@@ -1,8 +1,6 @@
-import * as Components from './components';
-
+export * from './components';
 import * as Constants from './constants';
 
 export {
-	Components,
 	Constants
-}
+};
