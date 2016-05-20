@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
-import DateTime from '../components/DateTime';
+import DateTime from '../DateTime';
 
 const date = new Date('2015-10-22T21:00:00.000Z');
 const relativeTo = new Date('2015-10-30T22:00:00.000Z'); //+1 day, and +1 hour
