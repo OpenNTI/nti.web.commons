@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 function getItem (o, p, ...r) {
 	if (o.getItem) {
@@ -7,11 +7,7 @@ function getItem (o, p, ...r) {
 	return p.item;
 }
 
-export default {
-	// propTypes: {
-	// 	item: React.PropTypes.object.isRequired
-	// },
-
+const MIXIN = {
 
 	componentDidMount () {
 		this.listen(getItem(this, this.props, this.state, this.context));
@@ -58,4 +54,25 @@ export default {
 			this.forceUpdate();
 		}
 	}
+};
+
+
+export default MIXIN;
+export function compose(Component) {
+	const getter = !Component.getItem ? {} : {
+		getItem: (...a) => Component.getItem(...a)
+	}
+
+	return React.createClass({
+		propTypes: {
+			item: React.PropTypes.object.isRequired
+		},
+
+		render() {
+			return <Component {...this.props} />;
+		},
+
+		...getter,
+		...MIXIN
+	});
 };
