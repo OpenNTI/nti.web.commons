@@ -58,7 +58,7 @@ function truncateText (el, measure) {
 	}
 
 
-	return SharedExecution.schedual(() => {
+	return SharedExecution.schedule(() => {
 		const box = (measure === 'parent') ? el.parentNode : el;
 		const tooBig = () => box.scrollHeight - (box.clientHeight || box.offsetHeight) >= 1;
 
@@ -69,7 +69,7 @@ function truncateText (el, measure) {
 
 					setText(getText().replace(/[^\.](\.*)$/, '...'));
 
-					return SharedExecution.schedual(trimStep);
+					return SharedExecution.schedule(trimStep);
 				}
 			}
 		}
