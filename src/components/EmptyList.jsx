@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import {Notice} from './Notice';
+import Notice from './Notice';
 
 import {scoped} from 'nti-lib-locale';
 
