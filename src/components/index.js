@@ -1,4 +1,6 @@
 export AssetIcon from './AssetIcon';
+export Background from './Background';
+export Banner from './Banner';
 export CalendarCard from './CalendarCard';
 export DateTime from './DateTime';
 export Ellipsed from './Ellipsed';
