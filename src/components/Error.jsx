@@ -1,7 +1,7 @@
 import React from 'react';
 import Logger from 'nti-util-logger';
 
-import {rawContent} from '../utils/jsx';
+import {rawContent} from 'nti-commons/lib/jsx';
 
 const logger = Logger.get('common:components:Error');
 
