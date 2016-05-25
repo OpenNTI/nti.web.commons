@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Loading} from 'nti-web-commons';
+import Loading from './Loading';
 import {NavigatableMixin} from 'react-router-component';
 
 
