@@ -5,7 +5,13 @@ import moment from 'moment';
 import DateTime from '../DateTime';
 
 const date = new Date('2015-10-22T21:00:00.000Z');
-const relativeTo = new Date('2015-10-30T22:00:00.000Z'); //+1 day, and +1 hour
+const relativeTo = new Date('2015-10-24T22:01:00.000Z'); //+1 day, and +1 hour
+const relativeToOneDay = new Date('2015-10-23T22:00:00.000Z'); //+1 day, and +1 hour
+const relativeToWeek1 = new Date('2015-10-29T22:00:00.000Z'); //+7 day
+const relativeToWeek2 = new Date('2015-11-05T22:00:00.000Z'); //+14 day
+const relativeToWeek3 = new Date('2015-11-12T22:00:00.000Z'); //+21 day
+const relativeToMonth = new Date('2015-11-19T22:00:00.000Z'); //+27 day
+const relativeToMonths = new Date('2015-12-31T22:00:00.000Z'); //+++ days
 
 const getText = cmp => ReactDOM.findDOMNode(cmp).textContent;
 
@@ -81,6 +87,23 @@ describe('DateTime', () => {
 
 	});
 
+	it('Base Cases: date, relative to one day', () => {
+
+		const A = ReactDOM.render(
+			React.createElement(DateTime, {date, relative: true, relativeTo: relativeToOneDay}),
+			newNode
+		);
+
+		const B = ReactDOM.render(
+			React.createElement(DateTime, {date, relative: true, relativeTo: relativeToOneDay}),
+			container
+		);
+
+		expect(getText(A)).toMatch(/a day ago/);
+		expect(getText(B)).toMatch(/a day ago/);
+
+	});
+
 	it('relativeTo turns on relative', () => {
 
 		const A = ReactDOM.render(
@@ -96,6 +119,86 @@ describe('DateTime', () => {
 		expect(getText(A)).toMatch(/\d days ago/);
 		expect(getText(B)).toMatch(/\d days ago/);
 
+	});
+
+	it('relativeTo: Weeks 1', () => {
+
+		const A = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToWeek1}),
+			newNode
+		);
+
+		const B = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToWeek1}),
+			container
+		);
+
+		expect(getText(A)).toMatch(/1 week ago/);
+		expect(getText(B)).toMatch(/1 week ago/);
+	});
+
+	it('relativeTo: Weeks 2', () => {
+
+		const A = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToWeek2}),
+			newNode
+		);
+
+		const B = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToWeek2}),
+			container
+		);
+
+		expect(getText(A)).toMatch(/2 weeks ago/);
+		expect(getText(B)).toMatch(/2 weeks ago/);
+	});
+
+	it('relativeTo: Weeks 3', () => {
+
+		const A = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToWeek3}),
+			newNode
+		);
+
+		const B = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToWeek3}),
+			container
+		);
+
+		expect(getText(A)).toMatch(/3 weeks ago/);
+		expect(getText(B)).toMatch(/3 weeks ago/);
+	});
+
+	it('relativeTo: Weeks 4 (month)', () => {
+
+		const A = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToMonth}),
+			newNode
+		);
+
+		const B = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToMonth}),
+			container
+		);
+
+		expect(getText(A)).toMatch(/a month ago/);
+		expect(getText(B)).toMatch(/a month ago/);
+	});
+
+	it('relativeTo: Months', () => {
+
+		const A = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToMonths}),
+			newNode
+		);
+
+		const B = ReactDOM.render(
+			React.createElement(DateTime, {date, relativeTo: relativeToMonths}),
+			container
+		);
+
+		expect(getText(A)).toMatch(/\d months ago/);
+		expect(getText(B)).toMatch(/\d months ago/);
 	});
 
 
