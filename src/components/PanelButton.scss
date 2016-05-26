@@ -10,7 +10,7 @@
 			background-color: lighten($alert-color,40%);
 		}
 	}
-	.buttons {
+	& > .buttons {
 		@extend %dialog-buttons;
 	}
 	.panel {
