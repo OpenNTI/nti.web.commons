@@ -2,23 +2,23 @@ import React, {PropTypes} from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import isEmpty from 'isempty';
 import moment from 'moment-timezone';
+import invariant from 'invariant';
 
 import jstz from 'jstimezonedetect';
 
 //days threshold to 25 (our dd -- day plural-- takes care of weeks) any more than 25 days falls to months.
 moment.relativeTimeThreshold('d', 25);
+const localeData = moment.localeData('en');
+const RELATIVE_TIME_KEY = '_relativeTime';
+const relativeTimeData = localeData[RELATIVE_TIME_KEY];
+invariant(relativeTimeData, 'momentjs changed where they store relativeTime in localeData');
+
 //Add custom plural day callback to handle weeks. moment doesn't merge sub-objects...so we have
 //to include the entire relativeTime object with our custom dd
 moment.updateLocale('en', {
-	relativeTime : {
-		future: 'in %s',
-		past: '%s ago',
-		s: 'seconds',
-		m: 'a minute',
-		mm: '%d minutes',
-		h: 'an hour',
-		hh: '%d hours',
-		d: 'a day',
+	relativeTime: {
+		...relativeTimeData,
+
 		dd (number) {
 			let weeks = Math.round(number / 7);
 			return (number < 7)
@@ -26,11 +26,7 @@ moment.updateLocale('en', {
 				? `${number} days`
 				// pluralize weeks
 				: `${weeks} week${(weeks === 1 ? '' : 's')}`;
-		},
-		M:  'a month',
-		MM: '%d months',
-		y:  'a year',
-		yy: '%d years'
+		}
 	}
 });
 
