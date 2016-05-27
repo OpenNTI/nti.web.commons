@@ -1,16 +1,14 @@
 import React from 'react';
-import Router from 'react-router-component';
-
+import NavigatableMixin from '../mixins/NavigatableMixin';
 import cx from 'classnames';
 
-const Link = Router.Link;
 
 //This is duplicating "./ActiveState"
 
 export default React.createClass({
 	displayName: 'ActiveLink',
 
-	mixins: [Router.NavigatableMixin],
+	mixins: [NavigatableMixin],
 
 	propTypes: {
 		href: React.PropTypes.string,
@@ -36,7 +34,7 @@ export default React.createClass({
 	},
 
 	render () {
-		let {className} = this.props;
+		const {context: {routerLinkComponent: Link = 'a'}, props: {className}} = this;
 
 		return (
 			<Link {...this.props} className={cx(className, {active: this.isActive()})}/>

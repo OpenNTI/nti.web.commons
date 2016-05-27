@@ -1,9 +1,10 @@
 import React from 'react';
 
-import {Link} from 'react-router-component';
+import NavigatableMixin from '../mixins/NavigatableMixin';
 
 export default React.createClass({
 	displayName: 'FilterBar',
+	mixins: [NavigatableMixin],
 
 	propTypes: {
 		filters: React.PropTypes.array,
@@ -32,7 +33,7 @@ export default React.createClass({
 
 
 	renderFilterBar  () {
-		let {props: {filters = []}} = this;
+		const {props: {filters = []}} = this;
 		return filters.length === 0 ? null : (
 			<ul className="filter-bar">
 				{filters.map(this.renderFilterLink)}
@@ -42,11 +43,10 @@ export default React.createClass({
 
 
 	renderFilterLink (filter) {
-		let {name, kind} = filter;
-
+		const {name, kind} = filter;
 		const {props: {filter: propsFilter}} = this;
-
-		let isActive = propsFilter.kind === filter.kind || propsFilter.name === filter.name; // this.props.filtername.toLowerCase() === name.toLowerCase();
+		const isActive = propsFilter.kind === filter.kind || propsFilter.name === filter.name;
+		const Link = this.getLinkComponent();
 
 		return (
 			<li key={name} className={isActive ? 'active' : null}>

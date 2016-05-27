@@ -7,7 +7,8 @@ const ENVIRONMENT_TYPE = PropTypes.shape({
 
 export default {
 	contextTypes: {
-		defaultEnvironment: ENVIRONMENT_TYPE,
+		defaultEnvironment: ENVIRONMENT_TYPE.isRequired,
+		routerLinkComponent: PropTypes.object.isRequired,
 		router: PropTypes.shape({
 			getEnvironment: PropTypes.func,
 			getNavigable: PropTypes.func,
@@ -16,13 +17,14 @@ export default {
 			getPath: PropTypes.func,
 			makeHref: PropTypes.func,
 			navigate: PropTypes.func
-		})
+		}).isRequired
 	},
 
 	propTypes: {
 		environment: ENVIRONMENT_TYPE
 	},
 
+	getLinkComponent () { return this.context.routerLinkComponent; },
 
 	getNavigable () {
 		const {

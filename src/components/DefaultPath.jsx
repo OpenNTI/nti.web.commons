@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Loading from './Loading';
-import {NavigatableMixin} from 'react-router-component';
+import NavigatableMixin from '../mixins/NavigatableMixin';
 
 
 export default React.createClass({
