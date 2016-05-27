@@ -17,7 +17,7 @@ export default {
 			getPath: PropTypes.func,
 			makeHref: PropTypes.func,
 			navigate: PropTypes.func
-		}).isRequired
+		})
 	},
 
 	propTypes: {
