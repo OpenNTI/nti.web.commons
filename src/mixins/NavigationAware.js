@@ -8,7 +8,7 @@ const ENVIRONMENT_TYPE = PropTypes.shape({
 export default {
 	contextTypes: {
 		defaultEnvironment: ENVIRONMENT_TYPE.isRequired,
-		routerLinkComponent: PropTypes.object.isRequired,
+		routerLinkComponent: PropTypes.func.isRequired,
 		router: PropTypes.shape({
 			getEnvironment: PropTypes.func,
 			getNavigable: PropTypes.func,
