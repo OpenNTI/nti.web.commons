@@ -120,7 +120,7 @@ export default class DateTime extends React.Component {
 					m.format(format);
 
 		if ((showToday || !isEmpty(todayText)) && m.isSame(new Date(), 'day')) {
-			text = todayText || 'Today';
+			text = (todayText || 'Today').replace('{time}', text);
 		}
 
 		text = (prefix || '') + text + (suffix || '');
