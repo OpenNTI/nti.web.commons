@@ -59,10 +59,13 @@ export default React.createClass({
 		return (
 			<div>
 				<FilterBar {...this.props}/>
-				{list.length === 0 ? <NoMatches /> : null}
-				<div>
-					{React.cloneElement(this.props.listcomp, {list, filter})}
-				</div>
+				{(!list || list.length === 0) ? (
+					<NoMatches />
+				) : (
+					<div>
+						{React.cloneElement(this.props.listcomp, {list, filter})}
+					</div>
+				)}
 			</div>
 		);
 	}
