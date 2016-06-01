@@ -2,7 +2,7 @@ import React from 'react';
 import Logger from 'nti-util-logger';
 
 import FilterBar from './FilterBar';
-import {NoMatches} from './NoMatches';
+import NoMatches from './NoMatches';
 
 
 const logger = Logger.get('common:components:filterable-view');
