@@ -1,14 +1,8 @@
 import React from 'react';
 
-import scrollParent from 'scrollparent';
-
-import {getScreenWidth, getScreenHeight} from 'nti-lib-dom';
+import {getScreenWidth, getScreenHeight, getScrollParent} from 'nti-lib-dom';
 
 const EMPTY = ()=>{};
-
-const WINDOW = typeof window === 'undefined' ? global : window;
-const shouldBeWindow = el => el.tagName === 'BODY' && el.clientHeight <= el.scrollHeight;
-const getScrollParent = el => (x => shouldBeWindow(x) ? WINDOW : x)(scrollParent(el));
 
 export default React.createClass({
 	displayName: 'ScrollTrigger',
