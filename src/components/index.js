@@ -25,3 +25,4 @@ export PromiseButton from './PromiseButton';
 export ScrollTrigger from './ScrollTrigger';
 export SelectBox from './SelectBox';
 export TinyLoader from './TinyLoader';
+export Flyout from './Flyout';
