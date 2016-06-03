@@ -1,5 +1,3 @@
-@import "~nti-style-common";
-
 .favorite {
 	position: relative;
 	display: inline-block;
@@ -11,7 +9,7 @@
 	vertical-align: top;
 
 	&::after {
-		@extend %icon-favorite;
+		background-image: url(./assets/favorite.png);
 		content: '';
 		overflow: hidden;
 		position: absolute;
@@ -22,6 +20,6 @@
 	}
 
 	&.active::after {
-		@extend %icon-favorite-active;
+		background-image: url(./assets/favorite_active.png);
 	}
 }
