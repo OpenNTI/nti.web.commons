@@ -2,11 +2,11 @@ import React, {PropTypes} from 'react';
 
 Radio.propTypes = {
 	label: PropTypes.string,
-	checked: PropTypes.boolean,
+	checked: PropTypes.bool,
 	children: PropTypes.any
 };
 
-function Radio (props) {
+export default function Radio (props) {
 	return (
 		<label className="radio">
 			<input {...props} type="radio" children={void 0}/>
