@@ -1,0 +1,14 @@
+label.radio {
+	input[type=radio] {
+
+		& + span.label {
+			//iOS workaround
+			pointer-events: none;
+			a { pointer-events: all; }
+		}
+	}
+
+	.sub {
+
+	}
+}
