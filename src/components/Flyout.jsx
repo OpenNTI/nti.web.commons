@@ -90,10 +90,11 @@ export default class Flyout extends React.Component {
 		trigger: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.node
-		]).isRequired,
-		children: PropTypes.any.isRequired,
+		]),
+		children: PropTypes.any,
 		className: PropTypes.string,
-		alignment: PropTypes.string
+		alignment: PropTypes.string,
+		afterAlign: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -122,6 +123,7 @@ export default class Flyout extends React.Component {
 
 
 	componentWillUnmount () {
+		ReactDOM.unmountComponentAtNode(this.fly);
 		document.body.removeChild(this.fly);
 	}
 
@@ -130,6 +132,8 @@ export default class Flyout extends React.Component {
 		if (nextProps.className !== this.props.className) {
 			this.fly.className = cx('fly-wrapper', nextProps.className);
 		}
+
+		this.maybeDismiss();
 	}
 
 
@@ -145,14 +149,14 @@ export default class Flyout extends React.Component {
 
 
 	maybeDismiss (e) {
-		const {target} = e;
+		const {target} = e || {};
 		const {trigger, flyout, state: {open}} = this;
 
-		if (!trigger || !flyout || !open || target === trigger || trigger.contains(target)) {
+		if (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target))) {
 			return;
 		}
 
-		if (!flyout.contains(target) && flyout !== target) {
+		if (!e || (!flyout.contains(target) && flyout !== target)) {
 			this.setState({open: false, aligning: true});
 		}
 	}
@@ -197,9 +201,9 @@ export default class Flyout extends React.Component {
 	}
 
 
-	align () {
+	align (cb = this.props.afterAlign, noRetry = false) {
 		const rect = getRect(this.trigger);
-		const {offsetWidth: width, offsetHeight: height} = this.flyout;
+		const {offsetWidth: width, offsetHeight: height} = this.flyout || {};
 
 		function flip (a) {
 			return ({
@@ -209,6 +213,12 @@ export default class Flyout extends React.Component {
 				top: 'bottom'
 			})[a] || a;
 		}
+
+		const finish = () => {
+			this.setState(
+				{aligning: false},
+				typeof cb === 'function' ? cb : void cb);
+		};
 
 		const calculateAlignment = (alignments, attempts = 1) => {
 			const y = ALIGNERS[alignments.vertical](height, rect);
@@ -231,37 +241,47 @@ export default class Flyout extends React.Component {
 					realignments = Object.assign({}, alignments, {vertical: flip(vertical)});
 				}
 
-				if (alignments === realignments || attempts >= 3) {
-					this.setState({aligning: false});
+				if (noRetry || alignments === realignments || attempts >= 3) {
+					finish();
 				} else {
 					calculateAlignment(realignments, attempts + 1);
 				}
 			});
 		};
 
+		if (!this.flyout) {
+			return finish();
+		}
+
 		calculateAlignment(getAlignments(this.props.alignment));
 	}
 
 
-	onToggle (e) {
-		if (e && e.isPropagationStopped()) {
-			return;
+	onToggle (e, cb) {
+		if (e) {
+			if (e.isPropagationStopped()) {
+				return;
+			}
+
+			e.preventDefault();
+			e.stopPropagation();
 		}
 
-		e.preventDefault();
-		e.stopPropagation();
-
 		const {open} = this.state;
-		this.setState({
-			open: !open,
-			aligning: true
-		});
+
+		this.setState(
+			{ open: !open, aligning: true },
+			typeof cb === 'function' ? cb : void cb);
 	}
 
 
 	render () {
 		const props = Object.assign({}, this.props, {children: void 0});
-		const {trigger: Trigger} = this.props;
+		let {trigger: Trigger} = this.props;
+
+		if (!Trigger) {
+			Trigger = ( <button>Trigger</button> );
+		}
 
 		if (Trigger.type instanceof React.Component || typeof Trigger.type === 'string') {
 			const {onClick} = Trigger.props;
