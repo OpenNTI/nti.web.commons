@@ -7,3 +7,11 @@ exports = module.exports = Object.assign(require('./webpack.config'), {
 		publicPath: '/'
 	}
 });
+
+exports.module.loaders.push({
+	test: /\.(eot|ttf|woff)$/,
+	loader: 'file-loader',
+	query: {
+		name: 'assets/fonts/[name]-[hash].[ext]'
+	}
+});
