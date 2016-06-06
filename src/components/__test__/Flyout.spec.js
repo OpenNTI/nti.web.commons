@@ -162,9 +162,11 @@ describe('Flyout', () => {
 					Promise.all(
 						test({alignment: `${vert}-${horz}`})
 							.map(x => new Promise(next =>
-								x.onToggle(null,
-									//We need to call align ourselves because we need to know when it finishes
-									()=> x.align(()=> next(x), true)
+								x.maybeDismiss(null, () =>
+									x.onToggle(null,
+										//We need to call align ourselves because we need to know when it finishes
+										()=> x.align(()=> next(x), true)
+									)
 								)
 							)
 						)

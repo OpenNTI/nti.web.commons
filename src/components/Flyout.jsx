@@ -132,8 +132,6 @@ export default class Flyout extends React.Component {
 		if (nextProps.className !== this.props.className) {
 			this.fly.className = cx('fly-wrapper', nextProps.className);
 		}
-
-		this.maybeDismiss();
 	}
 
 
@@ -148,16 +146,19 @@ export default class Flyout extends React.Component {
 	}
 
 
-	maybeDismiss (e) {
+	maybeDismiss (e, cb) {
 		const {target} = e || {};
 		const {trigger, flyout, state: {open}} = this;
+		const finish = () => typeof cb === 'function' && cb();
 
 		if (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target))) {
-			return;
+			return finish();
 		}
 
 		if (!e || (!flyout.contains(target) && flyout !== target)) {
-			this.setState({open: false, aligning: true});
+			this.setState({open: false, aligning: true}, finish);
+		} else {
+			finish();
 		}
 	}
 
