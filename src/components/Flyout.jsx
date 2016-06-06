@@ -309,7 +309,6 @@ export default class Flyout extends React.Component {
 		const style = {
 			position: 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
-			border: '1px solid red',
 			top: alignment.top,
 			left: alignment.left
 		};
