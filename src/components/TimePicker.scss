@@ -1,0 +1,64 @@
+@import "~nti-style-common";
+
+.TimePicker {
+	display: flex;
+	color: $tertiary-grey;
+
+	.time {
+		display: 0 0 auto;
+	}
+
+	input[type="number"] {
+		width: 2.125rem;
+		padding: .3125rem 0 .3125rem 0;
+		text-align: center;
+		font-size: .8125rem;
+		text-align: center;
+		color: $secondary-grey;
+
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+		  -webkit-appearance: none;
+		  margin: 0;
+		}
+
+		&:invalid {
+	    	border: 1px solid $border-red;
+		}
+	}
+
+	.meridiem-select-box.select-box {
+	    flex: 0 0 auto;
+	    margin-left: 15px;
+		border: 1px solid $border-grey-alt;
+
+		.menu-label {
+			color: $secondary-grey;
+		    font-size: .8125rem;
+		    padding-right: 1.5rem;
+		    line-height: 1.6875rem;
+
+			&.selected {
+				background: none;
+			}
+		}
+
+		> ul {
+			-webkit-padding-start: 0px;
+		    border: 1px solid #dcdcdc;
+			margin-left: -1px;
+
+			li {
+				color: $secondary-grey;
+				font-size: .8125rem;
+				font-weight: 400;
+
+				&:hover {
+				    background: #efefef;
+	    			color: #3c3c3c;
+				}
+			}
+		}
+	}
+}
