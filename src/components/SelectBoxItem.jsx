@@ -11,8 +11,13 @@ export default React.createClass({
 		onClick: React.PropTypes.func
 	},
 
-	onClick () {
+	onClick (e) {
 		const {option, onClick} = this.props;
+		if(onClick) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
+
 		onClick && onClick(option.value || option.label);
 	},
 

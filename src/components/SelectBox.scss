@@ -8,6 +8,11 @@
 
 .select-box {
 	position: relative;
+	
+	&.disabled {
+		opacity: 0.75;
+	}
+
 	&.open {
 		& > ul {
 			background: white;

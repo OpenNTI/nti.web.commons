@@ -10,7 +10,8 @@ export default React.createClass({
 		options: React.PropTypes.array.isRequired,
 		value: React.PropTypes.any,
 		onChange: React.PropTypes.func,
-		className: React.PropTypes.string
+		className: React.PropTypes.string,
+		disabled: React.PropTypes.bool
 	},
 
 	getInitialState () {
@@ -26,11 +27,11 @@ export default React.createClass({
 
 	componentWillReceiveProps (nextProps) {
 		let {value, options} = nextProps;
-		this.setSelected(value || options[0].value, true);
+		this.setSelected(value || options[0].value, true, nextProps);
 	},
 
-	setSelected (value, silent) {
-		let {options, onChange} = this.props;
+	setSelected (value, silent, props = this.props) {
+		let {options, onChange} = props;
 		let selectedOption = value ? options.find(option => option.value === value) : options[0];
 		this.setState({
 			selectedOption
@@ -58,25 +59,29 @@ export default React.createClass({
 		});
 	},
 
-	toggle () {
+	toggle (e) {
+		e.preventDefault();
+		e.stopPropagation();
 		this.state.isOpen ? this.close() : this.open();
 	},
 
 	render () {
+		const {
+			state: {isOpen, selectedOption},
+			props: {disabled, className, options}
+		} = this;
 
-		let {isOpen, selectedOption} = this.state;
-
-		let classes = cx('select-box', this.props.className, {'open': isOpen});
+		let classes = cx('select-box', className, {'open': isOpen, disabled});
 
 		const optionLabel = (text) => <span className="option-label">{text}</span>;
 		// let selectedItem = <li className="selected" onClick={this.toggle}><span className="option-label">{selectedOption.label}</span></li>;
 
 		return (
-			<div className={classes}>
-				<div className="menu-label selected" onClick={this.toggle}>{optionLabel(selectedOption.label)}</div>
+			<div className={classes} tabIndex="-1">
+				<div className="menu-label selected" onClick={!disabled && this.toggle}>{optionLabel(selectedOption.label)}</div>
 				{isOpen && (
 					<ul>
-						{this.props.options.filter(item => item !== selectedOption).map((option, index) =>
+						{options.filter(item => item !== selectedOption).map((option, index) =>
 							<SelectBoxItem key={index} option={option} onClick={this.onClick} />
 						)}
 					</ul>
