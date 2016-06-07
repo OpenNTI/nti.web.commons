@@ -3,12 +3,13 @@ import React, {PropTypes} from 'react';
 Radio.propTypes = {
 	label: PropTypes.string,
 	checked: PropTypes.bool,
-	children: PropTypes.any
+	children: PropTypes.any,
+	name: PropTypes.string
 };
 
 export default function Radio (props) {
 	return (
-		<label className="radio">
+		<label className="radio" name={props.name}>
 			<input {...props} type="radio" children={void 0}/>
 			<span className="label">{props.label}</span>
 			{props.children && props.checked && (
