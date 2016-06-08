@@ -14,6 +14,9 @@ exports = module.exports = {
 
 	devtool: 'source-map',
 
+	node: {
+		global: false
+	}
 
 	target: 'web',
 

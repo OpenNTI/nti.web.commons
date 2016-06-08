@@ -8,6 +8,8 @@ exports = module.exports = Object.assign(require('./webpack.config'), {
 	}
 });
 
+delete exports.node;
+
 exports.module.loaders.push({
 	test: /\.(eot|ttf|woff)$/,
 	loader: 'file-loader',
