@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import Picker, { DateUtils, WeekdayPropTypes } from 'react-day-picker';
 
+export {DateUtils};
+
 function Weekday ({ weekday, className, localeUtils, locale }) {
 	const weekdayName = localeUtils.formatWeekdayLong(weekday, locale);
 	return (
@@ -17,6 +19,11 @@ export default class DayPicker extends React.Component {
 	static propTypes = {
 		value: PropTypes.object,
 		onChange: PropTypes.func
+	}
+
+
+	static defaultProps = {
+		value: new Date()
 	}
 
 
@@ -69,7 +76,7 @@ export default class DayPicker extends React.Component {
 			<Picker
 				weekdayComponent={ Weekday }
 				selectedDays={ this.selectedDays }
-				disabledDays={ DateUtils.isPastDay }
+				disabledDays={ this.props.disabledDays }
 				onDayClick={ this.handleDayClick }
 				enableOutsideDays
 				/>
