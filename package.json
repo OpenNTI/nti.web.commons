@@ -45,6 +45,7 @@
     "nti-lib-locale": "^1.0.0",
     "nti-lib-ntiids": "^1.0.1",
     "nti-util-logger": "^1.0.0",
+    "react-addons-test-utils": "^15.1.0",
     "react-day-picker": "^2.1.0",
     "react-router-component": "^0.32.2",
     "sinon": "^1.17.4"
