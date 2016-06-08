@@ -1,7 +1,14 @@
 const baseConfig = require('nti-unittesting-clientside');
 
 module.exports = function (config) {
-	baseConfig.webpack.resolve.root = void 0;
+	const {webpack} = baseConfig;
+	webpack.resolve.root = void 0;
+	webpack.externals = Object.assign(webpack.externals || {}, {
+		'cheerio': 'window',
+		'react/addons': true,
+		'react/lib/ExecutionEnvironment': true,
+		'react/lib/ReactContext': true
+	});
 
 	config.set(Object.assign(baseConfig, {
 		files: [
