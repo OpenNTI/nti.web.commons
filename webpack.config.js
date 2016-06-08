@@ -16,7 +16,7 @@ exports = module.exports = {
 
 	node: {
 		global: false
-	}
+	},
 
 	target: 'web',
 
