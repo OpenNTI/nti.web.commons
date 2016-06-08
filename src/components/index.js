@@ -24,7 +24,7 @@ export Notice from './Notice';
 export OkCancelButtons from './OkCancelButtons';
 export PanelButton from './PanelButton';
 export PromiseButton from './PromiseButton';
-export Publish from './Publish/Publish';
+export Publish from './Publish';
 export Radio from './Radio';
 export ScrollTrigger from './ScrollTrigger';
 export SelectBox from './SelectBox';
