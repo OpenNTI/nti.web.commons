@@ -33,6 +33,14 @@ export default class TimePicker extends React.Component {
 		};
 	}
 
+	componentWillReceiveProps (nextProps) {
+		if(nextProps.value !== this.props.value) {
+			this.setState({
+				value: this.getValue(nextProps)
+			});
+		}
+	}
+
 	getValue (props = this.props) {
 		const {value} = props;
 
@@ -72,8 +80,10 @@ export default class TimePicker extends React.Component {
 	}
 
 
-	onMeridiemChange (value) {
-		this.onChange(this.getValue().setPeriod(value));
+	onMeridiemChange (period) {
+		const {value} = this.state;
+
+		this.onChange(value.setPeriod(period));
 	}
 
 

@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-import Picker, { DateUtils, WeekdayPropTypes, LocaleUtils } from 'react-day-picker';
+import Picker, { DateUtils, WeekdayPropTypes } from 'react-day-picker';
 
 export {DateUtils};
-export {LocaleUtils};
+
 function Weekday ({ weekday, className, localeUtils, locale }) {
 	const weekdayName = localeUtils.formatWeekdayLong(weekday, locale);
 	return (
@@ -14,11 +14,11 @@ function Weekday ({ weekday, className, localeUtils, locale }) {
 
 Weekday.propTypes = WeekdayPropTypes;
 
-
 export default class DayPicker extends React.Component {
 	static propTypes = {
 		value: PropTypes.object,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		disabledDays: PropTypes.func
 	}
 
 
