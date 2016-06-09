@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 import autobind from 'nti-commons/lib/autobind';
-
+import moment from 'moment';
 import Radio from './Radio';
-import DayPicker, {DateUtils, LocaleUtils} from './DayPicker';
+import DayPicker, {DateUtils} from './DayPicker';
 import TimePicker from './TimePicker';
 import Flyout from './Flyout';
 
@@ -49,13 +49,16 @@ export default class Publish extends React.Component {
 		value: PUBLISH_STATES.DRAFT,
 		onChange: () => {
 			console.warn('Pass on change prop');
-		}
+		},
+		changed: false
 	}
 
 	constructor (props) {
 		super(props);
 
 		this.setupValue(props);
+
+		this.setFlyoutRef = x => this.flyoutRef = x;
 
 		autobind(this, 'onChange', 'onDateChange', 'onSave');
 	}
@@ -80,9 +83,11 @@ export default class Publish extends React.Component {
 
 	onChange (e) {
 		const selected = e.target.value;
+		const {value} = this.props;
 
 		this.setState({
-			selected
+			selected,
+			changed: value === selected ? false : true
 		});
 	}
 
@@ -113,14 +118,19 @@ export default class Publish extends React.Component {
 	}
 
 
+	closeMenu () {
+		if (this.flyoutRef) {
+			this.flyoutRef.doDismiss();
+		}
+	}
+
+
 	renderTrigger () {
-		const {value} = this.props;
 		const {selected, date} = this.state;
 		const {SCHEDULE} = PUBLISH_STATES;
 		const classNames = cx('publish-trigger', selected.toLowerCase());
-		const months = LocaleUtils.getMonths();
 
-		const label = selected === SCHEDULE ? `Schedule for ${months[date.getMonth()].slice(0,3)} ${date.getDay()}` : t(`${selected.toLowerCase()}.buttonLabel`);
+		const label = selected === SCHEDULE ? `Schedule for ${moment(date).format('MMM D')}` : t(`${selected.toLowerCase()}.buttonLabel`);
 
 		return (
 			<div className={classNames}>
@@ -133,10 +143,12 @@ export default class Publish extends React.Component {
 
 
 	render () {
-		const {selected, date} = this.state;
+		const {selected, date, changed} = this.state;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
+		const saveClassNames = cx('publish-save', {'changed': changed});
 		return (
-			<Flyout className="publish-controls" alignment="bottom right" trigger={this.renderTrigger()}>
+			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment="bottom-right" trigger={this.renderTrigger()}>
+				<div className="arrow"/>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>
@@ -156,7 +168,7 @@ export default class Publish extends React.Component {
 				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>
 					{t('draft.text')}
 				</Radio>
-				<div className="publish-save" onClick={this.onSave}>Save</div>
+				<div className={saveClassNames} onClick={changed === true ? this.onSave : null}>Save</div>
 			</Flyout>
 		);
 	}

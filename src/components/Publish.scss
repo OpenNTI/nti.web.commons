@@ -1,19 +1,20 @@
 @import "~nti-style-common";
 $trigger-height: 2.4375rem;
 
+// REMOVE THIS
+div#content {
+    margin-left: 39%;
+}
 
 .publish-controls.flyout {
 	border-radius: .25rem;
 	background-color: #ffffff;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
 	padding: .625rem;
-
-	overflow-y: auto;
-	overflow-x: hidden;
 	width: 19.0625rem;
 
 	&.bottom {
-		margin-top: 1rem;
+		margin-top: 0.6rem;
 	}
 
 	&.top {
@@ -27,7 +28,9 @@ $trigger-height: 2.4375rem;
 		padding-top: .625rem;
 		padding-bottom: .625rem;
 
-
+		&:first-of-type {
+    		padding-top: 0px;
+		}
 
 		&:not(:last-of-type) {
 			border-bottom: 1px solid #f8f8f8;
@@ -51,7 +54,8 @@ $trigger-height: 2.4375rem;
 	      padding-left: 1.5rem;
 
 			.DayPicker {
-				margin-left: -.5rem;
+			    margin-left: -5.75px;
+
 				.DayPicker-Caption {
 					font-size: 1rem;
 				}
@@ -67,21 +71,21 @@ $trigger-height: 2.4375rem;
 				line-height: 1.6;
 				color: #b8b8b8;
 				margin: 0 auto;
-				width: 60%;
+				width: 40%;
 			}
 
 			.TimePicker {
-				width: 60%;
+				width: 64%;
 				margin: 0 auto;
 			}
 		}
 	}
 
 	.publish-save {
-		width: 18rem;
+		width: 100%;
 		height: 2rem;
 		border-radius: .25rem;
-		background-color: $primary-blue;
+		background-color: #d1d1d1;
 		color: white;
 		text-align: center;
 		vertical-align: middle;
@@ -89,14 +93,42 @@ $trigger-height: 2.4375rem;
 		font-weight: 100;
 		font-size: .875rem;
 		font-family: $body-font-family;
+		&.changed {
+			background-color: $primary-blue;
+		}
+	}
+
+	.arrow {
+		position: absolute;
+		right: 18px;
+		top: -10px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 9px 10px 9px;
+		border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;
+		color: transparent;
+
+		&::after {
+			content: '';
+			position: absolute;
+			left: -8px;
+			top: 1px;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 0 8px 9px 8px;
+			border-color: transparent transparent #fff transparent;
+		}
 	}
 }
 
 
 .publish-trigger {
-	width: 10.375rem;
+    min-width: 10.375rem;
+    max-width: 12.5rem;
 	height: $trigger-height;
-	line-height: $trigger-height;
+	line-height: 2.125rem;
 	border-radius: .25rem;
 	background-color: $primary-blue;
     cursor: pointer;
@@ -120,12 +152,13 @@ $trigger-height: 2.4375rem;
 		color: #ffffff;
 		font-weight: 400;
 		font-family: $body-font-family;
+		margin-right: 1.875rem;
 	}
 
 	&:after {
 		content: '';
 		overflow: hidden;
-		top: 13px;
+		top: 10px;
 		left: auto;
 		right: 11px;
 		background-image: url(../assets/options-menu.png);

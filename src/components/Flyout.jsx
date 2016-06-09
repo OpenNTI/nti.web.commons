@@ -164,6 +164,18 @@ export default class Flyout extends React.Component {
 	}
 
 
+	doDismiss (cb) {
+		this.setState({
+			open: false,
+			aligning: true
+		}, () => {
+			if (typeof cb === 'function') {
+				cb();
+			}
+		})
+	}
+
+
 	listenToScroll (scroller) {
 		const {scrollparent: old} = this;
 		if (old === scroller) {
