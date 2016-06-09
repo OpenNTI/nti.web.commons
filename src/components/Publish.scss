@@ -1,20 +1,24 @@
 @import "~nti-style-common";
 $trigger-height: 2.4375rem;
 
-/* Remove this */
-body {
-	background: #545454;
-}
-
 
 .publish-controls.flyout {
 	border-radius: .25rem;
 	background-color: #ffffff;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
-    padding: .625rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: 19.0625rem;
+	padding: .625rem;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 19.0625rem;
+
+	&.bottom {
+		margin-top: 1rem;
+	}
+
+	&.top {
+		margin-top: -1rem;
+	}
 
 	label.radio {
 
@@ -47,6 +51,7 @@ body {
 	      padding-left: 1.5rem;
 
 			.DayPicker {
+				margin-left: -.5rem;
 				.DayPicker-Caption {
 					font-size: 1rem;
 				}
@@ -96,6 +101,18 @@ body {
 	background-color: $primary-blue;
     cursor: pointer;
     position: relative;
+
+	&.publish, &.schedule {
+    	background: #f8f8f8;
+		border: 1px solid #d1d1d1;
+
+		.publish-trigger-text {
+			color: #3fb3f6;
+		}
+		&:after {
+			background-image: url(../assets/options-menu_hover.png);
+		}
+	}
 
 	.publish-trigger-text {
 		padding-left: 1rem;

@@ -4,7 +4,7 @@ import {scoped} from 'nti-lib-locale';
 import autobind from 'nti-commons/lib/autobind';
 
 import Radio from './Radio';
-import DayPicker, {DateUtils} from './DayPicker';
+import DayPicker, {DateUtils, LocaleUtils} from './DayPicker';
 import TimePicker from './TimePicker';
 import Flyout from './Flyout';
 
@@ -17,32 +17,39 @@ export const PUBLISH_STATES = {
 const DEFAULT_TEXT = {
 	publish: {
 		text: 'Lesson contents are visible to students.',
-		label: 'Publish'
+		label: 'Publish',
+		buttonLabel: 'Published'
 	},
 	draft: {
 		text: 'Currently not visible to any students',
-		label: 'Draft'
+		label: 'Draft',
+		buttonLabel: 'Publish'
 	},
 	schedule: {
 		text: 'When do you want students to have access to this lesson?',
 		label: 'Schedule'
-	},
-	buttonLabel: 'Publish'
+	}
 };
 
 const t = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
 
 export default class Publish extends React.Component {
 
+	static States = PUBLISH_STATES;
+
 	static propTypes = {
 		value: PropTypes.oneOfType([
 			PropTypes.instanceOf(Date),
 			PropTypes.oneOf(Object.keys(PUBLISH_STATES))
-		])
+		]),
+		onChange: PropTypes.func
 	}
 
 	static defaultProps = {
-		value: PUBLISH_STATES.DRAFT
+		value: PUBLISH_STATES.DRAFT,
+		onChange: () => {
+			console.warn('Pass on change prop');
+		}
 	}
 
 	constructor (props) {
@@ -50,7 +57,7 @@ export default class Publish extends React.Component {
 
 		this.setupValue(props);
 
-		autobind(this, 'onChange', 'onDateChange');
+		autobind(this, 'onChange', 'onDateChange', 'onSave');
 	}
 
 
@@ -94,15 +101,31 @@ export default class Publish extends React.Component {
 	}
 
 
+	onSave () {
+		const { onChange } = this.props;
+		onChange(this.getValue());
+	}
+
+
+	getValue () {
+		const {selected, date} = this.state;
+		return selected === PUBLISH_STATES.SCHEDULE ? date : selected;
+	}
+
+
 	renderTrigger () {
 		const {value} = this.props;
+		const {selected, date} = this.state;
+		const {SCHEDULE} = PUBLISH_STATES;
+		const classNames = cx('publish-trigger', selected.toLowerCase());
+		const months = LocaleUtils.getMonths();
 
-		const classNames = cx('publish-trigger', value);
+		const label = selected === SCHEDULE ? `Schedule for ${months[date.getMonth()].slice(0,3)} ${date.getDay()}` : t(`${selected.toLowerCase()}.buttonLabel`);
 
 		return (
 			<div className={classNames}>
 				<span className="publish-trigger-text">
-					{t('buttonLabel')}
+					{label}
 				</span>
 			</div>
 		);
@@ -113,7 +136,7 @@ export default class Publish extends React.Component {
 		const {selected, date} = this.state;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 		return (
-			<Flyout className="publish-controls" trigger={this.renderTrigger()}>
+			<Flyout className="publish-controls" alignment="bottom right" trigger={this.renderTrigger()}>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>

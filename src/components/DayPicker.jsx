@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-import Picker, { DateUtils, WeekdayPropTypes } from 'react-day-picker';
+import Picker, { DateUtils, WeekdayPropTypes, LocaleUtils } from 'react-day-picker';
 
 export {DateUtils};
-
+export {LocaleUtils};
 function Weekday ({ weekday, className, localeUtils, locale }) {
 	const weekdayName = localeUtils.formatWeekdayLong(weekday, locale);
 	return (
