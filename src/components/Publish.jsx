@@ -27,7 +27,8 @@ const DEFAULT_TEXT = {
 	},
 	schedule: {
 		text: 'When do you want students to have access to this lesson?',
-		label: 'Schedule'
+		label: 'Schedule',
+		buttonLabel: 'Schedule for %(date)s'
 	}
 };
 
@@ -130,7 +131,7 @@ export default class Publish extends React.Component {
 		const {SCHEDULE} = PUBLISH_STATES;
 		const classNames = cx('publish-trigger', selected.toLowerCase());
 
-		const label = selected === SCHEDULE ? `Schedule for ${moment(date).format('MMM D')}` : t(`${selected.toLowerCase()}.buttonLabel`);
+		const label = t(`${selected.toLowerCase()}.buttonLabel`, {date: date && moment(date).format('MMM D')});
 
 		return (
 			<div className={classNames}>
