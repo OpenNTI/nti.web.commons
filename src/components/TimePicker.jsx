@@ -5,7 +5,9 @@ import autobind from 'nti-commons/lib/autobind';
 
 const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 const TimeMap = new WeakMap();
-
+const isValidHour = h => h < 23 ? true : false;
+const MAX_MINUTES = 59;
+const MIN_MINUTES = 0;
 export default class TimePicker extends React.Component {
 
 	static propTypes = {
@@ -66,11 +68,13 @@ export default class TimePicker extends React.Component {
 		}
 	}
 
+
 	onHourInputChange (e) {
 		const {target: {value: hours}} = e;
-		const {tfTime, value} = this.state; //getting value from state directly violates the getValue() utility we added.
+		const {tfTime} = this.state;
+		const value = this.getValue();
 
-		if(hours > 23) { return; } //hours is a string... this is not a "safe" comparison.
+		if(!isValidHour(getNumber(hours))) { return; }
 
 		let num = getNumber(hours);
 		if (num == null) {
@@ -97,17 +101,18 @@ export default class TimePicker extends React.Component {
 
 
 	onMinuteInputChange (e) {
-		const {target: {value: minutes}} = e;
-		const {value} = this.state; //again... this violates our getValue utility that abstracts prop/state.
+		const {target: {value: minuteString}} = e;
+		const value = this.getValue();
+		const minutes = getNumber(minuteString);
 
-		if(minutes > 0 && minutes < 60 || minutes === '') { //minutes is a STRING, your constant magic numbers are type integer.  ">" and "<" invoke auto-boxing before performing the comparison. Ensure both sides are the same time to avoid hidden bugs.
+		if(minutes > MIN_MINUTES && minutes < MAX_MINUTES || minutes === null) { 
 			this.onChange(value.setMinutes(getNumber(minutes)));
 		}
 	}
 
 
 	onMeridiemChange (period) {
-		const {value} = this.state;
+		const value = this.getValue();
 
 		this.onChange(value.setPeriod(period));
 	}
@@ -115,7 +120,7 @@ export default class TimePicker extends React.Component {
 
 	onKeyDown (e) {
 		const {key, target: {name}} = e;
-		const {value} = this.state; // Why did you abandon getValue()??? accessing value directly from state drops the abstraction.
+		const value = this.getValue();
 		const KeyDownMap = {
 			hoursArrowUp: 'incrementHours',
 			hoursArrowDown: 'decrementHours',
@@ -137,7 +142,7 @@ export default class TimePicker extends React.Component {
 
 
 	convertHours (h) {
-		const {value} = this.state;// UGh... use getValue()
+		const value = this.getValue();
 		const period = value.getPeriod();
 
 		if(period === 'AM' && h === 12) {
@@ -154,7 +159,8 @@ export default class TimePicker extends React.Component {
 			{label: 'AM', value: 'AM'},
 			{label: 'PM', value: 'PM'}
 		];
-		const {value, tfTime} = this.state; //Use getValue!!
+		const {tfTime} = this.state;
+		const value = this.getValue();
 		const meridiem = value.getPeriod();
 
 		return (
@@ -171,11 +177,13 @@ export default class TimePicker extends React.Component {
 
 
 	render () {
-		const {value, tfTime, editingHour} = this.state; //Use getValue!!!!
+		const {tfTime, editingHour} = this.state;
+		const value = this.getValue();
 		let hours = tfTime ? value.getHours() : ((value.getHours() % 12) || 12);
 		const minutes = value.getMinutes();
 
-		if (editingHour) { hours = ''; } //wtf?
+		// Allow to edit the hours. Can't type down to zero because we are using a date.
+		if (editingHour) { hours = ''; }
 
 		return (
 			<div className="TimePicker">
