@@ -68,10 +68,11 @@ export default class Publish extends React.Component {
 	setupValue (props = this.props) {
 		const setState = s => this.state ? this.setState(s) : (this.state = s);
 		const {value} = props;
+		const date = (value instanceof Date) ? value : new Date();
 
 		setState({
 			selected: PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null),
-			date: (value instanceof Date) ? value : new Date()
+			date
 		});
 	}
 
@@ -84,7 +85,6 @@ export default class Publish extends React.Component {
 
 	onChange (e) {
 		const selected = e.target.value;
-		const {value} = this.props;
 
 		this.setState({
 			selected,
@@ -128,7 +128,6 @@ export default class Publish extends React.Component {
 
 	renderTrigger () {
 		const {selected, date} = this.state;
-		const {SCHEDULE} = PUBLISH_STATES;
 		const classNames = cx('publish-trigger', selected.toLowerCase());
 
 		const label = t(`${selected.toLowerCase()}.buttonLabel`, {date: date && moment(date).format('MMM D')});
