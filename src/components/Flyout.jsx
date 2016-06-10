@@ -157,14 +157,14 @@ export default class Flyout extends React.Component {
 		}
 
 		if (!e || (!flyout.contains(target) && flyout !== target)) {
-			this.setState({open: false, aligning: true}, finish);
+			this.dismiss(finish);
 		} else {
 			finish();
 		}
 	}
 
 
-	doDismiss (cb) {
+	dismiss (cb) {
 		this.setState({
 			open: false,
 			aligning: true

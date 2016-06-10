@@ -121,7 +121,7 @@ export default class Publish extends React.Component {
 
 	closeMenu () {
 		if (this.flyoutRef) {
-			this.flyoutRef.doDismiss();
+			this.flyoutRef.dismiss();
 		}
 	}
 
