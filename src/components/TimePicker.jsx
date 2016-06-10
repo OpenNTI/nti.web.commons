@@ -35,6 +35,18 @@ export default class TimePicker extends React.Component {
 	}
 
 
+	/**
+	 * A private utility method to abstract where we get "value" from and to normalize it into
+	 * a Time instance. Use this to get the current value when rendering, or reasoning about
+	 * the current value. DO NOT, I REPEAT, DO NOT reference `value` in props or state directly!!!
+	 *
+	 * The value in state is ONLY used if the value prop is not given. If the value prop is given,
+	 * we do NOT internally track the value. We give it to the parent through "onChange" and let it
+	 * pass it back in a prop update.
+	 *
+	 * @param  {Object} props - defaults to {this.props}. The props to base the value off of.
+	 * @return {Time} - an instance of Time.
+	 */
 	getValue (props = this.props) {
 		const {value} = props;
 
@@ -56,9 +68,9 @@ export default class TimePicker extends React.Component {
 
 	onHourInputChange (e) {
 		const {target: {value: hours}} = e;
-		const {tfTime, value} = this.state;
+		const {tfTime, value} = this.state; //getting value from state directly violates the getValue() utility we added.
 
-		if(hours > 23) { return; }
+		if(hours > 23) { return; } //hours is a string... this is not a "safe" comparison.
 
 		let num = getNumber(hours);
 		if (num == null) {
@@ -86,9 +98,9 @@ export default class TimePicker extends React.Component {
 
 	onMinuteInputChange (e) {
 		const {target: {value: minutes}} = e;
-		const {value} = this.state;
+		const {value} = this.state; //again... this violates our getValue utility that abstracts prop/state.
 
-		if(minutes > 0 && minutes < 60 || minutes === '') {
+		if(minutes > 0 && minutes < 60 || minutes === '') { //minutes is a STRING, your constant magic numbers are type integer.  ">" and "<" invoke auto-boxing before performing the comparison. Ensure both sides are the same time to avoid hidden bugs.
 			this.onChange(value.setMinutes(getNumber(minutes)));
 		}
 	}
@@ -103,7 +115,7 @@ export default class TimePicker extends React.Component {
 
 	onKeyDown (e) {
 		const {key, target: {name}} = e;
-		const {value} = this.state;
+		const {value} = this.state; // Why did you abandon getValue()??? accessing value directly from state drops the abstraction.
 		const KeyDownMap = {
 			hoursArrowUp: 'incrementHours',
 			hoursArrowDown: 'decrementHours',
@@ -125,7 +137,7 @@ export default class TimePicker extends React.Component {
 
 
 	convertHours (h) {
-		const {value} = this.state;
+		const {value} = this.state;// UGh... use getValue()
 		const period = value.getPeriod();
 
 		if(period === 'AM' && h === 12) {
@@ -142,7 +154,7 @@ export default class TimePicker extends React.Component {
 			{label: 'AM', value: 'AM'},
 			{label: 'PM', value: 'PM'}
 		];
-		const {value, tfTime} = this.state;
+		const {value, tfTime} = this.state; //Use getValue!!
 		const meridiem = value.getPeriod();
 
 		return (
@@ -159,10 +171,12 @@ export default class TimePicker extends React.Component {
 
 
 	render () {
-		const {value, tfTime, editingHour} = this.state;
+		const {value, tfTime, editingHour} = this.state; //Use getValue!!!!
 		let hours = tfTime ? value.getHours() : ((value.getHours() % 12) || 12);
 		const minutes = value.getMinutes();
-		if (editingHour) { hours = ''; }
+
+		if (editingHour) { hours = ''; } //wtf?
+
 		return (
 			<div className="TimePicker">
 				<div className="time">
