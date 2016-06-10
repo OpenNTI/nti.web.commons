@@ -88,7 +88,7 @@ export default class Publish extends React.Component {
 
 		this.setState({
 			selected,
-			changed: value === selected ? false : true
+			changed: true
 		});
 	}
 
