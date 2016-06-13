@@ -5,7 +5,7 @@ import autobind from 'nti-commons/lib/autobind';
 
 const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 const TimeMap = new WeakMap();
-const isValidHour = h => h < 23 ? true : false;
+const isValidHour = h => h < 24 ? true : false;
 const MAX_MINUTES = 59;
 const MIN_MINUTES = 0;
 export default class TimePicker extends React.Component {
@@ -57,7 +57,7 @@ export default class TimePicker extends React.Component {
 			TimeMap.set(value, time = new Time(value));
 		}
 
-		return time || this.state.value;
+		return time || (this.state || {}).value || null;
 	}
 
 	componentWillReceiveProps (nextProps) {
@@ -105,7 +105,7 @@ export default class TimePicker extends React.Component {
 		const value = this.getValue();
 		const minutes = getNumber(minuteString);
 
-		if(minutes > MIN_MINUTES && minutes < MAX_MINUTES || minutes === null) { 
+		if(minutes >= MIN_MINUTES && minutes <= MAX_MINUTES || minutes === null) {
 			this.onChange(value.setMinutes(getNumber(minutes)));
 		}
 	}
