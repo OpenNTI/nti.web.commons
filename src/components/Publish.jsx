@@ -102,7 +102,8 @@ export default class Publish extends React.Component {
 		}
 
 		this.setState({
-			date
+			date,
+			changed: true
 		});
 	}
 
