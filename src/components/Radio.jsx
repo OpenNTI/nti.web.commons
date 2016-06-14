@@ -9,7 +9,7 @@ Radio.propTypes = {
 
 export default function Radio (props) {
 	return (
-		<label className="radio" name={props.name}>
+		<label className="radio-component" name={props.name}>
 			<input {...props} type="radio" children={void 0}/>
 			<span className="label">{props.label}</span>
 			{props.children && props.checked && (
