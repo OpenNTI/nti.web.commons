@@ -172,7 +172,7 @@ export default class Flyout extends React.Component {
 			if (typeof cb === 'function') {
 				cb();
 			}
-		})
+		});
 	}
 
 
