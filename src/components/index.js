@@ -4,6 +4,7 @@ export AssetIcon from './AssetIcon';
 export Background from './Background';
 export Banner from './Banner';
 export CalendarCard from './CalendarCard';
+export Checkbox from './Checkbox';
 export CollectionFilter from './CollectionFilter';
 export DarkMode from './DarkMode';
 export DateTime from './DateTime';
