@@ -7,8 +7,12 @@ const CHANGE_HANDLERS = new WeakMap();
 const REF_HANDLERS = new WeakMap();
 
 function itemChanged (scope) {
-	const {refChild} = scope;
-	if (refChild && refChild.onItemChanged) {
+	const {refChild, props: {onItemChanged}} = scope;
+
+	if (onItemChanged) {
+		onItemChanged();
+	}
+	else if (refChild && refChild.onItemChanged) {
 		refChild.onItemChanged();
 	} else {
 		scope.forceUpdate();
@@ -65,7 +69,8 @@ function stopListening (scope, item) {
 export default class ItemChanges extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
-		children: PropTypes.node
+		children: PropTypes.node,
+		onItemChanged: PropTypes.func
 	}
 
 	static compose (Component) {
