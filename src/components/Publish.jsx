@@ -48,9 +48,6 @@ export default class Publish extends React.Component {
 
 	static defaultProps = {
 		value: PUBLISH_STATES.DRAFT,
-		onChange: () => {
-			console.warn('Pass on change prop');
-		},
 		changed: false
 	}
 
@@ -110,7 +107,9 @@ export default class Publish extends React.Component {
 
 	onSave () {
 		const { onChange } = this.props;
-		onChange(this.getValue());
+		if (onChange) {
+			onChange(this.getValue());
+		}
 	}
 
 

@@ -3,26 +3,19 @@ import React from 'react';
 import Favorite from './Favorite';
 import Like from './Like';
 
-export default React.createClass({
-	displayName: 'LuckyCharms',
+LuckyCharms.propTypes = { item: React.PropTypes.object.isRequired };
+export default function LuckyCharms (props) {
+	let {item} = props;
 
-	propTypes: {
-		item: React.PropTypes.object.isRequired
-	},
-
-	render () {
-		let {item} = this.props;
-
-		if (!item || !item.isTopLevel || item.placeholder) {
-			// console.warn('Item doesn\'t have isTopLevel method. bailing.');
-			return null;
-		}
-
-		return (
-			<div className="charms">
-				<Like item={item}/>
-				{item.isTopLevel() && ( <Favorite item={item}/> )}
-			</div>
-		);
+	if (!item || !item.isTopLevel || item.placeholder) {
+		// console.warn('Item doesn\'t have isTopLevel method. bailing.');
+		return null;
 	}
-});
+
+	return (
+		<div className="charms">
+			<Like item={item}/>
+			{item.isTopLevel() && ( <Favorite item={item}/> )}
+		</div>
+	);
+}
