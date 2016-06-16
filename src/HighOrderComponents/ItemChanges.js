@@ -47,6 +47,7 @@ function getRefHandler (parentRef, localRef) {
 	return h;
 }
 
+
 function listen (scope, item) {
 	if (item) {
 		item.addListener('change', getHandler(scope));
@@ -68,9 +69,15 @@ export default class ItemChanges extends React.Component {
 	}
 
 	static compose (Component) {
+
+		function item (...a) {
+			const getter = (Component.getItem || getItem);
+			return getter(...a);
+		}
+
 		return function ItemChangesComposer (props, context) {
 			return (
-				<ItemChanges item={Component.getItem(props, {}, context)}>
+				<ItemChanges item={item(props, {}, context)}>
 					<Component {...props}/>
 				</ItemChanges>
 			);
