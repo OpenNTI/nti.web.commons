@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, {Children, PropTypes} from 'react';
 import Logger from 'nti-util-logger';
 
 const logger = Logger.get('common:high-order-components:ItemChanges');
@@ -119,7 +119,11 @@ export default class ItemChanges extends React.Component {
 
 
 	render () {
-		const child = React.Children.only(this.props.children);
+		const {children} = this.props;
+		const child = Children.count(children) > 0 && Children.only(children);
+
+		if (!child) { return null; }
+
 		const ref = getRefHandler(child.ref, this.attachRef);
 		return React.cloneElement(child, {ref});
 	}
