@@ -1,5 +1,5 @@
 export * from './components';
-export * from './prompts';
+export * as Prompt from './prompts';
 import * as Constants from './constants';
 import * as HOC from './HighOrderComponents';
 import * as Mixins from './mixins';
