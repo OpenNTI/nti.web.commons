@@ -80,6 +80,7 @@ export default class Publish extends React.Component {
 		}
 	}
 
+
 	onChange (e) {
 		const selected = e.target.value;
 
