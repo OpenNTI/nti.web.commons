@@ -33,6 +33,8 @@ const DEFAULT_TEXT = {
 };
 
 const t = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
+const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
+
 
 export default class Publish extends React.Component {
 
@@ -68,7 +70,7 @@ export default class Publish extends React.Component {
 		const date = (value instanceof Date) ? value : new Date();
 
 		setState({
-			selected: PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null),
+			selected: getPublishState(value),
 			date
 		});
 	}
@@ -128,7 +130,9 @@ export default class Publish extends React.Component {
 
 
 	renderTrigger () {
-		const {selected, date} = this.state;
+		const {value} = this.props;
+		const selected = getPublishState(value);
+		const date = selected === PUBLISH_STATES.SCHEDULE ? value : null;
 		const classNames = cx('publish-trigger', selected.toLowerCase());
 
 		const label = t(`${selected.toLowerCase()}.buttonLabel`, {date: date && moment(date).format('MMM D')});
