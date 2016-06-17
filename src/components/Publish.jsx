@@ -27,6 +27,7 @@ const DEFAULT_TEXT = {
 	},
 	schedule: {
 		text: 'When do you want students to have access to this lesson?',
+		selectedText: 'Lesson contents will be visible to students on %(date)s at %(time)s.',
 		label: 'Schedule',
 		buttonLabel: 'Schedule for %(date)s'
 	}
@@ -71,7 +72,8 @@ export default class Publish extends React.Component {
 
 		setState({
 			selected: getPublishState(value),
-			date
+			date,
+			dayClicked: false
 		});
 	}
 
@@ -88,7 +90,8 @@ export default class Publish extends React.Component {
 
 		this.setState({
 			selected,
-			changed: true
+			changed: true,
+			dayClicked: false
 		});
 	}
 
