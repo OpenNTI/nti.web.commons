@@ -60,7 +60,7 @@ export default class Publish extends React.Component {
 
 		this.setFlyoutRef = x => this.flyoutRef = x;
 
-		autobind(this, 'onChange', 'onDateChange', 'onSave');
+		autobind(this, 'onChange', 'onDateChange', 'onSave', 'closeMenu');
 	}
 
 
@@ -103,15 +103,21 @@ export default class Publish extends React.Component {
 
 		this.setState({
 			date,
-			changed: true
+			changed: true,
+			dayClicked: true
 		});
 	}
 
 
 	onSave () {
-		const { onChange } = this.props;
-		if (onChange) {
-			onChange(this.getValue());
+		const {props: {onChange}, state: {changed}} = this;
+		if (onChange && changed) {
+			this.setState({changed: false});
+			const p = onChange(this.getValue());
+
+			if (p && p.then) {
+				p.then(()=> this.closeMenu());
+			}
 		}
 	}
 
@@ -126,6 +132,7 @@ export default class Publish extends React.Component {
 		if (this.flyoutRef) {
 			this.flyoutRef.dismiss();
 		}
+		this.setupValue();
 	}
 
 
@@ -148,17 +155,18 @@ export default class Publish extends React.Component {
 
 
 	render () {
-		const {selected, date, changed} = this.state;
+		const {selected, date, changed, dayClicked} = this.state;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 		const saveClassNames = cx('publish-save', {'changed': changed});
+
 		return (
-			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment="bottom-right" trigger={this.renderTrigger()}>
+			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment="bottom-right" trigger={this.renderTrigger()} onDismiss={this.closeMenu}>
 				<div className="arrow"/>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>
 				<Radio name="publish-radio" value={SCHEDULE} label={t('schedule.label')} checked={SCHEDULE === selected} onChange={this.onChange}>
-					{t('schedule.text')}
+					{dayClicked ? t('schedule.selectedText', {date: date && moment(date).format('MMMM D'), time: moment(date).format('LT')}) : t('schedule.text')}
 					<DayPicker
 						value={date}
 						disabledDays={DateUtils.isPastDay}
@@ -173,7 +181,7 @@ export default class Publish extends React.Component {
 				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>
 					{t('draft.text')}
 				</Radio>
-				<div className={saveClassNames} onClick={changed === true ? this.onSave : null}>Save</div>
+				<div className={saveClassNames} onClick={this.onSave}>Save</div>
 			</Flyout>
 		);
 	}
