@@ -8,20 +8,13 @@
 		display: 0 0 auto;
 	}
 
-	input[type="number"] {
+	.number-input-component {
 		width: 2.125rem;
 		padding: .3125rem 0 .3125rem 0;
 		text-align: center;
 		font-size: .8125rem;
 		text-align: center;
 		color: $secondary-grey;
-
-
-		&::-webkit-inner-spin-button,
-		&::-webkit-outer-spin-button {
-		  -webkit-appearance: none;
-		  margin: 0;
-		}
 
 		&:invalid {
 			border: 1px solid $border-red;

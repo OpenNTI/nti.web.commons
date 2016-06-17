@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import SelectBox from './SelectBox';
+import NumberInput from './NumberInput';
 import Time from 'nti-commons/lib/Time';
 import autobind from 'nti-commons/lib/autobind';
 
@@ -8,6 +9,8 @@ const TimeMap = new WeakMap();
 const isValidHour = h => h < 24 ? true : false;
 const MAX_MINUTES = 59;
 const MIN_MINUTES = 0;
+
+
 export default class TimePicker extends React.Component {
 
 	static propTypes = {
@@ -188,21 +191,22 @@ export default class TimePicker extends React.Component {
 		return (
 			<div className="TimePicker">
 				<div className="time">
-					<input
+					<NumberInput
 						onKeyDown={this.onKeyDown}
 						onChange={this.onHourInputChange}
 						onBlur={this.onHourInputBlur}
 						value={hours}
-						type="number"
 						name="hours"
 						min={0} max={23}
-					/> : <input
+						/>
+					<span> : </span>
+					<NumberInput
 						onKeyDown={this.onKeyDown}
 						onChange={this.onMinuteInputChange}
 						value={minutes}
-						type="number"
 						name="minutes"
 						min={0} max={59}
+						pad
 						/>
 				</div>
 				{this.renderMeridiem()}
