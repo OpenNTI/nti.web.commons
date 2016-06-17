@@ -24,20 +24,20 @@
 		}
 
 		&:invalid {
-	    	border: 1px solid $border-red;
+			border: 1px solid $border-red;
 		}
 	}
 
 	.meridiem-select-box.select-box {
-	    flex: 0 0 auto;
-	    margin-left: 15px;
+		flex: 0 0 auto;
+		margin-left: 15px;
 		border: 1px solid $border-grey-alt;
 
 		.menu-label {
 			color: $secondary-grey;
-		    font-size: .8125rem;
-		    padding-right: 1.5rem;
-		    line-height: 1.6875rem;
+			font-size: .8125rem;
+			padding-right: 1.5rem;
+			line-height: 1.6875rem;
 
 			&.selected {
 				background: none;
@@ -46,7 +46,7 @@
 
 		> ul {
 			-webkit-padding-start: 0px;
-		    border: 1px solid #dcdcdc;
+			border: 1px solid #dcdcdc;
 			margin-left: -1px;
 
 			li {
@@ -55,8 +55,8 @@
 				font-weight: 400;
 
 				&:hover {
-				    background: #efefef;
-	    			color: #3c3c3c;
+					background: #efefef;
+					color: #3c3c3c;
 				}
 			}
 		}
