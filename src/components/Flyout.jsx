@@ -94,7 +94,8 @@ export default class Flyout extends React.Component {
 		children: PropTypes.any,
 		className: PropTypes.string,
 		alignment: PropTypes.string,
-		afterAlign: PropTypes.func
+		afterAlign: PropTypes.func,
+		onDismiss: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -135,13 +136,18 @@ export default class Flyout extends React.Component {
 	}
 
 
-	componentDidUpdate (/*prevProps, prevState*/) {
-		const {open} = this.state;
+	componentDidUpdate (prevProps, prevState) {
+		const {props: {onDismiss}, state: {open}} = this;
+		const {open: wasOpen} = prevState;
 
 		if (open) {
 			this.renderFlyout();
 		} else {
 			ReactDOM.unmountComponentAtNode(this.fly);
+		}
+
+		if (wasOpen && !open && onDismiss) {
+			onDismiss();
 		}
 	}
 
