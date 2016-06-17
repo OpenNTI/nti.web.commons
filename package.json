@@ -46,7 +46,8 @@
     "nti-util-logger": "^1.0.0",
     "react-addons-test-utils": "^15.1.0",
     "react-day-picker": "^2.1.0",
-    "react-router-component": "^0.32.2"
+    "react-router-component": "^0.32.2",
+    "zpad": "^0.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

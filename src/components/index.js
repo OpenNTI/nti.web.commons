@@ -22,6 +22,7 @@ export LuckyCharms from './LuckyCharms';
 export NestableLink from './NestableLink';
 export NoMatches from './NoMatches';
 export Notice from './Notice';
+export NumberInput from './NumberInput';
 export OkCancelButtons from './OkCancelButtons';
 export PanelButton from './PanelButton';
 export PromiseButton from './PromiseButton';
