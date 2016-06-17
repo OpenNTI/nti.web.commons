@@ -1,0 +1,31 @@
+
+
+.modal-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0,0,0,.2);
+	.icon-close {
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		background-image: url(./assets/close.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		right: 1rem;
+		top: 1rem;
+	}
+}
+
+.modal-content {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 0;
+	right: 0;
+	& > * {
+		margin: 0 auto;
+	}
+}
