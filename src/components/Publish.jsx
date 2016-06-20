@@ -30,6 +30,10 @@ const DEFAULT_TEXT = {
 		selectedText: 'Lesson contents will be visible to students on %(date)s at %(time)s.',
 		label: 'Schedule',
 		buttonLabel: 'Schedule for %(date)s'
+	},
+	reset: {
+		label: 'Students have started your assignment.',
+		text: 'Resetting or deleting this assignment will result in erasing students work and submissions. You cannot undo this action.'
 	}
 };
 
@@ -46,12 +50,18 @@ export default class Publish extends React.Component {
 			PropTypes.instanceOf(Date),
 			PropTypes.oneOf(Object.keys(PUBLISH_STATES))
 		]),
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		alignment: PropTypes.string,
+		enableDelete: PropTypes.bool,
+		enableReset: PropTypes.bool
 	}
 
 	static defaultProps = {
 		value: PUBLISH_STATES.DRAFT,
-		changed: false
+		changed: false,
+		alignment: 'bottom-right',
+		enableDelete: false,
+		enableReset: false
 	}
 
 	constructor (props) {
@@ -61,7 +71,7 @@ export default class Publish extends React.Component {
 
 		this.setFlyoutRef = x => this.flyoutRef = x;
 
-		autobind(this, 'onChange', 'onDateChange', 'onSave', 'closeMenu');
+		autobind(this, 'onChange', 'onDateChange', 'onSave', 'closeMenu', 'onDeleteClick');
 	}
 
 
@@ -139,6 +149,14 @@ export default class Publish extends React.Component {
 	}
 
 
+	onDeleteClick () {
+	}
+
+
+	onResetClick () {
+	}
+
+
 	renderTrigger () {
 		const {value} = this.props;
 		const selected = getPublishState(value);
@@ -157,13 +175,27 @@ export default class Publish extends React.Component {
 	}
 
 
-	render () {
+	renderReset () {
+		const {alignment, enableDelete} = this.props;
+		return (
+			<Flyout ref={this.setFlyoutRef} className="publish-controls reset" alignment={alignment} trigger={this.renderTrigger()} onDismiss={this.closeMenu}>
+				<span className="reset-label">{t('reset.label')}</span>
+				<p className="reset-text">{t('reset.text')}</p>
+				{enableDelete ? <div onClick={this.onDeleteClick} className="publish-delete">Delete</div> : null}
+				<div className="publish-reset" onClick={this.onResetClick}>Reset Assignment</div>
+			</Flyout>
+		);
+	}
+
+
+	renderControls () {
 		const {selected, date, changed, dayClicked} = this.state;
+		const {alignment, enableDelete} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 		const saveClassNames = cx('publish-save', {'changed': changed});
 
 		return (
-			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment="bottom-right" trigger={this.renderTrigger()} onDismiss={this.closeMenu}>
+			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment={alignment} trigger={this.renderTrigger()} onDismiss={this.closeMenu}>
 				<div className="arrow"/>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
@@ -184,8 +216,20 @@ export default class Publish extends React.Component {
 				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>
 					{t('draft.text')}
 				</Radio>
+				{enableDelete ? <div onClick={this.onDeleteClick} className="publish-delete">Delete</div> : null}
 				<div className={saveClassNames} onClick={this.onSave}>Save</div>
 			</Flyout>
+		);
+	}
+
+
+	render () {
+		const {enableReset} = this.props;
+
+		return (
+			<div>
+				{enableReset ? this.renderReset() : this.renderControls()}
+			</div>
 		);
 	}
 }
