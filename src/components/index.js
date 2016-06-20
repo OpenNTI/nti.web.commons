@@ -25,6 +25,7 @@ export Notice from './Notice';
 export NumberInput from './NumberInput';
 export OkCancelButtons from './OkCancelButtons';
 export PanelButton from './PanelButton';
+export Pager from './Pager';
 export PromiseButton from './PromiseButton';
 export Publish from './Publish';
 export Radio from './Radio';
