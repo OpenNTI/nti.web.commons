@@ -17,6 +17,7 @@ export Footer from './Footer';
 export HideNavigation from './HideNavigation';
 export Loading from './Loading';
 export LoadingInline from './LoadingInline';
+export LocalizedHTML from './LocalizedHTML';
 export LockScroll from './LockScroll';
 export LuckyCharms from './LuckyCharms';
 export NestableLink from './NestableLink';
