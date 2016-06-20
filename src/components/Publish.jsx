@@ -216,7 +216,7 @@ export default class Publish extends React.Component {
 				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>
 					{t('draft.text')}
 				</Radio>
-				{enableDelete ? <div onClick={this.onDeleteClick} className="publish-delete">Delete</div> : null}
+				{enableDelete && ( <div onClick={this.onDeleteClick} className="publish-delete">Delete</div> )}
 				<div className={saveClassNames} onClick={this.onSave}>Save</div>
 			</Flyout>
 		);
