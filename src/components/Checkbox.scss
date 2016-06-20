@@ -12,7 +12,7 @@ label.checkbox-component {
 			&::before {
 				content: '';
 				position: absolute;
-				top: 0.3125rem;
+				top: .125rem;
 				left: -1.625rem;
 				width: 1rem;
 				height: 1rem;
@@ -24,6 +24,10 @@ label.checkbox-component {
 
 		&:checked + span.label::before {
 			background-image: url(./assets/checkbox-select.png);
+		}
+
+		&:disabled + span.label::before {
+			opacity: 0.5;
 		}
 	}
 

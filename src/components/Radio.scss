@@ -25,6 +25,10 @@ label.radio-component {
 		&:checked + span.label::before {
 			background-image: url(./assets/radio-select.png);
 		}
+
+		&:disabled + span.label::before {
+			opacity: 0.5;
+		}
 	}
 
 	input + span.label,
