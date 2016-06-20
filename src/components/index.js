@@ -28,6 +28,7 @@ export PanelButton from './PanelButton';
 export PromiseButton from './PromiseButton';
 export Publish from './Publish';
 export Radio from './Radio';
+export Report from './Report';
 export ScrollTrigger from './ScrollTrigger';
 export SelectBox from './SelectBox';
 export TinyLoader from './TinyLoader';
