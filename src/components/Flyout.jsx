@@ -36,6 +36,17 @@ function getAlignments (str) {
 }
 
 
+function isFixed (el) {
+	const hasFixedPosition = x => x && getComputedStyle(x).position === 'fixed';
+
+	while(el && !hasFixedPosition(el)) {
+		el = el.offsetParent;
+	}
+
+	return hasFixedPosition(el);
+}
+
+
 const ALIGNERS = {
 
 	top (dim, {top}) {
@@ -113,7 +124,7 @@ export default class Flyout extends React.Component {
 
 		this.realign = () => {
 			clearTimeout(this.realign.timeout);
-			this.realign.timeout = setTimeout(()=> this.align(), 200);
+			this.realign.timeout = setTimeout(()=> this.align(), 50);
 		};
 	}
 
@@ -244,7 +255,7 @@ export default class Flyout extends React.Component {
 			const y = ALIGNERS[alignments.vertical](height, rect);
 			const x = ALIGNERS[alignments.horizontal](width, rect);
 
-			const alignment = {...y, ...x};
+			const alignment = {...y, ...x, dimensions: {height, width}};
 
 			alignment.side = {[x.side]: 1, [y.side]: 1};
 
@@ -324,20 +335,30 @@ export default class Flyout extends React.Component {
 
 	renderFlyout () {
 		const {props: {children, className}, state: {aligning, alignment}} = this;
+		const fixed = isFixed(this.trigger);
 
 		const style = {
-			position: 'absolute',
+			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
 			top: alignment.top,
 			left: alignment.left
 		};
 
-		const css = cx('flyout', className, alignment.side);
+		const css = cx('flyout', className, alignment.side, {fixed});
 
-		ReactDOM.render(
+		const flyout = ReactDOM.render(
 			<div className={css} ref={this.attachFlyoutRef} style={style}>
 				{children}
 			</div>
-		, this.fly);
+		, this.fly, () => {
+
+			if (flyout && this.flyout === flyout) {
+				const {offsetWidth: width, offsetHeight: height} = flyout;
+				const {dimensions: dim} = alignment;
+				if (dim && (dim.width !== width || dim.height !== height)) {
+					this.realign();
+				}
+			}
+		});
 	}
 }
