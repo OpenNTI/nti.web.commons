@@ -14,7 +14,7 @@ export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	});
 }
 
-export function modal (content, className) {
+export function modal (content, className, handlers = {}) {
 
 	const {createElement: ce} = global.document || {};
 	const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
@@ -23,6 +23,9 @@ export function modal (content, className) {
 	document.body.appendChild(container);
 
 	function dismiss () {
+		if (handlers.onBeforeDismiss && !handlers.onBeforeDismiss()) {
+			return;
+		}
 		ReactDOM.unmountComponentAtNode(container);
 		document.body.removeChild(container);
 	}
