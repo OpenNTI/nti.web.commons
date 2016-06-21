@@ -14,7 +14,7 @@ export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	});
 }
 
-export function modal (content) {
+export function modal (content, className) {
 
 	const {createElement: ce} = global.document || {};
 	const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
@@ -28,7 +28,7 @@ export function modal (content) {
 	}
 
 	ReactDOM.render(
-		<Modal onDismiss={dismiss}>{content}</Modal>,
+		<Modal onDismiss={dismiss} className={className}>{content}</Modal>,
 		container
 	);
 
