@@ -8,7 +8,6 @@ exports = module.exports = Object.assign(require('./webpack.config'), {
 	}
 });
 
-exports.externals = [{ request: true }],
 delete exports.node;
 
 exports.module.loaders.push({

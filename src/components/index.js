@@ -15,7 +15,6 @@ export Error from './Error';
 export Flyout from './Flyout';
 export Footer from './Footer';
 export HideNavigation from './HideNavigation';
-export Impersonate from './Impersonate';
 export Loading from './Loading';
 export LoadingInline from './LoadingInline';
 export LocalizedHTML from './LocalizedHTML';
