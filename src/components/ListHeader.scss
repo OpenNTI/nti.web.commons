@@ -1,6 +1,6 @@
 @import "~nti-style-common";
 
-.topic-header {
+.list-header-component {
 	padding: 0 3em;
 
 	font-style: normal;
@@ -16,7 +16,7 @@
 	position: relative;
 
 	&::after {
-		background-image: url(./assets/topic.png);
+		background-image: url(./assets/list.png);
 		content: '';
 		position: absolute;
 		left: 18px;

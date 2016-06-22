@@ -5,7 +5,7 @@ export default function ListHeader (props) {
 	const {className} = props;
 
 	return (
-		<div className={cx('topic-header', className)} {...props}/>
+		<div className={cx('list-header-component', className)} {...props}/>
 	);
 }
 
