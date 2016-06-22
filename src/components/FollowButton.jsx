@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import {Prompt} from 'nti-web-commons';
+import {areYouSure} from '../prompts/';
 import {scoped} from 'nti-lib-locale';
 
 let t = scoped('CONTACTS');
@@ -33,7 +33,7 @@ export default React.createClass({
 		e.stopPropagation();
 		let {entity} = this.props;
 
-		let p = this.state.following ? Prompt.areYouSure(t('unfollowPrompt')) : Promise.resolve();
+		let p = this.state.following ? areYouSure(t('unfollowPrompt')) : Promise.resolve();
 		p.then(() => {
 			this.setState({
 				loading: true
