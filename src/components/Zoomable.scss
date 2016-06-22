@@ -1,5 +1,4 @@
-@import "utils/variables";
-@import "utils/placeholders";
+@import "~nti-style-common";
 
 .zoomable {
 	position:fixed !important;
@@ -24,7 +23,7 @@
 	}
 
 	.zoomable-close {
-		@extend %icon-close;
+		background-image: url(./assets/icons/close.png);
 		position: absolute;
 		top: .5rem;
 		right: .5rem;
