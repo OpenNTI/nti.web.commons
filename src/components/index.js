@@ -45,4 +45,5 @@ export SelectBoxItem from './SelectBoxItem';
 export TinyLoader from './TinyLoader';
 export TimePicker from './TimePicker';
 export Toggle from './Toggle';
+export TopicHeader from './TopicHeader';
 export Zoomable from './Zoomable';
