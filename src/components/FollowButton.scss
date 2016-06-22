@@ -22,7 +22,18 @@
 	}
 
 	&.loading {
-		@extend %spinner;
+		// spinner
+		$size: 2em;
+		border: 2px solid rgba(0,0,0,.05);
+		border-top-color: rgba(0,0,0,.1);
+		border-right-color: rgba(0,0,0,.1);
+		border-radius: 50%;
+		width: $size;
+		height: $size;
+		line-height: 1;
+		animation: rotation .9s infinite linear;
+		margin-top: -$size/2; // the animation uses transform, which overwrites our translateY, so use margin to get vertical centering since we know the size
+
 		&::after {
 			content:none;
 		}
