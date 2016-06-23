@@ -15,19 +15,25 @@
 	&.top {
 		margin-top: -1rem;
 	}
-	
-	&.bottom.right {
+
+
+
+	&.right {
 		.flyout-arrow {
 			right: 12px;
-			top: 0;
 		}
 	}
 
-	&.top.right {
+	&.top {
 		.flyout-arrow {
-			right: 12px;
 			bottom: 0;
 			transform: rotate(180deg);
+		}
+	}
+
+	&.bottom {
+		.flyout-arrow {
+			top: 0;
 		}
 	}
 
