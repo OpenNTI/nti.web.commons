@@ -1,0 +1,48 @@
+$trigger-height: 2.4375rem;
+@import "~nti-style-common";
+
+.publish-trigger {
+	min-width: 10.375rem;
+	max-width: 12.5rem;
+	height: $trigger-height;
+	line-height: 2.125rem;
+	border-radius: 0.25rem;
+	background-color: $primary-blue;
+	cursor: pointer;
+	position: relative;
+
+	&.publish,
+	&.schedule {
+		background: #f8f8f8;
+		border: 1px solid #d1d1d1;
+		.publish-trigger-text {
+			color: #3fb3f6;
+		}
+		&:after {
+			background-image: url("../assets/options-menu_hover.png");
+		}
+	}
+
+	.publish-trigger-text {
+		font-size: 0.875rem;
+		color: #ffffff;
+		font-weight: 400;
+		font-family: $body-font-family;
+		margin-right: 1.875rem;
+		padding-left: 1rem;
+	}
+
+	&:after {
+		content: '';
+		overflow: hidden;
+		top: 10px;
+		left: auto;
+		right: 11px;
+		background-image: url("../assets/options-menu.png");
+		width: 17px;
+		height: 17px;
+		position: absolute;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+}
