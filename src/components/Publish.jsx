@@ -175,13 +175,13 @@ export default class Publish extends React.Component {
 		const {selected, date, changed, dayClicked} = this.state;
 		const {alignment, children, value} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
-		const saveClassNames = cx('publish-save', {'changed': changed});
+		
+		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed});
 
 		const trigger = <PublishTrigger value={value}/>;
 
 		return (
 			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment={alignment} trigger={trigger} onDismiss={this.closeMenu}>
-				<div className="arrow"/>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>

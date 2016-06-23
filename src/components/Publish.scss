@@ -2,39 +2,6 @@
 
 // ----------------------------------
 .publish-controls {
-	&.bottom.right {
-		.arrow {
-			right: 12px;
-			top: 0;
-		}
-	}
-
-	&.top.right {
-		.arrow {
-			right: 12px;
-			bottom: 0;
-			transform: rotate(180deg);
-		}
-	}
-
-	.arrow {
-		position: absolute;
-		clip: rect(-15px, 25px, 0px, -10px);
-		display: block;
-		padding: 0;
-		margin: 0;
-
-		&::after {
-			content: '';
-			box-shadow: 0 0 4px 0 rgba(0,0,0,0.21);
-			width: 15px;
-			height: 15px;
-			background: white;
-			transform: translateY(-50%) rotate(45deg);
-			display: block;
-		}
-	}
-
 	.publish-delete {
 		border-top: 1px solid #f8f8f8;
 		padding: 1rem;
@@ -50,14 +17,6 @@
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
 	padding: 0.625rem;
 	width: 19.0625rem;
-
-	&.bottom {
-		margin-top: 1rem;
-	}
-
-	&.top {
-		margin-top: -1rem;
-	}
 
 	// Style the datepicker and timepicker
 	label[name="publish-radio"] {
@@ -116,25 +75,6 @@
 			font-family: $body-font-family;
 			display: inline-block;
 			padding-left: 0.625rem;
-		}
-	}
-
-	.publish-save {
-		width: 100%;
-		height: 2rem;
-		border-radius: 0.25rem;
-		background-color: #d1d1d1;
-		color: white;
-		text-align: center;
-		vertical-align: middle;
-		line-height: 2rem;
-		font-weight: 100;
-		font-size: 0.875rem;
-		font-family: $body-font-family;
-		cursor: pointer;
-
-		&.changed {
-			background-color: $primary-blue;
 		}
 	}
 }

@@ -351,6 +351,7 @@ export default class Flyout extends React.Component {
 
 		const flyout = ReactDOM.render(
 			<div className={css} ref={this.attachFlyoutRef} style={style}>
+				<div className="flyout-arrow"/>
 				{children}
 			</div>
 		, this.fly, () => {
