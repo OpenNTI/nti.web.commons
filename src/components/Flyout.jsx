@@ -98,10 +98,7 @@ const ALIGNERS = {
 export default class Flyout extends React.Component {
 
 	static propTypes = {
-		trigger: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.node
-		]),
+		trigger: PropTypes.any,
 		children: PropTypes.any,
 		className: PropTypes.string,
 		alignment: PropTypes.string,
@@ -118,7 +115,6 @@ export default class Flyout extends React.Component {
 		this.state = {alignment: {}};
 		this.fly = makeDOM({className: cx('fly-wrapper', props.className)});
 		this.onToggle = this.onToggle.bind(this);
-		this.attachTriggerRef = ref => this.trigger = ref;
 		this.attachFlyoutRef = this.attachFlyoutRef.bind(this);
 		this.maybeDismiss = this.maybeDismiss.bind(this);
 
@@ -126,6 +122,11 @@ export default class Flyout extends React.Component {
 			clearTimeout(this.realign.timeout);
 			this.realign.timeout = setTimeout(()=> this.align(), 50);
 		};
+	}
+
+
+	get trigger () {
+		return ReactDOM.findDOMNode(this);
 	}
 
 
@@ -314,7 +315,7 @@ export default class Flyout extends React.Component {
 			Trigger = ( <button>Trigger</button> );
 		}
 
-		if (Trigger.type instanceof React.Component || typeof Trigger.type === 'string') {
+		if (React.isValidElement(Trigger)) {
 			const {onClick} = Trigger.props;
 			let onToggle = this.onToggle;
 			if (onClick) {
@@ -324,11 +325,11 @@ export default class Flyout extends React.Component {
 				};
 			}
 
-			return React.cloneElement(Trigger, {ref: this.attachTriggerRef, onClick: onToggle});
+			return React.cloneElement(Trigger, {onClick: onToggle});
 		}
 
 		return (
-			<Trigger {...props} ref={this.attachTriggerRef} onClick={this.onToggle}/>
+			<Trigger {...props} onClick={this.onToggle}/>
 		);
 	}
 
