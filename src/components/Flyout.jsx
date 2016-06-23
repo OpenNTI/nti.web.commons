@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
-import {getViewportHeight, getViewportWidth, getScrollParent} from 'nti-lib-dom';
+import {getEffectiveZIndex, getViewportHeight, getViewportWidth, getScrollParent} from 'nti-lib-dom';
 
 const {createElement: ce} = global.document || {};
 const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
@@ -336,13 +336,15 @@ export default class Flyout extends React.Component {
 
 	renderFlyout () {
 		const {props: {children, className}, state: {aligning, alignment}} = this;
-		const fixed = isFixed(this.trigger);
+		const {trigger} = this;
+		const fixed = isFixed(trigger);
 
 		const style = {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
 			top: alignment.top,
-			left: alignment.left
+			left: alignment.left,
+			zIndex: getEffectiveZIndex(trigger) + 1
 		};
 
 		const css = cx('flyout', className, alignment.side, {fixed});
