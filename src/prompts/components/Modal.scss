@@ -39,6 +39,7 @@
 }
 
 .modal-content {
+	animation: modal-content .25s ease forwards;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
@@ -46,5 +47,15 @@
 	right: 0;
 	& > * {
 		margin: 0 auto;
+	}
+}
+
+@keyframes modal-content {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+
+	100% {
+		transform: translate3d(0,-50%,0);
 	}
 }

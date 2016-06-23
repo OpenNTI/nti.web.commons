@@ -2,6 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import Transition from 'react-addons-css-transition-group';
 
+import LockScroll from '../../components/LockScroll';
+
 export default class Modal extends React.Component {
 
 	static propTypes = {
@@ -26,7 +28,7 @@ export default class Modal extends React.Component {
 		const {children, className} = this.props;
 
 		const content = React.Children.only(children);
-		const c = React.cloneElement(content, {onDismiss: close});
+		const c = React.cloneElement(content, {onDismiss: this.close});
 
 		const classes = cx('modal-mask', className);
 
@@ -38,6 +40,7 @@ export default class Modal extends React.Component {
 				transitionEnterTimeout={500}
 				transitionLeaveTimeout={500}
 			>
+				<LockScroll />
 				<div ref={(x) => this.mask = x} className={classes}>
 					<i className="icon-close" onClick={this.close}/>
 					<div className="modal-content">
