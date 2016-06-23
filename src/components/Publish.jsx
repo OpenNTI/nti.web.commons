@@ -1,12 +1,18 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import {scoped} from 'nti-lib-locale';
+
 import autobind from 'nti-commons/lib/autobind';
-import moment from 'moment';
-import Radio from './Radio';
+import {scoped} from 'nti-lib-locale';
+import Logger from 'nti-util-logger';
+
+import DateTime from './DateTime';
 import DayPicker, {DateUtils} from './DayPicker';
-import TimePicker from './TimePicker';
 import Flyout from './Flyout';
+import Radio from './Radio';
+import TimePicker from './TimePicker';
+import PublishTrigger from './PublishTrigger';
+
+const logger = Logger.get('lib:commons:components:Publish');
 
 export const PUBLISH_STATES = {
 	DRAFT: 'DRAFT',
@@ -17,33 +23,52 @@ export const PUBLISH_STATES = {
 const DEFAULT_TEXT = {
 	publish: {
 		text: 'Lesson contents are visible to students.',
-		label: 'Publish',
-		buttonLabel: 'Published'
+		label: 'Publish'
 	},
 	draft: {
 		text: 'Currently not visible to any students',
-		label: 'Draft',
-		buttonLabel: 'Publish'
+		label: 'Draft'
 	},
 	schedule: {
 		text: 'When do you want students to have access to this lesson?',
 		selectedText: 'Lesson contents will be visible to students on %(date)s at %(time)s.',
 		label: 'Schedule',
-		buttonLabel: 'Schedule for %(date)s'
-	},
-	reset: {
-		label: 'Students have started your assignment.',
-		text: 'Resetting or deleting this assignment will result in erasing students work and submissions. You cannot undo this action.'
+		timePickerHeader: 'YOUR LOCAL TIME'
 	}
 };
 
 const t = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
-const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
+export const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
 
 
 export default class Publish extends React.Component {
 
 	static States = PUBLISH_STATES;
+
+	static evaluatePublishStateFor (object) {
+		if (typeof object.isPublished !== 'function' || typeof object.getPublishDate !== 'function') {
+			throw new TypeError('Argument does not conform to expected interface!');
+		}
+
+		const NOW = new Date();
+		const isPublished = object.isPublished();
+		const publishDate = object.getPublishDate();
+		const hasPublishDatePassed = publishDate && (publishDate < NOW);
+
+
+		if (isPublished || hasPublishDatePassed)	 {
+			return Publish.States.PUBLISH;
+		}
+		else if (!isPublished) {
+			return Publish.States.DRAFT;
+		}
+		else if (isPublished && publishDate) {
+			return new Date(publishDate);
+		}
+		else {
+			logger.warn('Not expected. The node should be published if its lesson is published: %o', object);
+		}
+	}
 
 	static propTypes = {
 		value: PropTypes.oneOfType([
@@ -52,16 +77,13 @@ export default class Publish extends React.Component {
 		]),
 		onChange: PropTypes.func,
 		alignment: PropTypes.string,
-		enableDelete: PropTypes.bool,
-		enableReset: PropTypes.bool
+		children: PropTypes.any
 	}
 
 	static defaultProps = {
 		value: PUBLISH_STATES.DRAFT,
 		changed: false,
-		alignment: 'bottom-right',
-		enableDelete: false,
-		enableReset: false
+		alignment: 'bottom-right'
 	}
 
 	constructor (props) {
@@ -71,7 +93,7 @@ export default class Publish extends React.Component {
 
 		this.setFlyoutRef = x => this.flyoutRef = x;
 
-		autobind(this, 'onChange', 'onDateChange', 'onSave', 'closeMenu', 'onDeleteClick');
+		autobind(this, 'onChange', 'onDateChange', 'onSave', 'closeMenu');
 	}
 
 
@@ -149,65 +171,28 @@ export default class Publish extends React.Component {
 	}
 
 
-	onDeleteClick () {
-	}
-
-
-	onResetClick () {
-	}
-
-
-	renderTrigger () {
-		const {value} = this.props;
-		const selected = getPublishState(value);
-		const date = selected === PUBLISH_STATES.SCHEDULE ? value : null;
-		const classNames = cx('publish-trigger', selected.toLowerCase());
-
-		const label = t(`${selected.toLowerCase()}.buttonLabel`, {date: date && moment(date).format('MMM D')});
-
-		return (
-			<div className={classNames}>
-				<span className="publish-trigger-text">
-					{label}
-				</span>
-			</div>
-		);
-	}
-
-
-	renderReset () {
-		const {alignment, enableDelete} = this.props;
-		return (
-			<Flyout ref={this.setFlyoutRef} className="publish-controls reset" alignment={alignment} trigger={this.renderTrigger()} onDismiss={this.closeMenu}>
-				<span className="reset-label">{t('reset.label')}</span>
-				<p className="reset-text">{t('reset.text')}</p>
-				{enableDelete ? <div onClick={this.onDeleteClick} className="publish-delete">Delete</div> : null}
-				<div className="publish-reset" onClick={this.onResetClick}>Reset Assignment</div>
-			</Flyout>
-		);
-	}
-
-
-	renderControls () {
+	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {alignment, enableDelete} = this.props;
+		const {alignment, children} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 		const saveClassNames = cx('publish-save', {'changed': changed});
 
+		const trigger = <PublishTrigger value={this.getValue()}/>;
+
 		return (
-			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment={alignment} trigger={this.renderTrigger()} onDismiss={this.closeMenu}>
+			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment={alignment} trigger={trigger} onDismiss={this.closeMenu}>
 				<div className="arrow"/>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>
 				<Radio name="publish-radio" value={SCHEDULE} label={t('schedule.label')} checked={SCHEDULE === selected} onChange={this.onChange}>
-					{dayClicked ? t('schedule.selectedText', {date: date && moment(date).format('MMMM D'), time: moment(date).format('LT')}) : t('schedule.text')}
+					{dayClicked ? t('schedule.selectedText', {date: date && DateTime.format(date, 'MMMM D'), time: DateTime.format(date, 'LT')}) : t('schedule.text')}
 					<DayPicker
 						value={date}
 						disabledDays={DateUtils.isPastDay}
 						onChange={this.onDateChange}
 					/>
-					<div className="TimePicker-Header-Text">YOUR LOCAL TIME</div>
+					<div className="TimePicker-Header-Text">{t('schedule.timePickerHeader')}</div>
 					<TimePicker
 						value={date}
 						onChange={this.onDateChange}
@@ -216,20 +201,13 @@ export default class Publish extends React.Component {
 				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>
 					{t('draft.text')}
 				</Radio>
-				{enableDelete && ( <div onClick={this.onDeleteClick} className="publish-delete">Delete</div> )}
+				{children && (
+					<div>
+						{children}
+					</div>
+				)}
 				<div className={saveClassNames} onClick={this.onSave}>Save</div>
 			</Flyout>
-		);
-	}
-
-
-	render () {
-		const {enableReset} = this.props;
-
-		return (
-			<div>
-				{enableReset ? this.renderReset() : this.renderControls()}
-			</div>
 		);
 	}
 }

@@ -36,6 +36,7 @@ export OkCancelButtons from './OkCancelButtons';
 export PanelButton from './PanelButton';
 export Pager from './Pager';
 export PromiseButton from './PromiseButton';
+export PublishTrigger from './PublishTrigger';
 export Publish from './Publish';
 export Radio from './Radio';
 export Report from './Report';
