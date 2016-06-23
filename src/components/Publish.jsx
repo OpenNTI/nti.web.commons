@@ -173,11 +173,11 @@ export default class Publish extends React.Component {
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {alignment, children} = this.props;
+		const {alignment, children, value} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 		const saveClassNames = cx('publish-save', {'changed': changed});
 
-		const trigger = <PublishTrigger value={this.getValue()}/>;
+		const trigger = <PublishTrigger value={value}/>;
 
 		return (
 			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment={alignment} trigger={trigger} onDismiss={this.closeMenu}>
