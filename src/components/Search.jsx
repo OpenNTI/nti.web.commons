@@ -46,7 +46,8 @@ export default React.createClass({
 	render () {
 		let {value} = this.state;
 		return (
-			<form onSubmit={stop} className="search">
+			<form onSubmit={stop} className="search-component">
+				<i className="icon-search"/>
 				<input type="text"
 					defaultValue={this.props.defaultValue}
 					onChange={this.updateFilter}

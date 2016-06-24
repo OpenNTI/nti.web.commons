@@ -1,0 +1,68 @@
+@import "~nti-style-common";
+
+form.search-component {
+	position: relative;
+	overflow: hidden;
+	background: #fafafa;
+	border-radius: rem-calc(5px);
+	box-shadow: rem-calc(0 0 0 1px) #eaeaea;
+	margin: rem-calc(8px);
+	// line-height: rem-calc(38px);
+
+	.icon-search {
+		position: absolute;
+		top: rem-calc(8px);
+		left: rem-calc(7px);
+		font-size: rem-calc(22px);
+		color: $tertiary-grey;
+	}
+
+	input[type=text] {
+		background: #fafafa;
+		border: 0;
+		color: $primary-grey;
+		margin: 0;
+		padding: rem-calc(0 32px);
+		height: rem-calc(38px);
+		width: 100%;
+		font-weight: normal;
+		font-style: normal;
+		font-size: rem-calc(14px);
+
+		&:not(:valid) ~ input[type=reset] {
+			opacity: 0;
+			cursor: text;
+		}
+
+		&:focus, &:active {
+			outline: none;
+		}
+	}
+
+	input[type=reset] {
+		transition: opacity 0.5s;
+		opacity: 1;
+
+		position: absolute;
+		display: block;
+
+		background-image: url(./assets/circle-x-grey-16.png);
+		background-color: transparent;
+		border: 0;
+		cursor: pointer;
+
+		margin: 0;
+		padding: 0;
+
+		text-indent: 18px;
+		width: rem-calc(16px);
+		height: rem-calc(16px);
+		top: rem-calc(9px);
+		right: rem-calc(9px);
+		left: auto;
+
+		&:focus, &:active {
+			outline: none;
+		}
+	}
+}
