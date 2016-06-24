@@ -9,14 +9,9 @@ import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
+import {PUBLISH_STATES} from '../constants';
 
 const logger = Logger.get('lib:commons:components:Publish');
-
-export const PUBLISH_STATES = {
-	DRAFT: 'DRAFT',
-	PUBLISH: 'PUBLISH',
-	SCHEDULE: 'SCHEDULE'
-};
 
 const DEFAULT_TEXT = {
 	publish: {
@@ -54,15 +49,16 @@ export default class Publish extends React.Component {
 		const hasPublishDatePassed = publishDate && (publishDate < NOW);
 
 
-		if (isPublished || hasPublishDatePassed)	 {
+		if (isPublished || hasPublishDatePassed) {
 			return Publish.States.PUBLISH;
+		}
+		else if (!isPublished && publishDate) {
+			return new Date(publishDate);
 		}
 		else if (!isPublished) {
 			return Publish.States.DRAFT;
 		}
-		else if (isPublished && publishDate) {
-			return new Date(publishDate);
-		}
+
 		else {
 			logger.warn('Not expected. The node should be published if its lesson is published: %o', object);
 		}
@@ -181,6 +177,7 @@ export default class Publish extends React.Component {
 					<DayTimePicker
 						value={date}
 						onChange={this.onDateChange}
+						disablePastNow
 					/>
 				</Radio>
 				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>

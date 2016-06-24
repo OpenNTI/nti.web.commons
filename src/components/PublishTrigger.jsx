@@ -3,7 +3,8 @@ import cx from 'classnames';
 
 import {scoped} from 'nti-lib-locale';
 import DateTime from './DateTime';
-import Publish, {getPublishState} from './Publish';
+import {PUBLISH_STATES} from '../constants';
+import {getPublishState} from './Publish';
 
 const DEFAULT_TEXT = {
 	publish: {
@@ -22,7 +23,7 @@ const t = scoped('PUBLISH_TRIGGER', DEFAULT_TEXT);
 export default function PublishTrigger (props) {
 	const {value} = props;
 	const selected = getPublishState(value);
-	const date = selected === Publish.States.SCHEDULE ? value : null;
+	const date = selected === PUBLISH_STATES.SCHEDULE ? value : null;
 	const classNames = cx('publish-trigger', selected.toLowerCase());
 
 	const label = t(`${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,'MMM D')});
@@ -39,6 +40,6 @@ export default function PublishTrigger (props) {
 PublishTrigger.propTypes = {
 	value: PropTypes.oneOfType([
 		PropTypes.instanceOf(Date),
-		PropTypes.oneOf(Object.keys(Publish.States))
+		PropTypes.oneOf(Object.keys(PUBLISH_STATES))
 	])
 };
