@@ -1,3 +1,4 @@
+export * as ContentResources from './content-resources';
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
 export AssetIcon from './AssetIcon';

@@ -1,0 +1,19 @@
+@import "~nti-style-common";
+
+.content-resource-browser {
+	max-width: 1024px;
+	// min-height: 720px;
+	// max-height: 720px;
+	border: 1px solid $border-grey;
+
+	.toolbar-component .search-component {
+		margin: rem-calc(0 10px 0 0);
+		min-width: 100px;
+		max-width: 230px;
+		flex: .5 1 auto;
+	}
+
+	@media (max-width: 768px) {
+		.toolbar-component .toolbar-button > span { display: none; }
+	}
+}

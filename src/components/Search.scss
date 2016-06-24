@@ -7,27 +7,28 @@ form.search-component {
 	border-radius: rem-calc(5px);
 	box-shadow: rem-calc(0 0 0 1px) #eaeaea;
 	margin: rem-calc(8px);
-	// line-height: rem-calc(38px);
+	line-height: rem-calc(38px);
 
 	.icon-search {
 		position: absolute;
-		top: rem-calc(8px);
+		top: 50%;
+		transform: translateY(-50%);
 		left: rem-calc(7px);
 		font-size: rem-calc(22px);
 		color: $tertiary-grey;
 	}
 
 	input[type=text] {
-		background: #fafafa;
+		background: transparent;
 		border: 0;
 		color: $primary-grey;
 		margin: 0;
 		padding: rem-calc(0 32px);
-		height: rem-calc(38px);
 		width: 100%;
 		font-weight: normal;
 		font-style: normal;
 		font-size: rem-calc(14px);
+		box-sizing: border-box;
 
 		&:not(:valid) ~ input[type=reset] {
 			opacity: 0;
@@ -36,6 +37,12 @@ form.search-component {
 
 		&:focus, &:active {
 			outline: none;
+		}
+
+		&::placeholder {
+			font-style: italic;
+			color: $tertiary-grey;
+			font-weight: 300;
 		}
 	}
 
@@ -57,7 +64,8 @@ form.search-component {
 		text-indent: 18px;
 		width: rem-calc(16px);
 		height: rem-calc(16px);
-		top: rem-calc(9px);
+		top: 50%;
+		transform: translateY(-50%);
 		right: rem-calc(9px);
 		left: auto;
 
@@ -65,4 +73,5 @@ form.search-component {
 			outline: none;
 		}
 	}
+
 }

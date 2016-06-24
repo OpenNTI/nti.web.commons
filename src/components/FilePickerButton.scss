@@ -1,0 +1,38 @@
+@import "~nti-style-common";
+
+span.file-picker.button {
+	position: relative;
+	overflow: hidden;
+	vertical-align: middle;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: rem-calc(14px);
+	display: inline-block;
+
+	input[type=file] {
+		position: absolute;
+		cursor: pointer;
+		right: 0;
+		bottom: 0;
+		padding: 0;
+		margin: 0;
+		font-size: 2rem;
+		border: 0;
+		background-color: red; //for debugging
+		opacity: 0;
+	}
+
+	> span {
+		display: inline-block;
+		color: white;
+		background: $primary-blue;
+		padding: rem-calc(0 15px 0 12px);
+		border-radius: 3px;
+	}
+
+	i + span:not(:empty) {
+		vertical-align: middle;
+		font-weight: 600;
+		margin-left: rem-calc(9px);
+	}
+}

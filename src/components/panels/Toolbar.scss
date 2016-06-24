@@ -1,0 +1,32 @@
+@import "~nti-style-common";
+
+.toolbar-component {
+	@include clearfix;
+	display: flex;
+	align-items: center;
+	margin: rem-calc(0 15px);
+	padding: rem-calc(10px 0);
+	line-height: rem-calc(32px);
+
+	& > * {
+		flex: 0 0 auto;
+		margin: rem-calc(0 10px);
+	}
+
+	& > .spacer {
+		flex: 1 1 auto;
+		margin: 0;
+	}
+
+	.search-component {
+		border-radius: rem-calc(3px);
+		background: white;
+		line-height: 2;
+		.icon-search {
+			font-size: 14px;
+		}
+		input[type=text] {
+			padding-left: rem-calc(27px);
+		}
+	}
+}
