@@ -1,11 +1,12 @@
 @import "~nti-style-common";
 
 .available-trigger {
-	width: 190px;
-	height: 50px;
-	padding-left: 25px;
+	width: 15.125em;
+    height: 30px;
+    padding: 0.625rem 0.625rem 0.625rem 1.85rem;
 	text-align: left;
 	border: solid 1px #e2e2e2;
+	border-top: none;
 	position: relative;
 
 	.arrow {
@@ -42,34 +43,54 @@
 }
 
 .available-picker.flyout {
-	border-radius: 0.25rem;
 	background-color: #ffffff;
-	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
+	border-left: solid 1px #e2e2e2;
+	border-right: solid 1px #e2e2e2;
+	border-bottom: solid 1px #e2e2e2;
 	padding: 0.625rem;
-	width: 19.0625rem;
+	width: 16.4025em;
+	margin-top: -1px;
 
-	.DayPicker {
-        margin-left: -1.65rem;
+	.daytime-picker {
+		.DayPicker {
+			width: 262px;
+			margin-left: 0;
 
-        .DayPicker-Caption {
-            font-size: 1rem;
-        }
-        .TimePicker-Header-Text {
-            margin-left: 30%;
-        }
+	        .DayPicker-Caption {
+	            font-size: 1rem;
+	        }
+	        .TimePicker-Header-Text {
+	            margin-left: 30%;
+	        }
+	    }
+
+	    .TimePicker-Header-Text {
+	        font-family: $body-font-family;
+	        font-size: 0.625rem;
+	        line-height: 1.6;
+	        color: #b8b8b8;
+	        text-align: center;
+	    }
+
+	    .TimePicker {
+	        width: 62%;
+	        margin: 10px auto;
+	    }
+	}
+
+	.checkbox-component {
+		font-family: $body-font-family;
+	    font-size: 0.7725rem;
+	    line-height: 1.6;
+	    color: $primary-grey;
+	    margin-left: 25px;
+	}
+
+    .flyout-arrow {
+    	display: none;
     }
 
-    .TimePicker-Header-Text {
-        font-family: $body-font-family;
-        font-size: 0.625rem;
-        line-height: 1.6;
-        color: #b8b8b8;
-        margin: 0 auto;
-        width: 50%;
-    }
-
-    .TimePicker {
-        width: 75%;
-        margin: 0 auto;
+    .available-save {
+    	margin-bottom: 1rem;
     }
 }
