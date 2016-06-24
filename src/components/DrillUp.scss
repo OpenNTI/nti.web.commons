@@ -1,0 +1,8 @@
+@import "~nti-style-common";
+
+a.drill-up {
+	color: $primary-blue;
+	i.icon-chevron-left {
+		margin-right: rem-calc(5px);
+	}
+}
