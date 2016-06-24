@@ -1,0 +1,52 @@
+.daytime-toggle.flyout {
+    background-color: #ffffff;
+    width: 335px;
+    box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.3);
+	padding: 10px;
+
+	.toggle {
+		display: flex;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		flex-direction: row;
+		border-radius: 3px;
+		overflow: hidden;
+
+		.part {
+			flex: 1 1 auto;
+			background: #ffffff;
+			background-image: -webkit-linear-gradient(top, #ffffff 0%, #f2f2f2 100%);
+			background-image: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+			border: 1px solid rgba(150, 150, 150, 0.3);
+			text-align: center;
+			line-height: 36px;
+			color: #757474;
+			cursor: pointer;
+
+			&.active {
+				color: #ffffff;
+				background: #A0A0A0;
+				box-shadow: inset 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+			}
+		}
+	}
+
+	.daytime-picker {
+		.DayPicker {
+			width: auto;
+			position: inherit;
+			margin-left: 0px;
+		}
+		.TimePicker-Header-Text {
+			text-align: center;
+		}
+		.TimePicker {
+		    width: 50%;
+		    margin: 0 auto;
+		}
+	}
+
+	.flyout-fullwidth-btn {
+		margin-top: 1rem;
+	}
+}

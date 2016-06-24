@@ -1,0 +1,82 @@
+.daytime-toggle-trigger {
+	display: flex;
+
+	.calendar {
+		cursor: pointer;
+		width: 31px;
+		height: 31px;
+		text-transform: uppercase;
+		border-radius: 4px;
+		margin-right: 1rem;
+		box-shadow: 0 0 0 1px #AFAFAF, inset 0 0 0 1px #AFAFAF;
+		text-align: center;
+		padding: 0;
+
+		&.empty {
+			.month {
+				height: 12px;
+			}
+			.day {
+			    position: relative;
+
+				&:after {
+				    content: '';
+				    overflow: hidden;
+				    top: 2px;
+				    left: 4px;
+				    right: auto;
+				    background-image: url(../assets/empty-calendar.png);
+				    width: 23px;
+				    height: 13px;
+				    position: absolute;
+				}
+			}
+		}
+
+		.month {
+			background: #AFAFAF;
+			color: white;
+			border-radius: 0;
+			font: normal 700 10px/14px "Open Sans", sans-serif;
+			padding: 1px 2px;
+		}
+
+		.day {
+			color: #AFAFAF;
+			font: normal 600 12px/15px "Open Sans", sans-serif;
+			border-radius: 0;
+		}
+	}
+
+	.main {
+		display: block;
+		color: #b8b8b8;
+
+		.text {
+			display: inline-block;
+			border: 1px solid #d1d1d1;
+			padding: 0 10px;
+			cursor: pointer;
+			font: italic 500 12px/32px "Open Sans", sans-serif;
+			position: relative;
+
+			.clear {
+				display: inline-block;
+				float: right;
+				padding-left: 10px;
+				color: #b8b8b8;
+				text-transform: uppercase;
+				font: normal 700 10px/34px "Open Sans", sans-serif;
+				cursor: pointer;
+				&.empty {
+					display: none;
+				}
+			}
+
+			&.hasDate {
+			}
+		}
+
+
+	}
+}
