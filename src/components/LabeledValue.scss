@@ -1,0 +1,13 @@
+@import "~nti-style-common";
+
+.labeled-value {
+	label {
+		font-size: .625rem;
+		text-transform: uppercase;
+		color: $secondary-grey;
+	}
+	.value {
+		font-size: .875rem;
+		color: $primary-grey;
+	}
+}

@@ -24,6 +24,7 @@ export Flyout from './Flyout';
 export FollowButton from './FollowButton';
 export Footer from './Footer';
 export HideNavigation from './HideNavigation';
+export LabeledValue from './LabeledValue';
 export Like from './Like';
 export ListHeader from './ListHeader';
 export Loading from './Loading';
