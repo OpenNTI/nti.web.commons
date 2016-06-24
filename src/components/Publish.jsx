@@ -168,7 +168,7 @@ export default class Publish extends React.Component {
 		const trigger = <PublishTrigger value={value}/>;
 
 		return (
-			<Flyout ref={this.setFlyoutRef} className="publish-controls" alignment={alignment} trigger={trigger} onDismiss={this.closeMenu}>
+			<Flyout ref={this.setFlyoutRef} arrow className="publish-controls" alignment={alignment} trigger={trigger} onDismiss={this.closeMenu}>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>

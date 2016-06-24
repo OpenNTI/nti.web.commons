@@ -8,11 +8,11 @@
 
 .flyout {
 
-	&.bottom {
+	&.arrow.bottom {
 		margin-top: 1rem;
 	}
 
-	&.top {
+	&.arrow.top {
 		margin-top: -1rem;
 	}
 
@@ -20,7 +20,13 @@
 
 	&.right {
 		.flyout-arrow {
-			right: 12px;
+			right: rem-calc(12px);
+		}
+	}
+
+	&.left {
+		.flyout-arrow {
+			left: rem-calc(12px);
 		}
 	}
 

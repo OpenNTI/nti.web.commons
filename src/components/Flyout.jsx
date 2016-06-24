@@ -103,7 +103,8 @@ export default class Flyout extends React.Component {
 		className: PropTypes.string,
 		alignment: PropTypes.string,
 		afterAlign: PropTypes.func,
-		onDismiss: PropTypes.func
+		onDismiss: PropTypes.func,
+		arrow: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -335,7 +336,7 @@ export default class Flyout extends React.Component {
 
 
 	renderFlyout () {
-		const {props: {children, className}, state: {aligning, alignment}} = this;
+		const {props: {children, className, arrow}, state: {aligning, alignment}} = this;
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
 
@@ -347,11 +348,11 @@ export default class Flyout extends React.Component {
 			zIndex: getEffectiveZIndex(trigger) + 1
 		};
 
-		const css = cx('flyout', className, alignment.side, {fixed});
+		const css = cx('flyout', className, alignment.side, {fixed, arrow});
 
 		const flyout = ReactDOM.render(
 			<div className={css} ref={this.attachFlyoutRef} style={style}>
-				<div className="flyout-arrow"/>
+				{arrow && <div className="flyout-arrow"/>}
 				{children}
 			</div>
 		, this.fly, () => {
