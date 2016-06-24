@@ -1,15 +1,33 @@
 import React from 'react';
 
-export default React.createClass({
-	displayName: 'BufferedInput',
-
-	propTypes: {
+export default class BufferedInput extends React.Component {
+	static propTypes = {
+		defaultValue: React.PropTypes.string,
 		onChange: React.PropTypes.func,
 		delay: React.PropTypes.number
-	},
+	}
+
+	attachRef = x => this.input = x
 
 
-	onChange (e) {
+	clear () {
+		const {input} = this;
+		input.value = '';
+		this.onChange({
+			target: input,
+			type: 'change',
+			persist () {},
+			preventDefault () {},
+			stopPropagation () {}
+		});
+	}
+
+	focus () {
+		this.input.focus();
+	}
+
+
+	onChange = (e) => {
 		const {delay = 0, onChange} = this.props;
 		if (!onChange) {
 			return;
@@ -25,11 +43,11 @@ export default React.createClass({
 		e.persist();
 
 		this.inputBufferDelayTimer = setTimeout(() => onChange(e), delay);
-	},
+	}
 
 	render () {
 		return (
-			<input {...this.props} onChange={this.onChange}/>
+			<input {...this.props} ref={this.attachRef} onChange={this.onChange} value={void 0}/>
 		);
 	}
-});
+}

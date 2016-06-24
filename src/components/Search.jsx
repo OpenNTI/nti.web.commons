@@ -1,62 +1,44 @@
 import React from 'react';
+import BufferedInput from './BufferedInput';
 
 const stop = e => e.preventDefault();
 
-export default React.createClass({
-	displayName: 'Search',
+export default class Search extends React.Component {
 
-	propTypes: {
+	static propTypes = {
 		onChange: React.PropTypes.func,
 		defaultValue: React.PropTypes.string
-	},
-
-	getInitialState () {
-		return {
-			value: ''
-		};
-	},
+	}
 
 
-	getDefaultProps () {
-		return {
-			onChange () {}
-		};
-	},
+	attachRef = x => this.input = x
+
+	clearFilter = () => {
+		const {input} = this;
+		input.clear();
+		input.focus();
+	}
 
 
-	clearFilter () {
-		this.setState({filter: undefined}, ()=> {
-			const {fitlter: target} = this;
-			target.focus();
-			this.updateFilter({target: {value: ''}});
-		});
-	},
-
-
-	updateFilter (event) {
-		let {onChange} = this.props;
-		let {value} = event.target;
-		clearTimeout(this.state.buffer);
-
-		let buffer = setTimeout(()=>onChange(value), 300);
-
-		this.setState({value, buffer});
-	},
+	onChange = (event) => {
+		const {onChange} = this.props;
+		if (onChange) {
+			onChange(event.target.value);
+		}
+	}
 
 	render () {
-		let {value} = this.state;
 		return (
 			<form onSubmit={stop} className="search-component">
 				<i className="icon-search"/>
-				<input type="text"
+				<BufferedInput type="text"
 					defaultValue={this.props.defaultValue}
-					onChange={this.updateFilter}
-					ref={x => this.filter = x}
+					onChange={this.onChange}
+					ref={this.attachRef}
 					required
-					value={value}
 					/>
 				<input type="reset" onClick={this.clearFilter}/>
 			</form>
 		);
 	}
-});
+}
