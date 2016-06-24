@@ -10,6 +10,7 @@ export CollectionFilter from './CollectionFilter';
 export DarkMode from './DarkMode';
 export DateTime from './DateTime';
 export DayPicker from './DayPicker';
+export DayTimePicker from './DayTimePicker';
 export DefaultPath from './DefaultPath';
 export Ellipsed from './Ellipsed';
 export EmptyList from './EmptyList';

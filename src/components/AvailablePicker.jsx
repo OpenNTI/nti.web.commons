@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import {scoped} from 'nti-lib-locale';
-import moment from 'moment';
 import autobind from 'nti-commons/lib/autobind';
-import DayPicker, {DateUtils} from './DayPicker';
-import TimePicker from './TimePicker';
+import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
 import DateTime from './DateTime';
 
@@ -47,13 +44,6 @@ export default class AvailablePicker extends React.Component {
 	}
 
 	onDateChange (date) {
-		debugger;
-		if (DateUtils.isPastDay(date)) {
-			let today = new Date();
-			today.setHours(date.getHours(), date.getMinutes(), 0, 0);
-			date = today;
-		}
-
 		this.setState({
 			date,
 			changed: true,
@@ -71,15 +61,6 @@ export default class AvailablePicker extends React.Component {
 				p.then(()=> this.closeMenu());
 			}
 		}
-	}
-
-	getValue () {
-		const {selected, date} = this.state;
-		return selected === PUBLISH_STATES.SCHEDULE ? date : selected;
-	}
-
-	closeMenu () {
-		
 	}
 
 	renderTrigger () {
@@ -110,13 +91,7 @@ export default class AvailablePicker extends React.Component {
 		return (
 			<Flyout ref={this.setFlyoutRef} className="available-picker" alignment="bottom-left" trigger={this.renderTrigger()}>
 				{label}
-				<DayPicker
-					value={date}
-					disabledDays={DateUtils.isPastDay}
-					onChange={this.onDateChange}
-				/>
-				<div className="TimePicker-Header-Text">YOUR LOCAL TIME</div>
-				<TimePicker
+				<DayTimePicker
 					value={date}
 					onChange={this.onDateChange}
 				/>

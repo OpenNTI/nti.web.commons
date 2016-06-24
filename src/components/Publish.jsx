@@ -4,12 +4,10 @@ import cx from 'classnames';
 import autobind from 'nti-commons/lib/autobind';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
-
 import DateTime from './DateTime';
-import DayPicker, {DateUtils} from './DayPicker';
+import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
 import Radio from './Radio';
-import TimePicker from './TimePicker';
 import PublishTrigger from './PublishTrigger';
 
 const logger = Logger.get('lib:commons:components:Publish');
@@ -129,13 +127,6 @@ export default class Publish extends React.Component {
 
 
 	onDateChange (date) {
-		//prevent time picker from rolling us too far back.
-		if (DateUtils.isPastDay(date)) {
-			let today = new Date();
-			today.setHours(date.getHours(), date.getMinutes(), 0, 0);
-			date = today;
-		}
-
 		this.setState({
 			date,
 			changed: true,
@@ -175,7 +166,7 @@ export default class Publish extends React.Component {
 		const {selected, date, changed, dayClicked} = this.state;
 		const {alignment, children, value} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
-		
+
 		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed});
 
 		const trigger = <PublishTrigger value={value}/>;
@@ -187,13 +178,7 @@ export default class Publish extends React.Component {
 				</Radio>
 				<Radio name="publish-radio" value={SCHEDULE} label={t('schedule.label')} checked={SCHEDULE === selected} onChange={this.onChange}>
 					{dayClicked ? t('schedule.selectedText', {date: date && DateTime.format(date, 'MMMM D'), time: DateTime.format(date, 'LT')}) : t('schedule.text')}
-					<DayPicker
-						value={date}
-						disabledDays={DateUtils.isPastDay}
-						onChange={this.onDateChange}
-					/>
-					<div className="TimePicker-Header-Text">{t('schedule.timePickerHeader')}</div>
-					<TimePicker
+					<DayTimePicker
 						value={date}
 						onChange={this.onDateChange}
 					/>
