@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import {scoped} from 'nti-lib-locale';
-import moment from 'moment';
+// import {scoped} from 'nti-lib-locale';
 import autobind from 'nti-commons/lib/autobind';
 import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
@@ -13,16 +12,13 @@ export default class AvailablePicker extends React.Component {
 		value: React.PropTypes.instanceOf(Date),
 		label: React.PropTypes.string,
 		checked: React.PropTypes.bool,
-		onChange: PropTypes.func
+		onChange: PropTypes.func.isRequired
 	}
 
 	static defaultProps = {
 		value: new Date(),
 		label: 'Available Date',
 		checked: true,
-		onChange: () => {
-			console.warn('Pass on change prop');
-		},
 		changed: false
 	}
 

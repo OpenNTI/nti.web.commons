@@ -56,7 +56,7 @@ export default class DayTimeToggle extends React.Component {
 
 		if (onChange) {
 			this.setState({changed: false});
-			const p = onChange(availableBeginning, availableEnding);
+			/*const p = */onChange(availableBeginning, availableEnding);
 			this.closeMenu();
 			// if (p && p.then) {
 			// 	p.then(()=> this.closeMenu());
