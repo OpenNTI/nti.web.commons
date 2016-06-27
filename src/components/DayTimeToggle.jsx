@@ -141,7 +141,7 @@ export default class DayTimeToggle extends React.Component {
 		const btnClassNames = cx('flyout-fullwidth-btn', {changed: changed});
 
 		return (
-			<Flyout ref={this.setFlyoutRef} className="daytime-toggle" alignment="bottom-left" trigger={trigger}>
+			<Flyout ref={this.setFlyoutRef} className="daytime-toggle" alignment="bottom-left" trigger={trigger} arrow>
 				<div className="toggle">
 					<div className={beginClassNames} name={TOGGLE.BEGIN} onClick={this.onToggle}>Begin Date</div>
 					<div className={endClassNames} name={TOGGLE.END} onClick={this.onToggle}>Finish Date</div>
