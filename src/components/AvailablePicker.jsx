@@ -6,6 +6,7 @@ import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
 import DateTime from './DateTime';
 import Checkbox from './Checkbox';
+import LabeledValue from './LabeledValue';
 
 export default class AvailablePicker extends React.Component {
 	static propTypes = {
@@ -76,6 +77,12 @@ export default class AvailablePicker extends React.Component {
 		}
 	}
 
+	closeMenu () {
+		if (this.flyoutRef) {
+			this.flyoutRef.dismiss();
+		}
+	}
+
 	getValue () {
 		const {date, checked} = this.state;
 		return checked ? date : null;
@@ -85,19 +92,10 @@ export default class AvailablePicker extends React.Component {
 		const {label} = this.props;
 		const {date} = this.state;
 		const format = 'L';
+		const children = <DateTime date={date} format={format} />;
 
 		return (
-			<div className="available-trigger" onClick={this.onTriggerToggle}>
-				<div className="inner-available-trigger">
-					<div className="available-label">
-						{label}
-					</div>
-					<div className="available-date">
-						<DateTime date={date} format={format} />
-					</div>
-				</div>
-				<div className="arrow"></div>
-			</div>
+			<LabeledValue label={label} className="available-trigger" children={children} arrow="true" />
 		);
 	}
 

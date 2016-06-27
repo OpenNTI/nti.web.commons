@@ -1,47 +1,5 @@
 @import "~nti-style-common";
 
-.available-trigger {
-	width: 15.125em;
-    height: 30px;
-    padding: 0.625rem 0.625rem 0.625rem 1.85rem;
-	text-align: left;
-	border: solid 1px #e2e2e2;
-	border-top: none;
-	position: relative;
-
-	.arrow {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		right: 20px;
-		left: auto;
-		height: 10px;
-		width: 10px;
-		background: url(./assets/dropdown-arrow.png) no-repeat center;
-	}
-
-	.inner-available-trigger {
-		height: 32px;
-		width: 100%;
-		position: relative;
-		top: 50%;
-		transform: translateY(-50%);
-		
-		.available-label {
-			font: normal 600 10px/14px $body-font-family;
-			letter-spacing: -0.4px;
-			color: $secondary-grey;
-			text-transform: uppercase;
-		}
-
-		.available-date {
-			font: normal 400 13px/18px $body-font-family;
-			letter-spacing: -0.3px;
-			color: $primary-grey;
-		}	
-	}	
-}
-
 .available-picker.flyout {
 	background-color: #ffffff;
 	border-left: solid 1px #e2e2e2;
