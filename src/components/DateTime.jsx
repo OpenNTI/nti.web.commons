@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import emptyFunction from 'fbjs/lib/emptyFunction';
 import isEmpty from 'isempty';
 import moment from 'moment-timezone';
 import invariant from 'invariant';
 
 import jstz from 'jstimezonedetect';
+
+const returnFalse = () => false;
 
 //days threshold to 25 (our dd -- day plural-- takes care of weeks) any more than 25 days falls to months.
 moment.relativeTimeThreshold('d', 25);
@@ -108,7 +109,7 @@ export default class DateTime extends React.Component {
 			//
 			// We are mapping the duration object to behave just like a moment object.
 			m.fromNow = omitSuffix => m.humanize(!omitSuffix);
-			m.isSame = emptyFunction;//will return falsy
+			m.isSame = returnFalse;
 		}
 
 		const suffixExplicitlySuppressed = suffix === false;

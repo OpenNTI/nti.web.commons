@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
-import CSS from 'fbjs/lib/CSSCore';
 import cx from 'classnames';
+
+import {addClass, removeClass} from 'nti-lib-dom';
 
 const CONTEXT_KEY = 'content-background';
 
@@ -35,9 +36,9 @@ export default React.createClass({
 		const args = [body, 'content-background'];
 
 		if (url) {
-			CSS.addClass(...args);
+			addClass(...args);
 		} else {
-			CSS.removeClass(...args);
+			removeClass(...args);
 		}
 
 		style.backgroundImage = url ? `url(${url})` : null;

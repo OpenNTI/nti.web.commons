@@ -1,17 +1,17 @@
 import React from 'react';
-import CSS from 'fbjs/lib/CSSCore';
+import {addClass, removeClass} from 'nti-lib-dom';
 
 export default React.createClass({
 	displayName: 'LockScroll',
 
 
 	componentDidMount () {
-		CSS.addClass(document.body.parentNode, 'scroll-lock');
+		addClass(document.body.parentNode, 'scroll-lock');
 	},
 
 
 	componentWillUnmount () {
-		CSS.removeClass(document.body.parentNode, 'scroll-lock');
+		removeClass(document.body.parentNode, 'scroll-lock');
 	},
 
 	render () {

@@ -1,17 +1,17 @@
 import React from 'react';
-import CSS from 'fbjs/lib/CSSCore';
+import {addClass, removeClass} from 'nti-lib-dom';
 
 export default React.createClass({
 	displayName: 'HideNavigation',
 
 
 	componentDidMount () {
-		CSS.addClass(document.body.parentNode, 'hide-nav');
+		addClass(document.body.parentNode, 'hide-nav');
 	},
 
 
 	componentWillUnmount () {
-		CSS.removeClass(document.body.parentNode, 'hide-nav');
+		removeClass(document.body.parentNode, 'hide-nav');
 	},
 
 	render () {
