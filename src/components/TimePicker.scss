@@ -29,16 +29,21 @@
 		.menu-label {
 			color: $secondary-grey;
 			font-size: .8125rem;
-			padding-right: 1.5rem;
+			padding-right: 1.65rem;
 			line-height: 1.6875rem;
 
 			&.selected {
 				background: none;
 			}
+
+			&:after {
+				right: .5rem;
+				font-size: .75rem;
+			}
 		}
 
 		> ul {
-			-webkit-padding-start: 0px;
+			padding-left: 0px;
 			border: 1px solid #dcdcdc;
 			margin-left: -1px;
 
