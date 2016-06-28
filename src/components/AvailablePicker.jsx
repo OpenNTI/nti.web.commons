@@ -89,13 +89,15 @@ export default class AvailablePicker extends React.Component {
 	}
 
 	renderTrigger () {
-		const {label} = this.props;
-		const {date} = this.state;
-		const format = 'L';
-		const children = <DateTime date={date} format={format} />;
+		const {
+			state: {date},
+			props: {label}
+		} = this;
 
 		return (
-			<LabeledValue label={label} className="available-trigger" children={children} arrow="true" />
+			<LabeledValue label={label} className="available-trigger" arrow>
+				<DateTime date={date} format="L"/>
+			</LabeledValue>
 		);
 	}
 
