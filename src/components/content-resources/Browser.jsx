@@ -1,12 +1,15 @@
 import React, {PropTypes} from 'react';
 import {getService} from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
+import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 
 import CError from '../Error';
+import Loading from '../Loading';
 
 import Search from '../Search';
 import ParentFolder from './ParentFolder';
 import FolderName from './FolderName';
+import Inspector from './Inspector';
 import View from './View';
 
 import Header, {TitleBalencer} from '../panels/Header';
@@ -36,10 +39,20 @@ export default class ContentResourcesBrowser extends React.Component {
 		onClose: () => {}
 	}
 
+
 	constructor (props) {
 		super(props);
+		this.selection = new ObjectSelectionModel();
 		this.state = {};
+
+		this.selection.addListener('change', this.onSelectionChange);
 	}
+
+
+	componentWillUnmount () {
+		this.selection.removeListener('change', this.onSelectionChange);
+	}
+
 
 	componentDidMount () {
 		const {sourceID} = this.props;
@@ -47,17 +60,36 @@ export default class ContentResourcesBrowser extends React.Component {
 		getService()
 			.then(s => s.getObject(sourceID))
 			.then(c => c.getResources())
+
+			//Temp drill into first folder
 			.then(c => c.getContents())
 			.then(c => c[0])
+
 			.then(dir => (this.setState({folder: dir}),dir.getContents()))
 			.then(c => this.setState({folderContents: c}))
 			.catch(error => this.setState({error}));
 	}
 
-	toggle = () => this.setState({info: !this.state.info})
+
+	onSelectionChange = () => {
+		this.forceUpdate();
+	}
+
+
+	toggle = () => this.setState({showInfo: !this.state.showInfo})
+
 
 	render () {
-		const {error, folder, folderContents, info} = this.state;
+		const {
+			selection,
+			state: {
+				error,
+				folder,
+				folderContents,
+				showInfo
+			}
+		} = this;
+
 		return (
 			<div className="content-resource-browser">
 				<Header onClose={this.props.onClose}>
@@ -73,14 +105,20 @@ export default class ContentResourcesBrowser extends React.Component {
 						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')}/>
 						<ToolbarSpacer/>
-						<ToolbarButton icon="hint" checked={info} onClick={this.toggle}/>
+						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle}/>
 						<Search/>
 					</Toolbar>
 				</Header>
 				{error ? (
 					<CError error={error}/>
+				) : !folderContents ? (
+					<Loading/>
 				) : (
-					<View contents={folderContents} layout="icons"/>
+					<View contents={folderContents} selection={selection}>
+						{showInfo && (
+							<Inspector selection={selection}/>
+						)}
+					</View>
 				)}
 			</div>
 		);
