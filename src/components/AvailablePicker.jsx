@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 // import {scoped} from 'nti-lib-locale';
-import autobind from 'nti-commons/lib/autobind';
+
 import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
 import DateTime from './DateTime';
@@ -25,13 +25,11 @@ export default class AvailablePicker extends React.Component {
 
 	constructor (props) {
 		super(props);
-
 		this.setupValue(props);
-
-		this.setFlyoutRef = x => this.flyoutRef = x;
-
-		autobind(this, 'onDateChange', 'onSave', 'onCheckChange');
 	}
+
+
+	setFlyoutRef = x => this.flyoutRef = x
 
 
 	setupValue (props = this.props) {
@@ -45,7 +43,8 @@ export default class AvailablePicker extends React.Component {
 		});
 	}
 
-	onDateChange (date) {
+
+	onDateChange = (date) => {
 		this.setState({
 			date,
 			changed: true,
@@ -53,7 +52,8 @@ export default class AvailablePicker extends React.Component {
 		});
 	}
 
-	onCheckChange (e) {
+
+	onCheckChange = (e) => {
 		const newChecked = e.target.checked;
 		const {checked:oldChecked} = this.state;
 
@@ -64,7 +64,8 @@ export default class AvailablePicker extends React.Component {
 		}
 	}
 
-	onSave () {
+
+	onSave = () => {
 		const {props: {onChange}, state: {changed}} = this;
 		if (onChange && changed) {
 			this.setState({changed: false});
@@ -76,16 +77,19 @@ export default class AvailablePicker extends React.Component {
 		}
 	}
 
+
 	closeMenu () {
 		if (this.flyoutRef) {
 			this.flyoutRef.dismiss();
 		}
 	}
 
+
 	getValue () {
 		const {date, checked} = this.state;
 		return checked ? date : null;
 	}
+
 
 	renderTrigger () {
 		const {
@@ -99,6 +103,7 @@ export default class AvailablePicker extends React.Component {
 			</LabeledValue>
 		);
 	}
+
 
 	render () {
 		const {date, changed, checked} = this.state;
