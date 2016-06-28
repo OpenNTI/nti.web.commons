@@ -6,12 +6,12 @@
 	border-right: solid 1px #e2e2e2;
 	border-bottom: solid 1px #e2e2e2;
 	padding: 0.625rem;
-	width: 16.4025em;
+	width: 15.025em;
 	margin-top: -1px;
 
 	.daytime-picker {
 		.DayPicker {
-			width: 262px;
+			width: 240px;
 			margin-left: 0;
 
 	        .DayPicker-Caption {
@@ -31,7 +31,7 @@
 	    }
 
 	    .TimePicker {
-	        width: 62%;
+	        width: 67%;
 	        margin: 10px auto;
 	    }
 	}
@@ -41,7 +41,7 @@
 	    font-size: 0.7725rem;
 	    line-height: 1.6;
 	    color: $primary-grey;
-	    margin-left: 25px;
+	    margin-left: 15px;
 	}
 
     .flyout-arrow {

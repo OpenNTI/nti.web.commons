@@ -1,25 +1,25 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-// import {scoped} from 'nti-lib-locale';
 
 import DayTimePicker from './DayTimePicker';
 import Flyout from './Flyout';
 import DateTime from './DateTime';
 import Checkbox from './Checkbox';
 import LabeledValue from './LabeledValue';
+import TinyLoader from './TinyLoader';
 
 export default class AvailablePicker extends React.Component {
 	static propTypes = {
-		value: React.PropTypes.instanceOf(Date),
-		label: React.PropTypes.string,
-		checked: React.PropTypes.bool,
-		onChange: PropTypes.func.isRequired
+		value: PropTypes.instanceOf(Date),
+		label: PropTypes.string,
+		onChange: PropTypes.func.isRequired,
+		saving: PropTypes.bool,
+		error: PropTypes.any
 	}
 
 	static defaultProps = {
 		value: new Date(),
-		label: 'Available Date',
-		checked: true
+		label: 'Available Date'
 	}
 
 
@@ -34,49 +34,49 @@ export default class AvailablePicker extends React.Component {
 
 	setupValue (props = this.props) {
 		const setState = s => this.state ? this.setState(s) : (this.state = s);
-		const {value, checked} = props;
-		const date = (value instanceof Date) ? value : new Date();
+		const {value} = props;
 
 		setState({
-			date,
-			checked
+			date: value,
+			checked: value !== null
 		});
 	}
 
 
-	componentWillReceiveProps (/*nextProps*/) {
-		//TODO: Implement me
-		//if (value or checked of nextProps != this.props version) {
-		//	re-setup(nextProps);
-		//}
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.value !== this.props.value) {
+			this.setupValue(nextProps);
+		}
 	}
 
 
 	onDateChange = (date) => {
 		this.setState({
 			date,
-			changed: true,
-			dayClicked: true
+			checked: true
 		});
 	}
 
 
 	onCheckChange = (e) => {
-		const newChecked = e.target.checked;
-		const {checked:oldChecked} = this.state;
+		const checked = e.target.checked;
+		const {date, checked:oldChecked} = this.state;
+		const newValue = checked ? date : null;
 
-		if (newChecked !== oldChecked) {
+		if (checked !== oldChecked) {
 			this.setState({
-				checked: newChecked
+				date: newValue,
+				checked
 			});
 		}
 	}
 
 
 	onSave = () => {
-		const {props: {onChange}, state: {changed}} = this;
+		const {props: {onChange, value}, state: {date}} = this;
+		const changed = value !== date;
+
 		if (onChange && changed) {
-			this.setState({changed: false});
 			const p = onChange(this.getValue());
 
 			if (p && p.then) {
@@ -94,8 +94,7 @@ export default class AvailablePicker extends React.Component {
 
 
 	getValue () {
-		const {date, checked} = this.state;
-		return checked ? date : null;
+		return this.state.date;
 	}
 
 
@@ -104,28 +103,31 @@ export default class AvailablePicker extends React.Component {
 			state: {date},
 			props: {label}
 		} = this;
+		const hasValue = date !== null;
+		const placeholder = 'No Due Date';
+		const labelClasses = cx({
+			'placeholder': date === null
+		});
 
 		return (
 			<LabeledValue label={label} className="available-trigger" arrow>
-				<DateTime date={date} format="L"/>
+				{hasValue ? <DateTime date={date} format="L"/> : <span className={labelClasses}>{placeholder}</span>} 
 			</LabeledValue>
 		);
 	}
 
 
 	render () {
-		// "changed" is just "props.value !== state.date || props.checked !== state.checked"... don't track that in state.
-		//Why do we have state? This is a control. This probably should be stateless. Maybe we need state... idk, but
-		//we def don't need to track "changed".
-		//FIXME: But for SURE we need to implement componentWillReceiveProps
-		const {date, changed, checked} = this.state;
-		const {label} = this.props;
+		const {date, checked} = this.state;
+		const {label, saving, value} = this.props;
+		const changed = value !== date;
 		const saveClassNames = cx('available-save flyout-fullwidth-btn', {changed});
+
 		return (
 			<Flyout ref={this.setFlyoutRef} className="available-picker" alignment="bottom-left" trigger={this.renderTrigger()}>
 				<Checkbox label={label} checked={checked} onChange={this.onCheckChange} />
 				<DayTimePicker value={date} onChange={this.onDateChange} />
-				<div className={saveClassNames} onClick={changed === true ? this.onSave : null}>Save</div>
+				{saving ? <TinyLoader /> : <div className={saveClassNames} onClick={this.onSave}>Save</div>}
 			</Flyout>
 		);
 	}
