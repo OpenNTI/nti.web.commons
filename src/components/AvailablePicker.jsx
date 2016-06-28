@@ -19,8 +19,7 @@ export default class AvailablePicker extends React.Component {
 	static defaultProps = {
 		value: new Date(),
 		label: 'Available Date',
-		checked: true,
-		changed: false
+		checked: true
 	}
 
 
