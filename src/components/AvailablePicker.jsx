@@ -44,6 +44,14 @@ export default class AvailablePicker extends React.Component {
 	}
 
 
+	componentWillReceiveProps (/*nextProps*/) {
+		//TODO: Implement me
+		//if (value or checked of nextProps != this.props version) {
+		//	re-setup(nextProps);
+		//}
+	}
+
+
 	onDateChange = (date) => {
 		this.setState({
 			date,
@@ -106,6 +114,10 @@ export default class AvailablePicker extends React.Component {
 
 
 	render () {
+		// "changed" is just "props.value !== state.date || props.checked !== state.checked"... don't track that in state.
+		//Why do we have state? This is a control. This probably should be stateless. Maybe we need state... idk, but
+		//we def don't need to track "changed".
+		//FIXME: But for SURE we need to implement componentWillReceiveProps
 		const {date, changed, checked} = this.state;
 		const {label} = this.props;
 		const saveClassNames = cx('available-save flyout-fullwidth-btn', {changed});
