@@ -62,8 +62,8 @@ export default class ContentResourcesBrowser extends React.Component {
 			.then(c => c.getResources())
 
 			//Temp drill into first folder
-			.then(c => c.getContents())
-			.then(c => c[0])
+			// .then(c => c.getContents())
+			// .then(c => c[0])
 
 			.then(dir => (this.setState({folder: dir}),dir.getContents()))
 			.then(c => this.setState({folderContents: c}))
