@@ -10,6 +10,7 @@
 	position: relative;
 
 	ul.loader {
+		box-sizing: content-box;
 		position:absolute;
 		margin:0 auto !important;
 		left:0;
