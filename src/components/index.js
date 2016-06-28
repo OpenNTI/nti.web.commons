@@ -14,6 +14,7 @@ export DayTimePicker from './DayTimePicker';
 export DayTimeToggle from './DayTimeToggle';
 export DayTimeToggleTrigger from './DayTimeToggleTrigger';
 export DefaultPath from './DefaultPath';
+export DurationPicker from './DurationPicker';
 export Ellipsed from './Ellipsed';
 export EmptyList from './EmptyList';
 export Error from './Error';
