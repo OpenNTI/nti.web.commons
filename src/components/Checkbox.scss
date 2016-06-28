@@ -1,4 +1,5 @@
 label.checkbox-component {
+	line-height: 1; // fixes a safari issue where clicking the label doesn't affect the checkbox
 	input[type=checkbox] {
 		opacity: 0;
 		position: absolute;
