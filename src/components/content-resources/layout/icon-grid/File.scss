@@ -1,0 +1,65 @@
+@import "~nti-style-common";
+
+.content-resource-view-layout .file-asset {
+
+	&.selected .select,
+	&:active, &:focus,
+	&:hover .select {
+		outline: none;
+		margin: rem-calc(-5px);
+		padding: rem-calc(5px);
+		border-radius: 5px;
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	&.selected .select {
+		background-color: $primary-blue;
+	}
+
+	.file-asset-icon {
+		border-radius: 2px;
+		box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.1), 0 0 1px 1px rgba(0, 0, 0, 0.1);
+
+		background-color: #fff;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		position: relative;
+		overflow: hidden;
+		padding-top: 71%;
+	}
+
+	.file-type.icon {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+
+		label {
+			// font-size: ?;
+		}
+	}
+
+	.filename {
+		$size: 13px;
+		padding: rem-calc(5px);
+		height: rem-calc($size * 2.5);
+		font-size: rem-calc($size);
+		box-sizing: content-box;
+		font-weight: 600;
+		color: $primary-grey;
+
+		white-space: normal;
+		word-break: break-word;
+		overflow: hidden;
+		text-align: center;
+
+		text-overflow: ellipsis;
+
+		//Magic non-standard CSS:
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+}

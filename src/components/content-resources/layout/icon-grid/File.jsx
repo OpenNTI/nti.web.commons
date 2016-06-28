@@ -11,12 +11,17 @@ export default function File (props) {
 
 	const mimeType = item.getFileMimeType();
 	const filename = item.getFileName();
-	const url = /image/i.test(mimeType) ? item.getURL() : void 0;
+	const imgSrc = /image/i.test(mimeType) ? item.getURL() : void 0;
+	const image = !imgSrc ? null : {backgroundImage: `url(${imgSrc})`};
 
 	return (
-		<div className="file-asset">
-			<AssetIcon mimeType={mimeType} src={url} href={filename}/>
-			<div className="filename">{filename}</div>
+		<div className="entity file-asset" role="button" aria-label={filename} tabIndex="0">
+			<div className="select">
+				<div className="file-asset-icon" style={image}>
+					{!imgSrc && ( <AssetIcon mimeType={mimeType} href={filename}/> )}
+				</div>
+				<div className="filename">{filename}</div>
+			</div>
 		</div>
 	);
 }

@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import cx from 'classnames';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 
 Section.propTypes = {
@@ -11,7 +12,7 @@ Section.propTypes = {
 export default function Section (props) {
 	const {className, items, selection, type: Type} = props;
 	return (
-		<div className={className}>
+		<div className={cx('section', className)}>
 			{items.map(i =>
 				<Type key={i.getID()} item={i} selected={selection.isSelected(i)}/>
 			)}

@@ -24,7 +24,7 @@ export default function LayoutIcon (props) {
 	}
 
 	return (
-		<div className={cx('content-resource-view-layout', 'icon-grid', className)}>
+		<div className={cx('content-resource-view-layout', 'icons', className)}>
 			<Section className="folders" items={folders} selection={selection} type={Folder}/>
 			<Section className="files" items={files} selection={selection} type={File}/>
 		</div>

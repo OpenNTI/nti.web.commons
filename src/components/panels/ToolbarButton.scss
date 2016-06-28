@@ -1,13 +1,17 @@
 @import "~nti-style-common";
 
 .toolbar-button {
-	color: $secondary-grey;
+	color: $primary-grey;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: rem-calc(13px);
 	vertical-align: middle;
 	cursor: pointer;
 	opacity: 0.5;
+
+	i {
+		color: #787878;
+	}
 
 	&:not(.disabled):focus,
 	&:not(.disabled):active,

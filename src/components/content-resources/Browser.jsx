@@ -4,7 +4,7 @@ import {scoped} from 'nti-lib-locale';
 import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 
 import CError from '../Error';
-import Loading from '../Loading';
+import Loading from '../LoadingInline';
 
 import Search from '../Search';
 import ParentFolder from './ParentFolder';
