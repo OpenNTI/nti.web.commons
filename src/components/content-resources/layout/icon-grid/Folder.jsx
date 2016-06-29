@@ -1,9 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
+
+import {ItemChanges} from '../../../../HighOrderComponents';
+
 import Entity from './Entity';
 
 
-export default class Folder extends Entity {
+class Folder extends Entity {
 
 	render () {
 		const {props: {item, selection}, state: {rename}} = this;
@@ -35,3 +38,5 @@ export default class Folder extends Entity {
 		);
 	}
 }
+
+export default ItemChanges.compose(Folder);

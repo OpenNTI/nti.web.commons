@@ -1,10 +1,14 @@
 import React from 'react';
 import cx from 'classnames';
-import Entity from './Entity';
+
+import {ItemChanges} from '../../../../HighOrderComponents';
 
 import AssetIcon from '../../../AssetIcon';
 
-export default class File extends Entity {
+import Entity from './Entity';
+
+
+class File extends Entity {
 
 	render () {
 		const {props: {item, selection}, state: {rename}} = this;
@@ -30,7 +34,7 @@ export default class File extends Entity {
 						{imgSrc && ( <img src={image}/> )}
 					</div>
 					<div className="filename">
-						<span onClick={this.onTrigger}>{filename}</span>
+						<span>{filename}</span>
 						{rename && (
 							<input type="text"
 							ref={this.attachInputRef}
@@ -45,3 +49,5 @@ export default class File extends Entity {
 		);
 	}
 }
+
+export default ItemChanges.compose(File);
