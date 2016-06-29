@@ -29,15 +29,31 @@
 		@extend %icon-fallback-download;
 		&.www {
 			@extend %icon-fallback-link;
-			label {display: none;}
+			text, label {display: none;}
 		}
 		&.unknown {
 			@extend %icon-fallback-unknown;
-			label {display: none;}
+			text, label {display: none;}
 		}
 		&.content-link {
 			@extend %icon-fallback-reading;
-			label {display: none;}
+			text, label {display: none;}
+		}
+
+		text, label {
+			text-transform: uppercase;
+			font-family: $header-font-family;
+			font-weight: bold;
+			font-size: 1.3125rem;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			padding: 0 0.3rem;
+		}
+
+		text {
+			fill: currentColor;
+			font-size: rem-calc(14px);
 		}
 
 		label {
@@ -45,15 +61,7 @@
 			bottom: .25rem;
 			left: 0;
 			right: 0;
-			padding: 0 0.3rem;
-			text-transform: uppercase;
 			text-align: center;
-			font-weight: bold;
-			font-size: 1.3125rem;
-			font-family: $header-font-family;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 			color: inherit;
 		}
 
