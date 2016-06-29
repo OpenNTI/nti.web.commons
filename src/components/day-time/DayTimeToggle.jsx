@@ -14,12 +14,14 @@ export default class DayTimeToggle extends React.Component {
 	static propTypes = {
 		availableBeginning: PropTypes.instanceOf(Date),
 		availableEnding: PropTypes.instanceOf(Date),
+		disableText: PropTypes.bool,
 		onChange: PropTypes.func
 	}
 
 	static defaultProps = {
 		availableBeginning: null,
-		availableEnding: null
+		availableEnding: null,
+		disableText: false
 	}
 
 	constructor (props) {
@@ -132,9 +134,9 @@ export default class DayTimeToggle extends React.Component {
 
 	render () {
 		const {active, changed} = this.state;
-		const {availableBeginning: begin, availableEnding: end} = this.props;
+		const {availableBeginning: begin, availableEnding: end, disableText} = this.props;
 
-		const trigger = <DayTimeToggleTrigger availableBeginning={begin} availableEnding={end} onChange={this.onClear}/>;
+		const trigger = <DayTimeToggleTrigger availableBeginning={begin} availableEnding={end} onChange={this.onClear} disableText={disableText}/>;
 
 		const beginClassNames = cx('part beginning', {active: active === TOGGLE.BEGIN});
 		const endClassNames = cx('part ending', {active: active === TOGGLE.END}, {disabled: !this.state[TOGGLE.BEGIN]});
