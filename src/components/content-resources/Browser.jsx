@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {getService} from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
 import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
+import Logger from 'nti-util-logger';
 
 import CError from '../Error';
 import Loading from '../Loading';
@@ -16,6 +17,9 @@ import Header, {TitleBalencer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
 import ToolbarButton from '../panels/ToolbarButton';
 import FilePickerButton from '../FilePickerButton';
+
+
+const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
 	TOOLBAR: {
@@ -103,7 +107,7 @@ export default class ContentResourcesBrowser extends React.Component {
 	onRename = () => {
 		const selections = Array.from(this.selection);
 		if (selections.length !== 1) {
-			console.warn('Incorrect selection');
+			logger.warn('Incorrect selection %o', this.selection);
 			return;
 		}
 
@@ -118,7 +122,7 @@ export default class ContentResourcesBrowser extends React.Component {
 			return this.setFolder(item);
 		}
 
-		console.log('Selected File: %o', item);
+		logger.debug('Selected File: %o', item);
 	}
 
 
