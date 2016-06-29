@@ -11,6 +11,32 @@ export default class Entity extends React.Component {
 
 	state = {}
 
+	componentDidMount () {
+		const {item} = this.props;
+		item.addListener('rename', this.onBeginRename);
+	}
+
+	componentWillUnmount () {
+		const {item} = this.props;
+		item.removeListener('rename', this.onBeginRename);
+	}
+
+	componentDidUpdate (prevProps) {
+		const {item} = this.props;
+		const {item: prev} = prevProps;
+		if (item !== prev) {
+			prev.removeListener('rename', this.onBeginRename);
+			item.addListener('rename', this.onBeginRename);
+		}
+	}
+
+	componentWillReceiveProps (nextProps) {
+		if (this.props.item !== nextProps.item) {
+			this.setState(this.state = {});
+		}
+	}
+
+
 	attachInputRef = (ref) => {
 		if (ref) {
 			ref.focus();
@@ -23,8 +49,11 @@ export default class Entity extends React.Component {
 		const {selection, item} = this.props;
 		if (!selection.isSelected(item)) { return; }
 
-		e.preventDefault();
-		e.stopPropagation();
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
 		if (this.props.item.can('rename')) {
 			this.setState({rename: true});
 		}
@@ -75,13 +104,6 @@ export default class Entity extends React.Component {
 			e.target.blur();
 		} else if (key === 'Escape') {
 			this.setState({rename: false});
-		}
-	}
-
-
-	componentWillReceiveProps (nextProps) {
-		if (this.props.item !== nextProps.item) {
-			this.setState(this.state = {});
 		}
 	}
 

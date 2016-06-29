@@ -79,6 +79,19 @@ export default class ContentResourcesBrowser extends React.Component {
 	toggle = () => this.setState({showInfo: !this.state.showInfo})
 
 
+	onRename = () => {
+		const selections = Array.from(this.selection);
+		if (selections.length !== 1) {
+			console.warn('Incorrect selection');
+			return;
+		}
+
+		const [item] = selections;
+
+		item.emit('rename');
+	}
+
+
 	render () {
 		const {
 			selection,
@@ -108,7 +121,7 @@ export default class ContentResourcesBrowser extends React.Component {
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')}/>
 						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')}/>
-						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')}/>
+						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarSpacer/>
 						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle}/>
 						<Search/>
