@@ -6,6 +6,7 @@ const HANDLERS = new WeakMap();
 const disable = (e) => (e.preventDefault(),e.stopPropagation());
 
 ToolbarButton.propTypes = {
+	available: PropTypes.bool,
 	checked: PropTypes.bool,
 	children: PropTypes.any,
 	className: PropTypes.string,
@@ -16,10 +17,13 @@ ToolbarButton.propTypes = {
 };
 
 export default function ToolbarButton (props) {
-	const {checked, children, className, disabled, icon, label} = props;
+	const {available, checked, children, className, disabled, icon, label} = props;
 	const toggle = ('checked' in props);
-
 	const onClick = getHandler(props.onClick);
+
+	if ('available' in props && !available) {
+		return null;
+	}
 
 	return (
 		<a {...props}
