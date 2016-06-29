@@ -65,9 +65,13 @@ export default class Entity extends React.Component {
 
 
 	onCommitRename = (e) => {
+		const {item} = this.props;
 		const {target: {value}} = e;
+		const newName = value.trim();
+
 		this.setState({rename: false});
-		console.log('rename: ' + value);
+
+		item.rename(newName);
 	}
 
 

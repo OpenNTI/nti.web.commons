@@ -5,7 +5,7 @@ import {ItemChanges} from '../../../../HighOrderComponents';
 
 import AssetIcon from '../../../AssetIcon';
 
-import Entity from './Entity';
+import Entity from '../../Entity';
 
 
 class File extends Entity {

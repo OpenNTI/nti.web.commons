@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import {ItemChanges} from '../../../../HighOrderComponents';
 
-import Entity from './Entity';
+import Entity from '../../Entity';
 
 
 class Folder extends Entity {
