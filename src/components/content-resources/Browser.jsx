@@ -60,14 +60,26 @@ export default class ContentResourcesBrowser extends React.Component {
 		getService()
 			.then(s => s.getObject(sourceID))
 			.then(c => c.getResources())
+			.then(folder => this.setFolder(folder))
+			.catch(error => this.setState({error}));
+	}
 
-			//Temp drill into first folder
-			// .then(c => c.getContents())
-			// .then(c => c[0])
 
-			.then(dir => (this.setState({folder: dir}),dir.getContents()))
+	setFolder = (folder) => {
+		this.setState({folder, folderContents: void 0});
+
+		folder.getContents()
 			.then(c => this.setState({folderContents: c}))
 			.catch(error => this.setState({error}));
+	}
+
+
+	gotoParent = () => {
+		const {folder} = this.state;
+		const parent = folder && folder.getParentFolder();
+		if (parent) {
+			this.setFolder(parent);
+		}
 	}
 
 
