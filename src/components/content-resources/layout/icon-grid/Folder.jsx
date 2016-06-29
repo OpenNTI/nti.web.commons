@@ -1,18 +1,36 @@
 import React from 'react';
+import cx from 'classnames';
+import Entity from './Entity';
 
-Folder.propTypes = {
-	item: React.PropTypes.object
-};
 
-export default function Folder (props) {
-	const {item} = props;
+export default class Folder extends Entity {
 
-	const filename = item.getFileName();
+	render () {
+		const {props: {item, selection}, state: {rename}} = this;
+		const selected = selection.isSelected(item);
+		const renameable = item.can('rename');
+		const filename = item.getFileName();
 
-	return (
-		<div className="entity folder-asset" role="button" aria-label={filename} tabIndex="0">
-			<i className="icon-folder small"/>
-			<span className="filename" tabIndex="0">{filename}</span>
-		</div>
-	);
+		return (
+			<div className={cx('entity folder-asset', {renameable, selected})}
+				role="button"
+				aria-label={filename}
+				tabIndex="0"
+				onKeyDown={this.onSelect}
+				onClick={this.onSelect}
+				>
+				<i className="icon-folder small"/>
+				<span className="filename" onClick={this.onBeginRename}>{filename}</span>
+				{rename && (
+					<input type="text"
+						ref={this.attachInputRef}
+						className="filename"
+						onBlur={this.onCommitRename}
+						onKeyDown={this.onFilenameKeyDown}
+						defaultValue={filename}
+						/>
+				)}
+			</div>
+		);
+	}
 }

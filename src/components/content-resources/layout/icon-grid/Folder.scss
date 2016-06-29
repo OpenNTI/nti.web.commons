@@ -7,6 +7,7 @@
 	padding: rem-calc(10px 15px);
 	line-height: rem-calc(20px);
 	cursor: pointer;
+	position: relative;
 
 	&:active, &:focus,
 	.no-touch &:hover {
@@ -45,5 +46,18 @@
 			outline: none;
 			text-decoration: underline;
 		}
+	}
+
+	&.renameable .filename { cursor: text; }
+
+	input.filename {
+		position: absolute;
+		height: auto;
+		width: calc(100% - 55px);
+		top: 50%;
+		left: 38px;
+		right: 0;
+		transform: translateY(-50%);
+		text-decoration: none !important;
 	}
 }
