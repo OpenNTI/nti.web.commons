@@ -7,6 +7,7 @@ export BufferedInput from './BufferedInput';
 export CalendarCard from './CalendarCard';
 export Checkbox from './Checkbox';
 export CollectionFilter from './CollectionFilter';
+export ConflictResolutionHandler from './conflict-resolution';
 export DarkMode from './DarkMode';
 export DateTime from './DateTime';
 export DayPicker from './DayPicker';
