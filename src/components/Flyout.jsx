@@ -339,13 +339,13 @@ export default class Flyout extends React.Component {
 		const {props: {children, className, arrow}, state: {aligning, alignment}} = this;
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
-
+		const effectiveZ = getEffectiveZIndex(trigger);
 		const style = {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
 			top: alignment.top,
 			left: alignment.left,
-			zIndex: getEffectiveZIndex(trigger) + 1
+			zIndex: effectiveZ ? (effectiveZ + 1) : void 0
 		};
 
 		const css = cx('flyout', className, alignment.side, {fixed, arrow});
