@@ -20,7 +20,7 @@ import FilePickerButton from '../FilePickerButton';
 const DEFAULT_TEXT = {
 	TOOLBAR: {
 		'upload': 'Upload',
-		'new-folder': 'Create Folder',
+		'mkdir': 'Create Folder',
 		'move': 'Move',
 		'delete': 'Delete',
 		'rename': 'Rename'
@@ -90,6 +90,11 @@ export default class ContentResourcesBrowser extends React.Component {
 			}
 		} = this;
 
+		const selections = Array.from(selection);
+		const selected = selections.length;
+		const can = x => folder && folder.can(x);
+		const selectionCan = x => selected > 0 && selections.every(i => i.can(x));
+
 		return (
 			<div className="content-resource-browser">
 				<Header onClose={this.props.onClose}>
@@ -99,11 +104,11 @@ export default class ContentResourcesBrowser extends React.Component {
 						<TitleBalencer/>
 					</div>
 					<Toolbar>
-						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')}/>
-						<ToolbarButton icon="folder-add" label={t('TOOLBAR.new-folder')}/>
-						<ToolbarButton icon="move" label={t('TOOLBAR.move')}/>
-						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')}/>
-						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')}/>
+						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')}/>
+						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')}/>
+						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')}/>
+						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')}/>
+						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')}/>
 						<ToolbarSpacer/>
 						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle}/>
 						<Search/>
