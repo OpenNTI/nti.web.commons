@@ -39,6 +39,10 @@ export default class ContentResourcesBrowser extends React.Component {
 		onClose: () => {}
 	}
 
+	static childContextTypes = {
+		onTrigger: PropTypes.func
+	}
+
 
 	constructor (props) {
 		super(props);
@@ -47,6 +51,11 @@ export default class ContentResourcesBrowser extends React.Component {
 
 		this.selection.addListener('change', this.onSelectionChange);
 	}
+
+
+	getChildContext = () => ({
+		onTrigger: this.onTrigger
+	})
 
 
 	componentWillUnmount () {
@@ -101,6 +110,15 @@ export default class ContentResourcesBrowser extends React.Component {
 		const [item] = selections;
 
 		item.emit('rename');
+	}
+
+
+	onTrigger = (item) => {
+		if (item.isFolder) {
+			return this.setFolder(item);
+		}
+
+		console.log('Selected File: %o', item);
 	}
 
 

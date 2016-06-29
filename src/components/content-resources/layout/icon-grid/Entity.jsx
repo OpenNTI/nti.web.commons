@@ -9,6 +9,10 @@ export default class Entity extends React.Component {
 		selection: PropTypes.instanceOf(SelectionModel)
 	}
 
+	static contextTypes = {
+		onTrigger: PropTypes.func.isRequired
+	}
+
 	state = {}
 
 	componentDidMount () {
@@ -90,10 +94,9 @@ export default class Entity extends React.Component {
 			return;
 		}
 
-		const {item} = this.props;
+		const {props: {item}, context: {onTrigger}} = this;
 
-		console.log('Tiggered', item);
-
+		onTrigger(item);
 	}
 
 
