@@ -14,7 +14,7 @@ export default function Section (props) {
 	return (
 		<div className={cx('section', className)}>
 			{items.map(i =>
-				<Type key={i.getID()} item={i} selected={selection.isSelected(i)}/>
+				<Type key={i.getID()} item={i} selection={selection}/>
 			)}
 		</div>
 	);
