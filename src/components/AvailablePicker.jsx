@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import DayTimePicker from './DayTime/DayTimePicker';
+import DayTimePicker from './day-time/DayTimePicker';
 import Flyout from './Flyout';
 import DateTime from './DateTime';
 import Checkbox from './Checkbox';
