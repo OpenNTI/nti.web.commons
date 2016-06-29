@@ -5,7 +5,7 @@ import FilterBar from './FilterBar';
 import NoMatches from './NoMatches';
 
 
-const logger = Logger.get('common:components:filterable-view');
+const logger = Logger.get('common:components:FilterableView');
 
 export default React.createClass({
 	displayName: 'FilterableView',

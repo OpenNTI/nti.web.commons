@@ -11,7 +11,7 @@ import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
 import {PUBLISH_STATES} from '../constants';
 
-const logger = Logger.get('lib:commons:components:Publish');
+const logger = Logger.get('common:components:Publish');
 
 const DEFAULT_TEXT = {
 	publish: {
