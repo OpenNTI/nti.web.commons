@@ -18,7 +18,7 @@ export default function ContentResourcesView (props) {
 
 	return (
 		<div className={cx('content-resource-view', className, {split: hasSubView})}>
-			<div className="view-main-pane">
+			<div className="view-main-pane" onClick={()=> selection.set()}>
 				<Layout contents={contents} selection={selection}/>
 			</div>
 			{hasSubView && (

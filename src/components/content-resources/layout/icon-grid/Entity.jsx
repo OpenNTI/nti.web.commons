@@ -39,6 +39,9 @@ export default class Entity extends React.Component {
 
 	onSelect = (e) => {
 		if (!isActionable(e)) { return; }
+		e.preventDefault();
+		e.stopPropagation();
+
 		const {selection, item} = this.props;
 		selection.set(item);
 	}
