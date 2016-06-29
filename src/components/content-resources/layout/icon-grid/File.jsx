@@ -22,6 +22,7 @@ export default class File extends Entity {
 				tabIndex="0"
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
+				onDoubleClick={this.onTrigger}
 				>
 				<div className="select">
 					<div className="file-asset-icon">
@@ -29,7 +30,7 @@ export default class File extends Entity {
 						{imgSrc && ( <img src={image}/> )}
 					</div>
 					<div className="filename">
-						<span onClick={this.onBeginRename}>{filename}</span>
+						<span onClick={this.onTrigger}>{filename}</span>
 						{rename && (
 							<input type="text"
 							ref={this.attachInputRef}

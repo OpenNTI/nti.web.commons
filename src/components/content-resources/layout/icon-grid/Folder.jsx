@@ -18,9 +18,10 @@ export default class Folder extends Entity {
 				tabIndex="0"
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
+				onDoubleClick={this.onTrigger}
 				>
 				<i className="icon-folder small"/>
-				<span className="filename" onClick={this.onBeginRename}>{filename}</span>
+				<span className="filename" onClick={this.onTrigger}>{filename}</span>
 				{rename && (
 					<input type="text"
 						ref={this.attachInputRef}

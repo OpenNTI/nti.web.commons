@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 import isActionable from 'nti-commons/lib/is-event-actionable';
+import getCoolOff from 'nti-commons/lib/function-cooloff';
 
 export default class Entity extends React.Component {
 	static propTypes = {
@@ -43,7 +44,27 @@ export default class Entity extends React.Component {
 		e.stopPropagation();
 
 		const {selection, item} = this.props;
+
+		if (selection.isSelected(item)) {
+			return;
+		}
+
 		selection.set(item);
+	}
+
+
+	onTrigger = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (getCoolOff(this.onTrigger)) {
+			return;
+		}
+
+		const {item} = this.props;
+
+		console.log('Tiggered', item);
+
 	}
 
 
