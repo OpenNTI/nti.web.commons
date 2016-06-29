@@ -75,14 +75,9 @@ export default class ItemChanges extends React.Component {
 
 	static compose (Component) {
 
-		function item (...a) {
-			const getter = (Component.getItem || getItem);
-			return getter(...a);
-		}
-
 		return function ItemChangesComposer (props, context) {
 			return (
-				<ItemChanges item={item(props, {}, context)}>
+				<ItemChanges item={getItem(Component, props, {}, context)}>
 					<Component {...props}/>
 				</ItemChanges>
 			);
