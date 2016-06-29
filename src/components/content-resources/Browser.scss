@@ -8,6 +8,14 @@
 	box-shadow: 0 0 0 1px #e2e2e2;
 	background-color: #f2f2f2;
 
+	& > .loading {
+		position: relative;
+		transform: none;
+		top: 0;
+		margin: 0;
+		padding: 4rem 0;
+	}
+
 	.toolbar-component .search-component {
 		margin: rem-calc(0 10px 0 0);
 		min-width: 100px;
