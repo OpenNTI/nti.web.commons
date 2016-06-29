@@ -17,8 +17,12 @@
 		}
 	}
 
-	&.selected .select {
+	&.selected .select,
+	&:hover.selected .select {
 		background-color: $primary-blue;
+		div.filename {
+			color: #fff;
+		}
 	}
 
 	.file-asset-icon {
@@ -83,9 +87,6 @@
 		}
 	}
 
-	&.renameable .filename span {
-		cursor: text;
-	}
 	&.renameable.renaming .filename span {
 		visibility: hidden;
 	}
