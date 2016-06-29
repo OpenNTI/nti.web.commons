@@ -83,6 +83,10 @@
 			    width: 10px;
 				background: url(./assets/dropdown-arrow.png) no-repeat center;
 			}
+
+			&.hide {
+				display: none;
+			}
 		}
 
 

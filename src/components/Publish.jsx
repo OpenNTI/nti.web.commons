@@ -5,7 +5,7 @@ import autobind from 'nti-commons/lib/autobind';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 import DateTime from './DateTime';
-import DayTimePicker from './DayTimePicker';
+import DayTimePicker from './DayTime/DayTimePicker';
 import Flyout from './Flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
