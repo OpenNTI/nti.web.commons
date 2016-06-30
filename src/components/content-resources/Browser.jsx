@@ -102,6 +102,20 @@ export default class ContentResourcesBrowser extends React.Component {
 	toggle = () => this.setState({showInfo: !this.state.showInfo})
 
 
+	onDelete = () => {
+		let last = Promise.resolve();
+
+		for (let item of this.selection) {
+			last = last.then(() => item.delete());
+		}
+
+		last.then(this.refresh, (e) => {
+			logger.error(e);
+			this.refresh();
+		});
+	}
+
+
 	onMakeDirectory = () => {
 		const {folder} = this.state;
 		folder.mkdir()
@@ -171,7 +185,7 @@ export default class ContentResourcesBrowser extends React.Component {
 						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')}/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')}/>
-						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')}/>
+						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')} onClick={this.onDelete}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarSpacer/>
 						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle}/>
