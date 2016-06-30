@@ -37,14 +37,14 @@
 
 		&.prev::before {
 			@extend %chevron-up;
-			.dark & {
+			.darkmode & {
 				@extend %chevron-up-white;
 			}
 		}
 
 		&.next::before {
 			@extend %chevron-down;
-			.dark & {
+			.darkmode & {
 				@extend %chevron-down-white;
 			}
 		}

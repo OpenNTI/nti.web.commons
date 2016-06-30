@@ -6,12 +6,12 @@ export default React.createClass({
 
 
 	componentDidMount () {
-		addClass(document.body, 'dark');
+		addClass(document.body, 'darkmode');
 	},
 
 
 	componentWillUnmount () {
-		removeClass(document.body, 'dark');
+		removeClass(document.body, 'darkmode');
 	},
 
 	render () {
