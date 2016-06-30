@@ -118,15 +118,27 @@ export default class ContentResourcesBrowser extends React.Component {
 
 	onMakeDirectory = () => {
 		const {folder} = this.state;
-		folder.mkdir()
-			.then(newFolder =>
-				folder.getContents()
-					.then(c => {
-						this.selection.set(c.find(x => x.getID() === newFolder.getID()));
-						this.setState({folderContents: c}, () => this.onRename());
-					})
-			)
-			.catch(e => logger.error(e));
+		const {last} = this.onMakeDirectory;
+		this.onMakeDirectory.last = (last || Promise.resolve())
+			.then(() =>
+				folder.mkdir()
+					.then(newFolder =>
+						folder.getContents()
+							.then(c => {
+								const id = newFolder.getID();
+								const inListInstance = c.find(x => x.getID() === id);
+
+								return new Promise(x => this.setState({folderContents: c}, x))
+									.then(() => {
+										if (inListInstance) {
+											this.selection.set(inListInstance);
+											this.onRename();
+										}
+									});
+							})
+					)
+					.catch(e => logger.error(e))
+			);
 	}
 
 
