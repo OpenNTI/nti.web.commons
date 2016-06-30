@@ -4,7 +4,6 @@ import Radio from './Radio';
 export default class RadioGroup extends React.Component {
 	constructor (props) {
 		super(props);
-		this.state = {};
 		this.setup();
 	}
 
@@ -22,8 +21,9 @@ export default class RadioGroup extends React.Component {
 
 
 	setup (props = this.props) {
+		const setState = s => this.state ? this.setState(s) : (this.state = s);
 		const {initialValue} = props;
-		this.setState({
+		setState({
 			selected: initialValue
 		});
 	}
