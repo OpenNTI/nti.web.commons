@@ -18,7 +18,7 @@ const {Browser} = ContentResources;
 
 //Kitchen Sink
 ReactDOM.render(
-	<div>
+	<div className="test-kitchen">
 		<ConflictResolutionHandler/>
 		<Browser sourceID={ID}/>
 	</div>,

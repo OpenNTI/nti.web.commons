@@ -7,6 +7,7 @@ import Logger from 'nti-util-logger';
 import CError from '../Error';
 import Loading from '../Loading';
 
+import Chooser from './Chooser';
 import Search from '../Search';
 import ParentFolder from './ParentFolder';
 import FolderName from './FolderName';
@@ -37,10 +38,6 @@ export default class ContentResourcesBrowser extends React.Component {
 	static propTypes = {
 		sourceID: PropTypes.string,
 		onClose: PropTypes.func
-	}
-
-	static defaultProps = {
-		onClose: () => {}
 	}
 
 	static childContextTypes = {
@@ -168,6 +165,12 @@ export default class ContentResourcesBrowser extends React.Component {
 	}
 
 
+	onMoveSelectTarget = () => {
+		const folderFilter = x => x.isFolder;
+		Chooser.show(this.props.sourceID, folderFilter);
+	}
+
+
 	onRename = () => {
 		const selections = Array.from(this.selection);
 		if (selections.length !== 1) {
@@ -222,7 +225,7 @@ export default class ContentResourcesBrowser extends React.Component {
 					<Toolbar>
 						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')}/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
-						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')}/>
+						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
 						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')} onClick={this.onDelete}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarSpacer/>
