@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ContentResources} from '../../src/index';
+import {ConflictResolutionHandler, ContentResources} from '../../src/index';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -19,6 +19,7 @@ const {Browser} = ContentResources;
 //Kitchen Sink
 ReactDOM.render(
 	<div>
+		<ConflictResolutionHandler/>
 		<Browser sourceID={ID}/>
 	</div>,
 	document.getElementById('content')
