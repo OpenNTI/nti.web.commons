@@ -29,8 +29,8 @@
 		cursor: pointer;
 		box-sizing: border-box;
 		text-transform: none;
-		font-weight: 600;
-		font-size: 0.9rem;
+		font-weight: 700;
+		font-size: rem-calc(14px);
 		letter-spacing: normal;
 		line-height: 2.5rem;
 		padding: 0 1.25rem;
@@ -39,6 +39,8 @@
 		text-align: center;
 		min-width: 90px;
 		display: inline-block;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 
 		&.link,
 		&.cancel {

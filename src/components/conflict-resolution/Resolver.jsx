@@ -26,7 +26,8 @@ export default class Resolver extends React.Component {
 	onConflict = (prompt) => {
 		return new Promise(confirm => {
 			modal(
-				<ConfirmPrompt challenge={prompt} onConfirm={confirm} />
+				<ConfirmPrompt challenge={prompt} onConfirm={confirm} />,
+				'request-conflict-resolver'
 			);
 		})
 			.then(() => prompt.confirm());

@@ -6,7 +6,7 @@
 	height: auto;
 	position: relative;
 	padding-top: 30px;
-	
+
 	.message {
 		color: #494949;
 		padding-left: 80px;
@@ -15,19 +15,8 @@
 		margin: 0 10px 30px 10px;
 	}
 
-	.buttons {
+	.dialog-buttons {
 		background-color: #f8f8f8;
-		overflow: hidden;
-		position: relative;
-		padding-left: 5px;
-
-		.button {
-			float: right;
-			padding: 0 20px;
-			cursor: pointer;
-			font-family: $body-font-family;
-			text-align: center;
-		}
 	}
 
 }
