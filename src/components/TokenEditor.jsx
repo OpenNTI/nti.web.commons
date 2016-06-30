@@ -15,7 +15,8 @@ export default class TokenEditor extends React.Component {
 		tokens: React.PropTypes.array,
 		onFocus: React.PropTypes.func,
 		className: React.PropTypes.string,
-		preprocessToken: React.PropTypes.func
+		preprocessToken: React.PropTypes.func,
+		placeholder: React.PropTypes.string
 	}
 
 	get value () {
@@ -106,13 +107,14 @@ export default class TokenEditor extends React.Component {
 
 	render () {
 
+		const {placeholder} = this.props;
 		const {values, inputValue} = this.state;
 
 		const classes = cx('token-editor', this.props.className);
 
 		return (
 			<div className={classes} onClick={this.focusInput}>
-				{values.size === 0 && inputValue.length === 0 && <span className="placeholder">Enter all the file types you want to accept</span>}
+				{placeholder && values.size === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
 				{[...values].map(x => <Token key={x} value={x} onRemove={this.remove} />)}
 				<input
 					ref={x => this.input = x}
