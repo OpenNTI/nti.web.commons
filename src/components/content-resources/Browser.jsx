@@ -44,7 +44,8 @@ export default class ContentResourcesBrowser extends React.Component {
 	}
 
 	static childContextTypes = {
-		onTrigger: PropTypes.func
+		onTrigger: PropTypes.func,
+		selectItem: PropTypes.func
 	}
 
 
@@ -58,7 +59,8 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	getChildContext = () => ({
-		onTrigger: this.onTrigger
+		onTrigger: this.onTrigger,
+		selectItem: this.selectItem
 	})
 
 
@@ -97,6 +99,26 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	refresh = () => this.setFolder(this.state.folder, this.state.folderContents)
+
+
+	selectItem = (item, modifiers) => {
+		const {selection} = this;
+		const {metaKey, ctrlKey/*, altKey, shiftKey*/} = modifiers || {};
+
+		if (selection.isSelected(item)) {
+			if (metaKey || ctrlKey) {
+				selection.remove(item);
+			}
+			return;
+		}
+
+		if (metaKey || ctrlKey) {
+			selection.add(item);
+		}
+		else {
+			selection.set(item);
+		}
+	}
 
 
 	toggle = () => this.setState({showInfo: !this.state.showInfo})
@@ -219,6 +241,7 @@ export default class ContentResourcesBrowser extends React.Component {
 						)}
 					</View>
 				)}
+				<div className="progress"/>
 			</div>
 		);
 	}

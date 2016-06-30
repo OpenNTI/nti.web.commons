@@ -10,7 +10,8 @@ export default class Entity extends React.Component {
 	}
 
 	static contextTypes = {
-		onTrigger: PropTypes.func.isRequired
+		onTrigger: PropTypes.func.isRequired,
+		selectItem: PropTypes.func.isRequired
 	}
 
 	state = {}
@@ -49,6 +50,7 @@ export default class Entity extends React.Component {
 		}
 	}
 
+
 	onBeginRename = (e) => {
 		const {selection, item} = this.props;
 		if (!selection.isSelected(item)) { return; }
@@ -78,24 +80,17 @@ export default class Entity extends React.Component {
 
 
 	onSelect = (e) => {
+		const {metaKey, altKey, ctrlKey, shiftKey} = e;
+		const {item} = this.props;
+
 		if (!isActionable(e)) { return; }
-		e.preventDefault();
-		e.stopPropagation();
 
-		const {selection, item} = this.props;
-
-		if (selection.isSelected(item)) {
-			return;
+		if (!shiftKey) { //if shift was pressed, let this bubble up
+			e.preventDefault();
+			e.stopPropagation();
 		}
 
-		// metaKey, altKey, ctrlKey, shiftKey
-
-		if (e.metaKey || e.ctrlKey) {
-			selection.add(item);
-		}
-		else {
-			selection.set(item);
-		}
+		this.context.selectItem(item, { metaKey, altKey, ctrlKey, shiftKey });
 	}
 
 
