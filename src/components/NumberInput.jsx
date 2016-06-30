@@ -7,7 +7,10 @@ const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 export default class NumbertInput extends React.Component {
 	static propTypes = {
 		className: React.PropTypes.string,
-		value: React.PropTypes.number,
+		value: React.PropTypes.oneOfType([
+			React.PropTypes.oneOf(['']),
+			React.PropTypes.number
+		]),
 		onChange: React.PropTypes.func,
 		pad: React.PropTypes.oneOfType([
 			React.PropTypes.bool,
@@ -32,6 +35,9 @@ export default class NumbertInput extends React.Component {
 
 
 	attachRef = (x) => this.ref = x
+
+
+	focus = () => this.ref.focus()
 
 
 	onChange = (e) => {
