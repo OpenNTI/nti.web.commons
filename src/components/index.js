@@ -45,6 +45,7 @@ export PromiseButton from './PromiseButton';
 export Publish from './Publish';
 export PublishTrigger from './PublishTrigger';
 export Radio from './Radio';
+export RadioGroup from './RadioGroup';
 export Report from './Report';
 export ScrollTrigger from './ScrollTrigger';
 export Search from './Search';
