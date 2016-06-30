@@ -23,7 +23,9 @@ class File extends Entity {
 			<div className={cx('entity file-asset', {renameable, renaming: rename, selected})}
 				role="button"
 				aria-label={filename}
+				draggable
 				tabIndex="0"
+
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}

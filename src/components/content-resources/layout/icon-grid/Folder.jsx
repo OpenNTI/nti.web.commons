@@ -18,7 +18,9 @@ class Folder extends Entity {
 			<div className={cx('entity folder-asset', {renameable, selected})}
 				role="button"
 				aria-label={filename}
+				draggable
 				tabIndex="0"
+
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}

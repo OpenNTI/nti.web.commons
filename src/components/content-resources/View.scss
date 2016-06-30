@@ -17,4 +17,13 @@
 	.context-view-pane {
 		flex: 0;
 	}
+
+	[draggable] {
+		user-select: none;
+		-khtml-user-drag: element;
+		-webkit-user-drag: element;
+		img, svg {
+			pointer-events: none;
+		}
+	}
 }
