@@ -3,6 +3,9 @@ import cx from 'classnames';
 
 import IconGrid from './layout/icon-grid';
 
+const stop = e => e.stopPropagation();
+
+
 export default class ContentResourcesView extends React.Component {
 
 	static propTypes = {
@@ -23,12 +26,12 @@ export default class ContentResourcesView extends React.Component {
 		const Layout = layout || IconGrid;
 
 		return (
-			<div className={cx('content-resource-view', className, {split: hasSubView})}>
-				<div className="view-main-pane" onClick={this.clearSelection}>
+			<div className={cx('content-resource-view', className, {split: hasSubView})} onClick={this.clearSelection}>
+				<div className="view-main-pane">
 					<Layout contents={contents} selection={selection}/>
 				</div>
 				{hasSubView && (
-					<div className="context-view-pane">{children}</div>
+					<div className="context-view-pane" onClick={stop}>{children}</div>
 				)}
 			</div>
 		);
