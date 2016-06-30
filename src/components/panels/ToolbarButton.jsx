@@ -48,7 +48,7 @@ function getHandler (fn) {
 
 	let result = HANDLERS.get(fn);
 	if (!result) {
-		result = (e) => isActionable(e) && fn(e);
+		result = (e) => isActionable(e) && (fn(e), e.target.blur());
 		HANDLERS.set(fn, result);
 	}
 
