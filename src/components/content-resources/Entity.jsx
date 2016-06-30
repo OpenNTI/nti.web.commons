@@ -88,7 +88,14 @@ export default class Entity extends React.Component {
 			return;
 		}
 
-		selection.set(item);
+		// metaKey, altKey, ctrlKey, shiftKey
+
+		if (e.metaKey || e.ctrlKey) {
+			selection.add(item);
+		}
+		else {
+			selection.set(item);
+		}
 	}
 
 
