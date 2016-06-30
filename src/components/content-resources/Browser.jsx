@@ -111,7 +111,8 @@ export default class ContentResourcesBrowser extends React.Component {
 						this.selection.set(c.find(x => x.getID() === newFolder.getID()));
 						this.setState({folderContents: c}, () => this.onRename());
 					})
-			);
+			)
+			.catch(e => logger.error(e));
 	}
 
 
