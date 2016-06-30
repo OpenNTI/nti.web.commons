@@ -5,6 +5,7 @@ export default class RadioGroup extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {};
+		this.setup();
 	}
 
 	static propTypes = {
@@ -14,13 +15,11 @@ export default class RadioGroup extends React.Component {
 		onChange: React.PropTypes.func
 	}
 
-	componentWillMount () {
-		this.setup();
-	}
 
 	componentWillReceiveProps (nextProps) {
 		this.setup(nextProps);
 	}
+
 
 	setup (props = this.props) {
 		const {initialValue} = props;
@@ -28,6 +27,7 @@ export default class RadioGroup extends React.Component {
 			selected: initialValue
 		});
 	}
+
 
 	onChange = (e) => {
 		const selected = e.target.value;
@@ -39,9 +39,11 @@ export default class RadioGroup extends React.Component {
 		}
 	}
 
+
 	get value () {
 		return this.state.selected;
 	}
+
 
 	render () {
 		const {name, options} = this.props;
