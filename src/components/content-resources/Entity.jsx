@@ -71,7 +71,9 @@ export default class Entity extends React.Component {
 
 		this.setState({rename: false});
 
-		item.rename(newName);
+		if (newName !== item.getFileName()) {
+			item.rename(newName);
+		}
 	}
 
 
