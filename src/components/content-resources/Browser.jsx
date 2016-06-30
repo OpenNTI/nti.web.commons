@@ -133,7 +133,7 @@ export default class ContentResourcesBrowser extends React.Component {
 	onRename = () => {
 		const selections = Array.from(this.selection);
 		if (selections.length !== 1) {
-			logger.warn('Incorrect selection %o', this.selection);
+			logger.warn('Incorrect selection %o', Array.from(this.selection));
 			return;
 		}
 
