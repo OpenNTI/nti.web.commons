@@ -30,7 +30,9 @@ export default function ConfirmPrompt ({onDismiss, challenge, onConfirm}) {
 
 	return (
 		<div className="confirm-prompt">
+			<i className="icon-alert"/>
 			<div className="message">
+				<h3>Are you sure?</h3>
 				{challenge.message}
 			</div>
 			<DialogButtons buttons={buttons}/>
