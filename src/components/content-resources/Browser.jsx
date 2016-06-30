@@ -78,8 +78,8 @@ export default class ContentResourcesBrowser extends React.Component {
 	}
 
 
-	setFolder = (folder) => {
-		this.setState({folder, folderContents: void 0});
+	setFolder = (folder, contents) => {
+		this.setState({folder, folderContents: contents});
 
 		folder.getContents()
 			.then(c => this.setState({folderContents: c}))
@@ -96,9 +96,7 @@ export default class ContentResourcesBrowser extends React.Component {
 	}
 
 
-	onSelectionChange = () => {
-		this.forceUpdate();
-	}
+	refresh = () => this.setFolder(this.state.folder, this.state.folderContents)
 
 
 	toggle = () => this.setState({showInfo: !this.state.showInfo})
@@ -127,6 +125,11 @@ export default class ContentResourcesBrowser extends React.Component {
 		const [item] = selections;
 
 		item.emit('rename');
+	}
+
+
+	onSelectionChange = () => {
+		this.forceUpdate();
 	}
 
 
