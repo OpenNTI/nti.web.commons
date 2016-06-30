@@ -167,7 +167,8 @@ export default class ContentResourcesBrowser extends React.Component {
 
 	onMoveSelectTarget = () => {
 		const folderFilter = x => x.isFolder;
-		Chooser.show(this.props.sourceID, folderFilter);
+		Chooser.show(this.props.sourceID, folderFilter)
+			.then(this.refresh, this.refresh);
 	}
 
 
