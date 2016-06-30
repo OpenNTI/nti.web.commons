@@ -14,7 +14,8 @@ export default class TokenEditor extends React.Component {
 	static propTypes = {
 		tokens: React.PropTypes.array,
 		onFocus: React.PropTypes.func,
-		className: React.PropTypes.string
+		className: React.PropTypes.string,
+		preprocessToken: React.PropTypes.func
 	}
 
 	get value () {
