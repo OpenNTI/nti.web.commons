@@ -22,7 +22,7 @@ export default function ConfirmPrompt ({onDismiss, challenge, onConfirm}) {
 			onClick: onDismiss
 		},
 		{
-			className: 'confirm',
+			className: 'caution confirm',
 			label: 'Confirm',
 			onClick
 		}
