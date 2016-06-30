@@ -75,9 +75,9 @@ export default class DayTimeToggle extends React.Component {
 	}
 
 
-	onToggle = () => {
+	onToggle = ({target}) => {
 		const {active} = this.state;
-		if(!this.state[TOGGLE.BEGIN] && active === TOGGLE.BEGIN) {
+		if(!this.state[TOGGLE.BEGIN] && active === TOGGLE.BEGIN || target.getAttribute("name") === active) {
 			return;
 		}
 

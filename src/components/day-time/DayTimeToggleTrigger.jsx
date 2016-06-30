@@ -5,9 +5,9 @@ import DateTime from '../DateTime';
 
 DayTimeToggleTrigger.propTypes = {
 	className: PropTypes.string,
-	availableBeginning: PropTypes.instanceOf(Date).isRequired,
-	availableEnding: PropTypes.instanceOf(Date).isRequired,
-	onChange: PropTypes.func, //OnClick??,
+	availableBeginning: PropTypes.instanceOf(Date),
+	availableEnding: PropTypes.instanceOf(Date),
+	onChange: PropTypes.func,
 	disableText: PropTypes.bool
 };
 
