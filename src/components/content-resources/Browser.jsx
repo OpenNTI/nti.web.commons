@@ -82,7 +82,7 @@ export default class ContentResourcesBrowser extends React.Component {
 		this.setState({folder, folderContents: contents});
 
 		folder.getContents()
-			.then(c => this.setState({folderContents: c}))
+			.then(c => this.setState({folderContents: c, error: null}))
 			.catch(error => this.setState({error}));
 	}
 
