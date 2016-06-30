@@ -52,6 +52,8 @@ export ScrollTrigger from './ScrollTrigger';
 export Search from './Search';
 export SelectBox from './SelectBox';
 export SelectBoxItem from './SelectBoxItem';
+export Token from './Token';
+export TokenEditor from './TokenEditor';
 export TinyLoader from './TinyLoader';
 export TimePicker from './TimePicker';
 export Toggle from './Toggle';
