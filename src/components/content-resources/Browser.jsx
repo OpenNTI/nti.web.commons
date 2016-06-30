@@ -104,12 +104,21 @@ export default class ContentResourcesBrowser extends React.Component {
 
 	onDelete = () => {
 		let last = Promise.resolve();
+		const selection = Array.from(this.selection);
 
-		for (let item of this.selection) {
-			last = last.then(() => item.delete());
+		const drop = x => new Promise(next =>
+			this.setState({folderContents: this.state.folderContents.filter(i => i.getID() !== x.getID())}, next));
+
+		this.selection.set();
+
+		for (let item of selection) {
+			last = last
+				.then(() => item.delete())
+				.then(() => drop(item));
 		}
 
-		last.then(this.refresh, (e) => {
+
+		last.catch((e) => {
 			logger.error(e);
 			this.refresh();
 		});
@@ -119,24 +128,19 @@ export default class ContentResourcesBrowser extends React.Component {
 	onMakeDirectory = () => {
 		const {folder} = this.state;
 		const {last} = this.onMakeDirectory;
+
+		const append = x => new Promise(next =>
+			this.setState(
+				{folderContents: [...this.state.folderContents, x]},
+				() => next(x)
+			));
+
 		this.onMakeDirectory.last = (last || Promise.resolve())
 			.then(() =>
 				folder.mkdir()
-					.then(newFolder =>
-						folder.getContents()
-							.then(c => {
-								const id = newFolder.getID();
-								const inListInstance = c.find(x => x.getID() === id);
-
-								return new Promise(x => this.setState({folderContents: c}, x))
-									.then(() => {
-										if (inListInstance) {
-											this.selection.set(inListInstance);
-											this.onRename();
-										}
-									});
-							})
-					)
+					.then(append)
+					.then(x => this.selection.set(x))
+					.then(() => this.onRename())
 					.catch(e => logger.error(e))
 			);
 	}
