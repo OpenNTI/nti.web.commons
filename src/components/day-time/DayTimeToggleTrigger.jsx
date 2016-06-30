@@ -24,7 +24,7 @@ export default function DayTimeToggleTrigger (props) {
 		<div {...props} className={cx('daytime-toggle-trigger', className)}>
 			<div className={dateClassNames}>
 				<div className="month">{DateTime.format(begin, 'MMM')}</div>
-				<div className="day">{DateTime.format(begin, 'd')}</div>
+				<div className="day">{DateTime.format(begin, 'D')}</div>
 			</div>
 			<div className="main">
 				<div className={mainTextClassNames}>
