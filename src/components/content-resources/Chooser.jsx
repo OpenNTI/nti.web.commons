@@ -9,8 +9,8 @@ import Browser from './Browser';
 
 export default class Chooser extends React.Component {
 	static propTypes = {
+		accept: React.PropTypes.func,
 		filter: React.PropTypes.func,
-		selectable: React.PropTypes.func,
 		sourceID: React.PropTypes.string,
 		onCancel: React.PropTypes.func,
 		onDismiss: React.PropTypes.func,
@@ -18,13 +18,22 @@ export default class Chooser extends React.Component {
 		selectButtonLabel: React.PropTypes.string
 	}
 
-
-	static show (sourceID, filter, selectable, verb) {
+	/**
+	 * Open a Resource Browser-Picker. Currently only allowing a single item to be selected.
+	 *
+	 * @param  {string} sourceID - an NTIID of the resource provider. (eg: CourseInstance)
+	 * @param  {function} [accept] - A callback that inspects a File/Folder. Return true to make it selectable.
+	 * @param  {function} [filter] - A callback that inspects a File/Folder. Return falsy to remove it from
+	 *                           the list. Truthy to include it.
+	 * @param  {string} [labelOfButton] - Sets the label on the "Accept/Select" blue button.
+	 * @return {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
+	 */
+	static show (sourceID, accept, filter, verb) {
 		return new Promise((select, reject) => {
 			modal(
 				<Chooser sourceID={sourceID}
+					accept={accept}
 					filter={filter}
-					selectable={selectable}
 					selectButtonLabel={verb}
 					onCancel={reject}
 					onSelect={select}
@@ -86,8 +95,8 @@ export default class Chooser extends React.Component {
 		const {
 			state: {selected},
 			props:{
+				accept,
 				filter,
-				selectable,
 				sourceID,
 				selectButtonLabel
 			}
@@ -108,7 +117,9 @@ export default class Chooser extends React.Component {
 
 		return (
 			<div className="content-resource-chooser">
-				<Browser sourceID={sourceID} filter={filter} selectable={selectable}
+				<Browser sourceID={sourceID}
+					accept={accept}
+					filter={filter}
 					onClose={this.onCancel}
 					onSelectionChange={this.onSelectionChange}
 					/>

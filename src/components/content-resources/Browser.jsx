@@ -36,8 +36,8 @@ const t = scoped('CONTENT_RESOURCES.BROWSER', DEFAULT_TEXT);
 
 export default class ContentResourcesBrowser extends React.Component {
 	static propTypes = {
+		accept: PropTypes.func,
 		filter: PropTypes.func,
-		selectable: PropTypes.func,
 		sourceID: PropTypes.string,
 		onClose: PropTypes.func,
 		onSelectionChange: PropTypes.func
@@ -117,12 +117,12 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	canSelectItem = (item) => {
-		const {selectable} = this.props;
-		if (!selectable || typeof selectable !== 'function') {
+		const {accept} = this.props;
+		if (!accept || typeof accept !== 'function') {
 			return true;
 		}
 
-		return selectable(item);
+		return accept(item);
 	}
 
 
