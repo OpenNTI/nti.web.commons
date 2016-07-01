@@ -68,11 +68,16 @@ export default class Chooser extends React.Component {
 
 
 	onSelectionChange = (items) => {
-		const {filter} = this.props;
+		const {accept, filter} = this.props;
 		const [item] = items || [];
+		const matchesFilter = x => x && (!filter || filter(x));
+		const matchesAccepts = x => x && (!filter || accept(x));
 
 		this.setState({
-			selected: (item && (!filter || filter(item)) && items && items.length === 1) ? item : void 0
+			selected: (item
+					&& matchesAccepts(item)
+					&& matchesFilter(item)
+					&& items && items.length === 1) ? item : void 0
 		});
 	}
 
