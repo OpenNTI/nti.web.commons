@@ -36,13 +36,17 @@ const t = scoped('CONTENT_RESOURCES.BROWSER', DEFAULT_TEXT);
 
 export default class ContentResourcesBrowser extends React.Component {
 	static propTypes = {
+		filter: PropTypes.func,
+		selectable: PropTypes.func,
 		sourceID: PropTypes.string,
-		onClose: PropTypes.func
+		onClose: PropTypes.func,
+		onSelectionChange: PropTypes.func
 	}
 
 	static childContextTypes = {
 		onTrigger: PropTypes.func,
-		selectItem: PropTypes.func
+		selectItem: PropTypes.func,
+		canSelectItem: PropTypes.func
 	}
 
 
@@ -57,6 +61,7 @@ export default class ContentResourcesBrowser extends React.Component {
 
 	getChildContext = () => ({
 		onTrigger: this.onTrigger,
+		canSelectItem: this.canSelectItem,
 		selectItem: this.selectItem
 	})
 
@@ -67,7 +72,20 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	componentDidMount () {
+		this.setup();
+	}
+
+
+	componentWillReceiveProps (nextProps) {
 		const {sourceID} = this.props;
+		if (sourceID !== nextProps.sourceID) {
+			this.setup(nextProps);
+		}
+	}
+
+
+	setup (props = this.props) {
+		const {sourceID} = props;
 
 		getService()
 			.then(s => s.getObject(sourceID))
@@ -98,9 +116,23 @@ export default class ContentResourcesBrowser extends React.Component {
 	refresh = () => this.setFolder(this.state.folder, this.state.folderContents)
 
 
+	canSelectItem = (item) => {
+		const {selectable} = this.props;
+		if (!selectable || typeof selectable !== 'function') {
+			return true;
+		}
+
+		return selectable(item);
+	}
+
+
 	selectItem = (item, modifiers) => {
 		const {selection} = this;
 		const {metaKey, ctrlKey/*, altKey, shiftKey*/} = modifiers || {};
+
+		if (!this.canSelectItem(item)) {
+			return;
+		}
 
 		if (selection.isSelected(item)) {
 			if (metaKey || ctrlKey) {
@@ -122,13 +154,14 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	onDelete = () => {
-		let last = Promise.resolve();
 		const selection = Array.from(this.selection);
 
 		const drop = x => new Promise(next =>
 			this.setState({folderContents: this.state.folderContents.filter(i => i.getID() !== x.getID())}, next));
 
 		this.selection.set();
+
+		let last = Promise.resolve();
 
 		for (let item of selection) {
 			last = last
@@ -166,9 +199,38 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	onMoveSelectTarget = () => {
-		const folderFilter = x => x.isFolder;
-		Chooser.show(this.props.sourceID, folderFilter)
-			.then(this.refresh, this.refresh);
+		const allowed = x => !this.selection.isSelected(x);
+		const folders = x => x.isFolder;
+
+		if (this.selection.lenth < 1) {
+			return;
+		}
+
+		Chooser.show(this.props.sourceID, folders, allowed, 'Move')
+			.then(folder => folder.getPath())
+			.then(this.onMoveToDirectory)
+			.catch(this.refresh);
+	}
+
+
+	onMoveToDirectory = (path) => {
+		const selection = Array.from(this.selection);
+
+		const drop = x => new Promise(next =>
+			this.setState({folderContents: this.state.folderContents.filter(i => i.getID() !== x.getID())}, next));
+
+		this.selection.set();
+
+		let last = Promise.resolve();
+
+		for (let item of selection) {
+			last = last
+				.then(() => item.moveTo(path))
+				.then(() => drop(item));
+		}
+
+
+		return last.catch((e) => (logger.error(e), Promise.reject(e)));
 	}
 
 
@@ -186,7 +248,13 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	onSelectionChange = () => {
+		const {onSelectionChange} = this.props;
 		this.forceUpdate();
+
+		if (onSelectionChange) {
+			const selections = Array.from(this.selection);
+			onSelectionChange(selections);
+		}
 	}
 
 
@@ -207,8 +275,13 @@ export default class ContentResourcesBrowser extends React.Component {
 				folder,
 				folderContents,
 				showInfo
+			},
+			props: {
+				filter
 			}
 		} = this;
+
+		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
 
 		const selections = Array.from(selection);
 		const selected = selections.length;
@@ -239,7 +312,7 @@ export default class ContentResourcesBrowser extends React.Component {
 				) : !folderContents ? (
 					<Loading/>
 				) : (
-					<View contents={folderContents} selection={selection}>
+					<View contents={content} selection={selection}>
 						{showInfo && (
 							<Inspector selection={selection}/>
 						)}

@@ -1,12 +1,16 @@
 import React from 'react';
-import Browser from './Browser';
-import DialogButtons from '../DialogButtons';
+import cx from 'classnames';
 
 import {modal} from '../../prompts';
+
+import DialogButtons from '../DialogButtons';
+
+import Browser from './Browser';
 
 export default class Chooser extends React.Component {
 	static propTypes = {
 		filter: React.PropTypes.func,
+		selectable: React.PropTypes.func,
 		sourceID: React.PropTypes.string,
 		onCancel: React.PropTypes.func,
 		onDismiss: React.PropTypes.func,
@@ -15,11 +19,12 @@ export default class Chooser extends React.Component {
 	}
 
 
-	static show (sourceID, filter, verb) {
+	static show (sourceID, filter, selectable, verb) {
 		return new Promise((select, reject) => {
 			modal(
 				<Chooser sourceID={sourceID}
 					filter={filter}
+					selectable={selectable}
 					selectButtonLabel={verb}
 					onCancel={reject}
 					onSelect={select}
@@ -43,13 +48,25 @@ export default class Chooser extends React.Component {
 	onSelect = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		const {onSelect} = this.props;
+		const {props: {onSelect}, state: {selected}} = this;
+		if (!selected) { return; }
 
 		if (onSelect) {
-			onSelect();
+			onSelect(selected);
 		}
 		this.dismiss();
 	}
+
+
+	onSelectionChange = (items) => {
+		const {filter} = this.props;
+		const [item] = items || [];
+
+		this.setState({
+			selected: (item && (!filter || filter(item)) && items && items.length === 1) ? item : void 0
+		});
+	}
+
 
 	onCancel = (e) => {
 		if (e) {
@@ -67,10 +84,14 @@ export default class Chooser extends React.Component {
 
 	render () {
 		const {
-			filter,
-			sourceID,
-			selectButtonLabel
-		} = this.props;
+			state: {selected},
+			props:{
+				filter,
+				selectable,
+				sourceID,
+				selectButtonLabel
+			}
+		} = this;
 
 		const buttons = [
 			{
@@ -79,6 +100,7 @@ export default class Chooser extends React.Component {
 				onClick: this.onCancel
 			},
 			{
+				className: cx({disabled: !selected}),
 				label: selectButtonLabel || 'Select',
 				onClick: this.onSelect
 			}
@@ -86,7 +108,10 @@ export default class Chooser extends React.Component {
 
 		return (
 			<div className="content-resource-chooser">
-				<Browser sourceID={sourceID} fiter={filter} onClose={this.onCancel}/>
+				<Browser sourceID={sourceID} filter={filter} selectable={selectable}
+					onClose={this.onCancel}
+					onSelectionChange={this.onSelectionChange}
+					/>
 				<DialogButtons buttons={buttons}/>
 			</div>
 		);
