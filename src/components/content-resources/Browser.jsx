@@ -97,6 +97,7 @@ export default class ContentResourcesBrowser extends React.Component {
 
 	setFolder = (folder, contents) => {
 		this.setState({folder, folderContents: contents});
+		this.selection.set([]);
 
 		folder.getContents()
 			.then(c => this.setState({folderContents: c, error: null}))
