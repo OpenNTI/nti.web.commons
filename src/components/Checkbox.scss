@@ -23,10 +23,15 @@ label.checkbox-component {
 			}
 		}
 
-		&:checked + span.label::before {
-			background-image: url(./assets/checkbox-select.png);
+		&.checked + span.label.green::before {
+			background-image: url(./assets/checkbox-green-select.png);
 		}
 
+		&:checked + span.label::before {
+			background-image: url(./assets/checkbox-select.png);
+
+		}
+		
 		&:disabled + span.label::before {
 			opacity: 0.5;
 		}
