@@ -16,7 +16,7 @@ body > .folder-asset.ghost,
 		opacity: 0.6;
 	}
 
-	&:active, &:focus,
+	&:focus,
 	.no-touch &:hover {
 		outline: none;
 		background-color: #f5f5f5;
@@ -50,7 +50,7 @@ body > .folder-asset.ghost,
 		overflow: hidden;
 		text-overflow: ellipsis;
 
-		&:active, &:focus,
+		&:focus,
 		.no-touch &:hover {
 			outline: none;
 			text-decoration: underline;
