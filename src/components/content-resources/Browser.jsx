@@ -297,14 +297,14 @@ export default class ContentResourcesBrowser extends React.Component {
 						<TitleBalencer/>
 					</div>
 					<Toolbar>
-						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')}/>
+						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} disabled/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
 						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')} onClick={this.onDelete}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarSpacer/>
-						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle}/>
-						<Search/>
+						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle} disabled/>
+						<Search disabled/>
 					</Toolbar>
 				</Header>
 				{error ? (
