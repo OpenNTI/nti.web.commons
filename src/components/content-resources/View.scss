@@ -12,10 +12,23 @@
 
 	.view-main-pane {
 		flex: 1 1 auto;
+		overflow: scroll;
+
+		padding-right: rem-calc(5px);
+	}
+
+	&:not(.split) .view-main-pane {
+		padding-right: rem-calc(25px);
+		margin-right: rem-calc(-25px);
 	}
 
 	.context-view-pane {
 		flex: 0;
+		overflow: scroll;
+		min-width: 250px;
+		background: red;
+		padding-right: rem-calc(25px);
+		margin-right: rem-calc(-25px);
 	}
 
 	[draggable] {

@@ -6,6 +6,9 @@
 	// min-height: 720px;
 	// max-height: 720px;
 	background-color: #f2f2f2;
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
 
 	& > .loading {
 		position: relative;
@@ -13,6 +16,10 @@
 		top: 0;
 		margin: 0;
 		padding: 4rem 0;
+	}
+
+	.content-resource-view {
+		flex: 1 1 auto;
 	}
 
 	.toolbar-component .search-component {
