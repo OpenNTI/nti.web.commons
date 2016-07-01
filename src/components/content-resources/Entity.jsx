@@ -58,7 +58,9 @@ export default class Entity extends React.Component {
 		let {offsetWidth: width, offsetHeight: height} = target;
 		const {selection, item} = this.props;
 
-		const count = selection.isSelected(item) ? selection.length : 1;
+		const dragging = selection.isSelected(item) ? Array.from(selection) : [item];
+
+		const count = dragging.length;
 		const image = count <= 1
 			? target.cloneNode(true)
 			: getDetachedNodeFrom(<FileDragImage count={count}/>);
