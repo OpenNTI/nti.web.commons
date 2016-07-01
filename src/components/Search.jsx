@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import cx from 'classnames';
 import BufferedInput from './BufferedInput';
 
 const stop = e => e.preventDefault();
@@ -6,8 +7,9 @@ const stop = e => e.preventDefault();
 export default class Search extends React.Component {
 
 	static propTypes = {
-		onChange: React.PropTypes.func,
-		defaultValue: React.PropTypes.string
+		disabled: PropTypes.bool,
+		onChange: PropTypes.func,
+		defaultValue: PropTypes.string
 	}
 
 
@@ -28,11 +30,14 @@ export default class Search extends React.Component {
 	}
 
 	render () {
+		const {disabled, defaultValue} = this.props;
 		return (
-			<form onSubmit={stop} className="search-component">
+			<form onSubmit={stop} className={cx('search-component',{disabled})}>
 				<i className="icon-search"/>
 				<BufferedInput type="text"
-					defaultValue={this.props.defaultValue}
+					placeholder="Search"
+					disabled={disabled}
+					defaultValue={defaultValue}
 					onChange={this.onChange}
 					ref={this.attachRef}
 					required
