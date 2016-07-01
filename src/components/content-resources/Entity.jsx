@@ -11,6 +11,7 @@ export default class Entity extends React.Component {
 
 	static contextTypes = {
 		onTrigger: PropTypes.func.isRequired,
+		canSelectItem: PropTypes.func.isRequired,
 		selectItem: PropTypes.func.isRequired
 	}
 
@@ -39,6 +40,13 @@ export default class Entity extends React.Component {
 		if (this.props.item !== nextProps.item) {
 			this.setState(this.state = {});
 		}
+	}
+
+
+	canSelect = () => {
+		const {canSelectItem} = this.context;
+		if (!canSelectItem) { return true; }
+		return canSelectItem(this.props.item);
 	}
 
 

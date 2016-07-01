@@ -3,6 +3,11 @@
 .content-resource-view-layout .file-asset {
 	cursor: pointer;
 
+	&.unselectable {
+		pointer-events: none;
+		cursor: default;
+		opacity: 0.6;
+	}
 
 	&:active,
 	&:focus,

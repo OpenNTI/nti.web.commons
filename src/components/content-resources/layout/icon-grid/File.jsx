@@ -13,6 +13,7 @@ class File extends Entity {
 	render () {
 		const {props: {item, selection}, state: {rename}} = this;
 		const selected = selection.isSelected(item);
+		const unselectable = !this.canSelect();
 		const renameable = item.can('rename');
 		const mimeType = item.getFileMimeType();
 		const filename = item.getFileName();
@@ -20,7 +21,7 @@ class File extends Entity {
 		const image = !imgSrc ? null : imgSrc;
 
 		return (
-			<div className={cx('entity file-asset', {renameable, renaming: rename, selected})}
+			<div className={cx('entity file-asset', {renameable, renaming: rename, selected, unselectable})}
 				role="button"
 				aria-label={filename}
 				draggable

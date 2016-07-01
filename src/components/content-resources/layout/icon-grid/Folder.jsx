@@ -13,9 +13,10 @@ class Folder extends Entity {
 		const selected = selection.isSelected(item);
 		const renameable = item.can('rename');
 		const filename = item.getFileName();
+		const unselectable = !this.canSelect();
 
 		return (
-			<div className={cx('entity folder-asset', {renameable, selected})}
+			<div className={cx('entity folder-asset', {renameable, selected, unselectable})}
 				role="button"
 				aria-label={filename}
 				draggable

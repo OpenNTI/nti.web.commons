@@ -9,6 +9,12 @@
 	cursor: pointer;
 	position: relative;
 
+	&.unselectable {
+		pointer-events: none;
+		cursor: default;
+		opacity: 0.6;
+	}
+
 	&:active, &:focus,
 	.no-touch &:hover {
 		outline: none;
