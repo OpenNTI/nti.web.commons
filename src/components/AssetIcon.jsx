@@ -18,6 +18,8 @@ export default class Icon extends React.Component {
 		src: PropTypes.string,
 		href: PropTypes.string,
 
+		svg: PropTypes.bool,
+
 		mimeType: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.arrayOf(PropTypes.string)
@@ -110,7 +112,8 @@ export default class Icon extends React.Component {
 		const {
 			props: {
 				children,
-				className
+				className,
+				svg
 			},
 			state: {
 				cls,
@@ -120,6 +123,17 @@ export default class Icon extends React.Component {
 
 		const inlineStyles = this.getBackgroundImage();
 		const css = cx('file-type', 'icon', cls, className);
+
+		if (!children && svg) {
+			let text = label.length > 5 ? `${label.substr(0,5)}...` : label;
+			return (
+				<svg className={css} width="300" height="375" viewBox="0 0 80 100">
+					{label && (
+						<text x="50%" y="90" textAnchor="middle">{text}</text>
+					)}
+				</svg>
+			);
+		}
 
 		return (
 			<div className={css} style={inlineStyles}>

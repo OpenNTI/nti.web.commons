@@ -1,0 +1,10 @@
+@import "~nti-style-common";
+
+span.folder-name-component {
+	text-align: center;
+	color: $secondary-grey;
+	i.icon-folder {
+		color: #787878;
+		margin-right: rem-calc(10px);
+	}
+}

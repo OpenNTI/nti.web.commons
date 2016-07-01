@@ -2,47 +2,25 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Flyout} from '../../src/index';
-import {Prompt} from '../../src/index';
+import {addFeatureCheckClasses} from 'nti-lib-dom';
+import {ConflictResolutionHandler, ContentResources} from '../../src/index';
 
 import 'normalize.css';
-import 'nti-style-common/fonts.scss';
+import 'nti-style-common/all.scss';
 
+addFeatureCheckClasses();
 
-function modal () {
+global['$AppConfig'] = {server: '/dataserver2/'};
 
-	function ModalContent (props) {
-		const style = {
-			padding: '5rem 1rem 1rem',
-			background: 'white',
-			width: '80%',
-			textAlign: 'right',
-			boxSizing: 'border-box',
-			borderRadius: '3px'
-		};
-		return (
-			<div style={style}>
-				<button onClick={props.onDismiss}>Close</button>
-				<button onClick={modal}>Open</button>
-			</div>
-		);
-	}
+const ID = 'tag:nextthought.com,2011-10:system-OID-0x314663:5573657273:g2p9ZuMqCPF';
 
-	ModalContent.propTypes = {
-		onDismiss: React.PropTypes.func
-	};
-
-
-	Prompt.modal(
-		<ModalContent />
-	);
-}
+const {Browser} = ContentResources;
 
 //Kitchen Sink
 ReactDOM.render(
-	<div>
-		<Flyout/>
-		<div><button onClick={modal}>Modal</button></div>
+	<div className="test-kitchen">
+		<ConflictResolutionHandler/>
+		<Browser sourceID={ID}/>
 	</div>,
 	document.getElementById('content')
 );

@@ -1,0 +1,35 @@
+@import "~nti-style-common";
+
+.content-resource-browser {
+	position: relative;
+	max-width: 1024px;
+	// min-height: 720px;
+	// max-height: 720px;
+	background-color: #f2f2f2;
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+
+	& > .loading {
+		position: relative;
+		transform: none;
+		top: 0;
+		margin: 0;
+		padding: 4rem 0;
+	}
+
+	.content-resource-view {
+		flex: 1 1 auto;
+	}
+
+	.toolbar-component .search-component {
+		margin: rem-calc(0 10px 0 0);
+		min-width: 100px;
+		max-width: 230px;
+		flex: .5 1 auto;
+	}
+
+	@media (max-width: 768px) {
+		.toolbar-component .toolbar-button > span { display: none; }
+	}
+}

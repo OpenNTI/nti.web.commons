@@ -1,0 +1,76 @@
+@import "~nti-style-common";
+
+body > .folder-asset.ghost,
+.content-resource-view-layout .folder-asset {
+	border-radius: 2px;
+	background-color: #ffffff;
+	box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.1);
+	padding: rem-calc(10px 15px);
+	line-height: rem-calc(20px);
+	cursor: pointer;
+	position: relative;
+
+	&.unselectable {
+		pointer-events: none;
+		cursor: default;
+		opacity: 0.6;
+	}
+
+	&:active, &:focus,
+	.no-touch &:hover {
+		outline: none;
+		background-color: #f5f5f5;
+	}
+
+	&:hover.selected,
+	&.selected {
+		background-color: $primary-blue;
+		color: #fff;
+
+		span.filename,
+		i.icon-folder {
+			color: #fff;
+		}
+	}
+
+	i.icon-folder {
+		color: #787878;
+		margin-right: rem-calc(10px);
+	}
+
+	.filename {
+		$size: 13px;
+		height: rem-calc($size * 2.5);
+		font-size: rem-calc($size);
+		box-sizing: content-box;
+		font-weight: 600;
+		color: $primary-grey;
+
+		white-space: nowrap;;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&:active, &:focus,
+		.no-touch &:hover {
+			outline: none;
+			text-decoration: underline;
+		}
+	}
+
+	input.filename {
+		position: absolute;
+		height: auto;
+		width: calc(100% - 55px);
+		top: 50%;
+		left: 38px;
+		right: 0;
+		transform: translateY(-50%);
+		text-decoration: none !important;
+	}
+}
+
+
+body > .folder-asset.ghost {
+	position: absolute;
+	top: -1000px;
+}
