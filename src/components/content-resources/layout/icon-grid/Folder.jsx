@@ -25,6 +25,9 @@ class Folder extends Entity {
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
+
+				onDragEnd={this.onDragEnd}
+				onDragStart={this.onDragStart}
 				>
 				<i className="icon-folder small"/>
 				<span className="filename" onClick={this.onTrigger}>{filename}</span>

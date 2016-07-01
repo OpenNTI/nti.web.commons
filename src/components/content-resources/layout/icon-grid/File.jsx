@@ -30,6 +30,9 @@ class File extends Entity {
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
+
+				onDragEnd={this.onDragEnd}
+				onDragStart={this.onDragStart}
 				>
 				<div className="select">
 					<div className="file-asset-icon">

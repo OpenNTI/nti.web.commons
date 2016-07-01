@@ -43,6 +43,31 @@ export default class Entity extends React.Component {
 	}
 
 
+	onDragStart = (e) => {
+		const {target} = e;
+		const {offsetWidth: width, offsetHeight: height} = target;
+		let image = target.cloneNode(true);
+
+		this.onDragEnd();
+		this.dragImage = image;
+
+		image.removeAttribute('draggable');
+		image.classList.add('ghost');
+		image.style.width = width + 'px';
+
+		document.body.appendChild(image);
+		e.dataTransfer.setDragImage(image, width / 2, height / 2);
+	}
+
+
+	onDragEnd = () => {
+		if (this.dragImage) {
+			document.body.removeChild(this.dragImage);
+			delete this.dragImage;
+		}
+	}
+
+
 	canSelect = () => {
 		const {canSelectItem} = this.context;
 		if (!canSelectItem) { return true; }

@@ -1,5 +1,6 @@
 @import "~nti-style-common";
 
+body > .folder-asset.ghost,
 .content-resource-view-layout .folder-asset {
 	border-radius: 2px;
 	background-color: #ffffff;
@@ -66,4 +67,10 @@
 		transform: translateY(-50%);
 		text-decoration: none !important;
 	}
+}
+
+
+body > .folder-asset.ghost {
+	position: absolute;
+	top: -1000px;
 }

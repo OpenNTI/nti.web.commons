@@ -1,5 +1,6 @@
 @import "~nti-style-common";
 
+body > .file-asset.ghost,
 .content-resource-view-layout .file-asset {
 	cursor: pointer;
 
@@ -95,4 +96,10 @@
 	&.renameable.renaming .filename span {
 		visibility: hidden;
 	}
+}
+
+
+body > .file-asset.ghost {
+	position: absolute;
+	top: -1000px;
 }
