@@ -52,6 +52,7 @@ export default class Entity extends React.Component {
 		this.dragImage = image;
 
 		image.removeAttribute('draggable');
+		image.classList.add('content-dragged-asset');
 		image.classList.add('ghost');
 		image.style.width = width + 'px';
 
