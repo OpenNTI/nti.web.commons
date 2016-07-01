@@ -13,5 +13,5 @@ export Browser from './Browser';
  * @return {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
  */
 export function selectFrom (sourceID, accept, filter, labelOfButton = 'Place') {
-	return Chooser.show(this.props.sourceID, filter, accept, labelOfButton);
+	return Chooser.show(sourceID, filter, accept, labelOfButton);
 }
