@@ -50,6 +50,16 @@
 			font-weight: 300;
 		}
 
+		&.disabled {
+			opacity: 0.3;
+		}
+		&:not(.faded).disabled {
+			opacity: 1;
+			background: $disabled-button-background;
+			border-color: $disabled-button-border;
+			color: $disabled-button-color;
+		}
+
 
 		&.primary {
 			background: $primary-blue;
