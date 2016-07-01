@@ -26,6 +26,7 @@
 	bottom: 0;
 	right: 0;
 	background: rgba(0,0,0,.7);
+	perspective: 300px;
 	.icon-close {
 		position: absolute;
 		width: 16px;
@@ -53,7 +54,7 @@
 
 @keyframes modal-content {
 	0% {
-		transform: translate3d(0, 0, 0);
+		transform: translate3d(0, -50%, -30px);
 		opacity: 0;
 	}
 
