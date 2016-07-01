@@ -1,7 +1,17 @@
 import React, {PropTypes} from 'react';
+import ReactDOMServer from 'react-dom/server'; //eew
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 import isActionable from 'nti-commons/lib/is-event-actionable';
 import getCoolOff from 'nti-commons/lib/function-cooloff';
+import {getFragmentFromString} from 'nti-lib-dom';
+
+import FileDragImage from './FileDragImage';
+
+function getDetachedNodeFrom (jsxExp) {
+	let frag = getFragmentFromString(
+			ReactDOMServer.renderToStaticMarkup(jsxExp));
+	return frag.firstChild;
+}
 
 export default class Entity extends React.Component {
 	static propTypes = {
@@ -45,15 +55,29 @@ export default class Entity extends React.Component {
 
 	onDragStart = (e) => {
 		const {target} = e;
-		const {offsetWidth: width, offsetHeight: height} = target;
-		let image = target.cloneNode(true);
+		let {offsetWidth: width, offsetHeight: height} = target;
+		const {selection, item} = this.props;
+
+		const dragging = selection.isSelected(item) ? Array.from(selection) : [item];
+
+		const count = dragging.length;
+		const image = count <= 1
+			? target.cloneNode(true)
+			: getDetachedNodeFrom(<FileDragImage count={count}/>);
 
 		this.onDragEnd();
 		this.dragImage = image;
 
 		image.removeAttribute('draggable');
+		image.classList.add('content-dragged-asset');
 		image.classList.add('ghost');
-		image.style.width = width + 'px';
+
+		if (image.tagName !== 'SVG') {
+			image.style.width = width + 'px';
+		} else {
+			height = image.offsetHeight;
+			width = image.offsetWidth;
+		}
 
 		document.body.appendChild(image);
 		e.dataTransfer.setDragImage(image, width / 2, height / 2);

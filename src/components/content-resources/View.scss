@@ -18,6 +18,8 @@
 	}
 
 	&:not(.split) .view-main-pane {
+		padding-left: rem-calc(25px);
+		margin-left: rem-calc(-25px);
 		padding-right: rem-calc(25px);
 		margin-right: rem-calc(-25px);
 	}

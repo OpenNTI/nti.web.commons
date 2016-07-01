@@ -36,11 +36,12 @@ const t = scoped('CONTENT_RESOURCES.BROWSER', DEFAULT_TEXT);
 
 export default class ContentResourcesBrowser extends React.Component {
 	static propTypes = {
+		accept: PropTypes.func,
 		filter: PropTypes.func,
-		selectable: PropTypes.func,
 		sourceID: PropTypes.string,
 		onClose: PropTypes.func,
-		onSelectionChange: PropTypes.func
+		onSelectionChange: PropTypes.func,
+		onTrigger: PropTypes.func
 	}
 
 	static childContextTypes = {
@@ -97,6 +98,7 @@ export default class ContentResourcesBrowser extends React.Component {
 
 	setFolder = (folder, contents) => {
 		this.setState({folder, folderContents: contents});
+		this.selection.set([]);
 
 		folder.getContents()
 			.then(c => this.setState({folderContents: c, error: null}))
@@ -117,12 +119,12 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	canSelectItem = (item) => {
-		const {selectable} = this.props;
-		if (!selectable || typeof selectable !== 'function') {
+		const {accept} = this.props;
+		if (!accept || typeof accept !== 'function') {
 			return true;
 		}
 
-		return selectable(item);
+		return accept(item);
 	}
 
 
@@ -199,14 +201,14 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	onMoveSelectTarget = () => {
-		const allowed = x => !this.selection.isSelected(x);
-		const folders = x => x.isFolder;
+		const filter = x => !this.selection.isSelected(x);
+		const accept = x => x.isFolder && !this.selection.isSelected(x);
 
 		if (this.selection.lenth < 1) {
 			return;
 		}
 
-		Chooser.show(this.props.sourceID, folders, allowed, 'Move')
+		Chooser.show(this.props.sourceID, accept, filter, 'Move')
 			.then(folder => folder.getPath())
 			.then(this.onMoveToDirectory)
 			.catch(this.refresh);
@@ -259,6 +261,12 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	onTrigger = (item) => {
+		const {onTrigger} = this.props;
+
+		if(onTrigger && onTrigger(item)) {
+			return;
+		}
+
 		if (item.isFolder) {
 			return this.setFolder(item);
 		}
