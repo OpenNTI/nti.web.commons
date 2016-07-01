@@ -54,9 +54,26 @@ export default class Chooser extends React.Component {
 	}
 
 
+	onCancel = (e) => {
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+		const {onCancel} = this.props;
+
+		if (onCancel) {
+			onCancel();
+		}
+
+		this.dismiss();
+	}
+
+
 	onSelect = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
 		const {props: {onSelect}, state: {selected}} = this;
 		if (!selected) { return; }
 
@@ -64,6 +81,7 @@ export default class Chooser extends React.Component {
 			onSelect(selected);
 		}
 		this.dismiss();
+		return true;
 	}
 
 
@@ -82,19 +100,10 @@ export default class Chooser extends React.Component {
 	}
 
 
-	onCancel = (e) => {
-		if (e) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-		const {onCancel} = this.props;
-
-		if (onCancel) {
-			onCancel();
-		}
-
-		this.dismiss();
+	onTrigger = (item) => {
+		return (item === this.state.selected && this.onSelect());
 	}
+
 
 	render () {
 		const {
@@ -127,6 +136,7 @@ export default class Chooser extends React.Component {
 					filter={filter}
 					onClose={this.onCancel}
 					onSelectionChange={this.onSelectionChange}
+					onTrigger={this.onTrigger}
 					/>
 				<DialogButtons buttons={buttons}/>
 			</div>
