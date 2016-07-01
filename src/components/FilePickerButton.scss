@@ -9,6 +9,18 @@ span.file-picker.button {
 	font-size: rem-calc(14px);
 	display: inline-block;
 
+	&.disabled {
+		&, input {
+			pointer-events: none;
+			cursor: default;
+		}
+
+		> span {
+			color: $disabled-button-color;
+			background: $disabled-button-background;
+		}
+	}
+
 	input[type=file] {
 		position: absolute;
 		cursor: pointer;
