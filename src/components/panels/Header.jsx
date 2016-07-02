@@ -18,10 +18,10 @@ export default class Header extends React.Component {
 	}
 
 	render () {
-		const {children, className, onClose} = this.props;
+		const {children, className, onClose, ...otherProps} = this.props;
 
 		return (
-			<div {...this.props} className={cx('panel-header-component', className)}>
+			<div {...otherProps} className={cx('panel-header-component', className)}>
 				{children}
 				{onClose && (
 					<i className="icon-light-x"

@@ -17,7 +17,7 @@ ToolbarButton.propTypes = {
 };
 
 export default function ToolbarButton (props) {
-	const {available, checked, children, className, disabled, icon, label} = props;
+	const {available, checked, children, className, disabled, icon, label, ...otherProps} = props;
 	const toggle = ('checked' in props);
 	const onClick = getHandler(props.onClick);
 
@@ -26,7 +26,7 @@ export default function ToolbarButton (props) {
 	}
 
 	return (
-		<a {...props}
+		<a {...otherProps}
 			role="button"
 			className={cx('toolbar-button', className, {disabled, toggle, checked})}
 			data-tip={label}
