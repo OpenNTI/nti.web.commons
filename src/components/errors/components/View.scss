@@ -1,0 +1,10 @@
+@import "~nti-style-common";
+
+.nti-error {
+	font-size: 0.875rem;
+	color: $primary-red;
+
+	&.warning {
+		color: $primary-orange;
+	}
+}

@@ -22,6 +22,8 @@ export DurationPicker from './DurationPicker';
 export Ellipsed from './Ellipsed';
 export EmptyList from './EmptyList';
 export Error from './Error';
+export ErrorCmp from './errors';
+export {ErrorFactory} from './errors';
 export Favorite from './Favorite';
 export FilterableView from './FilterableView';
 export FilterBar from './FilterBar';
