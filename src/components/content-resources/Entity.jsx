@@ -53,12 +53,20 @@ export default class Entity extends React.Component {
 	}
 
 
+	isInDragSet () {
+		const {selection, item} = this.props;
+		const {dragging = []} = selection;
+		return dragging.includes(item);
+	}
+
+
 	onDragStart = (e) => {
 		const {target} = e;
 		let {offsetWidth: width, offsetHeight: height} = target;
 		const {selection, item} = this.props;
 
 		const dragging = selection.isSelected(item) ? Array.from(selection) : [item];
+		selection.set(dragging);
 
 		const count = dragging.length;
 		const image = count <= 1
@@ -66,6 +74,8 @@ export default class Entity extends React.Component {
 			: getDetachedNodeFrom(<FileDragImage count={count}/>);
 
 		this.onDragEnd();
+
+		selection.dragging = dragging;
 		this.dragImage = image;
 
 		image.removeAttribute('draggable');
@@ -84,10 +94,16 @@ export default class Entity extends React.Component {
 	}
 
 
-	onDragEnd = () => {
+	onDragEnd = (e) => {
+		const {selection} = this.props;
+		delete selection.dragging;
 		if (this.dragImage) {
 			document.body.removeChild(this.dragImage);
 			delete this.dragImage;
+		}
+
+		if (e) {
+			selection.emit('change', 'drag-end');
 		}
 	}
 

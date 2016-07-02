@@ -21,7 +21,7 @@ class File extends Entity {
 		const image = !imgSrc ? null : imgSrc;
 
 		return (
-			<div className={cx('entity file-asset', {renameable, renaming: rename, selected, unselectable})}
+			<div className={cx('entity file-asset', {renameable, renaming: rename, selected, unselectable, dragging: this.isInDragSet()})}
 				role="button"
 				aria-label={filename}
 				draggable
