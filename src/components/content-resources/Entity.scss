@@ -2,3 +2,7 @@ body > .content-dragged-asset.ghost {
 	position: absolute;
 	top: -1000px;
 }
+
+.content-resource-view-layout .entity.dragging {
+	opacity: 0;
+}

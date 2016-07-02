@@ -90,7 +90,13 @@ export default class Entity extends React.Component {
 		}
 
 		document.body.appendChild(image);
-		e.dataTransfer.setDragImage(image, width / 2, height / 2);
+
+		const {dataTransfer: tx} = e;
+		tx.effectAllowed = 'move';
+		tx.setData('application/json', JSON.stringify(dragging));
+		tx.setDragImage(image, width / 2, height / 2);
+
+		selection.emit('change', 'drag-start');
 	}
 
 
@@ -105,6 +111,32 @@ export default class Entity extends React.Component {
 		if (e) {
 			selection.emit('change', 'drag-end');
 		}
+	}
+
+
+	onDragOver = (e) => {
+		e.preventDefault();
+		e.dataTransfer.dropEffect = 'move';
+	}
+
+
+	onDragEnter = (e) => {
+		if (!this.isInDragSet()) {
+			e.target.classList.add('drag-over');
+		}
+	}
+
+	onDragLeave = (e) => {
+		e.target.classList.remove('drag-over');
+	}
+
+
+	onDrop = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+		e.target.classList.remove('drag-over');
+
+		console.log(e.dataTransfer.getData('application/json'));
 	}
 
 
