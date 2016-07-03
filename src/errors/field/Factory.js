@@ -1,5 +1,7 @@
 import {EventEmitter} from 'events';
 
+const DATA = Symbol('Data');
+
 function getMessageForReason (reason, overrides) {
 	const code = reason.ErrorCode;
 
@@ -12,43 +14,64 @@ function getMessageForReason (reason, overrides) {
 }
 
 class FieldError extends EventEmitter {
-	constructor (id, obj, field, message, reason, onClear) {
+	/**
+	 * Creates a FieldError.
+	 *
+	 * attachedTo is an object that looks like:
+	 * {
+	 * 		NTIID: String, //The object the error is on
+	 * 		Field: String, //The field on the object the error is on
+	 * 		Label: String, //User facing string describing what the error is on
+	 * }
+	 * @param  {String} id      identifier for the error
+	 * @param  {Object} attachedTo      what the error is on
+	 * @param  {String} message user facing message
+	 * @param  {Object} raw     the raw response from the server
+	 * @param  {Function} onClear callback for when the error is cleared
+	 * @return {void}
+	 */
+	constructor (id, attachedTo, message, raw, onClear) {
 		super();
 
 		this.onClear = onClear;
 
-		this.data = {
+		this[DATA] = {
 			id,
-			NTIID: obj.NTIID || obj,
-			field,
+			attachedTo,
 			message,
-			reason
+			raw
 		};
 	}
 
 
 	get ID () {
-		return this.data.id;
+		return this[DATA].id;
+	}
+
+	get raw () {
+		return this[DATA].reason;
 	}
 
 
-	get NTIID () {
-		return this.data.NTIID;
+	get attachedTo () {
+		return this[DATA].attachedTo;
 	}
 
 
-	get field () {
-		return this.data.field;
+	set attachedTo (value) {
+		this[DATA].attachedTo = value;
+		this.emit('changed');
 	}
 
 
 	get message () {
-		return this.data.message;
+		return this[DATA].message;
 	}
 
 
-	get reason () {
-		return this.data.reason;
+	set message (value) {
+		this[DATA].message = value;
+		this.emit('changed');
 	}
 
 
@@ -65,6 +88,14 @@ class FieldError extends EventEmitter {
 		this.emit('focus');
 	}
 
+
+	isAttachedTo (ntiid, field) {
+		const {attachedTo} = this;
+
+		//Is attached to the same NTIID, and if field is passed it is the same
+		return attachedTo.NTIID === ntiid && (field != null ? field === attachedTo.field : true);
+	}
+
 }
 
 export default class Factory {
@@ -73,9 +104,18 @@ export default class Factory {
 		this.seenCount = 0;
 	}
 
-
-	make (obj, field, reason, onClear) {
+	/**
+	 * Create a FieldError.
+	 * @param  {Object} attachedTo  describes what the error is on. See comment on FieldError's constructor
+	 * @param  {Object} reason  describes what the error is (i.e. the server's error response)
+	 * @param  {Function} onClear what to do when the error is cleared
+	 * @return {[type]}         [description]
+	 */
+	make (attachedTo, reason, onClear) {
 		this.seenCount += 1;
-		return new FieldError (this.seenCount, obj, field, getMessageForReason(reason, this.overrides), reason, onClear);
+
+		const message = getMessageForReason(reason, this.overrides);
+
+		return new FieldError (this.seenCount, attachedTo, message, reason, onClear);
 	}
 }
