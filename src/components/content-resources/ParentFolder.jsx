@@ -7,13 +7,13 @@ ParentFolder.propTypes = {
 };
 
 export default function ParentFolder (props) {
-	const {folder, emptyComponent: Empty} = props;
+	const {folder, emptyComponent: Empty, ...otherProps} = props;
 	const parent = folder && folder.getParentFolder();
 	return !parent ? (
 		!Empty ? null : (
 			<Empty/>
 		)
 	) : (
-		<DrillUp {...props} label={parent.getFileName()}/>
+		<DrillUp {...otherProps} label={parent.getFileName()}/>
 	);
 }

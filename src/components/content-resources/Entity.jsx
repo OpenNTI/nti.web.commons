@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server'; //eew
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 import isActionable from 'nti-commons/lib/is-event-actionable';
 import getCoolOff from 'nti-commons/lib/function-cooloff';
+import toJS from 'nti-commons/lib/json-parse-safe';
 import {getFragmentFromString} from 'nti-lib-dom';
 
 import FileDragImage from './FileDragImage';
@@ -21,6 +22,7 @@ export default class Entity extends React.Component {
 
 	static contextTypes = {
 		onTrigger: PropTypes.func.isRequired,
+		onFolderDrop: PropTypes.func.isRequired,
 		canSelectItem: PropTypes.func.isRequired,
 		selectItem: PropTypes.func.isRequired
 	}
@@ -115,18 +117,22 @@ export default class Entity extends React.Component {
 
 
 	onDragOver = (e) => {
+		if (!this.props.item.isFolder) { return; }
 		e.preventDefault();
 		e.dataTransfer.dropEffect = 'move';
 	}
 
 
 	onDragEnter = (e) => {
+		if (!this.props.item.isFolder) { return; }
 		if (!this.isInDragSet()) {
 			e.target.classList.add('drag-over');
 		}
 	}
 
+
 	onDragLeave = (e) => {
+		if (!this.props.item.isFolder) { return; }
 		e.target.classList.remove('drag-over');
 	}
 
@@ -134,9 +140,25 @@ export default class Entity extends React.Component {
 	onDrop = (e) => {
 		e.stopPropagation();
 		e.preventDefault();
+
+		if (!this.props.item.isFolder) { return; }
+
 		e.target.classList.remove('drag-over');
 
-		console.log(e.dataTransfer.getData('application/json'));
+		const {dataTransfer: dt} = e;
+		const {
+			context: {
+				onFolderDrop
+			},
+			props: {
+				item
+			}
+		} = this;
+
+		const {files} = dt;
+		const data = toJS(dt.getData('application/json'));
+
+		onFolderDrop(item, data, files);
 	}
 
 

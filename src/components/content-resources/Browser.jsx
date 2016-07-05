@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import {getService} from 'nti-web-client';
+
 import {scoped} from 'nti-lib-locale';
-import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 import Logger from 'nti-util-logger';
 
 import CError from '../Error';
 import Loading from '../Loading';
 
+import BrowsableView from './BrowsableView';
 import Chooser from './Chooser';
 import Search from '../Search';
 import ParentFolder from './ParentFolder';
@@ -34,7 +34,7 @@ const DEFAULT_TEXT = {
 
 const t = scoped('CONTENT_RESOURCES.BROWSER', DEFAULT_TEXT);
 
-export default class ContentResourcesBrowser extends React.Component {
+export default class ContentResourcesBrowser extends BrowsableView {
 	static propTypes = {
 		accept: PropTypes.func,
 		filter: PropTypes.func,
@@ -44,122 +44,12 @@ export default class ContentResourcesBrowser extends React.Component {
 		onTrigger: PropTypes.func
 	}
 
-	static childContextTypes = {
-		onTrigger: PropTypes.func,
-		selectItem: PropTypes.func,
-		canSelectItem: PropTypes.func
-	}
-
-
-	constructor (props) {
-		super(props);
-		this.selection = new ObjectSelectionModel();
-		this.state = {};
-
-		this.selection.addListener('change', this.onSelectionChange);
-	}
-
-
-	getChildContext = () => ({
-		onTrigger: this.onTrigger,
-		canSelectItem: this.canSelectItem,
-		selectItem: this.selectItem
-	})
-
-
-	componentWillUnmount () {
-		this.selection.removeListener('change', this.onSelectionChange);
-	}
-
-
-	componentDidMount () {
-		this.setup();
-	}
-
-
-	componentWillReceiveProps (nextProps) {
-		const {sourceID} = this.props;
-		if (sourceID !== nextProps.sourceID) {
-			this.setup(nextProps);
-		}
-	}
-
-
-	setup (props = this.props) {
-		const {sourceID} = props;
-
-		getService()
-			.then(s => s.getObject(sourceID))
-			.then(c => c.getResources())
-			.then(folder => this.setFolder(folder))
-			.catch(error => this.setState({error}));
-	}
-
-
-	setFolder = (folder, contents) => {
-		this.setState({folder, folderContents: contents});
-		this.selection.set([]);
-
-		folder.getContents()
-			.then(c => this.setState({folderContents: c, error: null}))
-			.catch(error => this.setState({error}));
-	}
-
-
-	gotoParent = () => {
-		const {folder} = this.state;
-		const parent = folder && folder.getParentFolder();
-		if (parent) {
-			this.setFolder(parent);
-		}
-	}
-
-
-	refresh = () => this.setFolder(this.state.folder, this.state.folderContents)
-
-
-	canSelectItem = (item) => {
-		const {accept} = this.props;
-		if (!accept || typeof accept !== 'function') {
-			return true;
-		}
-
-		return accept(item);
-	}
-
-
-	selectItem = (item, modifiers) => {
-		const {selection} = this;
-		const {metaKey, ctrlKey/*, altKey, shiftKey*/} = modifiers || {};
-
-		if (!this.canSelectItem(item)) {
-			return;
-		}
-
-		if (selection.isSelected(item)) {
-			if (metaKey || ctrlKey) {
-				selection.remove(item);
-			}
-			return;
-		}
-
-		if (metaKey || ctrlKey) {
-			selection.add(item);
-		}
-		else {
-			selection.set(item);
-		}
-	}
-
 
 	toggle = () => this.setState({showInfo: !this.state.showInfo})
 
 
 	onDelete = () => {
 		const selection = Array.from(this.selection);
-
-		const drop = x => new Promise(next =>
-			this.setState({folderContents: this.state.folderContents.filter(i => i.getID() !== x.getID())}, next));
 
 		this.selection.set();
 
@@ -168,7 +58,7 @@ export default class ContentResourcesBrowser extends React.Component {
 		for (let item of selection) {
 			last = last
 				.then(() => item.delete())
-				.then(() => drop(item));
+				.then(() => this.dropItem(item));
 		}
 
 
@@ -201,38 +91,16 @@ export default class ContentResourcesBrowser extends React.Component {
 
 
 	onMoveSelectTarget = () => {
+		const selected = Array.from(this.selection);
 		const filter = x => !this.selection.isSelected(x);
 		const accept = x => x.isFolder && !this.selection.isSelected(x);
 
-		if (this.selection.lenth < 1) {
+		if (selected.lenth < 1) {
 			return;
 		}
 
 		Chooser.show(this.props.sourceID, accept, filter, 'Move')
-			.then(folder => folder.getPath())
-			.then(this.onMoveToDirectory)
-			.catch(this.refresh);
-	}
-
-
-	onMoveToDirectory = (path) => {
-		const selection = Array.from(this.selection);
-
-		const drop = x => new Promise(next =>
-			this.setState({folderContents: this.state.folderContents.filter(i => i.getID() !== x.getID())}, next));
-
-		this.selection.set();
-
-		let last = Promise.resolve();
-
-		for (let item of selection) {
-			last = last
-				.then(() => item.moveTo(path))
-				.then(() => drop(item));
-		}
-
-
-		return last.catch((e) => (logger.error(e), Promise.reject(e)));
+			.then(folder => this.moveEntities(selected, folder));
 	}
 
 
@@ -246,32 +114,6 @@ export default class ContentResourcesBrowser extends React.Component {
 		const [item] = selections;
 
 		item.emit('rename');
-	}
-
-
-	onSelectionChange = () => {
-		const {onSelectionChange} = this.props;
-		this.forceUpdate();
-
-		if (onSelectionChange) {
-			const selections = Array.from(this.selection);
-			onSelectionChange(selections);
-		}
-	}
-
-
-	onTrigger = (item) => {
-		const {onTrigger} = this.props;
-
-		if(onTrigger && onTrigger(item)) {
-			return;
-		}
-
-		if (item.isFolder) {
-			return this.setFolder(item);
-		}
-
-		logger.debug('Selected File: %o', item);
 	}
 
 
@@ -307,9 +149,9 @@ export default class ContentResourcesBrowser extends React.Component {
 					<Toolbar>
 						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} disabled/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
+						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
 						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')} onClick={this.onDelete}/>
-						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarSpacer/>
 						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle} disabled/>
 						<Search disabled/>
