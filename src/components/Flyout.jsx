@@ -350,15 +350,15 @@ export default class Flyout extends React.Component {
 
 		const css = cx('flyout', className, alignment.side, {fixed, arrow});
 
-		const flyout = ReactDOM.render(
+		ReactDOM.render(
 			<div className={css} ref={this.attachFlyoutRef} style={style}>
 				{arrow && <div className="flyout-arrow"/>}
 				{children}
 			</div>
 		, this.fly, () => {
 
-			if (flyout && this.flyout === flyout) {
-				const {offsetWidth: width, offsetHeight: height} = flyout;
+			if (this.flyout) {
+				const {offsetWidth: width, offsetHeight: height} = this.flyout;
 				const {dimensions: dim} = alignment;
 				if (dim && (dim.width !== width || dim.height !== height)) {
 					this.realign();
