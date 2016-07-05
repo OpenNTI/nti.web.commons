@@ -1,7 +1,11 @@
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
 
+const root = path.resolve(__dirname, 'src');
+const testRoot = path.resolve(__dirname, 'test');
+const isRoot = (e) => e.startsWith(root) || e.startsWith(testRoot);
 
 exports = module.exports = {
 	entry: './src/index.js',
@@ -46,13 +50,14 @@ exports = module.exports = {
 		preLoaders: [
 			{
 				test: /src.+jsx?$/,
-				loader: 'baggage?[file].scss'
+				loader: 'baggage?[file].scss',
+				include: isRoot
 			}
 		],
 		loaders: [
 			{
 				test: /\.js(x?)$/,
-				exclude: /node_modules/,
+				include: isRoot,
 				loader: 'babel',
 				query: {
 					sourceMaps: true
