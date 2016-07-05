@@ -25,7 +25,7 @@ describe('DayPicker', () => {
 			});
 	});
 
-	it('Simulate Selecting a Day', () => {
+	xit('Simulate Selecting a Day', () => {
 		// TODO: Implament me
 		// const onChange = jasmine.createSpy('onChange');
 		// const date = new Date();
