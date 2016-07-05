@@ -35,7 +35,7 @@ export default function FileDragImage (props) {
 					<feGaussianBlur stdDeviation="0" in="SourceGraphic"></feGaussianBlur>
 				</filter>
 			</defs>
-			<g stroke="none" strokeWwidth="1" fill="none" fillRule="evenodd">
+			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
 				<g transform="translate(-1987.000000, -1311.000000)">
 					<g transform="translate(1991.000000, 1311.000000)">
 						<g transform="translate(35.343285, 53.107372) rotate(5.000000) translate(-35.343285, -53.107372) ">
