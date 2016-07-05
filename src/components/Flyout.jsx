@@ -309,8 +309,15 @@ export default class Flyout extends React.Component {
 
 
 	render () {
-		const props = Object.assign({}, this.props, {children: void 0});
-		let {trigger: Trigger} = this.props;
+		let {trigger: Trigger, ...props} = this.props;
+
+		delete props.children;
+		delete props.alignment;
+		delete props.afterAlign;
+		delete props.alignment;
+		delete props.className;
+		delete props.onDismiss;
+		delete props.arrow;
 
 		if (!Trigger) {
 			Trigger = ( <button>Trigger</button> );

@@ -49,7 +49,7 @@ export default class NumbertInput extends React.Component {
 
 
 	render () {
-		const {value: givenValue, className, pad} = this.props;
+		const {value: givenValue, className, pad, ...props} = this.props;
 		let value = givenValue;
 
 		if (pad) {
@@ -57,7 +57,7 @@ export default class NumbertInput extends React.Component {
 		}
 
 		return (
-			<input {...this.props}
+			<input {...props}
 				type="number"
 				className={cx('number-input-component', className)}
 				onChange={this.onChange}

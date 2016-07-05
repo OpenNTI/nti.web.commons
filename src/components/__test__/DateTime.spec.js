@@ -15,6 +15,14 @@ const relativeToMonths = new Date('2015-12-31T22:00:00.000Z'); //+++ days
 
 const getText = cmp => ReactDOM.findDOMNode(cmp).textContent;
 
+const render = (node, cmp, props, ...children) => new Promise(next =>
+	void ReactDOM.render(
+		React.createElement(cmp, {...props, ref (x) {cmp = x; props.ref && props.ref(x);}}, ...children),
+		node,
+		() => next(cmp)
+	));
+
+
 describe('DateTime', () => {
 	let container = document.createElement('div');
 	let newNode;
@@ -37,310 +45,143 @@ describe('DateTime', () => {
 		document.body.removeChild(container);
 	});
 
-	it('Base Cases: date only', () => {
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date}),
-			newNode
-		);
 
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date}),
-			container
-		);
+	const test = (props, ...children) => [
+		render(newNode, DateTime, props, ...children),
+		render(container, DateTime, props, ...children)
+	];
 
-		expect(getText(A)).toMatch(/October \d\d, 2015/);
-		expect(getText(B)).toMatch(/October \d\d, 2015/);
+
+
+	it('Base Cases: date only', (done) => {
+		Promise.all(test({date}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/October \d\d, 2015/)))
+			.then(done, (e) => done.fail(e));
 	});
 
 
-	it('Base Cases: date, relative to now', () => {
+	it('Base Cases: date, relative to now', (done) => {
 		const yesterday = moment().subtract(1, 'days');
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, relative: true}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, relative: true}),
-			container
-		);
-
-		expect(getText(A)).toEqual('a day ago');
-		expect(getText(B)).toEqual('a day ago');
+		Promise.all(test({date: yesterday, relative: true}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('a day ago')))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: date, relative to {Date}', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relative: true, relativeTo}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relative: true, relativeTo}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/\d days ago/);
-		expect(getText(B)).toMatch(/\d days ago/);
-
+	it('Base Cases: date, relative to {Date}', (done) => {
+		Promise.all(test({date, relative: true, relativeTo}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/\d days ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: date, relative to one day', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relative: true, relativeTo: relativeToOneDay}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relative: true, relativeTo: relativeToOneDay}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/a day ago/);
-		expect(getText(B)).toMatch(/a day ago/);
-
+	it('Base Cases: date, relative to one day', (done) => {
+		Promise.all(test({date, relative: true, relativeTo: relativeToOneDay}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/a day ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('relativeTo turns on relative', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/\d days ago/);
-		expect(getText(B)).toMatch(/\d days ago/);
-
+	it('relativeTo turns on relative', (done) => {
+		Promise.all(test({date, relativeTo}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/\d days ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('relativeTo: Weeks 1', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToWeek1}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToWeek1}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/1 week ago/);
-		expect(getText(B)).toMatch(/1 week ago/);
+	it('relativeTo: Weeks 1', (done) => {
+		Promise.all(test({date, relativeTo: relativeToWeek1}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/1 week ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('relativeTo: Weeks 2', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToWeek2}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToWeek2}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/2 weeks ago/);
-		expect(getText(B)).toMatch(/2 weeks ago/);
+	it('relativeTo: Weeks 2', (done) => {
+		Promise.all(test({date, relativeTo: relativeToWeek2}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/2 weeks ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('relativeTo: Weeks 3', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToWeek3}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToWeek3}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/3 weeks ago/);
-		expect(getText(B)).toMatch(/3 weeks ago/);
+	it('relativeTo: Weeks 3', (done) => {
+		Promise.all(test({date, relativeTo: relativeToWeek3}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/3 weeks ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('relativeTo: Weeks 4 (month)', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToMonth}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToMonth}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/a month ago/);
-		expect(getText(B)).toMatch(/a month ago/);
+	it('relativeTo: Weeks 4 (month)', (done) => {
+		Promise.all(test({date, relativeTo: relativeToMonth}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/a month ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('relativeTo: Months', () => {
-
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToMonths}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, relativeTo: relativeToMonths}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/\d months ago/);
-		expect(getText(B)).toMatch(/\d months ago/);
+	it('relativeTo: Months', (done) => {
+		Promise.all(test({date, relativeTo: relativeToMonths}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/\d months ago/)))
+			.then(done, (e) => done.fail(e));
 	});
 
 
-	it('Base Cases: date, alternate format', () => {
-
+	it('Base Cases: date, alternate format', (done) => {
 		const format = '[year:] YYYY';
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date, format}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date, format}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/year: \d{4}/);
-		expect(getText(B)).toMatch(/year: \d{4}/);
+		Promise.all(test({date, format}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/year: \d{4}/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: relative date, no suffix', () => {
+	it('Base Cases: relative date, no suffix', (done) => {
 		const yesterday = moment().subtract(1, 'days');
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, relative: true, suffix: false}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, relative: true, suffix: false}),
-			container
-		);
-
-		expect(getText(A)).toEqual('a day');
-		expect(getText(B)).toEqual('a day');
+		Promise.all(test({date: yesterday, relative: true, suffix: false}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('a day')))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: relative date, custom suffix', () => {
+	it('Base Cases: relative date, custom suffix', (done) => {
 		const yesterday = moment().subtract(1, 'days');
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, relative: true, suffix: ' bananas'}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, relative: true, suffix: ' bananas'}),
-			container
-		);
-
-		expect(getText(A)).toEqual('a day bananas');
-		expect(getText(B)).toEqual('a day bananas');
+		Promise.all(test({date: yesterday, relative: true, suffix: ' bananas'}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('a day bananas')))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: date, prefix', () => {
+	it('Base Cases: date, prefix', (done) => {
 		const yesterday = moment(date).subtract(1, 'days');
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, prefix: 'toast '}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: yesterday, prefix: 'toast '}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/toast October \d+, 2015/);
-		expect(getText(B)).toMatch(/toast October \d+, 2015/);
-
+		Promise.all(test({date: yesterday, prefix: 'toast '}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/toast October \d+, 2015/)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: date, showToday', () => {
+	it('Base Cases: date, showToday', (done) => {
 		const now = new Date();
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: now, showToday: true}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: now, showToday: true}),
-			container
-		);
-
-		expect(getText(A)).toEqual('Today');
-		expect(getText(B)).toEqual('Today');
+		Promise.all(test({date: now, showToday: true}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('Today')))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('Base Cases: date, showToday, custom message', () => {
+	it('Base Cases: date, showToday, custom message', (done) => {
 		const now = new Date();
 		const todayText = 'coffee';
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: now, showToday: true, todayText}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: now, showToday: true, todayText}),
-			container
-		);
-
-		expect(getText(A)).toEqual(todayText);
-		expect(getText(B)).toEqual(todayText);
+		Promise.all(test({date: now, showToday: true, todayText}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual(todayText)))
+			.then(done, (e) => done.fail(e));
 	});
 
 
-	it('todayText turns on showToday', () => {
+	it('todayText turns on showToday', (done) => {
 		const todayText = 'coffee';
 		const now = new Date();
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: now, todayText}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: now, todayText}),
-			container
-		);
-
-		expect(getText(A)).toEqual(todayText);
-		expect(getText(B)).toEqual(todayText);
+		Promise.all(test({date: now, todayText}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual(todayText)))
+			.then(done, (e) => done.fail(e));
 	});
 
-	it('supports timezone abbreviation', () => {
+	it('supports timezone abbreviation', (done) => {
 		const now = new Date();
 
-		const A = ReactDOM.render(
-			React.createElement(DateTime, {date: now, format: 'z'}),
-			newNode
-		);
-
-		const B = ReactDOM.render(
-			React.createElement(DateTime, {date: now, format: 'z'}),
-			container
-		);
-
-		expect(getText(A)).toMatch(/[A-Z]{2,}/i);
-		expect(getText(B)).toMatch(/[A-Z]{2,}/i);
+		Promise.all(test({date: now, format: 'z'}))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/[A-Z]{2,}/i)))
+			.then(done, (e) => done.fail(e));
 	});
 
 });

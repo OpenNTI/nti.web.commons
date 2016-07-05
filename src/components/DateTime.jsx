@@ -88,7 +88,8 @@ export default class DateTime extends React.Component {
 				showToday,
 				relativeTo,
 				relative,
-				todayText
+				todayText,
+				...otherProps
 			},
 			state: {
 				tz
@@ -126,7 +127,7 @@ export default class DateTime extends React.Component {
 
 		text = (prefix || '') + text + (suffix || '');
 
-		const props = Object.assign({}, this.props, {
+		const props = Object.assign({}, otherProps, {
 			dateTime: moment(date).format()
 		});
 
