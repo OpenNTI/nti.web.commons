@@ -9,11 +9,17 @@ ErrorListItem.propTypes = {
 function ErrorListItem ({error, isWarning}) {
 	const {attachedTo, message} = error;
 	const {label} = attachedTo;
-	const cls = cx('nti-error-listitem', {warning: isWarning});
+	const cls = cx('nti-error-list-item', {warning: isWarning});
+
+	const onClick = () => {
+		if (error && error.focus) {
+			error.focus();
+		}
+	};
 
 	return (
 		<div className={cls}>
-			{label && (<span className="label">label</span>)}
+			{label && (<span className="label" onClick={onClick}>{label}</span>)}
 			<span className="message">{message}</span>
 		</div>
 	);

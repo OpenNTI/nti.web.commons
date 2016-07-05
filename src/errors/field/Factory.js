@@ -49,7 +49,7 @@ class FieldError extends EventEmitter {
 	}
 
 	get raw () {
-		return this[DATA].reason;
+		return this[DATA].raw;
 	}
 
 
@@ -96,6 +96,12 @@ class FieldError extends EventEmitter {
 		return attachedTo.NTIID === ntiid && (field != null ? field === attachedTo.field : true);
 	}
 
+
+	isAttachedToField (field) {
+		const {attachedTo} = this;
+
+		return attachedTo.field === field;
+	}
 }
 
 export default class Factory {

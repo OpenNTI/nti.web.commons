@@ -1,0 +1,19 @@
+@import "~nti-style-common";
+
+.nti-error-flyout-list {
+	.nti-error-flyout-trigger {
+		font-size: 0.875rem;
+		line-height: 1rem;
+		color: $primary-red;
+		cursor: pointer;
+
+		i {
+			font-size: 1rem;
+			vertical-align: middle;
+		}
+
+		span {
+			vertical-align: middle;
+		}
+	}
+}

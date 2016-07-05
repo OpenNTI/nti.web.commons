@@ -1,0 +1,11 @@
+@import "~nti-style-common";
+
+.nti-error-list-item {
+	font-size: 0.875rem;
+
+	.label {
+		margin-right: 0.5rem;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
