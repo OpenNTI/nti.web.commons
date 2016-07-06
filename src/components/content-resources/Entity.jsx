@@ -225,6 +225,8 @@ export default class Entity extends React.Component {
 		e.preventDefault();
 		e.stopPropagation();
 
+		if (e.metaKey || e.ctrlKey) { return; }
+
 		if (getCoolOff(this.onTrigger)) {
 			return;
 		}
