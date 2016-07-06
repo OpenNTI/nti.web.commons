@@ -1,8 +1,9 @@
 @import "~nti-style-common";
 
 .content-resource-view {
+	$sideMargin: 20px;
 	@include clearfix;
-	padding: rem-calc(0 25px);
+	padding: rem-calc(0 $sideMargin);
 	min-height: rem-calc(160px);
 
 	display: flex;
@@ -14,23 +15,23 @@
 		flex: 1 1 auto;
 		overflow: scroll;
 
-		padding-right: rem-calc(5px);
+		padding-right: rem-calc($sideMargin - 5px);
 	}
 
 	&:not(.split) .view-main-pane {
-		padding-left: rem-calc(25px);
-		margin-left: rem-calc(-25px);
-		padding-right: rem-calc(25px);
-		margin-right: rem-calc(-25px);
+		padding-left: rem-calc($sideMargin);
+		margin-left: rem-calc(-$sideMargin);
+		padding-right: rem-calc($sideMargin);
+		margin-right: rem-calc(-$sideMargin);
 	}
 
 	.context-view-pane {
 		flex: 0;
 		overflow: scroll;
-		min-width: 250px;
+		min-width: 350px;
 		background: red;
-		padding-right: rem-calc(25px);
-		margin-right: rem-calc(-25px);
+		padding-right: rem-calc($sideMargin);
+		margin-right: rem-calc(-$sideMargin);
 	}
 
 	[draggable] {
