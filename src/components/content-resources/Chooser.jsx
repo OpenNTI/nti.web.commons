@@ -25,16 +25,16 @@ export default class Chooser extends React.Component {
 	 * @param  {function} [accept] - A callback that inspects a File/Folder. Return true to make it selectable.
 	 * @param  {function} [filter] - A callback that inspects a File/Folder. Return falsy to remove it from
 	 *                           the list. Truthy to include it.
-	 * @param  {string} [labelOfButton] - Sets the label on the "Accept/Select" blue button.
+	 * @param  {string} [selectButtonLabel] - Sets the label on the "Accept/Select" blue button.
 	 * @return {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
 	 */
-	static show (sourceID, accept, filter, verb) {
+	static show (sourceID, accept, filter, selectButtonLabel) {
 		return new Promise((select, reject) => {
 			modal(
 				<Chooser sourceID={sourceID}
 					accept={accept}
 					filter={filter}
-					selectButtonLabel={verb}
+					selectButtonLabel={selectButtonLabel}
 					onCancel={reject}
 					onSelect={select}
 					/>,

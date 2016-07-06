@@ -29,6 +29,12 @@
 		flex: .5 1 auto;
 	}
 
+	.status-bar {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
+
 	@media (max-width: 768px) {
 		.toolbar-component .toolbar-button > span { display: none; }
 	}

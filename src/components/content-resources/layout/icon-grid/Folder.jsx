@@ -16,7 +16,7 @@ class Folder extends Entity {
 		const unselectable = !this.canSelect();
 
 		return (
-			<div className={cx('entity folder-asset', {renameable, selected, unselectable})}
+			<div className={cx('entity folder-asset', {renameable, selected, unselectable, dragging: this.isInDragSet()})}
 				role="button"
 				aria-label={filename}
 				draggable
@@ -28,6 +28,12 @@ class Folder extends Entity {
 
 				onDragEnd={this.onDragEnd}
 				onDragStart={this.onDragStart}
+
+				onDragOver={this.onDragOver}
+				onDragEnter={this.onDragEnter}
+				onDragLeave={this.onDragLeave}
+
+				onDrop={this.onDrop}
 				>
 				<i className="icon-folder small"/>
 				<span className="filename" onClick={this.onTrigger}>{filename}</span>

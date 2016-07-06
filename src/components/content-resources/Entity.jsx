@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server'; //eew
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 import isActionable from 'nti-commons/lib/is-event-actionable';
 import getCoolOff from 'nti-commons/lib/function-cooloff';
+import toJS from 'nti-commons/lib/json-parse-safe';
 import {getFragmentFromString} from 'nti-lib-dom';
 
 import FileDragImage from './FileDragImage';
@@ -21,6 +22,7 @@ export default class Entity extends React.Component {
 
 	static contextTypes = {
 		onTrigger: PropTypes.func.isRequired,
+		onFolderDrop: PropTypes.func.isRequired,
 		canSelectItem: PropTypes.func.isRequired,
 		selectItem: PropTypes.func.isRequired
 	}
@@ -53,12 +55,20 @@ export default class Entity extends React.Component {
 	}
 
 
+	isInDragSet () {
+		const {selection, item} = this.props;
+		const {dragging = []} = selection;
+		return dragging.includes(item);
+	}
+
+
 	onDragStart = (e) => {
 		const {target} = e;
 		let {offsetWidth: width, offsetHeight: height} = target;
 		const {selection, item} = this.props;
 
 		const dragging = selection.isSelected(item) ? Array.from(selection) : [item];
+		selection.set(dragging);
 
 		const count = dragging.length;
 		const image = count <= 1
@@ -66,6 +76,8 @@ export default class Entity extends React.Component {
 			: getDetachedNodeFrom(<FileDragImage count={count}/>);
 
 		this.onDragEnd();
+
+		selection.dragging = dragging;
 		this.dragImage = image;
 
 		image.removeAttribute('draggable');
@@ -80,15 +92,73 @@ export default class Entity extends React.Component {
 		}
 
 		document.body.appendChild(image);
-		e.dataTransfer.setDragImage(image, width / 2, height / 2);
+
+		const {dataTransfer: tx} = e;
+		tx.effectAllowed = 'move';
+		tx.setData('application/json', JSON.stringify(dragging));
+		tx.setDragImage(image, width / 2, height / 2);
+
+		selection.emit('change', 'drag-start');
 	}
 
 
-	onDragEnd = () => {
+	onDragEnd = (e) => {
+		const {selection} = this.props;
+		delete selection.dragging;
 		if (this.dragImage) {
 			document.body.removeChild(this.dragImage);
 			delete this.dragImage;
 		}
+
+		if (e) {
+			selection.emit('change', 'drag-end');
+		}
+	}
+
+
+	onDragOver = (e) => {
+		if (!this.props.item.isFolder) { return; }
+		e.preventDefault();
+		e.dataTransfer.dropEffect = 'move';
+	}
+
+
+	onDragEnter = (e) => {
+		if (!this.props.item.isFolder) { return; }
+		if (!this.isInDragSet()) {
+			e.target.classList.add('drag-over');
+		}
+	}
+
+
+	onDragLeave = (e) => {
+		if (!this.props.item.isFolder) { return; }
+		e.target.classList.remove('drag-over');
+	}
+
+
+	onDrop = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		if (!this.props.item.isFolder) { return; }
+
+		e.target.classList.remove('drag-over');
+
+		const {dataTransfer: dt} = e;
+		const {
+			context: {
+				onFolderDrop
+			},
+			props: {
+				item
+			}
+		} = this;
+
+		const {files} = dt;
+		const data = toJS(dt.getData('application/json'));
+
+		onFolderDrop(item, data, files);
 	}
 
 
