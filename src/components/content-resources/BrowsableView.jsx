@@ -5,6 +5,7 @@ import Logger from 'nti-util-logger';
 
 import TaskQueue from './tasks/Queue';
 import MoveTask from './tasks/Move';
+import UploadTask from './tasks/Upload';
 
 import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 
@@ -167,9 +168,16 @@ export default class BrowsableView extends React.Component {
 	}
 
 
+	uploadFiles = (files, folder) => {
+		for (let item of files) {
+			this.taskQueue.add(new UploadTask(item, folder));
+		}
+	}
+
+
 	onFolderDrop = (target, data, files) => {
 
-		if (files && files.lenth) {
+		if (files && files.length) {
 			this.uploadFiles(files, target);
 		}
 		else if (data && Array.isArray(data) && data.every(isFile)) {
@@ -201,7 +209,6 @@ export default class BrowsableView extends React.Component {
 
 	onTasksEnqueued = () => {
 		logger.log('Starting to work on tasks');
-
 	}
 
 
