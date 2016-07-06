@@ -18,6 +18,25 @@ export default class TaskQueue extends EventEmitter {
 	}
 
 
+	get running () {
+		return !!this.current || !!this.previous;
+	}
+
+
+	get empty () {
+		return this.queue.length === 0 && this.done.length === 0;
+	}
+
+
+	cleanup () {
+		delete this.previous;
+		this.done = this.done.filter(x => x.error || x.needsConfirmation);
+		if (this.queue.length !== 0) {
+			logger.warn('Unexpected state');
+		}
+	}
+
+
 	add (task) {
 		const queue = this.queue.filter(x => x !== task);
 		const move = this.queue.length !== queue.length;
@@ -28,6 +47,7 @@ export default class TaskQueue extends EventEmitter {
 			listen(this, task);
 		}
 
+
 		this.schedual();
 	}
 
@@ -35,33 +55,40 @@ export default class TaskQueue extends EventEmitter {
 		if (!this.current) {
 			let task = this.current = this.queue[this.queue.length - 1];
 			if (!task) {
-				this.done = [];
-				if (this.queue.length !== 0) {
-					logger.warn('Unexpected state');
-				}
+				this.cleanup();
 				return void this.emit('finish');
 			}
 
-			this.nextUp = task.begin();
+			task.begin();
+			if (!this.previous) {
+				this.emit('begin');
+			}
 		}
 	}
 
 
-	onTaskProgress = (task, progress, total) => {
-		logger.log('Progress: %o %d %d', task, progress, total);
+	onTaskProgress = (task, taskProgress, taskTotal) => {
+		const count = (acc, t) => acc + t.total;
+		const done = this.done.reduce(count, 0);
+		const max = done + this.queue.reduce(count, 0);
+		const value = done + taskProgress;
+
+		logger.log('Progress: %o %d (%d) %d (%d)', task, taskProgress, value, taskTotal, max);
+		this.emit('progress', task, value, max);
 	}
 
 
 	onTaskFinish = (task, error) => {
 		stopListening(this, task);
+		if (error) { this.emit('error', error); }
 
 		if (this.current === task) {
 			this.queue = this.queue.filter(x => x !== task);
 			this.done.push(task);
+			this.previous = this.current;
 			delete this.current;
 		}
 
-		if (error) { this.emit('error', error); }
 		if (!error || !this.stopOnError) {
 			this.schedual();
 		}

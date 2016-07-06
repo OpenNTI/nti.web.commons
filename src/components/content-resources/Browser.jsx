@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-
+import Transition from 'react-addons-css-transition-group';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 
@@ -18,6 +18,8 @@ import Header, {TitleBalencer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
 import ToolbarButton from '../panels/ToolbarButton';
 import FilePickerButton from '../FilePickerButton';
+
+import ProgressBar from '../ProgressBar';
 
 
 const logger = Logger.get('common:components:content-resources:Browser');
@@ -124,7 +126,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				error,
 				folder,
 				folderContents,
-				showInfo
+				showInfo,
+				progress
 			},
 			props: {
 				filter
@@ -168,7 +171,21 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						)}
 					</View>
 				)}
-				<div className="progress"/>
+				<div className="status-bar">
+					<Transition component="div" className=""
+						transitionName="content-resource-browser-drop"
+						transitionEnterTimeout={500}
+						transitionLeaveTimeout={500}
+						>
+						{progress && (
+							<ProgressBar key="progress"
+								max={progress.max}
+								value={progress.value}
+								text={progress.text}
+								/>
+						)}
+					</Transition>
+				</div>
 			</div>
 		);
 	}

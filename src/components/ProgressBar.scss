@@ -1,0 +1,108 @@
+@import "~nti-style-common";
+
+.progress-bar-component {
+	position: relative;
+	margin: rem-calc(10px) auto;
+	max-width: rem-calc(600px);
+	width: 100%;
+	display: block;
+	border-radius: 2px;
+	background-color: #ffffff;
+	box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.1);
+	padding: rem-calc(11px 15px 10px);
+	font-size: rem-calc(13px);
+	font-weight: 600;
+	color: $secondary-grey;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	min-height: rem-calc(50px);
+	transition: min-height 300ms linear;
+	overflow: hidden;
+
+	&.complete {
+		min-height: rem-calc(40px);
+		background-color: #ebf7ed;
+		color: $secondary-green;
+		line-height: 1.5;
+
+		i.icon-check {
+			margin-right: rem-calc(5px);
+		}
+
+		a, a:link, a:visited, a:hover {
+			color: $tertiary-grey;
+			text-decoration: none;
+			float: right;// eeew
+		}
+	}
+
+
+	.progress-header {
+		margin: 0;
+		line-height: 1.15;
+
+		a, a:link, a:visited {
+			color: $primary-blue;
+			text-decoration: none;
+			margin-left: rem-calc(15px);
+			.no-touch &:hover {
+				text-decoration: underline;
+			}
+		}
+
+		.time-left {
+			color: $tertiary-grey;
+			float: right;//eew...
+		}
+	}
+
+
+	.progress-bar-fallback,
+	progress[value] {
+		appearance: none;
+		border: none;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		height: rem-calc(5px);
+		background-color: rgba($primary-blue, 0.2);
+		color: $primary-blue;
+		position: relative;
+	}
+
+
+	progress[value] {
+		&::-moz-progress-bar { background: $primary-blue; }
+		&::-webkit-progress-value { background: $primary-blue; }
+		&::-webkit-progress-bar { background-color: rgba($primary-blue, 0.2); }
+	}
+
+
+	.progress-bar-fallback > span {
+		display: block;
+		text-indent: -9999px;
+	}
+}
+
+
+.progress-bar-transition-enter {
+	opacity: 0.01;
+}
+
+.progress-bar-transition-enter.progress-bar-transition-enter-active {
+	opacity: 1;
+	transition: opacity 300ms ease-in;
+}
+
+.progress-bar-transition-leave {
+	position: absolute;
+	top: rem-calc(11px);
+	left: rem-calc(15px);
+	right: rem-calc(15px);
+	opacity: 1;
+}
+
+.progress-bar-transition-leave.progress-bar-transition-leave-active {
+	opacity: 0.01;
+	transition: opacity 300ms ease-in;
+}

@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {getService} from 'nti-web-client';
+import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 
 import TaskQueue from './tasks/Queue';
@@ -10,6 +11,19 @@ import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 const logger = Logger.get('common:components:content-resources:BrowsableView');
 
 const isFile = x => x && /nextthought.+(folder|file)/i.test(x.MimeType);
+
+const DEFAULT_TEXT = {
+	ACTIVE: {
+		move: 'Moving %(filename)s...',
+		upload: 'Uploading %(filename)s...'
+	},
+	COMPLETE: {
+		move: 'Moved %(filename)s.',
+		upload: 'Uploaded %(filename)s.'
+	}
+};
+
+const t = scoped('CONTENT_RESOURCES', DEFAULT_TEXT);
 
 export default class BrowsableView extends React.Component {
 	static propTypes = {
@@ -44,6 +58,7 @@ export default class BrowsableView extends React.Component {
 
 		this.selection.addListener('change', this.onSelectionChange);
 		this.taskQueue.addListener('begin', this.onTasksEnqueued);
+		this.taskQueue.addListener('progress', this.onTaskProgress);
 		this.taskQueue.addListener('finish', this.onTasksComplete);
 	}
 
@@ -64,6 +79,7 @@ export default class BrowsableView extends React.Component {
 	componentWillUnmount () {
 		this.selection.removeListener('change', this.onSelectionChange);
 		this.taskQueue.removeListener('begin', this.onTasksEnqueued);
+		this.taskQueue.removeListener('progress', this.onTaskProgress);
 		this.taskQueue.removeListener('finish', this.onTasksComplete);
 	}
 
@@ -175,10 +191,31 @@ export default class BrowsableView extends React.Component {
 	}
 
 
-	onTasksComplete = () => {}
+	onTasksComplete = () => {
+		logger.log('All finished');
+		if (this.taskQueue.empty) {
+			this.setState({progress: void 0});
+		}
+	}
 
 
-	onTasksEnqueued = () => {}
+	onTasksEnqueued = () => {
+		logger.log('Starting to work on tasks');
+
+	}
+
+
+	onTaskProgress = (task, value, max) => {
+		const key = value === max ? 'COMPLETE' : 'ACTIVE';
+
+		this.setState({
+			progress: {
+				text: t(`${key}.${task.verb}`, {filename: task.filename}),
+				max,
+				value
+			}
+		});
+	}
 
 
 	onTrigger = (item) => {

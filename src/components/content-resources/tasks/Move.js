@@ -20,7 +20,7 @@ export default class Move extends Task {
 	 */
 	constructor (data, path, onComplete) {
 		super(()=> this.performMove(data, path), 1, onComplete);
-		this.verb = 'Moving';
+		this.verb = 'move';
 		this.filename = data.filename;
 	}
 
