@@ -16,7 +16,7 @@ export default class ContentResourcesView extends React.Component {
 	}
 
 
-	clearSelection = () => this.props.selection.set()
+	clearSelection = (e) => (!e.metaKey && !e.ctrlKey) && this.props.selection.set()
 
 
 	render () {
