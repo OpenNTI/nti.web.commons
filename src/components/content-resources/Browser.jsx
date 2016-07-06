@@ -214,7 +214,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 								/>
 						)}
 
-						{!dragover && (
+						{dragover && (
 							<div key="drag" className="drag-over-message">
 								{t('DRAG_DROP.drag-over-mesasge')}
 							</div>
