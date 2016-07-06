@@ -44,6 +44,7 @@ export NumberInput from './NumberInput';
 export OkCancelButtons from './OkCancelButtons';
 export PanelButton from './PanelButton';
 export Pager from './Pager';
+export ProgressBar from './ProgressBar';
 export PromiseButton from './PromiseButton';
 export Publish from './Publish';
 export PublishTrigger from './PublishTrigger';
