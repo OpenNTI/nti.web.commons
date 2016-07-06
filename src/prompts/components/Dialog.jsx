@@ -7,18 +7,33 @@ import DialogButtons from '../../components/DialogButtons';
 const logger = Logger.get('prompts:components:Dialog');
 const emptyFunction = () => {};
 
+const MOUNT_POINT_CLS = 'nti-dialog-mount-point';
+
 export default class Dialog extends React.Component {
 
 	static getMountPoint () {
-		return document.getElementById('modals');
+		let mountPoint = document.querySelector(`.${MOUNT_POINT_CLS}`);
+
+		if (!mountPoint) {
+			mountPoint = document.createElement('div');
+			mountPoint.classList.add(MOUNT_POINT_CLS);
+
+			document.body.appendChild(mountPoint);
+		}
+
+		return mountPoint;
 	}
 
 
 	static clear () {
-		let res = ReactDOM.unmountComponentAtNode(this.getMountPoint());
+		const mountPoint = this.getMountPoint();
+		let res = ReactDOM.unmountComponentAtNode(mountPoint);
+
 		if (res) {//only clear active if React unmounted the component at the mount point.
 			this.active = null;
+			document.body.removeChild(mountPoint);
 		}
+
 		return res;
 	}
 
