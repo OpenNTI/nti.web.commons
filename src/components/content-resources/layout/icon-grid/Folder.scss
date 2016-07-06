@@ -41,7 +41,7 @@ body > .folder-asset.ghost,
 
 	.filename {
 		$size: 13px;
-		height: rem-calc($size * 2.5);
+		line-height: 1.125rem;
 		font-size: rem-calc($size);
 		box-sizing: content-box;
 		font-weight: 600;
@@ -50,6 +50,9 @@ body > .folder-asset.ghost,
 		white-space: nowrap;;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		display: inline-block;
+		vertical-align: middle;
+		max-width: calc(100% - 26px);
 
 		&:focus,
 		.no-touch &:hover {

@@ -17,8 +17,6 @@
 	& > .entity {
 		margin: rem-calc(15px) $gap 0;
 		flex: 0 1 (25% - ($gap * 2));
-		overflow: hidden;
-		text-overflow: ellipsis;
 
 		.content-resource-view.split & {
 			flex: 0 1 (33% - ($gap * 2));
