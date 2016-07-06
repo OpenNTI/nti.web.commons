@@ -235,7 +235,7 @@ export default class BrowsableView extends React.Component {
 		else {
 			const [confirmation, errors] = indeterminate.reduce((a,x) => (a[x.error ? 1 : 0].push(x), a), [[],[ ]]);
 
-			let text = '';
+			let text = void 0;
 			if (confirmation.length > 0) {
 				text = getLabel(confirmation);
 			}
@@ -245,7 +245,7 @@ export default class BrowsableView extends React.Component {
 			}
 
 			this.setState({
-				progress: {
+				progress: text && {
 					dismiss,
 					errors: errors.length > 0,
 					max: 0,
