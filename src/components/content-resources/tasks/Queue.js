@@ -74,14 +74,14 @@ export default class TaskQueue extends EventEmitter {
 	}
 
 
-	onTaskProgress = (task, taskProgress, taskTotal) => {
+	onTaskProgress = (task, taskProgress, taskTotal, abort) => {
 		const count = (acc, t) => acc + t.total;
 		const done = this.done.reduce(count, 0);
 		const max = done + this.queue.reduce(count, 0);
 		const value = done + taskProgress;
 
-		logger.log('Progress: %o %d (%d) %d (%d)', task, taskProgress, value, taskTotal, max);
-		this.emit('progress', task, value, max);
+		logger.debug('Progress: %o %d (%d) %d (%d)', task, taskProgress, value, taskTotal, max);
+		this.emit('progress', task, value, max, abort);
 	}
 
 
@@ -107,6 +107,12 @@ export default class TaskQueue extends EventEmitter {
 			this.schedual();
 		}
 	}
+
+
+	onTaskAbort = (task) => {
+		this.queue = [];
+		this.onTaskFinish(task);
+	}
 }
 
 
@@ -114,10 +120,12 @@ function stopListening (scope, task) {
 	task.removeListener('progress', scope.onTaskProgress);
 	task.removeListener('finish', scope.onTaskFinish);
 	task.removeListener('error', scope.onTaskFinish);
+	task.removeListener('abort', scope.onTaskAbort);
 }
 
 function listen (scope, task) {
 	task.addListener('progress', scope.onTaskProgress);
 	task.addListener('finish', scope.onTaskFinish);
 	task.addListener('error', scope.onTaskFinish);
+	task.addListener('abort', scope.onTaskAbort);
 }
