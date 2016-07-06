@@ -1,5 +1,7 @@
 import Task from './Task';
+import Logger from 'nti-util-logger';
 
+const logger = Logger.get('common:components:content-resources:tasks:Upload');
 
 export default class Upload extends Task {
 
@@ -13,12 +15,13 @@ export default class Upload extends Task {
 	 */
 	constructor (file, folder, onComplete) {
 		super(()=> this.startUpload(file, folder), 1, onComplete);
+		this.needsConfirmation = true;
 		this.verb = 'upload';
 		this.filename = file.name;
 	}
 
 
 	startUpload = (file, folder) => {
-		console.log(folder.getLink('upload'), file.name);
+		logger.log(folder.getLink('upload'), file.name);
 	}
 }
