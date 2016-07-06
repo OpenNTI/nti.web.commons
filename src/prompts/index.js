@@ -3,13 +3,23 @@ import ReactDOM from 'react-dom';
 import Dialog from './components/Dialog';
 import Modal from './components/Modal';
 
+export function alert (message, title = 'Alert', extra = {}) {
+	return new Promise(acknowledge=> {
+		Dialog.show(Object.assign(extra || {}, {
+			confirmButtonClass: 'caution',
+			message, title,
+			onConfirm: ()=> acknowledge()
+		}));
+	});
+}
+
 export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	return new Promise((acknowledge, cancel)=> {
 		Dialog.show(Object.assign(extra || {}, {
 			confirmButtonClass: 'caution',
 			message, title,
-			onConfirm: ()=>	acknowledge(),
-			onCancel: ()=>	cancel('Prompt Canceled')
+			onConfirm: ()=> acknowledge(),
+			onCancel: ()=> cancel('Prompt Canceled')
 		}));
 	});
 }
