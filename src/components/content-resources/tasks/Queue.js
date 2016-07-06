@@ -81,10 +81,10 @@ export default class TaskQueue extends EventEmitter {
 	onTaskFinish = (task, error) => {
 		stopListening(this, task);
 		if (error) { this.emit('error', error); }
+		this.queue = this.queue.filter(x => x !== task);
+		this.done.push(task);
 
 		if (this.current === task) {
-			this.queue = this.queue.filter(x => x !== task);
-			this.done.push(task);
 			this.previous = this.current;
 			delete this.current;
 		}
