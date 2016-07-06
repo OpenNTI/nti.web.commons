@@ -3,6 +3,8 @@ import {getService} from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 
+import {alert} from '../../prompts';
+
 import TaskQueue from './tasks/Queue';
 import MoveTask from './tasks/Move';
 import UploadTask from './tasks/Upload';
@@ -19,8 +21,26 @@ const DEFAULT_TEXT = {
 		upload: 'Uploading %(filename)s...'
 	},
 	COMPLETE: {
-		move: 'Moved %(filename)s.',
-		upload: 'Uploaded %(filename)s.'
+		movefail: {
+			zero: 'Could not move %(filename)s. Something went wrong.',
+			one: 'Failed to move %(filename)s, and %(count)s other.',
+			other: 'Failed to move %(filename)s, and %(count)s others.'
+		},
+		uploadfail: {
+			zero: 'Could not upload %(filename)s. Something went wrong.',
+			one: 'Failed to upload %(filename)s, and %(count)s other.',
+			other: 'Failed to upload %(filename)s, and %(count)s others.'
+		},
+		move: {
+			zero: 'Moved %(filename)s.',
+			one: 'Moved %(filename)s, and %(count)s other.',
+			other: 'Moved %(filename)s, and %(count)s others.'
+		},
+		upload: {
+			zero: 'Uploaded %(filename)s.',
+			one: 'Uploaded %(filename)s, and %(count)s other.',
+			other: 'Uploaded %(filename)s, and %(count)s others.'
+		}
 	}
 };
 
@@ -199,10 +219,40 @@ export default class BrowsableView extends React.Component {
 	}
 
 
-	onTasksComplete = () => {
+	onTasksComplete = (completed, indeterminate) => {
 		logger.log('All finished');
-		if (this.taskQueue.empty) {
-			this.setState({progress: void 0});
+
+		const dismiss = () => this.setState({progress: void 0});
+
+		function getLabel (x, postfix = '') {
+			let [first, ...others] = x;
+			return t(`COMPLETE.${first.verb}${postfix}`, {filename: first.filename, count: others.length});
+		}
+
+		if (indeterminate.length === 0) {
+			dismiss();
+		}
+		else {
+			const [confirmation, errors] = indeterminate.reduce((a,x) => (a[x.error ? 1 : 0].push(x), a), [[],[ ]]);
+
+			let text = void 0;
+			if (confirmation.length > 0) {
+				text = getLabel(confirmation);
+			}
+
+			if (errors.length > 0) {
+				alert(getLabel(errors, 'fail'));
+			}
+
+			this.setState({
+				progress: text && {
+					dismiss,
+					errors: errors.length > 0,
+					max: 0,
+					text,
+					value: 0
+				}
+			});
 		}
 	}
 
@@ -217,7 +267,7 @@ export default class BrowsableView extends React.Component {
 
 		this.setState({
 			progress: {
-				text: t(`${key}.${task.verb}`, {filename: task.filename}),
+				text: t(`${key}.${task.verb}`, {filename: task.filename, count: 0}),
 				max,
 				value
 			}

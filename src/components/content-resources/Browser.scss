@@ -25,7 +25,7 @@
 	.toolbar-component .search-component {
 		margin: rem-calc(0 10px 0 0);
 		min-width: 100px;
-		max-width: 230px;
+		max-width: 288px;
 		flex: .5 1 auto;
 	}
 
@@ -35,7 +35,27 @@
 		width: 100%;
 	}
 
-	@media (max-width: 768px) {
+	.content-resource-view.split + .status-bar {
+		width: auto;
+		left: 0;
+		right: 350px;
+	}
+
+	.drag-over-message {
+		margin: rem-calc(15px) auto;
+		padding: rem-calc(11px 20px 13px);
+		border-radius: 2px;
+		background: $primary-blue;
+		max-width: rem-calc(205px);
+		color: white;
+		font-size: rem-calc(13px);
+		font-weight: 600;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-align: center;
+	}
+
+	@media (max-width: 830px) {
 		.toolbar-component .toolbar-button > span { display: none; }
 	}
 }

@@ -25,6 +25,9 @@ import ProgressBar from '../ProgressBar';
 const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
+	DRAG_DROP: {
+		'drag-over-mesasge': 'Drop Files Here to Upload them to Your Library.'
+	},
 	TOOLBAR: {
 		'upload': 'Upload',
 		'mkdir': 'Create Folder',
@@ -68,6 +71,16 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			logger.error(e);
 			this.refresh();
 		});
+	}
+
+
+	onDragOverChanged = (dragover) => {
+		this.setState({dragover});
+	}
+
+
+	onFileDrop = (files) => {
+		this.uploadFiles(files, this.state.folder);
 	}
 
 
@@ -119,10 +132,21 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	}
 
 
+	onUploadFile = (e) => {
+		const {target: {files}} = e;
+		this.uploadFiles(files, this.state.folder);
+		//These three lines allow the same file to be selected over and over again.
+		e.target.value = null;
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+
 	render () {
 		const {
 			selection,
 			state: {
+				dragover,
 				error,
 				folder,
 				folderContents,
@@ -150,7 +174,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						<TitleBalencer/>
 					</div>
 					<Toolbar>
-						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} disabled/>
+						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} onChange={this.onUploadFile} multiple/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
@@ -165,7 +189,10 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				) : !folderContents ? (
 					<Loading/>
 				) : (
-					<View contents={content} selection={selection}>
+					<View contents={content}
+						selection={selection}
+						onDragOverChanged={this.onDragOverChanged}
+						onFileDrop={this.onFileDrop}>
 						{showInfo && (
 							<Inspector selection={selection}/>
 						)}
@@ -182,7 +209,15 @@ export default class ContentResourcesBrowser extends BrowsableView {
 								max={progress.max}
 								value={progress.value}
 								text={progress.text}
+								onCancel={progress.cancel}
+								onDismiss={progress.dismiss}
 								/>
+						)}
+
+						{!dragover && (
+							<div key="drag" className="drag-over-message">
+								{t('DRAG_DROP.drag-over-mesasge')}
+							</div>
 						)}
 					</Transition>
 				</div>
