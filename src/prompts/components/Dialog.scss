@@ -107,31 +107,4 @@
 			font-size: 0.9em;
 		}
 	}
-
-
-	.buttons {
-		@extend %dialog-buttons;
-	}
-
-}
-
-
-.modal .dialog.window {
-/*
-	&:not(.showing) {
-		.alert-container {
-			//@include animate(fadeOutDown, $duration: 0.35s, $delay: 0);
-		}
-	}
-
-	&.showing {
-		.alert-container {
-			//@include animate(fadeInUp, $duration: 0.35s);
-		}
-
-		&::after {
-			background-color: rgba(0, 0, 0, 0.5);
-		}
-	}
-*/
 }

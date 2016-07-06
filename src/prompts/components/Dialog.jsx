@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Logger from 'nti-util-logger';
 
+import DialogButtons from '../../components/DialogButtons';
+
 const logger = Logger.get('prompts:components:Dialog');
 const emptyFunction = () => {};
 
@@ -58,10 +60,11 @@ export default class Dialog extends React.Component {
 	static defaultProps = {
 		iconClass: 'alert',
 		message: '...',
-		confirmButtonClass: '',
+		title: 'Alert',
+		confirmButtonClass: 'primary',
+		confirmButtonLabel: 'OK',
 		cancelButtonClass: '',
-		onCancel: emptyFunction,
-		onConfirm: emptyFunction,
+		cancelButtonLabel: 'Cancel',
 		onDismiss: emptyFunction
 	}
 
@@ -116,7 +119,11 @@ export default class Dialog extends React.Component {
 			e.stopPropagation();
 		}
 		dismiss(this);
-		this.props.onConfirm.call();
+
+		const {onConfirm} = this.props;
+		if (onConfirm) {
+			onConfirm.call();
+		}
 	}
 
 
@@ -126,19 +133,49 @@ export default class Dialog extends React.Component {
 			e.stopPropagation();
 		}
 		dismiss(this);
-		this.props.onCancel.call();
+
+		const {onCancel} = this.props;
+		if (onCancel) {
+			onCancel.call();
+		}
 	}
 
 
 	render () {
-		let {title, message, iconClass} = this.props;
+		const {
+			props: {
+				iconClass,
+				message,
+				title,
 
-		let state = 'showing';
-		if (this.state.dismissing) {
-			state = 'dismissing';
-		}
+				confirmButtonLabel,
+				confirmButtonClass,
 
-		title = title || 'Alert'; //TODO: localize the default
+				cancelButtonLabel,
+				cancelButtonClass,
+
+				onCancel,
+				onConfirm
+			},
+			state: {
+				dismissing
+			}
+		} = this;
+
+		const state = dismissing ? 'dismissing' : 'showing';
+
+		const buttons = [
+			onCancel && {
+				label: cancelButtonLabel,
+				className: cancelButtonClass,
+				onClick: this.dismiss
+			},
+			onConfirm && {
+				className: confirmButtonClass,
+				label: confirmButtonLabel,
+				onClick: this.confirmClicked
+			}
+		].filter(x => x);
 
 		return (
 			<div ref={el => this.frame = el} className={`modal dialog mask ${state}`} onKeyDown={this.handleEscapeKey}>
@@ -150,48 +187,10 @@ export default class Dialog extends React.Component {
 						<h1>{title}</h1>
 						<p>{message}</p>
 					</div>
-					<div className="buttons">
-						{this.renderCancelButton()}
-						{this.renderConfirmButton()}
-					</div>
+					<DialogButtons buttons={buttons} />
 				</div>
 
 			</div>
-		);
-	}
-
-
-	renderCancelButton () {
-		let {onCancel, cancelButtonLabel, cancelButtonClass} = this.props;
-
-		cancelButtonLabel = cancelButtonLabel || 'Cancel';//TODO: localize the default
-
-		if (onCancel == null) {
-			return null;
-		}
-
-		return (
-			<a ref={el => this.cancel = el} className={`cancel button ${cancelButtonClass}`} href="#cancel" onClick={this.dismiss}>
-				{cancelButtonLabel}
-			</a>
-		);
-	}
-
-
-	renderConfirmButton () {
-		let {onConfirm, confirmButtonLabel, confirmButtonClass} = this.props;
-
-		confirmButtonLabel = confirmButtonLabel || 'OK';//TODO: localize the default
-		confirmButtonClass = confirmButtonClass || 'primary';
-
-		if (onConfirm == null) {
-			return null;
-		}
-
-		return (
-			<a ref={el => this.confirm = el} className={`confirm button ${confirmButtonClass}`} href="#confirm" onClick={this.confirmClicked}>
-				{confirmButtonLabel}
-			</a>
 		);
 	}
 

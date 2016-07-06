@@ -1,7 +1,7 @@
 @import "~nti-style-common";
 
 .dialog-buttons {
-	overflow: hidden;
+	// overflow: hidden;
 	position: relative;
 	text-align: right;
 
@@ -26,6 +26,7 @@
 	}
 
 	.button {
+		min-height: 2.5rem;
 		cursor: pointer;
 		box-sizing: border-box;
 		text-transform: none;
