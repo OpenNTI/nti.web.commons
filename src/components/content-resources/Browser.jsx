@@ -119,6 +119,16 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	}
 
 
+	onUploadFile = (e) => {
+		const {target: {files}} = e;
+		this.uploadFiles(files, this.state.folder);
+		//These three lines allow the same file to be selected over and over again.
+		e.target.value = null;
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+
 	render () {
 		const {
 			selection,
@@ -150,7 +160,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						<TitleBalencer/>
 					</div>
 					<Toolbar>
-						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} disabled/>
+						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} onChange={this.onUploadFile} multiple/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
