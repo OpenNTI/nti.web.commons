@@ -28,15 +28,6 @@ export default class TaskQueue extends EventEmitter {
 	}
 
 
-	cleanup () {
-		delete this.previous;
-		this.done = this.done.filter(x => x.error || x.needsConfirmation);
-		if (this.queue.length !== 0) {
-			logger.warn('Unexpected state');
-		}
-	}
-
-
 	add (task) {
 		const queue = this.queue.filter(x => x !== task);
 		const move = this.queue.length !== queue.length;
@@ -51,12 +42,28 @@ export default class TaskQueue extends EventEmitter {
 		this.schedual();
 	}
 
+
+	beginHalt () {
+		delete this.previous;
+		const falted = x => x.error || x.needsConfirmation;
+		const completed = this.done.filter(x => !falted(x));
+		const indeterminate = this.done.filter(falted);
+
+		this.done = [];
+		if (this.queue.length !== 0) {
+			logger.warn('Unexpected state');
+		}
+
+		this.emit('finish', completed, indeterminate);
+	}
+
+
 	schedual () {
 		if (!this.current) {
 			let task = this.current = this.queue[this.queue.length - 1];
 			if (!task) {
-				this.cleanup();
-				return void this.emit('finish');
+				this.beginHalt();
+				return;
 			}
 
 			task.begin();
