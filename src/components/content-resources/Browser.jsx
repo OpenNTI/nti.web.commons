@@ -182,6 +182,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 								max={progress.max}
 								value={progress.value}
 								text={progress.text}
+								onCancel={progress.cancel}
+								onDismiss={progress.dismiss}
 								/>
 						)}
 					</Transition>
