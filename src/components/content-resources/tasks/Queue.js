@@ -80,7 +80,14 @@ export default class TaskQueue extends EventEmitter {
 
 	onTaskFinish = (task, error) => {
 		stopListening(this, task);
-		if (error) { this.emit('error', error); }
+		if (error) {
+			try {
+				this.emit('error', error);
+			} catch (e) {
+				logger.error('Unhandled error: %o', e.stack || e.message || e);
+			}
+		}
+
 		this.queue = this.queue.filter(x => x !== task);
 		this.done.push(task);
 
