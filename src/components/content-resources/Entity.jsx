@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import ReactDOMServer from 'react-dom/server'; //eew
+import {getEventTarget} from 'nti-lib-dom';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 import isActionable from 'nti-commons/lib/is-event-actionable';
 import getCoolOff from 'nti-commons/lib/function-cooloff';
@@ -26,6 +27,8 @@ export default class Entity extends React.Component {
 		canSelectItem: PropTypes.func.isRequired,
 		selectItem: PropTypes.func.isRequired
 	}
+
+	dragover = 0
 
 	state = {}
 
@@ -126,14 +129,23 @@ export default class Entity extends React.Component {
 	onDragEnter = (e) => {
 		if (!this.props.item.isFolder) { return; }
 		if (!this.isInDragSet()) {
-			e.target.classList.add('drag-over');
+			this.dragover++;
+			const target = getEventTarget(e, '.entity');
+			if (target) {
+				target.classList.add('drag-over');
+			}
 		}
 	}
 
 
 	onDragLeave = (e) => {
 		if (!this.props.item.isFolder) { return; }
-		e.target.classList.remove('drag-over');
+		const target = getEventTarget(e, '.entity');
+		this.dragover--;
+		if (target && this.dragover <= 0) {
+			this.dragover = 0; //force 0
+			target.classList.remove('drag-over');
+		}
 	}
 
 
@@ -143,7 +155,7 @@ export default class Entity extends React.Component {
 
 		if (!this.props.item.isFolder) { return; }
 
-		e.target.classList.remove('drag-over');
+		this.onDragLeave(e);
 
 		const {dataTransfer: dt} = e;
 		const {
