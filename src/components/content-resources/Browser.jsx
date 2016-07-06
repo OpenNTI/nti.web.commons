@@ -25,6 +25,9 @@ import ProgressBar from '../ProgressBar';
 const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
+	DRAG_DROP: {
+		'drag-over-mesasge': 'Drop Files Here to Upload them to Your Library.'
+	},
 	TOOLBAR: {
 		'upload': 'Upload',
 		'mkdir': 'Create Folder',
@@ -68,6 +71,16 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			logger.error(e);
 			this.refresh();
 		});
+	}
+
+
+	onDragOverChanged = (dragover) => {
+		this.setState({dragover});
+	}
+
+
+	onFileDrop = (files) => {
+		this.uploadFiles(files, this.state.folder);
 	}
 
 
@@ -133,6 +146,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const {
 			selection,
 			state: {
+				dragover,
 				error,
 				folder,
 				folderContents,
@@ -175,7 +189,10 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				) : !folderContents ? (
 					<Loading/>
 				) : (
-					<View contents={content} selection={selection}>
+					<View contents={content}
+						selection={selection}
+						onDragOverChanged={this.onDragOverChanged}
+						onFileDrop={this.onFileDrop}>
 						{showInfo && (
 							<Inspector selection={selection}/>
 						)}
@@ -195,6 +212,12 @@ export default class ContentResourcesBrowser extends BrowsableView {
 								onCancel={progress.cancel}
 								onDismiss={progress.dismiss}
 								/>
+						)}
+
+						{!dragover && (
+							<div key="drag" className="drag-over-message">
+								{t('DRAG_DROP.drag-over-mesasge')}
+							</div>
 						)}
 					</Transition>
 				</div>

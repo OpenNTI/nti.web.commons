@@ -31,6 +31,8 @@ export default class ContentResourcesView extends React.Component {
 
 
 	onDragEnter = (e) => {
+		const {files} = e.dataTransfer;
+		if (!files || files.length === 0) { return; }
 
 		this.dragover++;
 
@@ -47,6 +49,9 @@ export default class ContentResourcesView extends React.Component {
 
 
 	onDragLeave = (e) => {
+		const {files} = e.dataTransfer;
+		if (!files || files.length === 0) { return; }
+
 		const target = getEventTarget(e, '.view-main-pane');
 		this.dragover--;
 		if (target && this.dragover <= 0) {
