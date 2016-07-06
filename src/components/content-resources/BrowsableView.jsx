@@ -159,7 +159,7 @@ export default class BrowsableView extends React.Component {
 
 
 	setFolder = (folder, contents) => {
-		this.setState({folder, folderContents: contents});
+		this.setState({folder, folderContents: contents, progress: void 0});
 		this.selection.set([]);
 
 		folder.getContents()
@@ -262,14 +262,15 @@ export default class BrowsableView extends React.Component {
 	}
 
 
-	onTaskProgress = (task, value, max) => {
+	onTaskProgress = (task, value, max, abort) => {
 		const key = value === max ? 'COMPLETE' : 'ACTIVE';
 
 		this.setState({
 			progress: {
 				text: t(`${key}.${task.verb}`, {filename: task.filename, count: 0}),
 				max,
-				value
+				value,
+				abort
 			}
 		});
 	}

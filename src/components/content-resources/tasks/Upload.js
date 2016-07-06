@@ -14,14 +14,57 @@ export default class Upload extends Task {
 	 * @return {void}
 	 */
 	constructor (file, folder, onComplete) {
-		super(()=> this.startUpload(file, folder), 1, onComplete);
+		super(()=> this.startUpload(file, folder), file.size, onComplete);
 		this.needsConfirmation = true;
 		this.verb = 'upload';
 		this.filename = file.name;
+		this.file = file;
+		this.folder = folder;
+	}
+
+
+	abort = () => {
+		if (this.xhr) {
+			this.needsConfirmation = false;
+			this.xhr.abort();
+			this.emit('abort', this);
+		}
 	}
 
 
 	startUpload = (file, folder) => {
-		logger.log(folder.getLink('upload'), file.name);
+		const url = folder.getLink('upload');
+		const xhr = this.xhr = new XMLHttpRequest();
+
+		xhr.addEventListener('progress', e => logger.log('Progress %o', e));
+
+		return new Promise((finish, error) => {
+
+			const formdata = new FormData();
+
+			formdata.append(file.name, file);
+
+			xhr.open('POST', url, true);
+
+			xhr.setRequestHeader('accept', 'application/json');
+			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+
+			xhr.upload.onprogress = (e) => e.lengthComputable && this.emitProgress(e.loaded, e.total, this.abort);
+			xhr.onload = () => {
+
+				if (xhr.status >= 200 && xhr.status < 300) {
+					finish();
+				} else {
+					error({
+						status: xhr.status,
+						statusText: xhr.statusText,
+						responseText: xhr.responseText
+					});
+				}
+			};
+
+			xhr.send(formdata);
+		});
 	}
 }
