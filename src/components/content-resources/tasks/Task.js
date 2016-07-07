@@ -3,7 +3,7 @@ import Logger from 'nti-util-logger';
 
 const logger = Logger.get('common:components:content-resources:tasks:Task');
 
-const value = x => ({value: x});
+const value = (x, y) => ({value: x, writable: y});
 
 export default class Task extends EventEmitter {
 
@@ -19,7 +19,7 @@ export default class Task extends EventEmitter {
 		super();
 		Object.defineProperties(this, {
 			executer: value(callback),
-			total: value(units),
+			total: value(units, true),
 			onComplete: value(onComplete)
 		});
 	}
@@ -63,9 +63,10 @@ export default class Task extends EventEmitter {
 	}
 
 
-	emitProgress = (current, total) => (
+	emitProgress = (current, total = this.total, abort) => (
 		this.current = current,
-		this.emit('progress', this, current, total)
+		this.total = total,
+		this.emit('progress', this, current, total, abort)
 	)
 
 

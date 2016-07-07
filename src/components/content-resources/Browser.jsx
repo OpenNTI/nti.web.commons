@@ -201,20 +201,20 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				<div className="status-bar">
 					<Transition component="div" className=""
 						transitionName="content-resource-browser-drop"
-						transitionEnterTimeout={500}
-						transitionLeaveTimeout={500}
+						transitionEnterTimeout={1}
+						transitionLeaveTimeout={1}
 						>
 						{progress && (
 							<ProgressBar key="progress"
 								max={progress.max}
 								value={progress.value}
 								text={progress.text}
-								onCancel={progress.cancel}
+								onCancel={progress.abort}
 								onDismiss={progress.dismiss}
 								/>
 						)}
 
-						{!dragover && (
+						{dragover && (
 							<div key="drag" className="drag-over-message">
 								{t('DRAG_DROP.drag-over-mesasge')}
 							</div>
