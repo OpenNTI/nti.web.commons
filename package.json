@@ -47,7 +47,7 @@
     "nti-web-client": "^1.0.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-day-picker": "^2.1.0",
-    "react-router-component": "^0.32.2",
+    "react-router-component": "^0.35.0",
     "zpad": "^0.5.0"
   },
   "devDependencies": {
