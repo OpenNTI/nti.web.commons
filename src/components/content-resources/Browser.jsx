@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import cx from 'classnames';
 import Transition from 'react-addons-css-transition-group';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
@@ -198,13 +199,13 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						)}
 					</View>
 				)}
-				<div className="status-bar">
+				<div className={cx('status-bar', {dragover})}>
 					<Transition component="div" className=""
 						transitionName="content-resource-browser-drop"
 						transitionEnterTimeout={1}
 						transitionLeaveTimeout={1}
 						>
-						{progress && (
+						{!dragover && progress && (
 							<ProgressBar key="progress"
 								max={progress.max}
 								value={progress.value}
