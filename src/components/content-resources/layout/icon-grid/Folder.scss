@@ -11,9 +11,6 @@ body > .folder-asset.ghost,
 	position: relative;
 
 	&.unselectable {
-		pointer-events: none;
-		cursor: default;
-		opacity: 0.6;
 	}
 
 	&:focus,
