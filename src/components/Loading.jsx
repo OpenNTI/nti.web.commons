@@ -23,29 +23,29 @@ export default React.createClass({
 
 
 	render () {
-		let Tag = this.props.tag;
-		if (!isEmpty(this.props.children) && !this.props.loading) {
-			return <Tag {...this.props}/>;
+		const {tag: Tag, children, loading, maskScreen, message, ...otherProps} = this.props;
+
+		if (!isEmpty(children) && !loading) {
+			return <Tag {...otherProps}/>;
 		}
 
-		if (this.props.maskScreen) {
-			return (
-				<div className="mask-loader">
-					{this.renderSpiner()}
-				</div>
-			);
-		}
-
-		return this.renderSpiner();
-	},
-
-
-	renderSpiner () {
 		return (
-			<figure className="loading">
-				<div className="m spinner"></div>
-				<figcaption>{this.props.message}</figcaption>
-			</figure>
+			<Mask mask={maskScreen}>
+				<figure className="loading">
+					<div className="m spinner"></div>
+					<figcaption>{message}</figcaption>
+				</figure>
+			</Mask>
 		);
 	}
 });
+
+
+Mask.propTypes = {
+	children: React.PropTypes.element,
+	mask: React.PropTypes.bool
+};
+function Mask (props) {
+	const {children, mask} = props;
+	return mask ? ( <div className="mask-loader">{children}</div> ) : children;
+}

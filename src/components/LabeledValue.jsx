@@ -9,14 +9,15 @@ LabeledValue.propTypes = {
 };
 
 export default function LabeledValue (props) {
-	const classes = cx('labeled-value', props.className, {
-		'arrow-down': props.arrow
+	const {arrow, children, className, label, ...otherProps} = props;
+	const classes = cx('labeled-value', className, {
+		'arrow-down': arrow
 	});
 	return (
-		<div {...props} className={classes}>
-			<label>{props.label}</label>
+		<div {...otherProps} className={classes}>
+			<label>{label}</label>
 			<div className="value">
-				{props.children}
+				{children}
 			</div>
 		</div>
 	);

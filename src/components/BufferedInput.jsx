@@ -46,8 +46,12 @@ export default class BufferedInput extends React.Component {
 	}
 
 	render () {
+		const props = Object.assign({}, this.props);
+
+		delete props.delay;//don't pass "our" props to the spread
+
 		return (
-			<input {...this.props} ref={this.attachRef} onChange={this.onChange} value={void 0}/>
+			<input {...props} ref={this.attachRef} onChange={this.onChange} value={void 0}/>
 		);
 	}
 }

@@ -35,6 +35,7 @@ export default class Ellipsed extends React.Component {
 
 	render () {
 		let {tag, ...otherProps} = this.props;
+		delete otherProps.measureOverflow;
 		return React.createElement(tag, otherProps);
 	}
 }

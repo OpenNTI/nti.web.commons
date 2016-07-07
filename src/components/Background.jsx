@@ -58,9 +58,9 @@ export default React.createClass({
 
 
 	render () {
-		const {props: {className, imgUrl, children}} = this;
+		const {props: {className, imgUrl, children, ...props}} = this;
 		return (
-			<div {...this.props} className={cx('background-cmp', className, {'no-image': !imgUrl})}>
+			<div {...props} className={cx('background-cmp', className, {'no-image': !imgUrl})}>
 				{children}
 			</div>
 		);

@@ -32,14 +32,14 @@ export default React.createClass({
 
 
 	render () {
-		const {props: {tag: Element, className, activeClassName, link}} = this;
-		const props = Object.assign({},
-			this.props, {
-				tag: void 0,
-				className: cx(className, {
-					[activeClassName]: this.isActive()
-				})
-			});
+		const {props: {tag: Element, className, activeClassName, link, ...props}} = this;
+
+		delete props.hasChildren;
+		Object.assign(props, {
+			className: cx(className, {
+				[activeClassName]: this.isActive()
+			})
+		});
 
 		if (Element === 'a' || link) {
 			props.onClick = this.onClick;
