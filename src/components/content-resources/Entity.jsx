@@ -6,8 +6,11 @@ import isActionable from 'nti-commons/lib/is-event-actionable';
 import getCoolOff from 'nti-commons/lib/function-cooloff';
 import toJS from 'nti-commons/lib/json-parse-safe';
 import {getFragmentFromString} from 'nti-lib-dom';
+import Logger from 'nti-util-logger';
 
 import FileDragImage from './FileDragImage';
+
+const logger = Logger.get('common:components:content-resources:Entity');
 
 function getDetachedNodeFrom (jsxExp) {
 	let frag = getFragmentFromString(
@@ -153,20 +156,34 @@ export default class Entity extends React.Component {
 		e.stopPropagation();
 		e.preventDefault();
 
-		if (!this.props.item.isFolder) { return; }
-
-		this.onDragLeave(e);
-
-		const {dataTransfer: dt} = e;
 		const {
 			context: {
 				onFolderDrop
 			},
 			props: {
-				item
+				item,
+				selection
 			}
 		} = this;
 
+		const isFile = !item.isFolder;
+		const isSelected = selection.isSelected(item);
+		const isBegingDragged = (selection.dragging || []).includes(item);
+
+		//If we're not a folder, we do not accept drops.
+		//If we're a folder, but in the current dragging set, we are invalid targets.
+		if (isFile || isSelected || isBegingDragged) {
+			logger.debug('Ignoring Drop. isFile: %s, isSelected: %s, isBegingDragged: %s',
+				isFile,
+				isSelected,
+				isBegingDragged
+			);
+			return;
+		}
+
+		this.onDragLeave(e);
+
+		const {dataTransfer: dt} = e;
 		const {files} = dt;
 		const data = toJS(dt.getData('application/json'));
 
