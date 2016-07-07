@@ -189,9 +189,18 @@ export default class BrowsableView extends React.Component {
 
 
 	uploadFiles = (files, folder) => {
-		for (let item of files) {
-			this.taskQueue.add(new UploadTask(item, folder));
-		}
+		Promise.all(
+			Array.from(files).map(item => new Promise(done =>
+				this.taskQueue.add(new UploadTask(item, folder, done)))))
+
+			.then(() => {
+
+				if (this.state.folder === folder) {
+					this.refresh();
+				}
+
+			});
+
 	}
 
 
