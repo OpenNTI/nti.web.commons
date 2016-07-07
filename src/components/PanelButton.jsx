@@ -11,7 +11,7 @@ export default React.createClass({
 	propTypes: {
 		linkText: React.PropTypes.string, // the text of the button
 		href: React.PropTypes.string, // the href of the button, if applicable
-		buttonClick: React.PropTypes.func, // click handler for the button (deprecated)
+		buttonClick: function deprecated (o, k) { if (o[k]) { return new Error('Deprecated, use "onClick"'); } },
 		onClick: React.PropTypes.func, // click handler for the button
 		button: React.PropTypes.element, // pass in your own button if you need special behavior or treatment
 
@@ -21,8 +21,7 @@ export default React.createClass({
 	getDefaultProps () {
 		return {
 			linkText: t('BUTTONS.ok'),
-			href: '#',
-			buttonClick: null
+			href: '#'
 		};
 	},
 
