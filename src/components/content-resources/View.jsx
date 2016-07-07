@@ -26,13 +26,14 @@ export default class ContentResourcesView extends React.Component {
 
 	onDragOver = (e) => {
 		e.preventDefault();
-		e.dataTransfer.dropEffect = 'move';
+		e.dataTransfer.dropEffect = accepts(e) ? 'move' : 'none';
 	}
 
 
 	onDragEnter = (e) => {
-		const {files} = e.dataTransfer;
-		if (!files || files.length === 0) { return; }
+		if (!accepts(e)) {
+			return;
+		}
 
 		this.dragover++;
 
@@ -49,8 +50,9 @@ export default class ContentResourcesView extends React.Component {
 
 
 	onDragLeave = (e) => {
-		const {files} = e.dataTransfer;
-		if (!files || files.length === 0) { return; }
+		if (!accepts(e)) {
+			return;
+		}
 
 		const target = getEventTarget(e, '.view-main-pane');
 		this.dragover--;
@@ -101,4 +103,14 @@ export default class ContentResourcesView extends React.Component {
 			</div>
 		);
 	}
+}
+
+
+function accepts (e) {
+	const {files, items, types} = e.dataTransfer;
+	const file = /file/i;
+
+	return (files && files.length > 0) ||
+			Array.from(items).some(x => file.test(x.kind)) ||
+			Array.from(types).some(x => file.test(x));
 }
