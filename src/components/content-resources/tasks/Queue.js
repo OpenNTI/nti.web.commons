@@ -34,6 +34,8 @@ export default class TaskQueue extends EventEmitter {
 
 		this.queue = [task, ...queue];
 
+		logger.debug('Task %s: %o', (move ? 'moved' : 'added'), task);
+
 		if (!move) {
 			listen(this, task);
 		}
@@ -54,12 +56,14 @@ export default class TaskQueue extends EventEmitter {
 			logger.warn('Unexpected state');
 		}
 
+		logger.debug('Finished tasks');
 		this.emit('finish', completed, indeterminate);
 	}
 
 
 	schedual () {
 		if (!this.current) {
+			logger.debug('Starging next task');
 			let task = this.current = this.queue[this.queue.length - 1];
 			if (!task) {
 				this.beginHalt();
