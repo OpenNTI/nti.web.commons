@@ -34,8 +34,8 @@ export default class Ellipsed extends React.Component {
 
 
 	render () {
-		let {tag} = this.props;
-		return React.createElement(tag, this.props);
+		let {tag, ...otherProps} = this.props;
+		return React.createElement(tag, otherProps);
 	}
 }
 
