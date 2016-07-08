@@ -51,7 +51,8 @@ export default class BrowsableView extends React.Component {
 		accept: PropTypes.func,
 		onSelectionChange: PropTypes.func,
 		onTrigger: PropTypes.func,
-		sourceID: PropTypes.string
+		sourceID: PropTypes.string,
+		limited: PropTypes.bool
 	}
 
 
@@ -66,7 +67,7 @@ export default class BrowsableView extends React.Component {
 	getChildContext = () => ({
 		canSelectItem: this.canSelectItem,
 		onTrigger: this.onTrigger,
-		onFolderDrop: this.onFolderDrop,
+		onFolderDrop: this.props.limited ? void 0 : this.onFolderDrop,
 		selectItem: this.selectItem
 	})
 
@@ -159,7 +160,9 @@ export default class BrowsableView extends React.Component {
 
 
 	setFolder = (folder, contents) => {
-		this.setState({folder, folderContents: contents, progress: void 0});
+		this.setState(
+			{folder, folderContents: contents, progress: void 0},
+			() => this.onSelectionChange());
 		this.selection.set([]);
 
 		folder.getContents()
@@ -222,7 +225,7 @@ export default class BrowsableView extends React.Component {
 		this.forceUpdate();
 
 		if (onSelectionChange) {
-			const selections = Array.from(this.selection);
+			const selections = Array.from(this.selection).concat(this.state.folder);
 			onSelectionChange(selections);
 		}
 	}

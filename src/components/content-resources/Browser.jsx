@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
+import {dirname} from 'path';
 import Transition from 'react-addons-css-transition-group';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
@@ -47,7 +48,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		sourceID: PropTypes.string,
 		onClose: PropTypes.func,
 		onSelectionChange: PropTypes.func,
-		onTrigger: PropTypes.func
+		onTrigger: PropTypes.func,
+		limited: PropTypes.bool
 	}
 
 
@@ -109,14 +111,17 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	onMoveSelectTarget = () => {
 		const selected = Array.from(this.selection);
 		const filter = x => !this.selection.isSelected(x);
-		const accept = x => x.isFolder && !this.selection.isSelected(x);
+		const accept = x => x.isFolder
+							&& !this.selection.isSelected(x)
+							&& !selected.some(item => dirname(item.path) === (x.path || '/'));
 
 		if (selected.lenth < 1) {
 			return;
 		}
 
-		Chooser.show(this.props.sourceID, accept, filter, 'Move')
-			.then(folder => this.moveEntities(selected, folder));
+		Chooser.show(this.props.sourceID, accept, filter, 'Move', true)
+			.then(folder => this.moveEntities(selected, folder))
+			.then(this.refresh, this.refresh);
 	}
 
 
@@ -155,7 +160,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				progress
 			},
 			props: {
-				filter
+				filter,
+				limited
 			}
 		} = this;
 
@@ -164,7 +170,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const selections = Array.from(selection);
 		const selected = selections.length;
 		const can = x => folder && folder.can(x);
-		const selectionCan = x => selected > 0 && selections.every(i => i.can(x));
+		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
 
 		return (
 			<div className="content-resource-browser">
@@ -175,7 +181,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						<TitleBalencer/>
 					</div>
 					<Toolbar>
-						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={can('upload')} onChange={this.onUploadFile} multiple/>
+						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={!limited && can('upload')} onChange={this.onUploadFile} multiple/>
 						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
 						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
 						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
@@ -193,7 +199,9 @@ export default class ContentResourcesBrowser extends BrowsableView {
 					<View contents={content}
 						selection={selection}
 						onDragOverChanged={this.onDragOverChanged}
-						onFileDrop={this.onFileDrop}>
+						onFileDrop={this.onFileDrop}
+						limited={limited}
+						>
 						{showInfo && (
 							<Inspector selection={selection}/>
 						)}

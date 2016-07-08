@@ -24,15 +24,15 @@ class File extends Entity {
 			<div className={cx('entity file-asset', {renameable, renaming: rename, selected, unselectable, dragging: this.isInDragSet()})}
 				role="button"
 				aria-label={filename}
-				draggable
+				draggable={this.canDrag() ? true : null}
 				tabIndex="0"
 
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
 
-				onDragEnd={this.onDragEnd}
-				onDragStart={this.onDragStart}
+				onDragEnd={this.canDrag() && this.onDragEnd}
+				onDragStart={this.canDrag() && this.onDragStart}
 				>
 				<div className="select">
 					<div className="file-asset-icon">

@@ -26,7 +26,7 @@ export default class Entity extends React.Component {
 
 	static contextTypes = {
 		onTrigger: PropTypes.func.isRequired,
-		onFolderDrop: PropTypes.func.isRequired,
+		onFolderDrop: PropTypes.func,
 		canSelectItem: PropTypes.func.isRequired,
 		selectItem: PropTypes.func.isRequired
 	}
@@ -123,14 +123,16 @@ export default class Entity extends React.Component {
 
 
 	onDragOver = (e) => {
-		if (!this.props.item.isFolder) { return; }
+		if (!this.canDrop()) { return; }
 		e.preventDefault();
+		e.stopPropagation();
+
 		e.dataTransfer.dropEffect = 'move';
 	}
 
 
 	onDragEnter = (e) => {
-		if (!this.props.item.isFolder) { return; }
+		if (!this.canDrop()) { return; }
 		if (!this.isInDragSet()) {
 			this.dragover++;
 			const target = getEventTarget(e, '.entity');
@@ -142,7 +144,7 @@ export default class Entity extends React.Component {
 
 
 	onDragLeave = (e) => {
-		if (!this.props.item.isFolder) { return; }
+		if (!this.canDrop()) { return; }
 		const target = getEventTarget(e, '.entity');
 		this.dragover--;
 		if (target && this.dragover <= 0) {
@@ -165,6 +167,8 @@ export default class Entity extends React.Component {
 				selection
 			}
 		} = this;
+
+		if (!this.canDrop()) { return; }
 
 		const isFile = !item.isFolder;
 		const isSelected = selection.isSelected(item);
@@ -196,6 +200,10 @@ export default class Entity extends React.Component {
 		if (!canSelectItem) { return true; }
 		return canSelectItem(this.props.item);
 	}
+
+
+	canDrag = () => typeof this.context.onFolderDrop === 'function'
+	canDrop = () => this.canDrag() && this.props.item.isFolder
 
 
 	attachInputRef = (ref) => {

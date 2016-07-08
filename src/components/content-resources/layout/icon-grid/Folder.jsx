@@ -19,15 +19,15 @@ class Folder extends Entity {
 			<div className={cx('entity folder-asset', {renameable, selected, unselectable, dragging: this.isInDragSet()})}
 				role="button"
 				aria-label={filename}
-				draggable
+				draggable={this.canDrag() ? true : null}
 				tabIndex="0"
 
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
 
-				onDragEnd={this.onDragEnd}
-				onDragStart={this.onDragStart}
+				onDragEnd={this.canDrag() && this.onDragEnd}
+				onDragStart={this.canDrag() && this.onDragStart}
 
 				onDragOver={this.onDragOver}
 				onDragEnter={this.onDragEnter}

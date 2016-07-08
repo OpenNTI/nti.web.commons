@@ -11,6 +11,7 @@ export default class Chooser extends React.Component {
 	static propTypes = {
 		accept: React.PropTypes.func,
 		filter: React.PropTypes.func,
+		limited: React.PropTypes.bool,
 		sourceID: React.PropTypes.string,
 		onCancel: React.PropTypes.func,
 		onDismiss: React.PropTypes.func,
@@ -26,9 +27,10 @@ export default class Chooser extends React.Component {
 	 * @param  {function} [filter] - A callback that inspects a File/Folder. Return falsy to remove it from
 	 *                           the list. Truthy to include it.
 	 * @param  {string} [selectButtonLabel] - Sets the label on the "Accept/Select" blue button.
+	 * @param  {boolean} [limited] - Restricts actions to basic selections.
 	 * @return {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
 	 */
-	static show (sourceID, accept, filter, selectButtonLabel) {
+	static show (sourceID, accept, filter, selectButtonLabel, limited) {
 		return new Promise((select, reject) => {
 			modal(
 				<Chooser sourceID={sourceID}
@@ -37,6 +39,7 @@ export default class Chooser extends React.Component {
 					selectButtonLabel={selectButtonLabel}
 					onCancel={reject}
 					onSelect={select}
+					limited={!!limited}
 					/>,
 				'content-resource-chooser-dialog'
 			);
@@ -89,19 +92,20 @@ export default class Chooser extends React.Component {
 		const {accept, filter} = this.props;
 		const [item] = items || [];
 		const matchesFilter = x => x && (!filter || filter(x));
-		const matchesAccepts = x => x && (!filter || accept(x));
+		const matchesAccepts = x => x && (!accept || accept(x));
 
 		this.setState({
 			selected: (item
 					&& matchesAccepts(item)
 					&& matchesFilter(item)
-					&& items && items.length === 1) ? item : void 0
+					//Singleton selections will also have "current folder" in the items.
+					&& items && items.length <= 2) ? item : void 0
 		});
 	}
 
 
 	onTrigger = (item) => {
-		return (item === this.state.selected && this.onSelect());
+		return (item === this.state.selected && !item.isFolder && this.onSelect());
 	}
 
 
@@ -111,6 +115,7 @@ export default class Chooser extends React.Component {
 			props:{
 				accept,
 				filter,
+				limited,
 				sourceID,
 				selectButtonLabel
 			}
@@ -137,6 +142,7 @@ export default class Chooser extends React.Component {
 					onClose={this.onCancel}
 					onSelectionChange={this.onSelectionChange}
 					onTrigger={this.onTrigger}
+					limited={limited}
 					/>
 				<DialogButtons buttons={buttons}/>
 			</div>

@@ -15,6 +15,7 @@ export default class ContentResourcesView extends React.Component {
 		onDragOverChanged: PropTypes.func,
 		onFileDrop: PropTypes.func,
 		layout: PropTypes.func,//React Component "Type"
+		limited: PropTypes.bool,
 		...IconGrid.propTypes
 	}
 
@@ -24,14 +25,17 @@ export default class ContentResourcesView extends React.Component {
 	clearSelection = (e) => (!e.metaKey && !e.ctrlKey) && this.props.selection.set()
 
 
+	allowDrops = () => !this.props.limited
+
+
 	onDragOver = (e) => {
 		e.preventDefault();
-		e.dataTransfer.dropEffect = accepts(e) ? 'move' : 'none';
+		e.dataTransfer.dropEffect = this.allowDrops() && accepts(e) ? 'move' : 'none';
 	}
 
 
 	onDragEnter = (e) => {
-		if (!accepts(e)) {
+		if (!this.allowDrops() || !accepts(e)) {
 			return;
 		}
 
@@ -50,7 +54,7 @@ export default class ContentResourcesView extends React.Component {
 
 
 	onDragLeave = (e) => {
-		if (!accepts(e)) {
+		if (!this.allowDrops() || !accepts(e)) {
 			return;
 		}
 
@@ -72,6 +76,10 @@ export default class ContentResourcesView extends React.Component {
 		e.stopPropagation();
 		e.preventDefault();
 		this.onDragLeave(e);
+
+		if (!this.allowDrops()) {
+			return;
+		}
 
 		const {files} = e.dataTransfer;
 		const {onFileDrop} = this.props;
