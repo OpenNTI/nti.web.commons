@@ -227,7 +227,8 @@ export default class Entity extends React.Component {
 
 		if (item.can('rename')) {
 			const filename = item.getFileName();
-			const rename = (item.isFolder() ? filename : path.basename(filename)) || filename;
+			const ext = path.extname(filename);
+			const rename = (item.isFolder ? filename : path.basename(filename, ext)) || filename;
 
 			this.setState({rename});
 		}
@@ -237,12 +238,12 @@ export default class Entity extends React.Component {
 	onCommitRename = (e) => {
 		const {item} = this.props;
 		const {target: {value}} = e;
+		const v = value.trim();
 		const oldName = item.getFileName();
-		const ext = item.isFolder ? '' : path.extname(oldName);
-		const newName = value.trim() + ext;
+		const ext = path.extname(oldName);
+		const newName = (item.isFolder || path.extname(v) === ext) ? v : (v + ext);
 
 		if (newName !== oldName) {
-
 			item.rename(newName);
 		}
 
