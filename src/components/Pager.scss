@@ -1,6 +1,58 @@
 @import "~nti-style-common";
 
-.pager {
+.pager.desktop {
+	display: inline-flex;
+	align-items: center;
+
+	.counts {
+		flex: 1 1 auto;
+		font-size: 0.75rem;
+		font-style: italic;
+		text-transform: uppercase;
+		max-width: initial;
+		margin-right: rem-calc(25px);
+	}
+
+	a {
+		flex: 0 0 auto;
+		text-decoration: none;
+		text-align: center;
+		width: rem-calc(40px);
+
+		&[href] {
+			opacity: 0.65;
+
+			&::before {
+				color: $primary-blue;
+			}
+
+			.no-touch &:hover {
+				opacity: 1;
+			}
+		}
+
+		&::before {
+			font-family: 'icomoon';
+			font-size: rem-calc(25px);
+			font-weight: 300;
+			line-height: 2;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			color: $disabled-button-border;
+
+		}
+	}
+
+	a.prev::before {
+		content: $icon-chevronup-25;
+	}
+
+	a.next::before {
+		content: $icon-chevrondown-25;
+	}
+}
+
+.pager.mobile {
 	white-space: nowrap;
 
 	&, & > * {
@@ -50,6 +102,8 @@
 		}
 	}
 }
+
+
 
 .bottompager {
 	margin: 0 auto;

@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import invariant from 'invariant';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
@@ -75,6 +76,11 @@ export default React.createClass({
 	},
 
 
+	contextTypes: {
+		isMobile: React.PropTypes.bool
+	},
+
+
 	getInitialState () {
 		return {
 			next: null, prev: null
@@ -124,6 +130,8 @@ export default React.createClass({
 
 	render () {
 		const {state} = this;
+		const {isMobile} = this.context;
+		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile});
 		let {props: {
 			position,
 			prev = state.prev || {},
@@ -147,7 +155,7 @@ export default React.createClass({
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
 			</ul>
 		) : (
-			<div className="pager" ref={x => this.el = x}>
+			<div className={cls} ref={x => this.el = x}>
 				{state.total > 1 && this.makeCounts() }
 				<a className="prev" {...prev}/>
 				<a className="next" {...next}/>
