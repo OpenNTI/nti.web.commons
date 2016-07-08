@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources} from '../../src/index';
+import {ConflictResolutionHandler, ContentResources, Flyout} from '../../src/index';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -21,6 +21,11 @@ ReactDOM.render(
 	<div className="test-kitchen">
 		<ConflictResolutionHandler/>
 		<Browser sourceID={ID}/>
+		<Flyout>
+			<div style={{border: '1px solid black'}}>
+				Flyout
+			</div>
+		</Flyout>
 	</div>,
 	document.getElementById('content')
 );
