@@ -174,7 +174,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 
 		const selections = Array.from(selection);
 		const selected = selections.length;
-		const can = x => folder && folder.can(x);
+		const currentFolderCan = x => folder && folder.can(x);
 		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
 		const disabled = (renaming); //modal states
 
@@ -191,7 +191,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							icon="upload"
 							label={t('TOOLBAR.upload')}
 							disabled={disabled}
-							available={!limited && can('upload')}
+							available={!limited && currentFolderCan('upload')}
 							onChange={this.onUploadFile}
 							multiple
 							/>
@@ -199,7 +199,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							icon="folder-add"
 							label={t('TOOLBAR.mkdir')}
 							disabled={disabled}
-							available={can('mkdir')}
+							available={currentFolderCan('mkdir')}
 							onClick={this.onMakeDirectory}
 							/>
 						<ToolbarButton
