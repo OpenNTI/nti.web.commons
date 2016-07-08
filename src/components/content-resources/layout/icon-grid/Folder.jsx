@@ -43,7 +43,7 @@ class Folder extends Entity {
 						className="filename"
 						onBlur={this.onCommitRename}
 						onKeyDown={this.onFilenameKeyDown}
-						defaultValue={filename}
+						defaultValue={rename}
 						/>
 				)}
 			</div>

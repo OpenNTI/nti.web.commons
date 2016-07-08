@@ -46,7 +46,7 @@ class File extends Entity {
 							ref={this.attachInputRef}
 							onBlur={this.onCommitRename}
 							onKeyDown={this.onFilenameKeyDown}
-							defaultValue={filename}
+							defaultValue={rename}
 							/>
 						)}
 					</div>

@@ -7,6 +7,7 @@ import getCoolOff from 'nti-commons/lib/function-cooloff';
 import toJS from 'nti-commons/lib/json-parse-safe';
 import {getFragmentFromString} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
+import path from 'path';
 
 import FileDragImage from './FileDragImage';
 
@@ -224,8 +225,11 @@ export default class Entity extends React.Component {
 			e.stopPropagation();
 		}
 
-		if (this.props.item.can('rename')) {
-			this.setState({rename: true});
+		if (item.can('rename')) {
+			const filename = item.getFileName();
+			const rename = (item.isFolder() ? filename : path.basename(filename)) || filename;
+
+			this.setState({rename});
 		}
 	}
 
@@ -233,13 +237,16 @@ export default class Entity extends React.Component {
 	onCommitRename = (e) => {
 		const {item} = this.props;
 		const {target: {value}} = e;
-		const newName = value.trim();
+		const oldName = item.getFileName();
+		const ext = item.isFolder ? '' : path.extname(oldName);
+		const newName = value.trim() + ext;
 
-		this.onFinishRename();
+		if (newName !== oldName) {
 
-		if (newName !== item.getFileName()) {
 			item.rename(newName);
 		}
+
+		this.onFinishRename();
 	}
 
 
