@@ -134,7 +134,11 @@ export default class ContentResourcesBrowser extends BrowsableView {
 
 		const [item] = selections;
 
-		item.emit('rename');
+		if (item.emit('rename')) {
+			this.setState({renaming: true});
+			item.once('rename-end', () => this.setState({renaming: false}));
+
+		}
 	}
 
 
@@ -157,7 +161,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				folder,
 				folderContents,
 				showInfo,
-				progress
+				progress,
+				renaming
 			},
 			props: {
 				filter,
@@ -171,6 +176,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const selected = selections.length;
 		const can = x => folder && folder.can(x);
 		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
+		const disabled = (renaming); //modal states
 
 		return (
 			<div className="content-resource-browser">
@@ -181,11 +187,41 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						<TitleBalencer/>
 					</div>
 					<Toolbar>
-						<FilePickerButton icon="upload" label={t('TOOLBAR.upload')} available={!limited && can('upload')} onChange={this.onUploadFile} multiple/>
-						<ToolbarButton icon="folder-add" label={t('TOOLBAR.mkdir')} available={can('mkdir')} onClick={this.onMakeDirectory}/>
-						<ToolbarButton icon="rename" label={t('TOOLBAR.rename')} available={selected === 1 && selectionCan('rename')} onClick={this.onRename}/>
-						<ToolbarButton icon="move" label={t('TOOLBAR.move')} available={selectionCan('move')} onClick={this.onMoveSelectTarget}/>
-						<ToolbarButton icon="delete" label={t('TOOLBAR.delete')} available={selectionCan('delete')} onClick={this.onDelete}/>
+						<FilePickerButton
+							icon="upload"
+							label={t('TOOLBAR.upload')}
+							disabled={disabled}
+							available={!limited && can('upload')}
+							onChange={this.onUploadFile}
+							multiple
+							/>
+						<ToolbarButton
+							icon="folder-add"
+							label={t('TOOLBAR.mkdir')}
+							disabled={disabled}
+							available={can('mkdir')}
+							onClick={this.onMakeDirectory}
+							/>
+						<ToolbarButton
+							icon="rename"
+							label={t('TOOLBAR.rename')}
+							disabled={disabled}
+							available={selected === 1 && selectionCan('rename')}
+							onClick={this.onRename}
+							/>
+						<ToolbarButton
+							icon="move"
+							label={t('TOOLBAR.move')}
+							disabled={disabled}
+							available={selectionCan('move')}
+							onClick={this.onMoveSelectTarget}
+							/>
+						<ToolbarButton
+							icon="delete"
+							label={t('TOOLBAR.delete')}
+							available={selectionCan('delete')}
+							onClick={this.onDelete}
+							/>
 						<ToolbarSpacer/>
 						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle} disabled/>
 						<Search disabled/>

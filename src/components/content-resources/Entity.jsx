@@ -235,11 +235,18 @@ export default class Entity extends React.Component {
 		const {target: {value}} = e;
 		const newName = value.trim();
 
-		this.setState({rename: false});
+		this.onFinishRename();
 
 		if (newName !== item.getFileName()) {
 			item.rename(newName);
 		}
+	}
+
+
+	onFinishRename () {
+		const {item} = this.props;
+		item.emit('rename-end');
+		this.setState({rename: false});
 	}
 
 
@@ -280,7 +287,7 @@ export default class Entity extends React.Component {
 		if (key === 'Enter') {
 			e.target.blur();
 		} else if (key === 'Escape') {
-			this.setState({rename: false});
+			this.onFinishRename();
 		}
 	}
 
