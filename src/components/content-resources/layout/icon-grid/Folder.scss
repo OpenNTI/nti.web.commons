@@ -9,6 +9,7 @@ body > .folder-asset.ghost,
 	line-height: rem-calc(20px);
 	cursor: pointer;
 	position: relative;
+	overflow: hidden;
 
 	&.unselectable {
 	}

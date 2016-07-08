@@ -25,7 +25,8 @@ body > .file-asset.ghost,
 	&.selected .select,
 	&:hover.selected .select {
 		background-color: $primary-blue;
-		div.filename {
+		div.filename,
+		div.filename span {
 			color: #fff;
 		}
 	}
@@ -59,23 +60,27 @@ body > .file-asset.ghost,
 		position: relative;
 		padding: rem-calc(10px 5px 5px);
 		height: rem-calc($size * 2.5);
+		max-height: rem-calc($size * 2.5);
 		font-size: rem-calc($size);
 		box-sizing: content-box;
 		font-weight: 600;
 		color: $primary-grey;
 
-		white-space: normal;
-		word-break: break-word;
-		overflow: hidden;
-		text-align: center;
+		&, & > span {
+			opacity: 1;
+			white-space: normal;
+			word-break: break-word;
+			overflow: hidden;
+			text-align: center;
 
-		text-overflow: ellipsis;
-		max-width: 100%;
+			text-overflow: ellipsis;
+			max-width: 100%;
 
-		//Magic non-standard CSS:
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
+			//Magic non-standard CSS:
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+		}
 
 		input {
 			position: absolute;
@@ -94,6 +99,6 @@ body > .file-asset.ghost,
 	}
 
 	&.renameable.renaming .filename span {
-		visibility: hidden;
+		visibility: hidden; opacity: 0;
 	}
 }

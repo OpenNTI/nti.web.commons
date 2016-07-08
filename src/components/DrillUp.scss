@@ -3,6 +3,11 @@
 a.drill-up {
 	cursor: pointer;
 	color: $primary-blue;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-right: 1em;
+
 	i.icon-chevron-left {
 		margin-right: rem-calc(5px);
 	}
