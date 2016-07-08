@@ -112,7 +112,7 @@ export default class BrowsableView extends React.Component {
 			return true;
 		}
 
-		return accept(item);
+		return item.isFolder || accept(item);
 	}
 
 
