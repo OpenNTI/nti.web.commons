@@ -1,7 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Flyout from '../Flyout';
+import Flyout, {
+	ALIGNMENT_POSITIONS,
+	VERTICAL,
+	ALIGN_TOP,
+	ALIGN_BOTTOM,
+	ALIGN_CENTER,
+	ALIGN_LEFT,
+	ALIGN_RIGHT,
+	MATCH_SIDE,
+	DEFAULT_VERTICAL,
+	DEFAULT_HORIZONTAL
+} from '../Flyout';
 
 const getDom = cmp => ReactDOM.findDOMNode(cmp);
 const getText = cmp => getDom(cmp).textContent;
@@ -168,36 +179,95 @@ describe('Flyout', () => {
 
 	});
 
-	describe('Flys honor alignments:', () => {
-		setup();
+	describe('Alignment Positions', () => {
+		const viewSize = {height: 1000, width: 1000};
+		const flyout = {offsetHeight: 250, offsetWidth: 250};
 
-		for (let vert of ['top', 'middle', 'bottom']) {
-			for (let horz of ['left', 'center', 'right']) {
+		describe('Vertical Axis is Primary', () => {
+			const ALIGNMENTS = ALIGNMENT_POSITIONS[VERTICAL];
 
-				it (`Align: ${vert}-${horz}`, (done) => {
-					Promise.all(test({alignment: `${vert}-${horz}`}))
-						.then(cmps => Promise.all(cmps
-							.map(x => new Promise(next =>
-								x.maybeDismiss(null, () =>
-									x.onToggle(null,
-										//We need to call align ourselves because we need to know when it finishes
-										()=> x.align(()=> next(x), true)
-									)
-								)
-							))
-						))
-						.then(components => {
-							for (let c of components) {
+			describe('Vertical Alignments', () => {
+				it ('Forced Top Alignment', () => {
+					const position = ALIGNMENTS[ALIGN_TOP]({top: 500}, flyout, viewSize);
 
-								expect(c.flyout.className).toEqual(`flyout ${horz} ${vert}`);
-
-							}
-						})
-						.then(done)
-						.catch(x => done.fail((x.stack || x)));
+					//The flyout should be be positioned by bottom to be at the top of the trigger,
+					//so it can grow upwards.
+					expect(position.top).toEqual(null);
+					expect(position.bottom).toEqual(500);
 				});
-			}
-		}
 
+				it ('Forced Bottom Alignment', () => {
+					const position = ALIGNMENTS[ALIGN_BOTTOM]({bottom: 500}, flyout, viewSize);
+
+					//THe flyout should be positioned by top to be at the bottom of the trigger,
+					//so it can grow downwards.
+					expect(position.top).toEqual(500);
+					expect(position.bottom).toEqual(null);
+				});
+
+				it ('Default enough room on bottom', () => {
+					const position = ALIGNMENTS[DEFAULT_VERTICAL]({top: 5, bottom: 45}, flyout, viewSize);
+
+					expect(position.top).toEqual(45);
+					expect(position.bottom).toEqual(null);
+				});
+
+				it ('Default enough room on top', () => {
+					const position = ALIGNMENTS[DEFAULT_VERTICAL]({top: 955, bottom: 995}, flyout, viewSize);
+
+					expect(position.top).toEqual(null);
+					expect(position.bottom).toEqual(45);
+				});
+
+				it ('Default more room on the bottom', () => {
+					const position = ALIGNMENTS[DEFAULT_VERTICAL]({top: 5, bottom: 45}, flyout, viewSize);
+
+					expect(position.top).toEqual(45);
+					expect(position.bottom).toEqual(null);
+				});
+
+				it ('Default more room on the top', () => {
+					const position = ALIGNMENTS[DEFAULT_VERTICAL]({top: 200, bottom: 995}, flyout, viewSize);
+
+					expect(position.top).toEqual(null);
+					expect(position.bottom).toEqual(800);
+				});
+			});
+
+			describe('Horizontal Alignments', () => {
+				it ('Left Alignment', () => {
+					const position = ALIGNMENTS[ALIGN_LEFT]({left: 45}, flyout, viewSize);
+
+					expect(position.left).toEqual(45);
+					expect(position.right).toEqual(null);
+				});
+
+				it ('Right Alignment', () => {
+					const position = ALIGNMENTS[ALIGN_RIGHT]({right: 955}, flyout, viewSize);
+
+					expect(position.left).toEqual(null);
+					expect(position.right).toEqual(45);
+				});
+
+				it ('Center Alignment, Trigger wider', () => {
+					const position = ALIGNMENTS[ALIGN_CENTER]({left: 45, width: 450}, flyout, viewSize);
+
+					expect(position.left).toEqual(145);
+					expect(position.right).toEqual(null);
+				});
+
+				it ('Center Alignment, Trigger narrower', () => {
+					const position = ALIGNMENTS[ALIGN_CENTER]({left: 45, width: 200}, flyout, viewSize);
+
+					expect(position.left).toEqual(20);
+					expect(position.right).toEqual(null);
+				});
+
+				it ('Default', () => {
+					//For now this just calls center alignment so no need to test it
+					expect(true).toBeTruthy();
+				});
+			});
+		});
 	});
 });
