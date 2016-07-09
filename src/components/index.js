@@ -25,7 +25,7 @@ export Error from './Error';
 export Favorite from './Favorite';
 export FilterableView from './FilterableView';
 export FilterBar from './FilterBar';
-export Flyout from './Flyout';
+export Flyout from './flyout-cmp';
 export FollowButton from './FollowButton';
 export Footer from './Footer';
 export HideNavigation from './HideNavigation';
