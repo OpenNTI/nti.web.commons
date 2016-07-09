@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Flyout, {
 	ALIGNMENT_POSITIONS,
+	ALIGNMENT_SIZINGS,
 	VERTICAL,
 	ALIGN_TOP,
 	ALIGN_BOTTOM,
@@ -267,6 +268,19 @@ describe('Flyout', () => {
 					//For now this just calls center alignment so no need to test it
 					expect(true).toBeTruthy();
 				});
+			});
+		});
+	});
+
+
+	describe ('Sizing Tests', () => {
+		describe('Vertical Axis is Primary', () => {
+			const SIZINGS = ALIGNMENT_SIZINGS[VERTICAL];
+
+			it ('Match Side', () => {
+				const size = SIZINGS[MATCH_SIDE]({width: 200});
+
+				expect(size.width).toEqual(200);
 			});
 		});
 	});
