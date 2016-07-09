@@ -13,41 +13,41 @@
 			width: 240px;
 			margin-left: 0;
 
-	        .DayPicker-Caption {
-	            font-size: 1rem;
-	        }
-	        .TimePicker-Header-Text {
-	            margin-left: 30%;
-	        }
-	    }
+			.DayPicker-Caption {
+				font-size: 1rem;
+			}
+			.TimePicker-Header-Text {
+				margin-left: 30%;
+			}
+		}
 
-	    .TimePicker-Header-Text {
-	        font-family: $body-font-family;
-	        font-size: 0.625rem;
-	        line-height: 1.6;
-	        color: #b8b8b8;
-	        text-align: center;
-	    }
+		.TimePicker-Header-Text {
+			font-family: $body-font-family;
+			font-size: 0.625rem;
+			line-height: 1.6;
+			color: #b8b8b8;
+			text-align: center;
+		}
 
-	    .TimePicker {
-	        width: 67%;
-	        margin: 10px auto;
-	    }
+		.TimePicker {
+			width: 67%;
+			margin: 10px auto;
+		}
 	}
 
 	.checkbox-component {
 		font-family: $body-font-family;
-	    font-size: 0.7725rem;
-	    line-height: 1.6;
-	    color: $primary-grey;
-	    margin-left: 15px;
+		font-size: 0.7725rem;
+		line-height: 1.6;
+		color: $primary-grey;
+		margin-left: 15px;
 	}
 
-    .flyout-arrow {
-    	display: none;
-    }
+	.flyout-arrow {
+		display: none;
+	}
 
-    .available-save {
-    	margin-bottom: 1rem;
-    }
+	.available-save {
+		margin-bottom: 1rem;
+	}
 }
