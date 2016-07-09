@@ -1,1 +1,4 @@
-export Flyout from './View';
+import Flyout from './View';
+
+
+export default Flyout;
