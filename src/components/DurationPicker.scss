@@ -1,21 +1,27 @@
 .duration-picker {
 	background: white;
-	input {
-		width: 4rem;
-		margin: 0.25rem;
-		font-size: .875rem;
-		padding: 1rem .5rem .25rem;
-	}
+	display: flex;
+
 	label {
+		flex: 1 1 auto;
+		display: flex;
 		position: relative;
 		.label {
 			position: absolute;
 			font-size: .5rem;
 			text-transform: uppercase;
-			top: -0.7rem;
-			left: 0.8rem;
+			top: rem-calc(10px);
+			left: 1.5em;
 			/* font-weight: 600; */
 			color: #b8b8b8;
+		}
+
+		input {
+			flex: 0 1 auto;
+			width: 4.25rem;
+			margin: 0.25rem;
+			font-size: .875rem;
+			padding: 1rem .5rem .25rem;
 		}
 	}
 }
