@@ -69,6 +69,10 @@ export default class ErrorView extends React.Component {
 		const cls = cx('nti-error', {warning: isWarning});
 		const msg = error.message || DEFAULT_MESSAGE;
 
+		if (error.doNotShow) {
+			return null;
+		}
+
 		return (
 			<div ref={this.setErrorCmpRef} className={cls}>{msg}</div>
 		);

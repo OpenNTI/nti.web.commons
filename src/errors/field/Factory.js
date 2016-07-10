@@ -58,6 +58,11 @@ class FieldError extends EventEmitter {
 	}
 
 
+	get doNotShow () {
+		return this.raw.doNotShow;
+	}
+
+
 	set attachedTo (value) {
 		this[DATA].attachedTo = value;
 		this.emit('changed');
