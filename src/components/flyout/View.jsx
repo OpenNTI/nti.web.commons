@@ -3,11 +3,38 @@ import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import {getEffectiveZIndex, getViewportHeight, getViewportWidth, getScrollParent} from 'nti-lib-dom';
+import {
+	DEFAULT_VERTICAL,
+	DEFAULT_HORIZONTAL,
+	DEFAULT_SIZING,
+
+	VERTICAL,
+	// HORIZONTAL,
+
+	ALIGN_TOP,
+	ALIGN_BOTTOM,
+	ALIGN_LEFT,
+	ALIGN_CENTER,
+	ALIGN_RIGHT,
+
+	MATCH_SIDE
+} from './Constants';
+
+import {
+	ALIGNMENT_POSITIONS,
+	ALIGNMENT_SIZINGS,
+	constrainAlignment,
+	getOuterStylesForAlignment,
+	getInnerStylesForAlignment,
+	getAlignmentClass
+} from './utils';
+
 
 const {createElement: ce} = global.document || {};
 const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
 
 function getRect (el) {
+	const rect = el.getBoundingClientRect();
 	const p = e => e && e.offsetParent;
 	const r = e => p(e) ? [e].concat(r(p(e))) : [e];
 	const sum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
@@ -15,24 +42,11 @@ function getRect (el) {
 	return r(el).reduce(sum, {
 		left: 0,
 		top: 0,
-		width: el.offsetWidth,
-		height: el.offsetHeight,
+		width: rect.width,
+		height: rect.height,
 		get right () { return this.left + this.width; },
 		get bottom () { return this.top + this.height; }
 	});
-}
-
-function getAlignments (str) {
-	str = str.toLowerCase();
-	const [vert, horz] = str.split('-');
-
-	const VALID_VERT = /^top|middle|bottom$/;
-	const VALID_HORZ = /^left|center|right$/;
-
-	return {
-		horizontal: VALID_HORZ.test(horz) ? horz : 'left',
-		vertical: VALID_VERT.test(vert) ? vert : 'bottom'
-	};
 }
 
 
@@ -47,69 +61,69 @@ function isFixed (el) {
 }
 
 
-const ALIGNERS = {
-
-	top (dim, {top}) {
-		return {
-			side: 'top',
-			top: Math.round(top - dim) + 'px'
-		};
-	},
-
-	middle (dim, {top, height}) {
-		return {
-			side: 'middle',
-			top: Math.round((top + (height / 2)) - (dim / 2)) + 'px'
-		};
-	},
-
-	bottom (dim, {bottom}) {
-		return {
-			side: 'bottom',
-			top: Math.round(bottom) + 'px'
-		};
-	},
-
-
-
-	left (dim, {left}) {
-		return {
-			side: 'left',
-			left: Math.round(left) + 'px'
-		};
-	},
-
-	center (dim, {left, width}) {
-		return {
-			left: Math.round((left + (width / 2)) - (dim / 2)) + 'px',
-			side: 'center'
-		};
-	},
-
-	right (dim, {left, width}) {
-		return {
-			side: 'right',
-			left: Math.round((left + width) - dim) + 'px'
-		};
-	}
-};
-
-
+/**
+ * NOTE: for now the primary axis is always vertical
+ *
+ * The primary alignment should behave as follows:
+ * 		If primary axis alignment is NOT passed:
+ * 			1.) The primary axis alignment will be set to which ever side has the most space
+ * 		 	(i.e if the primary axis is vertical if the trigger is closer to the bottom
+ * 		  	of the window the flyout will open to the top)
+ *
+ * 		If primary axis alignment is passed:
+ * 			1.) The primary axis alignment will be forced to that side.
+ *
+ *
+ * The secondary alignment defaults to center and behaves like:
+ *
+ * 		Align the same point on the flyout to the same point on the trigger.
+ *
+ *		CASES:
+ *			'left': the left edge of the flyout is aligned to the left edge of the trigger
+ *			'center': the center of the flyout is aligned to the center of the trigger
+ *			'right': the right edge of the flyout is aligned to the right edge of the trigger
+ *			'top': the top edge of the flyout is aligned to the top edge of the trigger
+ *			'bottom': the bottom edge of the flyout is aligned to the bottom edge of the trigger
+ */
 export default class Flyout extends React.Component {
+
+	static AXIS = {
+		// HORIZONTAL, // Don't expose horizontal for now
+		VERTICAL
+	}
+
+	static ALIGNMENTS = {
+		TOP: ALIGN_TOP,
+		BOTTOM: ALIGN_BOTTOM,
+		LEFT: ALIGN_LEFT,
+		CENTER: ALIGN_CENTER,
+		RIGHT: ALIGN_RIGHT
+	}
+
+	static SIZES = {
+		MATCH_SIDE
+	}
 
 	static propTypes = {
 		trigger: PropTypes.any,
 		children: PropTypes.any,
 		className: PropTypes.string,
-		alignment: PropTypes.string,
+		//For now this can only be vertical
+		primaryAxis: PropTypes.oneOf([VERTICAL]),
+		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
+		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER]),
+		//Set the max-(height|width) to keep the flyout within the window
+		constrain: PropTypes.bool,
+		sizing: PropTypes.oneOf([MATCH_SIDE]),
 		afterAlign: PropTypes.func,
 		onDismiss: PropTypes.func,
 		arrow: PropTypes.bool
 	}
 
 	static defaultProps = {
-		alignment: 'bottom center'
+		primaryAxis: 'vertical'
 	}
+
 
 	constructor (props) {
 		super(props);
@@ -235,58 +249,40 @@ export default class Flyout extends React.Component {
 
 
 	align (cb = this.props.afterAlign, noRetry = false) {
-		const rect = getRect(this.trigger);
-		const {offsetWidth: width, offsetHeight: height} = this.flyout || {};
-
-		function flip (a) {
-			return ({
-				center: 'left',
-				middle: 'bottom',
-				left: 'right',
-				top: 'bottom'
-			})[a] || a;
-		}
-
-		const finish = () => {
+		const {alignment:oldAlignment} = this.state;
+		const finish = (alignment) => {
 			this.setState(
-				{aligning: false},
-				typeof cb === 'function' ? cb : void cb);
-		};
-
-		const calculateAlignment = (alignments, attempts = 1) => {
-			const y = ALIGNERS[alignments.vertical](height, rect);
-			const x = ALIGNERS[alignments.horizontal](width, rect);
-
-			const alignment = {...y, ...x, dimensions: {height, width}};
-
-			alignment.side = {[x.side]: 1, [y.side]: 1};
-
-			this.setState({alignment}, () => {
-				const {top, left, right, bottom} = this.flyout.getBoundingClientRect();
-				const {vertical, horizontal} = alignments;
-				let realignments = alignments;
-
-				if (left < 0 || right > getViewportWidth()) {
-					realignments = Object.assign({}, alignments, {horizontal: flip(horizontal)});
-				}
-
-				if (top < 0 || bottom > getViewportHeight()) {
-					realignments = Object.assign({}, alignments, {vertical: flip(vertical)});
-				}
-
-				if (noRetry || alignments === realignments || attempts >= 3) {
-					finish();
-				} else {
-					calculateAlignment(realignments, attempts + 1);
-				}
-			});
+				{aligning: false, alignment},
+				typeof cb === 'function' ? cb : void cb
+			);
 		};
 
 		if (!this.flyout) {
-			return finish();
+			return finish(oldAlignment);
 		}
 
-		calculateAlignment(getAlignments(this.props.alignment));
+		const triggerRect = getRect(this.trigger);
+		const viewport = {width: getViewportWidth(), height: getViewportHeight()};
+		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing, arrow} = this.props;
+
+		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
+		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
+
+		const verticalPosition = alignmentPositions[verticalAlign || DEFAULT_VERTICAL](triggerRect, this.flyout, viewport);
+		const horizontalPosition = alignmentPositions[horizontalAlign || DEFAULT_HORIZONTAL](triggerRect, this.flyout, viewport);
+		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](triggerRect, this.flyout, viewport);
+
+		let newAlignment = {
+			...verticalPosition,
+			...horizontalPosition,
+			...flyoutSizing
+		};
+
+		if (constrain) {
+			newAlignment = constrainAlignment(newAlignment, viewport, arrow);
+		}
+
+		finish(newAlignment);
 	}
 
 
@@ -312,12 +308,18 @@ export default class Flyout extends React.Component {
 		let {trigger: Trigger, ...props} = this.props;
 
 		delete props.children;
-		delete props.alignment;
+		delete props.verticalAlign;
+		delete props.horizontalAlign;
+		delete props.primaryAxis;
+		delete props.constrain;
+		delete props.sizing;
 		delete props.afterAlign;
 		delete props.alignment;
 		delete props.className;
 		delete props.onDismiss;
 		delete props.arrow;
+
+		//TODO: inform the trigger that the flyout is open
 
 		if (!Trigger) {
 			Trigger = ( <button>Trigger</button> );
@@ -343,24 +345,31 @@ export default class Flyout extends React.Component {
 
 
 	renderFlyout () {
-		const {props: {children, className, arrow}, state: {aligning, alignment}} = this;
+		debugger;
+		const {
+			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign},
+			state: {aligning, alignment}
+		} = this;
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
 		const effectiveZ = getEffectiveZIndex(trigger);
-		const style = {
+		const flyoutStyle = {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
-			top: alignment.top,
-			left: alignment.left,
-			zIndex: effectiveZ ? (effectiveZ + 1) : void 0
+			zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
+			...getOuterStylesForAlignment(alignment, arrow, primaryAxis)
 		};
 
-		const css = cx('flyout', className, alignment.side, {fixed, arrow});
+		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
+
+		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {fixed, arrow});
 
 		ReactDOM.render(
-			<div className={css} ref={this.attachFlyoutRef} style={style}>
+			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle}>
 				{arrow && <div className="flyout-arrow"/>}
-				{children}
+				<div className="flyout-inner" style={innerStyle}>
+					{children}
+				</div>
 			</div>
 		, this.fly, () => {
 

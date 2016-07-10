@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Flyout from '../Flyout';
+import Flyout from '../View';
 
 const getDom = cmp => ReactDOM.findDOMNode(cmp);
 const getText = cmp => getDom(cmp).textContent;
@@ -165,39 +165,6 @@ describe('Flyout', () => {
 				done();
 			})
 			.catch(x => done.fail(x));
-
-	});
-
-	describe('Flys honor alignments:', () => {
-		setup();
-
-		for (let vert of ['top', 'middle', 'bottom']) {
-			for (let horz of ['left', 'center', 'right']) {
-
-				it (`Align: ${vert}-${horz}`, (done) => {
-					Promise.all(test({alignment: `${vert}-${horz}`}))
-						.then(cmps => Promise.all(cmps
-							.map(x => new Promise(next =>
-								x.maybeDismiss(null, () =>
-									x.onToggle(null,
-										//We need to call align ourselves because we need to know when it finishes
-										()=> x.align(()=> next(x), true)
-									)
-								)
-							))
-						))
-						.then(components => {
-							for (let c of components) {
-
-								expect(c.flyout.className).toEqual(`flyout ${horz} ${vert}`);
-
-							}
-						})
-						.then(done)
-						.catch(x => done.fail((x.stack || x)));
-				});
-			}
-		}
 
 	});
 });

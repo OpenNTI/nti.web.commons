@@ -6,7 +6,7 @@ import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 import DateTime from './DateTime';
 import DayTimePicker from './day-time/DayTimePicker';
-import Flyout from './Flyout';
+import Flyout from './flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
 import {PUBLISH_STATES} from '../constants';
@@ -70,14 +70,15 @@ export default class Publish extends React.Component {
 			PropTypes.oneOf(Object.keys(PUBLISH_STATES))
 		]),
 		onChange: PropTypes.func,
-		alignment: PropTypes.string,
+		verticalAlignment: PropTypes.string,
+		horizontalAlignment: PropTypes.string,
 		children: PropTypes.any
 	}
 
 	static defaultProps = {
 		value: PUBLISH_STATES.DRAFT,
 		changed: false,
-		alignment: 'bottom-right'
+		horizontalAlignment: Flyout.ALIGNMENTS.RIGHT
 	}
 
 	constructor (props) {
@@ -160,7 +161,7 @@ export default class Publish extends React.Component {
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {alignment, children, value} = this.props;
+		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 
 		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed});
@@ -168,7 +169,16 @@ export default class Publish extends React.Component {
 		const trigger = <PublishTrigger value={value}/>;
 
 		return (
-			<Flyout ref={this.setFlyoutRef} arrow className="publish-controls" alignment={alignment} trigger={trigger} onDismiss={this.closeMenu}>
+			<Flyout
+				ref={this.setFlyoutRef}
+				arrow
+				constrain
+				className="publish-controls"
+				verticalAlign={vAlign}
+				horizontalAlign={hAlign}
+				trigger={trigger}
+				onDismiss={this.closeMenu}
+			>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>

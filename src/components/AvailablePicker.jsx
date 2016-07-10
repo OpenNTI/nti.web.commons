@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import DayTimePicker from './day-time/DayTimePicker';
-import Flyout from './Flyout';
+import Flyout from './flyout';
 import DateTime from './DateTime';
 import Checkbox from './Checkbox';
 import LabeledValue from './LabeledValue';
@@ -110,7 +110,7 @@ export default class AvailablePicker extends React.Component {
 
 		return (
 			<LabeledValue label={label} className="available-trigger" arrow>
-				{hasValue ? <DateTime date={date} format="L"/> : <span className={labelClasses}>{placeholder}</span>} 
+				{hasValue ? <DateTime date={date} format="L"/> : <span className={labelClasses}>{placeholder}</span>}
 			</LabeledValue>
 		);
 	}
@@ -123,7 +123,13 @@ export default class AvailablePicker extends React.Component {
 		const saveClassNames = cx('available-save flyout-fullwidth-btn', {changed});
 
 		return (
-			<Flyout ref={this.setFlyoutRef} className="available-picker" alignment="bottom-left" trigger={this.renderTrigger()}>
+			<Flyout
+				ref={this.setFlyoutRef}
+				className="available-picker"
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				trigger={this.renderTrigger()}
+			>
 				<Checkbox label={label} checked={checked} onChange={this.onCheckChange} />
 				<DayTimePicker value={date} onChange={this.onDateChange} />
 				{saving ? <TinyLoader /> : <div className={saveClassNames} onClick={this.onSave}>Save</div>}
