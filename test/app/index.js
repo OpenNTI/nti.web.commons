@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources} from '../../src/index';
+import {DayTimeToggle, ConflictResolutionHandler, ContentResources} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -21,6 +21,8 @@ ReactDOM.render(
 	<div className="test-kitchen">
 		<ConflictResolutionHandler/>
 		<Browser sourceID={ID}/>
+
+		<DayTimeToggle availableBeginning={new Date()} availableEnding={new Date('2016-7-20')} />
 	</div>,
 	document.getElementById('content')
 );
