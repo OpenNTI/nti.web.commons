@@ -1,4 +1,5 @@
-input.number-input-component {
+input[type=number].number-input-component {
+	-moz-appearance: textfield;
 	&::-webkit-inner-spin-button,
 	&::-webkit-outer-spin-button {
 	  -webkit-appearance: none;
