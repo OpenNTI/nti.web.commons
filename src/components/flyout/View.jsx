@@ -345,7 +345,6 @@ export default class Flyout extends React.Component {
 
 
 	renderFlyout () {
-		debugger;
 		const {
 			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign},
 			state: {aligning, alignment}
