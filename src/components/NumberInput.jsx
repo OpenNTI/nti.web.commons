@@ -48,6 +48,31 @@ export default class NumbertInput extends React.Component {
 	}
 
 
+	/**
+	 * Because of FIREFOX we still have to listen to KeyPress.
+	 *
+	 * @param  {Event} e KeyPress event.
+	 * @return {void}
+	 */
+	onKeyPress = (e) => {
+		//if the owner component wants a KeyPress listener, don't hijack it.
+		const {onKeyPress} = this.props;//eslint-disable-line react/prop-types
+		const allowed = {
+			44: ',',
+			45: '-',
+			46: '.'
+		};
+
+		if ((e.charCode < 48 || e.charCode > 57) && !allowed[e.charCode]) {
+			e.preventDefault();
+			// console.log(e.charCode, e.key)
+		}
+
+		if (onKeyPress) {
+			onKeyPress(e);
+		}
+	}
+
 	render () {
 		const {value: givenValue, className, pad, ...props} = this.props;
 		let value = givenValue;
@@ -61,6 +86,7 @@ export default class NumbertInput extends React.Component {
 				type="number"
 				className={cx('number-input-component', className)}
 				onChange={this.onChange}
+				onKeyPress={this.onKeyPress}
 				value={value}
 				ref={this.attachRef}
 				/>
