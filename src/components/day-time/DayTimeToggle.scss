@@ -1,8 +1,8 @@
 .daytime-toggle.flyout {
-    background-color: #ffffff;
-    width: 335px;
-    box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.3);
-	padding: 10px;
+
+	.flyout-inner {
+		padding: 10px;
+	}
 
 	.toggle {
 		display: flex;
@@ -47,6 +47,7 @@
 		.TimePicker {
 		    width: 50%;
 		    margin: 0 auto;
+		    min-width: 151px;
 		}
 	}
 

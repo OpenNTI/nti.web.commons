@@ -21,7 +21,7 @@ ReactDOM.render(
 	<div className="test-kitchen">
 		<ConflictResolutionHandler/>
 		<Browser sourceID={ID}/>
-		<Flyout>
+		<Flyout verticalAlign={Flyout.ALIGNMENTS.TOP} horizontalAlign={Flyout.ALIGNMENTS.LEFT} sizing={Flyout.SIZES.MATCH_SIDE} >
 			<div style={{border: '1px solid black'}}>
 				Flyout
 			</div>

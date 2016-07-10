@@ -15,6 +15,10 @@ import {
 	MATCH_SIDE
 } from './Constants';
 
+const ARROW_HEIGHT = 15;
+
+const styleProps = ['top', 'bottom', 'left', 'right', 'width'];
+
 /**
  * Functions to compute the different types of alignments
  * @type {Object}
@@ -204,17 +208,79 @@ export const ALIGNMENT_SIZINGS = {
 
 
 export function constrainAlignment (alignment = {}, {height: viewHeight, width: viewWidth}) {
+	const clone = {...alignment};
+
+	if (clone.top != null) {
+		clone.maxHeight = viewHeight - clone.top;
+	} else if (clone.bottom != null) {
+		clone.maxHeight = viewHeight - clone.bottom;
+	}
+
+	if (clone.left != null) {
+		clone.maxWidth = viewWidth - clone.left;
+	} else if (clone.right != null) {
+		clone.maxWidth = viewWidth - clone.right;
+	}
+
+	return clone;
+}
+
+
+export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis) {
+	const clone = {...alignment};
+
+	if (primaryAxis === VERTICAL && arrow) {
+		if (clone.top != null) {
+			clone.top = clone.top + ARROW_HEIGHT;
+		} else if (clone.bottom != null) {
+			clone.bottom = clone.bottom + ARROW_HEIGHT;
+		}
+	}
+
+	return styleProps.reduce((acc, prop) => {
+		if (clone[prop] != null) {
+			acc[prop] = `${clone[prop]}px`;
+		}
+
+		return acc;
+	}, {});
+}
+
+
+export function getInnerStylesForAlignment (alignment, arrow, primaryAxis) {
+	let {maxWidth, maxHeight} = alignment;
+
+	if (primaryAxis === VERTICAL && arrow) {
+		maxHeight = maxHeight - ARROW_HEIGHT;
+	}
+
+	//TODO: figure out what to do for horizontal alignment
+
+	return {
+		maxWidth: maxWidth ? `${maxWidth}px` : null,
+		maxHeight: maxHeight ? `${maxHeight}px` : null
+	};
+}
+
+
+export function getAlignmentClass (alignment, vAlign, hAlign) {
+	//TODO: figure out what to do for horizontal alignment
+	let vCls = '';
+	let hCls = '';
+
 	if (alignment.top != null) {
-		alignment.maxHeight = viewHeight - alignment.top;
+		vCls = 'bottom';
 	} else if (alignment.bottom != null) {
-		alignment.maxHeight = viewHeight - alignment.bottom;
+		vCls = 'top';
 	}
 
-	if (alignment.left != null) {
-		alignment.maxWidth = viewWidth - alignment.left;
+	if (!hAlign || hAlign === ALIGN_CENTER) {
+		hCls = 'center';
+	} else if (alignment.left != null) {
+		hCls = 'left';
 	} else if (alignment.right != null) {
-		alignment.maxWidth = viewWidth - alignment.right;
+		hCls = 'right';
 	}
 
-	return alignment;
+	return vCls && hCls ? `${vCls} ${hCls}` : (vCls || hCls);
 }

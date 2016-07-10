@@ -20,13 +20,21 @@ import {
 	MATCH_SIDE
 } from './Constants';
 
-import {ALIGNMENT_POSITIONS, ALIGNMENT_SIZINGS, constrainAlignment} from './utils';
+import {
+	ALIGNMENT_POSITIONS,
+	ALIGNMENT_SIZINGS,
+	constrainAlignment,
+	getOuterStylesForAlignment,
+	getInnerStylesForAlignment,
+	getAlignmentClass
+} from './utils';
 
 
 const {createElement: ce} = global.document || {};
 const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
 
 function getRect (el) {
+	const rect = el.getBoundingClientRect();
 	const p = e => e && e.offsetParent;
 	const r = e => p(e) ? [e].concat(r(p(e))) : [e];
 	const sum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
@@ -34,8 +42,8 @@ function getRect (el) {
 	return r(el).reduce(sum, {
 		left: 0,
 		top: 0,
-		width: el.offsetWidth,
-		height: el.offsetHeight,
+		width: rect.width,
+		height: rect.height,
 		get right () { return this.left + this.width; },
 		get bottom () { return this.top + this.height; }
 	});
@@ -92,7 +100,7 @@ export default class Flyout extends React.Component {
 		RIGHT: ALIGN_RIGHT
 	}
 
-	static SIZE = {
+	static SIZES = {
 		MATCH_SIDE
 	}
 
@@ -241,6 +249,7 @@ export default class Flyout extends React.Component {
 
 
 	align (cb = this.props.afterAlign, noRetry = false) {
+		const {alignment:oldAlignment} = this.state;
 		const finish = (alignment) => {
 			this.setState(
 				{aligning: false, alignment},
@@ -249,12 +258,12 @@ export default class Flyout extends React.Component {
 		};
 
 		if (!this.flyout) {
-			return finish();
+			return finish(oldAlignment);
 		}
 
 		const triggerRect = getRect(this.trigger);
 		const viewport = {width: getViewportWidth(), height: getViewportHeight()};
-		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing} = this.props;
+		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing, arrow} = this.props;
 
 		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
 		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
@@ -263,17 +272,17 @@ export default class Flyout extends React.Component {
 		const horizontalPosition = alignmentPositions[horizontalAlign || DEFAULT_HORIZONTAL](triggerRect, this.flyout, viewport);
 		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](triggerRect, this.flyout, viewport);
 
-		let alignment = {
+		let newAlignment = {
 			...verticalPosition,
 			...horizontalPosition,
 			...flyoutSizing
 		};
 
 		if (constrain) {
-			alignment = constrainAlignment(alignment, viewport);
+			newAlignment = constrainAlignment(newAlignment, viewport, arrow);
 		}
 
-		//TODO: set state for alignment
+		finish(newAlignment);
 	}
 
 
@@ -336,24 +345,31 @@ export default class Flyout extends React.Component {
 
 
 	renderFlyout () {
-		const {props: {children, className, arrow}, state: {aligning, alignment}} = this;
+		debugger;
+		const {
+			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign},
+			state: {aligning, alignment}
+		} = this;
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
 		const effectiveZ = getEffectiveZIndex(trigger);
-		const style = {
+		const flyoutStyle = {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
-			top: alignment.top,
-			left: alignment.left,
-			zIndex: effectiveZ ? (effectiveZ + 1) : void 0
+			zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
+			...getOuterStylesForAlignment(alignment, arrow, primaryAxis)
 		};
 
-		const css = cx('flyout', className, alignment.side, {fixed, arrow});
+		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
+
+		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {fixed, arrow});
 
 		ReactDOM.render(
-			<div className={css} ref={this.attachFlyoutRef} style={style}>
+			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle}>
 				{arrow && <div className="flyout-arrow"/>}
-				{children}
+				<div className="flyout-inner" style={innerStyle}>
+					{children}
+				</div>
 			</div>
 		, this.fly, () => {
 

@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import DayTimeToggleTrigger from './DayTimeToggleTrigger';
 import DayTimePicker from './DayTimePicker';
-import Flyout from '../flyout-cmp';
+import Flyout from '../flyout';
 
 const TOGGLE = {
 	BEGIN: 'availableBeginning',

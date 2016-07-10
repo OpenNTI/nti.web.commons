@@ -6,7 +6,7 @@ import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 import DateTime from './DateTime';
 import DayTimePicker from './day-time/DayTimePicker';
-import Flyout from './flyout-cmp';
+import Flyout from './flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
 import {PUBLISH_STATES} from '../constants';
@@ -172,9 +172,10 @@ export default class Publish extends React.Component {
 			<Flyout
 				ref={this.setFlyoutRef}
 				arrow
+				constrain
 				className="publish-controls"
-				verticalAlignment={vAlign}
-				horizontalAlignment={hAlign}
+				verticalAlign={vAlign}
+				horizontalAlign={hAlign}
 				trigger={trigger}
 				onDismiss={this.closeMenu}
 			>

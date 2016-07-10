@@ -7,17 +7,6 @@
 }
 
 .flyout {
-
-	&.arrow.bottom {
-		margin-top: 1rem;
-	}
-
-	&.arrow.top {
-		margin-top: -1rem;
-	}
-
-
-
 	&.right {
 		.flyout-arrow {
 			right: rem-calc(12px);
@@ -85,5 +74,11 @@
 		&.changed {
 			background-color: $primary-blue;
 		}
+	}
+
+	.flyout-inner {
+		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
+		background: white;
+		overflow: auto;
 	}
 }

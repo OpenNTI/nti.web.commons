@@ -10,11 +10,19 @@ import {
 	DEFAULT_VERTICAL
 } from '../Constants';
 
-import {ALIGNMENT_POSITIONS, ALIGNMENT_SIZINGS } from '../utils';
+import {
+	ALIGNMENT_POSITIONS,
+	ALIGNMENT_SIZINGS,
+	constrainAlignment,
+	getOuterStylesForAlignment,
+	getInnerStylesForAlignment,
+	getAlignmentClass
+} from '../utils';
+
+const viewSize = {height: 1000, width: 1000};
 
 describe('Flyout util tests', () => {
 	describe('Alignment Positions', () => {
-		const viewSize = {height: 1000, width: 1000};
 		const flyout = {offsetHeight: 250, offsetWidth: 250};
 
 		describe('Vertical Axis is Primary', () => {
@@ -106,7 +114,7 @@ describe('Flyout util tests', () => {
 	});
 
 
-	describe ('Sizing Tests', () => {
+	describe('Sizing Tests', () => {
 		describe('Vertical Axis is Primary', () => {
 			const SIZINGS = ALIGNMENT_SIZINGS[VERTICAL];
 
@@ -115,6 +123,91 @@ describe('Flyout util tests', () => {
 
 				expect(size.width).toEqual(200);
 			});
+		});
+	});
+
+
+	describe('Constraining sets maxWidth', () => {
+		it('Aligned with top', () => {
+			const constraint = constrainAlignment({top: 500}, viewSize);
+
+			expect(constraint.maxHeight).toEqual(500);//1000 - 500
+		});
+
+		it('Aligned with bottom', () => {
+			const constraint = constrainAlignment({bottom: 500}, viewSize);
+
+			expect(constraint.maxHeight).toEqual(500);
+		});
+
+		it('Aligned with left', () => {
+			const constraint = constrainAlignment({left: 500}, viewSize);
+
+			expect(constraint.maxWidth).toEqual(500);
+		});
+
+		it('Aligned with right', () => {
+			const constraint = constrainAlignment({right: 500}, viewSize);
+
+			expect(constraint.maxWidth).toEqual(500);
+		});
+	});
+
+
+	it('Alignment -> Outer Styles', () => {
+		//Even though this isn't a valid alignment, its just checking that
+		//it converts all the props to px's and removes maxHeight and maxWidth
+		const styles = getOuterStylesForAlignment({
+			top: 50,
+			bottom: 50,
+			left: 50,
+			right: 50,
+			width: 50,
+			maxWidth: 50,
+			maxHeight: 50
+		});
+
+		expect(styles.top).toEqual('50px');
+		expect(styles.bottom).toEqual('50px');
+		expect(styles.left).toEqual('50px');
+		expect(styles.right).toEqual('50px');
+		expect(styles.width).toEqual('50px');
+	});
+
+
+	it('Alignment -> Inner Styles', () => {
+		const maxWidth = getInnerStylesForAlignment({maxWidth: 50});
+		const maxHeight = getInnerStylesForAlignment({maxHeight: 50});
+		const both = getInnerStylesForAlignment({maxWidth: 50, maxHeight: 50});
+
+		expect(maxWidth.maxWidth).toEqual('50px');
+		expect(maxWidth.maxHeight).toBeFalsy();
+
+		expect(maxHeight.maxHeight).toEqual('50px');
+		expect(maxHeight.maxWidth).toBeFalsy();
+
+		expect(both.maxHeight).toEqual('50px');
+		expect(both.maxWidth).toEqual('50px');
+	});
+
+
+	fdescribe('Alignment -> Classes', () => {
+		it ('Bottom Left', () => {
+			const cls = getAlignmentClass({top: 50, left: 50}, ALIGN_TOP, ALIGN_LEFT);
+
+			expect(cls).toEqual('bottom left');
+		});
+
+		it ('Bottom Centered', () => {
+			const cls = getAlignmentClass({top: 50, left: 50}, ALIGN_BOTTOM, ALIGN_CENTER);
+
+			expect(cls).toEqual('top center');
+		});
+
+		it('Bottom Right', () => {
+			const cls = getAlignmentClass({top: 50, right: 50}, ALIGN_BOTTOM, ALIGN_RIGHT);
+
+			expect(cls).toEqual('top right');
 		});
 	});
 });
