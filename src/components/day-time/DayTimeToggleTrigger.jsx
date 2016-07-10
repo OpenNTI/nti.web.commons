@@ -12,7 +12,7 @@ DayTimeToggleTrigger.propTypes = {
 };
 
 export default function DayTimeToggleTrigger (props) {
-	const {availableBeginning: begin, availableEnding: end, onChange, className, disableText} = props;
+	const {availableBeginning: begin, availableEnding: end, onChange, className, disableText, ...otherProps} = props;
 
 	const dateClassNames = cx('calendar', {empty: !begin});
 	const clearClassNames = cx('clear', {empty: !begin});
@@ -21,7 +21,7 @@ export default function DayTimeToggleTrigger (props) {
 	const mainText = !begin && !end ? 'When should students begin this lesson?' : begin && end ? `${DateTime.format(begin, 'MMMM D')} - ${DateTime.format(end, 'MMMM D')}` : `${DateTime.format(begin, 'dddd, MMMM Do, YYYY')}`;
 
 	return (
-		<div {...props} className={cx('daytime-toggle-trigger', className)}>
+		<div {...otherProps} className={cx('daytime-toggle-trigger', className)}>
 			<div className={dateClassNames}>
 				<div className="month">{DateTime.format(begin, 'MMM')}</div>
 				<div className="day">{DateTime.format(begin, 'D')}</div>
