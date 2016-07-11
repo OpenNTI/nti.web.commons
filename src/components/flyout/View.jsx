@@ -248,7 +248,7 @@ export default class Flyout extends React.Component {
 	}
 
 
-	align (cb = this.props.afterAlign, noRetry = false) {
+	align (cb = this.props.afterAlign) {
 		const {alignment:oldAlignment} = this.state;
 		const finish = (alignment) => {
 			this.setState(
