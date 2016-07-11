@@ -43,7 +43,7 @@ export default class ContentResourcesView extends React.Component {
 
 		const target = getEventTarget(e, '.view-main-pane');
 		if (target) {
-			target.classList.add('drag-over');
+			target.classList.add('entity-drag-over');
 		}
 
 		const {onDragOverChanged} = this.props;
@@ -62,7 +62,7 @@ export default class ContentResourcesView extends React.Component {
 		this.dragover--;
 		if (target && this.dragover <= 0) {
 			this.dragover = 0; //force 0
-			target.classList.remove('drag-over');
+			target.classList.remove('entity-drag-over');
 		}
 
 		const {onDragOverChanged} = this.props;

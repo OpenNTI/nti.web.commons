@@ -138,7 +138,7 @@ export default class Entity extends React.Component {
 			this.dragover++;
 			const target = getEventTarget(e, '.entity');
 			if (target) {
-				target.classList.add('drag-over');
+				target.classList.add('entity-drag-over');
 			}
 		}
 	}
@@ -150,7 +150,7 @@ export default class Entity extends React.Component {
 		this.dragover--;
 		if (target && this.dragover <= 0) {
 			this.dragover = 0; //force 0
-			target.classList.remove('drag-over');
+			target.classList.remove('entity-drag-over');
 		}
 	}
 

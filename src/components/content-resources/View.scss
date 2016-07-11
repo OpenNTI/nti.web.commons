@@ -19,7 +19,7 @@
 
 		padding-right: rem-calc($sideMargin - 5px);
 
-		&.drag-over {
+		&.entity-drag-over {
 			box-shadow: inset 0 0 0 5px $primary-blue;
 			background-color: rgba($primary-blue, 0.1);
 
