@@ -26,7 +26,7 @@ export default React.createClass({
 		const {tag: Tag, children, loading, maskScreen, message, ...otherProps} = this.props;
 
 		if (!isEmpty(children) && !loading) {
-			return <Tag {...otherProps}/>;
+			return <Tag {...otherProps}>{children}</Tag>;
 		}
 
 		return (
