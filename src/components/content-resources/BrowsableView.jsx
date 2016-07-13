@@ -250,7 +250,7 @@ export default class BrowsableView extends React.Component {
 		}
 
 		if (indeterminate.length === 0) {
-			this.progressDismissTimeout = setTimeout(dismiss, ONE_MINUTE);
+			dismiss();
 		}
 		else {
 			const [confirmation, errors] = indeterminate.reduce((a,x) => (a[x.error ? 1 : 0].push(x), a), [[],[ ]]);
@@ -264,6 +264,7 @@ export default class BrowsableView extends React.Component {
 				alert(getLabel(errors, 'fail'));
 			}
 
+			this.progressDismissTimeout = setTimeout(dismiss, ONE_MINUTE);
 			this.setState({
 				progress: text && {
 					dismiss,
