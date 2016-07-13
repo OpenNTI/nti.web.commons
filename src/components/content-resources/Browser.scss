@@ -18,6 +18,10 @@
 		padding: 4rem 0;
 	}
 
+	.panel-header-component {
+		min-height: 105px;//safari??
+	}
+
 	.content-resource-view {
 		flex: 1 1 auto;
 	}
