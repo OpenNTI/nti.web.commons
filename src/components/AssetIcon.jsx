@@ -125,7 +125,7 @@ export default class Icon extends React.Component {
 		const css = cx('file-type', 'icon', cls, className);
 
 		if (!children && svg) {
-			let text = label.length > 5 ? `${label.substr(0,5)}...` : label;
+			let text = (label && label.length > 5) ? `${label.substr(0,5)}...` : label;
 			return (
 				<svg className={css} width="300" height="375" viewBox="0 0 80 100">
 					{label && (
