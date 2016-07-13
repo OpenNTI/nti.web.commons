@@ -70,8 +70,10 @@ export default class Publish extends React.Component {
 			PropTypes.oneOf(Object.keys(PUBLISH_STATES))
 		]),
 		onChange: PropTypes.func,
+		onDismiss: PropTypes.func,
 		verticalAlignment: PropTypes.string,
 		horizontalAlignment: PropTypes.string,
+		error: PropTypes.string,
 		children: PropTypes.any
 	}
 
@@ -155,16 +157,24 @@ export default class Publish extends React.Component {
 		if (this.flyoutRef) {
 			this.flyoutRef.dismiss();
 		}
+	}
+
+
+	onDismiss = () => {
+		const {onDismiss} = this.props;
 		this.setupValue();
+		if (onDismiss) {
+			onDismiss();
+		}
 	}
 
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value} = this.props;
+		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 
-		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed});
+		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error});
 
 		const trigger = <PublishTrigger value={value}/>;
 
@@ -177,7 +187,7 @@ export default class Publish extends React.Component {
 				verticalAlign={vAlign}
 				horizontalAlign={hAlign}
 				trigger={trigger}
-				onDismiss={this.closeMenu}
+				onDismiss={this.onDismiss}
 			>
 				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
@@ -197,6 +207,9 @@ export default class Publish extends React.Component {
 					<div>
 						{children}
 					</div>
+				)}
+				{error && (
+					<div className="error-message">{error}</div>
 				)}
 				<div className={saveClassNames} onClick={this.onSave}>Save</div>
 			</Flyout>
