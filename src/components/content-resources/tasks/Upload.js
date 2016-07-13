@@ -38,6 +38,14 @@ export default class Upload extends Task {
 
 		xhr.addEventListener('progress', e => logger.log('Progress %o', e));
 
+		function json (str) {
+			try {
+				return JSON.parse(str);
+			} catch (e) {
+				return {message: str};
+			}
+		}
+
 		return new Promise((finish, error) => {
 
 			const formdata = new FormData();
@@ -50,16 +58,17 @@ export default class Upload extends Task {
 			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
 
-			xhr.upload.onprogress = (e) => e.lengthComputable && this.emitProgress(e.loaded, e.total, this.abort);
+			xhr.upload.onprogress = (e) => e.lengthComputable && this.emitProgress(e.loaded - 1, e.total, this.abort);
 			xhr.onload = () => {
 
 				if (xhr.status >= 200 && xhr.status < 300) {
+					this.emitProgress(this.total, this.total);
 					finish();
 				} else {
 					error({
 						status: xhr.status,
 						statusText: xhr.statusText,
-						responseText: xhr.responseText
+						...json(xhr.responseText)
 					});
 				}
 			};

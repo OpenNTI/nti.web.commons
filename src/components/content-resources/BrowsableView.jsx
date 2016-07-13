@@ -21,13 +21,14 @@ const DEFAULT_TEXT = {
 		upload: 'Uploading %(filename)s...'
 	},
 	COMPLETE: {
+		unknown: 'Something went wrong.',
 		movefail: {
-			zero: 'Could not move %(filename)s. Something went wrong.',
+			zero: 'Could not move %(filename)s. %(message)s',
 			one: 'Failed to move %(filename)s, and %(count)s other.',
 			other: 'Failed to move %(filename)s, and %(count)s others.'
 		},
 		uploadfail: {
-			zero: 'Could not upload %(filename)s. Something went wrong.',
+			zero: 'Could not upload %(filename)s. %(message)s',
 			one: 'Failed to upload %(filename)s, and %(count)s other.',
 			other: 'Failed to upload %(filename)s, and %(count)s others.'
 		},
@@ -238,7 +239,11 @@ export default class BrowsableView extends React.Component {
 
 		function getLabel (x, postfix = '') {
 			let [first, ...others] = x;
-			return t(`COMPLETE.${first.verb}${postfix}`, {filename: first.filename, count: others.length});
+			return t(`COMPLETE.${first.verb}${postfix}`, {
+				filename: first.filename,
+				count: others.length,
+				message: (first.error || {}).message || t('COMPLETE.unknown')
+			});
 		}
 
 		if (indeterminate.length === 0) {
