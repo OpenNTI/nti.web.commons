@@ -81,9 +81,11 @@ export default class DayPicker extends React.Component {
 
 
 	render () {
+		const {value} = this.state;
 		return (
 			<Picker
 				weekdayComponent={ Weekday }
+				initialMonth={ value || void value }
 				selectedDays={ this.selectedDays }
 				disabledDays={ this.props.disabledDays }
 				onDayClick={ this.handleDayClick }
