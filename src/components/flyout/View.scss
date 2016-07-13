@@ -9,13 +9,13 @@
 .flyout {
 	&.right {
 		.flyout-arrow {
-			right: rem-calc(12px);
+			right: rem-calc(16px);
 		}
 	}
 
 	&.left {
 		.flyout-arrow {
-			left: rem-calc(12px);
+			left: rem-calc(16px);
 		}
 	}
 
@@ -58,7 +58,8 @@
 	}
 
 	.flyout-fullwidth-btn {
-		width: 100%;
+		margin: rem-calc(0 (-5px));
+		display: block;
 		height: 2rem;
 		border-radius: 0.25rem;
 		color: white;
