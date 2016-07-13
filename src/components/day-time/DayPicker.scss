@@ -1,6 +1,5 @@
 @import "~nti-style-common";
 
-/* DayPicker styles */
 .DayPicker {
 	display: flex;
 	flex-wrap: wrap;
@@ -8,8 +7,8 @@
 	position: relative;
 	padding: 1rem 0;
 	user-select: none;
-    width: 268px;
-    border: none;
+	width: 268px;
+	border: none;
 	font-family: $body-font-family;
 
 	&:focus {
@@ -24,7 +23,7 @@
 	margin: 0 1rem;
 
 	&:focus {
-    	outline: none;
+		outline: none;
 	}
 }
 .DayPicker-NavBar {
@@ -61,7 +60,7 @@
 	height: 1.5rem;
 	text-align: center;
 	color: #494949;
-    font-weight: 100;
+	font-weight: 100;
 }
 .DayPicker-Weekdays {
 	display: table-header-group;
@@ -73,11 +72,11 @@
 	display: table-cell;
 	padding: 20px 0.5rem 15px 0.5rem;
 	text-align: center;
-    font-size: 12px;
-    color: #b8b8b8;
+	font-size: 12px;
+	color: $tertiary-grey;
 
 	abbr[title] {
-    	text-decoration: none;
+		text-decoration: none;
 	}
 }
 .DayPicker-Body {
@@ -92,9 +91,9 @@
 	text-align: center;
 	cursor: pointer;
 	vertical-align: middle;
-    font-size: 12px;
+	font-size: 12px;
 	line-height: 14px;
-    color: #494949;
+	color: $primary-grey;
 	font-family: $body-font-family;
 
 	&:focus {
@@ -102,7 +101,8 @@
 	}
 
 	&:hover:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled):not(.DayPicker-Day--today):not(.DayPicker-Day--selected) {
-		color: $primary-blue;
+		border-radius: 100%;
+		background-color: #f0f0f0;
 	}
 }
 .DayPicker--interactionDisabled .DayPicker-Day {
@@ -111,28 +111,19 @@
 
 /* Default modifiers */
 .DayPicker-Day--today:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled) {
-    background-color: #b8b8b8;
-    color: #494949;
-    border-radius: 90px;
+	color: $primary-blue;
 }
 .DayPicker-Day--disabled {
-	color: #dce0e0;
+	// opacity: 0.5;
 	cursor: default;
-	background-color: #eff1f1;
+	color: $tertiary-grey;
 }
+
 .DayPicker-Day--outside {
-	cursor: default;
-	color: #dce0e0;
 }
-/* Example modifiers */
-.DayPicker-Day--sunday {
-	background-color: #f7f8f8;
-}
-.DayPicker-Day--sunday:not(.DayPicker-Day--today) {
-	color: #dce0e0;
-}
+
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-	background-color: #3fb3f6;
-    color: #ffffff;
-    border-radius: 90px;
+	background-color: $primary-blue;
+	color: #ffffff;
+	border-radius: 90px;
 }
