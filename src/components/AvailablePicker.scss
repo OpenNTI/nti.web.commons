@@ -11,9 +11,10 @@
 
 
 	.daytime-picker {
+
 		.DayPicker {
 			width: 240px;
-			margin-left: 0;
+			margin-left: -5px;
 
 			.DayPicker-Caption {
 				font-size: 1rem;
@@ -42,14 +43,13 @@
 		font-size: 0.7725rem;
 		line-height: 1.6;
 		color: $primary-grey;
-		margin-left: 15px;
+		margin-left: 10px;
 	}
 
-	.flyout-arrow {
-		display: none;
-	}
 
 	.available-save {
 		margin-bottom: 1rem;
+		margin-left: 0;
+		margin-right: 0;
 	}
 }
