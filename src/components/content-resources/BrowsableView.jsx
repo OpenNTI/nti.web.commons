@@ -13,6 +13,8 @@ import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 
 const logger = Logger.get('common:components:content-resources:BrowsableView');
 
+const ONE_MINUTE = 60000;//60 * 1000ms
+
 const isFile = x => x && /nextthought.+(folder|file)/i.test(x.MimeType);
 
 const DEFAULT_TEXT = {
@@ -247,7 +249,7 @@ export default class BrowsableView extends React.Component {
 		}
 
 		if (indeterminate.length === 0) {
-			// dismiss();
+			this.progressDismissTimeout = setTimeout(dismiss, ONE_MINUTE);
 		}
 		else {
 			const [confirmation, errors] = indeterminate.reduce((a,x) => (a[x.error ? 1 : 0].push(x), a), [[],[ ]]);
@@ -281,6 +283,7 @@ export default class BrowsableView extends React.Component {
 
 	onTaskProgress = (task, value, max, abort) => {
 		const key = value === max ? 'COMPLETE' : 'ACTIVE';
+		clearTimeout(this.progressDismissTimeout);
 
 		this.setState({
 			progress: {
