@@ -57,6 +57,7 @@ export default class Upload extends Task {
 			xhr.setRequestHeader('accept', 'application/json');
 			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
+			this.emitProgress(1, this.total);
 
 			xhr.upload.onprogress = (e) => e.lengthComputable && this.emitProgress(e.loaded - 1, e.total, this.abort);
 			xhr.onload = () => {
@@ -73,7 +74,7 @@ export default class Upload extends Task {
 				}
 			};
 
-			xhr.send(formdata);
+			setTimeout(()=> xhr.send(formdata), 1);
 		});
 	}
 }

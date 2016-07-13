@@ -14,6 +14,13 @@ export default class ProgressBar extends React.Component {
 	state = {}
 
 
+	constructor (props) {
+		super(props);
+		this.mounted = new Date();
+		setTimeout(() => this.forceUpdate(), 1001);
+	}
+
+
 	onCancel = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -41,8 +48,10 @@ export default class ProgressBar extends React.Component {
 			value
 		} = this.props;
 
-		const complete = value >= max;
-		const percent = Math.round((value / max) * 100);
+		const mountTime = new Date() - this.mounted;
+
+		const complete = value >= max && mountTime > 1000;
+		const percent = Math.round((value / (max || 1)) * 100) || (value === max ? 100 : 0);
 		const timeleft = '';
 
 		return (

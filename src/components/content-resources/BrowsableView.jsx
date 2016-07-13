@@ -269,9 +269,9 @@ export default class BrowsableView extends React.Component {
 				progress: text && {
 					dismiss,
 					errors: errors.length > 0,
-					max: 0,
 					text,
-					value: 0
+					max: 1,
+					value: 1
 				}
 			});
 		}
