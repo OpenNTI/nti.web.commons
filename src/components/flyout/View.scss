@@ -75,11 +75,33 @@
 		&.changed {
 			background-color: $primary-blue;
 		}
+
+		&.error {
+			animation-name: error-flyout-fullwidth-btn;
+			animation-duration: 1s;
+			animation-fill-mode: both;
+			color: white;
+			background-color: $primary-red;
+		}
 	}
 
 	.flyout-inner {
 		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
 		background: white;
 		overflow: auto;
+	}
+}
+
+@keyframes error-flyout-fullwidth-btn {
+	from, to {
+		transform: translate3d(0, 0, 0);
+	}
+
+	10%, 30%, 50%, 70%, 90% {
+		transform: translate3d(-5px, 0, 0);
+	}
+
+	20%, 40%, 60%, 80% {
+		transform: translate3d(5px, 0, 0);
 	}
 }

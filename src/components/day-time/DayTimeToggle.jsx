@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
 
+import {scoped} from 'nti-lib-locale';
+
 import DayTimeToggleTrigger from './DayTimeToggleTrigger';
 import DayTimePicker from './DayTimePicker';
 import Flyout from '../flyout';
@@ -9,6 +11,13 @@ const TOGGLE = {
 	BEGIN: 'availableBeginning',
 	END: 'availableEnding'
 };
+
+const DEFAULT_TEXT = {
+	[`date-error-${TOGGLE.BEGIN}`]: 'Begin Date cannot come after Finish Date.',
+	[`date-error-${TOGGLE.END}`]: 'Finish Date cannot come before Begin Date.'
+};
+
+const t = scoped('common.components.DayTimeToggle', DEFAULT_TEXT);
 
 export default class DayTimeToggle extends React.Component {
 	static propTypes = {
@@ -45,6 +54,7 @@ export default class DayTimeToggle extends React.Component {
 		const {availableBeginning, availableEnding} = props;
 
 		setState({
+			error: false,
 			availableBeginning,
 			availableEnding,
 			active: TOGGLE.BEGIN
@@ -53,16 +63,20 @@ export default class DayTimeToggle extends React.Component {
 
 
 	onSave = () => {
-		const {availableBeginning, availableEnding} = this.state;
+		const {availableBeginning, availableEnding, active} = this.state;
 		const {onChange} = this.props;
+
+		if (this[active + 'Disabled'](this.state[active])) {
+			this.setState({error: true});
+			return;
+		}
 
 		if (onChange) {
 			this.setState({changed: false});
-			/*const p = */onChange(availableBeginning, availableEnding);
+
+			onChange(availableBeginning, availableEnding);
+
 			this.closeMenu();
-			// if (p && p.then) {
-			// 	p.then(()=> this.closeMenu());
-			// }
 		}
 	}
 
@@ -71,9 +85,13 @@ export default class DayTimeToggle extends React.Component {
 		if (this.flyoutRef) {
 			this.flyoutRef.dismiss();
 		}
-		this.setupValue();
+		this.reset();
 	}
 
+
+	reset = () => {
+		this.setupValue();
+	}
 
 	onToggle = ({target}) => {
 		const {active} = this.state;
@@ -92,7 +110,8 @@ export default class DayTimeToggle extends React.Component {
 
 		this.setState({
 			[active]: date,
-			changed: true
+			changed: true,
+			error: false
 		});
 	}
 
@@ -133,17 +152,17 @@ export default class DayTimeToggle extends React.Component {
 
 
 	render () {
-		const {active, changed} = this.state;
+		const {active, changed, error} = this.state;
 		const {availableBeginning: begin, availableEnding: end, disableText} = this.props;
 
 		const trigger = <DayTimeToggleTrigger availableBeginning={begin} availableEnding={end} onChange={this.onClear} disableText={disableText}/>;
 
 		const beginClassNames = cx('part beginning', {active: active === TOGGLE.BEGIN});
 		const endClassNames = cx('part ending', {active: active === TOGGLE.END}, {disabled: !this.state[TOGGLE.BEGIN]});
-		const btnClassNames = cx('flyout-fullwidth-btn', {changed: changed});
+		const btnClassNames = cx('flyout-fullwidth-btn', {changed: changed, error});
 
 		return (
-			<Flyout ref={this.setFlyoutRef} className="daytime-toggle" horizontalAlign={Flyout.ALIGNMENTS.LEFT} trigger={trigger} arrow>
+			<Flyout ref={this.setFlyoutRef} className="daytime-toggle" horizontalAlign={Flyout.ALIGNMENTS.LEFT} trigger={trigger} onDismiss={this.reset} arrow>
 				<div className="toggle">
 					<div className={beginClassNames} name={TOGGLE.BEGIN} onClick={this.onToggle}>Begin Date</div>
 					<div className={endClassNames} name={TOGGLE.END} onClick={this.onToggle}>Finish Date</div>
@@ -151,8 +170,10 @@ export default class DayTimeToggle extends React.Component {
 				<DayTimePicker
 					value={this.state[active]}
 					onChange={this.onDateChange}
-					disabledDays={this[active + 'Disabled']}
 				/>
+				{error && (
+					<div className="date-error">{t(`date-error-${active}`)}</div>
+				)}
 				<div className={btnClassNames} onClick={this.onSave}>Save</div>
 			</Flyout>
 		);
