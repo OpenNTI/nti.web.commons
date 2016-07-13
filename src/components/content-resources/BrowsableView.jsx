@@ -247,7 +247,7 @@ export default class BrowsableView extends React.Component {
 		}
 
 		if (indeterminate.length === 0) {
-			dismiss();
+			// dismiss();
 		}
 		else {
 			const [confirmation, errors] = indeterminate.reduce((a,x) => (a[x.error ? 1 : 0].push(x), a), [[],[ ]]);
