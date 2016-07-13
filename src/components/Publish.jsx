@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 
-import autobind from 'nti-commons/lib/autobind';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 import DateTime from './DateTime';
@@ -85,13 +84,11 @@ export default class Publish extends React.Component {
 
 	constructor (props) {
 		super(props);
-
 		this.setupValue(props);
-
-		this.setFlyoutRef = x => this.flyoutRef = x;
-
-		autobind(this, 'onChange', 'onDateChange', 'onSave', 'closeMenu');
 	}
+
+
+	setFlyoutRef = x => this.flyoutRef = x
 
 
 	setupValue (props = this.props) {
@@ -114,7 +111,7 @@ export default class Publish extends React.Component {
 	}
 
 
-	onChange (e) {
+	onChange = (e) => {
 		const selected = e.target.value;
 
 		this.setState({
@@ -125,7 +122,7 @@ export default class Publish extends React.Component {
 	}
 
 
-	onDateChange (date) {
+	onDateChange = (date) => {
 		this.setState({
 			date,
 			changed: true,
@@ -134,7 +131,7 @@ export default class Publish extends React.Component {
 	}
 
 
-	onSave () {
+	onSave = () => {
 		const {props: {onChange}, state: {changed}} = this;
 		if (onChange && changed) {
 			this.setState({changed: false});
@@ -153,7 +150,7 @@ export default class Publish extends React.Component {
 	}
 
 
-	closeMenu () {
+	closeMenu = () => {
 		if (this.flyoutRef) {
 			this.flyoutRef.dismiss();
 		}
