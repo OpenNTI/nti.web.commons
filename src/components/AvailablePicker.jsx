@@ -7,6 +7,7 @@ import Checkbox from './Checkbox';
 import LabeledValue from './LabeledValue';
 import TinyLoader from './TinyLoader';
 
+//This belongs in the assignment-editor package. Way to specific to be "common"
 export default class AvailablePicker extends React.Component {
 	static propTypes = {
 		value: PropTypes.instanceOf(Date),
@@ -46,6 +47,11 @@ export default class AvailablePicker extends React.Component {
 		if (nextProps.value !== this.props.value) {
 			this.setupValue(nextProps);
 		}
+	}
+
+
+	reset = () => {
+		this.setupValue();
 	}
 
 
@@ -129,6 +135,7 @@ export default class AvailablePicker extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				trigger={this.renderTrigger()}
+				onDismiss={this.reset}
 			>
 				<Checkbox label={label} checked={checked} onChange={this.onCheckChange} />
 				<DayTimePicker value={date} onChange={this.onDateChange} />
