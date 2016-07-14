@@ -15,7 +15,7 @@
 	}
 
 	& > .entity {
-		margin: rem-calc(15px) $gap 0;
+		margin: rem-calc(15px) round($gap) 0;
 		flex: 0 1 (25% - ($gap * 2));
 
 		.content-resource-view.split & {
