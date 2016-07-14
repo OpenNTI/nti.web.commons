@@ -119,6 +119,6 @@ function accepts (e) {
 	const file = /file/i;
 
 	return (files && files.length > 0) ||
-			Array.from(items).some(x => file.test(x.kind)) ||
-			Array.from(types).some(x => file.test(x));
+			Array.from(items || {}).some(x => file.test(x.kind)) ||
+			Array.from(types || {}).some(x => file.test(x));
 }
