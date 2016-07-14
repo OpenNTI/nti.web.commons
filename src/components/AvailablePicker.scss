@@ -3,53 +3,28 @@
 .available-picker.flyout {
 	.flyout-inner {
 		box-shadow: 1px 0 0 0 $border-grey-light,
-					-1px 0 0 0 $border-grey-light,
-					0 	1px 0 0 $border-grey-light;
+					0 1px 0 0 $border-grey-light;
 
-		padding: 0.625rem;
+		padding: rem-calc(10px 15px 15px);
 	}
 
 
 	.daytime-picker {
+		margin: 0;
 
 		.DayPicker {
-			width: 240px;
-			margin-left: -5px;
-
-			.DayPicker-Caption {
-				font-size: 1rem;
-			}
-			.TimePicker-Header-Text {
-				margin-left: 30%;
-			}
-		}
-
-		.TimePicker-Header-Text {
-			font-family: $body-font-family;
-			font-size: 0.625rem;
-			line-height: 1.6;
-			color: #b8b8b8;
-			text-align: center;
-		}
-
-		.TimePicker {
-			width: 67%;
-			margin: 10px auto;
+			width: 200px;
+			margin: 0 auto;
 		}
 	}
 
 	.checkbox-component {
-		font-family: $body-font-family;
-		font-size: 0.7725rem;
-		line-height: 1.6;
-		color: $primary-grey;
-		margin-left: 10px;
+		font-size: rem-calc(14px);
+		margin-left: rem-calc(20px);
 	}
 
 
 	.available-save {
-		margin-bottom: 1rem;
-		margin-left: 0;
-		margin-right: 0;
+		margin: 1rem 0 0 0;
 	}
 }

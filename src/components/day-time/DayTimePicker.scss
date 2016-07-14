@@ -1,28 +1,18 @@
 @import "~nti-style-common";
 
 .daytime-picker {
-	.DayPicker {
-		margin-left: -1.65rem;
 
-		.DayPicker-Caption {
-			font-size: 1rem;
-		}
-		.TimePicker-Header-Text {
-			margin-left: 30%;
-		}
+	.DayPicker .DayPicker-Caption {
+		font-size: 1rem;
 	}
 
 	.TimePicker-Header-Text {
 		font-family: $body-font-family;
-		font-size: 0.625rem;
+		font-size: rem-calc(10px);
+		margin: rem-calc(10px);
 		line-height: 1.6;
-		color: #b8b8b8;
-		margin: 0 auto;
-		width: 50%;
+		color: $tertiary-grey;
+		text-align: center;
 	}
 
-	.TimePicker {
-		width: 75%;
-		margin: 0 auto;
-	}
 }

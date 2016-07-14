@@ -5,25 +5,32 @@
 	display: flex;
 
 	label {
-		flex: 1 1 auto;
+		flex: 1 1 33%;
 		display: flex;
 		position: relative;
+		overflow: hidden;
+
 		.label {
 			position: absolute;
 			font-size: .5rem;
 			text-transform: uppercase;
 			top: rem-calc(10px);
-			left: 1.5em;
+			left: 1em;
 			/* font-weight: 600; */
-			color: #b8b8b8;
+			color: $tertiary-grey;
 		}
 
 		input {
-			flex: 0 1 auto;
-			width: 4.25rem;
-			margin: 0.25rem;
+			width: 100%;
+			margin: 0.25rem 0;
 			font-size: .875rem;
 			padding: 1rem .5rem .25rem;
+			border: 1px solid $border-grey-light;
+			border-width: 1px 1px 1px 0;
+		}
+
+		&:first-child input {
+			border-left-width: 1px;
 		}
 	}
 }

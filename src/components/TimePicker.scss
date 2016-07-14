@@ -3,6 +3,8 @@
 .TimePicker {
 	display: flex;
 	color: $tertiary-grey;
+	min-width: 151px;
+	justify-content: center;
 
 	.time {
 		flex: 0 0 auto;
