@@ -2,7 +2,6 @@ export * as ContentResources from './content-resources';
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
 export AssetIcon from './AssetIcon';
-export AvailablePicker from './AvailablePicker';
 export Background from './Background';
 export Banner from './Banner';
 export BufferedInput from './BufferedInput';
