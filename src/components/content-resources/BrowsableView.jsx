@@ -24,6 +24,7 @@ const DEFAULT_TEXT = {
 	},
 	COMPLETE: {
 		unknown: 'Something went wrong.',
+		PermissionDeniedNoLink: 'Permission Denied.',
 		movefail: {
 			zero: 'Could not move %(filename)s. %(message)s',
 			one: 'Failed to move %(filename)s, and %(count)s other.',
@@ -266,10 +267,13 @@ export default class BrowsableView extends React.Component {
 
 		function getLabel (x, postfix = '') {
 			let [first, ...others] = x;
+			const key = `COMPLETE.${first.error.code}`;
+			const m = t.isMissing(key) ? null : t(key);
+
 			return t(`COMPLETE.${first.verb}${postfix}`, {
 				filename: first.filename,
 				count: others.length,
-				message: (first.error || {}).message || t('COMPLETE.unknown')
+				message: m || (first.error || {}).message || t('COMPLETE.unknown')
 			});
 		}
 
