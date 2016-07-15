@@ -33,13 +33,16 @@ export default {
 
 	listen (item) {
 		if (item) {
+			if (typeof item.addListener !== 'function') {
+				return;
+			}
 			item.addListener('change', this.itemChanged);
 		}
 	},
 
 
 	stopListening (item) {
-		if (item) {
+		if (item && typeof item.removeListener === 'function') {
 			item.removeListener('change', this.itemChanged);
 		}
 	},

@@ -53,14 +53,18 @@ function getRefHandler (parentRef, localRef) {
 
 
 function listen (scope, item) {
-	if (item) {
+	if (item ) {
+		if (typeof item.addListener !== 'function') {
+			logger.warn('Item is not observable: %o', item);
+			return;
+		}
 		item.addListener('change', getHandler(scope));
 	}
 }
 
 
 function stopListening (scope, item) {
-	if (item) {
+	if (item && typeof item.removeListener === 'function') {
 		item.removeListener('change', getHandler(scope));
 	}
 }
