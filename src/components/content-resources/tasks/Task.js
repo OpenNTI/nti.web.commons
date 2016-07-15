@@ -36,8 +36,7 @@ export default class Task extends EventEmitter {
 			if (result && result.then && result.catch) {
 				result
 					.catch(e => this.emitError(e))
-					//force finish to have no arguments
-					.then(()=> this.finish());
+					.then(o => this.finish(o));
 			} else {
 				this.finish();
 			}
@@ -47,11 +46,11 @@ export default class Task extends EventEmitter {
 	}
 
 
-	finish () {
+	finish (result) {
 		const {onComplete} = this;
 		if (typeof onComplete === 'function' && !this.error) {
 			try {
-				onComplete();
+				onComplete(result);
 			} catch (e) {
 				logger.error(e.stack || e.message || e);
 			}

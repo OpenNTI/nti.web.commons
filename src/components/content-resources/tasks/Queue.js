@@ -114,6 +114,7 @@ export default class TaskQueue extends EventEmitter {
 
 
 	onTaskAbort = (task) => {
+		this.queue.map(x => stopListening(this,x));
 		this.queue = [];
 		this.onTaskFinish(task);
 	}

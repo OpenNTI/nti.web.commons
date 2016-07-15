@@ -169,8 +169,8 @@ export default class BrowsableView extends React.Component {
 			() => this.onSelectionChange());
 		this.selection.set([]);
 
-		folder.getContents()
-			.then(c => this.setState({folderContents: c, error: null}))
+		return folder.getContents()
+			.then(c => (this.setState({folderContents: c, error: null}), c))
 			.catch(error => this.setState({error}));
 	}
 
@@ -196,14 +196,38 @@ export default class BrowsableView extends React.Component {
 
 
 	uploadFiles = (files, folder) => {
+		const add = (o) => {
+			let {folderContents = []} = this.state;
+			if (!folderContents.find(x => o.getID() === x.getID())) {
+				folderContents = [...folderContents, o];
+				this.selection.add(o);
+				this.setState({folderContents});
+			}
+		};
+
+		const largestLast = (a, b) => a.size - b.size;
+
 		Promise.all(
-			Array.from(files).map(item => new Promise(done =>
-				this.taskQueue.add(new UploadTask(item, folder, done)))))
+			Array.from(files)
+				.sort(largestLast)
+				.map(item => new Promise(done =>
+					this.taskQueue.add(new UploadTask(item, folder, (o)=> {add(o);done();} ))
+					)
+				)
+			)
 
 			.then(() => {
 
 				if (this.state.folder === folder) {
-					this.refresh();
+					const ids = Array.from(this.selection).map(x => x.getID());
+					this.refresh()
+						.then(items => {
+							if (items) {
+								this.selection.add(
+									...items.filter(x => ids.includes(x.getID()))
+								);
+							}
+						});
 				}
 
 			});

@@ -64,7 +64,8 @@ export default class Upload extends Task {
 
 				if (xhr.status >= 200 && xhr.status < 300) {
 					this.emitProgress(this.total, this.total);
-					finish();
+					const {Items: [fileObj] = []} = json(xhr.responseText) || {};
+					finish(folder.castFile(fileObj));
 				} else {
 					error({
 						status: xhr.status,
