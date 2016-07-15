@@ -46,6 +46,15 @@ export default class Upload extends Task {
 			}
 		}
 
+		if (!url) {
+			return Promise.reject(
+				Object.assign(new Error(`Cannot upload into ${folder.getFileName()}.`), {
+					code: 'PermissionDeniedNoLink',
+					statusCode: 401
+				})
+			);
+		}
+
 		return new Promise((finish, error) => {
 
 			const formdata = new FormData();
