@@ -14,7 +14,7 @@ export default function Radio (props) {
 	const {checked, children, green, label, name, ...otherProps} = props;
 	return (
 		<label className="radio-component" name={name}>
-			<input {...otherProps} type="radio" children={void 0}/>
+			<input {...otherProps} checked={Boolean(checked)} type="radio" children={void 0}/>
 			<span className={cx('label', {green})}>{label}</span>
 			{children && checked && (
 				<div className="sub">
