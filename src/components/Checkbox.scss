@@ -29,7 +29,7 @@ label.checkbox-component {
 			// @include retina-asset('./assets/checkbox/select', $xCount: 3);
 		}
 
-		&.checked + span.label.green::before {
+		&:checked + span.label.green::before {
 			@include retina-asset('./assets/checkbox/select-green', $xCount: 3);
 		}
 

@@ -27,7 +27,7 @@ label.radio-component {
 			@include retina-asset('./assets/radio/select', $xCount: 3);
 		}
 
-		&.checked + span.label.green::before {
+		&:checked + span.label.green::before {
 			@include retina-asset('./assets/radio/select-green', $xCount: 3);
 		}
 
