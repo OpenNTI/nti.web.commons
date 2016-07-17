@@ -69,7 +69,7 @@
     "in-publish": "^2.0.0",
     "node-sass": "^3.4.2",
     "normalize.css": "^4.1.1",
-    "nti-style-common": "^1.0.0",
+    "nti-style-common": "^1.1.11",
     "nti-unittesting-clientside": "^1.0.3",
     "postcss-loader": "^0.8.2",
     "react": "^15.1.0",

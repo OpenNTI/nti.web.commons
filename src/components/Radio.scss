@@ -1,3 +1,5 @@
+@import "~nti-style-common";
+
 label.radio-component {
 	input[type=radio] {
 		opacity: 0;
@@ -17,13 +19,16 @@ label.radio-component {
 				width: 1rem;
 				height: 1rem;
 				background: transparent center/100% no-repeat;
-				background-image: url(./assets/radio-base.png);
-				//@include retina-assets(./assets/radio-base.png, 3);
+				@include retina-asset('./assets/radio/base', $xCount: 3);
 			}
 		}
 
 		&:checked + span.label::before {
-			background-image: url(./assets/radio-select.png);
+			@include retina-asset('./assets/radio/select', $xCount: 3);
+		}
+
+		&.checked + span.label.green::before {
+			@include retina-asset('./assets/radio/select-green', $xCount: 3);
 		}
 
 		&:disabled + span.label::before {
@@ -39,11 +44,11 @@ label.radio-component {
 	// html:not(.touch) &:hover {
 	// 	input[type=radio] {
 	// 		& + span.label::before {
-	// 			background-image: url(./assets/radio-hover.png);
+	// 			@include retina-asset('./assets/radio/hover', $xCount: 3);
 	// 		}
 	//
 	// 		&:checked + span.label::before {
-	// 			background-image: url(./assets/radio-hover-checked.png);
+	// 			@include retina-asset('./assets/radio/hover-select', $xCount: 3);
 	// 		}
 	// 	}
 	// }

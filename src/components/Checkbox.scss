@@ -1,3 +1,5 @@
+@import "~nti-style-common";
+
 label.checkbox-component {
 	line-height: 1; // fixes a safari issue where clicking the label doesn't affect the checkbox
 	input[type=checkbox] {
@@ -18,20 +20,19 @@ label.checkbox-component {
 				width: 1rem;
 				height: 1rem;
 				background: transparent center/100% no-repeat;
-				background-image: url(./assets/checkbox-base.png);
-				//@include retina-assets(./assets/checkbox-base.png, 3);
+				@include retina-asset('./assets/checkbox/base', $xCount: 3);
 			}
 		}
 
-		&.checked + span.label.green::before {
-			background-image: url(./assets/checkbox-green-select.png);
-		}
-
 		&:checked + span.label::before {
-			background-image: url(./assets/checkbox-select.png);
-
+			background-image: url(./assets/checkbox/select.png);
+			// @include retina-asset('./assets/checkbox/select', $xCount: 3);
 		}
-		
+
+		&.checked + span.label.green::before {
+			@include retina-asset('./assets/checkbox/select-green', $xCount: 3);
+		}
+
 		&:disabled + span.label::before {
 			opacity: 0.5;
 		}
@@ -45,11 +46,11 @@ label.checkbox-component {
 	// html:not(.touch) &:hover {
 	// 	input[type=checkbox] {
 	// 		& + span.label::before {
-	// 			background-image: url(./assets/checkbox-hover.png);
+	// 			@include retina-asset('./assets/checkbox/hover', $xCount: 3);
 	// 		}
 	//
 	// 		&:checked + span.label::before {
-	// 			background-image: url(./assets/checkbox-hover-checked.png);
+	// 			@include retina-asset('./assets/checkbox/hover-select', $xCount: 3);
 	// 		}
 	// 	}
 	// }
