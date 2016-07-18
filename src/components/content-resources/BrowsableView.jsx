@@ -267,13 +267,15 @@ export default class BrowsableView extends React.Component {
 
 		function getLabel (x, postfix = '') {
 			let [first, ...others] = x;
-			const key = `COMPLETE.${first.error.code}`;
-			const m = t.isMissing(key) ? null : t(key);
+
+			const {error} = first;
+			const errorKey = error && `COMPLETE.${error.code}`;
+			const specificErrorMessage = error && t.isMissing(errorKey) ? null : t(errorKey);
 
 			return t(`COMPLETE.${first.verb}${postfix}`, {
 				filename: first.filename,
 				count: others.length,
-				message: m || (first.error || {}).message || t('COMPLETE.unknown')
+				message: specificErrorMessage || (error || {}).message || t('COMPLETE.unknown')
 			});
 		}
 
