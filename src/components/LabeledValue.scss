@@ -5,9 +5,11 @@
 		font-size: .625rem;
 		text-transform: uppercase;
 		color: $secondary-grey;
+		font-weight: 600;
+		line-height: 2;
 	}
 	.value {
-		font-size: .8rem;
+		font-size: .8125rem;
 		color: $primary-grey;
 		.placeholder {
 			font-style: italic;
