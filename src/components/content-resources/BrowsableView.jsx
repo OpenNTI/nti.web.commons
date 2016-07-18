@@ -36,9 +36,9 @@ const DEFAULT_TEXT = {
 			other: 'Failed to upload %(filename)s, and %(count)s others.'
 		},
 		move: {
-			zero: 'Moved %(filename)s.',
-			one: 'Moved %(filename)s, and %(count)s other.',
-			other: 'Moved %(filename)s, and %(count)s others.'
+			zero: 'Moved %(filename)s to %(folderName)s.',
+			one: 'Moved %(filename)s, and %(count)s other to %(folderName)s.',
+			other: 'Moved %(filename)s, and %(count)s others to %(folderName)s.'
 		},
 		upload: {
 			zero: 'Uploaded %(filename)s.',
@@ -191,7 +191,7 @@ export default class BrowsableView extends React.Component {
 		this.selection.set();
 
 		for (let item of entities) {
-			this.taskQueue.add(new MoveTask(item, target.getPath(), () => this.dropItem(item)));
+			this.taskQueue.add(new MoveTask(item, target, () => this.dropItem(item)));
 		}
 	}
 
@@ -270,11 +270,12 @@ export default class BrowsableView extends React.Component {
 
 			const {error} = first;
 			const errorKey = error && `COMPLETE.${error.code}`;
-			const specificErrorMessage = error && t.isMissing(errorKey) ? null : t(errorKey);
+			const specificErrorMessage = !error || t.isMissing(errorKey) ? null : t(errorKey);
 
 			return t(`COMPLETE.${first.verb}${postfix}`, {
 				filename: first.filename,
 				count: others.length,
+				folderName: first.folder && first.folder.getFileName(),
 				message: specificErrorMessage || (error || {}).message || t('COMPLETE.unknown')
 			});
 		}
@@ -319,7 +320,11 @@ export default class BrowsableView extends React.Component {
 
 		this.setState({
 			progress: {
-				text: t(`${key}.${task.verb}`, {filename: task.filename, count: 0}),
+				text: t(`${key}.${task.verb}`, {
+					filename: task.filename,
+					count: 0,
+					folderName: task.folder && task.folder.getFileName()
+				}),
 				max,
 				value,
 				abort
