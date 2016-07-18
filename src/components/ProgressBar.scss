@@ -18,6 +18,7 @@
 	min-height: rem-calc(50px);
 	transition: min-height 300ms linear;
 	overflow: hidden;
+	white-space: nowrap;
 
 	&.complete {
 		min-height: rem-calc(40px);
@@ -32,8 +33,25 @@
 		a, a:link, a:visited, a:hover {
 			color: $tertiary-grey;
 			text-decoration: none;
-			float: right;// eeew
+			position: absolute;
+			right: rem-calc(15px);
+			top: 50%;
+			transform: translateY(-50%);
 		}
+
+		.status-message {
+			max-width: 90%;
+			max-width: calc(100% - 40px);
+		}
+	}
+
+	.status-message {
+		display: inline-block;
+		vertical-align: bottom;
+		white-space: nowrap;
+		max-width: 74%;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 

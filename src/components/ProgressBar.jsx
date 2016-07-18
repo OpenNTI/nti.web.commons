@@ -65,14 +65,14 @@ export default class ProgressBar extends React.Component {
 				{complete ? (
 					<div key="complete" className="complete">
 						<i className="icon-check"/>
-						{text}
+						<span className="status-message">{text}</span>
 						<a href="#" onClick={this.onDismiss}><i className="icon-remove small"/></a>
 					</div>
 				) : (
 					<div className="in-progress" key="in-progress">
 						<div className="progress-header">
 							<span>
-								{text}
+								<span className="status-message">{text}</span>
 								{cancelable && (<a href="#" onClick={this.onCancel}>Cancel</a>)}
 							</span>
 							<span className="time-left">
