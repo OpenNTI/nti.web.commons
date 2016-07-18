@@ -47,6 +47,17 @@ export default React.createClass({
 	},
 
 
+	isNotFound (props = this.props) {
+		let {error} = props;
+		if (error.statusCode != null) {
+			let code = parseInt(error.statusCode, 10);//just a precaution, should already be an int.
+			return (code === 404);
+		}
+
+		return false;
+	},
+
+
 	render () {
 		let {error} = this.props;
 		let label = 'Error';
@@ -61,6 +72,10 @@ export default React.createClass({
 		if (this.isAccessError()) {
 			label = 'Access was denied.';
 			message = 'We\'re sorry, but you do not have access to this content.';
+		}
+		else if (this.isNotFound()) {
+			label = 'Not Found.';
+			message = 'We\'re sorry, but we could not find this content.';
 		}
 
 		return (
