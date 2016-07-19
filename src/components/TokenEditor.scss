@@ -1,24 +1,24 @@
 @import "~nti-style-common";
 
 .token-editor {
+	font-size: rem-calc(14px); //we set the default font size to 14...
+	// so all the "relative" sizes are in em's so you can change one font size and they all stay in sync. See the 14 denominators.
+	$line-height: (18/14);
+
 	position: relative;
 	padding: rem-calc(6px);
 	border: 1px solid $border-grey-light;
 	background: white;
 	min-height: 5rem;
-	font-size: rem-calc(14px); //we set the default font size to 14...
-	// so all the "relative" sizes are in em's so you can change one font size and they all stay in sync. See the 14 denominators.
-	line-height: 18/14;
 
-	.token {
-		line-height: 18/14;
+	&, input, .token {
+		line-height: $line-height;
 	}
 
 	input {
 		width: 5rem;
 		background: none;
 		border-color: transparent;
-		line-height: 18/14;
 		font-size: 1em;
 
 		&:focus {
