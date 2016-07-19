@@ -70,8 +70,8 @@ export default class TokenEditor extends React.Component {
 	}
 
 	onBlur = (e) => {
-		this.add(e.target.value);
-		this.clearInput();
+		// this.add(e.target.value);
+		// this.clearInput();
 	}
 
 	onInputChange = (e) => {
@@ -117,6 +117,7 @@ export default class TokenEditor extends React.Component {
 				{placeholder && values.size === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
 				{[...values].map(x => <Token key={x} value={x} onRemove={this.remove} />)}
 				<input
+					className="token"
 					ref={x => this.input = x}
 					onKeyDown={this.onKeyDown}
 					onChange={this.onInputChange}

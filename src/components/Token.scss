@@ -4,13 +4,12 @@
 	display: inline-block;
 	background: $panel-background;
 	border: 1px solid $border-grey-light;
-	margin-right: .5em;
-	margin-bottom: .3em;
-	padding: 0 .5em;
-	line-height: 1.7;
+	margin: rem-calc(6px 3px);
+	padding: rem-calc(3px 8px 5px 12px);
+	line-height: 1.3;
 	color: $secondary-grey;
-	font-size: .875rem;
+	font-size: 1em;
 	.value {
-		margin-right: .5em;
+		margin-right: rem-calc(6px);
 	}
 }

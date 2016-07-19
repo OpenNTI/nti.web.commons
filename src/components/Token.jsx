@@ -24,7 +24,7 @@ export default class Token extends React.Component {
 		return (
 			<div className="token">
 				<span className="value">{value}</span>
-				<i onClick={this.remove} className="icon-bold-x"/>
+				<i onClick={this.remove} className="icon-bold-x small"/>
 			</div>
 		);
 	}

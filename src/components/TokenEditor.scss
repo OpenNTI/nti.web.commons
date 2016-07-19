@@ -2,15 +2,25 @@
 
 .token-editor {
 	position: relative;
-	padding: .25rem .5rem;
+	padding: rem-calc(6px);
 	border: 1px solid $border-grey-light;
 	background: white;
-	margin: .5rem 1.5rem 6rem;
 	min-height: 5rem;
+	font-size: rem-calc(14px); //we set the default font size to 14...
+	// so all the "relative" sizes are in em's so you can change one font size and they all stay in sync. See the 14 denominators.
+	line-height: 18/14;
+
+	.token {
+		line-height: 18/14;
+	}
+
 	input {
-		padding: .25em 0;
 		width: 5rem;
-		border: none;
+		background: none;
+		border-color: transparent;
+		line-height: 18/14;
+		font-size: 1em;
+
 		&:focus {
 			outline: none;
 		}
@@ -22,7 +32,7 @@
 		position: absolute;
 		font-style: italic;
 		color: $tertiary-grey;
-		top: .5em;
-		left: 1em;
+		top: (17/14) + 0em;
+		left: (22/14) + 0em;
 	}
 }
