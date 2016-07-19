@@ -3,6 +3,7 @@
 
 %x-close {background-image: url(./assets/close.png);}
 %icon-modal-red-sign {background-image: url(./assets/modal-red-sign.png);}
+%icon-modal-yellow-sign {background-image: url(./assets/modal-yellow-sign.png);}
 
 .nti-dialog-mount-point > *  {
 	position: fixed;
@@ -67,7 +68,12 @@
 
 
 	.icon {
-		@extend %icon-modal-red-sign;
+		@extend %icon-modal-yellow-sign;
+
+		&.caution {
+			@extend %icon-modal-red-sign;
+		}
+
 		position: absolute;
 		width: 60px;
 		height: 60px;
