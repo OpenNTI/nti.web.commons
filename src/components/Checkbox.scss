@@ -8,9 +8,11 @@ label.checkbox-component {
 
 		& + span.label {
 			position: relative;
-			//iOS workaround
-			pointer-events: none;
-			a { pointer-events: all; }
+
+			// May be necessary to keep labels with links clickable?
+			// //iOS workaround
+			// pointer-events: none;
+			// a { pointer-events: all; }
 
 			&::before {
 				content: '';
