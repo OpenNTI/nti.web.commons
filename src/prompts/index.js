@@ -6,9 +6,9 @@ import Modal from './components/Modal';
 export function alert (message, title = 'Alert', extra = {}) {
 	return new Promise(acknowledge=> {
 		Dialog.show({
-			...(extra || {}),
-			confirmButtonClass: 'caution',
-			iconClass: 'caution',
+			...extra,
+			confirmButtonClass: extra.confirmButtonClass || 'caution',
+			iconClass: extra.iconClass || 'caution',
 			message, title,
 			onConfirm: ()=> acknowledge()
 		});
@@ -18,9 +18,9 @@ export function alert (message, title = 'Alert', extra = {}) {
 export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	return new Promise((acknowledge, cancel)=> {
 		Dialog.show({
-			...(extra || {}),
-			confirmButtonClass: 'caution',
-			iconClass: 'caution',
+			...extra,
+			confirmButtonClass: extra.confirmButtonClass || 'caution',
+			iconClass: extra.iconClass || 'caution',
 			message, title,
 			onConfirm: ()=> acknowledge(),
 			onCancel: ()=> cancel('Prompt Canceled')
