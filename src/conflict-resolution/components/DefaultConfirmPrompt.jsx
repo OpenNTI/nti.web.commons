@@ -1,17 +1,30 @@
 import React, {PropTypes} from 'react';
 import DialogButtons from '../../components/DialogButtons';
 
+const NOOP = () => {};
 
-ConfirmPrompt.propTypes = {
+DefaultConfirmPrompt.propTypes = {
+	challenge: PropTypes.object,
 	onDismiss: PropTypes.func,
 	onConfirm: PropTypes.func,
-	challenge: PropTypes.object
+	onCancel: PropTypes.func
 };
 
 
-export default function ConfirmPrompt ({onDismiss, challenge, onConfirm}) {
-	function onClick () {
+export default function DefaultConfirmPrompt ({
+	challenge,
+	onDismiss = NOOP,
+	onConfirm = NOOP,
+	onCancel = NOOP
+}) {
+
+	function onConfirmClick () {
 		onConfirm();
+		onDismiss();
+	}
+
+	function onCancelClick () {
+		onCancel();
 		onDismiss();
 	}
 
@@ -19,12 +32,12 @@ export default function ConfirmPrompt ({onDismiss, challenge, onConfirm}) {
 		{
 			className: 'cancel',
 			label: 'Cancel',
-			onClick: onDismiss
+			onClick: onCancelClick
 		},
 		{
 			className: 'caution confirm',
 			label: 'Confirm',
-			onClick
+			onClick: onConfirmClick
 		}
 	];
 

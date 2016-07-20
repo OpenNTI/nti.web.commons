@@ -3,8 +3,9 @@ import React from 'react';
 import {getServer} from 'nti-web-client';
 import {REQUEST_CONFLICT_EVENT} from 'nti-lib-interfaces';
 
-import {modal} from '../../prompts';
-import ConfirmPrompt from './ConfirmPrompt';
+import defaultConflictHandler from '../default-handler';
+
+import Registry from '../Registry';
 
 export default class Resolver extends React.Component {
 
@@ -23,14 +24,8 @@ export default class Resolver extends React.Component {
 	}
 
 
-	onConflict = (prompt) => {
-		return new Promise(confirm => {
-			modal(
-				<ConfirmPrompt challenge={prompt} onConfirm={confirm} />,
-				'request-conflict-resolver'
-			);
-		})
-			.then(() => prompt.confirm());
+	onConflict = (challenge) => {
+		return Registry.handleConflict(challenge) || defaultConflictHandler(challenge);
 	}
 
 
