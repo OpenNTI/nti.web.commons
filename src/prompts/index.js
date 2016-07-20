@@ -5,24 +5,26 @@ import Modal from './components/Modal';
 
 export function alert (message, title = 'Alert', extra = {}) {
 	return new Promise(acknowledge=> {
-		Dialog.show(Object.assign({
+		Dialog.show({
+			...(extra || {}),
 			confirmButtonClass: 'caution',
 			iconClass: 'caution',
 			message, title,
 			onConfirm: ()=> acknowledge()
-		}, extra || {}));
+		});
 	});
 }
 
 export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	return new Promise((acknowledge, cancel)=> {
-		Dialog.show(Object.assign({
+		Dialog.show({
+			...(extra || {}),
 			confirmButtonClass: 'caution',
 			iconClass: 'caution',
 			message, title,
 			onConfirm: ()=> acknowledge(),
 			onCancel: ()=> cancel('Prompt Canceled')
-		}, extra || {}));
+		});
 	});
 }
 
