@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import DialogButtons from '../DialogButtons';
+import DialogButtons from '../../components/DialogButtons';
 
 
 ConfirmPrompt.propTypes = {

@@ -1,6 +1,14 @@
 export * from './components';
-export * as Errors from './errors';
-export * as Prompt from './prompts';
+// once all old references to ConflictResolutionHandler are cleaned up just
+// change import to export and delete the back-compat block below.
+import * as ConflictResolution from './conflict-resolution';
 export * as Constants from './constants';
+export * as Errors from './errors';
 export * as HOC from './HighOrderComponents';
 export * as Mixins from './mixins';
+export * as Prompt from './prompts';
+
+//back-compat begin
+export const ConflictResolutionHandler = ConflictResolution.Component;
+export {ConflictResolution};
+//back-compat end
