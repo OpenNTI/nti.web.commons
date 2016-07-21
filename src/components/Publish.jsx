@@ -92,7 +92,7 @@ export default class Publish extends React.Component {
 		horizontalAlignment: PropTypes.string,
 		error: PropTypes.string,
 		children: PropTypes.any,
-		localeContext: PropTypes.oneOfType([
+		localeContext: PropTypes.oneOf([
 			'lesson',
 			'assignment'
 		])
