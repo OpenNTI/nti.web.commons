@@ -13,9 +13,9 @@ const defaultText = {
 		other: '%(count)s Warnings'
 	},
 	errors: {
-		zero: 'No Issues',
-		one: '%(count)s Issue',
-		other: '%(count)s Issues'
+		zero: 'No Errors',
+		one: '%(count)s Error',
+		other: '%(count)s Errors'
 	}
 };
 const t = scoped('FIELD_ERROR_FLYOUT', defaultText);
