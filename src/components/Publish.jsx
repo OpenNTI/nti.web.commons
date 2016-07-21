@@ -13,23 +13,41 @@ import {PUBLISH_STATES} from '../constants';
 const logger = Logger.get('common:components:Publish');
 
 const DEFAULT_TEXT = {
-	publish: {
-		text: 'Lesson contents are visible to students.',
-		label: 'Publish'
+	lesson: {
+		publish: {
+			text: 'Lesson contents are visible to students.',
+			label: 'Publish'
+		},
+		draft: {
+			text: 'Currently not visible to any students',
+			label: 'Draft'
+		},
+		schedule: {
+			text: 'When do you want students to have access to this lesson?',
+			selectedText: 'Lesson contents will be visible to students on %(date)s at %(time)s.',
+			label: 'Schedule',
+			timePickerHeader: 'YOUR LOCAL TIME'
+		}
 	},
-	draft: {
-		text: 'Currently not visible to any students',
-		label: 'Draft'
-	},
-	schedule: {
-		text: 'When do you want students to have access to this lesson?',
-		selectedText: 'Lesson contents will be visible to students on %(date)s at %(time)s.',
-		label: 'Schedule',
-		timePickerHeader: 'YOUR LOCAL TIME'
+	assignment: {
+		publish: {
+			text: 'Assignment contents are visible to students.',
+			label: 'Publish'
+		},
+		draft: {
+			text: 'Currently not visible to any students',
+			label: 'Draft'
+		},
+		schedule: {
+			text: 'When do you want students to have access to this assignment?',
+			selectedText: 'Assignment contents will be visible to students on %(date)s at %(time)s.',
+			label: 'Schedule',
+			timePickerHeader: 'YOUR LOCAL TIME'
+		}
 	}
 };
 
-const t = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
+const tt = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
 export const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
 
 
@@ -73,13 +91,18 @@ export default class Publish extends React.Component {
 		verticalAlignment: PropTypes.string,
 		horizontalAlignment: PropTypes.string,
 		error: PropTypes.string,
-		children: PropTypes.any
+		children: PropTypes.any,
+		localeContext: PropTypes.oneOfType([
+			'lesson',
+			'assignment'
+		])
 	}
 
 	static defaultProps = {
 		value: PUBLISH_STATES.DRAFT,
 		changed: false,
-		horizontalAlignment: Flyout.ALIGNMENTS.RIGHT
+		horizontalAlignment: Flyout.ALIGNMENTS.RIGHT,
+		localeContext: 'assignment'
 	}
 
 	constructor (props) {
@@ -168,12 +191,14 @@ export default class Publish extends React.Component {
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error} = this.props;
+		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 
 		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error});
 
 		const trigger = <PublishTrigger value={value}/>;
+
+		const t = (key,...args) => tt(`${localeContext}.${key}`,...args);
 
 		return (
 			<Flyout
