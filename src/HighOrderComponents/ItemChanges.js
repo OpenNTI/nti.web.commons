@@ -8,6 +8,10 @@ const REF_HANDLERS = new WeakMap();
 
 function itemChanged (scope) {
 	const {refChild, props: {onItemChanged}} = scope;
+	if (!scope.mounted) {
+		stopListening(scope);
+		return;
+	}
 
 	if (onItemChanged) {
 		onItemChanged();
@@ -64,6 +68,8 @@ function listen (scope, item) {
 
 
 function stopListening (scope, item) {
+	item = item || getItem(scope, scope.props, scope.state, scope.context);
+
 	if (item && typeof item.removeListener === 'function') {
 		item.removeListener('change', getHandler(scope));
 	}
@@ -97,6 +103,10 @@ export default class ItemChanges extends React.Component {
 
 	attachRef = x => this.refChild = x
 
+	componentWillMount () {
+		this.mounted = true;
+	}
+
 
 	componentWillReceiveProps (...next) {
 		const prev = [this.props, this.state, this.context];
@@ -113,6 +123,7 @@ export default class ItemChanges extends React.Component {
 
 
 	componentWillUnmount () {
+		delete this.mounted;
 		stopListening(this, getItem(this, this.props));
 	}
 
