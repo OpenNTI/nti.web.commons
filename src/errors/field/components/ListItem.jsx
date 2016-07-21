@@ -3,10 +3,11 @@ import cx from 'classnames';
 
 ErrorListItem.propTypes = {
 	error: React.PropTypes.object.isRequired,
-	isWarning: React.PropTypes.bool
+	isWarning: React.PropTypes.bool,
+	onErrorFocus: React.PropTypes.func
 };
 
-function ErrorListItem ({error, isWarning}) {
+function ErrorListItem ({error, isWarning, onErrorFocus}) {
 	const {attachedTo, message} = error;
 	const {label} = attachedTo;
 	const cls = cx('nti-error-list-item', {warning: isWarning});
@@ -14,6 +15,10 @@ function ErrorListItem ({error, isWarning}) {
 	const onClick = () => {
 		if (error && error.focus) {
 			error.focus();
+
+			if (onErrorFocus) {
+				onErrorFocus();
+			}
 		}
 	};
 
