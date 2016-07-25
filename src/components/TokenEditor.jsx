@@ -69,7 +69,7 @@ export default class TokenEditor extends React.Component {
 		}
 	}
 
-	onBlur = (e) => {
+	onBlur = (/*e*/) => {
 		// this.add(e.target.value);
 		// this.clearInput();
 	}
