@@ -177,6 +177,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const currentFolderCan = x => folder && folder.can(x);
 		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
 		const disabled = (renaming); //modal states
+		const hasInfo = selected === 1 && !selections[0].isFolder;
+		const inspectItem = hasInfo ? selections[0] : void 0;
 
 		return (
 			<div className="content-resource-browser">
@@ -223,7 +225,12 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							onClick={this.onDelete}
 							/>
 						<ToolbarSpacer/>
-						<ToolbarButton icon="hint" checked={showInfo} onClick={this.toggle} disabled/>
+						<ToolbarButton
+							icon="hint"
+							checked={showInfo}
+							onClick={this.toggle}
+							disabled={disabled || !hasInfo}
+							/>
 						<Search disabled/>
 					</Toolbar>
 				</Header>
@@ -239,7 +246,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						limited={limited}
 						>
 						{showInfo && (
-							<Inspector selection={selection}/>
+							<Inspector item={inspectItem}/>
 						)}
 					</View>
 				)}
