@@ -6,32 +6,33 @@ import Token from './Token';
 
 export default class TokenEditor extends React.Component {
 
-	constructor (props) {
-		super(props);
-		this.state = {inputValue: ''};
-	}
-
 	static propTypes = {
 		tokens: React.PropTypes.array,
+		onChange: React.PropTypes.func,
 		onFocus: React.PropTypes.func,
 		className: React.PropTypes.string,
 		preprocessToken: React.PropTypes.func,
 		placeholder: React.PropTypes.string
 	}
 
+	state = {inputValue: ''}
+
 	get value () {
 		return [...this.state.values];
 	}
+
 
 	componentWillMount () {
 		this.setUp();
 	}
 
+
 	setUp (props = this.props) {
 		this.setState({
-			values: new Set(props.tokens)
+			values: [... new Set(props.tokens)]
 		});
 	}
+
 
 	add = (value) => {
 		let v = value;
@@ -41,24 +42,24 @@ export default class TokenEditor extends React.Component {
 		if (this.props.preprocessToken) {
 			v = this.props.preprocessToken(v);
 		}
+
 		const {values} = this.state;
-		values.add(v);
-		this.setState({values});
+		if (!values.includes(v)) {
+			this.setState({values: [...values, v]});
+		}
 	}
+
 
 	remove = (value) => {
 		const {values} = this.state;
-		values.delete(value);
-		this.setState({
-			values
-		});
+		this.setState({ values: values.filter(x => x !== value) });
 	}
 
+
 	clearInput = () => {
-		this.setState({
-			inputValue: ''
-		});
+		this.setState({ inputValue: '' });
 	}
+
 
 	focusInput = () => {
 		if (this.input) {
@@ -69,16 +70,19 @@ export default class TokenEditor extends React.Component {
 		}
 	}
 
+
 	onBlur = (/*e*/) => {
 		// this.add(e.target.value);
 		// this.clearInput();
 	}
+
 
 	onInputChange = (e) => {
 		this.setState({
 			inputValue: e.target.value
 		});
 	}
+
 
 	onKeyDown = (e) => {
 		const finishingKeys = ['Enter', 'Tab', ' ', ','];
@@ -94,16 +98,16 @@ export default class TokenEditor extends React.Component {
 		}
 	}
 
+
 	deleteLastValue = () => {
 		const {values} = this.state;
-		if (values.size > 0) {
-			const lastValue = [...values][values.size - 1];
-			values.delete(lastValue);
-			this.setState({
-				inputValue: lastValue
-			});
+		if (values.length > 0) {
+			const lastValue = values[values.length - 1];
+			this.remove(lastValue);
+			this.setState({ inputValue: lastValue });
 		}
 	}
+
 
 	render () {
 
@@ -114,8 +118,8 @@ export default class TokenEditor extends React.Component {
 
 		return (
 			<div className={classes} onClick={this.focusInput}>
-				{placeholder && values.size === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
-				{[...values].map(x => <Token key={x} value={x} onRemove={this.remove} />)}
+				{placeholder && values.length === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
+				{values.map(x => <Token key={x} value={x} onRemove={this.remove} />)}
 				<input
 					className="token"
 					ref={x => this.input = x}
