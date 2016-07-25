@@ -8,8 +8,7 @@
 
 	display: flex;
 	user-select: none;
-	box-shadow: inset 0 -1px 0 0 #e2e2e2,
-				inset 0 1px 0 0 #e2e2e2;
+	box-shadow: inset 0 1px 0 0 $border-grey-light;
 
 	.view-main-pane {
 		transition: box-shadow 0.3s ease, background-color 0.3s ease;
@@ -41,9 +40,11 @@
 		flex: 0;
 		overflow: scroll;
 		min-width: 350px;
-		background: red;
-		padding-right: rem-calc($sideMargin);
+
 		margin-right: rem-calc(-$sideMargin);
+		border: 0 solid $border-grey-light;
+		border-width: 1px 0 0 1px;
+		background: #fff;
 	}
 
 	[draggable] {

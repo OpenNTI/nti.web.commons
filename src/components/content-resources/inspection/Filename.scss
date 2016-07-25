@@ -1,0 +1,9 @@
+@import "~nti-style-common";
+
+.resource-viewer-inspector-filename {
+	margin: rem-calc(9px 0 11px);
+	font-size: rem-calc(18px);
+	font-weight: 300;
+	line-height: 1.35;
+	color: $tertiary-grey;
+}

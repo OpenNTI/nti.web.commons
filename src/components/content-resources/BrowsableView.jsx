@@ -166,7 +166,7 @@ export default class BrowsableView extends React.Component {
 	setFolder = (folder, contents, clearProgress = true) => {
 		const additional = clearProgress ? {progress: void 0} : {};
 		this.setState(
-			{folder, folderContents: contents, ...additional},
+			{folder, folderContents: contents, showInfo: false, ...additional},
 			() => this.onSelectionChange());
 		this.selection.set([]);
 
@@ -251,10 +251,16 @@ export default class BrowsableView extends React.Component {
 
 	onSelectionChange = () => {
 		const {onSelectionChange} = this.props;
-		this.forceUpdate();
+		let selections = Array.from(this.selection);
+
+		if (selections.length === 0 || selections[0].isFolder) {
+			this.setState({showInfo: false});
+		} else {
+			this.forceUpdate();
+		}
 
 		if (onSelectionChange) {
-			const selections = Array.from(this.selection).concat(this.state.folder);
+			selections = selections.concat(this.state.folder);
 			onSelectionChange(selections);
 		}
 	}
