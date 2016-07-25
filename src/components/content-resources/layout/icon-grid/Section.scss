@@ -21,7 +21,9 @@
 		max-width: $percent;//FireFox can't even.
 
 		.content-resource-view.split & {
-			flex: 0 1 (33% - ($gap * 2));
+			$percent: (33% - ($gap * 2));
+			flex: 0 1 $percent;
+			max-width: $percent;
 		}
 	}
 }

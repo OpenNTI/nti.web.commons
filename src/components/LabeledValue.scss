@@ -2,14 +2,16 @@
 
 .labeled-value {
 	label {
-		font-size: .625rem;
+		font-size: rem-calc(10px);
 		text-transform: uppercase;
 		color: $secondary-grey;
-		font-weight: 600;
-		line-height: 2;
+		font-weight: bold;
+		line-height: 1.5;
+		display: block;
+		margin-bottom: rem-calc(1px);
 	}
 	.value {
-		font-size: .8125rem;
+		font-size: rem-calc(14px);
 		color: $primary-grey;
 		.placeholder {
 			font-style: italic;

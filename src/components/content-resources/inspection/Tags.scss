@@ -1,0 +1,13 @@
+@import "~nti-style-common";
+
+.resource-viewer-inspector-file-tags {
+	margin: rem-calc(20px 0);
+
+	.token-editor {
+		margin: rem-calc(10px 0 10px);
+		min-height: 100px;
+		border-radius: 2px;
+		background-color: $panel-background;
+		border: solid 1px $border-grey-light;
+	}
+}
