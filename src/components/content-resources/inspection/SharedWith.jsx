@@ -117,6 +117,6 @@ export default class SharedWith extends React.Component {
 					<span className="empty">{t('NoAssociations')}</span>
 				)}
 			</div>
-		)
+		);
 	}
 }
