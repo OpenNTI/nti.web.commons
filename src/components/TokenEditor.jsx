@@ -23,12 +23,20 @@ export default class TokenEditor extends React.Component {
 
 
 	componentWillMount () {
-		this.setUp();
+		this.initState();
 	}
 
 
-	setUp (props = this.props) {
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.tokens !== this.props.tokens) {
+			this.initState(nextProps);
+		}
+	}
+
+
+	initState (props = this.props) {
 		this.setState({
+			inputValue: '',
 			values: [... new Set(props.tokens)]//dedupe
 		});
 	}
