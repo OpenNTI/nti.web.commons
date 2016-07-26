@@ -2,12 +2,17 @@ import React from 'react';
 import isEmpty from 'isempty';
 import cx from 'classnames';
 
+import Logger from 'nti-util-logger';
+
 import Token from './Token';
+
+const logger = Logger.get('common:components:TokenEditor');
 
 export default class TokenEditor extends React.Component {
 
 	static propTypes = {
-		tokens: React.PropTypes.array,
+		tokens: React.PropTypes.array,//deprecated... we need to conform to the "value/onChange" api.
+		value: React.PropTypes.array,
 		onChange: React.PropTypes.func,
 		onFocus: React.PropTypes.func,
 		className: React.PropTypes.string,
@@ -23,13 +28,23 @@ export default class TokenEditor extends React.Component {
 	}
 
 
+	constructor (props) {
+		if (props.tokens) {
+			props = {value: props.tokens, ...props};
+			delete props.tokens;
+			logger.warn('tokens prop is deprecated, use value instead.');
+		}
+		super(props);
+	}
+
+
 	componentWillMount () {
 		this.initState();
 	}
 
 
 	componentWillReceiveProps (nextProps) {
-		if (nextProps.tokens !== this.props.tokens) {
+		if (nextProps.value !== this.props.value) {
 			this.initState(nextProps);
 		}
 	}
@@ -38,7 +53,7 @@ export default class TokenEditor extends React.Component {
 	initState (props = this.props) {
 		this.setState({
 			inputValue: '',
-			values: [... new Set(props.tokens)]//dedupe
+			values: [... new Set(props.value)]//dedupe
 		});
 	}
 
