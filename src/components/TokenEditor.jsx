@@ -29,7 +29,7 @@ export default class TokenEditor extends React.Component {
 
 	setUp (props = this.props) {
 		this.setState({
-			values: [... new Set(props.tokens)]
+			values: [... new Set(props.tokens)]//dedupe
 		});
 	}
 
@@ -45,14 +45,24 @@ export default class TokenEditor extends React.Component {
 
 		const {values} = this.state;
 		if (!values.includes(v)) {
-			this.setState({values: [...values, v]});
+			this.setState(
+				{values: [...values, v]},
+				()=> this.onChange()
+			);
 		}
 	}
 
 
 	remove = (value) => {
 		const {values} = this.state;
-		this.setState({ values: values.filter(x => x !== value) });
+		const filtered =  values.filter(x => x !== value);
+
+		if (filtered.length < values.length) {
+			this.setState(
+				{values: filtered},
+				()=> this.onChange()
+			);
+		}
 	}
 
 
@@ -74,6 +84,15 @@ export default class TokenEditor extends React.Component {
 	onBlur = (/*e*/) => {
 		// this.add(e.target.value);
 		// this.clearInput();
+	}
+
+
+	onChange = () => {
+		const {props: {onChange}, state: {values}} = this;
+
+		if (onChange) {
+			onChange(values);
+		}
 	}
 
 
