@@ -12,7 +12,8 @@ export default class TokenEditor extends React.Component {
 		onFocus: React.PropTypes.func,
 		className: React.PropTypes.string,
 		preprocessToken: React.PropTypes.func,
-		placeholder: React.PropTypes.string
+		placeholder: React.PropTypes.string,
+		disabled: React.PropTypes.bool
 	}
 
 	state = {inputValue: ''}
@@ -138,16 +139,17 @@ export default class TokenEditor extends React.Component {
 
 	render () {
 
-		const {placeholder} = this.props;
+		const {placeholder, disabled} = this.props;
 		const {values, inputValue} = this.state;
 
 		const classes = cx('token-editor', this.props.className);
 
 		return (
 			<div className={classes} onClick={this.focusInput}>
-				{placeholder && values.length === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
-				{values.map(x => <Token key={x} value={x} onRemove={this.remove} />)}
+				{!disabled && placeholder && values.length === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
+				{values.map(x => <Token key={x} value={x} onRemove={disabled ? void 0 : this.remove} />)}
 				<input
+					disabled={disabled}
 					className="token"
 					ref={x => this.input = x}
 					onKeyDown={this.onKeyDown}
