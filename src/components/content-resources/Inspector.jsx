@@ -6,7 +6,7 @@ import TypeAndSize from './inspection/TypeAndSize';
 import Field from './inspection/Field';
 import SharedWith from './inspection/SharedWith';
 import Tags from './inspection/Tags';
-import Comment from './inspection/Comment';
+// import Comment from './inspection/Comment';
 
 export default class Inspector extends React.Component {
 	static propTypes = {
@@ -27,7 +27,6 @@ export default class Inspector extends React.Component {
 				<Field item={item} field="creator"/>
 				<SharedWith item={item}/>
 				<Tags item={item}/>
-				<Comment item={item}/>
 			</div>
 		);
 	}
