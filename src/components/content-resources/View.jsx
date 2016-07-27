@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
 import {getEventTarget} from 'nti-lib-dom';
+import SelectionModel from 'nti-commons/lib/SelectionModel';
 
 import IconGrid from './layout/icon-grid';
 
@@ -16,7 +17,8 @@ export default class ContentResourcesView extends React.Component {
 		onFileDrop: PropTypes.func,
 		layout: PropTypes.func,//React Component "Type"
 		limited: PropTypes.bool,
-		...IconGrid.propTypes
+		contents: PropTypes.array,
+		selection: PropTypes.instanceOf(SelectionModel)
 	}
 
 	dragover = 0
