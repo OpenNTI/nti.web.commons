@@ -255,7 +255,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							onClick={this.toggle}
 							disabled={disabled || !hasInfo}
 							/>
-						<Search disabled={!currentFolderCan('search')} onChange={this.onSearch}/>
+						<Search disabled={!currentFolderCan('search')} value={search || ''} onChange={this.onSearch} buffered={false}/>
 					</Toolbar>
 				</Header>
 
