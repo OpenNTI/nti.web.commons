@@ -35,6 +35,13 @@
 		margin-right: rem-calc(-$sideMargin);
 	}
 
+	&.split {
+		.view-main-pane {
+			padding-left: rem-calc($sideMargin);
+			margin-left: rem-calc(-$sideMargin);
+		}
+	}
+
 	.context-view-pane {
 		flex: 0;
 		overflow: scroll;
