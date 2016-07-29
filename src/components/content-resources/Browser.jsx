@@ -267,7 +267,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							/>
 						<Search
 							disabled={!currentFolderCan('search')}
-							alue={search || ''}
+							value={search || ''}
 							onChange={this.onSearch}
 							buffered={false}
 							/>
