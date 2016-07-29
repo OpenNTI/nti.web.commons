@@ -3,7 +3,7 @@ import cx from 'classnames';
 import {getEventTarget} from 'nti-lib-dom';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 
-import IconGrid from './layout/icon-grid';
+import IconGrid from './layout/grid';
 
 const stop = e => e.stopPropagation();
 

@@ -18,7 +18,7 @@ import SearchScopeBar from './SearchScopeBar';
 import View from './View';
 
 import TableLayout from './layout/table';
-import IconLayout from './layout/icon-grid';
+import IconLayout from './layout/grid';
 
 import Header, {TitleBalencer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
