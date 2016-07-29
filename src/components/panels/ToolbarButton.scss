@@ -38,10 +38,18 @@
 		box-sizing: border-box;
 		border: solid rem-calc(1px) #e6e6e6;
 		border-radius: rem-calc(3px);
-
+		padding: rem-calc(0 7px);
 		line-height: rem-calc(30px);
-		width: rem-calc(32px);
+		min-width: rem-calc(32px);
 		text-align: center;
+
+		i[class*="icon-"] {
+			padding: rem-calc(7px 0);
+			display: block;
+			&::before {
+				display: block;
+			}
+		}
 
 		&.checked {
 			opacity: 1;

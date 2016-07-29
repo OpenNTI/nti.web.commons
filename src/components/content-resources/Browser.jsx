@@ -23,6 +23,7 @@ import IconLayout from './layout/icon-grid';
 import Header, {TitleBalencer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
 import ToolbarButton from '../panels/ToolbarButton';
+import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
 import FilePickerButton from '../FilePickerButton';
 
 import ProgressBar from '../ProgressBar';
@@ -177,7 +178,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				error,
 				folder,
 				folderContents,
-				layout,
+				layout: selectedLayout,
 				showInfo,
 				progress,
 				renaming,
@@ -190,6 +191,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				limited
 			}
 		} = this;
+
+		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || IconLayout;
 
 		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
 		const searching = search && search.length > 0;
@@ -248,14 +251,26 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							available={selectionCan('delete')}
 							onClick={this.onDelete}
 							/>
+
 						<ToolbarSpacer/>
+
+						<ToolbarButtonGroup>
+							<ToolbarButton icon="list" checked={layout === TableLayout} onClick={this.setLayoutToList}/>
+							<ToolbarButton icon="grid" checked={layout === IconLayout} onClick={this.setLayoutToGrid}/>
+						</ToolbarButtonGroup>
+
 						<ToolbarButton
 							icon="hint"
 							checked={showInfo}
 							onClick={this.toggle}
 							disabled={disabled || !hasInfo}
 							/>
-						<Search disabled={!currentFolderCan('search')} value={search || ''} onChange={this.onSearch} buffered={false}/>
+						<Search
+							disabled={!currentFolderCan('search')}
+							alue={search || ''}
+							onChange={this.onSearch}
+							buffered={false}
+							/>
 					</Toolbar>
 				</Header>
 
@@ -269,7 +284,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 					<Loading/>
 				) : (
 					<View contents={content}
-						// layout={layout == null && search ? TableLayout : layout}
+						layout={layout}
 						selection={selection}
 						onDragOverChanged={this.onDragOverChanged}
 						onFileDrop={this.onFileDrop}
