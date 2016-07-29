@@ -6,13 +6,13 @@ import Folder from './Folder';
 import File from './File';
 import Section from './Section';
 
-LayoutIcon.propTypes = {
+LayoutGrid.propTypes = {
 	className: PropTypes.string,
 	contents: PropTypes.array,
 	selection: PropTypes.instanceOf(SelectionModel)
 };
 
-export default function LayoutIcon (props) {
+export default function LayoutGrid (props) {
 	const {className, contents, selection} = props;
 
 	const folders = [];
@@ -24,7 +24,7 @@ export default function LayoutIcon (props) {
 	}
 
 	return (
-		<div className={cx('content-resource-view-layout', 'icons', className)}>
+		<div className={cx('content-resource-view-layout', 'grid', className)}>
 			<Section className="folders" items={folders} selection={selection} type={Folder}/>
 			<Section className="files" items={files} selection={selection} type={File}/>
 		</div>

@@ -3,7 +3,7 @@ import cx from 'classnames';
 import {getEventTarget} from 'nti-lib-dom';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
 
-import IconGrid from './layout/grid';
+import Grid from './layout/grid';
 
 const stop = e => e.stopPropagation();
 
@@ -95,7 +95,7 @@ export default class ContentResourcesView extends React.Component {
 		const {children, className, contents, selection, layout} = this.props;
 		const hasSubView = !!children;
 
-		const Layout = layout || IconGrid;
+		const Layout = layout || Grid;
 
 		return (
 			<div className={cx('content-resource-view', className, {split: hasSubView})} onClick={this.clearSelection}>

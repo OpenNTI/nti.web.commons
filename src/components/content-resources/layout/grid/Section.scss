@@ -1,6 +1,6 @@
 @import "~nti-style-common";
 
-.content-resource-view-layout.icons .section {
+.content-resource-view-layout.grid .section {
 	@include clearfix;
 
 	$gap: ((20 / 974) / 2) * 100%;
