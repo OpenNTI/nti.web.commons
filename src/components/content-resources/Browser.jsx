@@ -18,7 +18,7 @@ import SearchScopeBar from './SearchScopeBar';
 import View from './View';
 
 import TableLayout from './layout/table';
-import IconLayout from './layout/grid';
+import GridLayout from './layout/grid';
 
 import Header, {TitleBalencer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
@@ -170,6 +170,9 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	onChangeSearchScope = (scope) => this.setState({folderContents: null, searchScope: scope}, this.search)
 
 
+	setLayoutToList = () => this.setState({layout: TableLayout})
+	setLayoutToGrid = () => this.setState({layout: GridLayout})
+
 	render () {
 		const {
 			selection,
@@ -192,7 +195,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			}
 		} = this;
 
-		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || IconLayout;
+		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || TableLayout;
 
 		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
 		const searching = search && search.length > 0;
@@ -256,7 +259,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 
 						<ToolbarButtonGroup>
 							<ToolbarButton icon="list" checked={layout === TableLayout} onClick={this.setLayoutToList}/>
-							<ToolbarButton icon="grid" checked={layout === IconLayout} onClick={this.setLayoutToGrid}/>
+							<ToolbarButton icon="grid" checked={layout === GridLayout} onClick={this.setLayoutToGrid}/>
 						</ToolbarButtonGroup>
 
 						<ToolbarButton
