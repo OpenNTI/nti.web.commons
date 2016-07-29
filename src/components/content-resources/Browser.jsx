@@ -195,7 +195,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			}
 		} = this;
 
-		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || TableLayout;
+		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || GridLayout;
 
 		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
 		const searching = search && search.length > 0;
