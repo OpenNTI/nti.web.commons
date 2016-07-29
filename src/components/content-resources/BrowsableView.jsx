@@ -9,6 +9,7 @@ import TaskQueue from './tasks/Queue';
 import MoveTask from './tasks/Move';
 import UploadTask from './tasks/Upload';
 
+import buffered from 'nti-commons/lib/function-buffer';
 import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
 
 const logger = Logger.get('common:components:content-resources:BrowsableView');
@@ -49,6 +50,8 @@ const DEFAULT_TEXT = {
 };
 
 const t = scoped('CONTENT_RESOURCES', DEFAULT_TEXT);
+
+const BUFFERED_TIME = 1000;
 
 export default class BrowsableView extends React.Component {
 	static propTypes = {
@@ -139,6 +142,19 @@ export default class BrowsableView extends React.Component {
 	refresh = () => this.setFolder(this.state.folder, this.state.folderContents, false)
 
 
+	search = buffered(BUFFERED_TIME, () => {
+		const {searchScope, folder, search} = this.state;
+
+		(searchScope || folder).search(search, true)
+			.then(searchResults => {
+				if (this.state.search !== search) {return;}
+
+				this.setState({folderContents: searchResults});
+			})
+			.catch(error => this.setState({error}));
+	})
+
+
 	selectItem = (item, modifiers) => {
 		const {selection} = this;
 		const {metaKey, ctrlKey/*, altKey, shiftKey*/} = modifiers || {};
@@ -165,9 +181,11 @@ export default class BrowsableView extends React.Component {
 
 	setFolder = (folder, contents, clearProgress = true) => {
 		const additional = clearProgress ? {progress: void 0} : {};
+
 		this.setState(
-			{folder, folderContents: contents, showInfo: false, ...additional},
+			{folder, folderContents: contents, search: void 0, showInfo: false, ...additional},
 			() => this.onSelectionChange());
+
 		this.selection.set([]);
 
 		return folder.getContents()
@@ -182,7 +200,7 @@ export default class BrowsableView extends React.Component {
 		getService()
 			.then(s => s.getObject(sourceID))
 			.then(c => c.getResources())
-			.then(folder => this.setFolder(folder))
+			.then(folder => (this.setState({root: folder}), this.setFolder(folder)))
 			.catch(error => this.setState({error}));
 	}
 

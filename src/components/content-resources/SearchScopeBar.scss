@@ -1,0 +1,37 @@
+@import "~nti-style-common";
+
+.content-resource-search-scope-bar {
+	background-image: linear-gradient(to bottom, #f7f7f7, #ededed);
+	line-height: (30/14);
+	white-space: nowrap;
+	font-size: rem-calc(14px);
+	font-weight: 600;
+	color: $secondary-grey;
+	position: relative;
+	box-shadow: 0px 1px 0 0 $border-grey-light;
+
+	.item, .label {
+		display: inline-block;
+	}
+
+	.label {
+		margin: rem-calc(0 1px 0 20px);
+	}
+
+
+	.item {
+		padding: rem-calc(0 14px);
+		border: solid 1px rgba(0,0,0,0);
+		margin: -1px 0;
+	}
+
+	.item:not(.active) {
+		cursor: pointer;
+	}
+
+	.active {
+		background-color: #e8e8e8;
+		box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.17);
+		border-color: #cfcfcf;
+	}
+}

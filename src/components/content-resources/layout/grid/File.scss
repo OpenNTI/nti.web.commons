@@ -1,7 +1,7 @@
 @import "~nti-style-common";
 
 body > .file-asset.ghost,
-.content-resource-view-layout .file-asset {
+.content-resource-view-layout.icons .file-asset {
 	cursor: pointer;
 
 	&.unselectable {
@@ -62,11 +62,12 @@ body > .file-asset.ghost,
 		height: rem-calc($size * 2.5);
 		max-height: rem-calc($size * 2.5);
 		font-size: rem-calc($size);
+		line-height: 1.2;
 		box-sizing: content-box;
 		font-weight: 600;
 		color: $primary-grey;
 
-		&, & > span {
+		& > span {
 			opacity: 1;
 			white-space: normal;
 			word-break: break-word;

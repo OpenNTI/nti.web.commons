@@ -14,11 +14,16 @@ import Search from '../Search';
 import ParentFolder from './ParentFolder';
 import FolderName from './FolderName';
 import Inspector from './Inspector';
+import SearchScopeBar from './SearchScopeBar';
 import View from './View';
+
+import TableLayout from './layout/table';
+import GridLayout from './layout/grid';
 
 import Header, {TitleBalencer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
 import ToolbarButton from '../panels/ToolbarButton';
+import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
 import FilePickerButton from '../FilePickerButton';
 
 import ProgressBar from '../ProgressBar';
@@ -152,6 +157,22 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	}
 
 
+	onSearch = (query) => {
+		if (query && query.length > 0) {
+			this.setState({folderContents: null, search: query}, this.search);
+		}
+		else {
+			this.setState({folderContents: null, search: void 0, searchScope: void 0}, this.refresh);
+		}
+	}
+
+
+	onChangeSearchScope = (scope) => this.setState({folderContents: null, searchScope: scope}, this.search)
+
+
+	setLayoutToList = () => this.setState({layout: TableLayout})
+	setLayoutToGrid = () => this.setState({layout: GridLayout})
+
 	render () {
 		const {
 			selection,
@@ -160,9 +181,13 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				error,
 				folder,
 				folderContents,
+				layout: selectedLayout,
 				showInfo,
 				progress,
-				renaming
+				renaming,
+				root,
+				search,
+				searchScope = folder
 			},
 			props: {
 				filter,
@@ -170,7 +195,10 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			}
 		} = this;
 
+		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || TableLayout;
+
 		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
+		const searching = search && search.length > 0;
 
 		const selections = Array.from(selection);
 		const selected = selections.length;
@@ -179,6 +207,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const disabled = (renaming); //modal states
 		const hasInfo = selected === 1 && !selections[0].isFolder;
 		const inspectItem = hasInfo ? selections[0] : void 0;
+
+		const searchScopes = root === folder ? [root] : [root, folder];
 
 		return (
 			<div className="content-resource-browser">
@@ -224,32 +254,52 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							available={selectionCan('delete')}
 							onClick={this.onDelete}
 							/>
+
 						<ToolbarSpacer/>
+
+						<ToolbarButtonGroup>
+							<ToolbarButton icon="list" checked={layout === TableLayout} onClick={this.setLayoutToList}/>
+							<ToolbarButton icon="grid" checked={layout === GridLayout} onClick={this.setLayoutToGrid}/>
+						</ToolbarButtonGroup>
+
 						<ToolbarButton
 							icon="hint"
 							checked={showInfo}
 							onClick={this.toggle}
 							disabled={disabled || !hasInfo}
 							/>
-						<Search disabled/>
+						<Search
+							disabled={!currentFolderCan('search')}
+							value={search || ''}
+							onChange={this.onSearch}
+							buffered={false}
+							/>
 					</Toolbar>
 				</Header>
+
+				{searching && (
+					<SearchScopeBar scopes={searchScopes} scope={searchScope} onChange={this.onChangeSearchScope} />
+				)}
+
 				{error ? (
 					<CError error={error}/>
 				) : !folderContents ? (
 					<Loading/>
 				) : (
 					<View contents={content}
+						layout={layout}
 						selection={selection}
 						onDragOverChanged={this.onDragOverChanged}
 						onFileDrop={this.onFileDrop}
-						limited={limited}
+						limited={limited || searching}
 						>
 						{showInfo && (
 							<Inspector item={inspectItem}/>
 						)}
 					</View>
 				)}
+
+
 				<div className={cx('status-bar', {dragover})}>
 					<Transition component="div" className=""
 						transitionName="content-resource-browser-drop"
