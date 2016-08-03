@@ -77,6 +77,9 @@ body > .file-asset.ghost,
 			text-overflow: ellipsis;
 			max-width: 100%;
 
+			// For browsers that don't support -webkit-box
+			display: inline-block;
+			max-height: 2.1rem; // Used to set height on num of lines for FF.
 			//Magic non-standard CSS:
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
