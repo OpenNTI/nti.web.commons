@@ -33,7 +33,7 @@ const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
 	DRAG_DROP: {
-		'drag-over-mesasge': 'Drop Files Here to Upload them to Your Library.'
+		'drag-over-mesasge': 'Drop files here to upload them to your library.'
 	},
 	TOOLBAR: {
 		'upload': 'Upload',
