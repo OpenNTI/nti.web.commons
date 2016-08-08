@@ -219,9 +219,15 @@ export default class BrowsableView extends React.Component {
 	moveEntities = (entities, target) => {
 		this.selection.set();
 
-		for (let item of entities) {
-			this.taskQueue.add(new MoveTask(item, target, () => this.dropItem(item)));
-		}
+		return Promise.all([...entities]
+			.map(item => new Promise(next =>
+				this.taskQueue.add(
+					new MoveTask(item, target,
+						() => this.dropItem(item).then(next)
+					)
+				)
+			)
+		));
 	}
 
 
