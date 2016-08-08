@@ -187,7 +187,14 @@ export default class BrowsableView extends React.Component {
 		const additional = clearProgress ? {progress: void 0} : {};
 
 		this.setState(
-			{folder, folderContents: contents, search: void 0, showInfo: false, ...additional},
+			{
+				folder,
+				folderContents: contents,
+				search: void 0,
+				searchScope: void 0,
+				showInfo: false,
+				...additional
+			},
 			() => this.onSelectionChange());
 
 		this.selection.set([]);
