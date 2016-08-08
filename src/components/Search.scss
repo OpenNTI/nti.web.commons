@@ -29,6 +29,7 @@ form.search-component {
 		font-style: normal;
 		font-size: rem-calc(14px);
 		box-sizing: border-box;
+		box-shadow: none;
 
 		&:not(:valid) ~ input[type=reset] {
 			opacity: 0;
