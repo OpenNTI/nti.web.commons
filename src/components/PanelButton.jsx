@@ -25,32 +25,29 @@ export default React.createClass({
 		};
 	},
 
-	renderButton () {
-		let {button, href, buttonClick, onClick, linkText} = this.props;
-
-		onClick = onClick || buttonClick;
-
-		if (!button && (!href || href === '#') && !onClick) {
-			return null;
-		}
-
-		let props = {
-			onClick,
-			href,
-			className: 'button tiny column',
-			children: linkText
-		};
-
-		return button || <a {...props}/>;
-	},
-
 
 	render () {
+		const {children, button, href, buttonClick, onClick, linkText, ...rest} = this.props;
+
+		function renderButton () {
+
+			if (!button && (!href || href === '#') && !onClick) {
+				return null;
+			}
+
+			return button || <a {...{
+				href,
+				onClick: onClick || buttonClick,
+				className: 'button tiny column',
+				children: linkText
+			}}/>;
+		}
+
 		return (
-			<div {...this.props}>
+			<div {...rest}>
 				<div className="panel-button">
-					{this.props.children}
-					{this.renderButton()}
+					{children}
+					{renderButton()}
 				</div>
 			</div>
 		);
