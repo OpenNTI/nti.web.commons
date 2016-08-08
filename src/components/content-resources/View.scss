@@ -22,6 +22,12 @@
 			box-shadow: inset 0 0 0 5px $primary-blue;
 			background-color: rgba($primary-blue, 0.1);
 
+			.content-resource-view-layout.table thead,
+			.content-resource-view-layout.table {
+				background-color: rgba(0,0,0,0);
+			}
+
+			.row-file-asset,
 			.section.files {
 				opacity: 0.3;
 				pointer-events: none;

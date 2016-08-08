@@ -23,6 +23,7 @@
 .content-resource-view-layout.table {
 	cursor: default;
 	background: #fff;
+	transition: background-color 0.3s ease;
 	margin: 0 -1.25rem;
 	min-height: 100%;
 
@@ -44,6 +45,7 @@
 	}
 
 	thead {
+		transition: background-color 0.3s ease;
 		background-color: $panel-background;
 		box-shadow: 0 1px 0 0 $border-grey-light;
 		font-size: rem-calc(10px);
@@ -109,6 +111,19 @@
 			color: #fff;
 		}
 	}
+
+	.entity-drag-over & {
+		.entity-row {
+			&:focus,
+			&:hover,
+			&.selected,
+			&:hover.selected {
+				background: none;
+				color: $secondary-grey;
+			}
+		}
+	}
+
 
 	.column-name {
 	}
