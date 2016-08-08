@@ -27,14 +27,14 @@ const DEFAULT_TEXT = {
 		unknown: 'Something went wrong.',
 		PermissionDeniedNoLink: 'Permission Denied.',
 		movefail: {
-			zero: 'Could not move %(filename)s. %(message)s',
-			one: 'Failed to move %(filename)s, and %(count)s other.',
-			other: 'Failed to move %(filename)s, and %(count)s others.'
+			zero: 'Could not move <span class="named">%(filename)s</span>. %(message)s',
+			one: 'Failed to move <span class="named">%(filename)s</span>, and %(count)s other.',
+			other: 'Failed to move <span class="named">%(filename)s</span>, and %(count)s others.'
 		},
 		uploadfail: {
-			zero: 'Could not upload %(filename)s. %(message)s',
-			one: 'Failed to upload %(filename)s, and %(count)s other.',
-			other: 'Failed to upload %(filename)s, and %(count)s others.'
+			zero: 'Could not upload <span class="named">%(filename)s</span>. %(message)s',
+			one: 'Failed to upload <span class="named">%(filename)s</span>, and %(count)s other.',
+			other: 'Failed to upload <span class="named">%(filename)s</span>, and %(count)s others.'
 		},
 		move: {
 			zero: 'Moved %(filename)s to %(folderName)s.',

@@ -113,6 +113,12 @@
 
 		p {
 			font-size: 0.9em;
+
+			span.named {
+				word-wrap: break-word;
+				word-break: break-word;
+				hyphens: manual;
+			}
 		}
 	}
 }
