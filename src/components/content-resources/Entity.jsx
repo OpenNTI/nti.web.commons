@@ -126,8 +126,6 @@ export default class Entity extends React.Component {
 	onDragOver = (e) => {
 		if (!this.canDrop()) { return; }
 		e.preventDefault();
-		e.stopPropagation();
-
 		e.dataTransfer.dropEffect = 'move';
 	}
 

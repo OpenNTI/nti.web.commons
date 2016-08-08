@@ -1,12 +1,15 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-import {getEventTarget} from 'nti-lib-dom';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
-
+import {getEventTarget} from 'nti-lib-dom';
+import Logger from 'nti-util-logger';
 import Grid from './layout/grid';
 
 const stop = e => e.stopPropagation();
 
+const logger = Logger.get('common:components:content-resources:View');
+
+const DRAG_CLASS = 'entity-drag-over';
 
 export default class ContentResourcesView extends React.Component {
 
@@ -24,6 +27,9 @@ export default class ContentResourcesView extends React.Component {
 	dragover = 0
 
 
+	attachRef = x => this.viewEl = x
+
+
 	clearSelection = (e) => (!e.metaKey && !e.ctrlKey) && this.props.selection.set()
 
 
@@ -33,6 +39,11 @@ export default class ContentResourcesView extends React.Component {
 	onDragOver = (e) => {
 		e.preventDefault();
 		e.dataTransfer.dropEffect = this.allowDrops() && accepts(e) ? 'move' : 'none';
+
+		logger.debug('dragover');
+
+		clearTimeout(this.dragOverStopped);
+		this.dragOverStopped = setTimeout(this.onDragLeaveImplied, 100);
 	}
 
 
@@ -45,8 +56,10 @@ export default class ContentResourcesView extends React.Component {
 
 		const target = getEventTarget(e, '.view-main-pane');
 		if (target) {
-			target.classList.add('entity-drag-over');
+			target.classList.add(DRAG_CLASS);
 		}
+
+		logger.debug('dragEnter', this.dragover, e.target);
 
 		const {onDragOverChanged} = this.props;
 		if (this.dragover === 1 && onDragOverChanged) {
@@ -61,14 +74,29 @@ export default class ContentResourcesView extends React.Component {
 		}
 
 		const target = getEventTarget(e, '.view-main-pane');
+
 		this.dragover--;
 		if (target && this.dragover <= 0) {
 			this.dragover = 0; //force 0
-			target.classList.remove('entity-drag-over');
+		}
+
+		logger.debug('dragLeave', this.dragover, e.target);
+
+		if (this.dragover === 0) {
+			this.onDragLeaveImplied();
+		}
+	}
+
+
+	onDragLeaveImplied = () => {
+		clearTimeout(this.dragOverStopped);
+		this.dragover = 0; //force 0
+		if (this.viewEl) {
+			this.viewEl.classList.remove(DRAG_CLASS);
 		}
 
 		const {onDragOverChanged} = this.props;
-		if (this.dragover === 0 && onDragOverChanged) {
+		if (onDragOverChanged) {
 			onDragOverChanged(false);
 		}
 	}
@@ -99,7 +127,7 @@ export default class ContentResourcesView extends React.Component {
 
 		return (
 			<div className={cx('content-resource-view', className, {split: hasSubView})} onClick={this.clearSelection}>
-				<div className="view-main-pane"
+				<div ref={this.attachRef} className="view-main-pane"
 					onDragOver={this.onDragOver}
 					onDragEnter={this.onDragEnter}
 					onDragLeave={this.onDragLeave}
