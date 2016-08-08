@@ -262,24 +262,18 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							<ToolbarButton icon="grid" checked={layout === GridLayout} onClick={this.setLayoutToGrid}/>
 						</ToolbarButtonGroup>
 
-						{/* Remove info until AA3
-							<ToolbarButton
+						<ToolbarButton
 							icon="hint"
 							checked={showInfo}
 							onClick={this.toggle}
 							disabled={disabled || !hasInfo}
 							/>
-						*/}
-						{
-						/*	Remove search until AA3
-							<Search
+						<Search
 							disabled={!currentFolderCan('search')}
 							value={search || ''}
 							onChange={this.onSearch}
 							buffered={false}
 							/>
-						*/
-						}
 					</Toolbar>
 				</Header>
 
