@@ -28,7 +28,7 @@ class Folder extends Entity {
 				onDrop={this.onDrop}
 				>
 				<td className="column-name">
-					<div className={cx('entity-row-item row-folder-asset', {renameable})}
+					<div className={cx('entity-row-item row-folder-asset', {renameable, renaming: rename})}
 						role="button"
 						aria-label={filename}
 						draggable={!rename && this.canDrag() ? true : null}
