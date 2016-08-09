@@ -28,6 +28,13 @@ import FilePickerButton from '../FilePickerButton';
 
 import ProgressBar from '../ProgressBar';
 
+const GRID_LAYOUT = 'grid';
+const TABLE_LAYOUT = 'table';
+
+const LAYOUTS = {
+	[GRID_LAYOUT]: GridLayout,
+	[TABLE_LAYOUT]: TableLayout
+};
 
 const logger = Logger.get('common:components:content-resources:Browser');
 
@@ -171,8 +178,13 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	onChangeSearchScope = (scope) => this.setState({folderContents: null, searchScope: scope}, this.search)
 
 
-	setLayoutToList = () => this.setState({layout: TableLayout})
-	setLayoutToGrid = () => this.setState({layout: GridLayout})
+	setLayoutToList = () => this.setLayout(TABLE_LAYOUT)
+	setLayoutToGrid = () => this.setLayout(GRID_LAYOUT)
+
+	setLayout = (layout) => {
+		this.setState({layout});
+	}
+
 
 	render () {
 		const {
@@ -196,7 +208,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			}
 		} = this;
 
-		const layout = (selectedLayout == null && search ? TableLayout : selectedLayout) || GridLayout;
+		const layout = (selectedLayout == null && search ? TABLE_LAYOUT : selectedLayout) || GRID_LAYOUT;
 
 		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
 		const searching = search && search.length > 0;
@@ -259,8 +271,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						<ToolbarSpacer/>
 
 						<ToolbarButtonGroup>
-							<ToolbarButton icon="list" checked={layout === TableLayout} onClick={this.setLayoutToList}/>
-							<ToolbarButton icon="grid" checked={layout === GridLayout} onClick={this.setLayoutToGrid}/>
+							<ToolbarButton icon="list" checked={layout === TABLE_LAYOUT} onClick={this.setLayoutToList}/>
+							<ToolbarButton icon="grid" checked={layout === GRID_LAYOUT } onClick={this.setLayoutToGrid}/>
 						</ToolbarButtonGroup>
 
 						<ToolbarButton
@@ -288,7 +300,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 					<Loading/>
 				) : (
 					<View contents={content}
-						layout={layout}
+						layout={LAYOUTS[layout] || GridLayout}
 						selection={selection}
 						onDragOverChanged={this.onDragOverChanged}
 						onFileDrop={this.onFileDrop}
