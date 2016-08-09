@@ -65,6 +65,12 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	}
 
 
+	constructor (props) {
+		super(props);
+		this.state.layout = ContentResourcesBrowser.userSelectedLayout;
+	}
+
+
 	toggle = () => this.setState({showInfo: !this.state.showInfo})
 
 
@@ -182,6 +188,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	setLayoutToGrid = () => this.setLayout(GRID_LAYOUT)
 
 	setLayout = (layout) => {
+		ContentResourcesBrowser.userSelectedLayout = layout;
 		this.setState({layout});
 	}
 
