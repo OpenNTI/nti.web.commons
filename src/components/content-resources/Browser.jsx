@@ -64,10 +64,23 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		limited: PropTypes.bool
 	}
 
+	static userSelectedSort = {
+		[GRID_LAYOUT]: {
+			sortOn: 'name',
+			sortOrder: 'asc'
+		},
+		[TABLE_LAYOUT]: {
+			sortOn: 'name',
+			sortOrder: 'asc'
+		}
+	}
+
 
 	constructor (props) {
 		super(props);
-		this.state.layout = ContentResourcesBrowser.userSelectedLayout;
+		const layout = ContentResourcesBrowser.userSelectedLayout || GRID_LAYOUT;
+		this.state.sort = ContentResourcesBrowser.userSelectedSort[layout];
+		this.state.layout = layout;
 	}
 
 
@@ -184,12 +197,32 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	onChangeSearchScope = (scope) => this.setState({folderContents: null, searchScope: scope}, this.search)
 
 
+	onSortChanged = (sortOn, sortOrder) => {
+		const {layout, search} = this.state;
+		const sort = {sortOn, sortOrder};
+
+		ContentResourcesBrowser.userSelectedSort[layout] = sort;
+		this.setState({folderContents: null, sort},
+			(search && search.length > 0)
+				? this.search
+				: this.refresh
+		);
+	}
+
+
 	setLayoutToList = () => this.setLayout(TABLE_LAYOUT)
 	setLayoutToGrid = () => this.setLayout(GRID_LAYOUT)
 
 	setLayout = (layout) => {
+		const {search} = this.state;
+		const sort = ContentResourcesBrowser.userSelectedSort[layout] || {};
+
 		ContentResourcesBrowser.userSelectedLayout = layout;
-		this.setState({layout});
+		this.setState({folderContents: null, layout, sort},
+			(search && search.length > 0)
+				? this.search
+				: this.refresh
+		);
 	}
 
 
@@ -207,7 +240,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				renaming,
 				root,
 				search,
-				searchScope = folder
+				searchScope = folder,
+				sort = {}
 			},
 			props: {
 				filter,
@@ -229,6 +263,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const inspectItem = hasInfo ? selections[0] : void 0;
 
 		const searchScopes = root === folder ? [root] : [root, folder];
+
+		const LayoutComponent = LAYOUTS[layout] || GridLayout;
 
 		return (
 			<div className="content-resource-browser">
@@ -306,11 +342,12 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				) : !folderContents ? (
 					<Loading/>
 				) : (
-					<View contents={content}
-						layout={LAYOUTS[layout] || GridLayout}
+					<View contents={content} sort={sort}
+						layout={LayoutComponent}
 						selection={selection}
 						onDragOverChanged={this.onDragOverChanged}
 						onFileDrop={this.onFileDrop}
+						onSortChanged={this.onSortChanged}
 						limited={limited || searching}
 						>
 						{showInfo && (

@@ -143,13 +143,13 @@ export default class BrowsableView extends React.Component {
 
 
 	search = buffered(BUFFERED_TIME, () => {
-		const {searchScope, folder, search} = this.state;
+		const {searchScope, folder, search, sort} = this.state;
 
 		if (!search || search.trim().length === 0) {
 			return;
 		}
 
-		(searchScope || folder).search(search, true)
+		(searchScope || folder).search(search, sort, true)
 			.then(searchResults => {
 				if (this.state.search !== search) {return;}
 
@@ -185,6 +185,7 @@ export default class BrowsableView extends React.Component {
 
 	setFolder = (folder, contents, clearProgress = true) => {
 		const additional = clearProgress ? {progress: void 0} : {};
+		const {sort} = this.state;
 
 		this.setState(
 			{
@@ -199,7 +200,7 @@ export default class BrowsableView extends React.Component {
 
 		this.selection.set([]);
 
-		return folder.getContents()
+		return folder.getContents(sort)
 			.then(c => (this.setState({folderContents: c, error: null}), c))
 			.catch(error => this.setState({error}));
 	}

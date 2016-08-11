@@ -18,10 +18,12 @@ export default class ContentResourcesView extends React.Component {
 		className: PropTypes.string,
 		onDragOverChanged: PropTypes.func,
 		onFileDrop: PropTypes.func,
+		onSortChanged: PropTypes.func,
 		layout: PropTypes.func,//React Component "Type"
 		limited: PropTypes.bool,
 		contents: PropTypes.array,
-		selection: PropTypes.instanceOf(SelectionModel)
+		selection: PropTypes.instanceOf(SelectionModel),
+		sort: PropTypes.object
 	}
 
 	dragover = 0
@@ -120,7 +122,7 @@ export default class ContentResourcesView extends React.Component {
 
 
 	render () {
-		const {children, className, contents, selection, layout} = this.props;
+		const {children, className, contents, selection, layout, sort, onSortChanged} = this.props;
 		const hasSubView = !!children;
 
 		const Layout = layout || Grid;
@@ -133,7 +135,7 @@ export default class ContentResourcesView extends React.Component {
 					onDragLeave={this.onDragLeave}
 					onDrop={this.onDrop}
 					>
-					<Layout contents={contents} selection={selection}/>
+					<Layout contents={contents} selection={selection} sort={sort} onSortChanged={onSortChanged}/>
 				</div>
 				{hasSubView && (
 					<div className="context-view-pane" onClick={stop}>{children}</div>
