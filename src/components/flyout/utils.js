@@ -87,8 +87,8 @@ export const ALIGNMENT_POSITIONS = {
 			const topSpace = top;
 			const bottomSpace = viewHeight - bottom;
 
-			const bottomAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_BOTTOM]({bottom});
-			const topAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_TOP]({top}, void 0, {height: viewHeight});
+			const bottomAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_BOTTOM](...arguments);
+			const topAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_TOP](...arguments);
 
 			let position;
 
