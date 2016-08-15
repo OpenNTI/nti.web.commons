@@ -240,6 +240,7 @@ export default class Flyout extends React.Component {
 			window.document.addEventListener('click', this.maybeDismiss);
 			this.listenToScroll(getScrollParent(ref) || window);
 		} else if (!ref) {
+			delete this.flyoutSize;
 			window.removeEventListener('resize', this.realign);
 			window.document.removeEventListener('click', this.maybeDismiss);
 			this.listenToScroll(null);
@@ -349,7 +350,7 @@ export default class Flyout extends React.Component {
 	}
 
 
-	renderFlyout () {
+	renderFlyout = () => {
 		const {
 			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign},
 			state: {aligning, alignment}
@@ -378,9 +379,10 @@ export default class Flyout extends React.Component {
 		, this.fly, () => {
 
 			if (this.flyout) {
+				const prev = this.flyoutSize;
 				const {offsetWidth: width, offsetHeight: height} = this.flyout;
-				const {dimensions: dim} = alignment;
-				if (dim && (dim.width !== width || dim.height !== height)) {
+				this.flyoutSize = {width, height};
+				if (prev && (prev.width !== width || prev.height !== height)) {
 					this.realign();
 				}
 			}
