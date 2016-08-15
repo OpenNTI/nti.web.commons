@@ -140,7 +140,7 @@ export default class Flyout extends React.Component {
 
 		this.realign = () => {
 			clearTimeout(this.realign.timeout);
-			this.realign.timeout = setTimeout(()=> this.align(), 50);
+			this.realign.timeout = setTimeout(()=> this.setState({aligning: true}, () => this.align()), 50);
 		};
 	}
 
