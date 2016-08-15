@@ -31,7 +31,7 @@ export default React.createClass({
 
 		function renderButton () {
 
-			if (!button && (!href || href === '#') && !onClick) {
+			if (!button && (!href || href === '#') && !onClick && !buttonClick) {
 				return null;
 			}
 
