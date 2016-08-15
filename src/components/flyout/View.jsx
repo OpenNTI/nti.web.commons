@@ -2,7 +2,13 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
-import {getEffectiveZIndex, getViewportHeight, getViewportWidth, getScrollParent} from 'nti-lib-dom';
+import {
+	getEffectiveZIndex,
+	getViewportHeight,
+	getViewportWidth,
+	getScrollParent
+} from 'nti-lib-dom';
+
 import {
 	DEFAULT_VERTICAL,
 	DEFAULT_HORIZONTAL,
@@ -61,8 +67,7 @@ function isFixed (el) {
 }
 
 
-/**
- * NOTE: for now the primary axis is always vertical
+/* NOTE: for now the primary axis is always vertical
  *
  * The primary alignment should behave as follows:
  * 		If primary axis alignment is NOT passed:
