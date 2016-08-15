@@ -234,7 +234,13 @@ export default class BrowsableView extends React.Component {
 
 	uploadFiles = (files, folder) => {
 		const add = (o) => {
-			let {folderContents = []} = this.state;
+			let {folder: currentFolder, folderContents = []} = this.state;
+			//don't add the file to the folderContents if the file was added to a different folder.
+			const filesContainingFolder = o.getParentFolder();
+			if (!currentFolder || !filesContainingFolder || currentFolder.getPath() !== filesContainingFolder.getPath()) {
+				return;
+			}
+
 			if (!folderContents.find(x => o.getID() === x.getID())) {
 				folderContents = [...folderContents, o];
 				this.selection.add(o);
