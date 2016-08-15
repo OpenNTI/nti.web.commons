@@ -40,9 +40,11 @@ export default class ContentResourcesView extends React.Component {
 
 	onDragOver = (e) => {
 		e.preventDefault();
-		e.dataTransfer.dropEffect = this.allowDrops() && accepts(e) ? 'move' : 'none';
+		if (!e.isDefaultPrevented()) {
+			e.dataTransfer.dropEffect = this.allowDrops() && accepts(e) ? 'move' : 'none';
 
-		logger.debug('dragover');
+			logger.debug('dragover');
+		}
 
 		clearTimeout(this.dragOverStopped);
 		this.dragOverStopped = setTimeout(this.onDragLeaveImplied, 100);
