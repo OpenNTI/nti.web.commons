@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import {
+	getElementRect,
 	getEffectiveZIndex,
 	getViewportHeight,
 	getViewportWidth,
@@ -39,20 +40,24 @@ import {
 const {createElement: ce} = global.document || {};
 const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
 
-function getRect (el) {
-	const rect = el.getBoundingClientRect();
-	const p = e => e && e.offsetParent;
-	const r = e => p(e) ? [e].concat(r(p(e))) : [e];
-	const sum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
 
-	return r(el).reduce(sum, {
-		left: 0,
-		top: 0,
-		width: rect.width,
-		height: rect.height,
-		get right () { return this.left + this.width; },
-		get bottom () { return this.top + this.height; }
-	});
+function getBodyDocumentGaps () {
+	const a = document.body.getBoundingClientRect();
+	const b = document.body.parentNode.getBoundingClientRect();
+	return {
+		top: a.top - b.top,
+		left: a.left - b .left
+	};
+}
+
+function getBodySize () {
+	const el = document.body;
+	const getDim = x => Math.max(el[`client${x}`], el[`offset${x}`], el[`scroll${x}`]);
+	return {
+		height: getDim('Height'),
+		width: getDim('Width'),
+		...getBodyDocumentGaps()
+	};
 }
 
 
@@ -267,16 +272,30 @@ export default class Flyout extends React.Component {
 			return finish(oldAlignment);
 		}
 
-		const triggerRect = getRect(this.trigger);
-		const viewport = {width: getViewportWidth(), height: getViewportHeight()};
+		const triggerRect = getElementRect(this.trigger);
+		const fixed = isFixed(this.trigger);
+		const viewport = {top: 0, left: 0, width: getViewportWidth(), height: getViewportHeight()};
+		const coordinateRoot = fixed ? viewport : getBodySize();
+
+		triggerRect.top -= coordinateRoot.top;
+		triggerRect.bottom -= coordinateRoot.top;
+		triggerRect.left -= coordinateRoot.left;
+		triggerRect.right -= coordinateRoot.left;
+
 		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing, arrow} = this.props;
 
 		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
 		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
 
-		const verticalPosition = alignmentPositions[verticalAlign || DEFAULT_VERTICAL](triggerRect, this.flyout, viewport);
-		const horizontalPosition = alignmentPositions[horizontalAlign || DEFAULT_HORIZONTAL](triggerRect, this.flyout, viewport);
-		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](triggerRect, this.flyout, viewport);
+		const layoutArgs = [
+			triggerRect,
+			this.flyout,
+			coordinateRoot
+		];
+
+		const verticalPosition = alignmentPositions[verticalAlign || DEFAULT_VERTICAL](...layoutArgs);
+		const horizontalPosition = alignmentPositions[horizontalAlign || DEFAULT_HORIZONTAL](...layoutArgs);
+		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](...layoutArgs);
 
 		let newAlignment = {
 			...verticalPosition,
