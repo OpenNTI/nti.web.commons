@@ -41,6 +41,28 @@ const {createElement: ce} = global.document || {};
 const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
 
 
+function getViewportRelativeAlignments (element, alignment, viewport) {
+	//the alignment is relative to the coordinateRoot. We need to constrain to the screen...
+	//so we need to get the current screen coordinates.
+	const rect = getElementRect(element);
+
+	// We now have viewport relative rect, but the alignments omit keys that do not apply...
+	// so we must also omit those keys.
+
+	if (alignment.top != null) { delete rect.bottom; }
+	if (alignment.left != null) { delete rect.right; }
+	if (alignment.bottom != null) { delete rect.top; }
+	if (alignment.right != null) { delete rect.left; }
+
+	// ClientRects left & bottom's are distance from 0,0 (top, left), where
+	// "css" bottom & left are the distance from the bottom & left sides..so we have to flip here.
+	if (rect.bottom != null) { rect.bottom = viewport.height - rect.bottom; }
+	if (rect.right != null) { rect.right = viewport.width - rect.right; }
+
+	return rect;
+}
+
+
 function getBodyDocumentGaps () {
 	const a = document.body.getBoundingClientRect();
 	const b = document.body.parentNode.getBoundingClientRect();
@@ -282,7 +304,7 @@ export default class Flyout extends React.Component {
 		triggerRect.left -= coordinateRoot.left;
 		triggerRect.right -= coordinateRoot.left;
 
-		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing, arrow} = this.props;
+		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing} = this.props;
 
 		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
 		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
@@ -304,7 +326,20 @@ export default class Flyout extends React.Component {
 		};
 
 		if (constrain) {
-			newAlignment = constrainAlignment(newAlignment, viewport, arrow);
+			const rect = getViewportRelativeAlignments(this.trigger, newAlignment, viewport);
+
+			const {maxWidth, maxHeight} = constrainAlignment(rect, viewport);
+			newAlignment = {
+				...newAlignment,
+				maxWidth, maxHeight
+			};
+
+			//If the flyout is not going to be positioned fixed, let the flyout
+			//freely size vertically (only when growing down... for growing upward,
+			//we will continue to limit its height)
+			if (!fixed && newAlignment.top != null) {
+				delete newAlignment.maxHeight;
+			}
 		}
 
 		finish(newAlignment);
