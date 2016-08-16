@@ -1,21 +1,27 @@
 import React from 'react';
 import {createMountPoint} from '../utils';
 
-RemoteWrapper.propTypes = {
-	children: React.PropTypes.node
-};
+class RemoteWrapper extends React.Component {
+	static propTypes = {
+		children: React.PropTypes.node
+	}
 
-function RemoteWrapper ({children}) {
-	const child = React.Children.only(children);
-
-	return child;
+	render () {
+		return React.Children.only(this.props.children);
+	}
 }
 
-export default class MountPoint extends React.Component {
+/**
+ * This high order component should only be used as LAST RESORT. It renders its children in a div
+ * that is appended to the body instead of inline where it should be. We should just use this for
+ * items that will be fixed and need to be on top of the page. By appending it to the body we don't
+ * have to get into z-index messes. We can rely the position in the dom to determine the z order.
+ */
+export default class RemoteMountPoint extends React.Component {
 	static propTypes = {
 		appendTo: React.PropTypes.shape({
 			appendChild: React.PropTypes.func
-		}),
+		}).isRequired,
 		className: React.PropTypes.string,
 		children: React.PropTypes.node
 	}
@@ -33,6 +39,16 @@ export default class MountPoint extends React.Component {
 	componentWillUnmount () {
 		if (this.mountPoint) {
 			this.mountPoint.remove();
+			delete this.mountPoint;
+		}
+	}
+
+
+	componentDidUpdate () {
+		const {children} = this.props;
+
+		if (this.mountPoint) {
+			this.mountPoint.render(RemoteWrapper, {}, children);
 		}
 	}
 
@@ -43,3 +59,6 @@ export default class MountPoint extends React.Component {
 		);
 	}
 }
+
+
+//TODO: add a function to take content and render it, with out going through the high order component

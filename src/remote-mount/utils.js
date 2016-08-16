@@ -21,8 +21,12 @@ class MountPoint {
 		this.parent = parent;
 	}
 
-	setChild = x => this.child = x;
+	setChild = x => this.child = x
 
+	/**
+	 * Return the existing dom node, or create one and append it to the parent
+	 * @return {Node} the dom node for this mount point
+	 */
 	get mountPoint () {
 		const {parent, className} = this;
 
@@ -34,13 +38,19 @@ class MountPoint {
 		return this[MOUNT_POINT_NODE] || this;
 	}
 
-
+	/**
+	 * Render a react component at this point
+	 * @param  {Object} cmpCls   the react class to render
+	 * @param  {Object} props    the props to render the class with
+	 * @param  {Object} children the children to render with the class
+	 * @return {Promise}          fulfills with the cmp that was created
+	 */
 	render (cmpCls, props, children) {
 		return new Promise ((fulfill) => {
 			ReactDOM.render(
 				React.createElement(cmpCls, setRefOnProps(props, this.setChild), children),
 				this.mountPoint,
-				fulfill
+				() => fulfill(this.child)
 			);
 		});
 	}
@@ -52,7 +62,8 @@ class MountPoint {
 	}
 }
 
-
+//A utility to create a div and append it the dom to create
+//a place to mount new react components
 export function createMountPoint (appendTo, cls) {
 	return new MountPoint(appendTo, cls);
 }

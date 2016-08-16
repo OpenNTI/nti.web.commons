@@ -3,12 +3,16 @@ import React from 'react';
 import RemoteMountPoint from './RemoteMountPoint';
 
 function getBody () {
-	return document.body;
+	return typeof document === 'undefined' ? null : document.body;
 }
 
 
 export default function MountToBody (props) {
 	const body = getBody();
+
+	if (!body) {
+		return null;
+	}
 
 	return (
 		<RemoteMountPoint
@@ -17,3 +21,5 @@ export default function MountToBody (props) {
 		/>
 	);
 }
+
+//TODO: add a function to take content and render it, with out going through the high order component
