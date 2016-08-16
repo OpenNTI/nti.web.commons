@@ -11,7 +11,6 @@ export default React.createClass({
 	propTypes: {
 		linkText: React.PropTypes.string, // the text of the button
 		href: React.PropTypes.string, // the href of the button, if applicable
-		buttonClick: function deprecated (o, k) { if (o[k]) { return new Error('Deprecated, use "onClick"'); } },
 		onClick: React.PropTypes.func, // click handler for the button
 		button: React.PropTypes.element, // pass in your own button if you need special behavior or treatment
 
@@ -27,17 +26,17 @@ export default React.createClass({
 
 
 	render () {
-		const {children, button, href, buttonClick, onClick, linkText, ...rest} = this.props;
+		const {children, button, href, onClick, linkText, ...rest} = this.props;
 
 		function renderButton () {
 
-			if (!button && (!href || href === '#') && !onClick && !buttonClick) {
+			if (!button && (!href || href === '#') && !onClick) {
 				return null;
 			}
 
 			return button || <a {...{
 				href,
-				onClick: onClick || buttonClick,
+				onClick: onClick,
 				className: 'button tiny column',
 				children: linkText
 			}}/>;
