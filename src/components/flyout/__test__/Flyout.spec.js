@@ -157,7 +157,7 @@ describe('Flyout', () => {
 				for (let c of components) {
 					expect(c.state.open).toBeTruthy();
 					expect(c.fly.className).toEqual('fly-wrapper awesome sauce');
-					expect(c.flyout.className).toEqual('flyout awesome sauce left bottom');
+					expect(c.flyout.className).toEqual('flyout awesome sauce bottom center');
 					expect(c.flyout.textContent).toEqual('Lala');
 					expect(c.fly.contains(c.flyout)).toBeTruthy();
 				}

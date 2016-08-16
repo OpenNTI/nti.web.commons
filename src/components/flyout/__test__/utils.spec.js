@@ -191,7 +191,7 @@ describe('Flyout util tests', () => {
 	});
 
 
-	fdescribe('Alignment -> Classes', () => {
+	describe('Alignment -> Classes', () => {
 		it ('Bottom Left', () => {
 			const cls = getAlignmentClass({top: 50, left: 50}, ALIGN_TOP, ALIGN_LEFT);
 
@@ -201,13 +201,13 @@ describe('Flyout util tests', () => {
 		it ('Bottom Centered', () => {
 			const cls = getAlignmentClass({top: 50, left: 50}, ALIGN_BOTTOM, ALIGN_CENTER);
 
-			expect(cls).toEqual('top center');
+			expect(cls).toEqual('bottom center');
 		});
 
 		it('Bottom Right', () => {
 			const cls = getAlignmentClass({top: 50, right: 50}, ALIGN_BOTTOM, ALIGN_RIGHT);
 
-			expect(cls).toEqual('top right');
+			expect(cls).toEqual('bottom right');
 		});
 	});
 });
