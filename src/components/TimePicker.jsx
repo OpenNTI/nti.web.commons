@@ -55,18 +55,12 @@ export default class TimePicker extends React.Component {
 	getValue (props = this.props) {
 		let {value} = props;
 
-		// Initialize Value to 12:00 AM only when there is no prop
-		if (value === null) {
-			value = new Date();
-			value.setHours(0,0,0,0);
-		}
-
 		let time = value && TimeMap.get(value);
 		if (value && !time) {
 			TimeMap.set(value, time = new Time(value));
 		}
 
-		return time || (this.state || {}).value || null;
+		return time || (this.state || {}).value || new Time();
 	}
 
 	componentWillReceiveProps (nextProps) {
@@ -188,6 +182,7 @@ export default class TimePicker extends React.Component {
 	render () {
 		const {tfTime, editingHour} = this.state;
 		const value = this.getValue();
+
 		let hours = tfTime ? value.getHours() : ((value.getHours() % 12) || 12);
 		const minutes = value.getMinutes();
 
