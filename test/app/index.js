@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -21,6 +21,9 @@ ReactDOM.render(
 	<div className="test-kitchen">
 		<ConflictResolutionHandler/>
 		<Browser sourceID={ID}/>
+		<ControlBar>
+			<span>Test ControlBar</span>
+		</ControlBar>
 	</div>,
 	document.getElementById('content')
 );
