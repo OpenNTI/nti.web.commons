@@ -23,7 +23,7 @@ export default class DayPicker extends React.Component {
 
 
 	static defaultProps = {
-		value: new Date()
+		value: null
 	}
 
 
@@ -69,6 +69,10 @@ export default class DayPicker extends React.Component {
 		e.preventDefault();
 
 		if (disabled || value == null) { return; }
+
+		// Default the time to 12:00 AM per Design
+		value.setHours(0);
+		value.setMinutes(0);
 
 		if(onChange) {
 			onChange(value);

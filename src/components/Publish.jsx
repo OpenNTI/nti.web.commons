@@ -49,6 +49,12 @@ const DEFAULT_TEXT = {
 
 const tt = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
 export const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
+const CHANGES = {
+	[PUBLISH_STATES.DRAFT]: true,
+	[PUBLISH_STATES.PUBLISH]: true,
+	[PUBLISH_STATES.SCHEDULE]: false
+};
+export const changeOccur = value => CHANGES[value];
 
 
 export default class Publish extends React.Component {
@@ -117,12 +123,15 @@ export default class Publish extends React.Component {
 	setupValue (props = this.props) {
 		const setState = s => this.state ? this.setState(s) : (this.state = s);
 		const {value} = props;
-		const date = (value instanceof Date) ? value : new Date();
+
+		// Init: Don't start with an initial date when selected schedule
+		const date = (value instanceof Date) ? value : null;
 
 		setState({
 			selected: getPublishState(value),
 			date,
-			dayClicked: false
+			dayClicked: false,
+			changed: false
 		});
 	}
 
@@ -139,7 +148,7 @@ export default class Publish extends React.Component {
 
 		this.setState({
 			selected,
-			changed: true,
+			changed: changeOccur(selected),
 			dayClicked: false
 		});
 	}

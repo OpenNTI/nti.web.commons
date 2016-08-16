@@ -22,7 +22,7 @@ export default class TimePicker extends React.Component {
 		super(props);
 
 		this.state = {
-			value: this.getValue() || new Time(),
+			value: this.getValue(),
 			tfTime: false,
 			editingHour: false
 		};
@@ -53,7 +53,13 @@ export default class TimePicker extends React.Component {
 	 * @return {Time} - an instance of Time.
 	 */
 	getValue (props = this.props) {
-		const {value} = props;
+		let {value} = props;
+
+		// Initialize Value to 12:00 AM only when there is no prop
+		if (value === null) {
+			value = new Date();
+			value.setHours(0,0,0,0);
+		}
 
 		let time = value && TimeMap.get(value);
 		if (value && !time) {
