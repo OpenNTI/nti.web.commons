@@ -48,7 +48,9 @@ export default class Search extends React.Component {
 	attachRef = x => this.input = x
 
 
-	clearFilter = () => {
+	clearFilter = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
 		const {input} = this;
 		input.clear();
 		input.focus();
