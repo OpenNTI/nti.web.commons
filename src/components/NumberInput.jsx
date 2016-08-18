@@ -56,10 +56,11 @@ export default class NumbertInput extends React.Component {
 	 */
 	onKeyPress = (e) => {
 		//if the owner component wants a KeyPress listener, don't hijack it.
-		const {onKeyPress} = this.props;//eslint-disable-line react/prop-types
+		const {onKeyPress, min} = this.props;//eslint-disable-line react/prop-types
+		const minNumber = parseInt(min, 10);
 		const allowed = {
 			44: ',',
-			45: '-',
+			45: isNaN(minNumber) || minNumber < 0 ? '-' : false, //don't allow 'negative sign' if min is specified and positive.
 			46: '.'
 		};
 
@@ -87,6 +88,7 @@ export default class NumbertInput extends React.Component {
 				className={cx('number-input-component', className)}
 				onChange={this.onChange}
 				onKeyPress={this.onKeyPress}
+				onKeyDown={this.onKeyDown}
 				value={value}
 				ref={this.attachRef}
 				/>
