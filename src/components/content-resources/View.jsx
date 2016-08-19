@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
 import SelectionModel from 'nti-commons/lib/SelectionModel';
+import getFilesFromDataTransferItems from 'nti-commons/lib/get-files-from-data-transfer-items';
 import {getEventTarget} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import Grid from './layout/grid';
@@ -115,7 +116,13 @@ export default class ContentResourcesView extends React.Component {
 			return;
 		}
 
-		const {files} = e.dataTransfer;
+		const {files:transferFiles, items} = e.dataTransfer;
+		let files = transferFiles;
+
+		if (items) {
+			files = getFilesFromDataTransferItems(items);
+		}
+
 		const {onFileDrop} = this.props;
 		if (onFileDrop && files && files.length > 0) {
 			onFileDrop(files);
