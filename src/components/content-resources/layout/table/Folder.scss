@@ -2,6 +2,14 @@
 
 .content-resource-view-layout.table .row-folder-asset {
 
+	.icon-column {
+		color: #787878;
+	}
+
+	.filename {
+		color: $primary-grey;
+	}
+
 	.filename span:hover {
 		text-decoration: underline;
 	}
