@@ -2,4 +2,7 @@
 
 .content-resource-view-layout.table .row-folder-asset {
 
+	.filename span:hover {
+		text-decoration: underline;
+	}
 }
