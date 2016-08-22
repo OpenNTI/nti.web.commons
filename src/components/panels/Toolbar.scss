@@ -28,5 +28,9 @@
 		input[type=text] {
 			padding-left: rem-calc(27px);
 		}
+
+		&.focused {
+			box-shadow: rem-calc(0 0 0 1px) #D9D9D9;
+		}
 	}
 }
