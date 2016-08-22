@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import {
-	getElementRect,
+	getElementRect as getRectInViewport,
 	getEffectiveZIndex,
 	getViewportHeight,
 	getViewportWidth,
@@ -44,7 +44,7 @@ const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
 function getViewportRelativeAlignments (element, alignment, viewport) {
 	//the alignment is relative to the coordinateRoot. We need to constrain to the screen...
 	//so we need to get the current screen coordinates.
-	const rect = getElementRect(element);
+	const rect = getRectInViewport(element);
 
 	// We now have viewport relative rect, but the alignments omit keys that do not apply...
 	// so we must also omit those keys.
@@ -62,6 +62,25 @@ function getViewportRelativeAlignments (element, alignment, viewport) {
 	return rect;
 }
 
+function getRectInDocument (el) {
+	const p = e => e && e.offsetParent;
+	const r = e => p(e) ? [e].concat(r(p(e))) : [e];
+	const sum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
+
+
+	const tl = r(el).reduce(sum, {top: 0, left: 0});
+	const sz = {
+		width: el.offsetWidth,
+		height: el.offsetHeight
+	};
+
+	return {
+		...tl,
+		...sz,
+		right: tl.left + sz.width,
+		bottom: tl.top + sz.height
+	};
+}
 
 function getBodyDocumentGaps () {
 	const a = document.body.getBoundingClientRect();
@@ -75,10 +94,11 @@ function getBodyDocumentGaps () {
 function getBodySize () {
 	const el = document.body;
 	const getDim = x => Math.max(el[`client${x}`], el[`offset${x}`], el[`scroll${x}`]);
+	const tl = getBodyDocumentGaps();
 	return {
-		height: getDim('Height'),
-		width: getDim('Width'),
-		...getBodyDocumentGaps()
+		height: getDim('Height') - tl.top,
+		width: getDim('Width') - tl.left,
+		...tl
 	};
 }
 
@@ -294,15 +314,12 @@ export default class Flyout extends React.Component {
 			return finish(oldAlignment);
 		}
 
-		const triggerRect = getElementRect(this.trigger);
-		const fixed = isFixed(this.trigger);
+		const {trigger} = this;
+		const fixed = isFixed(trigger);
+		const triggerRect = fixed ? getRectInViewport(trigger) : getRectInDocument(trigger);
 		const viewport = {top: 0, left: 0, width: getViewportWidth(), height: getViewportHeight()};
 		const coordinateRoot = fixed ? viewport : getBodySize();
 
-		triggerRect.top -= coordinateRoot.top;
-		triggerRect.bottom -= coordinateRoot.top;
-		triggerRect.left -= coordinateRoot.left;
-		triggerRect.right -= coordinateRoot.left;
 
 		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing} = this.props;
 
@@ -416,7 +433,7 @@ export default class Flyout extends React.Component {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
 			zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
-			...getOuterStylesForAlignment(alignment, arrow, primaryAxis)
+			...(aligning ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment, arrow, primaryAxis))
 		};
 
 		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
