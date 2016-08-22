@@ -170,8 +170,8 @@ export default class BrowsableView extends React.Component {
 		if (selection.isSelected(item)) {
 			if (metaKey || ctrlKey) {
 				selection.remove(item);
+				return;
 			}
-			return;
 		}
 
 		if (metaKey || ctrlKey) {
