@@ -79,8 +79,6 @@ const testInterface = createInterfaceForActive(['1','3','5','7'], testAssociatio
 ReactDOM.render(
 	<div className="test-kitchen">
 		<AssociationsEditor associations={testInterface}/>
-		<Browser sourceID={ID}/>
-		<ControlBarTest />
 	</div>,
 	document.getElementById('content')
 );
