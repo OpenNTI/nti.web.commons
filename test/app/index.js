@@ -3,10 +3,12 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources, ControlBar} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar, Associations} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
+
+const {createInterfaceForActive, Editor:AssociationsEditor} = Associations;
 
 addFeatureCheckClasses();
 
@@ -49,10 +51,34 @@ class ControlBarTest extends React.Component {
 	}
 }
 
+
+function createFakeItem (id, name) {
+	return {
+		MimeType: 'fakeItem',
+		NTIID: id,
+		label: name
+	};
+}
+
+
+
+const testAssociations = [
+	createFakeItem('1', 'Test 1'),
+	createFakeItem('2', 'Test 2'),
+	createFakeItem('3', 'Test 3'),
+	createFakeItem('4', 'Test 4'),
+	createFakeItem('5', 'Test 5'),
+	createFakeItem('6', 'Test 6'),
+	createFakeItem('7', 'Test 7')
+];
+
+const testInterface = createInterfaceForActive(['1','3','5','7'], testAssociations, () => {debugger;}, () => {debugger;});
+
+
 //Kitchen Sink
 ReactDOM.render(
 	<div className="test-kitchen">
-		<ConflictResolutionHandler/>
+		<AssociationsEditor associations={testInterface}/>
 		<Browser sourceID={ID}/>
 		<ControlBarTest />
 	</div>,
