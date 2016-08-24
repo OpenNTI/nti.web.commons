@@ -1,5 +1,6 @@
 export * as ContentResources from './content-resources';
 export * as Panels from './panels';
+export * as Associations from './associations';
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
 export AssetIcon from './AssetIcon';
