@@ -58,7 +58,10 @@ class MountPoint {
 
 	remove () {
 		ReactDOM.unmountComponentAtNode(this.mountPoint);
-		parent.removeChild(this.mountPoint);
+
+		if (this.parent && this.parent.removeChild) {
+			this.parent.removeChild(this.mountPoint);
+		}
 	}
 }
 
