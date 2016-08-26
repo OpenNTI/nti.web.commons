@@ -1,14 +1,10 @@
 import React from 'react';
+import generateMatchFilter from 'nti-commons/lib/generate-match-filter';
 
 import Container from './Container';
 
 import Search from '../../../Search';
 
-function defaultFilterFn (value, item) {
-	const {label} = item;
-
-	return label.toLowerCase().indexOf(value.toLowerCase()) >= 0;
-}
 
 export default class AssociationsEditor extends React.Component {
 	static propTypes = {
@@ -21,7 +17,6 @@ export default class AssociationsEditor extends React.Component {
 
 
 	static defaultProps = {
-		filterFn: defaultFilterFn,
 		availableLabel: 'Available',
 		sharedToLabel: 'Shared To'
 	}
@@ -40,7 +35,7 @@ export default class AssociationsEditor extends React.Component {
 
 
 	onSearchChange = (value) => {
-		const {associations, filterFn} = this.props;
+		const {associations} = this.props;
 		const {used, unused} = associations;
 
 		if (!value) {
@@ -50,10 +45,24 @@ export default class AssociationsEditor extends React.Component {
 			});
 		} else {
 			this.setState({
-				used: used.filter(x => filterFn(value, x)),
-				unused: unused.filter(x => filterFn(value, x))
+				used: this.filterAssociations(used, value),//used.filter(x => filterFn(value, x)),
+				unused: this.filterAssociations(unused, value)//unused.filter(x => filterFn(value, x))
 			});
 		}
+	}
+
+
+	filterAssociations (associations, term) {
+		const {filterFn:customFilter} = this.props;
+		let filterFn;
+
+		if (customFilter) {
+			filterFn = x => filterFn(x, term);
+		} else {
+			filterFn = generateMatchFilter(term, x => x.label || x.title);
+		}
+
+		return associations.filter(filterFn);
 	}
 
 
