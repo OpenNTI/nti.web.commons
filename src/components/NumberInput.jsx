@@ -88,7 +88,6 @@ export default class NumbertInput extends React.Component {
 				className={cx('number-input-component', className)}
 				onChange={this.onChange}
 				onKeyPress={this.onKeyPress}
-				onKeyDown={this.onKeyDown}
 				value={value}
 				ref={this.attachRef}
 				/>
