@@ -6,12 +6,13 @@ const ARROW_UP = 40;
 const ARROW_DOWN = 38;
 
 describe('TimePicker', () => {
-	const sharedWrapper = mount(<TimePicker />);
+	// const sharedWrapper = mount(<TimePicker />);
 
 	const test = (props = {}, ...children) => [
 		mount(<TimePicker {...props} children={children}/>),
-		sharedWrapper.setProps({...props, children})
+		// sharedWrapper.setProps({...props, children})
 	];
+
 	/* INTERNAL STATE TESTS: NO PROPS, NO CHANGE HANDLER */
 	it('Base case: Check if it defaults to now', () => {
 		const now = new Date();
@@ -30,6 +31,7 @@ describe('TimePicker', () => {
 				expect(tfTime).toEqual(false);
 			});
 	});
+
 	// check if wrapping up work
 	it('wraps to from noon to 1 pm works', () => {
 		test()
@@ -48,6 +50,7 @@ describe('TimePicker', () => {
 				expect(value.getPeriod()).toEqual('PM');
 			});
 	});
+
 	// Check if wrapping down works
 	it('wraps to from 1pm to noon works', () => {
 		test()
@@ -67,6 +70,7 @@ describe('TimePicker', () => {
 				expect(value.getPeriod()).toEqual('PM');
 			});
 	});
+
 	//
 	it('changes to twentyFourHourTime when typed in', () => {
 		test()
