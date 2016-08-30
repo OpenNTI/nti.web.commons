@@ -57,7 +57,7 @@ export default class SharedWith extends React.Component {
 		const getPathFrom = (o) => o.getContextPath()
 									.then(([first]) => first); //unwrap, take the first path
 
-		this.setState({links: null}, () =>
+		this.setState({error: null, links: null}, () =>
 			item && item.fetchLinkParsed('associations')
 				.then(x => Promise.all(x.map(o=> getPathFrom(o))))
 				.then(x => Promise.all(x.map(o => getOutlineAndUnitsFromPath(o))))
