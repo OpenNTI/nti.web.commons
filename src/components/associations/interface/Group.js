@@ -15,6 +15,12 @@ export default class AssociationGroup {
 	}
 
 
+	set label (label) {
+		this[LABEL] = label;
+		return label;
+	}
+
+
 	get items () {
 		return this[ITEMS];
 	}

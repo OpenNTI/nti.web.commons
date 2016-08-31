@@ -1,7 +1,7 @@
 import React from 'react';
 import generateMatchFilter from 'nti-commons/lib/generate-match-filter';
 
-import Container from './Container';
+import Group from './Group';
 
 import Search from '../../../Search';
 
@@ -25,7 +25,11 @@ export default class AssociationsEditor extends React.Component {
 	constructor (props) {
 		super(props);
 
-		const {associations} = this.props;
+		const {associations, availableLabel, sharedToLabel} = this.props;
+		const {used, unused} = associations;
+
+		used.label = sharedToLabel;
+		unused.label = availableLabel;
 
 		this.state = {
 			used: associations.used,
@@ -35,34 +39,12 @@ export default class AssociationsEditor extends React.Component {
 
 
 	onSearchChange = (value) => {
-		const {associations} = this.props;
-		const {used, unused} = associations;
-
-		if (!value) {
-			this.setState({
-				used: associations.used,
-				unused: associations.unused
-			});
-		} else {
-			this.setState({
-				used: this.filterAssociations(used, value),//used.filter(x => filterFn(value, x)),
-				unused: this.filterAssociations(unused, value)//unused.filter(x => filterFn(value, x))
-			});
-		}
+		debugger;
 	}
 
 
 	filterAssociations (associations, term) {
-		const {filterFn:customFilter} = this.props;
-		let filterFn;
-
-		if (customFilter) {
-			filterFn = x => filterFn(x, term);
-		} else {
-			filterFn = generateMatchFilter(term, x => x.label || x.title);
-		}
-
-		return associations.filter(filterFn);
+		debugger;
 	}
 
 
@@ -73,8 +55,8 @@ export default class AssociationsEditor extends React.Component {
 		return (
 			<div className="association-editor">
 				<Search onChange={this.onSearchChange} buffered={false} />
-				<Container label={sharedToLabel} items={used} />
-				<Container label={availableLabel} items={unused} />
+				<Group group={used} />
+				<Group group={unused} />
 			</div>
 		);
 	}
