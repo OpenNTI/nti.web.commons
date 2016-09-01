@@ -12,12 +12,9 @@ export default class Modal extends React.Component {
 		className: React.PropTypes.string
 	}
 
-	constructor (props) {
-		super(props);
-		this.close = this.close.bind(this);
-	}
+	state = {}
 
-	close (e) {
+	close = (e) => {
 		const {onDismiss} = this.props;
 		if (onDismiss) {
 			onDismiss(e);
