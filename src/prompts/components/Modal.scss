@@ -1,12 +1,15 @@
 .modal-mask-appear,
 .modal-mask-enter {
 	opacity: 0.01;
-	transition: opacity .25s ease-out;
+	transition: opacity .26s ease-out; //make this transition 10ms longer to let the .modal-content animation playout
 }
 
 .modal-mask-appear.modal-mask-appear-active,
 .modal-mask-enter.modal-mask-enter-active {
 	opacity: 1;
+	.modal-content {
+		animation: modal-content .25s ease both;
+	}
 }
 
 .modal-mask-leave {
@@ -41,7 +44,6 @@
 }
 
 .modal-content {
-	animation: modal-content .25s ease both;
 	animation-delay: .15s;
 	position: absolute;
 	top: 50%;
