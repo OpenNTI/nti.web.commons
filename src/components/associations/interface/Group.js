@@ -1,11 +1,17 @@
 const ITEMS = Symbol('Items');
 const LABEL = Symbol('Label');
 
+let COUNTER = 0;
+
 export default class AssociationGroup {
 	constructor (label, items, collapseIfEmpty = true) {
 		this[LABEL] = label || '';
 		this[ITEMS] = items || [];
 		this.collapseIfEmpty = collapseIfEmpty;
+
+		COUNTER += 1;
+
+		this.ID = COUNTER;
 	}
 
 	isAssociationsGroup = true
