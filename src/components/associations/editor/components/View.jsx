@@ -1,7 +1,7 @@
 import React from 'react';
 import generateMatchFilter from 'nti-commons/lib/generate-match-filter';
 
-import Group from './Group';
+import Container from './Container';
 
 import Search from '../../../Search';
 
@@ -25,11 +25,7 @@ export default class AssociationsEditor extends React.Component {
 	constructor (props) {
 		super(props);
 
-		const {associations, availableLabel, sharedToLabel} = this.props;
-		const {used, unused} = associations;
-
-		used.label = sharedToLabel;
-		unused.label = availableLabel;
+		const {associations} = this.props;
 
 		this.state = {
 			used: associations.used,
@@ -39,12 +35,6 @@ export default class AssociationsEditor extends React.Component {
 
 
 	onSearchChange = (value) => {
-		debugger;
-	}
-
-
-	filterAssociations (associations, term) {
-		debugger;
 	}
 
 
@@ -55,8 +45,8 @@ export default class AssociationsEditor extends React.Component {
 		return (
 			<div className="association-editor">
 				<Search onChange={this.onSearchChange} buffered={false} />
-				<Group group={used} />
-				<Group group={unused} />
+				<Container groups={[used]} label={sharedToLabel}/>
+				<Container groups={unused} label={availableLabel}/>
 			</div>
 		);
 	}

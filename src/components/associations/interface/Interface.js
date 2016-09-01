@@ -43,7 +43,7 @@ export default class AssociationInterface extends EventEmitter {
 		this[DESTINATIONS] = groups;
 
 		this[USED] = new Group('', flattenGroups(groups.map(group => group.filter(x => this.isUsed(x)))));
-		this[UNUSED] = new Group('', groups.map(group => group.filter(x => !this.isUsed(x))));
+		this[UNUSED] = groups.map(group => group.filter(x => !this.isUsed(x)));
 
 		this.emit('changed');
 	}
