@@ -44,3 +44,16 @@ export function flattenGroups (groups) {
 		return acc;
 	}, []);
 }
+
+
+export function filterGroups (groups, fn) {
+	return groups.reduce((acc, group) => {
+		const filteredGroup = group.filter(fn);
+
+		if (!filteredGroup.isEmpty) {
+			acc.push(filteredGroup);
+		}
+
+		return acc;
+	}, []);
+}

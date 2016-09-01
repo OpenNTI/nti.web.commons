@@ -26,6 +26,11 @@ export default class AssociationGroup {
 	}
 
 
+	get isEmpty () {
+		return this.items.length === 0;
+	}
+
+
 	push (item) {
 		this[ITEMS].push(item);
 	}
@@ -36,7 +41,11 @@ export default class AssociationGroup {
 
 		let filteredItems = items.reduce((acc, item) => {
 			if (item instanceof AssociationGroup) {
-				acc.push(item.filter(fn));
+				const filteredGroup = item.filter(fn);
+
+				if (!filteredGroup.isEmpty) {
+					acc.push(item.filter(fn));
+				}
 			} else if (fn(item)) {
 				acc.push(item);
 			}
@@ -45,9 +54,5 @@ export default class AssociationGroup {
 		}, []);
 
 		return new AssociationGroup(this.label, filteredItems);
-	}
-
-
-	filterByTerm (term) {
 	}
 }

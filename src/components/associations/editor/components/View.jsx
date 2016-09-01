@@ -1,9 +1,16 @@
 import React from 'react';
-import generateMatchFilter from 'nti-commons/lib/generate-match-filter';
+import matchesFilter from 'nti-commons/lib/matches-filter';
 
 import Container from './Container';
 
 import Search from '../../../Search';
+
+
+function matchesTerm (item, term) {
+	const value = item.title || item.label;
+
+	return matchesFilter(value, term);
+}
 
 
 export default class AssociationsEditor extends React.Component {
@@ -35,6 +42,17 @@ export default class AssociationsEditor extends React.Component {
 
 
 	onSearchChange = (value) => {
+		const {associations, filterFn:customFilter} = this.props;
+		const filterFn = (x) => {
+			return customFilter ? customFilter(x, value) : matchesTerm(x, value);
+		};
+
+		const filtered = associations.filter(filterFn);
+
+		this.setState({
+			used: filtered.used,
+			unused: filtered.unused
+		});
 	}
 
 

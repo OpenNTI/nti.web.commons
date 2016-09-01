@@ -1,8 +1,9 @@
 import EventEmitter from 'events';
-import {groupDestinations, mapActive, flattenGroups} from './utils';
+import {groupDestinations, mapActive, flattenGroups, filterGroups} from './utils';
 import Group from './Group';
 
 const DESTINATIONS = Symbol('ASSOCIATIONS DESTINATIONS');
+const RAW_ACTIVE = Symbol('RAW ACTIVE DESTINATIONS');
 const ACTIVE_MAP = Symbol('ACTIVE DESTINATIONS');
 const USED = Symbol('USED ASSOCIATIONS');
 const UNUSED = Symbol('UNUSED ASSOCIATIONS');
@@ -50,6 +51,7 @@ export default class AssociationInterface extends EventEmitter {
 
 
 	set active (active) {
+		this[RAW_ACTIVE] = active;
 		this[ACTIVE_MAP] = mapActive(active);
 
 		//Re-set destinations to update the used and unused
@@ -77,5 +79,12 @@ export default class AssociationInterface extends EventEmitter {
 		if (!activeMap) { return false; }
 
 		return activeMap[association.NTIID || association.ID];
+	}
+
+
+	filter (fn) {
+		const filteredGroups = filterGroups(this.destinations, fn);
+
+		return new AssociationInterface(filteredGroups, this[RAW_ACTIVE]);
 	}
 }
