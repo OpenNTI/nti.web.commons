@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 function renderSubGroup (group) {
 	const {items} = group;
 
@@ -9,9 +8,9 @@ function renderSubGroup (group) {
 	}
 
 	return (
-		<li>
+		<li key={group.ID}>
 			{group.label && (<h5>group.label</h5>)}
-			<Items items={items} />
+			{renderItems(items)}
 		</li>
 	);
 }
@@ -19,31 +18,24 @@ function renderSubGroup (group) {
 
 function renderSingleItem (item) {
 	return (
-		<li>
+		<li key={item.NTIID || item.ID}>
 			{item.label}
 		</li>
 	);
 }
 
 
-
-Item.PropTypes = {
-	item: React.PropTypes.object
-};
-function Item ({item}) {
+function renderItem (item) {
 	return item.isAssociationsGroup ? renderSubGroup(item) : renderSingleItem(item);
 }
 
 
-Items.PropTypes = {
-	items: React.PropTypes.array
-};
-function Items ({items}) {
+function renderItems (items) {
 	items = items || [];
 
 	return (
 		<ul>
-			{items.map(x => (<Item key={x.NTIID || x.ID} item={x} />))}
+			{items.map(renderItem)}
 		</ul>
 	);
 }
@@ -58,7 +50,7 @@ export default function AssociationGroup ({group}) {
 	return (
 		<div className="associations-group">
 			{label && (<h4>{label}</h4>)}
-			<Items items={items} />
+			{renderItems(items)}
 		</div>
 	);
 }
