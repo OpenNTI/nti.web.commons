@@ -57,14 +57,14 @@ export default class AssociationsEditor extends React.Component {
 
 
 	render () {
-		const {availableLabel, sharedToLabel} = this.props;
+		const {availableLabel, sharedToLabel, associations} = this.props;
 		const {used, unused} = this.state;
 
 		return (
 			<div className="association-editor">
 				<Search onChange={this.onSearchChange} buffered={false} />
-				<Container groups={[used]} label={sharedToLabel}/>
-				<Container groups={unused} label={availableLabel}/>
+				<Container groups={[used]} label={sharedToLabel} associations={associations} />
+				<Container groups={unused} label={availableLabel} associations={associations} />
 			</div>
 		);
 	}

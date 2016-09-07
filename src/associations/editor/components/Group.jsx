@@ -1,6 +1,8 @@
 import React from 'react';
 
-function renderSubGroup (group) {
+import {getEditorCmpFor} from '../../types';
+
+function renderSubGroup (group, associations) {
 	const {items} = group;
 
 	if (!items.length) {
@@ -10,48 +12,54 @@ function renderSubGroup (group) {
 	return (
 		<li key={group.ID}>
 			{group.label && (<h5>group.label</h5>)}
-			{renderItems(items)}
+			{renderItems(items, associations)}
 		</li>
 	);
 }
 
 
-function renderSingleItem (item) {
+function renderSingleItem (item, associations) {
+	const Editor = getEditorCmpFor(item);
+
+	if (!Editor) {
+		return null;
+	}
+
 	return (
 		<li key={item.NTIID || item.ID}>
-			{item.label}
+			<Editor item={item} associations={associations} />
 		</li>
 	);
 }
 
 
-function renderItem (item) {
-	debugger;
-	return item.isAssociationsGroup ? renderSubGroup(item) : renderSingleItem(item);
+function renderItem (item, associations) {
+	return item.isAssociationsGroup ? renderSubGroup(item, associations) : renderSingleItem(item, associations);
 }
 
 
-function renderItems (items) {
+function renderItems (items, associations) {
 	items = items || [];
 
 	return (
 		<ul>
-			{items.map(renderItem)}
+			{items.map(x => renderItem(x, associations))}
 		</ul>
 	);
 }
 
 
 AssociationGroup.propTypes = {
-	group: React.PropTypes.object
+	group: React.PropTypes.object,
+	associations: React.PropTypes.object
 };
-export default function AssociationGroup ({group}) {
+export default function AssociationGroup ({group, associations}) {
 	const {label, items} = group;
 
 	return (
 		<div className="associations-group">
 			{label && (<h4>{label}</h4>)}
-			{renderItems(items)}
+			{renderItems(items, associations)}
 		</div>
 	);
 }

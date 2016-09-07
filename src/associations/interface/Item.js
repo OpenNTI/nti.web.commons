@@ -30,6 +30,16 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
+	get type () {
+		return this[ITEM].mimeType || this[ITEM].type;
+	}
+
+
+	get label () {
+		return this[ITEM].label || this[ITEM].title;
+	}
+
+
 	get item () {
 		return this[ITEM];
 	}
