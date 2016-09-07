@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import {groupDestinations, mapActive, flattenGroups, filterGroups} from './utils';
 import Group from './Group';
+import Item from './Item';
 
 const DESTINATIONS = Symbol('ASSOCIATIONS DESTINATIONS');
 const RAW_ACTIVE = Symbol('RAW ACTIVE DESTINATIONS');
@@ -9,6 +10,10 @@ const USED = Symbol('USED ASSOCIATIONS');
 const UNUSED = Symbol('UNUSED ASSOCIATIONS');
 
 export default class AssociationInterface extends EventEmitter {
+	static createItem (item, onAddTo, onRemoveFrom, cfg) {
+		return new Item(item, onAddTo, onRemoveFrom, cfg);
+	}
+
 	static createGroup (label, items) {
 		return new Group(label, items);
 	}

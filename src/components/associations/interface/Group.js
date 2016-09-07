@@ -1,17 +1,28 @@
 const ITEMS = Symbol('Items');
 const LABEL = Symbol('Label');
+const SETUP_ITEM = Symbol('Set Up Item');
 
 let COUNTER = 0;
 
 export default class AssociationGroup {
-	constructor (label, items, collapseIfEmpty = true) {
-		this[LABEL] = label || '';
-		this[ITEMS] = items || [];
+	constructor (label = '', items = [], collapseIfEmpty = true) {
+		for (let item of items) {
+			this[SETUP_ITEM](item);
+		}
+
+		this[LABEL] = label;
+		this[ITEMS] = items;
 		this.collapseIfEmpty = collapseIfEmpty;
 
 		COUNTER += 1;
 
 		this.ID = COUNTER;
+	}
+
+	[SETUP_ITEM] (item) {
+		if (item.isAssociationItem) {
+			item.group = this;
+		}
 	}
 
 	isAssociationsGroup = true
@@ -38,6 +49,8 @@ export default class AssociationGroup {
 
 
 	push (item) {
+		this[SETUP_ITEM](item);
+
 		this[ITEMS].push(item);
 	}
 
