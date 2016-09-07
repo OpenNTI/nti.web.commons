@@ -24,6 +24,12 @@ export default class AssociationItem extends EventEmitter {
 
 	isAssociationItem = true
 
+
+	get ID () {
+		return this[ITEM].NTIID || this[ITEM].ID;
+	}
+
+
 	get item () {
 		return this[ITEM];
 	}

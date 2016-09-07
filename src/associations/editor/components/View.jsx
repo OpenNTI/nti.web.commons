@@ -3,7 +3,7 @@ import matchesFilter from 'nti-commons/lib/matches-filter';
 
 import Container from './Container';
 
-import Search from '../../../Search';
+import Search from '../../../components/Search';
 
 
 function matchesTerm (item, term) {

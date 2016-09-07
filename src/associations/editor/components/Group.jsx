@@ -26,6 +26,7 @@ function renderSingleItem (item) {
 
 
 function renderItem (item) {
+	debugger;
 	return item.isAssociationsGroup ? renderSubGroup(item) : renderSingleItem(item);
 }
 
