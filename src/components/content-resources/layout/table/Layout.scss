@@ -107,7 +107,9 @@
 		&.selected,
 		&:hover.selected {
 			background: $primary-blue;
-			color: #fff;
+			&, .filename {
+				color: #fff;
+			}
 		}
 	}
 
