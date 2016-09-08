@@ -145,10 +145,14 @@ export default class Publish extends React.Component {
 
 	onChange = (e) => {
 		const selected = e.target.value;
+		const {changed, selected: oldSelected} = this.state;
+
+		// NTI-2144: This is for when the past selected is schedule and there was a change and there is a click inside the scheduler that isn't a date change.
+		const scheduleChange = oldSelected === PUBLISH_STATES.SCHEDULE && changed === true && selected === PUBLISH_STATES.SCHEDULE;
 
 		this.setState({
 			selected,
-			changed: changeOccur(selected),
+			changed: scheduleChange ? true : changeOccur(selected),
 			dayClicked: false
 		});
 	}
