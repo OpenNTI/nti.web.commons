@@ -15,7 +15,8 @@ export default class TimePicker extends React.Component {
 
 	static propTypes = {
 		value: PropTypes.object,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		allowEmpty: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -49,24 +50,25 @@ export default class TimePicker extends React.Component {
 	 * we do NOT internally track the value. We give it to the parent through "onChange" and let it
 	 * pass it back in a prop update.
 	 *
+	 * @param  {boolean} force - Use this to force value to an new date.
 	 * @param  {Object} props - defaults to {this.props}. The props to base the value off of.
 	 * @return {Time} - an instance of Time.
 	 */
-	getValue (props = this.props) {
-		let {value} = props;
+	getValue (force, props = this.props) {
+		let {value, allowEmpty} = props;
 
 		let time = value && TimeMap.get(value);
 		if (value && !time) {
 			TimeMap.set(value, time = new Time(value));
 		}
 
-		return time || (this.state || {}).value || new Time();
+		return time || (this.state || {}).value || ((allowEmpty && !force) ? void 0 : new Time());
 	}
 
 	componentWillReceiveProps (nextProps) {
 		if(nextProps.value !== this.props.value) {
 			this.setState({
-				value: this.getValue(nextProps)
+				value: this.getValue(false, nextProps)
 			});
 		}
 	}
@@ -75,7 +77,7 @@ export default class TimePicker extends React.Component {
 	onHourInputChange (e) {
 		const {target: {value: hours}} = e;
 		const {tfTime} = this.state;
-		const value = this.getValue();
+		const value = this.getValue(true);
 
 		if(!isValidHour(getNumber(hours))) { return; }
 
@@ -105,8 +107,14 @@ export default class TimePicker extends React.Component {
 
 	onMinuteInputChange (e) {
 		const {target: {value: minuteString}} = e;
-		const value = this.getValue();
+		const value = this.getValue(true);
 		const minutes = getNumber(minuteString);
+
+		if (!value) {
+			e.stopPropagation();
+			e.preventDefault();
+			return;
+		}
 
 		if(minutes >= MIN_MINUTES && minutes <= MAX_MINUTES || minutes === null) {
 			this.onChange(value.setMinutes(getNumber(minutes)));
@@ -115,15 +123,14 @@ export default class TimePicker extends React.Component {
 
 
 	onMeridiemChange (period) {
-		const value = this.getValue();
-
+		const value = this.getValue(true);
 		this.onChange(value.setPeriod(period));
 	}
 
 
 	onKeyDown (e) {
 		const {key, target: {name}} = e;
-		const value = this.getValue();
+		const value = this.getValue(true);
 		const KeyDownMap = {
 			hoursArrowUp: 'incrementHours',
 			hoursArrowDown: 'decrementHours',
@@ -145,8 +152,10 @@ export default class TimePicker extends React.Component {
 
 
 	convertHours (h) {
-		const value = this.getValue();
-		const period = value.getPeriod();
+		const value = this.getValue(true);
+		const period = value && value.getPeriod();
+
+		if (!value) { return; }
 
 		if(period === 'AM' && h === 12) {
 			return 0;
@@ -164,7 +173,7 @@ export default class TimePicker extends React.Component {
 		];
 		const {tfTime} = this.state;
 		const value = this.getValue();
-		const meridiem = value.getPeriod();
+		const meridiem = !value ? meridiemOptions[0].value : value.getPeriod();
 
 		return (
 			<SelectBox className="meridiem-select-box" disabled={tfTime} value={meridiem} options={meridiemOptions} onChange={this.onMeridiemChange}/>
@@ -181,10 +190,11 @@ export default class TimePicker extends React.Component {
 
 	render () {
 		const {tfTime, editingHour} = this.state;
+		const {allowEmpty} = this.props;
 		const value = this.getValue();
 
-		let hours = tfTime ? value.getHours() : ((value.getHours() % 12) || 12);
-		const minutes = value.getMinutes();
+		let hours = !value ? '' : (tfTime ? value.getHours() : ((value.getHours() % 12) || 12));
+		const minutes = !value ? '' : value.getMinutes();
 
 		// Allow to edit the hours. Can't type down to zero because we are using a date.
 		if (editingHour) { hours = ''; }
@@ -207,7 +217,7 @@ export default class TimePicker extends React.Component {
 						value={minutes}
 						name="minutes"
 						min={0} max={59}
-						pad
+						pad={!allowEmpty || value != null}
 						/>
 				</div>
 				{this.renderMeridiem()}
