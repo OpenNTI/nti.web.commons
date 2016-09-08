@@ -16,13 +16,14 @@
 	}
 
 	.TimePicker {
-		width: 24%;
+		width: 16%;
 	    justify-content: flex-start;
 	    line-height: 40px;
+		min-width: 150px;
 
 		.meridiem-select-box.select-box {
 			border-radius: 3px;
-		    margin-top: 21px;
+		    margin-top: 16px;
 		    background-color: white;
 		    max-height: 41px;
 
@@ -38,8 +39,8 @@
 		.number-input-component {
 			border-radius: 3px;
 		    border: 1px solid #dbdbdb;
-		    height: 43px;
-		    margin-top: 20px;
+		    height: 42px;
+		    margin-top: 16px;
 		    color: #494949;
 		}
 	}
@@ -74,6 +75,18 @@
 	    margin-bottom: 5px;
 	}
 
+	.date-select-label:first-child {
+		width: 42%;
+	}
+
+	.date-select-label:nth-child(2) {
+		width: 19%;
+	}
+
+	.date-select-label:nth-child(3) {
+		width: 27%;
+	}
+
 	.date-time-field-error {
 		font-size: 0.875em;
 		color: #F35252;
@@ -81,7 +94,7 @@
 
 	.set-current-date {
 		width: 21%;
-	    margin-top: 20px;
+	    margin-top: 16px;
 	    line-height: 40px;
 	    font-size: 0.75em;
 	    font-weight: 600;
