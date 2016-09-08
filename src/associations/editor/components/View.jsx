@@ -17,7 +17,6 @@ export default class AssociationsEditor extends React.Component {
 	static propTypes = {
 		associations: React.PropTypes.object.isRequired,
 		filterFn: React.PropTypes.func,
-		regroupOnChange: React.PropTypes.bool,
 		availableLabel: React.PropTypes.string,
 		sharedToLabel: React.PropTypes.string
 	}
