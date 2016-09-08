@@ -1,0 +1,17 @@
+@import "~nti-style-common";
+
+.association-item-info {
+	.label {
+		font: normal 400 0.875rem/1.25rem $body-font-family;
+		color: $primary-grey;
+	}
+}
+
+
+.associations-list-item {
+	&.active .association-item-info {
+		.label {
+			color: white;
+		}
+	}
+}

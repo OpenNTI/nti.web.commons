@@ -6,6 +6,8 @@ AssociationItemInfo.propTypes = {
 };
 export default function AssociationItemInfo ({label}) {
 	return (
-		<span>{label}</span>
+		<div className="association-item-info">
+			<span className="label">{label}</span>
+		</div>
 	);
 }
