@@ -7,9 +7,11 @@ DefaultEditor.propTypes = {
 	associations: React.PropTypes.object
 };
 export default function DefaultEditor ({item, associations}) {
+	const active = associations.isUsed(item);
+
 	return (
-		<ListItem active={associations.isUsed(item)}>
-			<ItemInfo label={item.label}/>
+		<ListItem active={active}>
+			<ItemInfo label={item.label} subLabel={[item.group.label]}/>
 		</ListItem>
 	);
 }

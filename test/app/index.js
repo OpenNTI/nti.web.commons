@@ -8,7 +8,7 @@ import {ConflictResolutionHandler, ContentResources, ControlBar, Associations} f
 import 'normalize.css';
 import 'nti-style-common/all.scss';
 
-const {createInterfaceForActive, Editor:AssociationsEditor} = Associations;
+const {Interface, Editor:AssociationsEditor} = Associations;
 
 addFeatureCheckClasses();
 
@@ -51,28 +51,51 @@ class ControlBarTest extends React.Component {
 	}
 }
 
+function onAdd () {
+	debugger;
+}
 
-function createFakeItem (id, name) {
-	return {
-		MimeType: 'fakeItem',
-		NTIID: id,
-		label: name
-	};
+function onRemove () {
+	debugger;
 }
 
 
+function createFakeItem (id, name) {
+	return Interface.createItem({
+		MimeType: 'fakeItem',
+		NTIID: id,
+		label: name
+	}, onAdd, onRemove);
+}
 
 const testAssociations = [
-	createFakeItem('1', 'Test 1'),
-	createFakeItem('2', 'Test 2'),
-	createFakeItem('3', 'Test 3'),
-	createFakeItem('4', 'Test 4'),
-	createFakeItem('5', 'Test 5'),
-	createFakeItem('6', 'Test 6'),
-	createFakeItem('7', 'Test 7')
+	Interface.createGroup('Group 1', [
+		createFakeItem('1', 'Foo Test 1'),
+		createFakeItem('2', 'Bar Test 1'),
+		createFakeItem('3', 'Foo Test 2'),
+		createFakeItem('4', 'Bar Test 2'),
+	]),
+	Interface.createGroup('Group 2', [
+		createFakeItem('5', 'Foo Test 3'),
+		createFakeItem('6', 'Bar Test 3'),
+		createFakeItem('7', 'Foo Test 4'),
+		createFakeItem('8', 'Bar Test 4'),
+	]),
+	Interface.createGroup('Group 3', [
+		createFakeItem('9', 'Foo Test 5'),
+		createFakeItem('10', 'Bar Test 5'),
+		createFakeItem('11', 'Foo Test 6'),
+		createFakeItem('12', 'Bar Test 6'),
+	]),
+	Interface.createGroup('Group 4', [
+		createFakeItem('13', 'Foo Test 7'),
+		createFakeItem('14', 'Bar Test 7'),
+		createFakeItem('15', 'Foo Test 8'),
+		createFakeItem('16', 'Bar Test 8'),
+	])
 ];
 
-const testInterface = createInterfaceForActive(['1','3','5','7'], testAssociations, () => {debugger;}, () => {debugger;});
+const testInterface = new Interface(testAssociations, ['1', '6', '7', '10']);
 
 
 //Kitchen Sink

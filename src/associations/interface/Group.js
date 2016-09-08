@@ -20,7 +20,7 @@ export default class AssociationGroup {
 	}
 
 	[SETUP_ITEM] (item) {
-		if (item.isAssociationItem) {
+		if (item.isAssociationItem && !item.group) {
 			item.group = this;
 		}
 	}
