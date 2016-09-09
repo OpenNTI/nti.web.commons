@@ -1,9 +1,17 @@
 @import "~nti-style-common";
 
 .associations-group {
+	margin-bottom: 20px;
 	ul.association-group-list {
 		padding: 0;
 		margin: 0;
 		list-style: none;
+
+	}
+
+	h4 {
+		font: normal 400 0.875rem/1.25rem $body-font-family;
+		color: $tertiary-grey;
+		margin: 10px 0;
 	}
 }

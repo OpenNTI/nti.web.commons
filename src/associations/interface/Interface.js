@@ -78,6 +78,11 @@ export default class AssociationInterface extends EventEmitter {
 	}
 
 
+	get hasAssociations () {
+		return this[RAW_ACTIVE] && this[RAW_ACTIVE].length;
+	}
+
+
 	isUsed (association) {
 		const activeMap = this[ACTIVE_MAP];
 
