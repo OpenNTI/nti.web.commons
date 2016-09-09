@@ -42,7 +42,7 @@ function renderItems (items, associations) {
 	items = items || [];
 
 	return (
-		<ul>
+		<ul className="association-group-list">
 			{items.map(x => renderItem(x, associations))}
 		</ul>
 	);

@@ -11,7 +11,7 @@ export default function DefaultEditor ({item, associations}) {
 
 	return (
 		<ListItem active={active}>
-			<ItemInfo label={item.label} subLabel={[item.group.label]}/>
+			<ItemInfo label={item.label} subLabels={[item.group.label, 'Test label']}/>
 		</ListItem>
 	);
 }
