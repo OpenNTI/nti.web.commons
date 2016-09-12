@@ -41,6 +41,8 @@ export default class DataTimeField extends Component {
 		} else {
 			date = new Date();
 			date.setDate(1);
+			date.setHours(23);
+			date.setMinutes(59);
 		}
 
 		date[method](value);

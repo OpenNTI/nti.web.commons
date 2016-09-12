@@ -91,7 +91,9 @@ describe('DateTimeField', () => {
 		const value = new Date();
 		value.setMonth('7');
 		value.setDate('1');
-
+		value.setHours(23);
+		value.setMinutes(59);
+		
 		test({ onChange: onChangeSpy})
 			.forEach(x => {
 				const monthSelect = x.find('.month-wrapper Select');
