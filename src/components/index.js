@@ -25,6 +25,7 @@ export DisplayName from './DisplayName';
 export DurationPicker from './DurationPicker';
 export Ellipsed from './Ellipsed';
 export EmptyList from './EmptyList';
+export EmptyState from './EmptyState';
 export Error from './Error';
 export Favorite from './Favorite';
 export FilterableView from './FilterableView';

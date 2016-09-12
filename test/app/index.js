@@ -83,14 +83,14 @@ const testAssociations = [
 	]),
 	Interface.createGroup('Group 3', [
 		createFakeItem('9', 'Foo Test 5'),
-		createFakeItem('10', 'Bar Test 5'),
 		createFakeItem('11', 'Foo Test 6'),
-		createFakeItem('12', 'Bar Test 6'),
+		createFakeItem('13', 'Foo Test 7'),
+		createFakeItem('15', 'Foo Test 8'),
 	]),
 	Interface.createGroup('Group 4', [
-		createFakeItem('13', 'Foo Test 7'),
+		createFakeItem('10', 'Bar Test 5'),
+		createFakeItem('12', 'Bar Test 6'),
 		createFakeItem('14', 'Bar Test 7'),
-		createFakeItem('15', 'Foo Test 8'),
 		createFakeItem('16', 'Bar Test 8'),
 	])
 ];

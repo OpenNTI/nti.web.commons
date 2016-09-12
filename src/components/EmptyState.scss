@@ -1,0 +1,18 @@
+@import "~nti-style-common";
+
+.empty-state-component {
+	border: none;
+	background: none;
+	text-align: center;
+	color: $tertiary-grey;
+
+	h1 {
+		font: normal 400 1.75rem/2.375rem $body-font-family;
+		margin: 5px 0;
+	}
+
+	p {
+		font: normal 400 0.875rem/1.25rem $body-font-family;
+		margin: 0;
+	}
+}

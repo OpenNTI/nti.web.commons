@@ -6,8 +6,8 @@ import Item from './Item';
 const DESTINATIONS = Symbol('ASSOCIATIONS DESTINATIONS');
 const RAW_ACTIVE = Symbol('RAW ACTIVE DESTINATIONS');
 const ACTIVE_MAP = Symbol('ACTIVE DESTINATIONS');
-const USED = Symbol('USED ASSOCIATIONS');
-const UNUSED = Symbol('UNUSED ASSOCIATIONS');
+const SHARED_WITH = Symbol('SHARED ASSOCIATIONS');
+const AVAILABLE = Symbol('UNUSED ASSOCIATIONS');
 
 export default class AssociationInterface extends EventEmitter {
 	static createItem (item, onAddTo, onRemoveFrom, cfg) {
@@ -48,8 +48,8 @@ export default class AssociationInterface extends EventEmitter {
 
 		this[DESTINATIONS] = groups;
 
-		this[USED] = new Group('', flattenGroups(groups.map(group => group.filter(x => this.isUsed(x)))));
-		this[UNUSED] = groups.map(group => group.filter(x => !this.isUsed(x)));
+		this[SHARED_WITH] = new Group('', flattenGroups(groups.map(group => group.filter(x => this.isUsed(x)))));
+		this[AVAILABLE] = groups.map(group => group.filter(x => !this.isUsed(x)));
 
 		this.emit('changed');
 	}
@@ -68,18 +68,25 @@ export default class AssociationInterface extends EventEmitter {
 	}
 
 
-	get used () {
-		return this[USED];
+	get sharedWith () {
+		return this[SHARED_WITH];
 	}
 
 
-	get unused () {
-		return this[UNUSED];
+	get available () {
+		return this[AVAILABLE];
 	}
 
 
 	get hasAssociations () {
 		return this[RAW_ACTIVE] && this[RAW_ACTIVE].length;
+	}
+
+
+	get isEmpty () {
+		const destinations = this[DESTINATIONS];
+
+		return destinations.every(x => x.isEmpty);
 	}
 
 
