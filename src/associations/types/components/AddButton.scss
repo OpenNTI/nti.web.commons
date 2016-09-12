@@ -1,0 +1,10 @@
+@import "~nti-style-common";
+
+.association-add-button {
+	font: normal 400 0.875rem/2rem $body-font-family;
+	background: $primary-purple;
+	padding: 0 10px;
+	color: white;
+	display: inline-block;
+	border-radius: 2px;
+}

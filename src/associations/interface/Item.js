@@ -71,10 +71,20 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
+	canAddTo () {
+		return !!this[ADD_TO];
+	}
+
+
 	onAddTo () {
 		if (this[ADD_TO]) {
 			this[ADD_TO](this.item);
 		}
+	}
+
+
+	canRemoveFrom () {
+		return !!this[REMOVE_FROM];
 	}
 
 
