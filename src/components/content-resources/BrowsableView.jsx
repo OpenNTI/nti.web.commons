@@ -227,8 +227,11 @@ export default class BrowsableView extends React.Component {
 						() => this.dropItem(item).then(next)
 					)
 				)
-			)
-		));
+			))
+		)
+			.then(() => target.refresh())
+			.then(this.refresh)
+			.then(() => null);//don't fulfill with any value.
 	}
 
 
@@ -259,19 +262,22 @@ export default class BrowsableView extends React.Component {
 				)
 			)
 
+			.then(() => folder.refresh())
+
 			.then(() => {
 
-				if (this.state.folder === folder) {
-					const ids = Array.from(this.selection).map(x => x.getID());
-					this.refresh()
-						.then(items => {
-							if (items) {
-								this.selection.add(
-									...items.filter(x => ids.includes(x.getID()))
-								);
-							}
-						});
-				}
+				const ids = Array.from(this.selection).map(x => x.getID());
+
+				//always redraw...
+				this.refresh()
+					.then(items => {
+						//only alter selection if the folder is the same.
+						if (items && this.state.folder === folder) {
+							this.selection.add(
+								...items.filter(x => ids.includes(x.getID()))
+							);
+						}
+					});
 
 			});
 
