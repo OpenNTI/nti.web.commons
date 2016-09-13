@@ -12,8 +12,9 @@
 	}
 
 	.content {
-		max-height: calc(80vh - 20px);
+		height: calc(80vh - 20px);
 		background: $panel-background;
 		overflow: auto;
+		padding: 1.25rem;
 	}
 }
