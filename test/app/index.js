@@ -8,7 +8,7 @@ import {ConflictResolutionHandler, ContentResources, ControlBar, Associations} f
 import 'normalize.css';
 import 'nti-style-common/all.scss';
 
-const {Interface, Editor:AssociationsEditor} = Associations;
+const {Interface, openEditorModal} = Associations;
 
 addFeatureCheckClasses();
 
@@ -97,11 +97,14 @@ const testAssociations = [
 
 const testInterface = new Interface(testAssociations, ['1', '6', '7', '10']);
 
+function openEditor () {
+	openEditorModal('Test Associations', testInterface);
+}
 
 //Kitchen Sink
 ReactDOM.render(
 	<div className="test-kitchen">
-		<AssociationsEditor associations={testInterface}/>
+		<button onClick={openEditor}>Open Editor</button>
 	</div>,
 	document.getElementById('content')
 );
