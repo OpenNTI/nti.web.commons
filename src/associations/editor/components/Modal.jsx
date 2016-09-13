@@ -2,15 +2,19 @@ import React from 'react';
 
 import {modal} from '../../../prompts';
 import TitleBar from '../../../components/panels/TitleBar';
+import DialogButtons from '../../../components/DialogButtons';
 
 import Editor from './View';
 
 AssociationEditorModal.propTypes = {
 	title: React.PropTypes.string,
-	onDismiss: React.PropTypes.string
+	onDismiss: React.PropTypes.func
 };
 export default function AssociationEditorModal (props) {
 	const {title, onDismiss, ...otherProps} = props;
+	const buttons = [
+		{label: 'Done', onClick: onDismiss}
+	];
 
 	return (
 		<div className="association-editor-modal">
@@ -18,6 +22,7 @@ export default function AssociationEditorModal (props) {
 			<div className="content">
 				<Editor {...otherProps} />
 			</div>
+			<DialogButtons buttons={buttons} />
 		</div>
 	);
 }
