@@ -25,6 +25,8 @@ const DEFAULT_TEXT = {
 	'emptyList:contactssearch': 'No contacts found.',
 	'emptyList:entity-search': 'No one found',
 	'emptyList:assignments': 'No assignments currently available.',
+	'emptyList:search': 'No Results Found.\nTry a different search.',
+	'emptyList:content-resources': 'Empty Folder.'
 };
 
 const t = scoped('LISTS', DEFAULT_TEXT);

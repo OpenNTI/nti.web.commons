@@ -6,6 +6,7 @@ import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 
 import CError from '../Error';
+import EmptyList from '../EmptyList';
 import Loading from '../Loading';
 
 import BrowsableView from './BrowsableView';
@@ -341,6 +342,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 					<CError error={error}/>
 				) : !folderContents ? (
 					<Loading/>
+				) : (folderContents.length === 0) ? (
+					<EmptyList type={searching ? 'search' : 'content-resources'}/>
 				) : (
 					<View contents={content} sort={sort}
 						layout={LayoutComponent}

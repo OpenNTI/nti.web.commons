@@ -63,6 +63,11 @@
 		text-align: center;
 	}
 
+	figure.empty-list {
+		border: none;
+		background: none;
+	}
+
 	@media (max-width: 830px) {
 		.toolbar-component .toolbar-button > span { display: none; }
 	}
