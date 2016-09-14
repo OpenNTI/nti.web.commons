@@ -1,7 +1,11 @@
 import React from 'react';
 import {scoped} from 'nti-lib-locale';
 
-const t = scoped('LISTS');
+const DEFAULT_TEXT = {
+	noMatches: 'No items match the selected filter.'
+};
+
+const t = scoped('LISTS', DEFAULT_TEXT);
 
 export default function NoMatches () {
 	return (
