@@ -4,10 +4,75 @@ import Group from './Group';
 import Item from './Item';
 
 const DESTINATIONS = Symbol('ASSOCIATIONS DESTINATIONS');
+const ACTIVE = Symbol('ACTIVE ASSOCIATIONS');
 const RAW_ACTIVE = Symbol('RAW ACTIVE DESTINATIONS');
 const ACTIVE_MAP = Symbol('ACTIVE DESTINATIONS');
-const SHARED_WITH = Symbol('SHARED ASSOCIATIONS');
-const AVAILABLE = Symbol('UNUSED ASSOCIATIONS');
+const CLONE = Symbol('Clone Interface');
+
+/**
+ * Make this a class so any subsequent interfaces from filtering can share a common
+ * instance to keep track of the active associations.
+ */
+class ActiveInterface extends EventEmitter {
+	/**
+	 * Create an ActiveInterface
+	 * @param  {[String]} active the list of active IDs
+	 * @return {Object}        the Active Interface
+	 */
+	constructor (active) {
+		super();
+
+		this.active = active;
+	}
+
+	isActiveInterface = true
+
+	set active (active) {
+		if (active.isActiveInterface) {
+			active = active.active;
+		}
+
+		this[RAW_ACTIVE] = active;
+		this[ACTIVE_MAP] = mapActive(active || []);
+
+		this.emit('change');
+	}
+
+
+	isSharedWith (association) {
+		const activeMap = this[ACTIVE_MAP];
+
+		return activeMap && activeMap[association.NTIID || association.ID];
+	}
+
+
+	hasAssociations () {
+		return this[RAW_ACTIVE] && this[RAW_ACTIVE].length > 0;
+	}
+
+
+	add (association) {
+		const id = association.NTIID || association.ID;
+		const activeMap = this[ACTIVE_MAP];
+		let active = this[RAW_ACTIVE];
+
+		if (!activeMap[id]) {
+			active.push(id);
+			this.active = active;
+		}
+	}
+
+
+	remove (association) {
+		const id = association.NTIID || association.ID;
+		const activeMap = this[ACTIVE_MAP];
+		const active = this[RAW_ACTIVE];
+
+		if (activeMap[id]) {
+			this.active = active.filter(x => x !== id);
+		}
+	}
+}
 
 export default class AssociationInterface extends EventEmitter {
 	static createItem (item, onAddTo, onRemoveFrom, cfg) {
@@ -31,7 +96,12 @@ export default class AssociationInterface extends EventEmitter {
 	}
 
 
-	get isSaving () {
+	onChanged () {
+		this.emit('change', this);
+	}
+
+
+	get isLoading () {
 		const {destinations} = this;
 
 		return !destinations;
@@ -48,38 +118,45 @@ export default class AssociationInterface extends EventEmitter {
 
 		this[DESTINATIONS] = groups;
 
-		this[SHARED_WITH] = new Group('', flattenGroups(groups.map(group => group.filter(x => this.isUsed(x)))));
-		this[AVAILABLE] = groups.map(group => group.filter(x => !this.isUsed(x)));
-
-		this.emit('changed');
+		this.onChanged();
 	}
 
 
 	set active (active) {
-		this[RAW_ACTIVE] = active;
-		this[ACTIVE_MAP] = mapActive(active);
+		if (this[ACTIVE]) {
+			this[ACTIVE].active = active;
+		} else {
+			if (active.isActiveInterface) {
+				this[ACTIVE] = active;
+			} else {
+				this[ACTIVE] = new ActiveInterface(active);
+			}
 
-		//Re-set destinations to update the used and unused
-		if (this.destinations) {
-			this.destinations = this.destinations;
+			this[ACTIVE].addListener('change', () => this.onChanged());
 		}
 
-		this.emit('changed');
+		this.onChanged();
 	}
 
 
-	get sharedWith () {
-		return this[SHARED_WITH];
+	addActive (active) {
+		if (this[ACTIVE]) {
+			this[ACTIVE].add(active);
+		} else {
+			this.active = [active];
+		}
 	}
 
 
-	get available () {
-		return this[AVAILABLE];
+	removeActive (active) {
+		if (this[ACTIVE]) {
+			this[ACTIVE].remove(active);
+		}
 	}
 
 
-	get hasAssociations () {
-		return this[RAW_ACTIVE] && this[RAW_ACTIVE].length;
+	get hasSharedWith () {
+		return this[ACTIVE] && this[ACTIVE].hasAssociations();
 	}
 
 
@@ -90,18 +167,26 @@ export default class AssociationInterface extends EventEmitter {
 	}
 
 
-	isUsed (association) {
-		const activeMap = this[ACTIVE_MAP];
+	isSharedWith (association) {
+		return this[ACTIVE] && this[ACTIVE].isSharedWith(association);
+	}
 
-		if (!activeMap) { return false; }
 
-		return activeMap[association.NTIID || association.ID];
+	[CLONE] (destinations) {
+		return new AssociationInterface(destinations, this[ACTIVE]);
 	}
 
 
 	filter (fn) {
 		const filteredGroups = filterGroups(this.destinations, fn);
 
-		return new AssociationInterface(filteredGroups, this[RAW_ACTIVE]);
+		return this[CLONE](filteredGroups);
+	}
+
+
+	flatten () {
+		const flattenedGroups = flattenGroups(this.destinations);
+
+		return this[CLONE](flattenedGroups);
 	}
 }

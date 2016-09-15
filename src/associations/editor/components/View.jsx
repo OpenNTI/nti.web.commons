@@ -43,40 +43,57 @@ export default class AssociationsEditor extends React.Component {
 
 		const {associations} = this.props;
 
+		this.sharedWith = associations.filter(x => associations.isSharedWith(x)).flatten();
+		this.available = associations.filter(x => !associations.isSharedWith(x));
+
 		this.state = {
-			sharedWith: associations.sharedWith,
-			available: associations.available,
-			isEmpty: associations.isEmpty
+			sharedWith: this.sharedWith,
+			available: this.available,
+			isEmpty: this.sharedWith.isEmpty && this.available.isEmpty
 		};
+
+		associations.addListener('change', this.onAssociationsChanged);
 	}
 
 
-	onSearchChange = (value) => {
-		const {associations, filterFn:customFilter} = this.props;
-		const filterFn = (x) => {
-			return customFilter ? customFilter(x, value) : matchesTerm(x, value);
-		};
+	getFilterForSearch (search) {
+		const {filterFn} = this.props;
 
-		const filtered = associations.filter(filterFn);
+		return !search ? null : filterFn ? x => filterFn(x, search) : x => matchesTerm(x, search);
+	}
+
+
+	onSearchChange = (search) => {
+		const {sharedWith, available} = this;
+		const filterFn = this.getFilterForSearch(search);
+		const newSharedWith = filterFn ? sharedWith.filter(filterFn) : sharedWith;
+		const newAvailable = filterFn ? available.filter(filterFn) : available;
 
 		this.setState({
-			sharedWith: filtered.sharedWith,
-			available: filtered.available,
-			isEmpty: filtered.isEmpty
+			sharedWith: newSharedWith,
+			available: newAvailable,
+			isEmpty: newSharedWith.isEmpty && newAvailable.isEmpty
 		});
+	}
+
+
+	onAssociationsChanged = () => {
+		this.forceUpdate();
 	}
 
 
 	getStrings () {
 		const {associations, getString:stringOverride} = this.props;
-		const {hasAssociations} = associations;
+		const {hasSharedWith} = associations;
 		const getString = stringOverride ? t.override(stringOverride) : t;
 
 		return {
+			emptyHeader: getString('noResults.header'),
+			emptySubHeader: getString('noResults.subHeader'),
 			sharedWith: {
 				label: getString('sharedLabel'),
-				emptyHeader: hasAssociations ? getString('noResults.header') : getString('noShared.header'),
-				emptySubHeader: hasAssociations ? getString('noResults.subHeader') : getString('noShared.subHeader')
+				emptyHeader: hasSharedWith ? getString('noResults.header') : getString('noShared.header'),
+				emptySubHeader: hasSharedWith ? getString('noResults.subHeader') : getString('noShared.subHeader')
 			},
 			available: {
 				label: getString('availableLabel'),
@@ -88,7 +105,6 @@ export default class AssociationsEditor extends React.Component {
 
 
 	render () {
-		const {associations} = this.props;
 		const {sharedWith, available, isEmpty} = this.state;
 		const strings = this.getStrings();
 
@@ -97,24 +113,22 @@ export default class AssociationsEditor extends React.Component {
 				<Search onChange={this.onSearchChange} buffered={false} />
 				{isEmpty && (
 					<EmptyState
-						header={strings.available.emptyHeader}
-						subHeader={strings.available.emptySubHeader}
+						header={strings.emptyHeader}
+						subHeader={strings.emptySubHeader}
 					/>
 				)}
 				{!isEmpty && (
 					<Container
-						groups={[sharedWith]}
 						label={strings.sharedWith.label}
-						associations={associations}
+						associations={sharedWith}
 						emptyHeader={strings.sharedWith.emptyHeader}
 						emptySubHeader={strings.sharedWith.emptySubHeader}
 					/>
 				)}
 				{!isEmpty && (
 					<Container
-						groups={available}
 						label={strings.available.label}
-						associations={associations}
+						associations={available}
 						emptyHeader={strings.available.emptyHeader}
 						emptySubHeader={strings.available.emptySubHeader}
 					/>

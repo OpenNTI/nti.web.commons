@@ -9,3 +9,11 @@ function createItem (item, onAddTo, onRemoveFrom) {
 export function createInterfaceForActive (active, destinations, onAddTo, onRemoveFrom) {
 	return new AssociationsInterface(destinations.map(x => createItem(x, onAddTo, onRemoveFrom)), active, onAddTo, onRemoveFrom);
 }
+
+
+export function createGroupedInterfaceForItemInScope (item, scope, limiter) {
+	item.getAssociations();
+	const provider = item.getPlacementProvider(scope, limiter);
+
+	provider.getItems().then();
+}

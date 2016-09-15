@@ -9,7 +9,7 @@ DefaultEditor.propTypes = {
 	associations: React.PropTypes.object
 };
 export default function DefaultEditor ({item, associations}) {
-	const active = associations.isUsed(item);
+	const active = associations.isSharedWith(item);
 
 	function onAdd () {
 		item.onAddTo();

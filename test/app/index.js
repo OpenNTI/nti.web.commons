@@ -51,12 +51,15 @@ class ControlBarTest extends React.Component {
 	}
 }
 
-function onAdd () {
-	debugger;
+const active = ['1', '6', '7', '10'];
+let testInterface;
+
+function onAdd (item) {
+	testInterface.addActive(item);
 }
 
-function onRemove () {
-	debugger;
+function onRemove (item) {
+	testInterface.removeActive(item);
 }
 
 
@@ -95,7 +98,7 @@ const testAssociations = [
 	])
 ];
 
-const testInterface = new Interface(testAssociations, ['1', '6', '7', '10']);
+testInterface = new Interface(testAssociations, active);
 
 function openEditor () {
 	openEditorModal('Test Associations', testInterface);
