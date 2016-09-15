@@ -30,19 +30,24 @@ export default class DataTimeField extends Component {
 		currentDate: PropTypes.bool,
 		useShortDates: PropTypes.bool,
 		error: PropTypes.string,
-		disabled: PropTypes.bool
+		disabled: PropTypes.bool,
+		defaultTime: PropTypes.instanceOf(Date)
 	}
 
 	onDateChange = (value, method) => {
-		const {onChange, value: oldDate} = this.props;
+		const {onChange, value: oldDate, defaultTime = void 0} = this.props;
 		let date;
+
 		if (oldDate) {
 			date = new Date(oldDate);
 		} else {
+			const defaultHours = defaultTime ? defaultTime.getHours() : 23;
+			const defaultMinutes = defaultTime ? defaultTime.getMinutes() : 59;
 			date = new Date();
+
 			date.setDate(1);
-			date.setHours(23);
-			date.setMinutes(59);
+			date.setHours(defaultHours);
+			date.setMinutes(defaultMinutes);
 		}
 
 		date[method](value);
