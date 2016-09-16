@@ -2,10 +2,15 @@
 
 .associations-group {
 	margin-bottom: 20px;
+
 	ul.association-group-list {
 		padding: 0;
 		margin: 0;
 		list-style: none;
+
+		li {
+			margin-bottom: 10px;
+		}
 
 	}
 
@@ -13,5 +18,34 @@
 		font: normal 400 0.875rem/1.25rem $body-font-family;
 		color: $tertiary-grey;
 		margin: 10px 0;
+	}
+
+	.fadeAndCollapse-enter-active, .fadeAndCollapse-leave-active {
+		overflow: hidden;
+		transition: opacity 400ms, max-height 400ms, margin-bottom 400ms;
+	}
+
+	.fadeAndCollapse-enter {
+		opacity: 0;
+		max-height: 0;
+		margin-bottom: 0;
+
+		&.fadeAndCollapse-enter-active {
+			opacity: 1;
+			max-height: 55px;
+			margin-bottom: 10px;
+		}
+	}
+
+	.fadeAndCollapse-leave {
+		opacity: 1;
+		max-height: 55px;
+		margin-bottom: 10px;
+
+		&.fadeAndCollapse-leave-active {
+			opacity: 0;
+			max-height: 0;
+			margin-bottom: 0;
+		}
 	}
 }

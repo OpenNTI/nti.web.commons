@@ -17,7 +17,7 @@ export default function AssociationsEditorContainer ({label, associations, empty
 			{label && (<h3>{label}</h3>)}
 			{associations.isEmpty ?
 				(<EmptyState header={emptyHeader} subHeader={emptySubHeader} />) :
-				groups.map(x => (<Group key={x.NTIID || x.ID} group={x} associations={associations}/>))
+				groups.map((x, i) => (<Group key={i} group={x} associations={associations}/>))
 			}
 		</div>
 	);

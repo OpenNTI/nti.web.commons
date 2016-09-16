@@ -11,9 +11,6 @@ export function createInterfaceForActive (active, destinations, onAddTo, onRemov
 }
 
 
-export function createGroupedInterfaceForItemInScope (item, scope, limiter) {
-	item.getAssociations();
-	const provider = item.getPlacementProvider(scope, limiter);
-
-	provider.getItems().then();
+export function createGroupedInterfaceForItem (item, scope, limiter) {
+	debugger;
 }

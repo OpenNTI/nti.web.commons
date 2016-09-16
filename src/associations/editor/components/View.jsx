@@ -30,6 +30,15 @@ function matchesTerm (item, term) {
 }
 
 
+function getSharedWith (associations) {
+	return associations.filter(x => associations.isSharedWith(x)).flatten();
+}
+
+function getAvailable (associations) {
+	return associations.filter(x => !associations.isSharedWith(x));
+}
+
+
 export default class AssociationsEditor extends React.Component {
 	static propTypes = {
 		associations: React.PropTypes.object.isRequired,
@@ -43,8 +52,8 @@ export default class AssociationsEditor extends React.Component {
 
 		const {associations} = this.props;
 
-		this.sharedWith = associations.filter(x => associations.isSharedWith(x)).flatten();
-		this.available = associations.filter(x => !associations.isSharedWith(x));
+		this.sharedWith = getSharedWith(associations);
+		this.available = getAvailable(associations);
 
 		this.state = {
 			sharedWith: this.sharedWith,
@@ -72,13 +81,20 @@ export default class AssociationsEditor extends React.Component {
 		this.setState({
 			sharedWith: newSharedWith,
 			available: newAvailable,
-			isEmpty: newSharedWith.isEmpty && newAvailable.isEmpty
+			isEmpty: newSharedWith.isEmpty && newAvailable.isEmpty,
+			search
 		});
 	}
 
 
 	onAssociationsChanged = () => {
-		this.forceUpdate();
+		const {associations} = this.props;
+		const {search} = this.state;
+
+		this.sharedWith = getSharedWith(associations);
+		this.available = getAvailable(associations);
+
+		this.onSearchChange(search);
 	}
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import {getEditorCmpFor} from '../../types';
 
@@ -42,9 +43,15 @@ function renderItems (items, associations) {
 	items = items || [];
 
 	return (
-		<ul className="association-group-list">
+		<ReactCSSTransitionGroup
+			component="ul"
+			className="association-group-list"
+			transitionName="fadeAndCollapse"
+			transitionEnterTimeout={400}
+			transitionLeaveTimeout={400}
+		>
 			{items.map(x => renderItem(x, associations))}
-		</ul>
+		</ReactCSSTransitionGroup>
 	);
 }
 
