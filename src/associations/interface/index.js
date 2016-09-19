@@ -14,6 +14,7 @@ export function createInterfaceForActive (active, destinations, onAddTo, onRemov
 
 export function createGroupedInterfaceForItem (item, scope, accepts) {
 	const provider = item.getPlacementProvider(scope, accepts);
+	const associations = new AssociationsInterface(null, null);
 
 	function onAddTo (parent) {
 		debugger;
@@ -22,8 +23,6 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 	function onRemoveFrom (parent) {
 		debugger;
 	}
-
-	const associations = new AssociationsInterface(null, null);
 
 	Promise.all([
 		item.getAssociations(),

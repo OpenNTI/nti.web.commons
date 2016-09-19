@@ -128,7 +128,7 @@ export default class AssociationsEditor extends React.Component {
 
 		if (associations.isLoading) {
 			return (
-				<div className="associations-editor">
+				<div className="association-editor">
 					<Loading />
 				</div>
 			);
