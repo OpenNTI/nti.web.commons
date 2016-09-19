@@ -178,14 +178,14 @@ export default class AssociationInterface extends EventEmitter {
 
 
 	filter (fn) {
-		const filteredGroups = filterGroups(this.destinations, fn);
+		const filteredGroups = filterGroups(this.destinations || [], fn);
 
 		return this[CLONE](filteredGroups);
 	}
 
 
 	flatten () {
-		const flattenedGroups = flattenGroups(this.destinations);
+		const flattenedGroups = flattenGroups(this.destinations || []);
 
 		return this[CLONE](flattenedGroups);
 	}

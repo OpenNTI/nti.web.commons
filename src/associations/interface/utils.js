@@ -57,3 +57,26 @@ export function filterGroups (groups, fn) {
 		return acc;
 	}, []);
 }
+
+
+export function groupItemsByParent (items) {
+	function getLabel (item) {
+		return item.label || item.title;
+	}
+
+	const parents = items.reduce((acc, item) => {
+		const parent = item.item.parent();
+		const id = parent.getID();
+
+		if (acc.map[id]) {
+			acc.map[id].push(item);
+		} else {
+			acc.order.push(id);
+			acc.map[id] = new Group (getLabel(parent), [item]);
+		}
+
+		return acc;
+	}, {map: {}, order: []});
+
+	return parents.order.map(x => parents.map[x]);
+}

@@ -1,4 +1,5 @@
 import AssociationsInterface from './Interface';
+import {groupItemsByParent} from './utils';
 
 export default AssociationsInterface;
 
@@ -11,6 +12,29 @@ export function createInterfaceForActive (active, destinations, onAddTo, onRemov
 }
 
 
-export function createGroupedInterfaceForItem (item, scope, limiter) {
-	debugger;
+export function createGroupedInterfaceForItem (item, scope, accepts) {
+	const provider = item.getPlacementProvider(scope, accepts);
+
+	function onAddTo (parent) {
+		debugger;
+	}
+
+	function onRemoveFrom (parent) {
+		debugger;
+	}
+
+	const associations = new AssociationsInterface(null, null);
+
+	Promise.all([
+		item.getAssociations(),
+		provider.getItems()
+	]).then((results) => {
+		const active = results[0];
+		const items = results[1];
+
+		associations.active = active;
+		associations.destinations = groupItemsByParent(items.map(x => createItem(x, onAddTo, onRemoveFrom)));
+	});
+
+	return associations;
 }

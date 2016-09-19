@@ -6,6 +6,7 @@ import Container from './Container';
 
 import EmptyState from '../../../components/EmptyState';
 import Search from '../../../components/Search';
+import Loading from '../../../components/Loading';
 
 const DEFAULT_TEXT = {
 	sharedLabel: 'Shared To',
@@ -121,8 +122,17 @@ export default class AssociationsEditor extends React.Component {
 
 
 	render () {
+		const {associations} = this.props;
 		const {sharedWith, available, isEmpty} = this.state;
 		const strings = this.getStrings();
+
+		if (associations.isLoading) {
+			return (
+				<div className="associations-editor">
+					<Loading />
+				</div>
+			);
+		}
 
 		return (
 			<div className="association-editor">

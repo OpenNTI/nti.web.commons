@@ -47,8 +47,8 @@ function renderItems (items, associations) {
 			component="ul"
 			className="association-group-list"
 			transitionName="fadeAndCollapse"
-			transitionEnterTimeout={400}
-			transitionLeaveTimeout={400}
+			transitionEnterTimeout={300}
+			transitionLeaveTimeout={300}
 		>
 			{items.map(x => renderItem(x, associations))}
 		</ReactCSSTransitionGroup>
