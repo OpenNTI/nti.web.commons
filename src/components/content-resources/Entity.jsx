@@ -10,6 +10,8 @@ import {getFragmentFromString} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import path from 'path';
 
+import {alert} from '../../prompts';
+
 import FileDragImage from './FileDragImage';
 
 const logger = Logger.get('common:components:content-resources:Entity');
@@ -248,7 +250,8 @@ export default class Entity extends React.Component {
 		const newName = (item.isFolder || path.extname(v) === ext) ? v : (v + ext);
 
 		if (newName !== oldName) {
-			item.rename(newName);
+			item.rename(newName)
+				.catch(er => alert(er.message));
 		}
 
 		this.onFinishRename();
