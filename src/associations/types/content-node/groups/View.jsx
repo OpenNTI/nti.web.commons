@@ -2,6 +2,8 @@ import React from 'react';
 import minWait, {SHORT} from 'nti-commons/lib/wait-min';
 import {scoped} from 'nti-lib-locale';
 
+import Group from './Group';
+
 import Loading from '../../../../components/TinyLoader';
 
 const DEFAULT_TEXT = {
@@ -34,9 +36,9 @@ export default class ContentNodeGroups extends React.Component {
 		node.getContent()
 			.then(minWait(SHORT))
 			.then((content) => {
-				// this.setState({
-				// 	content
-				// });
+				this.setState({
+					content
+				});
 			});
 	}
 
@@ -58,6 +60,15 @@ export default class ContentNodeGroups extends React.Component {
 
 
 	renderContent (content) {
-		debugger;
+		const {onAdd} = this.props;
+		const {Items:items} = content;
+
+		return (
+			<ul className="content-node-group-items">
+				{items.map((x, index) => {
+					return (<li key={index}><Group item={x} onAdd={onAdd} /></li>);
+				})}
+			</ul>
+		);
 	}
 }
