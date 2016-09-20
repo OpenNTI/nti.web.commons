@@ -45,13 +45,16 @@
 	}
 
 	thead {
-		transition: background-color 0.3s ease;
+		transition: background-color 0.3s ease, border-bottom-color 0.3s;
 		background-color: $panel-background;
 		border-bottom: 1px solid $border-grey-light;
 		font-size: rem-calc(10px);
 		font-weight: bold;
 		text-align: left;
 		line-height: 2.2;
+		.entity-drag-over & {
+			border-bottom-color: transparent;
+		}
 	}
 
 
@@ -114,13 +117,15 @@
 	}
 
 	.entity-drag-over & {
-		.entity-row {
+		.entity-row:not(.entity-drag-over) {
 			&:focus,
 			&:hover,
 			&.selected,
 			&:hover.selected {
 				background: none;
-				color: $secondary-grey;
+				&, .filename {
+					color: $secondary-grey;
+				}
 			}
 		}
 	}
