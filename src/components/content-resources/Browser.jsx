@@ -184,8 +184,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 	}
 
 
-	onSearch = (query) => {
-		const search = query && query.trim();
+	onSearch = (search) => {
 		if (search && search.length > 0) {
 			this.setState({folderContents: null, search}, this.search);
 		}

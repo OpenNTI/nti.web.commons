@@ -149,7 +149,7 @@ export default class BrowsableView extends React.Component {
 			return;
 		}
 
-		(searchScope || folder).search(search, sort, true)
+		(searchScope || folder).search(search.trim(), sort, true)
 			.then(searchResults => {
 				if (this.state.search !== search) {return;}
 
