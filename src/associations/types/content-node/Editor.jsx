@@ -1,10 +1,14 @@
 import React from 'react';
+
+import Groups from './groups';
+
 import ListItem from '../components/ListItem';
 import ItemInfo from '../components/ItemInfo';
 import AddButton from '../components/AddButton';
 import RemoveButton from '../components/RemoveButton';
 
 import DateTime from '../../../components/DateTime';
+import {InlineFlyout} from '../../../components/Flyout';
 
 
 function getSubLabels (item, isActive) {
@@ -23,6 +27,16 @@ function getSubLabels (item, isActive) {
 	}
 
 	return labels;
+}
+
+function renderAdd (item, onAdd) {
+	const trigger = (<AddButton label="Add to Lesson"/>);
+
+	return (
+		<InlineFlyout arrow trigger={trigger}>
+			<Groups node={item} onAdd={onAdd} />
+		</InlineFlyout>
+	);
 }
 
 
@@ -44,7 +58,7 @@ export default function ContentNodeEditor ({item, associations}) {
 	return (
 		<ListItem className="content-node" active={active}>
 			<ItemInfo label={item.label} subLabels={getSubLabels(item, active)}/>
-			{!active && item.canAddTo && (<AddButton onAdd={onAdd} />)}
+			{!active && item.canAddTo && (renderAdd(item.item, onAdd))}
 			{active && item.canRemoveFrom && (<RemoveButton onRemove={onRemove} />)}
 		</ListItem>
 	);

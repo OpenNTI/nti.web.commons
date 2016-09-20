@@ -22,7 +22,7 @@ export default function DefaultEditor ({item, associations}) {
 	return (
 		<ListItem active={active}>
 			<ItemInfo label={item.label} subLabels={[item.group.label, 'Test label']}/>
-			{!active && item.canAddTo && (<AddButton onAdd={onAdd} />)}
+			{!active && item.canAddTo && (<AddButton onClick={onAdd} />)}
 			{active && item.canRemoveFrom && (<RemoveButton onRemove={onRemove} />)}
 		</ListItem>
 	);
