@@ -29,16 +29,6 @@ export default class LayoutTable extends React.Component {
 	render () {
 		const {className, contents, sort, onSortChanged: onSort} = this.props;
 
-		const folders = [];
-		const files = [];
-
-		for (let item of contents) {
-			let list = item.isFolder ? folders : files;
-			list.push(item);
-		}
-
-		const groupped = [...folders, ...files];
-
 		return (
 			<div className={cx('content-resource-view-layout', 'table', className)}>
 				<table cellSpacing="0">
@@ -56,7 +46,7 @@ export default class LayoutTable extends React.Component {
 						</tr>
 					</thead>
 					<tbody>
-						{groupped.map(this.renderRow)}
+						{contents.map(this.renderRow)}
 					</tbody>
 				</table>
 			</div>
