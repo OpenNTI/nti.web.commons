@@ -21,13 +21,13 @@ class Folder extends Entity {
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
-
-				onDragOver={this.onDragOver}
-				onDragEnter={this.onDragEnter}
-				onDragLeave={this.onDragLeave}
-				onDrop={this.onDrop}
 				>
-				<td className="column-name">
+				<td className="column-name"
+					onDragOver={this.onDragOver}
+					onDragEnter={this.onDragEnter}
+					onDragLeave={this.onDragLeave}
+					onDrop={this.onDrop}
+					>
 					<div className={cx('entity-row-item row-folder-asset', {renameable, renaming: rename})}
 						role="button"
 						aria-label={filename}
