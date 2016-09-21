@@ -17,7 +17,7 @@ const t = scoped('common.components.content-resources.inspector', DEFAULT_TEXT);
 function getType (item) {
 	const ext = mime.extension(item.getFileMimeType());
 	return (
-		ext !== 'bin' && ext != null
+		ext !== 'bin' && ext
 			? ext
 			: extname(item.getFileName()).replace(/^\./, '')
 		)

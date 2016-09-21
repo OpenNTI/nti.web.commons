@@ -13,7 +13,7 @@ import Entity from '../../Entity';
 function getType (item) {
 	const ext = mime.extension(item.getFileMimeType());
 	return (
-		ext !== 'bin' && ext != null
+		ext !== 'bin' && ext
 			? ext
 			: extname(item.getFileName()).replace(/^\./, '')
 		)
