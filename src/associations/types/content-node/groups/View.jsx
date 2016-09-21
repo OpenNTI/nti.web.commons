@@ -43,6 +43,15 @@ export default class ContentNodeGroups extends React.Component {
 	}
 
 
+	onAddTo = (parent) => {
+		const {onAdd} = this.props;
+
+		if (onAdd) {
+			onAdd(parent);
+		}
+	}
+
+
 	render () {
 		const {content} = this.state;
 
@@ -60,13 +69,12 @@ export default class ContentNodeGroups extends React.Component {
 
 
 	renderContent (content) {
-		const {onAdd} = this.props;
 		const {Items:items} = content;
 
 		return (
 			<ul className="content-node-group-items">
 				{items.map((x, index) => {
-					return (<li key={index}><Group item={x} onAdd={onAdd} /></li>);
+					return (<li key={index}><Group item={x} onAdd={this.onAddTo} /></li>);
 				})}
 			</ul>
 		);

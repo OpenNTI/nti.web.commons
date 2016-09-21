@@ -17,7 +17,7 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 	const associations = new AssociationsInterface(null, null);
 
 	function onAddTo (parent) {
-		return provider.placeItemInParent(parent);
+		return provider.placeInParent(parent);
 	}
 
 	function onRemoveFrom (parent) {

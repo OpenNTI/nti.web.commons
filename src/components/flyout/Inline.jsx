@@ -68,14 +68,17 @@ export default class InlineFlyout extends React.Component {
 
 	render () {
 		const {trigger, children} = this.props;
+		const content = React.Children.only(children);
+		const c = React.cloneElement(content, {onDismiss: this.close});
+		const t = React.cloneElement(trigger, {onClick: this.toggle});
 		const {open} = this.state;
 		const cls = cx('inner-flyout', {open});
 
 		return (
 			<div className="inline-flyout" onClick={this.toggle}>
-				{trigger}
+				{t}
 				<div className={cls} ref={this.setInnerRef}>
-					{open && children}
+					{open && c}
 				</div>
 			</div>
 		);

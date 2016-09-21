@@ -2,8 +2,10 @@
 
 .content-node-group {
 	min-height: 70px;
-	width: 184px;
+	max-height: 300px;
+	width: 200px;
 	padding: 10px;
+	overflow: auto;
 
 	h6 {
 		font: normal 600 0.625rem/0.875rem $body-font-family;

@@ -9,6 +9,7 @@ import RemoveButton from '../components/RemoveButton';
 
 import DateTime from '../../../components/DateTime';
 import {InlineFlyout} from '../../../components/Flyout';
+import ItemChanges from '../../../HighOrderComponents/ItemChanges';
 
 
 function getSubLabels (item, isActive) {
@@ -30,11 +31,11 @@ function getSubLabels (item, isActive) {
 }
 
 function renderAdd (item, onAdd) {
-	const trigger = (<AddButton label="Add to Lesson"/>);
+	const trigger = item.isSaving ? (<span>Saving</span>) : (<AddButton label="Add to Lesson"/>);
 
 	return (
 		<InlineFlyout arrow trigger={trigger}>
-			<Groups node={item} onAdd={onAdd} />
+			<Groups node={item.item} onAdd={onAdd} error={item.error} />
 		</InlineFlyout>
 	);
 }
@@ -44,7 +45,7 @@ ContentNodeEditor.propTypes = {
 	item: React.PropTypes.object,
 	associations: React.PropTypes.object
 };
-export default function ContentNodeEditor ({item, associations}) {
+function ContentNodeEditor ({item, associations}) {
 	const active = associations.isSharedWith(item);
 
 	function onAdd (parent) {
@@ -58,8 +59,10 @@ export default function ContentNodeEditor ({item, associations}) {
 	return (
 		<ListItem className="content-node" active={active}>
 			<ItemInfo label={item.label} subLabels={getSubLabels(item, active)}/>
-			{!active && item.canAddTo && (renderAdd(item.item, onAdd))}
+			{!active && item.canAddTo && (renderAdd(item, onAdd))}
 			{active && item.canRemoveFrom && (<RemoveButton onRemove={onRemove} />)}
 		</ListItem>
 	);
 }
+
+export default ItemChanges.compose(ContentNodeEditor);
