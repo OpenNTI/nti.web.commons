@@ -76,9 +76,9 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
-	onAddTo () {
+	onAddTo (parent) {
 		if (this[ADD_TO]) {
-			this[ADD_TO](this.item);
+			this[ADD_TO](parent || this.item);
 		}
 	}
 

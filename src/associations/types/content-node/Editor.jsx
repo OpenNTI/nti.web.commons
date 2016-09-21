@@ -47,8 +47,8 @@ ContentNodeEditor.propTypes = {
 export default function ContentNodeEditor ({item, associations}) {
 	const active = associations.isSharedWith(item);
 
-	function onAdd () {
-		item.onAddTo();
+	function onAdd (parent) {
+		item.onAddTo(parent);
 	}
 
 	function onRemove () {

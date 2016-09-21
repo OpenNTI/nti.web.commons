@@ -1,0 +1,21 @@
+@import "~nti-style-common";
+
+.content-node-group-item {
+	cursor: pointer;
+
+	.accent-color {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
+		margin-right: 10px;
+		border-radius: 2px;
+	}
+
+	.title {
+		display: inline-block;
+		vertical-align: middle;
+		font: normal 400 0.875rem/1.25rem $body-font-family;
+		color: $primary-grey;
+	}
+}
