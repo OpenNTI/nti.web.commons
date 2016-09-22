@@ -60,6 +60,11 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
+	get error () {
+		return this[ERROR];
+	}
+
+
 	get group () {
 		return this[GROUP];
 	}

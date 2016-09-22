@@ -8,4 +8,8 @@
 	display: inline-block;
 	border-radius: 2px;
 	cursor: pointer;
+
+	&.error {
+		background: $primary-red;
+	}
 }

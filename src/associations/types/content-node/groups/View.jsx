@@ -15,7 +15,8 @@ const t = scoped('ASSOCIATIONS_CONTENT_NODE_GROUPS', DEFAULT_TEXT);
 export default class ContentNodeGroups extends React.Component {
 	static propTypes = {
 		node: React.PropTypes.object,
-		onAdd: React.PropTypes.fn
+		onAdd: React.PropTypes.fn,
+		error: React.PropTypes.string
 	}
 
 
@@ -53,10 +54,12 @@ export default class ContentNodeGroups extends React.Component {
 
 
 	render () {
+		const {error} = this.props;
 		const {content} = this.state;
 
 		return (
 			<div className="content-node-group">
+				{error && (<h6 className="error">{error}</h6>)}
 				<h6>{t('label')}</h6>
 				{
 					content ?
