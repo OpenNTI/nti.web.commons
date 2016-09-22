@@ -102,7 +102,7 @@ export default class AssociationItem extends EventEmitter {
 			this[SAVING] = true;
 			this.emit('change');
 
-			this[ADD_TO](container || this.item)
+			this[ADD_TO](container || this.item, container && this.item)
 				.then(() => {
 					this[SAVING] = false;
 					this.emit('change');

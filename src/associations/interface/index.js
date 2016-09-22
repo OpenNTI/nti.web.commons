@@ -1,3 +1,5 @@
+import minWait, {SHORT} from 'nti-commons/lib/wait-min';
+
 import AssociationsInterface from './Interface';
 import {groupItemsByParent} from './utils';
 
@@ -16,8 +18,12 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 	const provider = item.getPlacementProvider(scope, accepts);
 	const associations = new AssociationsInterface(null, null);
 
-	function onAddTo (container) {
-		return provider.placeIn(container);
+	function onAddTo (container, association) {
+		return provider.placeIn(container)
+			.then(minWait(SHORT))
+			.then(() => {
+				associations.addActive(association || container);
+			});
 	}
 
 	function onRemoveFrom (container) {
