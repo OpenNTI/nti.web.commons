@@ -16,11 +16,11 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 	const provider = item.getPlacementProvider(scope, accepts);
 	const associations = new AssociationsInterface(null, null);
 
-	function onAddTo (parent) {
-		return provider.placeInParent(parent);
+	function onAddTo (container) {
+		return provider.placeIn(container);
 	}
 
-	function onRemoveFrom (parent) {
+	function onRemoveFrom (container) {
 		debugger;
 	}
 

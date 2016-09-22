@@ -91,13 +91,13 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
-	onAddTo (parent) {
+	onAddTo (container) {
 		if (this[ADD_TO]) {
 			this[ERROR] = null;
 			this[SAVING] = true;
 			this.emit('change');
 
-			this[ADD_TO](parent || this.item)
+			this[ADD_TO](container || this.item)
 				.then(() => {
 					this[SAVING] = false;
 					this.emit('change');
