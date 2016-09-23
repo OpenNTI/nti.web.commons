@@ -98,6 +98,7 @@ export default class Publish extends React.Component {
 		horizontalAlignment: PropTypes.string,
 		error: PropTypes.string,
 		children: PropTypes.any,
+		disableDraft: PropTypes.bool,
 		localeContext: PropTypes.oneOf([
 			'lesson',
 			'assignment'
@@ -204,7 +205,7 @@ export default class Publish extends React.Component {
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext} = this.props;
+		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext, disableDraft} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 
 		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error});
@@ -235,7 +236,14 @@ export default class Publish extends React.Component {
 						disablePastNow
 					/>
 				</Radio>
-				<Radio name="publish-radio" value={DRAFT} label={t('draft.label')} checked={DRAFT === selected} onChange={this.onChange}>
+				<Radio
+					name="publish-radio"
+					value={DRAFT}
+					label={t('draft.label')}
+					checked={DRAFT === selected}
+					onChange={this.onChange}
+					disabled={disableDraft}
+				>
 					{t('draft.text')}
 				</Radio>
 				{children && (
