@@ -7,14 +7,15 @@ Radio.propTypes = {
 	children: PropTypes.any,
 	green: PropTypes.bool,
 	label: PropTypes.string,
-	name: PropTypes.string
+	name: PropTypes.string,
+	disabled: PropTypes.bool,
 };
 
 export default function Radio (props) {
-	const {checked, children, green, label, name, ...otherProps} = props;
+	const {checked, children, green, label, name, disabled, ...otherProps} = props;
 	return (
-		<label className="radio-component" name={name}>
-			<input {...otherProps} name={name} checked={checked} type="radio" children={void 0}/>
+		<label className={cx('radio-component', {disabled})} name={name}>
+			<input {...otherProps} name={name} checked={checked} type="radio" children={void 0} disabled={disabled} />
 			<span className={cx('label', {green})}>{label}</span>
 			{children && checked && (
 				<div className="sub">

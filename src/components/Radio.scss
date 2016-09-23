@@ -55,4 +55,8 @@ label.radio-component {
 	// 	}
 	// }
 
+	&.disabled {
+		opacity: 0.3;
+		pointer-events: none;
+	}
 }
