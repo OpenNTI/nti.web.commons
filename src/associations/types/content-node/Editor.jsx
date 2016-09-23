@@ -59,7 +59,6 @@ function getTrigger (item) {
 
 
 function renderAdd (item, onAdd) {
-	debugger;
 	const trigger = getTrigger(item);
 
 	return (

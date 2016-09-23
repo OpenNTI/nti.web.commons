@@ -26,8 +26,12 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 			});
 	}
 
-	function onRemoveFrom (container) {
-		debugger;
+	function onRemoveFrom (container, association) {
+		return provider.removeFrom(container)
+			.then(minWait(SHORT))
+			.then(() => {
+				debugger;
+			});
 	}
 
 	Promise.all([
