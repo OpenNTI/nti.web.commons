@@ -281,7 +281,7 @@ export default class Entity extends React.Component {
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (e.metaKey || e.ctrlKey) { return; }
+		if (e.metaKey || e.ctrlKey || this.state.rename) { return; }
 
 		if (getCoolOff(this.onTrigger)) {
 			return;
