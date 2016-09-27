@@ -22,7 +22,10 @@ export default class DisplayName extends React.Component {
 	static propTypes = {
 		className: React.PropTypes.string,
 
-		localeKey: React.PropTypes.string,
+		localeKey: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.func
+		]),
 
 		tag: React.PropTypes.any,
 
@@ -115,9 +118,11 @@ export default class DisplayName extends React.Component {
 		if (localeKey) {
 			name = ReactDOMServer.renderToStaticMarkup(<a rel="author" className="username">{name}</a>);
 
+			const getString = (typeof localeKey === 'function') ? localeKey : (o => t(localeKey, o));
+
 			Object.assign(props, {
 				children: void 0,
-				dangerouslySetInnerHTML: {'__html': t(localeKey, {name})}
+				dangerouslySetInnerHTML: {'__html': getString({name})}
 			});
 		}
 
