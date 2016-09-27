@@ -3,9 +3,9 @@ import cx from 'classnames';
 
 import {resolve, getDebugUsernameString} from 'nti-web-client/lib/user';
 
-import Constants from '../constants';
+import {DataURIs} from '../constants';
 
-const {DataURIs: {BLANK_AVATAR, BLANK_GROUP_AVATAR}} = Constants;
+const {BLANK_AVATAR, BLANK_GROUP_AVATAR} = DataURIs;
 
 const DEFAULT = { entity: {avatarURL: BLANK_AVATAR }};
 const DEFAULT_GROUP = { entity: {avatarURL: BLANK_GROUP_AVATAR }};
