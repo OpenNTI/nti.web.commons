@@ -1,0 +1,17 @@
+@import "~nti-style-common";
+
+.basic-button {
+	font: normal 600 0.875rem/1rem $body-font-family;
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.75rem 1.25rem;
+
+	&.rounded {
+		border-radius: 4px;
+	}
+
+	&.primary {
+		background: $primary-blue;
+		color: white;
+	}
+}

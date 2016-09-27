@@ -7,6 +7,7 @@ export Avatar from './Avatar';
 export Background from './Background';
 export Banner from './Banner';
 export BufferedInput from './BufferedInput';
+export Button from './Button';
 export CalendarCard from './CalendarCard';
 export Checkbox from './Checkbox';
 export CollectionFilter from './CollectionFilter';
