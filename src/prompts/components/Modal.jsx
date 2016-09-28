@@ -4,6 +4,8 @@ import Transition from 'react-addons-css-transition-group';
 
 import LockScroll from '../../components/LockScroll';
 
+const stop = e => e.stopPropagation();
+
 export default class Modal extends React.Component {
 
 	static propTypes = {
@@ -38,7 +40,7 @@ export default class Modal extends React.Component {
 				transitionLeaveTimeout={500}
 			>
 				<LockScroll />
-				<div ref={(x) => this.mask = x} className={classes}>
+				<div ref={(x) => this.mask = x} className={classes} onTouchStart={stop} onTouchMove={stop}>
 					<i className="icon-close" onClick={this.close}/>
 					<div className="modal-content">
 						{c}
