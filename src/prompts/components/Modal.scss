@@ -30,6 +30,16 @@
 	right: 0;
 	background: rgba(0,0,0,.7);
 	perspective: 300px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	overflow: {
+		x: hidden;
+		y: scroll;
+	}
+
 	.icon-close {
 		position: absolute;
 		width: 16px;
@@ -45,11 +55,8 @@
 
 .modal-content {
 	animation-delay: .15s;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	left: 0;
-	right: 0;
+	flex: 0 0 auto;
+
 	& > * {
 		margin: 0 auto;
 	}
@@ -57,12 +64,12 @@
 
 @keyframes modal-content {
 	0% {
-		transform: translate3d(0, -50%, -30px);
+		transform: translate3d(0, 0, -30px);
 		opacity: 0;
 	}
 
 	100% {
-		transform: translate3d(0,-50%,0);
+		transform: translate3d(0,0,0);
 		opacity: 1;
 	}
 }
