@@ -100,8 +100,9 @@ export default React.createClass({
 	},
 
 	render () {
+		const {props: {onEnterView, ...props}} = this;//eslint-disable-line no-unused-vars
 		return (
-			<div className="scrollTrigger" ref={x => this.el = x} {...this.props}/>
+			<div className="scrollTrigger" ref={x => this.el = x} {...props}/>
 		);
 	}
 });
