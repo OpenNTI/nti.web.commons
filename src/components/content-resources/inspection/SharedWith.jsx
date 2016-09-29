@@ -23,7 +23,7 @@ function getOutlineAndUnitsFromPath (path) {
 
 	return !course
 		? {outlineNode: o}
-		: course.getOutlineNode(outlineNodeId, true)
+		: course.getOutlineNode(outlineNodeId, {unpublished: true})
 			.then(outlineNode => {
 				const unit = outlineNode.parent();
 				return {course, unit, outlineNode};
