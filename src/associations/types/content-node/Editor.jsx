@@ -64,7 +64,7 @@ function renderAdd (item, onAdd) {
 
 	return (
 		<InlineFlyout arrow trigger={trigger}>
-			<Groups node={item.item} onAdd={onAdd} error={item.error} />
+			<Groups node={item.item} onAdd={onAdd} />
 		</InlineFlyout>
 	);
 }

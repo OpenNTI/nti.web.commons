@@ -10,6 +10,9 @@
 	cursor: pointer;
 
 	&.error {
-		background: $primary-red;
+		background: none;
+		padding: 0;
+		color: $primary-red;
+		text-decoration: underline;
 	}
 }

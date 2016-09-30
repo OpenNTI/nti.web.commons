@@ -1,5 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
+import {scoped} from 'nti-lib-locale';
+
+const DEFAULT_TEXT = {
+	tryAgain: 'Try Again'
+};
+
+const t = scoped('ASSOCIATION_ADD_BUTTON', DEFAULT_TEXT);
 
 AddButton.propTypes = {
 	label: React.PropTypes.string,
@@ -12,7 +19,7 @@ export default function AddButton ({label = 'Add To', onClick = () => {}, classN
 
 	return (
 		<div className={cls} onClick={onClick}>
-			{label}
+			{error ? t('tryAgain') : label}
 		</div>
 	);
 }
