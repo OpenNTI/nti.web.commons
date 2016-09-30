@@ -7,6 +7,7 @@
 	border-radius: 2px;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	display: flex;
+	align-items: center;
 
 	&.active {
 		background-color: $primary-purple;
@@ -21,6 +22,10 @@
 	}
 
 	.association-remove-button {
+		flex: 0 0 auto;
+	}
+
+	.association-error {
 		flex: 0 0 auto;
 	}
 }

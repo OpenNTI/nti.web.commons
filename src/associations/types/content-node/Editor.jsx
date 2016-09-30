@@ -7,6 +7,7 @@ import ListItem from '../components/ListItem';
 import ItemInfo from '../components/ItemInfo';
 import AddButton from '../components/AddButton';
 import RemoveButton from '../components/RemoveButton';
+import ErrorCmp from '../components/Error';
 
 import DateTime from '../../../components/DateTime';
 import {InlineFlyout} from '../../../components/Flyout';
@@ -17,7 +18,9 @@ const DEFAULT_TEXT = {
 	errorLabel: 'Failed: Try again',
 	draft: 'Draft',
 	schedule: 'Scheduled for %(date)s',
-	published: 'Published'
+	published: 'Published',
+	failedToAdd: 'Failed to add.',
+	failedToRemove: 'Failed to remove.'
 };
 
 const t = scoped('ASSOCIATION_CONTENT_NODE_EDITOR', DEFAULT_TEXT);
@@ -48,10 +51,8 @@ function getTrigger (item) {
 	if (item.isSaving) {
 		//TODO: replace this with the new spinner
 		trigger = (<span>Saving</span>);
-	} else if (item.error) {
-		trigger = (<AddButton label={t('errorLabel')} error />);
 	} else {
-		trigger = (<AddButton label={t('addLabel')} />);
+		trigger = (<AddButton label={t('addLabel')} error={item.error} />);
 	}
 
 	return trigger;
@@ -66,6 +67,20 @@ function renderAdd (item, onAdd) {
 			<Groups node={item.item} onAdd={onAdd} error={item.error} />
 		</InlineFlyout>
 	);
+}
+
+
+function renderRemove (item, onRemove) {
+	let remove;
+
+	if (item.isSaving) {
+		//TODO: replace this with the new spinner
+		remove = (<span>Saving</span>);
+	} else {
+		remove = (<RemoveButton  onRemove={onRemove} error={item.error} />);
+	}
+
+	return remove;
 }
 
 
@@ -87,8 +102,9 @@ function ContentNodeEditor ({item, associations}) {
 	return (
 		<ListItem className="content-node" active={active}>
 			<ItemInfo label={item.label} subLabels={getSubLabels(item, active)}/>
+			{item.error && (<ErrorCmp error={t(active ? 'failedToAdd' : 'failedToRemove')} white={active} />)}
 			{!active && item.canAddTo && (renderAdd(item, onAdd))}
-			{active && item.canRemoveFrom && (<RemoveButton onRemove={onRemove} />)}
+			{active && item.canRemoveFrom && (renderRemove(item, onRemove))}
 		</ListItem>
 	);
 }

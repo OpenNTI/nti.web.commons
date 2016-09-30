@@ -8,6 +8,8 @@ const GROUP = Symbol('Association Group');
 const SAVING = Symbol('Association Saving');
 const ERROR = Symbol('Association Error');
 
+const EDIT = Symbol('Edit Association');
+
 export default class AssociationItem extends EventEmitter {
 	/**
 	 * A wrapper to add some utils for associations
@@ -90,6 +92,25 @@ export default class AssociationItem extends EventEmitter {
 		this.emit('change');
 	}
 
+	[EDIT] (method, container) {
+		this[ERROR] = null;
+		this[SAVING] = true;
+		this.emit('change');
+
+		this[method](container || this.item, container && this.item)
+			.then(() => {
+				this[SAVING] = false;
+
+				this.emit('change');
+			})
+			.catch((reason) => {
+				this[SAVING] = false;
+				this[ERROR] = reason;
+
+				this.emit('change');
+			});
+	}
+
 
 	canAddTo () {
 		return !!this[ADD_TO];
@@ -98,21 +119,7 @@ export default class AssociationItem extends EventEmitter {
 
 	onAddTo (container) {
 		if (this[ADD_TO]) {
-			this[ERROR] = null;
-			this[SAVING] = true;
-			this.emit('change');
-
-			this[ADD_TO](container || this.item, container && this.item)
-				.then(() => {
-					this[SAVING] = false;
-					this.emit('change');
-				})
-				.catch((reason) => {
-					this[SAVING] = false;
-					this[ERROR] = reason;
-
-					this.emit('change');
-				});
+			this[EDIT](ADD_TO, container);
 		} else {
 			throw new Error('No method provided to add association');
 		}
@@ -124,9 +131,11 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
-	onRemoveFrom () {
+	onRemoveFrom (container) {
 		if (this[REMOVE_FROM]) {
-			this[REMOVE_FROM](this.item);
+			this[EDIT](REMOVE_FROM, container);
+		} else {
+			throw new Error('No method provided to remove association');
 		}
 	}
 }

@@ -1,11 +1,20 @@
+@import "~nti-style-common";
+
 .association-remove-button {
 	color: white;
-	opacity: 0.5;
 	cursor: pointer;
-	line-height: 2.125rem;
 	margin-right: 0.5rem;
 
-	&:hover {
-		opacity: 0.8;
+	i {
+		opacity: 0.5;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	span.try-again {
+		font: normal 400 0.875rem/2rem $body-font-family;
+		text-decoration: underline;
 	}
 }
