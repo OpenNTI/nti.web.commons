@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import {resolve, getDebugUsernameString} from 'nti-web-client/lib/user';
+import {User} from 'nti-web-client';
 
 import {DataURIs} from '../constants';
 
@@ -45,7 +45,7 @@ export default class Avatar extends React.Component {
 
 		this.setState({loading: true});
 
-		resolve(props)
+		User.resolve(props)
 			.catch(() => DEFAULT)
 			.then(x => this.setState({
 				entity: x,
@@ -113,7 +113,7 @@ export default class Avatar extends React.Component {
 
 		const childProps = {
 			...this.props,
-			'data-for': getDebugUsernameString(entity),
+			'data-for': User.getDebugUsernameString(entity),
 			alt: 'Avatar for ' + displayName,
 			className: cx('avatar', color, className)
 		};

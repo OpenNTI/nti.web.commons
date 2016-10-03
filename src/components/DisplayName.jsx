@@ -4,8 +4,7 @@ import ReactDOMServer from 'react-dom/server';
 import cx from 'classnames';
 
 import t from 'nti-lib-locale';
-import {getAppUsername} from 'nti-web-client';
-import {resolve, getDebugUsernameString} from 'nti-web-client/lib/user';
+import {getAppUsername, User} from 'nti-web-client';
 
 
 /**
@@ -80,7 +79,7 @@ export default class DisplayName extends React.Component {
 			}
 		};
 
-		this.setState({task}, ()=> resolve(props)
+		this.setState({task}, ()=> User.resolve(props)
 			.then(
 				entity => {
 					let displayName = (usePronoun && entity.getID() === appuser)
@@ -110,7 +109,7 @@ export default class DisplayName extends React.Component {
 			...otherProps,
 			className: cx('username', className),
 			children: name,
-			'data-for': getDebugUsernameString(entity)
+			'data-for': User.getDebugUsernameString(entity)
 		};
 
 		delete props.usePronoun;
