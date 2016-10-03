@@ -1,10 +1,10 @@
 import React, {Children, PropTypes} from 'react';
 import Logger from 'nti-util-logger';
+import {getRefHandler} from 'nti-commons/lib/jsx';
 
 const logger = Logger.get('common:high-order-components:ItemChanges');
 
 const CHANGE_HANDLERS = new WeakMap();
-const REF_HANDLERS = new WeakMap();
 
 function itemChanged (scope) {
 	const {refChild, props: {onItemChanged}} = scope;
@@ -35,22 +35,6 @@ function getHandler (scope) {
 	if (!h) {
 		h = itemChanged.bind(scope, scope);
 		CHANGE_HANDLERS.set(scope, h);
-	}
-	return h;
-}
-
-function getRefHandler (parentRef, localRef) {
-	if (typeof parentRef !== 'function') {
-		if (parentRef) {
-			logger.error('ItemChanges has stollen your ref! sorry :/');
-		}
-		return localRef;
-	}
-
-	let h = REF_HANDLERS.get(parentRef);
-	if (!h) {
-		h = (x) => {parentRef(x); localRef(x);};
-		REF_HANDLERS.set(parentRef, h);
 	}
 	return h;
 }
