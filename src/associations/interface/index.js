@@ -14,8 +14,8 @@ export function createInterfaceForActive (active, destinations, onAddTo, onRemov
 }
 
 
-export function createGroupedInterfaceForItem (item, scope, accepts) {
-	const provider = item.getPlacementProvider(scope, accepts);
+export function createInterfaceForItem (item, scope, accepts, group) {
+	const provider = item.getPlacementProvider(scope);
 	const associations = new AssociationsInterface(null, null);
 
 	function onAddTo (container, association) {
@@ -26,6 +26,7 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 			});
 	}
 
+
 	function onRemoveFrom (container, association) {
 		return provider.removeFrom(container)
 			.then(minWait(SHORT))
@@ -34,16 +35,29 @@ export function createGroupedInterfaceForItem (item, scope, accepts) {
 			});
 	}
 
+
+	function parseItems (items) {
+		const parsed = items.map(x => createItem(x, onAddTo, onRemoveFrom));
+
+		return group ? groupItemsByParent(parsed) : parsed;
+	}
+
+
 	Promise.all([
-		item.getAssociations(),
-		provider.getItems()
+		item.getAssociations(accepts),
+		provider.getItems(accepts)
 	]).then((results) => {
 		const active = results[0];
 		const items = results[1];
 
-		associations.active = active;
-		associations.destinations = groupItemsByParent(items.map(x => createItem(x, onAddTo, onRemoveFrom)));
+		associations.active = active || [];
+		associations.destinations = parseItems(items);
 	});
 
 	return associations;
+}
+
+
+export function createGroupedInterfaceForItem (item, scope, accepts) {
+	createInterfaceForItem (item, scope, accepts, true);
 }

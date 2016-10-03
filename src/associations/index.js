@@ -2,6 +2,7 @@ export Interface from './interface';
 export {
 	createInterfaceForRecord,
 	createInterfaceForActive,
+	createInterfaceForItem,
 	createGroupedInterfaceForItem
 } from './interface';
 
