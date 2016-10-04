@@ -59,7 +59,7 @@ function getDays (seconds) {
  * @param  {Number} seconds the number of seconds
  * @return {String}       display value
  */
-function getDisplay (seconds) {
+export function getDisplay (seconds) {
 	const days = getDays(seconds);
 	const hours = getHours(seconds);
 	const minutes = getMinutes(seconds);
