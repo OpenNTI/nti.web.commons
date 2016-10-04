@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {scoped} from 'nti-lib-locale';
-import buffered from 'nti-commons/lib/function-buffer';
+import {buffer as buffered} from 'nti-commons';
 
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
 

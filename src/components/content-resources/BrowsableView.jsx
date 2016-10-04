@@ -9,8 +9,8 @@ import TaskQueue from './tasks/Queue';
 import MoveTask from './tasks/Move';
 import UploadTask from './tasks/Upload';
 
-import buffered from 'nti-commons/lib/function-buffer';
-import ObjectSelectionModel from 'nti-commons/lib/ObjectSelectionModel';
+import {buffer as buffered, Selection} from 'nti-commons';
+const {ObjectSelectionModel} = Selection
 
 const logger = Logger.get('common:components:content-resources:BrowsableView');
 

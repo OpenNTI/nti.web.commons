@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import ReactDOMServer from 'react-dom/server'; //eew
 import {getEventTarget} from 'nti-lib-dom';
-import SelectionModel from 'nti-commons/lib/SelectionModel';
-import getFilesFromDataTransferItems from 'nti-commons/lib/get-files-from-data-transfer-items';
-import isActionable from 'nti-commons/lib/is-event-actionable';
-import getCoolOff from 'nti-commons/lib/function-cooloff';
-import toJS from 'nti-commons/lib/json-parse-safe';
+
+import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
+
+const {SelectionModel} = Selection;
+
 import {getFragmentFromString} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import path from 'path';
@@ -188,12 +188,12 @@ export default class Entity extends React.Component {
 		this.onDragLeave(e);
 
 		const {dataTransfer: dt} = e;
-		const data = toJS(dt.getData('application/json'));
+		const data = Parsing.parseJSON(dt.getData('application/json')); //just returns null on parse error
 		const {files:transferFiles, items} = dt;
 		let files = transferFiles;
 
 		if (items) {
-			files = getFilesFromDataTransferItems(items);
+			files = FileAPI.getFilesFromDataTransferItems(items);
 		}
 
 		onFolderDrop(item, data, files);
@@ -266,7 +266,7 @@ export default class Entity extends React.Component {
 		const {metaKey, altKey, ctrlKey, shiftKey} = e;
 		const {item} = this.props;
 
-		if (!isActionable(e)) { return; }
+		if (!Events.isActionable(e)) { return; }
 
 		if (!shiftKey) { //if shift was pressed, let this bubble up
 			e.preventDefault();

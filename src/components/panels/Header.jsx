@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import isActionable from 'nti-commons/lib/is-event-actionable';
+import {Events} from 'nti-commons';
 
 export default class Header extends React.Component {
 	static propTypes = {
@@ -12,7 +12,7 @@ export default class Header extends React.Component {
 
 	onClose = (e) => {
 		const {onClose} = this.props;
-		if (onClose && isActionable(e)) {
+		if (onClose && Events.isActionable(e)) {
 			onClose(e);
 		}
 	}

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Logger from 'nti-util-logger';
 
-import {rawContent as raw} from 'nti-commons/lib/jsx';
+import {rawContent} from 'nti-commons';
 
 import DialogButtons from '../../components/DialogButtons';
 
@@ -201,8 +201,8 @@ export default class Dialog extends React.Component {
 					{this.renderDismissControl()}
 					<div className={`icon ${iconClass}`}/>
 					<div className="content-area">
-						<h1 {...raw(title)}/>
-						<p {...raw(message)}/>
+						<h1 {...rawContent(title)}/>
+						<p {...rawContent(message)}/>
 					</div>
 					<DialogButtons buttons={buttons} />
 				</div>

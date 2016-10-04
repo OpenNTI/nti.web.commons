@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 import SelectBox from './SelectBox';
 import NumberInput from './NumberInput';
-import Time from 'nti-commons/lib/Time';
-import autobind from 'nti-commons/lib/autobind';
+import {Time} from 'nti-commons';
 
 const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 const TimeMap = new WeakMap();
@@ -27,8 +26,6 @@ export default class TimePicker extends React.Component {
 			tfTime: false,
 			editingHour: false
 		};
-
-		autobind(this,'onKeyDown','onHourInputChange','onMinuteInputChange','onMeridiemChange', 'onHourInputBlur');
 
 		this.onChange = value => {
 			const {onChange} = this.props;
@@ -74,7 +71,7 @@ export default class TimePicker extends React.Component {
 	}
 
 
-	onHourInputChange (e) {
+	onHourInputChange = (e) => {
 		const {target: {value: hours}} = e;
 		const {tfTime} = this.state;
 		const value = this.getValue(true);
@@ -105,7 +102,7 @@ export default class TimePicker extends React.Component {
 	}
 
 
-	onMinuteInputChange (e) {
+	onMinuteInputChange = (e) => {
 		const {target: {value: minuteString}} = e;
 		const value = this.getValue(true);
 		const minutes = getNumber(minuteString);
@@ -122,13 +119,13 @@ export default class TimePicker extends React.Component {
 	}
 
 
-	onMeridiemChange (period) {
+	onMeridiemChange = (period) => {
 		const value = this.getValue(true);
 		this.onChange(value.setPeriod(period));
 	}
 
 
-	onKeyDown (e) {
+	onKeyDown = (e) => {
 		const {key, target: {name}} = e;
 		const value = this.getValue(true);
 		const KeyDownMap = {
@@ -181,7 +178,7 @@ export default class TimePicker extends React.Component {
 	}
 
 
-	onHourInputBlur () {
+	onHourInputBlur = () => {
 		this.setState({
 			editingHour: false
 		});

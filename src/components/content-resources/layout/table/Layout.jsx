@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-import SelectionModel from 'nti-commons/lib/SelectionModel';
+import {Selection} from 'nti-commons';
 
 import ColumnHead from './ColumnHead';
 import Folder from './Folder';
@@ -12,7 +12,7 @@ export default class LayoutTable extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		contents: PropTypes.array,
-		selection: PropTypes.instanceOf(SelectionModel),
+		selection: PropTypes.instanceOf(Selection.Model),
 		sort: PropTypes.shape({
 			sortOn: PropTypes.string,
 			sortOrder: PropTypes.oneOf(['asc', 'desc'])

@@ -1,5 +1,5 @@
 import React from 'react';
-import Point from 'nti-commons/lib/Point';
+import {Point} from 'nti-commons';
 
 const pointFromTouch = t => new Point(t.pageX, t.pageY, t.identifier);
 

@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import cx from 'classnames';
 
-import wait from 'nti-commons/lib/wait';
+import {wait} from 'nti-commons';
 
 import TinyLoader from './TinyLoader';
 

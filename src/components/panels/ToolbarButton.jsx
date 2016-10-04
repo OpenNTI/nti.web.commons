@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-import isActionable from 'nti-commons/lib/is-event-actionable';
+import {Events} from 'nti-commons';
 
 const HANDLERS = new WeakMap();
 const disable = (e) => (e.preventDefault(),e.stopPropagation());
@@ -48,7 +48,7 @@ function getHandler (fn) {
 
 	let result = HANDLERS.get(fn);
 	if (!result) {
-		result = (e) => isActionable(e) && (fn(e), e.target.blur());
+		result = (e) => Events.isActionable(e) && (fn(e), e.target.blur());
 		HANDLERS.set(fn, result);
 	}
 

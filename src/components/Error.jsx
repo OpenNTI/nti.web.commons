@@ -1,7 +1,7 @@
 import React from 'react';
 import Logger from 'nti-util-logger';
 
-import {rawContent} from 'nti-commons/lib/jsx';
+import {rawContent} from 'nti-commons';
 
 const logger = Logger.get('common:components:Error');
 
@@ -80,7 +80,7 @@ export default React.createClass({
 
 		return (
 			<figure className="error">
-				<div className="m glyph icon-alert"></div>
+				<div className="m glyph icon-alert"/>
 				<figcaption>
 					<span>{label}</span>
 					<div>{message}</div>

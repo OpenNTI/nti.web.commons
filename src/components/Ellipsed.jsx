@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import setTextContent from 'react/lib/setTextContent';
-import SharedExecution from 'nti-commons/lib/SharedExecution';
-
+import {Tasks} from 'nti-commons';
+const {SharedExecution} = Tasks;
 
 export default class Ellipsed extends React.Component {
 
