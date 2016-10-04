@@ -1,9 +1,74 @@
 import React from 'react';
+import {scoped} from 'nti-lib-locale';
 
 import NumberInput from './NumberInput';
 
 export const secondsPerHour = 3600;
 export const secondsPerDay = secondsPerHour * 24;
+
+const DEFAULT_TEXT = {
+	days: {
+		one: '%(count)s Day',
+		other: '%(count)s Days'
+	},
+	hours: {
+		one: '%(count)s Hour',
+		other: '%(count)s Hours'
+	},
+	minutes: {
+		one: '%(count)s Minute',
+		other: '%(count)s Minutes'
+	}
+};
+
+const t = scoped('DURATION_UNITS', DEFAULT_TEXT);
+
+
+/**
+ * Get the minutes (0-59) for the given seconds value.
+ * @param  {number} seconds number of seconds
+ * @return {integer} the minutes (0-59) for the given seconds value
+ */
+function getMinutes (seconds) {
+	return Math.floor((seconds % secondsPerHour) / 60);
+}
+
+
+/**
+ * Get the hours (0-23) for the given seconds value
+ * @param  {number} seconds The number of seconds
+ * @return {integer} the number of hours (0-23) for the given seconds value
+ */
+function getHours (seconds) {
+	return Math.floor((seconds % secondsPerDay) / secondsPerHour);
+}
+
+
+/**
+ * Get the number of days for the given seconds value
+ * @param  {number} seconds The number of seconds
+ * @return {integer} the number of days for the given seconds value
+ */
+function getDays (seconds) {
+	return Math.floor(seconds / secondsPerDay);
+}
+
+/**
+ * Get a display string for the duration of a given number of
+ * seconds
+ * @param  {Number} seconds the number of seconds
+ * @return {String}       display value
+ */
+function getDisplay (seconds) {
+	const days = getDays(seconds);
+	const hours = getHours(seconds);
+	const minutes = getMinutes(seconds);
+
+	const p = (val, unit) => val ? t(unit, {count:val}) : '';
+
+	return `${p(days, 'days')} ${p(hours, 'hours')} ${p(minutes, 'minutes')}`;
+}
+
 
 export default class DurationPicker extends React.Component {
 	constructor (props) {
@@ -19,31 +84,23 @@ export default class DurationPicker extends React.Component {
 		value: React.PropTypes.number
 	}
 
-	/**
-	 * Get the minutes (0-59) for the given seconds value.
-	 * @param  {number} seconds number of seconds
-	 * @return {integer} the minutes (0-59) for the given seconds value
-	 */
+
 	static minutes (seconds) {
-		return Math.floor((seconds % secondsPerHour) / 60);
+		return getMinutes(seconds);
 	}
 
-	/**
-	 * Get the hours (0-23) for the given seconds value
-	 * @param  {number} seconds The number of seconds
-	 * @return {integer} the number of hours (0-23) for the given seconds value
-	 */
+
 	static hours (seconds) {
-		return Math.floor((seconds % secondsPerDay) / secondsPerHour);
+		return getHours(seconds);
 	}
 
-	/**
-	 * Get the number of days for the given seconds value
-	 * @param  {number} seconds The number of seconds
-	 * @return {integer} the number of days for the given seconds value
-	 */
+
 	static days (seconds) {
-		return Math.floor(seconds / secondsPerDay);
+		return getDays(seconds);
+	}
+
+	static getDisplay (value) {
+		return getDisplay(value);
 	}
 
 	componentWillMount () {
