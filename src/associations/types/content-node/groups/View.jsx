@@ -1,5 +1,5 @@
 import React from 'react';
-import minWait, {SHORT} from 'nti-commons/lib/wait-min';
+import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 
 import Group from './Group';
@@ -35,7 +35,7 @@ export default class ContentNodeGroups extends React.Component {
 
 	loadContent (node) {
 		node.getContent()
-			.then(minWait(SHORT))
+			.then(wait.min(wait.SHORT))
 			.then((content) => {
 				this.setState({
 					content

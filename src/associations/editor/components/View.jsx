@@ -1,5 +1,5 @@
 import React from 'react';
-import matchesFilter from 'nti-commons/lib/matches-filter';
+import {Filters} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 
 import Container from './Container';
@@ -7,6 +7,8 @@ import Container from './Container';
 import EmptyState from '../../../components/EmptyState';
 import Search from '../../../components/Search';
 import Loading from '../../../components/Loading';
+
+const {matchesFilter} = Filters;
 
 const DEFAULT_TEXT = {
 	sharedLabel: 'Shared To',
