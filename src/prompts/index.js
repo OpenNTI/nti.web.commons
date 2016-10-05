@@ -28,7 +28,7 @@ export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	});
 }
 
-export function modal (content, className, handlers = {}) {
+export function modal (content, className, handlers = {}, closeOnMaskClick = false) {
 
 	const {createElement: ce} = global.document || {};
 	const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
@@ -45,7 +45,7 @@ export function modal (content, className, handlers = {}) {
 	}
 
 	ReactDOM.render(
-		<Modal onDismiss={dismiss} className={className}>{content}</Modal>,
+		<Modal onDismiss={dismiss} className={className} closeOnMaskClick={closeOnMaskClick}>{content}</Modal>,
 		container
 	);
 

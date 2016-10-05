@@ -11,7 +11,8 @@ export default class Modal extends React.Component {
 	static propTypes = {
 		onDismiss: React.PropTypes.func.isRequired,
 		children: React.PropTypes.node,
-		className: React.PropTypes.string
+		className: React.PropTypes.string,
+		closeOnMaskClick: React.PropTypes.bool
 	}
 
 	state = {}
@@ -20,6 +21,13 @@ export default class Modal extends React.Component {
 		const {onDismiss} = this.props;
 		if (onDismiss) {
 			onDismiss(e);
+		}
+	}
+
+	onMaskClick = (e) => {
+		const {closeOnMaskClick} = this.props;
+		if (closeOnMaskClick && (e.target === this.mask || e.target === this.content)) {
+			this.close(e);
 		}
 	}
 
@@ -40,9 +48,9 @@ export default class Modal extends React.Component {
 				transitionLeaveTimeout={500}
 			>
 				<LockScroll />
-				<div ref={(x) => this.mask = x} className={classes} onTouchStart={stop} onTouchMove={stop}>
+				<div ref={(x) => this.mask = x} className={classes} onTouchStart={stop} onTouchMove={stop} onClick={this.onMaskClick}>
 					<i className="icon-close" onClick={this.close}/>
-					<div className="modal-content">
+					<div ref={x => this.content = x} className="modal-content">
 						{c}
 					</div>
 				</div>
