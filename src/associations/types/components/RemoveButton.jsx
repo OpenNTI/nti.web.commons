@@ -25,7 +25,7 @@ export default class AssociationRemove extends React.Component {
 	}
 
 
-	onClick () {
+	onClick = () => {
 		const {onRemove} = this.props;
 		const getString = this.getStringFn();
 

@@ -69,7 +69,7 @@ class ActiveInterface extends EventEmitter {
 		const active = this[RAW_ACTIVE];
 
 		if (activeMap[id]) {
-			this.active = active.filter(x => x !== id);
+			this.active = active.filter(x => x === id);
 		}
 	}
 }

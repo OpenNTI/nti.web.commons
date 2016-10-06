@@ -32,7 +32,7 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 		return provider.removeFrom(container)
 			.then(wait.min(wait.SHORT))
 			.then(() => {
-				debugger;
+				associations.removeActive(association || container);
 			});
 	}
 
