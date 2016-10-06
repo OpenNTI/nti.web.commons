@@ -19,6 +19,9 @@ export default class Modal extends React.Component {
 
 	close = (e) => {
 		const {onDismiss} = this.props;
+		if (e) {
+			e.stopPropagation();
+		}
 		if (onDismiss) {
 			onDismiss(e);
 		}
