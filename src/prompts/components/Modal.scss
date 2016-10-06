@@ -1,3 +1,5 @@
+@import "~nti-style-common";
+
 .modal-mask-appear,
 .modal-mask-enter {
 	opacity: 0.01;
@@ -59,7 +61,18 @@
 
 	& > * {
 		margin: 0 auto;
+
+		@include covered-modal {
+			&::before {
+				content: '';
+				position: absolute;
+				top: 0; bottom: 0;
+				left: 0; right: 0;
+				background: rgba(255, 255, 255, 0.5);
+			}
+		}
 	}
+
 }
 
 @keyframes modal-content {
@@ -71,5 +84,12 @@
 	100% {
 		transform: translate3d(0,0,0);
 		opacity: 1;
+	}
+}
+
+
+body > .modal + .modal {
+	.modal-mask {
+		background: none;
 	}
 }

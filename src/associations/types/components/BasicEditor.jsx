@@ -7,6 +7,8 @@ import ErrorCmp from './Error';
 import AddButton from './AddButton';
 import RemoveButton from './RemoveButton';
 
+import ItemChanges from '../../../HighOrderComponents/ItemChanges';
+
 const DEFAULT_TEXT = {
 	addLabel: 'Add',
 	failedToAdd: 'Failed to add.',
@@ -15,7 +17,7 @@ const DEFAULT_TEXT = {
 
 const t = scoped('BASIC_ASSOCIATION_EDITOR', DEFAULT_TEXT);
 
-export default class BasicEditor extends React.Component {
+class BasicEditor extends React.Component {
 	static propTypes = {
 		item: React.PropTypes.object.isRequired,
 		associations: React.PropTypes.object.isRequired,
@@ -28,7 +30,6 @@ export default class BasicEditor extends React.Component {
 	onAdd = () => {
 		const {item} = this.props;
 
-		debugger;
 		item.onAddTo();
 	}
 
@@ -104,3 +105,5 @@ export default class BasicEditor extends React.Component {
 	}
 
 }
+
+export default ItemChanges.compose(BasicEditor);
