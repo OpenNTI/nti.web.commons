@@ -6,7 +6,7 @@ import Container from './Container';
 
 import EmptyState from '../../../components/EmptyState';
 import Search from '../../../components/Search';
-import Loading from '../../../components/Loading';
+import {Mask as Loading} from '../../../components/loading-indicators';
 
 const {matchesFilter} = Filters;
 

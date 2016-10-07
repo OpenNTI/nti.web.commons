@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Loading from './Loading';
+import {Mask as Loading} from './loading-indicators';
 import NavigatableMixin from '../mixins/NavigatableMixin';
 
 

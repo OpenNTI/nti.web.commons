@@ -4,7 +4,7 @@ import {scoped} from 'nti-lib-locale';
 
 import Group from './Group';
 
-import Loading from '../../../../components/TinyLoader';
+import {Ellipse as Loading} from '../../../../components/loading-indicators';
 
 const DEFAULT_TEXT = {
 	label: 'Choose a Section'

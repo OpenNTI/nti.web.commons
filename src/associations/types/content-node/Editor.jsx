@@ -10,7 +10,7 @@ import RemoveButton from '../components/RemoveButton';
 import ErrorCmp from '../components/Error';
 
 import DateTime from '../../../components/DateTime';
-import {InlineFlyout} from '../../../components/Flyout';
+import {InlineFlyout} from '../../../components/flyout';
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
 
 const DEFAULT_TEXT = {
