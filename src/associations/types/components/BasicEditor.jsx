@@ -74,7 +74,7 @@ class BasicEditor extends React.Component {
 			addButton = this.renderSaving();
 		} else {
 			addButton = (
-				<AddButton label={getString('addLabel')} error={item.error} onClick={this.onAdd} />
+				<AddButton label={getString('addLabel')} error={!!item.error} onClick={this.onAdd} />
 			);
 		}
 
@@ -90,7 +90,7 @@ class BasicEditor extends React.Component {
 			removeButton = this.renderSaving();
 		} else {
 			removeButton = (
-				<RemoveButton onRemove={this.onRemove} error={item.error} />
+				<RemoveButton onRemove={this.onRemove} error={!!item.error} />
 			);
 		}
 
