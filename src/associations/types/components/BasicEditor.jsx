@@ -8,6 +8,7 @@ import AddButton from './AddButton';
 import RemoveButton from './RemoveButton';
 
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
+import {Loading} from '../../../components';
 
 const DEFAULT_TEXT = {
 	addLabel: 'Add',
@@ -98,9 +99,11 @@ class BasicEditor extends React.Component {
 
 
 	renderSaving = () => {
-		//TODO: replace this with spinner
+		const {item, associations} = this.props;
+		const active = associations.isSharedWith(item);
+
 		return (
-			<span>Saving</span>
+			<Loading.Spinner white={active} />
 		);
 	}
 
