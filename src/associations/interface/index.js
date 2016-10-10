@@ -60,5 +60,5 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 
 
 export function createGroupedInterfaceForItem (item, scope, accepts) {
-	createInterfaceForItem (item, scope, accepts, true);
+	return createInterfaceForItem (item, scope, accepts, true);
 }
