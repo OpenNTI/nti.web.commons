@@ -32,8 +32,21 @@ class ActiveInterface extends EventEmitter {
 			active = active.active;
 		}
 
-		this[RAW_ACTIVE] = active;
-		this[ACTIVE_MAP] = mapActive(active || []);
+		this[RAW_ACTIVE] = (active || []).map(x => {
+			let id;
+
+			if (x.NTIID != null) {
+				id = x.NTIID;
+			} else if (x.ID != null) {
+				id = x.ID;
+			} else {
+				id = x;
+			}
+
+			return id;
+		});
+
+		this[ACTIVE_MAP] = mapActive(this[RAW_ACTIVE] || []);
 
 		this.emit('change');
 	}
@@ -69,7 +82,7 @@ class ActiveInterface extends EventEmitter {
 		const active = this[RAW_ACTIVE];
 
 		if (activeMap[id]) {
-			this.active = active.filter(x => x === id);
+			this.active = active.filter(x => x !== id);
 		}
 	}
 }
