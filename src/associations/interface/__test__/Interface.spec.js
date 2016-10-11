@@ -7,7 +7,7 @@ function makeDestination (id, onAdd, onRemove) {
 	}, onAdd, onRemove);
 }
 
-fdescribe('Association Interface Tests', () => {
+describe('Association Interface Tests', () => {
 	let associations;
 	let items;
 
