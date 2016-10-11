@@ -117,6 +117,13 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
+	/**
+	 * Add an association
+	 *
+	 * @param  {Object} container the destination to add an association, if not passed use
+	 *                            this.item
+	 * @return {Promise}          Fulfills or rejects with the success of adding an association
+	 */
 	onAddTo (container) {
 		if (this[ADD_TO]) {
 			this[EDIT](ADD_TO, container);
@@ -131,6 +138,13 @@ export default class AssociationItem extends EventEmitter {
 	}
 
 
+	/**
+	 * Add an association
+	 *
+	 * @param  {Object} container the destination to add an association, if not passed use
+	 *                            this.item
+	 * @return {Promise}          Fulfills or rejects with the success of adding an association
+	 */
 	onRemoveFrom (container) {
 		if (this[REMOVE_FROM]) {
 			this[EDIT](REMOVE_FROM, container);
