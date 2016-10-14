@@ -8,3 +8,5 @@ export {
 
 export Editor from './editor';
 export {openEditorModal} from './editor';
+
+export * as Display from './display';

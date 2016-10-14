@@ -1,0 +1,16 @@
+@import "~nti-style-common";
+
+.inline-association {
+	.loading-spinner {
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 0.3rem;
+	}
+
+	.loading-text {
+		display: inline-block;
+		vertical-align: middle;
+		font: normal 400 0.875rem/1.25rem $body-font-family;
+		color: $tertiary-grey;
+	}
+}

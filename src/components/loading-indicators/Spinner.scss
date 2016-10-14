@@ -57,4 +57,10 @@
 			stroke: white;
 		}
 	}
+
+	&.grey {
+		.path {
+			stroke: $tertiary-grey;
+		}
+	}
 }
