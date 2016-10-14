@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 export function getParts (list, remaining, getString) {
 	const onlyTwo = list.length === 2;
@@ -21,18 +22,20 @@ export function getParts (list, remaining, getString) {
 }
 
 
-function renderItem (item, key) {
+function renderItem (item, key, remaining) {
+	const cls = cx('item', {remaining});
+
 	return (
-		<span className="item" key={key}>{item}</span>
+		<span className={cls} key={key}>{item}</span>
 	);
 }
 
 
 export const RENDERERS = {
-	['{listItem}'] (item, getString, renderOverrides, key) {
+	['{listItem}'] (item, getString, renderOverrides, key, remaining) {
 		return renderOverrides['{listItem}'] ?
-					renderOverrides['{listItem}'](item, getString, key) :
-					renderItem(item, key);
+					renderOverrides['{listItem}'](item, getString, key, remaining) :
+					renderItem(item, key, remaining);
 	},
 
 
@@ -58,7 +61,7 @@ export const RENDERERS = {
 
 	['{remaining}'] (list, remaining, getString, renderOverrides, key) {
 		if (!remaining && list.length > 1) {
-			return RENDERERS['{listItem}'](list[list.length - 1], getString, renderOverrides, key);
+			return RENDERERS['{listItem}'](list[list.length - 1], getString, renderOverrides, key, true);
 		}
 
 		return remaining && (<span className="remaining" key={key}>{getString('remaining', {count: remaining})}</span>);

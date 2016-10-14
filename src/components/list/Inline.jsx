@@ -12,8 +12,8 @@ const DEFAULT_TEXT = {
 	label: {
 		//This makes use of the pluralization of the count of list items to get the appropriate commas or not
 		remaining: {
-			one: '{list} & {remaining}',
-			other: '{list}, & {remaining}'
+			one: '{list} and {remaining}',
+			other: '{list}, and {remaining}'
 		},
 		single: '{list}'
 	},
@@ -38,9 +38,10 @@ export default function InlineList ({children, limit = 1, getString, renderOverr
 
 	const override = getString ? t.override(getString) : t;
 
-	const list = children.slice(0, limit);
+	const list = children.length === 2 || children.length < limit ? children : children.slice(0, limit);
 	const remaining = children.length - list.length;
 	const parts = getParts(list, remaining, override);
+
 
 	const renders = parts.reduce((acc, part, index) => {
 		let render;

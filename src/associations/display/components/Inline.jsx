@@ -110,7 +110,7 @@ export default class InlineAssociations extends React.Component {
 		const getString = this.getStringFn();
 
 		return (
-			<List.Inline children={associations.map(x => x.title || x.label)} max={1} getString={t} />
+			<List.Inline children={associations.map(x => x.title || x.label)} max={1} getString={getString} />
 		);
 	}
 }

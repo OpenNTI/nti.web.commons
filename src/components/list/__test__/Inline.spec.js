@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Inline from '../Inline';
 
 
-fdescribe('Inline List Tests', () => {
+describe('Inline List Tests', () => {
 	let div;
 
 	function getListDOM () {
@@ -119,7 +119,7 @@ fdescribe('Inline List Tests', () => {
 			const list = getListDOM();
 			const text = list.innerText;
 
-			expect(text).toEqual('Item 1 & Item 2');
+			expect(text).toEqual('Item 1 and Item 2');
 		});
 	});
 
@@ -164,7 +164,7 @@ fdescribe('Inline List Tests', () => {
 			const list = getListDOM();
 			const text = list.innerText;
 
-			expect(text).toEqual('Item 1, Item 2, & Item 3');
+			expect(text).toEqual('Item 1, Item 2, and Item 3');
 		});
 	});
 
@@ -204,7 +204,7 @@ fdescribe('Inline List Tests', () => {
 			const list = getListDOM();
 			const text = list.innerText;
 
-			expect(text).toEqual('Item 1, Item 2, & 2 Others');
+			expect(text).toEqual('Item 1, Item 2, and 2 Others');
 		});
 	});
 });
