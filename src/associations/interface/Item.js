@@ -38,7 +38,8 @@ export default class AssociationItem extends EventEmitter {
 
 
 	get ID () {
-		return this[ITEM].NTIID || this[ITEM].ID;
+		//TODO: make this better....
+		return this[ITEM].LessonOverviewNTIID || this[ITEM].NTIID || this[ITEM].ID;
 	}
 
 
