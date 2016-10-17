@@ -6,7 +6,7 @@ export function getParts (list, remaining, getString) {
 	let name = 'label';
 	let data = {};
 
-	if (list.length === 1) {
+	if (list.length === 1 && !remaining) {
 		name = `${name}.single`;
 	} else {
 		name = `${name}.remaining`;
