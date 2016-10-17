@@ -263,7 +263,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const selected = selections.length;
 		const currentFolderCan = x => folder && folder.can(x);
 		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
-		const disabled = (renaming|moving); //modal states
+		const disabled = (renaming || moving); //modal states
 		const hasInfo = selected === 1 && !selections[0].isFolder;
 		const inspectItem = hasInfo ? selections[0] : void 0;
 
