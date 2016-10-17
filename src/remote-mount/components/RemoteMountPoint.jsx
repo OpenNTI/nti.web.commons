@@ -55,7 +55,7 @@ export default class RemoteMountPoint extends React.Component {
 
 	render () {
 		return (
-			<span data-placeholder="mount point placeholder"></span>
+			<span data-placeholder="mount point placeholder"/>
 		);
 	}
 }

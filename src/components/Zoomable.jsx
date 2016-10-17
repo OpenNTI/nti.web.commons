@@ -139,7 +139,7 @@ export default React.createClass({
 					onTouchEnd={this.touchEnd}
 				>
 					<img src={src} style={style} ref={x => this.img = x} className="zoomable-img" />
-					<button className="zoomable-close" onClick={this.close}></button>
+					<button className="zoomable-close" onClick={this.close}/>
 				</div>
 		);
 	}

@@ -177,23 +177,19 @@ export default class Flyout extends React.Component {
 	}
 
 
+	state = {alignment: {}}
+
+
 	constructor (props) {
 		super(props);
-		this.state = {alignment: {}};
 		this.fly = makeDOM({className: cx('fly-wrapper', props.className)});
-		this.onToggle = this.onToggle.bind(this);
-		this.attachFlyoutRef = this.attachFlyoutRef.bind(this);
-		this.maybeDismiss = this.maybeDismiss.bind(this);
-
-		this.realign = () => {
-			clearTimeout(this.realign.timeout);
-			this.realign.timeout = setTimeout(()=> this.setState({aligning: true}, () => this.align()), 50);
-		};
 	}
 
 
 	get trigger () {
-		return ReactDOM.findDOMNode(this);
+		//This is presently needed because we allow the trigger to be a dom element or a Component...
+		//we can't ref-hook Components and get a dom node, so the only current solution is this.
+		return ReactDOM.findDOMNode(this);//eslint-disable-line
 	}
 
 
@@ -231,7 +227,7 @@ export default class Flyout extends React.Component {
 	}
 
 
-	maybeDismiss (e, cb) {
+	maybeDismiss = (e, cb) => {
 		const {target} = e || {};
 		const {trigger, flyout, state: {open}} = this;
 		const finish = () => typeof cb === 'function' && cb();
@@ -280,7 +276,7 @@ export default class Flyout extends React.Component {
 	}
 
 
-	attachFlyoutRef (ref) {
+	attachFlyoutRef = (ref) => {
 
 		if (ref && !this.flyout) {
 			window.addEventListener('resize', this.realign);
@@ -363,7 +359,13 @@ export default class Flyout extends React.Component {
 	}
 
 
-	onToggle (e, cb) {
+	realign = () => {
+		clearTimeout(this.realign.timeout);
+		this.realign.timeout = setTimeout(()=> this.setState({aligning: true}, () => this.align()), 50);
+	}
+
+
+	onToggle = (e, cb) => {
 		if (e) {
 			if (e.isPropagationStopped()) {
 				return;

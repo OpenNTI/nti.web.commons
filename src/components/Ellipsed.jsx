@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import setTextContent from 'react/lib/setTextContent';
-import {Tasks} from 'nti-commons';
-const {SharedExecution} = Tasks;
+import {Tasks, getRefHandler} from 'nti-commons';
 
 export default class Ellipsed extends React.Component {
 
@@ -21,22 +20,26 @@ export default class Ellipsed extends React.Component {
 	static trim = trim
 
 
+	attachRef = ref => this.element = ref;
+
+
 	componentDidMount () {
-		SharedExecution.clear(this.tt);
-		this.tt = truncateText(ReactDOM.findDOMNode(this), this.props.measureOverflow);
+		Tasks.SharedExecution.clear(this.tt);
+		this.tt = truncateText(this.element, this.props.measureOverflow);
 	}
 
 
 	componentDidUpdate () {
-		SharedExecution.clear(this.tt);
-		this.tt = truncateText(ReactDOM.findDOMNode(this), this.props.measureOverflow);
+		Tasks.SharedExecution.clear(this.tt);
+		this.tt = truncateText(this.element, this.props.measureOverflow);
 	}
 
 
 	render () {
-		let {tag, ...otherProps} = this.props;
+		const {tag, ...otherProps} = this.props;
 		delete otherProps.measureOverflow;
-		return React.createElement(tag, otherProps);
+		const ref = getRefHandler(otherProps.ref, this.attachRef);
+		return React.createElement(tag, {...otherProps, ref});
 	}
 }
 
@@ -59,7 +62,7 @@ function truncateText (el, measure) {
 	}
 
 
-	return SharedExecution.schedule(() => {
+	return Tasks.SharedExecution.schedule(() => {
 		const box = (measure === 'parent') ? el.parentNode : el;
 		const tooBig = () => box.scrollHeight - (box.clientHeight || box.offsetHeight) >= 1;
 
@@ -70,7 +73,7 @@ function truncateText (el, measure) {
 
 					setText(getText().replace(/[^\.](\.*)$/, '...'));
 
-					return SharedExecution.schedule(trimStep);
+					return Tasks.SharedExecution.schedule(trimStep);
 				}
 			}
 		}

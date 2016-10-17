@@ -29,7 +29,7 @@ export default function Select (props) {
 			<span className="icon-chevron-down small"/>
 			<span className="nti-select-value">{valueLabel}</span>
 			<select className={selectClassNames} {...otherProps} value={empty && value == null ? 'empty' : value} onChange={onChange}>
-				{(!value && empty) && <option disabled value="empty"></option>}
+				{(!value && empty) && <option disabled value="empty"/>}
 				{children}
 			</select>
 		</div>

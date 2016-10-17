@@ -13,7 +13,8 @@ const relativeToWeek3 = new Date('2015-11-12T22:00:00.000Z'); //+21 day
 const relativeToMonth = new Date('2015-11-19T22:00:00.000Z'); //+27 day
 const relativeToMonths = new Date('2015-12-31T22:00:00.000Z'); //+++ days
 
-const getText = cmp => ReactDOM.findDOMNode(cmp).textContent;
+//Find a better way... since react frowns on "findDOMNode".
+const getText = cmp => ReactDOM.findDOMNode(cmp).textContent;//eslint-disable-line
 
 const render = (node, cmp, props, ...children) => new Promise(next =>
 	void ReactDOM.render(

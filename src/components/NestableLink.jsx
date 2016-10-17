@@ -1,18 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 
 /*
  * Anchor tags cannot be nested within other anchor tags... this works around that.
  *
  */
-export default React.createClass({
-	displayName: 'NestableLink',
+export default class NestableLink extends React.Component {
 
-	onClick (e) {
+	attachRef = x => this.link = x
+
+	onClick = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		const link = ReactDOM.findDOMNode(this.link);
+		const {link} = this;
 		const href = link.getAttribute('href');
 		const target = link.getAttribute('target');
 
@@ -22,12 +22,12 @@ export default React.createClass({
 		}
 
 		Object.assign(location, {href});
-	},
+	}
 
 
 	render () {
 		return (
-			<span ref={x => this.link = x} {...this.props} onClick={this.onClick}/>
+			<span ref={this.attachRef} {...this.props} onClick={this.onClick}/>
 		);
 	}
-});
+}

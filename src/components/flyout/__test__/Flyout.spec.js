@@ -3,15 +3,19 @@ import ReactDOM from 'react-dom';
 
 import Flyout from '../View';
 
-const getDom = cmp => ReactDOM.findDOMNode(cmp);
+//We cannot currently get around not using this method...
+//there are other test utils that allow better component access to tests.
+const getDom = cmp => ReactDOM.findDOMNode(cmp); //eslint-disable-line
 const getText = cmp => getDom(cmp).textContent;
 
-const render = (node, cmp, props = {}, ...children) => new Promise(next =>
-	void ReactDOM.render(
-		React.createElement(cmp, {...props, ref (x) {cmp = x; props.ref && props.ref(x);}}, ...children),
+const render = (node, cmp, props = {}, ...children) => new Promise(next => {
+	let ref;
+	ReactDOM.render(
+		React.createElement(cmp, {...props, ref (x) {ref = x; props.ref && props.ref(x);}}, ...children),
 		node,
-		() => next(cmp)
-	));
+		() => next(ref)
+	);
+});
 
 describe('Flyout', () => {
 	let container = document.createElement('div');
