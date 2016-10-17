@@ -45,6 +45,7 @@
     "nti-lib-interfaces": "^1.11.0",
     "nti-lib-locale": "^1.0.2",
     "nti-lib-ntiids": "^1.0.1",
+    "nti-util-ios-version": "^1.0.0",
     "nti-util-logger": "^1.0.0",
     "nti-web-client": "^1.1.0",
     "react-addons-css-transition-group": "^15.1.0",
