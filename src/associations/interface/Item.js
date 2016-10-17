@@ -93,12 +93,12 @@ export default class AssociationItem extends EventEmitter {
 		this.emit('change');
 	}
 
-	[EDIT] (method, container) {
+	[EDIT] (method, container, association) {
 		this[ERROR] = null;
 		this[SAVING] = true;
 		this.emit('change');
 
-		this[method](container || this.item, container && this.item)
+		this[method](container || this.item, association || this.item)
 			.then(() => {
 				this[SAVING] = false;
 
@@ -123,11 +123,12 @@ export default class AssociationItem extends EventEmitter {
 	 *
 	 * @param  {Object} container the destination to add an association, if not passed use
 	 *                            this.item
+	 * @param {Object} association the parent object of the container if needed
 	 * @return {Promise}          Fulfills or rejects with the success of adding an association
 	 */
-	onAddTo (container) {
+	onAddTo (container, association) {
 		if (this[ADD_TO]) {
-			this[EDIT](ADD_TO, container);
+			this[EDIT](ADD_TO, container, association);
 		} else {
 			throw new Error('No method provided to add association');
 		}
@@ -144,11 +145,12 @@ export default class AssociationItem extends EventEmitter {
 	 *
 	 * @param  {Object} container the destination to add an association, if not passed use
 	 *                            this.item
+	 * @param {Object} association the parent object of the container if needed
 	 * @return {Promise}          Fulfills or rejects with the success of adding an association
 	 */
-	onRemoveFrom (container) {
+	onRemoveFrom (container, association) {
 		if (this[REMOVE_FROM]) {
-			this[EDIT](REMOVE_FROM, container);
+			this[EDIT](REMOVE_FROM, container, association);
 		} else {
 			throw new Error('No method provided to remove association');
 		}

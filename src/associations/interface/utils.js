@@ -20,19 +20,6 @@ export function groupDestinations (destinations) {
 	}, []);
 }
 
-export function mapActive (active) {
-	return active.reduce((acc, item) => {
-		if (item.NTIID != null) {
-			acc[item.NTIID] = true;
-		} else if (typeof item === 'string') {
-			acc[item] = true;
-		}
-
-		return acc;
-	}, {});
-}
-
-
 export function flattenGroups (groups) {
 	return groups.reduce((acc, group) => {
 		if (group instanceof Group) {

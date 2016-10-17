@@ -7,6 +7,7 @@ import ListItem from '../components/ListItem';
 import ItemInfo from '../components/ItemInfo';
 import AddButton from '../components/AddButton';
 import RemoveButton from '../components/RemoveButton';
+import Locations from '../components/Locations';
 import ErrorCmp from '../components/Error';
 
 import DateTime from '../../../components/DateTime';
@@ -25,6 +26,12 @@ const DEFAULT_TEXT = {
 };
 
 const t = scoped('ASSOCIATION_CONTENT_NODE_EDITOR', DEFAULT_TEXT);
+
+function getCountFor (item, overview) {
+	const refs = overview.getRefsTo(item);
+
+	return refs.length;
+}
 
 
 function getSubLabels (item, isActive) {
@@ -50,7 +57,6 @@ function getTrigger (item) {
 	let trigger;
 
 	if (item.isSaving) {
-		//TODO: replace this with the new spinner
 		trigger = (<Loading.Spinner />);
 	} else {
 		trigger = (<AddButton label={t('addLabel')} error={item.error} />);
@@ -71,14 +77,13 @@ function renderAdd (item, onAdd) {
 }
 
 
-function renderRemove (item, onRemove) {
+function renderRemove (item, count, onRemove) {
 	let remove;
 
 	if (item.isSaving) {
-		//TODO: replace this with the new spinner
 		remove = (<Loading.Spinner white />);
 	} else {
-		remove = (<RemoveButton  onRemove={onRemove} error={item.error} />);
+		remove = (<RemoveButton count={count}  onRemove={onRemove} error={item.error} />);
 	}
 
 	return remove;
@@ -90,22 +95,24 @@ ContentNodeEditor.propTypes = {
 	associations: React.PropTypes.object
 };
 function ContentNodeEditor ({item, associations}) {
-	const active = associations.isSharedWith(item);
+	const active = associations.getAssociationFor(item);
+	const count = active && getCountFor(associations.backingItem, active);
 
-	function onAdd (container) {
-		item.onAddTo(container);
+	function onAdd (group, overview) {
+		item.onAddTo(group, overview);
 	}
 
 	function onRemove () {
-		item.onRemoveFrom();
+		item.onRemoveFrom(active);
 	}
 
 	return (
-		<ListItem className="content-node" active={active}>
+		<ListItem className="content-node" active={!!active}>
 			<ItemInfo label={item.label} subLabels={getSubLabels(item, active)}/>
-			{item.error && (<ErrorCmp error={t(active ? 'failedToAdd' : 'failedToRemove')} white={active} />)}
+			{item.error && (<ErrorCmp error={t(active ? 'failedToAdd' : 'failedToRemove')} white={!!active} />)}
 			{!active && item.canAddTo && (renderAdd(item, onAdd))}
-			{active && item.canRemoveFrom && (renderRemove(item, onRemove))}
+			{active && !item.error && count && (<Locations count={count} />)}
+			{active && item.canRemoveFrom && (renderRemove(item, count, onRemove))}
 		</ListItem>
 	);
 }

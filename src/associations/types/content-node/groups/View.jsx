@@ -46,9 +46,10 @@ export default class ContentNodeGroups extends React.Component {
 
 	onAddTo = (container) => {
 		const {onAdd} = this.props;
+		const {content} = this.state;
 
 		if (onAdd) {
-			onAdd(container);
+			onAdd(container, content);
 		}
 	}
 

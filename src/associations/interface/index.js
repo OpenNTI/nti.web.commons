@@ -17,7 +17,7 @@ export function createInterfaceForActive (active, destinations, onAddTo, onRemov
 
 export function createInterfaceForItem (item, scope, accepts, group) {
 	const provider = item.getPlacementProvider(scope);
-	const associations = new AssociationsInterface(null, null);
+	const associations = new AssociationsInterface(null, null, item);
 
 	function onAddTo (container, association) {
 		return provider.placeIn(container)

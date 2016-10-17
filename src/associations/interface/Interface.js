@@ -1,12 +1,11 @@
 import EventEmitter from 'events';
-import {groupDestinations, mapActive, flattenGroups, filterGroups} from './utils';
+import {groupDestinations, flattenGroups, filterGroups} from './utils';
 import Group from './Group';
 import Item from './Item';
 
 const DESTINATIONS = Symbol('ASSOCIATIONS DESTINATIONS');
 const ACTIVE = Symbol('ACTIVE ASSOCIATIONS');
 const RAW_ACTIVE = Symbol('RAW ACTIVE DESTINATIONS');
-const ACTIVE_MAP = Symbol('ACTIVE DESTINATIONS');
 const CLONE = Symbol('Clone Interface');
 
 /**
@@ -16,7 +15,7 @@ const CLONE = Symbol('Clone Interface');
 class ActiveInterface extends EventEmitter {
 	/**
 	 * Create an ActiveInterface
-	 * @param  {[String]} active the list of active IDs
+	 * @param  {[Object]} active the list of active IDs
 	 * @return {Object}        the Active Interface
 	 */
 	constructor (active) {
@@ -32,30 +31,23 @@ class ActiveInterface extends EventEmitter {
 			active = active.active;
 		}
 
-		this[RAW_ACTIVE] = (active || []).map(x => {
-			let id;
-
-			if (x.NTIID != null) {
-				id = x.NTIID;
-			} else if (x.ID != null) {
-				id = x.ID;
-			} else {
-				id = x;
-			}
-
-			return id;
-		});
-
-		this[ACTIVE_MAP] = mapActive(this[RAW_ACTIVE] || []);
+		this[RAW_ACTIVE] = (active || []);
 
 		this.emit('change');
 	}
 
 
-	isSharedWith (association) {
-		const activeMap = this[ACTIVE_MAP];
+	getAssociationFor (item) {
+		const itemID = item.NTIID || item.ID;
+		const activeItems = this[RAW_ACTIVE];
 
-		return activeMap && activeMap[association.NTIID || association.ID || association];
+		for (let active of activeItems) {
+			let activeID = active.NTIID || active.ID;
+
+			if (itemID === activeID) {
+				return active;
+			}
+		}
 	}
 
 
@@ -64,26 +56,21 @@ class ActiveInterface extends EventEmitter {
 	}
 
 
-	add (association) {
-		const id = association.NTIID || association.ID;
-		const activeMap = this[ACTIVE_MAP];
+	add (item) {
 		let active = this[RAW_ACTIVE];
 
-		if (!activeMap[id]) {
-			active.push(id);
+		if (!this.getAssociationFor(item)) {
+			active.push(item);
 			this.active = active;
 		}
 	}
 
 
-	remove (association) {
-		const id = association.NTIID || association.ID;
-		const activeMap = this[ACTIVE_MAP];
+	remove (item) {
+		const id = item.NTIID || item.ID;
 		const active = this[RAW_ACTIVE];
 
-		if (activeMap[id]) {
-			this.active = active.filter(x => x !== id);
-		}
+		this.active = active.filter(x => x !== id);
 	}
 }
 
@@ -96,7 +83,7 @@ export default class AssociationInterface extends EventEmitter {
 		return new Group(label, items);
 	}
 
-	constructor (destinations, active) {
+	constructor (destinations, active, backing) {
 		super();
 
 		if (active) {
@@ -106,6 +93,8 @@ export default class AssociationInterface extends EventEmitter {
 		if (destinations) {
 			this.destinations = destinations;
 		}
+
+		this.backingItem = backing;
 	}
 
 
@@ -142,7 +131,7 @@ export default class AssociationInterface extends EventEmitter {
 
 	/**
 	 * Set the active associations in the possible destinations
-	 * @param  {[Object]|[String]} active list of active associations either object or ID
+	 * @param  {[Object]} active list of active associations either object or ID
 	 * @return {void}
 	 */
 	set active (active) {
@@ -164,7 +153,7 @@ export default class AssociationInterface extends EventEmitter {
 
 	/**
 	 * Add an active association
-	 * @param {Object|String} active possible destination to add or ID
+	 * @param {Object} active possible destination to add or ID
 	 * @return {void}
 	 */
 	addActive (active) {
@@ -200,9 +189,15 @@ export default class AssociationInterface extends EventEmitter {
 	}
 
 
-	isSharedWith (association) {
-		return this[ACTIVE] && this[ACTIVE].isSharedWith(association);
+	isSharedWith (item) {
+		return !!this.getAssociationFor(item);
 	}
+
+
+	getAssociationFor (item) {
+		return this[ACTIVE] && this[ACTIVE].getAssociationFor(item);
+	}
+
 
 	/**
 	 * Create a new interface with the given destinations, but with the
@@ -212,7 +207,7 @@ export default class AssociationInterface extends EventEmitter {
 	 * @return {Object} a new associations interface
 	 */
 	[CLONE] (destinations) {
-		return new AssociationInterface(destinations, this[ACTIVE]);
+		return new AssociationInterface(destinations, this[ACTIVE], this.backingItem);
 	}
 
 	/**
