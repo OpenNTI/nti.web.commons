@@ -12,6 +12,7 @@ import ErrorCmp from '../components/Error';
 import DateTime from '../../../components/DateTime';
 import {InlineFlyout} from '../../../components/flyout';
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
+import {Loading} from '../../../components';
 
 const DEFAULT_TEXT = {
 	addLabel: 'Add to Lesson',
@@ -50,7 +51,7 @@ function getTrigger (item) {
 
 	if (item.isSaving) {
 		//TODO: replace this with the new spinner
-		trigger = (<span>Saving</span>);
+		trigger = (<Loading.Spinner />);
 	} else {
 		trigger = (<AddButton label={t('addLabel')} error={item.error} />);
 	}
@@ -75,7 +76,7 @@ function renderRemove (item, onRemove) {
 
 	if (item.isSaving) {
 		//TODO: replace this with the new spinner
-		remove = (<span>Saving</span>);
+		remove = (<Loading.Spinner white />);
 	} else {
 		remove = (<RemoveButton  onRemove={onRemove} error={item.error} />);
 	}
