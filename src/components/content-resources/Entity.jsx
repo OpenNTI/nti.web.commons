@@ -4,8 +4,6 @@ import {getEventTarget} from 'nti-lib-dom';
 
 import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
 
-const {SelectionModel} = Selection;
-
 import {getFragmentFromString} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import path from 'path';
@@ -23,7 +21,7 @@ function getDetachedNodeFrom (jsxExp) {
 export default class Entity extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
-		selection: PropTypes.instanceOf(SelectionModel)
+		selection: PropTypes.instanceOf(Selection.Model)
 	}
 
 	static contextTypes = {
