@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import cx from 'classnames';
 import {dirname} from 'path';
 import Transition from 'react-addons-css-transition-group';
+import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 
@@ -150,10 +151,13 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		if (selected.lenth < 1) {
 			return;
 		}
-
-		Chooser.show(this.props.sourceID, accept, filter, 'Move', true)
-			.then(folder => this.moveEntities(selected, folder))
-			.then(this.refresh, this.refresh);
+		this.setState({moving: true});
+		wait.on(
+			Chooser.show(this.props.sourceID, accept, filter, 'Move', true)
+				.then(folder => this.moveEntities(selected, folder))
+				.then(this.refresh, this.refresh)
+		)
+			.then(() => this.setState({moving: false}));
 	}
 
 
@@ -235,6 +239,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				folder,
 				folderContents,
 				layout: selectedLayout,
+				moving,
 				showInfo,
 				progress,
 				renaming,
@@ -258,7 +263,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const selected = selections.length;
 		const currentFolderCan = x => folder && folder.can(x);
 		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
-		const disabled = (renaming); //modal states
+		const disabled = (renaming|moving); //modal states
 		const hasInfo = selected === 1 && !selections[0].isFolder;
 		const inspectItem = hasInfo ? selections[0] : void 0;
 
@@ -325,7 +330,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							disabled={disabled || !hasInfo}
 							/>
 						<Search
-							disabled={!currentFolderCan('search')}
+							disabled={disabled || !currentFolderCan('search')}
 							value={search || ''}
 							onChange={this.onSearch}
 							buffered={false}
