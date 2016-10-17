@@ -24,9 +24,10 @@ export function getParts (list, remaining, getString) {
 
 function renderItem (item, key, remaining) {
 	const cls = cx('item', {remaining});
+	const title = typeof item === 'string' ? item : void 0;
 
 	return (
-		<span className={cls} key={key}>{item}</span>
+		<span className={cls} key={key} title={title}>{item}</span>
 	);
 }
 
