@@ -23,6 +23,9 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 		return provider.placeIn(container)
 			.then(wait.min(wait.SHORT))
 			.then(() => {
+				return association && association.refresh();
+			})
+			.then(() => {
 				associations.addActive(association || container);
 			});
 	}
@@ -31,6 +34,9 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 	function onRemoveFrom (container, association) {
 		return provider.removeFrom(container)
 			.then(wait.min(wait.SHORT))
+			.then(() => {
+				return association && association.refresh();
+			})
 			.then(() => {
 				associations.removeActive(association || container);
 			});

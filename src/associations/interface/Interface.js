@@ -70,7 +70,7 @@ class ActiveInterface extends EventEmitter {
 		const id = item.NTIID || item.ID;
 		const active = this[RAW_ACTIVE];
 
-		this.active = active.filter(x => x !== id);
+		this.active = active.filter(x => x.NTIID !== id);
 	}
 }
 
