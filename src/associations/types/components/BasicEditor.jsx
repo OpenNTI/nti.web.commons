@@ -24,7 +24,8 @@ class BasicEditor extends React.Component {
 		associations: React.PropTypes.object.isRequired,
 		subLabels: React.PropTypes.array,
 		className: React.PropTypes.string,
-		getString: React.PropTypes.func
+		getString: React.PropTypes.func,
+		disabled: React.PropTypes.bool
 	}
 
 
@@ -66,7 +67,7 @@ class BasicEditor extends React.Component {
 
 
 	renderAdd = () => {
-		const {item} = this.props;
+		const {item, disabled} = this.props;
 		const getString = this.getStringsFn();
 		let addButton;
 
@@ -74,7 +75,7 @@ class BasicEditor extends React.Component {
 			addButton = this.renderSaving();
 		} else {
 			addButton = (
-				<AddButton label={getString('addLabel')} error={!!item.error} onClick={this.onAdd} />
+				<AddButton label={getString('addLabel')} error={!!item.error} onClick={this.onAdd} disabled={disabled} />
 			);
 		}
 

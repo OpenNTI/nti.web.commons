@@ -12,10 +12,11 @@ AddButton.propTypes = {
 	label: React.PropTypes.string,
 	className: React.PropTypes.string,
 	onClick: React.PropTypes.func,
-	error: React.PropTypes.bool
+	error: React.PropTypes.bool,
+	disabled: React.PropTypes.bool
 };
-export default function AddButton ({label = 'Add To', onClick = () => {}, className, error}) {
-	const cls = cx('association-add-button', className, {error});
+export default function AddButton ({label = 'Add To', onClick = () => {}, className, error, disabled}) {
+	const cls = cx('association-add-button', className, {error, disabled});
 
 	return (
 		<div className={cls} onClick={onClick}>

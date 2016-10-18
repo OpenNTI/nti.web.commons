@@ -15,4 +15,9 @@
 		color: $primary-red;
 		text-decoration: underline;
 	}
+
+	&.disabled {
+		opacity: 0.3;
+		pointer-events: none;
+	}
 }

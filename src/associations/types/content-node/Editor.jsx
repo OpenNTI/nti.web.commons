@@ -83,7 +83,7 @@ function renderRemove (item, count, onRemove) {
 	if (item.isSaving) {
 		remove = (<Loading.Spinner white />);
 	} else {
-		remove = (<RemoveButton count={count}  onRemove={onRemove} error={item.error} />);
+		remove = (<RemoveButton count={count}  onRemove={onRemove} error={!!item.error} />);
 	}
 
 	return remove;

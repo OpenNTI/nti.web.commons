@@ -66,6 +66,7 @@ export default function AssignmentAssociationEditor ({item, associations}) {
 			associations={associations}
 			subLabels={getSubLabels(item)}
 			getString={t}
+			disabled={item.item.hasLink('Reset')}
 		/>
 	);
 }

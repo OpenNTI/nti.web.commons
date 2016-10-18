@@ -13,7 +13,7 @@ const t = scoped('ASSOCIATION_REMOVE_BUTTON', DEFAULT_TEXT);
 export default class AssociationRemove extends React.Component {
 	static propTypes = {
 		onRemove: React.PropTypes.func,
-		error: React.PropTypes.string,
+		error: React.PropTypes.bool,
 		getString: React.PropTypes.func
 	}
 
