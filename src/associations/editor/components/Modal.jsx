@@ -27,11 +27,18 @@ export default function AssociationEditorModal (props) {
 	);
 }
 
-export function openEditorModal (title, associations, filterFn, getString) {
+export function openEditorModal (title, associations, filterFn, getString, beforeClose = () => {}) {
 	modal(
 		(
 			<AssociationEditorModal title={title} associations={associations} filterFn={filterFn} getString={getString} />
 		),
-		'associations-editor-modal-wrapper'
+		'associations-editor-modal-wrapper',
+		{
+			onBeforeDismiss () {
+				beforeClose();
+
+				return true;
+			}
+		}
 	);
 }
