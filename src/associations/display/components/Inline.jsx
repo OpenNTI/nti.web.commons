@@ -30,13 +30,18 @@ export default class InlineAssociations extends React.Component {
 		this.state = {
 			loading: true
 		};
-
-		this.loadAssociations(props.item);
 	}
 
 
 	componentDidMount () {
 		const {item, scope} = this.props;
+
+		this.loadAssociations(item, scope);
+	}
+
+
+	componentWillReceiveProps (nextProps) {
+		const {item, scope} = nextProps;
 
 		this.loadAssociations(item, scope);
 	}
