@@ -32,13 +32,16 @@ export default React.createClass({
 
 
 	render () {
-		const {props: {tag: Element, className, activeClassName, link, ...props}} = this;
+		const {props: {tag: Element, className, activeClassName, href, link, ...props}} = this;
 
 		delete props.hasChildren;
+
 		Object.assign(props, {
 			className: cx(className, {
 				[activeClassName]: this.isActive()
-			})
+			}),
+
+			href: href && this.makeHref(href)
 		});
 
 		if (Element === 'a' || link) {
