@@ -1,0 +1,36 @@
+@import "~nti-style-common";
+
+.associations-list-item {
+	min-height: 50px;
+	background-color: white;
+	border: 1px solid $border-grey-light;
+	border-radius: 4px;
+	padding: 0.5rem 0.5rem 0.5rem 1rem;
+	display: flex;
+	align-items: center;
+
+	&.active {
+		background-color: $primary-purple;
+	}
+
+	.association-item-info {
+		flex: 1 1 auto;
+	}
+
+	.association-add-button {
+		flex: 0 0 auto;
+	}
+
+	.association-remove-button {
+		flex: 0 0 auto;
+	}
+
+	.association-locations {
+		flex: 0 0 auto;
+		margin-right: 0.5rem;
+	}
+
+	.association-error {
+		flex: 0 0 auto;
+	}
+}

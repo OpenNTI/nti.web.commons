@@ -1,0 +1,17 @@
+@import "~nti-style-common";
+
+.association-error {
+	font-size: 0.875rem;
+	color: $primary-red;
+
+	i, span {
+		display: inline-block;
+		vertical-align: middle;
+		padding-right: 0.3rem;
+	}
+
+
+	&.white {
+		color: white;
+	}
+}

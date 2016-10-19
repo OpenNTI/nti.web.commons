@@ -1,0 +1,27 @@
+@import "~nti-style-common";
+
+.panel-title-bar {
+	background: white;
+	padding: 0.5625rem 1.25rem;
+	display: flex;
+
+	h1 {
+		margin: 0;
+		font: normal 300 1.5rem/2rem $body-font-family;
+		flex: 1 1 auto;
+		color: $primary-grey;
+	}
+
+	i {
+		flex: 0 0 auto;
+		font-size: 1.5rem;
+		line-height: 2rem;
+		color: $tertiary-grey;
+		cursor: pointer;
+		opacity: 0.8;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}

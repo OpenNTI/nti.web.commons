@@ -8,7 +8,7 @@ import Logger from 'nti-util-logger';
 
 import CError from '../Error';
 import EmptyList from '../EmptyList';
-import Loading from '../Loading';
+import {Mask as Loading} from '../loading-indicators';
 
 import BrowsableView from './BrowsableView';
 import Chooser from './Chooser';

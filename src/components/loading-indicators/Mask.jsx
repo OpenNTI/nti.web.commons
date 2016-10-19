@@ -2,7 +2,7 @@ import React from 'react';
 import isEmpty from 'isempty';
 
 export default React.createClass({
-	displayName: 'Loading',
+	displayName: 'LoadingMask',
 
 	propTypes: {
 		maskScreen: React.PropTypes.bool,
@@ -32,7 +32,7 @@ export default React.createClass({
 		return (
 			<Mask mask={maskScreen}>
 				<figure className="loading">
-					<div className="m spinner"></div>
+					<div className="m spinner" />
 					<figcaption>{message}</figcaption>
 				</figure>
 			</Mask>

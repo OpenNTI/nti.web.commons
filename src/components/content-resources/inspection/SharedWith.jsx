@@ -3,7 +3,7 @@ import React from 'react';
 import {scoped} from 'nti-lib-locale';
 
 import LabeledValue from '../../LabeledValue';
-import Loading from '../../TinyLoader';
+import {Ellipse as Loading} from '../../loading-indicators';
 
 import Link from './SharedLink';
 

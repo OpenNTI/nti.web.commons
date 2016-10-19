@@ -1,0 +1,30 @@
+@import "~nti-style-common";
+
+.content-node-group {
+	min-height: 70px;
+	max-height: 300px;
+	width: 200px;
+	padding: 10px;
+	overflow: auto;
+
+	h6 {
+		font: normal 600 0.625rem/0.875rem $body-font-family;
+		margin: 0 0 10px 0;
+		color: $tertiary-grey;
+		text-transform: uppercase;
+
+		&.error {
+			color: $primary-red;
+		}
+	}
+
+	.tinyloader {
+		padding-top: 10px;
+	}
+
+	ul.content-node-group-items {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+}

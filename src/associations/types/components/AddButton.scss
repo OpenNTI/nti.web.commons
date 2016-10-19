@@ -1,0 +1,23 @@
+@import "~nti-style-common";
+
+.association-add-button {
+	font: normal 400 0.875rem/2rem $body-font-family;
+	background: $primary-purple;
+	padding: 0 10px;
+	color: white;
+	display: inline-block;
+	border-radius: 2px;
+	cursor: pointer;
+
+	&.error {
+		background: none;
+		padding: 0;
+		color: $primary-red;
+		text-decoration: underline;
+	}
+
+	&.disabled {
+		opacity: 0.3;
+		pointer-events: none;
+	}
+}

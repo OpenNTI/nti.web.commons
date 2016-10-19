@@ -1,0 +1,80 @@
+import Interface from '../Interface';
+
+function makeDestination (id, onAdd, onRemove) {
+	return Interface.createItem({
+		NTIID: id,
+		label: `${id} Label`
+	}, onAdd, onRemove);
+}
+
+describe('Association Interface Tests', () => {
+	let associations;
+	let items;
+
+	beforeEach(() => {
+		function onAdd (item) {
+			associations.addActive(item);
+		}
+
+		function onRemove (item) {
+			associations.removeActive(item);
+		}
+
+		items = [
+			makeDestination('1', onAdd, onRemove),
+			makeDestination('2', onAdd, onRemove),
+			makeDestination('3', onAdd, onRemove),
+			makeDestination('4', onAdd, onRemove),
+			makeDestination('5', onAdd, onRemove)
+		];
+
+		associations = new Interface(items, ['2', '4']);
+	});
+
+	describe('Active Association Tests', () => {
+		it('isSharedWith is true for active', () => {
+			expect(associations.isSharedWith('2')).toBeTruthy();
+			expect(associations.isSharedWith('4')).toBeTruthy();
+		});
+
+		it('isSharedWith is false for non-active', () => {
+			expect(associations.isSharedWith('1')).toBeFalsy();
+			expect(associations.isSharedWith('3')).toBeFalsy();
+			expect(associations.isSharedWith('5')).toBeFalsy();
+		});
+	});
+
+	describe('Adding and Removing Associations', () => {
+		it('adding an association makes it active', (done) => {
+			const item = items[0];
+
+			function onChange () {
+				associations.removeListener('change', onChange);
+				expect(associations.isSharedWith(item)).toBeTruthy();
+				done();
+			}
+
+			associations.addListener('change', onChange);
+
+			expect(associations.isSharedWith(item)).toBeFalsy();
+
+			item.onAddTo();
+		});
+
+		it('removing an association makes it inactive', (done) => {
+			const item = items[1];
+
+			function onChange () {
+				associations.removeListener('change', onChange);
+				expect(associations.isSharedWith(item)).toBeFalsy();
+				done();
+			}
+
+			associations.addListener('change', onChange);
+
+			expect(associations.isSharedWith(item)).toBeTruthy();
+
+			item.onRemoveFrom();
+		});
+	});
+});

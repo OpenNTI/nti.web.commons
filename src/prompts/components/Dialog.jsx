@@ -18,7 +18,7 @@ export default class Dialog extends React.Component {
 
 		if (!mountPoint) {
 			mountPoint = document.createElement('div');
-			mountPoint.classList.add(MOUNT_POINT_CLS);
+			mountPoint.classList.add(MOUNT_POINT_CLS, 'modal');
 
 			document.body.appendChild(mountPoint);
 		}
@@ -195,7 +195,7 @@ export default class Dialog extends React.Component {
 		].filter(x => x);
 
 		return (
-			<div ref={el => this.frame = el} className={`modal dialog mask ${state}`} onKeyDown={this.handleEscapeKey}>
+			<div ref={el => this.frame = el} className={`modal dialog mask modal-mask ${state}`} onKeyDown={this.handleEscapeKey}>
 
 				<div className={`dialog window ${state}`}>
 					{this.renderDismissControl()}

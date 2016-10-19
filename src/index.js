@@ -2,6 +2,7 @@ export * from './components';
 // once all old references to ConflictResolutionHandler are cleaned up just
 // change import to export and delete the back-compat block below.
 import * as ConflictResolution from './conflict-resolution';
+export * as Associations from './associations';
 export * as Constants from './constants';
 export * as Errors from './errors';
 export * as HOC from './HighOrderComponents';

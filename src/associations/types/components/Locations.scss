@@ -1,0 +1,12 @@
+@import "~nti-style-common";
+
+.association-locations {
+	font: normal 700 0.625rem/1.25rem $body-font-family;
+	text-transform: uppercase;
+	text-align: center;
+	color: $primary-purple;
+	padding: 0 0.75rem;
+	background-color: white;
+	border-radius: 20px;
+	min-width: 90px;
+}

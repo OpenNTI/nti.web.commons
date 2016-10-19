@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import {wait} from 'nti-commons';
 
-import TinyLoader from './TinyLoader';
+import {Ellispe as TinyLoader} from './loading-indicators';
 
 const NORMAL = 'normal';
 const PROCESSING = 'processing';
@@ -121,7 +121,7 @@ export default React.createClass({
 				<ul>
 					<li><span>{children}</span></li>
 					<li className="processing"><TinyLoader /></li>
-					<li className="finished"/>
+					<li className="finished" />
 				</ul>
 			</button>
 		);

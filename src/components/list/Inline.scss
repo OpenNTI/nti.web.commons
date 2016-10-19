@@ -1,0 +1,23 @@
+@import "~nti-style-common";
+
+.inline-list {
+	display: flex;
+	white-space: nowrap;
+	overflow: hidden;
+
+	span {
+		flex: none;
+
+		&:not(.item)::after, &:not(.item)::before {
+			content: '';
+			display: inline-block;
+		}
+	}
+
+	span.item {
+		flex: 0 1 auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		min-width: 3.125rem;
+	}
+}

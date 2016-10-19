@@ -1,0 +1,113 @@
+import React from 'react';
+import {scoped} from 'nti-lib-locale';
+
+import ListItem from './ListItem';
+import ItemInfo from './ItemInfo';
+import ErrorCmp from './Error';
+import AddButton from './AddButton';
+import RemoveButton from './RemoveButton';
+
+import ItemChanges from '../../../HighOrderComponents/ItemChanges';
+import {Loading} from '../../../components';
+
+const DEFAULT_TEXT = {
+	addLabel: 'Add',
+	failedToAdd: 'Failed to add.',
+	failedToRemove: 'Failed to remove.'
+};
+
+const t = scoped('BASIC_ASSOCIATION_EDITOR', DEFAULT_TEXT);
+
+class BasicEditor extends React.Component {
+	static propTypes = {
+		item: React.PropTypes.object.isRequired,
+		associations: React.PropTypes.object.isRequired,
+		subLabels: React.PropTypes.array,
+		className: React.PropTypes.string,
+		getString: React.PropTypes.func,
+		disabled: React.PropTypes.bool
+	}
+
+
+	onAdd = () => {
+		const {item} = this.props;
+
+		item.onAddTo();
+	}
+
+
+	onRemove = () => {
+		const {item} = this.props;
+
+		item.onRemoveFrom();
+	}
+
+
+	getStringsFn = () => {
+		const {getString} = this.props;
+
+		return getString ? t.override(getString) : t;
+	}
+
+
+	render () {
+		const {item, associations, subLabels, className} = this.props;
+		const active = associations.isSharedWith(item);
+		const getString = this.getStringsFn();
+
+		return (
+			<ListItem className={className} active={active}>
+				<ItemInfo label={item.label} subLabels={subLabels} />
+				{item.error && (<ErrorCmp error={getString(active ? 'failedToAdd' : 'failedToRemove')} white={active} />)}
+				{!active && item.canAddTo && this.renderAdd()}
+				{active && item.canRemoveFrom && this.renderRemove()}
+			</ListItem>
+		);
+	}
+
+
+	renderAdd = () => {
+		const {item, disabled} = this.props;
+		const getString = this.getStringsFn();
+		let addButton;
+
+		if (item.isSaving) {
+			addButton = this.renderSaving();
+		} else {
+			addButton = (
+				<AddButton label={getString('addLabel')} error={!!item.error} onClick={this.onAdd} disabled={disabled} />
+			);
+		}
+
+		return addButton;
+	}
+
+
+	renderRemove = () => {
+		const {item} = this.props;
+		let removeButton;
+
+		if (item.isSaving) {
+			removeButton = this.renderSaving();
+		} else {
+			removeButton = (
+				<RemoveButton onRemove={this.onRemove} error={!!item.error} />
+			);
+		}
+
+		return removeButton;
+	}
+
+
+	renderSaving = () => {
+		const {item, associations} = this.props;
+		const active = associations.isSharedWith(item);
+
+		return (
+			<Loading.Spinner white={active} />
+		);
+	}
+
+}
+
+export default ItemChanges.compose(BasicEditor);
