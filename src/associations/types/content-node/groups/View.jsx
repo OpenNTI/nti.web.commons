@@ -15,7 +15,7 @@ const t = scoped('ASSOCIATIONS_CONTENT_NODE_GROUPS', DEFAULT_TEXT);
 export default class ContentNodeGroups extends React.Component {
 	static propTypes = {
 		node: React.PropTypes.object,
-		onAdd: React.PropTypes.fn,
+		onAdd: React.PropTypes.func,
 		error: React.PropTypes.string
 	}
 
