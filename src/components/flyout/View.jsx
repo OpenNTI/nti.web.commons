@@ -36,6 +36,9 @@ import {
 	getAlignmentClass
 } from './utils';
 
+const OPEN_TIMEOUT = 300;
+const CLOSE_TIMEOUT = 500;
+
 
 const {createElement: ce} = global.document || {};
 const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
@@ -169,7 +172,11 @@ export default class Flyout extends React.Component {
 		sizing: PropTypes.oneOf([MATCH_SIDE]),
 		afterAlign: PropTypes.func,
 		onDismiss: PropTypes.func,
-		arrow: PropTypes.bool
+		arrow: PropTypes.bool,
+		hover: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.object
+		])
 	}
 
 	static defaultProps = {
@@ -383,8 +390,62 @@ export default class Flyout extends React.Component {
 	}
 
 
+	isHover () {
+		const {hover} = this.props;
+
+		return !!hover;
+	}
+
+
+	get hoverTimeouts () {
+		const {hover} = this.props;
+
+		return {
+			openTimeout: hover && hover.openTimeout ? hover.openTimeout : OPEN_TIMEOUT,
+			closeTimeout: hover && hover.closeTimeout ? hover.closeTimeout : CLOSE_TIMEOUT
+		};
+	}
+
+
+	startShow = () => {
+		const {hoverTimeouts} = this;
+
+		clearTimeout(this.showTimeout);
+		clearTimeout(this.hideTimeout);
+
+		this.showTimeout = setTimeout(() => {
+			this.setState({
+				open: true,
+				aligning: true
+			});
+		}, hoverTimeouts.openTimeout);
+	}
+
+
+	startHide = () => {
+		const {hoverTimeouts} = this;
+
+		clearTimeout(this.showTimeout);
+		clearTimeout(this.hideTimeout);
+
+		this.hideTimeout = setTimeout(() => {
+			this.setState({
+				open: false,
+				aligning: true
+			});
+		}, hoverTimeouts.closeTimeout);
+	}
+
+
+	stopHide = () => {
+		clearTimeout(this.hideTimeout);
+	}
+
+
 	render () {
+		const hover = this.isHover();
 		let {trigger: Trigger, ...props} = this.props;
+		let listeners = {};
 
 		delete props.children;
 		delete props.verticalAlign;
@@ -397,6 +458,20 @@ export default class Flyout extends React.Component {
 		delete props.className;
 		delete props.onDismiss;
 		delete props.arrow;
+		delete props.hover;
+
+		if (hover) {
+			listeners.onMouseEnter = this.startShow;
+			listeners.onMouseLeave = this.startHide;
+		} else {
+			listeners.onClick = (e) => {
+				if (Trigger && Trigger.props.onClick) {
+					Trigger.props.onClick(e);
+				}
+
+				this.onToggle(e);
+			};
+		}
 
 		//TODO: inform the trigger that the flyout is open
 
@@ -405,20 +480,11 @@ export default class Flyout extends React.Component {
 		}
 
 		if (React.isValidElement(Trigger)) {
-			const {onClick} = Trigger.props;
-			let onToggle = this.onToggle;
-			if (onClick) {
-				onToggle = e => {
-					onClick(e);
-					this.onToggle(e);
-				};
-			}
-
-			return React.cloneElement(Trigger, {onClick: onToggle});
+			return React.cloneElement(Trigger, listeners);
 		}
 
 		return (
-			<Trigger {...props} onClick={this.onToggle}/>
+			<Trigger {...props} {...listeners} />
 		);
 	}
 
@@ -442,8 +508,10 @@ export default class Flyout extends React.Component {
 
 		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {fixed, arrow});
 
+		const listeners = this.isHover() ? {onMouseEnter: this.stopHide, onMouseLeave: this.startHide} : {};
+
 		ReactDOM.render(
-			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle}>
+			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle} {...listeners} >
 				{arrow && <div className="flyout-arrow"/>}
 				<div className="flyout-inner" style={innerStyle}>
 					{children}

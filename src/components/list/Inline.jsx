@@ -29,7 +29,7 @@ InlineList.propTypes = {
 	getString: React.PropTypes.func,
 	renderOverrides: React.PropTypes.object
 };
-export default function InlineList ({children, limit = 1, getString, renderOverrides = {}}) {
+export default function InlineList ({children, limit = 1, getString, renderOverrides = {}, ...otherProps}) {
 	children = React.Children.toArray(children);
 
 	if (children.length === 0) {
@@ -64,7 +64,7 @@ export default function InlineList ({children, limit = 1, getString, renderOverr
 	}, []);
 
 	return (
-		<div className="inline-list">
+		<div className="inline-list" {...otherProps} >
 			{renders}
 		</div>
 	);

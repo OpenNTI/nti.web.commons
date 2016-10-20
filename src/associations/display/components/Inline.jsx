@@ -1,7 +1,7 @@
 import React from 'react';
 import {scoped} from 'nti-lib-locale';
 
-import {List, Loading} from '../../../components';
+import {List, Loading, Flyout} from '../../../components';
 
 const DEFAULT_TEXT = {
 	loading: {
@@ -114,8 +114,14 @@ export default class InlineAssociations extends React.Component {
 		const {associations} = this.state;
 		const getString = this.getStringFn();
 
-		return (
+		const trigger = (
 			<List.Inline children={associations.map(x => x.title || x.label)} max={1} getString={getString} />
+		);
+
+		return (
+			<Flyout arrow hover trigger={trigger}>
+				<span>Test</span>
+			</Flyout>
 		);
 	}
 }
