@@ -90,6 +90,16 @@
 		background: white;
 		overflow: auto;
 	}
+
+	&.dark {
+		.flyout-arrow::after {
+			background: $primary-grey;
+		}
+
+		.flyout-inner {
+			background: $primary-grey;
+		}
+	}
 }
 
 @keyframes error-flyout-fullwidth-btn {

@@ -20,6 +20,7 @@ export default class InlineAssociations extends React.Component {
 			getAssociations: React.PropTypes.func
 		}).isRequired,
 		scope: React.PropTypes.object,
+		onShow: React.PropTypes.func,
 		getString: React.PropTypes.func
 	}
 
@@ -69,6 +70,16 @@ export default class InlineAssociations extends React.Component {
 	}
 
 
+
+	showMore = () => {
+		const {onShow} = this.props;
+
+		if (onShow) {
+			onShow();
+		}
+	}
+
+
 	render () {
 		const {item} = this.props;
 		const {loading} = this.state;
@@ -113,14 +124,15 @@ export default class InlineAssociations extends React.Component {
 	renderAssociations () {
 		const {associations} = this.state;
 		const getString = this.getStringFn();
+		const children = associations.map(x => x.title || x.label);
 
 		const trigger = (
-			<List.Inline children={associations.map(x => x.title || x.label)} max={1} getString={getString} />
+			<List.Inline children={children} max={1} getString={getString} />
 		);
 
 		return (
-			<Flyout arrow hover trigger={trigger}>
-				<span>Test</span>
+			<Flyout arrow hover trigger={trigger} dark>
+				<List.Limited className="inline-association-list" onShowMore={this.showMore} children={children} max={3} getString={getString} />
 			</Flyout>
 		);
 	}

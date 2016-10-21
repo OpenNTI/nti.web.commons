@@ -176,7 +176,8 @@ export default class Flyout extends React.Component {
 		hover: PropTypes.oneOfType([
 			PropTypes.bool,
 			PropTypes.object
-		])
+		]),
+		dark: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -491,7 +492,7 @@ export default class Flyout extends React.Component {
 
 	renderFlyout = () => {
 		const {
-			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign},
+			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark},
 			state: {aligning, alignment}
 		} = this;
 		const {trigger} = this;
@@ -506,7 +507,7 @@ export default class Flyout extends React.Component {
 
 		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
 
-		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {fixed, arrow});
+		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {fixed, arrow, dark});
 
 		const listeners = this.isHover() ? {onMouseEnter: this.stopHide, onMouseLeave: this.startHide} : {};
 
