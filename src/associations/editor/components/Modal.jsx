@@ -32,12 +32,10 @@ export function openEditorModal (title, associations, filterFn, getString, befor
 		(
 			<AssociationEditorModal title={title} associations={associations} filterFn={filterFn} getString={getString} />
 		),
-		'associations-editor-modal-wrapper',
 		{
+			className: 'associations-editor-modal-wrapper',
 			onBeforeDismiss () {
 				beforeClose();
-
-				return true;
 			}
 		}
 	);
