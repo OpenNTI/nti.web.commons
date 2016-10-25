@@ -59,7 +59,7 @@ function getTrigger (item) {
 	if (item.isSaving) {
 		trigger = (<Loading.Spinner />);
 	} else {
-		trigger = (<AddButton label={t('addLabel')} error={item.error} />);
+		trigger = (<AddButton label={t('addLabel')} error={!!item.error} />);
 	}
 
 	return trigger;
