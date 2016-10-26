@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import {wait} from 'nti-commons';
 
-import {Ellispe as TinyLoader} from './loading-indicators';
+import {Ellipse as TinyLoader} from './loading-indicators';
 
 const NORMAL = 'normal';
 const PROCESSING = 'processing';
