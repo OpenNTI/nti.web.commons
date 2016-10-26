@@ -75,15 +75,17 @@ export default class ContentNodeGroups extends React.Component {
 
 	renderContent (content) {
 		const {Items:items} = content;
+		const hasItems = (items && items.length > 0);
 
 		return (
 			<ul className="content-node-group-items">
-				{items ?
-					items.map((x, index) => {
-						return (<li key={index}><Group item={x} onAdd={this.onAddTo} /></li>);
-					}) :
-					(<h6 className="error">{DEFAULT_TEXT.empty}</h6>)
-				}
+				{hasItems ? (
+					items.map((x, index) => (
+						<li key={index}><Group item={x} onAdd={this.onAddTo} /></li>
+					))
+				) : (
+					<h6 className="error">{t('empty')}</h6>
+				)}
 			</ul>
 		);
 	}
