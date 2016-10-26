@@ -7,7 +7,8 @@ import Group from './Group';
 import {Spinner as Loading} from '../../../../components/loading-indicators';
 
 const DEFAULT_TEXT = {
-	label: 'Choose a Section'
+	label: 'Choose a Section',
+	empty: 'There are no sections in this group'
 };
 
 const t = scoped('ASSOCIATIONS_CONTENT_NODE_GROUPS', DEFAULT_TEXT);
@@ -77,9 +78,12 @@ export default class ContentNodeGroups extends React.Component {
 
 		return (
 			<ul className="content-node-group-items">
-				{items.map((x, index) => {
-					return (<li key={index}><Group item={x} onAdd={this.onAddTo} /></li>);
-				})}
+				{items ?
+					items.map((x, index) => {
+						return (<li key={index}><Group item={x} onAdd={this.onAddTo} /></li>);
+					}) :
+					(<h6 className="error">{DEFAULT_TEXT.empty}</h6>)
+				}
 			</ul>
 		);
 	}
