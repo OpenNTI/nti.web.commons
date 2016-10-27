@@ -49,18 +49,31 @@ class BasicEditor extends React.Component {
 		return getString ? t.override(getString) : t;
 	}
 
+	isCancelAction (item) {
+		const {error} = item;
+
+		// NOTE: When a 409 is thrown a challenge is raised and
+		// the user has two either confirm it or cancel it.
+		// Thus as such, the only time that the error will be propageted
+		// all the way to this component is when the user chose to cancel
+		// thus the promise is rejected. So, we can use it to conclude that
+		// the user cancel the action.
+		return (error || {}).statusCode === 409;
+	}
+
 
 	render () {
 		const {item, associations, subLabels, className} = this.props;
 		const active = associations.isSharedWith(item);
 		const getString = this.getStringsFn();
+		const isCancel = this.isCancelAction(item);
 
 		return (
 			<ListItem className={className} active={active}>
 				<ItemInfo label={item.label} subLabels={subLabels} />
-				{item.error && (<ErrorCmp error={getString(active ? 'failedToAdd' : 'failedToRemove')} white={active} />)}
-				{!active && item.canAddTo && this.renderAdd()}
-				{active && item.canRemoveFrom && this.renderRemove()}
+				{item.error && !isCancel && (<ErrorCmp error={getString(active ? 'failedToAdd' : 'failedToRemove')} white={active} />)}
+				{(!active || isCancel) && item.canAddTo && this.renderAdd()}
+				{active  && item.canRemoveFrom && this.renderRemove()}
 			</ListItem>
 		);
 	}
@@ -69,13 +82,14 @@ class BasicEditor extends React.Component {
 	renderAdd = () => {
 		const {item, disabled} = this.props;
 		const getString = this.getStringsFn();
+		const isCancel = this.isCancelAction(item);
 		let addButton;
 
 		if (item.isSaving) {
 			addButton = this.renderSaving();
 		} else {
 			addButton = (
-				<AddButton label={getString('addLabel')} error={!!item.error} onClick={this.onAdd} disabled={disabled} />
+				<AddButton label={getString('addLabel')} error={!!item.error && !isCancel} onClick={this.onAdd} disabled={disabled} />
 			);
 		}
 
