@@ -52,12 +52,12 @@ class BasicEditor extends React.Component {
 	isCancelAction (item) {
 		const {error} = item;
 
-		// NOTE: When a 409 is thrown a challenge is raised and
-		// the user has two either confirm it or cancel it.
+		// NOTE: When a 409 is thrown, a challenge is raised and
+		// the user has to either confirm it or cancel it.
 		// Thus as such, the only time that the error will be propageted
-		// all the way to this component is when the user chose to cancel
+		// all the way to this component is when the user chose to cancel,
 		// thus the promise is rejected. So, we can use it to conclude that
-		// the user cancel the action.
+		// the user canceled the action.
 		return (error || {}).statusCode === 409;
 	}
 
