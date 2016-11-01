@@ -11,7 +11,7 @@ export default function ContentNodeGroup ({item, onAdd = () => {}}) {
 
 	return (
 		<div className="content-node-group-item" onClick={onClick}>
-			<span className="accent-color" style={{background: `#${item.accentColor}`}}></span>
+			<span className="accent-color" style={{background: `#${item.accentColor}`}}/>
 			<span className="title">{item.title}</span>
 		</div>
 	);
