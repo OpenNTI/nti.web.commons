@@ -111,7 +111,7 @@ function ContentNodeEditor ({item, associations}) {
 			<ItemInfo label={item.label} subLabels={getSubLabels(item, active)}/>
 			{item.error && (<ErrorCmp error={t(active ? 'failedToAdd' : 'failedToRemove')} white={!!active} />)}
 			{!active && item.canAddTo && (renderAdd(item, onAdd))}
-			{active && !item.isSaving && !item.error && count ? (<Locations count={count} />) : null}
+			{active && !item.isSaving && !item.error && count > 1 ? (<Locations count={count} />) : null}
 			{active && item.canRemoveFrom && (renderRemove(item, count, onRemove))}
 		</ListItem>
 	);
