@@ -24,6 +24,15 @@ export class ModalManager extends EventEmitter {
 
 	active = []
 
+	get lastIndex () {
+		return this.active.length - 1;
+	}
+
+	getTopMost () {
+		const {lastIndex} = this;
+		return this.active[lastIndex];
+	}
+
 
 	hide (node) {
 		ReactDOM.unmountComponentAtNode(node);
@@ -99,6 +108,7 @@ export class ModalManager extends EventEmitter {
 			return true;
 		}
 
+		//reversed for lookup speed
 		const reversed = this.active.slice().reverse();
 		const lastIndex = 0;
 		const index = reversed.findIndex(x => (x.component === component) || x.mountPoint.contains(component.content));
@@ -130,8 +140,8 @@ export class ModalManager extends EventEmitter {
 
 
 	remove ({mountPoint, refocus}) {
-		const {active} = this;
-		const lastIndex = active.length - 1;
+		const {lastIndex, active} = this;
+
 		const index = active.findIndex(x => x.mountPoint === mountPoint);
 		const removingTopModal = lastIndex === index;
 		const ref = active[index];
@@ -168,8 +178,7 @@ export class ModalManager extends EventEmitter {
 
 
 	updateARIA () {
-		const {active} = this;
-		const lastIndex = active.length - 1;
+		const {active, lastIndex} = this;
 		const mainContent = document.getElementById('content');
 
 		setHidden(mainContent, lastIndex >= 0);
@@ -209,7 +218,7 @@ export class ModalManager extends EventEmitter {
 
 
 	onDocumentFocus = (e) => {
-		const [top] = this.active;
+		const top = this.getTopMost();
 		if (!top) {
 			return;
 		}
@@ -227,7 +236,7 @@ export class ModalManager extends EventEmitter {
 
 
 	onDocumentKeyDown = (e) => {
-		const [top] = this.active;
+		const top = this.getTopMost();
 		if (top && e.keyCode === 27) {
 			top.dismiss();
 		}
