@@ -63,6 +63,23 @@
 	}
 }
 
+.modal-mask dialog {
+	display: block;
+	position: static;
+	left: auto;
+	right: auto;
+	width: auto;
+	height: auto;
+	color: inherit;
+	margin: initial;
+	border-width: initial;
+	border-style: initial;
+	border-color: initial;
+	border-image: initial;
+	padding: initial;
+	background: inherit;
+}
+
 .modal-content {
 	animation-delay: .15s;
 	flex: 0 0 auto;

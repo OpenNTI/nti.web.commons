@@ -2,8 +2,13 @@ import React from 'react';
 import cx from 'classnames';
 import Transition from 'react-addons-css-transition-group';
 import isIOS from 'nti-util-ios-version';
+import {declareCustomElement} from 'nti-lib-dom';
 
 import LockScroll from '../../components/LockScroll';
+
+import Manager from '../ModalManager';
+
+declareCustomElement('dialog');
 
 const stop = e => e.stopPropagation();
 
@@ -21,6 +26,21 @@ export default class Modal extends React.Component {
 
 	state = {}
 
+
+	componentDidMount () {
+		Manager.addUpdateListener(this.onManagerUpdate);
+		this.focus();
+	}
+	
+
+	componentWillUnmount () {
+		Manager.removeUpdateListener(this.onManagerUpdate);
+	}
+	
+
+	onManagerUpdate = () => this.forceUpdate()
+
+
 	close = (e) => {
 		const {onDismiss} = this.props;
 		if (e) {
@@ -30,6 +50,12 @@ export default class Modal extends React.Component {
 			onDismiss(e);
 		}
 	}
+
+
+	focus = () => {
+		this.content.focus();
+	}
+
 
 	onMaskClick = (e) => {
 		const {closeOnMaskClick} = this.props;
@@ -56,8 +82,9 @@ export default class Modal extends React.Component {
 	render () {
 		const {children, className} = this.props;
 		const {safariFix} = this.state;
+		const hidden = Manager.isHidden(this);
 
-		const classes = cx('modal-mask', className, {'safari-fix': safariFix});
+		const classes = cx('modal-mask', className, {hidden, 'safari-fix': safariFix});
 
 		return (
 			<Transition transitionName="modal-mask"
@@ -76,12 +103,12 @@ export default class Modal extends React.Component {
 					onClick={this.onMaskClick}
 					>
 					<i className="icon-close" onClick={this.close}/>
-					<div ref={x => this.content = x} className="modal-content">
+					<dialog role="dialog" className="modal-content" open ref={x => this.content = x} tabIndex="-1">
 						{React.cloneElement(
 							React.Children.only(children),
 							{ onDismiss: this.close }
 						)}
-					</div>
+					</dialog>
 				</div>
 			</Transition>
 		);
