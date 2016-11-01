@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
 import {areYouSure} from '../../../prompts';
@@ -14,7 +15,8 @@ export default class AssociationRemove extends React.Component {
 	static propTypes = {
 		onRemove: React.PropTypes.func,
 		error: React.PropTypes.bool,
-		getString: React.PropTypes.func
+		getString: React.PropTypes.func,
+		disabled: React.PropTypes.bool
 	}
 
 
@@ -39,11 +41,12 @@ export default class AssociationRemove extends React.Component {
 
 
 	render () {
-		const {error} = this.props;
+		const {error, disabled} = this.props;
 		const getString = this.getStringFn();
+		const cls = cx('association-remove-button', {disabled});
 
 		return (
-			<div className="association-remove-button" onClick={this.onClick}>
+			<div className={cls} onClick={this.onClick}>
 				{!error ?
 					(<i className="icon-remove" />) :
 					(<span className="try-again">{getString('tryAgain')}</span>)

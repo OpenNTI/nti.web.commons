@@ -98,14 +98,14 @@ class BasicEditor extends React.Component {
 
 
 	renderRemove = () => {
-		const {item} = this.props;
+		const {item, disabled} = this.props;
 		let removeButton;
 
 		if (item.isSaving) {
 			removeButton = this.renderSaving();
 		} else {
 			removeButton = (
-				<RemoveButton onRemove={this.onRemove} error={!!item.error} />
+				<RemoveButton onRemove={this.onRemove} error={!!item.error} disabled={disabled} />
 			);
 		}
 
