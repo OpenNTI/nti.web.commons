@@ -181,7 +181,9 @@ export class ModalManager extends EventEmitter {
 		const {active, lastIndex} = this;
 		const mainContent = document.getElementById('content');
 
-		setHidden(mainContent, lastIndex >= 0);
+		if (mainContent) {
+			setHidden(mainContent, lastIndex >= 0);
+		}
 
 		active.forEach((ref, i) => {
 
