@@ -71,7 +71,7 @@ class BasicEditor extends React.Component {
 		return (
 			<ListItem className={className} active={active}>
 				<ItemInfo label={item.label} subLabels={subLabels} />
-				{item.error && !isCancel && (<ErrorCmp error={getString(active ? 'failedToAdd' : 'failedToRemove')} white={active} />)}
+				{item.error && !isCancel && (<ErrorCmp error={getString(active ? 'failedToRemove' : 'failedToAdd')} white={active} />)}
 				{(!active || isCancel) && item.canAddTo && this.renderAdd()}
 				{active  && item.canRemoveFrom && this.renderRemove()}
 			</ListItem>
