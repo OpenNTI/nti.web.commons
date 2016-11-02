@@ -59,6 +59,12 @@ export default class InlineAssociations extends React.Component {
 					loading: false,
 					associations
 				});
+			})
+			.catch(() => {
+				this.setState({
+					loading: false,
+					associations: []
+				});
 			});
 	}
 
@@ -83,7 +89,12 @@ export default class InlineAssociations extends React.Component {
 	render () {
 		const {item} = this.props;
 		const {loading} = this.state;
-		const {associationCount} = item;
+		const {associations} = this.state;
+		let {associationCount} = item;
+
+		if (associations && associations.length !== associationCount) {
+			associationCount = associations.length;
+		}
 
 		if (associationCount === 0 ) {
 			return (
