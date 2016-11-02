@@ -1,0 +1,28 @@
+@import "~nti-style-common";
+
+.association-pill-tooltip {
+	width: 200px;
+
+	&.loading {
+		padding: rem-calc(10px 0);
+	}
+}
+
+ul.limited-list.association-pill-tooltip-list {
+	font-size: 0.75rem;
+	line-height: 1rem;
+	white-space: nowrap;
+	padding: rem-calc(10px);
+	color: white;
+
+	li {
+		max-width: rem-calc(215px);
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&.remaining {
+			text-decoration: underline;
+			cursor: pointer;
+		}
+	}
+}

@@ -28,7 +28,7 @@ export default function LimitedList ({children, className = () => {}, onShowMore
 	const remaining = hasLimit ? (children.length - max) : 0;
 	const cls = cx('limited-list', className);
 	const remainingCls = cx('remaining', {'has-handler': !!onShowMore});
-	const stringFn = t.override(getString);
+	const stringFn = getString ? t.override(getString) : t;
 
 	return (
 		<ul className={cls} {...otherProps}>
