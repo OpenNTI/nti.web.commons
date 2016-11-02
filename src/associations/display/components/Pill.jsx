@@ -10,7 +10,7 @@ const DEFAULT_TEXT = {
 	shared: {
 		zero: 'Not Shared',
 		one: 'Shared',
-		other: 'Shared'
+		other: 'Shared with %(count)s'
 	}
 };
 
@@ -51,7 +51,7 @@ export default class AssociationPill extends React.Component {
 		const trigger = (
 			<div className={cls} onClick={this.onClick}>
 				<i className="icon-link small" />
-				<span>{getString('shared', {count: associationCount})}</span>
+				<span>{getString('shared', {count: associationCount - 1})}</span>
 			</div>
 		);
 
