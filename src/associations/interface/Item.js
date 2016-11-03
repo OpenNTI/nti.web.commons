@@ -26,12 +26,6 @@ export default class AssociationItem extends EventEmitter {
 		this[ADD_TO] = onAddTo;
 		this[REMOVE_FROM] = onRemoveFrom;
 		this[CFG] = cfg;
-
-		if (item.addListener) {
-			item.addListener('change', () => {
-				this.emit('change');
-			});
-		}
 	}
 
 	isAssociationItem = true
