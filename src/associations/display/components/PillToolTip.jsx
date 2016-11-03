@@ -23,15 +23,9 @@ export default class PillToolTip extends React.Component {
 		};
 	}
 
+
 	componentDidMount () {
 		const {item, scope} = this.props;
-
-		this.loadAssociations(item, scope);
-	}
-
-
-	componentWillReceiveProps (nextProps) {
-		const {item, scope} = nextProps;
 
 		this.loadAssociations(item, scope);
 	}
