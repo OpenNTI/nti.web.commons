@@ -63,8 +63,20 @@ export default class AssociationsEditor extends React.Component {
 			available: this.available,
 			isEmpty: this.sharedWith.isEmpty && this.available.isEmpty
 		};
+	}
+
+
+	componentDidMount () {
+		const {associations} = this.props;
 
 		associations.addListener('change', this.onAssociationsChanged);
+	}
+
+
+	componentWillUnmount () {
+		const {associations} = this.props;
+
+		associations.removeListener('change', this.onAssociationsChanged);
 	}
 
 
