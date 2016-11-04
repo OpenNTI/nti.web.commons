@@ -6,6 +6,8 @@ import {rawContent} from 'nti-commons';
 
 import DialogButtons from '../../components/DialogButtons';
 
+import Manager from '../ModalManager';
+
 const logger = Logger.get('prompts:components:Dialog');
 const emptyFunction = () => {};
 
@@ -103,8 +105,10 @@ export default class Dialog extends React.Component {
 	componentDidMount () {
 		this.mounted = true;
 		window.addEventListener('popstate', this.dismiss);
+		Manager.addUpdateListener(this.onManagerUpdate);
 	}
 
+	onManagerUpdate = () => this.forceUpdate()
 
 	componentDidUpdate () {
 		let focusNode;
@@ -113,13 +117,14 @@ export default class Dialog extends React.Component {
 			focusNode = this.confirm || this.cancel || this.frame;
 
 			focusNode.focus();
-		}
+		}		
 	}
 
 
 	componentWillUnmount () {
 		this.mounted = false;
 		window.removeEventListener('popstate', this.dismiss);
+		Manager.removeUpdateListener(this.onManagerUpdate);
 	}
 
 
@@ -180,6 +185,7 @@ export default class Dialog extends React.Component {
 		} = this;
 
 		const state = dismissing ? 'dismissing' : 'showing';
+		const hidden = Manager.isHidden(this);
 
 		const buttons = [
 			onCancel && {
@@ -195,7 +201,7 @@ export default class Dialog extends React.Component {
 		].filter(x => x);
 
 		return (
-			<div ref={el => this.frame = el} className={`modal dialog mask modal-mask ${state}`} onKeyDown={this.handleEscapeKey}>
+			<div ref={el => this.frame = el} className={`modal dialog mask modal-mask ${state, hidden}`} onKeyDown={this.handleEscapeKey}>
 
 				<div className={`dialog window ${state}`}>
 					{this.renderDismissControl()}

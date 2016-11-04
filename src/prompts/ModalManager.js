@@ -6,7 +6,7 @@ import EventEmitter from 'events';
 import Modal from './components/Modal';
 
 
-const setHidden = (node, hidden) => node.setAttribute('aria-hidden', hidden);
+const setHidden = (node, hidden) => node && node.setAttribute('aria-hidden', hidden);
 const focusElement = (node) => node && node.focus();
 
 const EVENT = 'updated';
