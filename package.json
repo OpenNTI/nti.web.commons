@@ -34,6 +34,7 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
+    "eases": "^1.0.8",
     "filesize": "^3.3.0",
     "invariant": "^2.2.1",
     "isempty": "0.0.1",
@@ -64,7 +65,6 @@
     "babel-preset-stage-1": "^6.1.0",
     "baggage-loader": "^0.2.4",
     "css-loader": "^0.25.0",
-    "eases": "^1.0.8",
     "enzyme": "^2.3.0",
     "eslint-config-nti-codestyle-js": "^1.1.0",
     "eslint-config-nti-codestyle-jsx": "^1.0.0",
