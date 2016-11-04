@@ -160,7 +160,7 @@ export default class Dialog extends React.Component {
 	}
 
 
-	focus = () => this.confirm && this.confirm.focux()
+	focus = () => this.confirm && this.confirm.focus()
 
 
 	render () {
