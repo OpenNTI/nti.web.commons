@@ -46,7 +46,7 @@ function getSubLabels (item) {
 
 	if (assignment.getMaximumTimeAllowed) {
 		labels.push(t('timeLimit', {
-			limit: getDisplay(assignment.getMaximumTimeAllowed())
+			limit: getDisplay(assignment.getMaximumTimeAllowed() / 1000)
 		}));
 	}
 
