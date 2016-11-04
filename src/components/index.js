@@ -56,6 +56,7 @@ export PublishTrigger from './PublishTrigger';
 export Radio from './Radio';
 export RadioGroup from './RadioGroup';
 export Report from './Report';
+export Scroller from './Scroller';
 export ScrollTrigger from './ScrollTrigger';
 export Search from './Search';
 export SelectBox from './SelectBox';
