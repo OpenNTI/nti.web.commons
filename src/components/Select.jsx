@@ -37,7 +37,7 @@ export default function Select (props) {
 }
 
 Select.propTypes = {
-	value: PropTypes.number,
+	value: PropTypes.any,
 	onChange: PropTypes.func.isRequired,
 	children: PropTypes.array.isRequired,
 	className: PropTypes.string,

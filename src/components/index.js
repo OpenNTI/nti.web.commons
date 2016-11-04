@@ -59,6 +59,7 @@ export Report from './Report';
 export Scroller from './Scroller';
 export ScrollTrigger from './ScrollTrigger';
 export Search from './Search';
+export Select from './Select';
 export SelectBox from './SelectBox';
 export SelectBoxItem from './SelectBoxItem';
 export SettingsButton from './SettingsButton';
