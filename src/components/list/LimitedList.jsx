@@ -33,7 +33,7 @@ export default function LimitedList ({children, className = () => {}, onShowMore
 	return (
 		<ul className={cls} {...otherProps}>
 			{items.map((x, index) => (<li key={index}>{x}</li>))}
-			{remaining && remaining > 0 && (<li className={remainingCls} onClick={onShowMore || noop}>{stringFn('loadMore', {count: remaining})}</li>) }
+			{!!remaining && remaining > 0 && (<li className={remainingCls} onClick={onShowMore || noop}>{stringFn('loadMore', {count: remaining})}</li>) }
 		</ul>
 	);
 }
