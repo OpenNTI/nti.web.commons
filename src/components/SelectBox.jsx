@@ -78,6 +78,7 @@ export default React.createClass({
 
 		return (
 			<div className={classes} tabIndex="-1">
+				{isOpen && <div className="click-mask" onClick={this.toggle} />}
 				<div className="menu-label selected" onClick={!disabled && this.toggle}>{optionLabel(selectedOption.label)}</div>
 				{isOpen && (
 					<ul>
