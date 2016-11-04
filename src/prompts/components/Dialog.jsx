@@ -4,6 +4,7 @@ import Logger from 'nti-util-logger';
 
 import {rawContent} from 'nti-commons';
 
+import Manager from '../ModalManager';
 import DialogButtons from '../../components/DialogButtons';
 
 const logger = Logger.get('prompts:components:Dialog');
@@ -18,7 +19,7 @@ export default class Dialog extends React.Component {
 
 		if (!mountPoint) {
 			mountPoint = document.createElement('div');
-			mountPoint.classList.add(MOUNT_POINT_CLS, 'modal');
+			mountPoint.classList.add(MOUNT_POINT_CLS);
 
 			document.body.appendChild(mountPoint);
 		}
@@ -86,6 +87,10 @@ export default class Dialog extends React.Component {
 	}
 
 
+	attachConfirmRef = el => this.confirm = el
+	attachFrameRef = el => this.frame = el
+
+
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -93,10 +98,12 @@ export default class Dialog extends React.Component {
 			dismissCalled: false
 		};
 
-
-		this.handleEscapeKey = this.handleEscapeKey.bind(this);
-		this.confirmClicked = this.confirmClicked.bind(this);
-		this.dismiss = this.dismiss.bind(this);
+		Manager.add(this.modalRef = {
+			refocus: document.activeElement,
+			dismiss: () => this.dismiss(),
+			component: this,
+			mountPoint: Dialog.getMountPoint()
+		});
 	}
 
 
@@ -120,17 +127,12 @@ export default class Dialog extends React.Component {
 	componentWillUnmount () {
 		this.mounted = false;
 		window.removeEventListener('popstate', this.dismiss);
+		Manager.remove(this.modalRef);
+		delete this.modalRef;
 	}
 
 
-	handleEscapeKey (e) {
-		if (e.key === 'Escape') {
-			this.dismiss();
-		}
-	}
-
-
-	confirmClicked (e) {
+	confirmClicked = (e) => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -144,7 +146,7 @@ export default class Dialog extends React.Component {
 	}
 
 
-	dismiss (e) {
+	dismiss = (e) => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -156,6 +158,9 @@ export default class Dialog extends React.Component {
 			onCancel.call();
 		}
 	}
+
+
+	focus = () => this.confirm && this.confirm.focux()
 
 
 	render () {
@@ -188,6 +193,7 @@ export default class Dialog extends React.Component {
 				onClick: this.dismiss
 			},
 			onConfirm && {
+				ref: this.attachConfirmRef,
 				className: confirmButtonClass,
 				label: confirmButtonLabel,
 				onClick: this.confirmClicked
@@ -195,7 +201,7 @@ export default class Dialog extends React.Component {
 		].filter(x => x);
 
 		return (
-			<div ref={el => this.frame = el} className={`modal dialog mask modal-mask ${state}`} onKeyDown={this.handleEscapeKey}>
+			<div ref={this.attachFrameRef} className={`modal dialog mask ${state}`}>
 
 				<div className={`dialog window ${state}`}>
 					{this.renderDismissControl()}
