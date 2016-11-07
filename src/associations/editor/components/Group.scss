@@ -22,7 +22,7 @@
 
 	.fadeAndCollapse-enter-active, .fadeAndCollapse-leave-active {
 		overflow: hidden;
-		transition: opacity 300ms, max-height 300ms, margin-bottom 300ms;
+		transition: opacity 300ms ease-in-out, max-height 300ms ease-in-out, margin-bottom 300ms ease-in-out;
 	}
 
 	.fadeAndCollapse-enter {
