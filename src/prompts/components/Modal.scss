@@ -38,6 +38,10 @@
 	justify-content: center;
 	align-items: center;
 
+	&.tall {
+		justify-content: flex-start;
+	}
+
 	overflow: {
 		x: hidden;
 		y: scroll;
@@ -77,7 +81,7 @@
 	border-color: initial;
 	border-image: initial;
 	padding: initial;
-	background: inherit;
+	background: none;
 }
 
 .modal-content {

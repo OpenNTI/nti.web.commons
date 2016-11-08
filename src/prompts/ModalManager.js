@@ -54,6 +54,7 @@ export class ModalManager extends EventEmitter {
 	 * @param {String} options.className Additional classname to add to the dialog
 	 * @param {Boolean} options.closeOnMaskClick Enables dismissing the dialog when the mask is clicked.
 	 * @param {Function} options.onBeforeDismiss ----
+	 * @param {Boolean} options.tall Indicates that the content will be tall; triggers css changes
 	 * @param {Node} options.mountPoint the DOM node that the dialog should mount/re-render to.
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
 	 * @return {ModalReference} Stuff & Things
@@ -62,7 +63,7 @@ export class ModalManager extends EventEmitter {
 		//Back-compat... if the second arg is a string, wrap it into an "options" object...otherwise, passthrough.
 		options = (typeof options === 'string') ? {className: options} : options;
 
-		const {className, closeOnMaskClick, onBeforeDismiss, mountPoint, refocus = document.activeElement} = options;
+		const {className, closeOnMaskClick, onBeforeDismiss, tall, mountPoint, refocus = document.activeElement} = options;
 
 		const container = this.getContainer(mountPoint);
 
@@ -80,6 +81,7 @@ export class ModalManager extends EventEmitter {
 					ref={x => reference.component = x}
 					onDismiss={dismiss}
 					className={className}
+					tall={tall}
 					closeOnMaskClick={closeOnMaskClick}
 					children={content}
 					/>

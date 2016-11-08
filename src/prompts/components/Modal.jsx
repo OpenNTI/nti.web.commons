@@ -21,7 +21,8 @@ export default class Modal extends React.Component {
 		onDismiss: React.PropTypes.func.isRequired,
 		children: React.PropTypes.node,
 		className: React.PropTypes.string,
-		closeOnMaskClick: React.PropTypes.bool
+		closeOnMaskClick: React.PropTypes.bool,
+		tall: React.PropTypes.bool
 	}
 
 	state = {}
@@ -36,7 +37,7 @@ export default class Modal extends React.Component {
 	componentWillUnmount () {
 		Manager.removeUpdateListener(this.onManagerUpdate);
 	}
-	
+
 
 	onManagerUpdate = () => this.forceUpdate()
 
@@ -80,11 +81,11 @@ export default class Modal extends React.Component {
 
 
 	render () {
-		const {children, className} = this.props;
+		const {children, className, tall} = this.props;
 		const {safariFix} = this.state;
 		const hidden = Manager.isHidden(this);
 
-		const classes = cx('modal-mask', className, {hidden, 'safari-fix': safariFix});
+		const classes = cx('modal-mask', className, {hidden, 'safari-fix': safariFix, tall});
 
 		return (
 			<Transition transitionName="modal-mask"
