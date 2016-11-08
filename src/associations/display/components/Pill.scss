@@ -9,6 +9,10 @@
 	cursor: pointer;
 	line-height: 1;
 
+	&:hover {
+		background: #7c3fd9;//Didn't make this a variable because it seems like a one off.
+	}
+
 	i {
 		margin-right: 2px;
 	}
