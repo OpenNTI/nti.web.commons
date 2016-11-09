@@ -25,6 +25,17 @@ export default class Modal extends React.Component {
 		tall: React.PropTypes.bool
 	}
 
+
+	static childContextTypes = {
+		close: React.PropTypes.func
+	}
+
+
+	getChildContext = () => ({
+		close: this.close
+	})
+
+
 	state = {}
 
 
@@ -32,7 +43,7 @@ export default class Modal extends React.Component {
 		Manager.addUpdateListener(this.onManagerUpdate);
 		this.focus();
 	}
-	
+
 
 	componentWillUnmount () {
 		Manager.removeUpdateListener(this.onManagerUpdate);
