@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createDOM} from 'nti-lib-dom';
+import {buffer} from 'nti-commons';
 import EventEmitter from 'events';
 
 import Modal from './components/Modal';
@@ -67,8 +68,8 @@ export class ModalManager extends EventEmitter {
 
 		const container = this.getContainer(mountPoint);
 
-		const dismiss = () =>
-				(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container);
+		const dismiss = buffer(1, () =>
+				(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
 
 		const reference = {
 			dismiss,
