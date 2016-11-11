@@ -7,6 +7,21 @@
 }
 
 .flyout {
+	&.hover {
+		&.center {
+			.flyout-arrow {
+				margin-left: -5px;
+			}
+		}
+
+		.flyout-arrow {
+			&::after {
+				width: 10px;
+				height: 10px;
+			}
+		}
+	}
+
 	&.right {
 		.flyout-arrow {
 			right: rem-calc(16px);
