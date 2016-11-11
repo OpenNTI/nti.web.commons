@@ -99,6 +99,7 @@ export default class Publish extends React.Component {
 		error: PropTypes.string,
 		children: PropTypes.any,
 		disableDraft: PropTypes.bool,
+		disableSave: PropTypes.bool,
 		localeContext: PropTypes.oneOf([
 			'lesson',
 			'assignment'
@@ -205,10 +206,10 @@ export default class Publish extends React.Component {
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext, disableDraft} = this.props;
+		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext, disableDraft, disableSave} = this.props;
 		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 
-		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error});
+		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error, 'disabled': disableSave});
 
 		const trigger = <PublishTrigger value={value}/>;
 
