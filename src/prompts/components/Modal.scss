@@ -38,6 +38,10 @@
 	justify-content: center;
 	align-items: center;
 
+	body.inline-dialog-open & {
+		z-index: 1;
+	}
+
 	&.tall {
 		justify-content: flex-start;
 	}
