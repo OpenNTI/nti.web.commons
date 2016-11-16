@@ -1,7 +1,22 @@
 import React from 'react';
-
-import setTextContent from 'react/lib/setTextContent';
 import {Tasks, getRefHandler} from 'nti-commons';
+
+function setTextContent (node, text) {
+	if (text) {
+		const {firstChild, lastChild} = node;
+
+		if (firstChild && firstChild === lastChild && firstChild.nodeType === 3) {
+			firstChild.nodeValue = text;
+			return;
+		}
+	}
+
+	if (node.textContent != null) {
+		node.textContent = text;
+	} else {
+		node.innerText = text;
+	}
+}
 
 export default class Ellipsed extends React.Component {
 
