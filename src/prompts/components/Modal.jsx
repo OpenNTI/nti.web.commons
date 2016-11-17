@@ -30,6 +30,8 @@ export default class Modal extends React.Component {
 		close: React.PropTypes.func
 	}
 
+	attachMaskRef = x => this.mask = x
+	attachContentRef = x => this.content = x
 
 	getChildContext = () => ({
 		close: this.close
@@ -107,7 +109,7 @@ export default class Modal extends React.Component {
 				transitionLeaveTimeout={500}
 			>
 				<LockScroll />
-				<div ref={(x) => this.mask = x} className={classes}
+				<div ref={this.attachMaskRef} className={classes}
 					onFocus={this.onFocus}
 					onBlur={this.onBlur}
 					onTouchStart={stop}
@@ -115,7 +117,7 @@ export default class Modal extends React.Component {
 					onClick={this.onMaskClick}
 					>
 					<i className="icon-close" onClick={this.close}/>
-					<dialog role="dialog" className="modal-content" open ref={x => this.content = x} tabIndex="-1">
+					<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1">
 						{React.cloneElement(
 							React.Children.only(children),
 							{ onDismiss: this.close }

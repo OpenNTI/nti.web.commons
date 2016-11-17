@@ -13,6 +13,9 @@ export default React.createClass({
 		onClose: React.PropTypes.func
 	},
 
+	attachContainerRef (x) {this.container = x;},
+	attachImageRef (x) {this.img = x;},
+
 	getInitialState () {
 		return {
 			src: null,
@@ -133,12 +136,12 @@ export default React.createClass({
 
 		return (
 				<div className="zoomable"
-					ref={x => this.container = x}
+					ref={this.attachContainerRef}
 					onTouchStart={this.touchStart}
 					onTouchMove={this.touchMove}
 					onTouchEnd={this.touchEnd}
 				>
-					<img src={src} style={style} ref={x => this.img = x} className="zoomable-img" />
+					<img src={src} style={style} ref={this.attachImageRef} className="zoomable-img" />
 					<button className="zoomable-close" onClick={this.close}/>
 				</div>
 		);

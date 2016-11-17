@@ -77,9 +77,11 @@ export class ModalManager extends EventEmitter {
 			refocus
 		};
 
+		const setReference = x => reference.component = x;
+
 		ReactDOM.render((
 				<Modal
-					ref={x => reference.component = x}
+					ref={setReference}
 					onDismiss={dismiss}
 					className={className}
 					tall={tall}

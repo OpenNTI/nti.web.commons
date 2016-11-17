@@ -103,6 +103,10 @@ export default class DurationPicker extends React.Component {
 		return getDisplay(value);
 	}
 
+	attachDaysRef = x => this.days = x
+	attachHoursRef = x => this.hours = x
+	attachMinutesRef = x => this.minutes = x
+
 	componentWillMount () {
 		const {value = 0} = this.props;
 		this.setState({value});
@@ -141,7 +145,7 @@ export default class DurationPicker extends React.Component {
 			<div className="duration-picker">
 				<label>
 					<span className="label">Days</span>
-					<NumberInput ref={x => this.days = x}
+					<NumberInput ref={this.attachDaysRef}
 						type="number"
 						onChange={this.inputChanged}
 						defaultValue={days}
@@ -150,7 +154,7 @@ export default class DurationPicker extends React.Component {
 				</label>
 				<label>
 					<span className="label">Hours</span>
-					<NumberInput ref={x => this.hours = x}
+					<NumberInput ref={this.attachHoursRef}
 						type="number"
 						onChange={this.inputChanged}
 						defaultValue={hours}
@@ -159,7 +163,7 @@ export default class DurationPicker extends React.Component {
 				</label>
 				<label>
 					<span className="label">Minutes</span>
-					<NumberInput ref={x => this.minutes = x}
+					<NumberInput ref={this.attachMinutesRef}
 						type="number"
 						onChange={this.inputChanged}
 						defaultValue={minutes}

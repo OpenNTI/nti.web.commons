@@ -28,6 +28,9 @@ export default class TokenEditor extends React.Component {
 	}
 
 
+	attachInputRef = x => this.input = x
+
+
 	constructor (props) {
 		if (props.tokens) {
 			props = {value: props.tokens, ...props};
@@ -166,7 +169,7 @@ export default class TokenEditor extends React.Component {
 				<input
 					disabled={disabled}
 					className="token"
-					ref={x => this.input = x}
+					ref={this.attachInputRef}
 					onKeyDown={this.onKeyDown}
 					onChange={this.onInputChange}
 					onBlur={this.onBlur}

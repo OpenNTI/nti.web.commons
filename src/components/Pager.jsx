@@ -88,6 +88,9 @@ export default React.createClass({
 	},
 
 
+	attachDOMRef (x) {this.el = x;},
+
+
 	componentDidMount () {
 		this.setupLinks(this.props);
 	},
@@ -149,13 +152,13 @@ export default React.createClass({
 		prev = getProps(prev);
 
 		return (position === 'bottom') ? (
-			<ul className="bottompager" ref={x => this.el = x}>
+			<ul className="bottompager" ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
 				<li className="counts">{state.total > 1 && this.makeCounts() }</li>
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
 			</ul>
 		) : (
-			<div className={cls} ref={x => this.el = x}>
+			<div className={cls} ref={this.attachDOMRef}>
 				{state.total > 1 && this.makeCounts() }
 				<a className="prev" {...prev}/>
 				<a className="next" {...next}/>

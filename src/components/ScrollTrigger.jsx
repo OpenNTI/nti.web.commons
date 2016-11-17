@@ -13,6 +13,9 @@ export default React.createClass({
 	},
 
 
+	attachDOMRef (x) {this.el = x;},
+
+
 	subscribeScroll () {
 		const scroller = getScrollParent(this.el);
 		const unsub = () => (scroller.removeEventListener('scroll', this.onScroll), this.unsubscribeScroll = EMPTY);
@@ -102,7 +105,7 @@ export default React.createClass({
 	render () {
 		const {props: {onEnterView, ...props}} = this;//eslint-disable-line no-unused-vars
 		return (
-			<div className="scrollTrigger" ref={x => this.el = x} {...props}/>
+			<div className="scrollTrigger" ref={this.attachDOMRef} {...props}/>
 		);
 	}
 });
