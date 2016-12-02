@@ -8,6 +8,7 @@ export * as Errors from './errors';
 export * as HOC from './HighOrderComponents';
 export * as Mixins from './mixins';
 export * as Prompt from './prompts';
+export * as RemoteMount from './remote-mount';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
