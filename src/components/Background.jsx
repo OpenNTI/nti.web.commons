@@ -51,6 +51,14 @@ export default React.createClass({
 	},
 
 
+	componentWillReceiveProps (nextProps) {
+		const {imgUrl} = nextProps;
+		if (imgUrl !== this.props.imgUrl) {
+			this.setBodyBackground(imgUrl);
+		}
+	},
+
+
 	componentWillUnmount () {
 		const prev = this.getPreviousBackground();
 		this.setBodyBackground(prev);
