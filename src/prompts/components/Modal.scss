@@ -25,6 +25,8 @@
 
 
 .modal-mask {
+	@include touch-scroll;
+	overflow: { x: hidden; y: scroll; }
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -44,11 +46,6 @@
 
 	&.tall {
 		justify-content: flex-start;
-	}
-
-	overflow: {
-		x: hidden;
-		y: scroll;
 	}
 
 	&.safari-fix {
