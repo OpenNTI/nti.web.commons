@@ -10,7 +10,6 @@ import Manager from '../ModalManager';
 
 declareCustomElement('dialog');
 
-const stop = e => e.stopPropagation();
 
 const needsSafariFix = e => e && (isIOS() && /input|textarea|select/i.test(e.target.tagName));
 
@@ -112,8 +111,6 @@ export default class Modal extends React.Component {
 				<div ref={this.attachMaskRef} className={classes}
 					onFocus={this.onFocus}
 					onBlur={this.onBlur}
-					onTouchStart={stop}
-					onTouchMove={stop}
 					onClick={this.onMaskClick}
 					>
 					<i className="icon-close" onClick={this.close}/>
