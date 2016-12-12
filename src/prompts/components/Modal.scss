@@ -50,6 +50,7 @@
 
 	&.safari-fix {
 		position: absolute !important;
+		bottom: auto;
 		.modal-content {
 			animation: none;
 		}
