@@ -92,9 +92,10 @@
 
 	& > * {
 		margin: 0 auto;
+		position: relative;
 
 		@include covered-modal {
-			&::before {
+			&::after {
 				content: '';
 				position: absolute;
 				top: 0; bottom: 0;
