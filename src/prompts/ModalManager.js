@@ -230,7 +230,9 @@ export class ModalManager extends EventEmitter {
 			return;
 		}
 
-		if (!top.mountPoint.contains(e.target)) {
+		const isAfter = (a) => top.mountPoint.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING; //eslint-disable-line
+
+		if (!top.mountPoint.contains(e.target) && !isAfter(e.target)) {
 			e.stopPropagation();
 			try {
 				// top.mountPoint.querySelector('dialog').focus();
