@@ -111,10 +111,10 @@ describe('Inline List Tests', () => {
 			expect(separators.length).toEqual(0);
 		});
 
-		it('Has No Remaining', () => {
+		it('Has One Remaining', () => {
 			const remaining = getRemainingFromDOM();
 
-			expect(remaining.length).toEqual(0);
+			expect(remaining.length).toEqual(1);
 		});
 
 		it('Has Expected Text', () => {
@@ -157,10 +157,10 @@ describe('Inline List Tests', () => {
 			expect(separators.length).toEqual(1);
 		});
 
-		it('Has No Remaining', () => {
+		it('Has One Remaining', () => {
 			const remaining = getRemainingFromDOM();
 
-			expect(remaining.length).toEqual(0);
+			expect(remaining.length).toEqual(1);
 		});
 
 		it('Has Expected Text', () => {
