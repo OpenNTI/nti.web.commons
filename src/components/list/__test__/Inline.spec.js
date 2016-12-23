@@ -37,10 +37,11 @@ describe('Inline List Tests', () => {
 	describe('One Item', () => {
 		const children = ['Item 1'];
 
-		beforeEach(() => {
+		beforeEach(done => {
 			ReactDOM.render(
 				React.createElement(Inline, {children}),
-				div
+				div,
+				done
 			);
 		});
 
@@ -82,10 +83,11 @@ describe('Inline List Tests', () => {
 	describe('Two Items', () => {
 		const children = ['Item 1', 'Item 2'];
 
-		beforeEach(() => {
+		beforeEach(done => {
 			ReactDOM.render(
 				React.createElement(Inline, {children, limit: 5}),
-				div
+				div,
+				done
 			);
 		});
 
@@ -127,10 +129,11 @@ describe('Inline List Tests', () => {
 	describe('Less Than Max', () => {
 		const children = ['Item 1', 'Item 2', 'Item 3'];
 
-		beforeEach(() => {
+		beforeEach(done => {
 			ReactDOM.render(
 				React.createElement(Inline, {children, limit: 5}),
-				div
+				div,
+				done
 			);
 		});
 
@@ -172,10 +175,11 @@ describe('Inline List Tests', () => {
 	describe('More Than Max', () => {
 		const children = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
-		beforeEach(() => {
+		beforeEach(done => {
 			ReactDOM.render(
 				React.createElement(Inline, {children, limit: 2}),
-				div
+				div,
+				done
 			);
 		});
 
