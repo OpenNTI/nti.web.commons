@@ -28,19 +28,19 @@ describe('Association Interface Tests', () => {
 			makeDestination('5', onAdd, onRemove)
 		];
 
-		associations = new Interface(items, ['2', '4']);
+		associations = new Interface(items, [{NTIID: '2'}, {NTIID: '4'}]);
 	});
 
 	describe('Active Association Tests', () => {
 		it('isSharedWith is true for active', () => {
-			expect(associations.isSharedWith('2')).toBeTruthy();
-			expect(associations.isSharedWith('4')).toBeTruthy();
+			expect(associations.isSharedWith({NTIID: '2'})).toBeTruthy();
+			expect(associations.isSharedWith({NTIID: '4'})).toBeTruthy();
 		});
 
 		it('isSharedWith is false for non-active', () => {
-			expect(associations.isSharedWith('1')).toBeFalsy();
-			expect(associations.isSharedWith('3')).toBeFalsy();
-			expect(associations.isSharedWith('5')).toBeFalsy();
+			expect(associations.isSharedWith({NTIID: '1'})).toBeFalsy();
+			expect(associations.isSharedWith({NTIID: '3'})).toBeFalsy();
+			expect(associations.isSharedWith({NTIID: '5'})).toBeFalsy();
 		});
 	});
 
