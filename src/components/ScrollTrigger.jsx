@@ -125,5 +125,5 @@ function isElementInView (el) {
 		rect.left >= viewportX &&
 		Math.floor(rect.bottom) <= viewportHeight &&
 		Math.floor(rect.right) <= viewportWidth
-    );
+	);
 }
