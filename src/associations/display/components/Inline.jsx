@@ -90,7 +90,7 @@ export default class InlineAssociations extends React.Component {
 		const {item} = this.props;
 		const {loading} = this.state;
 		const {associations} = this.state;
-		let {associationCount} = item;
+		let {associationCount = 0} = item;
 
 		if (associations && associations.length !== associationCount) {
 			associationCount = associations.length;
