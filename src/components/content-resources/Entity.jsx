@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import ReactDOMServer from 'react-dom/server'; //eew
 import {getEventTarget} from 'nti-lib-dom';
 
 import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
@@ -8,13 +7,23 @@ import {getFragmentFromString} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import path from 'path';
 
-import FileDragImage from './FileDragImage';
+import FileDragImageTemplate from './assets/FileDragImageTemplate.svg';
 
 const logger = Logger.get('common:components:content-resources:Entity');
 
-function getDetachedNodeFrom (jsxExp) {
-	let frag = getFragmentFromString(
-			ReactDOMServer.renderToStaticMarkup(jsxExp));
+function getFileDragImage (count) {
+	const digets = Number(count).toString().length;
+	const width = (digets * 6) + 11;
+	const x = 62 - (digets * 3);
+
+	return FileDragImageTemplate
+		.replace(/\{count\}/g, count)
+		.replace(/\{width\}/g, width)
+		.replace(/\{x\}/g, x);
+}
+
+function getDetachedNodeFrom (exp) {
+	let frag = getFragmentFromString(exp);
 	return frag.firstChild;
 }
 
@@ -79,7 +88,7 @@ export default class Entity extends React.Component {
 		const count = dragging.length;
 		const image = count <= 1
 			? target.cloneNode(true)
-			: getDetachedNodeFrom(<FileDragImage count={count}/>);
+			: getDetachedNodeFrom(getFileDragImage(count));
 
 		this.onDragEnd();
 

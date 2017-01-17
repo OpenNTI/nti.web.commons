@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 
 import cx from 'classnames';
 
@@ -31,7 +30,7 @@ export default React.createClass({
 	displayName: 'PromiseButton',
 
 	propTypes: {
-		children: React.PropTypes.any,
+		children: React.PropTypes.node,
 		className: React.PropTypes.string,
 
 		// The callback can return a promise if the work to be done will be async...
@@ -104,11 +103,12 @@ export default React.createClass({
 	},
 
 	render () {
-		let {children, className} = this.props;
-		let css = cx('promise-button', className, this.state.status);
+		const {children, className} = this.props;
+		const label = React.Children.only(children);
+		const css = cx('promise-button', className, this.state.status);
 
 		// A dummy element used to size the container to match the default (first) state.
-		let sizer = ReactDOMServer.renderToStaticMarkup(React.createElement('span', {}, children));
+		const sizer = `<span>${label}</span>`;
 
 		return (
 			<button className={css} onClick={this.go}>
@@ -119,7 +119,7 @@ export default React.createClass({
 					/*eslint-enable*/
 				}
 				<ul>
-					<li><span>{children}</span></li>
+					<li><span>{label}</span></li>
 					<li className="processing"><TinyLoader /></li>
 					<li className="finished" />
 				</ul>
