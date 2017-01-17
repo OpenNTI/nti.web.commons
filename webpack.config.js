@@ -75,8 +75,13 @@ exports = module.exports = {
 			},
 
 			{
+				test: /\.template\.svg$/,
+				loader: 'raw-loader'
+			},
+
+			{
 				test: /\.(ico|gif|png|jpg|svg)$/,
-				exclude: [/\-avatar.png$/],
+				exclude: [/\-avatar.png$/, /.template.svg$/],
 				loader: 'url',
 				query: {
 					limit: 500,

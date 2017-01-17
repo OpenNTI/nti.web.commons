@@ -7,7 +7,7 @@ import {getFragmentFromString} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import path from 'path';
 
-import FileDragImageTemplate from './assets/FileDragImageTemplate.svg';
+import FileDragImageTemplate from './assets/FileDragImage.template.svg';
 
 const logger = Logger.get('common:components:content-resources:Entity');
 

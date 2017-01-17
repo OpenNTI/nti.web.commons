@@ -10,6 +10,11 @@ module.exports = function (config) {
 		'react/lib/ReactContext': true
 	});
 
+	webpack.module.loaders.unshift({
+		test: /template\.svg$/,
+		loader: 'raw-loader'
+	});
+
 	config.set(Object.assign(baseConfig, {
 		files: [
 			'test/helpers/**/*.js',
