@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 
 import cx from 'classnames';
 
@@ -115,7 +114,7 @@ export default class DisplayName extends React.Component {
 		delete props.usePronoun;
 
 		if (localeKey) {
-			name = ReactDOMServer.renderToStaticMarkup(<a rel="author" className="username">{name}</a>);
+			name = `<a rel="author" class="username">${name}</a>`;
 
 			const getString = (typeof localeKey === 'function') ? localeKey : (o => t(localeKey, o));
 
