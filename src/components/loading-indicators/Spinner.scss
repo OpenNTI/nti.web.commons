@@ -19,7 +19,7 @@
 
 .loading-spinner {
 	position: relative;
-	margin: 0 auto;
+	margin: 0 auto; //XXX: This may cause everyone who uses this to define margin to override... we may want to remove this and let those who want to center the loader center it themselves
 
 	&::before {
 		content: '';
