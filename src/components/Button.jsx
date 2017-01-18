@@ -6,7 +6,7 @@ Button.propTypes = {
 	className: React.PropTypes.string,
 	children: React.PropTypes.element,
 	rounded: React.PropTypes.bool,
-	onClick: React.PropTypes
+	onClick: React.PropTypes.func
 };
 export default function Button (props) {
 	const {className, children, rounded, onClick = () => {}, ...otherProps} = props;
