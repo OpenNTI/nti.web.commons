@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 Button.propTypes = {
 	className: React.PropTypes.string,
-	children: React.PropTypes.element,
+	children: React.PropTypes.node,
 	rounded: React.PropTypes.bool,
 	onClick: React.PropTypes.func
 };

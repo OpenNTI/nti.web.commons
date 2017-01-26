@@ -30,7 +30,7 @@ export default React.createClass({
 	displayName: 'PromiseButton',
 
 	propTypes: {
-		children: React.PropTypes.node,
+		children: React.PropTypes.string,
 		className: React.PropTypes.string,
 
 		// The callback can return a promise if the work to be done will be async...
@@ -104,7 +104,7 @@ export default React.createClass({
 
 	render () {
 		const {children, className} = this.props;
-		const label = React.Children.only(children);
+		const label = React.Children.toArray(children)[0];
 		const css = cx('promise-button', className, this.state.status);
 
 		// A dummy element used to size the container to match the default (first) state.
