@@ -40,14 +40,27 @@ export default class Avatar extends React.Component {
 		}
 	}
 
+	componentWillUnmount () {
+		this.unmounted = true;
+		this.setState = () => {};
+	}
+
 
 	fillIn (props = this.props) {
 
-		this.setState({loading: true});
+		const task = Date.now();
 
+		const set = state => {
+			if (this.task === task) {
+				this.setState(state);
+			}
+		};
+
+		this.task = task;
+		set({loading: true});
 		User.resolve(props)
 			.catch(() => DEFAULT)
-			.then(x => this.setState({
+			.then(x => set({
 				entity: x,
 				color: this.getColorClass(x),
 				loading: false
