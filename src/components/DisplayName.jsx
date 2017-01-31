@@ -37,7 +37,7 @@ export default class DisplayName extends React.Component {
 		 *
 		 * @type {boolean|string}
 		 */
-		usePronoun: React.PropTypes.onOfType([
+		usePronoun: React.PropTypes.oneOfType([
 			React.PropTypes.bool,
 			React.PropTypes.string
 		]),
