@@ -33,11 +33,14 @@ export default class DisplayName extends React.Component {
 		]).isRequired,
 
 		/**
-		 * Specifies to substitute your name with "You".
+		 * Specifies to substitute your name with the specified string, or "You" if prop is boolean.
 		 *
-		 * @type {boolean}
+		 * @type {boolean|string}
 		 */
-		usePronoun: React.PropTypes.bool,
+		usePronoun: React.PropTypes.onOfType([
+			React.PropTypes.bool,
+			React.PropTypes.string
+		]),
 
 		/**
 		 * Sharing Scopes (entity objects) are given GeneralNames by the suggestion provider.
@@ -60,37 +63,43 @@ export default class DisplayName extends React.Component {
 	componentDidMount () { this.fillIn(); }
 
 	componentWillReceiveProps (nextProps) {
-		let {entity} = this.props;
+		const {entity} = this.props;
 		if (entity !== nextProps.entity) {
 			this.fillIn(nextProps);
 		}
 	}
 
+	componentWillUnmount () {
+		this.unmounted = true;
+		this.setState = () => {};
+	}
+
 
 	fillIn (props = this.props) {
-		let appuser = getAppUsername();
-		let {usePronoun} = props;
-		let task = Date.now();
+		const appuser = getAppUsername();
+		const {usePronoun} = props;
+		const task = Date.now();
 
-		let set = state => {
-			if (this.state.task === task) {
+		const set = state => {
+			if (this.task === task) {
 				this.setState(state);
 			}
 		};
 
-		this.setState({task}, ()=> User.resolve(props)
+		this.task = task;
+		User.resolve(props)
 			.then(
 				entity => {
-					let displayName = (usePronoun && entity.getID() === appuser)
-						? 'You'
+					const displayName = (usePronoun && entity.getID() === appuser)
+						? (typeof usePronoun === 'string') ? usePronoun : 'You'
 						: entity.displayName;
 
-					let { generalName } = entity;
+					const { generalName } = entity;
 
 					set({ displayName, generalName });
 				},
 				()=> set({ failed: true, displayName: 'Unknown' })
-			));
+			);
 
 	}
 
