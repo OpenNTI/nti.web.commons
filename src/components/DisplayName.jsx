@@ -123,7 +123,8 @@ export default class DisplayName extends React.Component {
 		delete props.usePronoun;
 
 		if (localeKey) {
-			name = `<a rel="author" class="username">${name}</a>`;
+			const innerTag = Tag === 'a' ? 'span' : 'a';
+			name = `<${innerTag} rel="author" class="username">${name}</${innerTag}>`;
 
 			const getString = (typeof localeKey === 'function') ? localeKey : (o => t(localeKey, o));
 
