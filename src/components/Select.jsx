@@ -26,8 +26,8 @@ export default function Select (props) {
 
 	return (
 		<div className="nti-select-native-wrapper">
-			<span className="icon-chevron-down small" role="presentation" aria-hidden/>
-			<span className="nti-select-value" aria-hidden>{valueLabel}</span>
+			<span className="icon-chevron-down small" role="presentation"/>
+			<span className="nti-select-value" role="presentation">{valueLabel}</span>
 			<select className={selectClassNames} {...otherProps} value={empty && value == null ? 'empty' : value} onChange={onChange}>
 				{(!value && empty) && <option disabled value="empty"/>}
 				{children}
