@@ -58,17 +58,17 @@ exports = module.exports = {
 			{
 				test: /\.js(x?)$/,
 				include: isRoot,
-				loader: 'babel',
+				loader: 'babel-loader',
 				query: {
 					sourceMaps: true
 				}
 			},
 
-			{ test: /\.json$/, loader: 'json' },
+			{ test: /\.json$/, loader: 'json-loader' },
 
 			{
 				test: /\-avatar.png$/,
-				loader: 'url',
+				loader: 'url-loader',
 				query: {
 					mimeType: 'image/[ext]'
 				}
@@ -82,7 +82,7 @@ exports = module.exports = {
 			{
 				test: /\.(ico|gif|png|jpg|svg)$/,
 				exclude: [/\-avatar.png$/, /.template.svg$/],
-				loader: 'url',
+				loader: 'url-loader',
 				query: {
 					limit: 500,
 					name: 'assets/[name]-[hash].[ext]',

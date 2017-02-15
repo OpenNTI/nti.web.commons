@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "karma start --single-run --reporters dots,html,junit,coverage",
-    "start": "make check; webpack-dev-server -d --config ./webpack.config.test.js  --host 0.0.0.0 --port 8000 --watch --progress --inline --info false --content-base ./test/app/ || true",
+    "start": "make check; webpack-dev-server -d --config ./webpack.config.test.js  --host 0.0.0.0 --port 8000 --quiet --watch --progress --inline --info false --content-base ./test/app/ || true",
     "prepublish": "not-in-install && make || in-install",
     "bump": "npm version",
     "preversion": "make check && make test",
@@ -72,6 +72,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "in-publish": "^2.0.0",
+    "json-loader": "^0.5.4",
     "node-sass": "^3.4.2",
     "normalize.css": "^5.0.0",
     "nti-style-common": "^1.1.11",
