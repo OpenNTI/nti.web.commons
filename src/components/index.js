@@ -66,6 +66,7 @@ export SelectBox from './SelectBox';
 export SelectBoxItem from './SelectBoxItem';
 export SettingsButton from './SettingsButton';
 export StickyElement from './StickyElement';
+export StickyContainer from './StickyContainer';
 export Token from './Token';
 export TokenEditor from './TokenEditor';
 export TimePicker from './TimePicker';

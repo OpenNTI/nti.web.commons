@@ -1,5 +1,5 @@
 import React from 'react';
-import {StickyContainer, Sticky as ReactSticky} from 'react-sticky';
+import {Sticky as ReactSticky} from 'react-sticky';
 
 const offsetProp = 'nti-sticky-top-offset';
 
@@ -7,7 +7,7 @@ Sticky.propTypes = {
 	children: React.PropTypes.any
 };
 
-function Sticky (props) {
+export default function Sticky (props) {
 	const {children} = props;
 	let styles = {};
 	let topOffset = 0;
@@ -23,9 +23,3 @@ function Sticky (props) {
 		</ReactSticky>
 	);
 }
-
-
-export {
-	StickyContainer,
-	Sticky
-};

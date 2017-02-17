@@ -5,6 +5,7 @@ const DEFAULT_MESSAGE = 'Unknown Error';
 
 export default class ErrorView extends React.Component {
 	static propTypes = {
+		className: React.PropTypes.string,
 		error: React.PropTypes.object.isRequired,
 		isWarning: React.PropTypes.bool,
 		onFocus: React.PropTypes.func
@@ -65,8 +66,8 @@ export default class ErrorView extends React.Component {
 
 
 	render () {
-		const {error, isWarning} = this.props;
-		const cls = cx('nti-error', {warning: isWarning});
+		const {error, isWarning, className} = this.props;
+		const cls = cx('nti-error', className, {warning: isWarning});
 		const msg = error.message || DEFAULT_MESSAGE;
 
 		if (error.doNotShow) {
