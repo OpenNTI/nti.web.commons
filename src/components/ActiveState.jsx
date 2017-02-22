@@ -19,7 +19,8 @@ export default React.createClass({
 		]),
 		href: React.PropTypes.string,
 		link: React.PropTypes.bool, //force onClick handler for non-'a' tags
-		tag: React.PropTypes.any
+		tag: React.PropTypes.any,
+		onClick: React.PropTypes.func
 	},
 
 
@@ -53,6 +54,11 @@ export default React.createClass({
 
 
 	onClick (e) {
+		const {onClick} = this.props;
+		if (onClick && (onClick(e) === false || e.defaultPrevented)) {
+			return;
+		}
+
 		e.preventDefault();
 		e.stopPropagation();
 		this.navigate(this.props.href);
