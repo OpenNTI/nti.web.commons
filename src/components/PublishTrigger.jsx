@@ -21,12 +21,12 @@ const DEFAULT_TEXT = {
 const t = scoped('PUBLISH_TRIGGER', DEFAULT_TEXT);
 
 export default function PublishTrigger (props) {
-	const {value} = props;
-	const selected = getPublishState(value);
+	const {value, label:labelOverride} = props;
+	const selected = getPublishState(value || PUBLISH_STATES.DRAFT);
 	const date = selected === PUBLISH_STATES.SCHEDULE ? value : null;
 	const classNames = cx('publish-trigger', selected.toLowerCase());
 
-	const label = t(`${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,'MMM D')});
+	const label = labelOverride || t(`${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,'MMM D')});
 
 	return (
 		<div {...props} className={classNames}>
@@ -41,5 +41,6 @@ PublishTrigger.propTypes = {
 	value: PropTypes.oneOfType([
 		PropTypes.instanceOf(Date),
 		PropTypes.oneOf(Object.keys(PUBLISH_STATES))
-	])
+	]),
+	label: PropTypes.string
 };
