@@ -26,7 +26,7 @@
 
 .modal-mask {
 	@include touch-scroll;
-	overflow: { x: hidden; y: scroll; }
+	overflow: { x: hidden; y: auto; }
 	position: fixed;
 	top: 0;
 	left: 0;
