@@ -81,6 +81,8 @@ export default class TimedSequence extends React.Component {
 		const {childrenState} = this.state;
 		const next = current + 1;
 
+		if (!this.running) { return; }
+
 		this.setState({
 			current: next
 		}, () => {
@@ -99,10 +101,9 @@ export default class TimedSequence extends React.Component {
 
 	startTimer () {
 		if (!this.running) {
+			this.running = true;
 			this.onTick(-1);
 		}
-
-		this.running = true;
 	}
 
 
