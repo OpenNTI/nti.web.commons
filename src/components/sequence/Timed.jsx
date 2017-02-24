@@ -59,12 +59,12 @@ export default class TimedSequence extends React.Component {
 		this.setState({
 			childrenState,
 			current: -1
+		}, () => {
+			if (this.running) {
+				this.stopTimer();
+				this.startTimer();
+			}
 		});
-
-		if (this.running) {
-			this.stopTimer();
-			this.startTimer();
-		}
 	}
 
 
@@ -77,8 +77,8 @@ export default class TimedSequence extends React.Component {
 	}
 
 
-	onTick () {
-		const {current, childrenState} = this.state;
+	onTick (current = 0) {
+		const {childrenState} = this.state;
 		const next = current + 1;
 
 		this.setState({
@@ -86,10 +86,8 @@ export default class TimedSequence extends React.Component {
 		}, () => {
 			const child = childrenState[next];
 
-			this.stopTimer();
-
 			if (child && child.showFor < Infinity) {
-				this[UPDATE_TIMEOUT] = setTimeout(() => this.onTick(), child.showFor);
+				this[UPDATE_TIMEOUT] = setTimeout(() => this.onTick(next), child.showFor);
 			}
 
 			if (!child) {
@@ -101,7 +99,7 @@ export default class TimedSequence extends React.Component {
 
 	startTimer () {
 		if (!this.running) {
-			this.onTick();
+			this.onTick(-1);
 		}
 
 		this.running = true;
