@@ -6,7 +6,6 @@ import ListHeader from './ListHeader';
 
 
 function applySortTo (items, sortFn) {
-	debugger;
 	return items.sort(sortFn);
 }
 
@@ -112,8 +111,6 @@ export default class ListTable extends React.Component {
 		const {renderItem, bodyClassName} = this.props;
 		const {items} = this.state;
 		const cls = cx('list-table-body', bodyClassName);
-
-		debugger;
 
 		return (
 			<ul className={cls}>
