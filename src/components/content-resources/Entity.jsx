@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {getEventTarget} from 'nti-lib-dom';
+import {addClass, removeClass, getEventTarget} from 'nti-lib-dom';
 
 import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
 
@@ -96,8 +96,8 @@ export default class Entity extends React.Component {
 		this.dragImage = image;
 
 		image.removeAttribute('draggable');
-		image.classList.add('content-dragged-asset');
-		image.classList.add('ghost');
+		addClass(image, 'content-dragged-asset');
+		addClass(image, 'ghost');
 
 		if (image.tagName !== 'SVG') {
 			image.style.width = width + 'px';
@@ -144,7 +144,7 @@ export default class Entity extends React.Component {
 			this.dragover++;
 			const target = getEventTarget(e, '.entity');
 			if (target) {
-				target.classList.add('entity-drag-over');
+				addClass(target, 'entity-drag-over');
 			}
 		}
 	}
@@ -156,7 +156,7 @@ export default class Entity extends React.Component {
 		this.dragover--;
 		if (target && this.dragover <= 0) {
 			this.dragover = 0; //force 0
-			target.classList.remove('entity-drag-over');
+			removeClass(target, 'entity-drag-over');
 		}
 	}
 

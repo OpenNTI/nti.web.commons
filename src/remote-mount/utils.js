@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {addClass} from 'nti-lib-dom';
 import {setRefOnProps} from '../utils/mergeRefHandlers';
 
 const MOUNT_POINT_NODE = Symbol('Mount Point Node');
@@ -8,7 +9,7 @@ const MOUNT_POINT_NODE = Symbol('Mount Point Node');
 function makeMountPoint (cls) {
 	const point = document.createElement('div');
 
-	point.classList.add(cls);
+	addClass(point, cls);
 	point.setAttribute('data-is-remote-mount-point', true);
 
 	return point;

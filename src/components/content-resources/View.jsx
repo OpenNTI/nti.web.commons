@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
 import {FileAPI, Selection} from 'nti-commons';
-import {getEventTarget} from 'nti-lib-dom';
+import {addClass, removeClass, getEventTarget} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
 import Grid from './layout/grid';
 
@@ -60,7 +60,7 @@ export default class ContentResourcesView extends React.Component {
 
 		const target = getEventTarget(e, '.view-main-pane');
 		if (target) {
-			target.classList.add(DRAG_CLASS);
+			addClass(target, DRAG_CLASS);
 		}
 
 		logger.debug('dragEnter', this.dragover, e.target);
@@ -96,7 +96,7 @@ export default class ContentResourcesView extends React.Component {
 		clearTimeout(this.dragOverStopped);
 		this.dragover = 0; //force 0
 		if (this.viewEl) {
-			this.viewEl.classList.remove(DRAG_CLASS);
+			removeClass(this.viewEl, DRAG_CLASS);
 		}
 
 		const {onDragOverChanged} = this.props;

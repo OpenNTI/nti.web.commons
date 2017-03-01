@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Logger from 'nti-util-logger';
-
+import {addClass} from 'nti-lib-dom';
 import {rawContent} from 'nti-commons';
 
 import Manager from '../ModalManager';
@@ -19,7 +19,7 @@ export default class Dialog extends React.Component {
 
 		if (!mountPoint) {
 			mountPoint = document.createElement('div');
-			mountPoint.classList.add(MOUNT_POINT_CLS);
+			addClass(mountPoint, MOUNT_POINT_CLS);
 
 			document.body.appendChild(mountPoint);
 		}
