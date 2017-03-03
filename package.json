@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://repos.nextthought.com/git/nti.web.component.commons"
+    "url": "https://github.com/NextThought/nti.web.component.commons.git"
   },
   "keywords": [
     "react",
