@@ -100,19 +100,22 @@ export default class Modal extends React.Component {
 		const classes = cx('modal-mask', className, {hidden, 'safari-fix': safariFix, tall});
 
 		const ios = isIOS();
-		const transitionName = ios ? '__none__' : 'modal-mask';
-		const timeout = ios ? 0 : 500;
+		const timeout = 500;
 
 		return (
-			<Transition transitionName={transitionName}
-				transitionAppear
-				transitionLeave
+			<Transition
+				transitionName="modal-mask"
+				transitionAppear={!ios}
+				transitionEnter={!ios}
+				transitionLeave={!ios}
 				transitionAppearTimeout={timeout}
 				transitionEnterTimeout={timeout}
 				transitionLeaveTimeout={timeout}
 			>
 				<LockScroll />
-				<div ref={this.attachMaskRef} className={classes}
+				<div ref={this.attachMaskRef}
+					key={className}
+					className={classes}
 					onFocus={this.onFocus}
 					onBlur={this.onBlur}
 					onClick={this.onMaskClick}
