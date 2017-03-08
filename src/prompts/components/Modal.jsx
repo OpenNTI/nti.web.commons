@@ -12,7 +12,7 @@ declareCustomElement('dialog');
 
 
 const needsSafariFix = e => e && (isIOS() && /input|textarea|select/i.test(e.target.tagName));
-
+const stopEvent = e => e.stopPropagation();
 
 export default class Modal extends React.Component {
 
@@ -121,7 +121,7 @@ export default class Modal extends React.Component {
 					onClick={this.onMaskClick}
 					>
 					<i className="icon-close" onClick={this.close}/>
-					<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1">
+					<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent}>
 						{React.cloneElement(
 							React.Children.only(children),
 							{ onDismiss: this.close }
