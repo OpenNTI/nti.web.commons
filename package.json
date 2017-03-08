@@ -41,6 +41,7 @@
     "isempty": "0.0.1",
     "jstimezonedetect": "^1.0.6",
     "mime-types": "^2.1.11",
+    "moment": "^2.17.1",
     "moment-timezone": "^0.5.4",
     "nti-commons": "^2.0.0",
     "nti-lib-dom": "^1.5.2",
