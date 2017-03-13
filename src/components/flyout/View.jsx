@@ -445,6 +445,7 @@ export default class Flyout extends React.Component {
 
 	render () {
 		const hover = this.isHover();
+		const {open} = this.state;
 		let {trigger: Trigger, ...props} = this.props;
 		let listeners = {};
 
@@ -479,6 +480,8 @@ export default class Flyout extends React.Component {
 		if (!Trigger) {
 			Trigger = ( <button>Trigger</button> );
 		}
+
+		listeners.className = cx(Trigger && Trigger.props && Trigger.props.className, {'flyout-open': open, 'flyout-closed': !open});
 
 		if (React.isValidElement(Trigger)) {
 			return React.cloneElement(Trigger, listeners);
