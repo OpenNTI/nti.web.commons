@@ -24,12 +24,12 @@ export default class FixedEelement extends React.Component {
 
 
 	componentDidMount () {
-		window.addEventListener('scroll', this.onWindowScroll);
+		addEventListener('scroll', this.onWindowScroll);
 	}
 
 
 	componentWillUnmount () {
-		window.removeEventListener('scroll', this.onWindowScroll);
+		removeEventListener('scroll', this.onWindowScroll);
 	}
 
 
