@@ -10,7 +10,7 @@ module.exports = function (config) {
 		'react/lib/ReactContext': true
 	});
 
-	webpack.module.loaders.unshift({
+	webpack.module.rules.unshift({
 		test: /template\.svg$/,
 		loader: 'raw-loader'
 	});

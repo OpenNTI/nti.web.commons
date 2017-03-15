@@ -3,16 +3,20 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
+const pkg = require('./package.json');
+
 const root = path.resolve(__dirname, 'src');
 const testRoot = path.resolve(__dirname, 'test');
 const isRoot = (e) => e.startsWith(root) || e.startsWith(testRoot);
 
 exports = module.exports = {
-	entry: './src/index.js',
+	entry: {
+		index: path.join(__dirname, 'src/index.js')
+	},
 	output: {
-		path: 'lib/',
+		path: path.join(__dirname, 'lib/'),
 		filename: 'index.js',
-		library: true,
+		library: pkg.name,
 		libraryTarget: 'commonjs2'
 	},
 
@@ -25,7 +29,7 @@ exports = module.exports = {
 	target: 'web',
 
 	resolve: {
-		extensions: ['', '.jsx', '.js']
+		extensions: ['.jsx', '.js']
 	},
 
 
@@ -36,40 +40,31 @@ exports = module.exports = {
 	],
 
 
-	postcss: [
-		autoprefixer({ browsers: ['> 1%', 'last 2 versions'] })
-	],
-
-
-	sassLoader: {
-		sourceMap: true
-	},
-
-
 	module: {
-		preLoaders: [
+		rules: [
 			{
 				test: /src.+jsx?$/,
-				loader: 'baggage?[file].scss',
-				include: isRoot
-			}
-		],
-		loaders: [
+				enforce: 'pre',
+				loader: 'baggage-loader',
+				include: isRoot,
+				options: {
+					'[file].scss':{}
+				}
+			},
+
 			{
 				test: /\.js(x?)$/,
 				include: isRoot,
 				loader: 'babel-loader',
-				query: {
+				options: {
 					sourceMaps: true
 				}
 			},
 
-			{ test: /\.json$/, loader: 'json-loader' },
-
 			{
 				test: /\-avatar.png$/,
 				loader: 'url-loader',
-				query: {
+				options: {
 					mimeType: 'image/[ext]'
 				}
 			},
@@ -83,24 +78,53 @@ exports = module.exports = {
 				test: /\.(ico|gif|png|jpg|svg)$/,
 				exclude: [/\-avatar.png$/, /.template.svg$/],
 				loader: 'url-loader',
-				query: {
+				options: {
 					limit: 500,
 					name: 'assets/[name]-[hash].[ext]',
 					mimeType: 'image/[ext]'
 				}
 			},
 
-			{ test: /\.(s?)css$/, loader: ExtractTextPlugin.extract(
-				'style-loader',
-				'css?sourceMap&-minimize!postcss!resolve-url!sass'
-				)
+			{
+				test: /\.(s?)css$/,
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						{
+							loader: 'css-loader',
+							options: {
+								sourceMap: true
+							}
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								sourceMap: true,
+								plugins: () => [
+									autoprefixer({ browsers: ['> 1% in US', 'last 2 versions', 'iOS > 8'] })
+								]
+							}
+						},
+						{
+							loader: 'resolve-url-loader'
+						},
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: true
+							}
+						}
+					]
+				})
 			}
 		]
 	},
 
 	plugins: [
-		new webpack.optimize.DedupePlugin(),
-		new webpack.optimize.OccurenceOrderPlugin(),
-		new ExtractTextPlugin('index.css', {allChunks: true})
+		new ExtractTextPlugin({
+			filename: 'index.css',
+			allChunks: true,
+			disable: false
+		}),
 	].filter(x => x)
 };
