@@ -42,11 +42,11 @@ export default function DefaultConfirmPrompt ({
 	];
 
 	return (
-		<div className="confirm-prompt">
+		<div className="confirm-prompt conflict-resolution-confirm-prompt">
 			<i className="icon-alert"/>
 			<div className="message">
 				<h3>Are you sure?</h3>
-				{challenge.message}
+				<p>{challenge.message}</p>
 			</div>
 			<DialogButtons buttons={buttons}/>
 		</div>
