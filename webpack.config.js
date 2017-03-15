@@ -17,7 +17,7 @@ exports = module.exports = {
 		path: path.join(__dirname, 'lib/'),
 		filename: 'index.js',
 		library: pkg.name,
-		libraryTarget: 'commonjs2'
+		libraryTarget: 'commonjs-module'
 	},
 
 	devtool: 'source-map',
