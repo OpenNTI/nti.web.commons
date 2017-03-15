@@ -4,7 +4,7 @@ import zpad from 'zpad';
 
 const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 
-export default class NumbertInput extends React.Component {
+export default class NumberInput extends React.Component {
 	static propTypes = {
 		className: React.PropTypes.string,
 		value: React.PropTypes.oneOfType([
