@@ -7,7 +7,7 @@ LIB = $(SRC:src/%.js=lib/%.js)
 LIBX = $(SRC:src/%.jsx=lib/%.js)
 LIBDIR = lib
 
-MAKE_PACKAGE=webpack --progress --cache --bail
+MAKE_PACKAGE=webpack --progress --cache --bail --hide-modules=true --display-chunks=false
 
 all: node_modules bundle
 #all: node_modules lib
