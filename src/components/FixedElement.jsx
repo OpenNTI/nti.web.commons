@@ -1,35 +1,66 @@
 import React from 'react';
 import cx from 'classnames';
+import {buffer, equals} from 'nti-commons';
 
 const SCROLL_STOP_TIMEOUT = 500;
 
-export default class FixedEelement extends React.Component {
+export default class FixedElement extends React.Component {
 	static propTypes = {
 		children: React.PropTypes.any,
 		className: React.PropTypes.string
 	}
 
+	attachRef = x => this.el = x
 
-	constructor (props) {
-		super(props);
-
-		this.setCmpRef = x => this.cmpRef = x;
-
-		this.state = {
-			styles: {
-				transform: 'none'
-			}
-		};
+	state = {
+		styles: {
+			transform: 'none'
+		}
 	}
 
 
 	componentDidMount () {
+		this.record();
 		addEventListener('scroll', this.onWindowScroll);
+		addEventListener('resize', this.onResize);
 	}
 
 
 	componentWillUnmount () {
 		removeEventListener('scroll', this.onWindowScroll);
+		removeEventListener('resize', this.onResize);
+	}
+
+
+	componentDidUpdate () {
+		this.record();
+	}
+
+	onResize = buffer(500, () => this.record())
+
+	record = () => {
+		const oldValues = this.fixedPosition && {...this.fixedPosition};
+		const width = this.el && this.el.offsetWidth;
+
+		let top = 0;
+		let left = 0;
+
+		let el = this.el;
+		do {
+			if (el) {
+				top += el.offsetTop;
+				left += el.offsetLeft;
+				el = el.offsetParent;
+			}
+		}
+		while (el && el.offsetParent);
+
+		const newValues = this.fixedPosition = {top, left, width};
+
+		if (oldValues && !equals(newValues, oldValues)) {
+			this.forceUpdate();
+		}
+		// console.log(this.fixedPosition);
 	}
 
 
@@ -43,20 +74,19 @@ export default class FixedEelement extends React.Component {
 
 
 	onWindowScroll = () => {
-		const rect = this.cmpRef && this.cmpRef.getBoundingClientRect();
 		const {isFixed} = this;
 
 		this.startScrollStopTimer();
 
-		if (rect && !isFixed) {
+		if (this.fixedPosition && !isFixed) {
 			this.isFixed = true;
 
 			this.setState({
 				styles: {
 					position: 'fixed',
-					top: `${Math.round(rect.top)}px`,
-					left: `${Math.round(rect.left)}px`,
-					width: `${rect.width}px`
+					top: `${this.fixedPosition.top}px`,
+					left: `${this.fixedPosition.left}px`,
+					width: `${this.fixedPosition.width}px`
 				}
 			});
 		}
@@ -77,14 +107,16 @@ export default class FixedEelement extends React.Component {
 
 
 	render () {
-		const {className, children} = this.props;
+		const {className, ...props} = this.props;
 		const {styles} = this.state;
-		const cls = cx(className, 'fixed-element');
 
 		return (
-			<div className={cls} style={styles} ref={this.setCmpRef}>
-				{children}
-			</div>
+			<div
+				className={cx(className, 'fixed-element')}
+				style={styles}
+				ref={this.attachRef}
+				{...props}
+			/>
 		);
 	}
 }
