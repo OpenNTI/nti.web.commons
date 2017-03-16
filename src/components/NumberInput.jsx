@@ -15,7 +15,8 @@ export default class NumberInput extends React.Component {
 		pad: React.PropTypes.oneOfType([
 			React.PropTypes.bool,
 			React.PropTypes.number
-		])
+		]),
+		max: React.PropTypes.number
 	}
 
 
@@ -41,7 +42,12 @@ export default class NumberInput extends React.Component {
 
 
 	onChange = (e) => {
-		const {onChange} = this.props;
+		const {onChange, max} = this.props;
+
+		if(!isNaN(max) && this.value > parseInt(max, 10)) {
+			return;
+		}
+
 		if (onChange) {
 			onChange(e, this.value, this);
 		}
