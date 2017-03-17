@@ -15,6 +15,7 @@ export CalendarCard from './CalendarCard';
 export Checkbox from './Checkbox';
 export CollectionFilter from './CollectionFilter';
 export ControlBar from './control-bar';
+export Currency from './Currency';
 export DarkMode from './DarkMode';
 export DateTime from './DateTime';
 export DayPicker from './day-time/DayPicker';
