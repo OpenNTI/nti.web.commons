@@ -20,19 +20,19 @@ export default function Currency ({amount, omitFractional, ...other}) {
 	);
 }
 
-// (function polyfill () {
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-	if(!supports()) {
-		logger.info('No browser support for Intl.NumberFormat. Adding polyfill.');
-		const el = document.createElement('script');
-		el.src = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en';
-		el.defer = true;
-		el.async = true;
-		el.setAttribute('data-script-added-by', 'nti-web-commons:Currency');
-		document.getElementsByTagName('body')[0].appendChild(el);
+(function () {
+	if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+		if(!supports()) {
+			logger.warn('No browser support for Intl.NumberFormat. Adding polyfill.');
+			const el = document.createElement('script');
+			el.src = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en';
+			el.defer = true;
+			el.async = true;
+			el.setAttribute('data-script-added-by', 'nti-web-commons:Currency');
+			document.getElementsByTagName('body')[0].appendChild(el);
+		}
 	}
-}
-// }());
+}());
 
 function supports () {
 	return typeof Intl === 'object' && Intl && typeof Intl.NumberFormat === 'function';
