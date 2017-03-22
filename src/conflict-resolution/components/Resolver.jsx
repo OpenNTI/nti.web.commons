@@ -1,16 +1,18 @@
 import React from 'react';
-
 import {getServer} from 'nti-web-client';
 import {REQUEST_CONFLICT_EVENT} from 'nti-lib-interfaces';
 
 import defaultConflictHandler from '../default-handler';
-
+import contentVersionConflictHandler, {Code} from '../content-version-conflict';
 import Registry from '../Registry';
+
+Registry.register(Code, contentVersionConflictHandler);
 
 export default class Resolver extends React.Component {
 
 	constructor (...args) {
 		super(...args);
+
 		this.emitter = getServer();
 	}
 
