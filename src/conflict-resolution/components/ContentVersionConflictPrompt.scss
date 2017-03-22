@@ -1,0 +1,63 @@
+@import "~nti-style-common";
+
+.content-version-conflict-prompt {
+	background: white;
+	width: 400px;
+	padding-top: 30px;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
+
+	.body {
+		display: flex;
+		padding: 0 1rem 1rem;
+
+		i {
+			flex: 0 0 auto;
+			font-size: 4rem;
+			color: $primary-red;
+			margin-right: 1rem;
+		}
+
+		.message {
+			flex: 1 1 auto;
+			color: $primary-grey;
+		}
+
+		h3 {
+			font: normal 300 1.3rem/1 $body-font-family;
+			margin-top: rem-calc(10px);
+			margin-bottom: rem-calc(5px);
+		}
+
+		p {
+			font: normal 400 0.875rem/1 $body-font-family;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+
+			li {
+				font: normal 300 0.875rem/1.5 $body-font-family;
+				color: $primary-blue;
+				cursor: pointer;
+
+				&.selected {
+					font-weight: 700;
+				}
+
+				label {
+					cursor: pointer;
+				}
+
+				input {
+					margin-right: 0.3rem;
+				}
+			}
+		}
+	}
+
+	.dialog-buttons {
+		background-color: $quad-grey;
+	}
+}
