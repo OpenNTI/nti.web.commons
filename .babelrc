@@ -1,8 +1,28 @@
 {
-	"presets": [
-		"es2015",
-		"stage-1",
-		"react"
-	],
+	"compact": false,
+	"env": {
+		"development": {
+			"presets": [
+				["env", {
+					"targets": {
+						"browsers": ["> 1% in US", "last 2 versions", "safari >= 6"]
+					}
+				}],
+				"stage-1",
+				"react"
+			]
+		},
+		"test": {
+			"presets": [
+				["env", {
+					"targets": {
+						"node": "current"
+					}
+				}],
+				"stage-1",
+				"react"
+			]
+		}
+	},
 	"sourceMaps": "both"
 }
