@@ -86,7 +86,7 @@ describe('Flyout', () => {
 				.forEach(x => {
 					expect(x.tagName).toEqual('A');
 					expect(x.getAttribute('href')).toEqual('#test');
-					expect(x.className).toEqual('foobar');
+					expect(x.classList.contains('foobar')).toBeTruthy();
 					expect(x.textContent).toEqual(value);
 				})
 			)
