@@ -55,7 +55,7 @@ describe('Inline List Tests', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
-				expect(items[i].innerText).toEqual(children[i]);
+				expect(items[i].textContent).toEqual(children[i]);
 			}
 		});
 
@@ -73,7 +73,7 @@ describe('Inline List Tests', () => {
 
 		it('Has Expected Text', () => {
 			const list = getListDOM();
-			const text = list.innerText;
+			const text = list.textContent;
 
 			expect(text).toEqual('Item 1');
 		});
@@ -101,7 +101,7 @@ describe('Inline List Tests', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
-				expect(items[i].innerText).toEqual(children[i]);
+				expect(items[i].textContent).toEqual(children[i]);
 			}
 		});
 
@@ -119,7 +119,7 @@ describe('Inline List Tests', () => {
 
 		it('Has Expected Text', () => {
 			const list = getListDOM();
-			const text = list.innerText;
+			const text = list.textContent;
 
 			expect(text).toEqual('Item 1 and Item 2');
 		});
@@ -147,7 +147,7 @@ describe('Inline List Tests', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
-				expect(items[i].innerText).toEqual(children[i]);
+				expect(items[i].textContent).toEqual(children[i]);
 			}
 		});
 
@@ -165,7 +165,7 @@ describe('Inline List Tests', () => {
 
 		it('Has Expected Text', () => {
 			const list = getListDOM();
-			const text = list.innerText;
+			const text = list.textContent;
 
 			expect(text).toEqual('Item 1, Item 2, and Item 3');
 		});
@@ -193,7 +193,7 @@ describe('Inline List Tests', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
-				expect(items[i].innerText).toEqual(children[i]);
+				expect(items[i].textContent).toEqual(children[i]);
 			}
 		});
 
@@ -201,12 +201,12 @@ describe('Inline List Tests', () => {
 			const remaining = getRemainingFromDOM();
 
 			expect(remaining.length).toEqual(1);
-			expect(remaining[0].innerText).toEqual('2 Others');
+			expect(remaining[0].textContent).toEqual('2 Others');
 		});
 
 		it('Has Expected Text', () => {
 			const list = getListDOM();
-			const text = list.innerText;
+			const text = list.textContent;
 
 			expect(text).toEqual('Item 1, Item 2, and 2 Others');
 		});
