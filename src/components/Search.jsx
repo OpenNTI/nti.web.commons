@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
+
 import BufferedInput from './BufferedInput';
 
 const stop = e => e.preventDefault();

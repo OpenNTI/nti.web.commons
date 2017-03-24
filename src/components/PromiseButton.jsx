@@ -1,7 +1,5 @@
 import React from 'react';
-
 import cx from 'classnames';
-
 import {wait} from 'nti-commons';
 
 import {Ellipse as TinyLoader} from './loading-indicators';

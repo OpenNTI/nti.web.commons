@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {getService} from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
+import {buffer as buffered, Selection} from 'nti-commons';
 
 import {alert} from '../../prompts';
 
@@ -9,7 +10,6 @@ import TaskQueue from './tasks/Queue';
 import MoveTask from './tasks/Move';
 import UploadTask from './tasks/Upload';
 
-import {buffer as buffered, Selection} from 'nti-commons';
 const {ObjectSelectionModel} = Selection;
 
 const logger = Logger.get('common:components:content-resources:BrowsableView');

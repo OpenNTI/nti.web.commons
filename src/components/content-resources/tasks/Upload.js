@@ -1,5 +1,6 @@
-import Task from './Task';
 import Logger from 'nti-util-logger';
+
+import Task from './Task';
 
 const logger = Logger.get('common:components:content-resources:tasks:Upload');
 

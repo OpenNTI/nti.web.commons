@@ -1,6 +1,7 @@
 import React from 'react';
-import NavigatableMixin from '../mixins/NavigatableMixin';
 import cx from 'classnames';
+
+import NavigatableMixin from '../mixins/NavigatableMixin';
 
 
 //This is duplicating "./ActiveState"

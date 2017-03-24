@@ -1,8 +1,8 @@
+import {extname} from 'path';
+
 import React from 'react';
 import filesize from 'filesize';
 import mime from 'mime-types';
-import {extname} from 'path';
-
 import {scoped} from 'nti-lib-locale';
 
 import LabeledValue from '../../LabeledValue';

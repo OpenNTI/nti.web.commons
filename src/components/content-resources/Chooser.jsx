@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'classnames';
 
 import {modal} from '../../prompts';
-
 import DialogButtons from '../DialogButtons';
 
 import Browser from './Browser';

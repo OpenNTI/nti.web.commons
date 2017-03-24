@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-
 import {Events} from 'nti-commons';
 
 export default class Header extends React.Component {

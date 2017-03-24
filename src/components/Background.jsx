@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-
 import {addClass, removeClass} from 'nti-lib-dom';
 
 const CONTEXT_KEY = 'content-background';

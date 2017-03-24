@@ -1,6 +1,7 @@
+import {dirname} from 'path';
+
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-import {dirname} from 'path';
 import Transition from 'react-addons-css-transition-group';
 import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
@@ -9,26 +10,26 @@ import Logger from 'nti-util-logger';
 import CError from '../Error';
 import EmptyList from '../EmptyList';
 import {Mask as Loading} from '../loading-indicators';
+import FilePickerButton from '../FilePickerButton';
+import ProgressBar from '../ProgressBar';
+import Search from '../Search';
+//
+import Header, {TitleBalencer} from '../panels/Header';
+import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
+import ToolbarButton from '../panels/ToolbarButton';
+import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
 
 import BrowsableView from './BrowsableView';
 import Chooser from './Chooser';
-import Search from '../Search';
 import ParentFolder from './ParentFolder';
 import FolderName from './FolderName';
 import Inspector from './Inspector';
 import SearchScopeBar from './SearchScopeBar';
 import View from './View';
-
+//
 import TableLayout from './layout/table';
 import GridLayout from './layout/grid';
 
-import Header, {TitleBalencer} from '../panels/Header';
-import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
-import ToolbarButton from '../panels/ToolbarButton';
-import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
-import FilePickerButton from '../FilePickerButton';
-
-import ProgressBar from '../ProgressBar';
 
 const GRID_LAYOUT = 'grid';
 const TABLE_LAYOUT = 'table';

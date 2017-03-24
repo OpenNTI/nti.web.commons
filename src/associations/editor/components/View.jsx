@@ -2,11 +2,12 @@ import React from 'react';
 import {Filters} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 
-import Container from './Container';
-
 import EmptyState from '../../../components/EmptyState';
 import Search from '../../../components/Search';
 import {Mask as Loading} from '../../../components/loading-indicators';
+
+import Container from './Container';
+
 
 const {matchesFilter} = Filters;
 

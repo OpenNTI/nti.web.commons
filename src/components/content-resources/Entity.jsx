@@ -1,11 +1,9 @@
-import React, {PropTypes} from 'react';
-import {addClass, removeClass, getEventTarget} from 'nti-lib-dom';
-
-import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
-
-import {getFragmentFromString} from 'nti-lib-dom';
-import Logger from 'nti-util-logger';
 import path from 'path';
+
+import React, {PropTypes} from 'react';
+import {addClass, removeClass, getEventTarget, getFragmentFromString} from 'nti-lib-dom';
+import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
+import Logger from 'nti-util-logger';
 
 import FileDragImageTemplate from './assets/FileDragImage.template.svg';
 

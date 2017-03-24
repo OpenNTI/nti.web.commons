@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import isEmpty from 'isempty';
 import moment from 'moment-timezone';
 import invariant from 'invariant';
-
 import jstz from 'jstimezonedetect';
 
 const returnFalse = () => false;

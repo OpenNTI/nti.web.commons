@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
+
+import {PUBLISH_STATES} from '../constants';
+
 import DateTime from './DateTime';
 import DayTimePicker from './day-time/DayTimePicker';
 import Flyout from './flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
-import {PUBLISH_STATES} from '../constants';
 
 const logger = Logger.get('common:components:Publish');
 

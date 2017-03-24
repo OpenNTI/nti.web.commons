@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-
 import {scoped} from 'nti-lib-locale';
-import DateTime from './DateTime';
+
 import {PUBLISH_STATES} from '../constants';
+
+import DateTime from './DateTime';
 import {getPublishState} from './Publish';
 
 const DEFAULT_TEXT = {

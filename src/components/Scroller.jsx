@@ -2,6 +2,7 @@ import React from 'react';
 import ease from 'eases/cubic-out';
 import cx from 'classnames';
 import {buffer} from 'nti-commons';
+
 import ScrollerButton from './ScrollerButton';
 
 export default class Scroller extends React.Component {

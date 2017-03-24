@@ -1,8 +1,9 @@
+import EventEmitter from 'events';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createDOM} from 'nti-lib-dom';
 import {buffer} from 'nti-commons';
-import EventEmitter from 'events';
 
 import Modal from './components/Modal';
 

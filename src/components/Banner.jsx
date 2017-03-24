@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+
 import {DataURIs} from '../constants';
 import {ItemChanges} from '../mixins';
 

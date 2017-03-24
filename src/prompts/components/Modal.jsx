@@ -5,7 +5,6 @@ import isIOS from 'nti-util-ios-version';
 import {declareCustomElement} from 'nti-lib-dom';
 
 import LockScroll from '../../components/LockScroll';
-
 import Manager from '../ModalManager';
 
 declareCustomElement('dialog');

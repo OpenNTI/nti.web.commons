@@ -2,7 +2,6 @@ import React from 'react';
 import {scoped} from 'nti-lib-locale';
 
 import BasicEditor from '../components/BasicEditor';
-
 import DateTime from '../../../components/DateTime';
 import {getDisplay} from '../../../components/DurationPicker';
 

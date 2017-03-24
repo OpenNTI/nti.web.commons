@@ -1,7 +1,5 @@
 import React from 'react';
-
 import cx from 'classnames';
-
 import t from 'nti-lib-locale';
 import {getAppUsername, User} from 'nti-web-client';
 

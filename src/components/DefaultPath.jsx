@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {Mask as Loading} from './loading-indicators';
 import NavigatableMixin from '../mixins/NavigatableMixin';
+
+import {Mask as Loading} from './loading-indicators';
 
 
 export default React.createClass({

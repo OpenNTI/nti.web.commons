@@ -2,9 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import {ItemChanges} from '../../../../HighOrderComponents';
-
 import AssetIcon from '../../../AssetIcon';
-
 import Entity from '../../Entity';
 
 

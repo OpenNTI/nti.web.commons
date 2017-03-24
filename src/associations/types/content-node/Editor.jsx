@@ -1,19 +1,19 @@
 import React from 'react';
 import {scoped} from 'nti-lib-locale';
 
-import Groups from './groups';
-
 import ListItem from '../components/ListItem';
 import ItemInfo from '../components/ItemInfo';
 import AddButton from '../components/AddButton';
 import RemoveButton from '../components/RemoveButton';
 import Locations from '../components/Locations';
 import ErrorCmp from '../components/Error';
-
+//
 import DateTime from '../../../components/DateTime';
 import {InlineFlyout} from '../../../components/flyout';
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
 import {Loading} from '../../../components';
+
+import Groups from './groups';
 
 const DEFAULT_TEXT = {
 	addLabel: 'Add to Lesson',

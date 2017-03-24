@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {modal} from '../prompts';
+
 import DefaultConfirmPrompt from './components/DefaultConfirmPrompt';
 
 export default function defaultConflictHandler (challenge) {

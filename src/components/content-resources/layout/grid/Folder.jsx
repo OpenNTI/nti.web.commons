@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'classnames';
 
 import {ItemChanges} from '../../../../HighOrderComponents';
-
 import Entity from '../../Entity';
 
 

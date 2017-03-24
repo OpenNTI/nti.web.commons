@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {getScreenWidth, getScreenHeight, getScrollParent} from 'nti-lib-dom';
 
 const EMPTY = ()=>{};

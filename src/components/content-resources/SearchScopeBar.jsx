@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-
 import {scoped} from 'nti-lib-locale';
 
 const DEFAULT_TEXT = {

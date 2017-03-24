@@ -1,7 +1,9 @@
 import React from 'react';
 import {mount} from 'enzyme';
-import TimePicker from '../TimePicker';
 import {Time} from 'nti-commons';
+
+import TimePicker from '../TimePicker';
+
 const ARROW_UP = 40;
 const ARROW_DOWN = 38;
 

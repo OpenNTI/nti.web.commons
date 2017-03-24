@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+
 import DialogButtons from '../../components/DialogButtons';
 
 const NOOP = () => {};

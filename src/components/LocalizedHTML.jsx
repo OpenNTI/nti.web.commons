@@ -1,5 +1,4 @@
 import React from 'react';
-
 import t from 'nti-lib-locale';
 
 export default React.createClass({

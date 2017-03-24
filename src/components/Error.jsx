@@ -1,6 +1,5 @@
 import React from 'react';
 import Logger from 'nti-util-logger';
-
 import {rawContent} from 'nti-commons';
 
 const logger = Logger.get('common:components:Error');

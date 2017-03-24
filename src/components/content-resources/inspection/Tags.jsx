@@ -1,10 +1,8 @@
 import React from 'react';
-
 import {scoped} from 'nti-lib-locale';
 import {buffer as buffered} from 'nti-commons';
 
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
-
 import LabeledValue from '../../LabeledValue';
 import TagField from '../../TokenEditor';
 

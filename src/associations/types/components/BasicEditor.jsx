@@ -1,14 +1,14 @@
 import React from 'react';
 import {scoped} from 'nti-lib-locale';
 
+import ItemChanges from '../../../HighOrderComponents/ItemChanges';
+import {Loading} from '../../../components';
+
 import ListItem from './ListItem';
 import ItemInfo from './ItemInfo';
 import ErrorCmp from './Error';
 import AddButton from './AddButton';
 import RemoveButton from './RemoveButton';
-
-import ItemChanges from '../../../HighOrderComponents/ItemChanges';
-import {Loading} from '../../../components';
 
 const DEFAULT_TEXT = {
 	addLabel: 'Add',

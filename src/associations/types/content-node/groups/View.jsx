@@ -2,9 +2,9 @@ import React from 'react';
 import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 
-import Group from './Group';
-
 import {Spinner as Loading} from '../../../../components/loading-indicators';
+
+import Group from './Group';
 
 const DEFAULT_TEXT = {
 	label: 'Choose a Section',

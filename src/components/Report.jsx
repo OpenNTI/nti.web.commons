@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
-import {areYouSure} from '../prompts/';
-
 import {scoped} from 'nti-lib-locale';
+
+import {areYouSure} from '../prompts/';
 import ItemChanges from '../mixins/ItemChanges';
 
 const t = scoped('DISCUSSIONS.ACTIONS');

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addClass} from 'nti-lib-dom';
+
 import {setRefOnProps} from '../utils/mergeRefHandlers';
 
 const MOUNT_POINT_NODE = Symbol('Mount Point Node');

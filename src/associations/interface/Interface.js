@@ -1,4 +1,5 @@
 import EventEmitter from 'events';
+
 import {groupDestinations, flattenGroups, filterGroups} from './utils';
 import Group from './Group';
 import Item from './Item';

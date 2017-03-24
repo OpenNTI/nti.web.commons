@@ -1,13 +1,12 @@
+import {extname} from 'path';
+
 import React from 'react';
 import cx from 'classnames';
 import mime from 'mime-types';
-import {extname} from 'path';
 
 import {ItemChanges} from '../../../../HighOrderComponents';
-
 import DateTime from '../../../DateTime';
 import AssetIcon from '../../../AssetIcon';
-
 import Entity from '../../Entity';
 
 function getType (item) {

@@ -3,6 +3,7 @@ import cx from 'classnames';
 import {FileAPI, Selection} from 'nti-commons';
 import {addClass, removeClass, getEventTarget} from 'nti-lib-dom';
 import Logger from 'nti-util-logger';
+
 import Grid from './layout/grid';
 
 const stop = e => e.stopPropagation();

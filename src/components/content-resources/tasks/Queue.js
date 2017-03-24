@@ -1,4 +1,5 @@
 import EventEmitter from 'events';
+
 import Logger from 'nti-util-logger';
 
 const logger = Logger.get('common:components:content-resources:tasks:TaskQueue');

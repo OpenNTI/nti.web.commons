@@ -9,7 +9,6 @@ import {
 	// DEFAULT_HORIZONTAL,
 	DEFAULT_VERTICAL
 } from '../Constants';
-
 import {
 	ALIGNMENT_POSITIONS,
 	ALIGNMENT_SIZINGS,

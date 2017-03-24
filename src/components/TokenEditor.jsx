@@ -1,7 +1,6 @@
 import React from 'react';
-import isEmpty from 'isempty';
 import cx from 'classnames';
-
+import isEmpty from 'isempty';
 import Logger from 'nti-util-logger';
 
 import Token from './Token';

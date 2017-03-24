@@ -1,10 +1,8 @@
 import React from 'react';
-
 import {getEnvironment} from 'react-router-component/lib/environment/LocalStorageKeyEnvironment';
 import {Locations, Location, NotFound as DefaultRoute} from 'react-router-component';
 
 import FilterableView from './FilterableView';
-
 import DefaultPath from './DefaultPath';
 
 export default React.createClass({

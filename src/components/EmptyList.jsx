@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
+import {scoped} from 'nti-lib-locale';
 
 import Notice from './Notice';
 
-import {scoped} from 'nti-lib-locale';
 
 const DEFAULT_TEXT = {
 	emptyList: 'This list is empty.',

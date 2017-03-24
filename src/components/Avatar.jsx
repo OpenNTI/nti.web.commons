@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-
 import {User} from 'nti-web-client';
 
 import {DataURIs} from '../constants';

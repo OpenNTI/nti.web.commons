@@ -1,7 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
-import {areYouSure} from '../prompts/';
 import {scoped} from 'nti-lib-locale';
+
+import {areYouSure} from '../prompts/';
 
 let t = scoped('CONTACTS');
 

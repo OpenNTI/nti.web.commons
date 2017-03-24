@@ -1,6 +1,8 @@
 import React from 'react';
-import Group from './Group';
+
 import EmptyState from '../../../components/EmptyState';
+
+import Group from './Group';
 
 
 AssociationsEditorContainer.propTypes = {

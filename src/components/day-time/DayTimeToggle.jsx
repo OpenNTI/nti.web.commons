@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-
 import {scoped} from 'nti-lib-locale';
+
+import Flyout from '../flyout';
 
 import DayTimeToggleTrigger from './DayTimeToggleTrigger';
 import DayTimePicker from './DayTimePicker';
-import Flyout from '../flyout';
 
 const TOGGLE = {
 	BEGIN: 'availableBeginning',

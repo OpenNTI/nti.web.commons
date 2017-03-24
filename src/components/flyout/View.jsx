@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
-
 import {
 	getElementRect as getRectInViewport,
 	getEffectiveZIndex,
@@ -26,7 +25,6 @@ import {
 
 	MATCH_SIDE
 } from './Constants';
-
 import {
 	ALIGNMENT_POSITIONS,
 	ALIGNMENT_SIZINGS,

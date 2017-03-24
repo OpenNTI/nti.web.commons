@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react';
-import cx from 'classnames';
-import mime from 'mime-types';
 import {extname} from 'path';
 import {parse as parseUrl} from 'url';
 
+import React, {PropTypes} from 'react';
+import cx from 'classnames';
+import mime from 'mime-types';
 import {isNTIID} from 'nti-lib-ntiids';
 
 const CONTENT_TYPE = 'application/vnd.nextthought.content';

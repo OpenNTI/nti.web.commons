@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {createMountPoint} from '../utils';
 
 class RemoteWrapper extends React.Component {
