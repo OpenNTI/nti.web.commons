@@ -101,6 +101,7 @@
     ],
     "coverageDirectory": "reports/coverage",
     "testResultsProcessor": "./node_modules/jest-junit",
+    "roots": ["<rootDir>/src/"],
     "testMatch": [
       "**/__test__/**/*.(spec).js?(x)"
     ]
