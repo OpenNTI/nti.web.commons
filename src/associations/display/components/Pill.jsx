@@ -56,9 +56,9 @@ export default class AssociationPill extends React.Component {
 		);
 
 		return !associationCount ? trigger : (
-			<Flyout arrow hover trigger={trigger} dark>
+			<Flyout.Triggered arrow hover trigger={trigger} dark>
 				<ToolTip {...this.props} />
-			</Flyout>
+			</Flyout.Triggered>
 		);
 	}
 }

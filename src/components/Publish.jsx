@@ -7,7 +7,7 @@ import {PUBLISH_STATES} from '../constants';
 
 import DateTime from './DateTime';
 import DayTimePicker from './day-time/DayTimePicker';
-import Flyout from './flyout';
+import * as Flyout from './flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
 
@@ -217,7 +217,7 @@ export default class Publish extends React.Component {
 		const t = (key,...args) => tt(`${localeContext}.${key}`,...args);
 
 		return (
-			<Flyout
+			<Flyout.Triggered
 				ref={this.setFlyoutRef}
 				arrow
 				constrain
@@ -257,7 +257,7 @@ export default class Publish extends React.Component {
 					<div className="error-message">{error}</div>
 				)}
 				<div className={saveClassNames} onClick={this.onSave}>Save</div>
-			</Flyout>
+			</Flyout.Triggered>
 		);
 	}
 }

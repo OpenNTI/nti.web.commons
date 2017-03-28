@@ -17,7 +17,7 @@ const render = (node, cmp, props = {}, ...children) => new Promise(next => {
 	);
 });
 
-describe('Flyout', () => {
+describe('Triggered Flyout', () => {
 	let container = document.createElement('div');
 	let newNode;
 

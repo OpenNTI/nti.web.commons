@@ -142,9 +142,9 @@ export default class InlineAssociations extends React.Component {
 		);
 
 		return (
-			<Flyout arrow hover trigger={trigger} dark>
+			<Flyout.Triggered arrow hover trigger={trigger} dark>
 				<List.Limited className="inline-association-list" onShowMore={this.showMore} children={children} max={3} getString={getString} />
-			</Flyout>
+			</Flyout.Triggered>
 		);
 	}
 }

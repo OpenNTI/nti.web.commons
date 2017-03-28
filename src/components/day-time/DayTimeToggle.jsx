@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
-import Flyout from '../flyout';
+import * as Flyout from '../flyout';
 
 import DayTimeToggleTrigger from './DayTimeToggleTrigger';
 import DayTimePicker from './DayTimePicker';
@@ -162,7 +162,7 @@ export default class DayTimeToggle extends React.Component {
 		const btnClassNames = cx('flyout-fullwidth-btn', {changed: changed, error});
 
 		return (
-			<Flyout ref={this.setFlyoutRef} className="daytime-toggle" horizontalAlign={Flyout.ALIGNMENTS.LEFT} trigger={trigger} onDismiss={this.reset} arrow>
+			<Flyout.Triggered ref={this.setFlyoutRef} className="daytime-toggle" horizontalAlign={Flyout.ALIGNMENTS.LEFT} trigger={trigger} onDismiss={this.reset} arrow>
 				<div className="toggle">
 					<div className={beginClassNames} name={TOGGLE.BEGIN} onClick={this.onToggle}>Begin Date</div>
 					<div className={endClassNames} name={TOGGLE.END} onClick={this.onToggle}>Finish Date</div>
@@ -175,7 +175,7 @@ export default class DayTimeToggle extends React.Component {
 					<div className="date-error">{t(`date-error-${active}`)}</div>
 				)}
 				<div className={btnClassNames} onClick={this.onSave}>Save</div>
-			</Flyout>
+			</Flyout.Triggered>
 		);
 	}
 }

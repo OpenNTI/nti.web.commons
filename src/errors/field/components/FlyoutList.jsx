@@ -35,9 +35,9 @@ function renderTrigger (errors, isWarnings) {
 
 function renderFlyout (errors, isWarnings, alignment) {
 	return (
-		<Flyout arrow alignment={alignment} trigger={renderTrigger(errors, isWarnings)}>
+		<Flyout.Triggered arrow alignment={alignment} trigger={renderTrigger(errors, isWarnings)}>
 			<List errors={errors} isWarnings={isWarnings} />
-		</Flyout>
+		</Flyout.Triggered>
 	);
 }
 
