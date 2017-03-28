@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Flyout from '../View';
+import Flyout from '../Triggered';
 
 //We cannot currently get around not using this method...
 //there are other test utils that allow better component access to tests.
