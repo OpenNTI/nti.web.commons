@@ -40,11 +40,22 @@ function supports () {
 
 function format (amount, omitFractional, locale = 'en-US', currency = 'USD') {
 	if (supports()) {
-		return Intl.NumberFormat(locale, {
+
+		const options = {
 			style: 'currency',
 			currency: currency,
-			maximumFractionDigits: omitFractional ? 0 : undefined
-		}).format(amount);
+		};
+
+		if (omitFractional) {
+			Object.assign(options, {
+				maximumFractionDigits: 0,
+				// in Safari (desktop and mobile), setting maximumFractionDigits without setting minimumFractionDigits
+				// causes format() to throw a RangeError ('maximumFractionDigits is out of range')
+				minimumFractionDigits: 0
+			});
+		}
+
+		return Intl.NumberFormat(locale, options).format(amount);
 	}
 	// logger.warn('No browser support for Intl.NumberFormat.');
 	return (omitFractional ? Math.floor(amount) : amount).toLocaleString();
