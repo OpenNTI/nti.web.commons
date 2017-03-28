@@ -1,0 +1,69 @@
+@import "~nti-style-common";
+
+.aligned-flyout {
+	&.right {
+		.flyout-arrow {
+			right: rem-calc(16px);
+		}
+	}
+
+	&.left {
+		.flyout-arrow {
+			left: rem-calc(16px);
+		}
+	}
+
+	&.top {
+		.flyout-arrow {
+			bottom: 0;
+			transform: rotate(180deg);
+		}
+	}
+
+	&.bottom {
+		.flyout-arrow {
+			top: 0;
+		}
+	}
+
+	&.center {
+		.flyout-arrow {
+			left: 50%;
+			margin-left: -7px;
+		}
+	}
+
+	.flyout-arrow {
+		position: absolute;
+		clip: rect(-15px, 25px, 0px, -10px);
+		display: block;
+		padding: 0;
+		margin: 0;
+
+		&::after {
+			content: '';
+			box-shadow: 0 0 4px 0 rgba(0,0,0,0.21);
+			width: 15px;
+			height: 15px;
+			background: white;
+			transform: translateY(-50%) rotate(45deg);
+			display: block;
+		}
+	}
+
+	.flyout-inner {
+		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
+		background: white;
+		overflow: auto;
+	}
+
+	&.dark {
+		.flyout-arrow::after {
+			background: $primary-grey;
+		}
+
+		.flyout-inner {
+			background: $primary-grey;
+		}
+	}
+}
