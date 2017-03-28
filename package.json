@@ -1,6 +1,6 @@
 {
   "name": "nti-web-commons",
-  "version": "0.0.176",
+  "version": "0.0.177",
   "author": "nextthought",
   "description": "ReactJS Common Components",
   "license": "UNLICENSED",
@@ -101,7 +101,9 @@
     ],
     "coverageDirectory": "reports/coverage",
     "testResultsProcessor": "./node_modules/jest-junit",
-    "roots": ["<rootDir>/src/"],
+    "roots": [
+      "<rootDir>/src/"
+    ],
     "testMatch": [
       "**/__test__/**/*.(spec).js?(x)"
     ]
