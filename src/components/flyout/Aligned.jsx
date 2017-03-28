@@ -114,6 +114,16 @@ export default class AlignedFlyout extends React.Component {
 	state = {alignment: null, visible: false}
 
 
+	componentDidUpdate (oldProps) {
+		const {visible, alignTo:newAlign} = this.props;
+		const {alignTo:oldAlign} = oldProps;
+
+		if (visible && newAlign !== oldAlign) {
+			this.align();
+		}
+	}
+
+
 	attachFlyoutRef = (ref) => {
 		this.flyout = ref;
 
