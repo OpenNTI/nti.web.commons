@@ -91,8 +91,12 @@ export default class AlignedFlyout extends React.Component {
 		arrow: React.PropTypes.bool,
 		dark: React.PropTypes.bool,
 
-		alignTo: React.PropTypes.node.isRequired,
-		parent: React.PropTypes.node,
+		alignTo: React.PropTypes.shape({
+			getBoundingClientRect: React.PropTypes.func
+		}).isRequired,
+		parent: React.PropTypes.shape({
+			getBoundingClientRect: React.PropTypes.func
+		}),
 
 		//For now this can only be vertical
 		primaryAxis: React.PropTypes.oneOf([VERTICAL]),
