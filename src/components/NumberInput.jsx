@@ -16,7 +16,8 @@ export default class NumberInput extends React.Component {
 			React.PropTypes.bool,
 			React.PropTypes.number
 		]),
-		max: React.PropTypes.number
+		max: React.PropTypes.number,
+		min: React.PropTypes.number
 	}
 
 
