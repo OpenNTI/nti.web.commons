@@ -14,4 +14,9 @@
 		background: $primary-blue;
 		color: white;
 	}
+
+	&.disabled {
+		opacity: 0.7;
+		pointer-events: none;
+	}
 }
