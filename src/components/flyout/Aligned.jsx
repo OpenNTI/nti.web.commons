@@ -89,6 +89,7 @@ export default class AlignedFlyout extends React.Component {
 
 		visible: React.PropTypes.bool,
 		arrow: React.PropTypes.bool,
+		alignToArrow: React.PropTypes.bool,
 		dark: React.PropTypes.bool,
 
 		alignTo: React.PropTypes.shape({
@@ -183,14 +184,14 @@ export default class AlignedFlyout extends React.Component {
 
 
 	render () {
-		const {children, visible, className, arrow, dark, primaryAxis, verticalAlign, horizontalAlign} = this.props;
+		const {children, visible, className, arrow, dark, primaryAxis, verticalAlign, horizontalAlign, alignToArrow} = this.props;
 		const {alignment} = this.state;
 
 		if (!visible) { return null; }
 
 		const outerStyle = {
 			visibility: alignment ? void 0 : 'hidden',
-			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis))
+			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
 		};
 		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
 		const cls = cx('aligned-flyout', className, getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign), {arrow, dark});
