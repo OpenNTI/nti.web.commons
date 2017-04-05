@@ -5,6 +5,7 @@ export * as List from './list';
 export * as Sequence from './sequence';
 export * as Table from './table';
 export * as Flyout from './flyout';
+export * as Input from './inputs';
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
 export AssetIcon from './AssetIcon';
