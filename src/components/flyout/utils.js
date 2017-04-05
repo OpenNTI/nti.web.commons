@@ -16,6 +16,7 @@ import {
 } from './Constants';
 
 const ARROW_HEIGHT = 15;
+const ARROW_OFFSET = 23;
 
 const styleProps = ['top', 'bottom', 'left', 'right', 'width'];
 
@@ -226,7 +227,7 @@ export function constrainAlignment (alignment = {}, {height: viewHeight, width: 
 }
 
 
-export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis) {
+export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis, alignToArrow) {
 	const clone = {...alignment};
 
 	if (primaryAxis === VERTICAL && arrow) {
@@ -234,6 +235,14 @@ export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis) 
 			clone.top = clone.top + ARROW_HEIGHT;
 		} else if (clone.bottom != null) {
 			clone.bottom = clone.bottom + ARROW_HEIGHT;
+		}
+
+		if (alignToArrow) {
+			if (clone.left != null) {
+				clone.left = clone.left - ARROW_OFFSET;
+			} else if (clone.right != null) {
+				clone.right = clone.right - ARROW_OFFSET;
+			}
 		}
 	}
 
