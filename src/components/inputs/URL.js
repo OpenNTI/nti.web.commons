@@ -29,9 +29,18 @@ export default class URLInput extends React.Component {
 	}
 
 
+	attachInputRef = x => this.input = x;
+
+	focus () {
+		if (this.input) {
+			this.input.focus();
+		}
+	}
+
+
 	get validity () {
 		const {value} = this.props;
-		const input = Object.assign(document.createElement, {type: 'url', value: getFullHref(value)});
+		const input = Object.assign(document.createElement('input'), {type: 'url', value: getFullHref(value)});
 
 		return input.validity;
 	}
@@ -47,10 +56,12 @@ export default class URLInput extends React.Component {
 
 
 	render () {
-		const {value, onChange, ...otherProps} = this.props;
+		const {value, ...otherProps} = this.props;
+
+		delete otherProps.onChange;
 
 		return (
-			<Text value={value} onChange={onChange} {...otherProps} />
+			<Text value={value} onChange={this.onChange} ref={this.attachInputRef} {...otherProps} />
 		);
 	}
 }
