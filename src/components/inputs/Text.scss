@@ -1,0 +1,47 @@
+@import "~nti-style-common";
+
+.nti-text-input {
+	display: block;
+
+	.label {
+		display: block;
+		font: normal bold 0.625rem/1rem $body-font-family;
+		text-transform: uppercase;
+		color: $secondary-grey;
+	}
+
+	.input-container {
+		display: inline-block;
+		position: relative;
+
+		.reset {
+			position: absolute;
+			width: rem-calc(16px);
+			height: rem-calc(16px);
+			top: 50%;
+			right: rem-calc(10px);
+			margin-top: rem-calc(-8px);
+
+			background-image: url(../assets/circle-x-grey-16.png);
+			background-color: transparent;
+		}
+
+		input {
+			border-radius: 2px;
+			background-color: $panel-background;
+			border: solid 1px $border-grey-light;
+			color: $secondary-grey;
+			font: normal 400 0.875rem/2rem $body-font-family;
+			padding: rem-calc(0 30px 0 10px);
+		}
+	}
+
+
+	&.disable-clear {
+		.input-container {
+			input {
+				padding: rem-calc(0 10px);
+			}
+		}
+	}
+}
