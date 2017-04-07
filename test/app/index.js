@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources, ControlBar, Associations} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
