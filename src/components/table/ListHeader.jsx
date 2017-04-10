@@ -2,40 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import {ASCENDING, DESCENDING} from './Constants';
 import ListHeaderItem from './ListHeaderItem';
 
 export default class ListHeader extends React.Component {
 	static propTypes = {
-		className: PropTypes.string,
-		cells: PropTypes.arrayOf(PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			className: PropTypes.string,
-			display: PropTypes.string,
-			sortFn: PropTypes.func.isRequired
+		className: React.PropTypes.string,
+		columns: React.PropTypes.arrayOf(React.PropTypes.shape({
+			name: React.PropTypes.string.isRequired,
+			classes: React.PropTypes.shape({
+				name: React.PropTypes.string,
+				default: React.PropTypes.string,
+				inactive: React.PropTypes.string,
+				active: React.PropTypes.string,
+				asc: React.PropTypes.string,
+				desc: React.PropTypes.string
+			}),
+			display: React.PropTypes.string,
+			sortFn: React.PropTypes.func.isRequired
 		})),
-		activeSort: PropTypes.string,
-		activeDirection: PropTypes.string,
-		onSortChagne: PropTypes.func
+		activeSort: React.PropTypes.string,
+		activeDirection: React.PropTypes.string,
+		onSortChange: React.PropTypes.func
 	}
 
 
 	render () {
-		const {cells, className} = this.props;
+		const {columns, className} = this.props;
 		const cls = cx('list-table-header', className);
 
 		return (
 			<div className={cls}>
-				{cells.map(this.renderCell)}
+				{columns.map(this.renderCell)}
 			</div>
 		);
 	}
 
 
-	renderCell = (cell, index) => {
-		const {activeSort, activeDirection} = this.props;
+	renderCell = (column, index) => {
+		const {activeSort, activeDirection, onSortChange} = this.props;
 
 		return (
-			<ListHeaderItem key={index} cell={cell} active={activeSort === cell.name} direction={activeDirection} />
+			<ListHeaderItem key={index} column={column} active={activeSort === column.name} direction={activeDirection} onSort={onSortChange} />
 		);
 	}
 }
