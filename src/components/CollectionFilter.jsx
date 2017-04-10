@@ -6,10 +6,10 @@ import {Locations, Location, NotFound as DefaultRoute} from 'react-router-compon
 import FilterableView from './FilterableView';
 import DefaultPath from './DefaultPath';
 
-export default React.createClass({
-	displayName: 'Filter',
+export default class extends React.Component {
+	static displayName = 'Filter';
 
-	propTypes: {
+	static propTypes = {
 		/**
 		 *	An array or object with a filter() method.
 		 */
@@ -46,17 +46,13 @@ export default React.createClass({
 
 
 		localStorageKey: PropTypes.string
-	},
+	};
 
-
-	getDefaultProps () {
-		return {
-			localStorageKey: null,
-			list: [],
-			filters: {}
-		};
-	},
-
+	static defaultProps = {
+		localStorageKey: null,
+		list: [],
+		filters: {}
+	};
 
 	componentWillMount () {
 		let key = this.props.localStorageKey;
@@ -65,8 +61,7 @@ export default React.createClass({
 		}
 		let env = getEnvironment(key);
 		this.setState({env});
-	},
-
+	}
 
 	render () {
 		let {env} = this.state || {};
@@ -84,10 +79,9 @@ export default React.createClass({
 				{this.getRoutes()}
 			</Locations>
 		);
-	},
+	}
 
-
-	getRoutes () {
+	getRoutes = () => {
 		let {children, defaultFilter, list, filters, title} = this.props;
 		let listComp = children;
 
@@ -123,6 +117,5 @@ export default React.createClass({
 			);
 
 		return routes;
-	}
-
-});
+	};
+}

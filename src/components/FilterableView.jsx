@@ -8,22 +8,22 @@ import NoMatches from './NoMatches';
 
 const logger = Logger.get('common:components:FilterableView');
 
-export default React.createClass({
-	displayName: 'FilterableView',
+export default class extends React.Component {
+	static displayName = 'FilterableView';
 
-	propTypes: {
+	static propTypes = {
 		filtername: PropTypes.string,
 		filters: PropTypes.array,
 		list: PropTypes.object,
 		listcomp: PropTypes.node
-	},
+	};
 
-	/**
+    /**
 	 * filter the list according using the currently selected filter.
 	 * @param {object} list Any object that implements filter.
 	 * @return {object} The result of calling filter on the `list`
 	 */
-	filter (list) {
+	filter = (list) => {
 
 		if (!(list && list.filter)) {
 			logger.error('List should be an array (or at least have a \'filter\' method. Returning an empty array. Received: %O', list);
@@ -51,7 +51,7 @@ export default React.createClass({
 			filter: null,
 			list: list
 		};
-	},
+	};
 
 	render () {
 
@@ -70,4 +70,4 @@ export default React.createClass({
 			</div>
 		);
 	}
-});
+}

@@ -4,38 +4,36 @@ import {scoped} from 'nti-lib-locale';
 
 const t = scoped('BUTTONS');
 
-export default React.createClass({
-	displayName: 'OkCancelButtons',
+export default class extends React.Component {
+	static displayName = 'OkCancelButtons';
 
-	propTypes: {
+	static propTypes = {
 		cancelText: PropTypes.string,
 		okText: PropTypes.string,
 
 		onCancel: PropTypes.func,
 		onOk: PropTypes.func.isRequired,
 		okEnabled: PropTypes.bool
-	},
+	};
 
-	getDefaultProps () {
-		return {
-			okEnabled: true
-		};
-	},
+	static defaultProps = {
+		okEnabled: true
+	};
 
-	onCancel (event) {
+	onCancel = (event) => {
 		this.killEvent(event);
 		this.props.onCancel(event);
-	},
+	};
 
-	onConfirm (event) {
+	onConfirm = (event) => {
 		this.killEvent(event);
 		this.props.onOk(event);
-	},
+	};
 
-	killEvent (event) {
+	killEvent = (event) => {
 		event.preventDefault();
 		event.stopPropagation();
-	},
+	};
 
 	render () {
 
@@ -54,5 +52,4 @@ export default React.createClass({
 			</div>
 		);
 	}
-
-});
+}

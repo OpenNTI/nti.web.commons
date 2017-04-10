@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -7,7 +8,7 @@ import NavigatableMixin from '../mixins/NavigatableMixin';
 
 //This is duplicating "./ActiveState"
 
-export default React.createClass({
+export default createReactClass({
 	displayName: 'ActiveLink',
 
 	mixins: [NavigatableMixin],

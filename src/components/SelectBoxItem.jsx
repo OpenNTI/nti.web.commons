@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default React.createClass({
-	displayName: 'SelectBoxItem',
+export default class extends React.Component {
+	static displayName = 'SelectBoxItem';
 
-	propTypes: {
+	static propTypes = {
 		option: PropTypes.shape({
 			label: PropTypes.string,
 			value: PropTypes.any
 		}),
 		onClick: PropTypes.func
-	},
+	};
 
-	onClick (e) {
+	onClick = (e) => {
 		const {option, onClick} = this.props;
 		if(onClick) {
 			e.stopPropagation();
@@ -20,7 +20,7 @@ export default React.createClass({
 		}
 
 		onClick && onClick(option.value || option.label);
-	},
+	};
 
 	render () {
 		const {option} = this.props;
@@ -29,4 +29,4 @@ export default React.createClass({
 			<li onClick={this.onClick}><span className="option-label">{option.label}</span></li>
 		);
 	}
-});
+}

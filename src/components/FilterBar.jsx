@@ -1,9 +1,10 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
 
-export default React.createClass({
+export default createReactClass({
 	displayName: 'FilterBar',
 	mixins: [NavigatableMixin],
 

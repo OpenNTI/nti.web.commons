@@ -6,19 +6,16 @@ import PropTypes from 'prop-types';
  * <figure class="notice">...
  */
 
-export default React.createClass({
-	displayName: 'Notice',
+export default class extends React.Component {
+	static displayName = 'Notice';
 
-	propTypes: {
+	static propTypes = {
 		className: PropTypes.string
-	},
+	};
 
-
-	getDefaultProps () {
-		return {
-			className: ''
-		};
-	},
+	static defaultProps = {
+		className: ''
+	};
 
 	render () {
 		let {className} = this.props;
@@ -28,4 +25,4 @@ export default React.createClass({
 			<figure {...this.props} className={className}/>
 		);
 	}
-});
+}

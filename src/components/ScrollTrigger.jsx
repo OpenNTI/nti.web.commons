@@ -4,19 +4,17 @@ import {getScreenWidth, getScreenHeight, getScrollParent} from 'nti-lib-dom';
 
 const EMPTY = ()=>{};
 
-export default React.createClass({
-	displayName: 'ScrollTrigger',
+export default class extends React.Component {
+	static displayName = 'ScrollTrigger';
 
-	propTypes: {
+	static propTypes = {
 		onEnterView: PropTypes.func.isRequired,
 		children: PropTypes.node
-	},
+	};
 
+	attachDOMRef = (x) => {this.el = x;};
 
-	attachDOMRef (x) {this.el = x;},
-
-
-	subscribeScroll () {
+	subscribeScroll = () => {
 		const scroller = getScrollParent(this.el);
 		const unsub = () => (scroller.removeEventListener('scroll', this.onScroll), this.unsubscribeScroll = EMPTY);
 		unsub.dom = scroller;
@@ -28,20 +26,17 @@ export default React.createClass({
 		scroller.addEventListener('scroll', this.onScroll);
 
 		this.unsubscribeScroll = unsub;
-	},
+	};
 
-
-	scrollerChanged () {
+	scrollerChanged = () => {
 		const scroller = getScrollParent(this.el);
 		return scroller !== (this.unsubscribeScroll || {}).dom;
-	},
-
+	};
 
 	componentDidMount () {
 		this.subscribeScroll();
 		this.scheduleCheck(true);
-	},
-
+	}
 
 	componentDidUpdate () {
 		if (this.scrollerChanged()) {
@@ -50,31 +45,26 @@ export default React.createClass({
 
 
 		this.scheduleCheck();
-	},
-
+	}
 
 	componentWillUnmount () {
 		this.unsubscribeScroll();
-	},
+	}
 
-
-	scheduleCheck (force) {
+	scheduleCheck = (force) => {
 		clearTimeout(this.schedule);
 		this.schedule = setTimeout(()=> this.checkInView(force), 20);
-	},
+	};
 
-
-	inView () {
+	inView = () => {
 		return isElementInView(this.el);
-	},
+	};
 
-
-	onScroll () {
+	onScroll = () => {
 		this.checkInView();
-	},
+	};
 
-
-	checkInView (force) {
+	checkInView = (force) => {
 		const {inView} = this.state || {};
 		const newInView = this.inView();
 
@@ -86,13 +76,13 @@ export default React.createClass({
 				this.onLeaveView();
 			}
 		}
-	},
+	};
 
-	onLeaveView () {
+	onLeaveView = () => {
 		this.setState({ inView: false });
-	},
+	};
 
-	onEnterView () {
+	onEnterView = () => {
 		const {props: {onEnterView}} = this;
 
 		if (typeof onEnterView === 'function') {
@@ -100,7 +90,7 @@ export default React.createClass({
 		}
 
 		this.setState({ inView: true });
-	},
+	};
 
 	render () {
 		const {props: {onEnterView, ...props}} = this;//eslint-disable-line no-unused-vars
@@ -108,7 +98,7 @@ export default React.createClass({
 			<div className="scrollTrigger" ref={this.attachDOMRef} {...props}/>
 		);
 	}
-});
+}
 
 function isElementInView (el) {
 	const rect = el.getBoundingClientRect();

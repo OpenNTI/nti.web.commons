@@ -2,22 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import t from 'nti-lib-locale';
 
-export default React.createClass({
-	displayName: 'LocalizedHTML',
+export default class extends React.Component {
+	static displayName = 'LocalizedHTML';
 
-	propTypes: {
+	static propTypes = {
 		stringId: PropTypes.string.isRequired,
 
 		tag: PropTypes.string,
 
 		className: PropTypes.string
-	},
+	};
 
-
-	getDefaultProps () {
-		return { tag: 'div' };
-	},
-
+	static defaultProps = { tag: 'div' };
 
 	render () {
 		let Tag = this.props.tag;
@@ -26,4 +22,4 @@ export default React.createClass({
 			<Tag {...this.props} dangerouslySetInnerHTML={{__html: t(this.props.stringId, this.props)}} />
 		);
 	}
-});
+}

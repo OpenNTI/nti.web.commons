@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'invariant';
@@ -18,7 +19,7 @@ function buildHref (page, props, scope) {
 }
 
 
-export default React.createClass({
+export default createReactClass({
 	mixins: [NavigatableMixin],
 	displayName: 'Pager',
 

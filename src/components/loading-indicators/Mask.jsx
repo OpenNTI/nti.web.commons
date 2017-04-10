@@ -2,26 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'isempty';
 
-export default React.createClass({
-	displayName: 'LoadingMask',
+export default class extends React.Component {
+	static displayName = 'LoadingMask';
 
-	propTypes: {
+	static propTypes = {
 		maskScreen: PropTypes.bool,
 		loading: PropTypes.bool,
 		message: PropTypes.string,
 		tag: PropTypes.string,
 
 		children: PropTypes.any
-	},
+	};
 
-
-	getDefaultProps () {
-		return {
-			tag: 'div',
-			message: 'Loading'
-		};
-	},
-
+	static defaultProps = {
+		tag: 'div',
+		message: 'Loading'
+	};
 
 	render () {
 		const {tag: Tag, children, loading, maskScreen, message, ...otherProps} = this.props;
@@ -39,7 +35,7 @@ export default React.createClass({
 			</Mask>
 		);
 	}
-});
+}
 
 
 Mask.propTypes = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
@@ -6,7 +7,7 @@ import NavigatableMixin from '../mixins/NavigatableMixin';
 import {Mask as Loading} from './loading-indicators';
 
 
-export default React.createClass({
+export default createReactClass({
 	displayName: 'DefaultPath',
 	mixins: [NavigatableMixin],
 

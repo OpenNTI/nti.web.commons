@@ -4,34 +4,32 @@ import cx from 'classnames';
 
 import SelectBoxItem from './SelectBoxItem';
 
-export default React.createClass({
-	displayName: 'SelectBox',
+export default class extends React.Component {
+	static displayName = 'SelectBox';
 
-	propTypes: {
+	static propTypes = {
 		options: PropTypes.array.isRequired,
 		value: PropTypes.any,
 		onChange: PropTypes.func,
 		className: PropTypes.string,
 		disabled: PropTypes.bool
-	},
+	};
 
-	getInitialState () {
-		return {
-			isOpen: false
-		};
-	},
+	state = {
+		isOpen: false
+	};
 
 	componentWillMount () {
 		let {value, options} = this.props;
 		this.setSelected(value || options[0].value, true);
-	},
+	}
 
 	componentWillReceiveProps (nextProps) {
 		let {value, options} = nextProps;
 		this.setSelected(value || options[0].value, true, nextProps);
-	},
+	}
 
-	setSelected (value, silent, props = this.props) {
+	setSelected = (value, silent, props = this.props) => {
 		let {options, onChange} = props;
 		let selectedOption = value ? options.find(option => option.value === value) : options[0];
 		this.setState({
@@ -41,30 +39,30 @@ export default React.createClass({
 		if(!silent && onChange) {
 			onChange(value);
 		}
-	},
+	};
 
-	onClick (value) {
+	onClick = (value) => {
 		this.setSelected(value);
 		this.close();
-	},
+	};
 
-	open () {
+	open = () => {
 		this.setState({
 			isOpen: true
 		});
-	},
+	};
 
-	close () {
+	close = () => {
 		this.setState({
 			isOpen: false
 		});
-	},
+	};
 
-	toggle (e) {
+	toggle = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		this.state.isOpen ? this.close() : this.open();
-	},
+	};
 
 	render () {
 		const {
@@ -92,4 +90,4 @@ export default React.createClass({
 		);
 
 	}
-});
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -7,7 +8,7 @@ import {ItemChanges} from '../mixins';
 
 const {BLANK_IMAGE} = DataURIs;
 
-export default React.createClass({
+export default createReactClass({
 	displayName: 'Content:Banner',
 	mixins: [ItemChanges],
 

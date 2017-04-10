@@ -7,36 +7,32 @@ const logger = Logger.get('common:components:Error');
 
 const isHTML = /<html|<([a-z]+)[^>]*>(.+)<\/\1>/i;
 
-export default React.createClass({
-	displayName: 'Error',
+export default class extends React.Component {
+	static displayName = 'Error';
 
-	propTypes: {
+	static propTypes = {
 		error: PropTypes.any
-	},
+	};
 
 	componentDidMount () {
 		this.log();
-	},
-
+	}
 
 	componentWillReceiveProps (props) {
 		if (this.props.error !== props.error) {
 			this.log(props);
 		}
-	},
+	}
 
-
-	log (props = this.props) {
+	log = (props = this.props) => {
 		let {error} = props;
 		logger.error(error.stack
 					|| error.message
 					|| error.responseText
 					|| error);
-	},
+	};
 
-
-
-	isAccessError (props = this.props) {
+	isAccessError = (props = this.props) => {
 		let {error} = props;
 		if (error.statusCode != null) {
 			let code = parseInt(error.statusCode, 10);//just a precaution, should already be an int.
@@ -44,10 +40,9 @@ export default React.createClass({
 		}
 
 		return false;
-	},
+	};
 
-
-	isNotFound (props = this.props) {
+	isNotFound = (props = this.props) => {
 		let {error} = props;
 		if (error.statusCode != null) {
 			let code = parseInt(error.statusCode, 10);//just a precaution, should already be an int.
@@ -55,8 +50,7 @@ export default React.createClass({
 		}
 
 		return false;
-	},
-
+	};
 
 	render () {
 		let {error} = this.props;
@@ -88,4 +82,4 @@ export default React.createClass({
 			</figure>
 		);
 	}
-});
+}

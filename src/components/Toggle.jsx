@@ -2,23 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-export default React.createClass({
-	displayName: 'Toggle',
+export default class extends React.Component {
+	static displayName = 'Toggle';
 
-	propTypes: {
+	static propTypes = {
 		active: PropTypes.string,
 		options: PropTypes.arrayOf(PropTypes.string).isRequired,
 		onToggle: PropTypes.func.isRequired,
 
 		children: PropTypes.any
-	},
+	};
 
-	onToggle (e) {
+	onToggle = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		this.props.onToggle(e.target.getAttribute('data-option'));
-	},
+	};
 
 	render () {
 		const {props: {active, options, children}} = this;
@@ -37,4 +37,4 @@ export default React.createClass({
 			</div>
 		);
 	}
-});
+}

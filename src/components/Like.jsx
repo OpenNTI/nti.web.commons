@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {ItemChanges} from '../mixins';
 
-export default React.createClass({
+export default createReactClass({
 	displayName: 'Like',
 	mixins: [ItemChanges],
 

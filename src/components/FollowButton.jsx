@@ -8,29 +8,29 @@ import {areYouSure} from '../prompts/';
 let t = scoped('CONTACTS');
 
 
-export default React.createClass({
-	displayName: 'FollowButton',
+export default class extends React.Component {
+	static displayName = 'FollowButton';
 
-	propTypes: {
+	static propTypes = {
 		entity: PropTypes.object.isRequired
-	},
+	};
 
 	componentWillMount () {
 		this.setFollowing();
-	},
+	}
 
 	componentWillReceiveProps (nextProps) {
 		this.setFollowing(nextProps);
-	},
+	}
 
-	setFollowing (props = this.props) {
+	setFollowing = (props = this.props) => {
 		let {entity} = props;
 		this.setState({
 			following: entity && entity.following
 		});
-	},
+	};
 
-	toggleFollow (e) {
+	toggleFollow = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		let {entity} = this.props;
@@ -48,7 +48,7 @@ export default React.createClass({
 					});
 				});
 		});
-	},
+	};
 
 	render () {
 		let {following, loading} = this.state;
@@ -62,4 +62,4 @@ export default React.createClass({
 			<div className={classes} onClick={loading ? null : this.toggleFollow} />
 		);
 	}
-});
+}

@@ -5,31 +5,29 @@ import {addClass, removeClass} from 'nti-lib-dom';
 
 const CONTEXT_KEY = 'content-background';
 
-export default React.createClass({
-	displayName: 'Background',
+export default class extends React.Component {
+	static displayName = 'Background';
 
-	propTypes: {
+	static propTypes = {
 		className: PropTypes.any,
 		imgUrl: PropTypes.string,
 		children: PropTypes.any
-	},
+	};
 
-	childContextTypes: { [CONTEXT_KEY]: PropTypes.string },
-	contextTypes: { [CONTEXT_KEY]: PropTypes.string },
+	static childContextTypes = { [CONTEXT_KEY]: PropTypes.string };
+	static contextTypes = { [CONTEXT_KEY]: PropTypes.string };
 
 	getChildContext () {
 		return {
 			[CONTEXT_KEY]: this.props.imgUrl || this.context[CONTEXT_KEY] || null
 		};
-	},
+	}
 
-
-	getPreviousBackground () {
+	getPreviousBackground = () => {
 		return this.context[CONTEXT_KEY];
-	},
+	};
 
-
-	setBodyBackground (url) {
+	setBodyBackground = (url) => {
 		const {body} = document;
 		const {style} = body;
 
@@ -42,28 +40,24 @@ export default React.createClass({
 		}
 
 		style.backgroundImage = url ? `url(${url})` : null;
-	},
-
+	};
 
 	componentDidMount () {
 		const {props: {imgUrl}} = this;
 		this.setBodyBackground(imgUrl);
-	},
-
+	}
 
 	componentWillReceiveProps (nextProps) {
 		const {imgUrl} = nextProps;
 		if (imgUrl !== this.props.imgUrl) {
 			this.setBodyBackground(imgUrl);
 		}
-	},
-
+	}
 
 	componentWillUnmount () {
 		const prev = this.getPreviousBackground();
 		this.setBodyBackground(prev);
-	},
-
+	}
 
 	render () {
 		const {props: {className, imgUrl, children, ...props}} = this;
@@ -73,4 +67,4 @@ export default React.createClass({
 			</div>
 		);
 	}
-});
+}
