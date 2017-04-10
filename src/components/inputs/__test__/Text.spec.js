@@ -4,6 +4,13 @@ import {mount} from 'enzyme';
 import Text from '../Text';
 
 describe('Text Input', () => {
+	it('attaches ref', () => {
+		const wrapper = mount(<Text />);
+		const input = wrapper.find('input');
+
+		expect(wrapper.getNode().input).toEqual(input.getNode());
+	});
+
 	describe('onChange', () => {
 		let wrapper;
 		let props;
