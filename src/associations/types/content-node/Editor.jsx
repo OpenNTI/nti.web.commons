@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import ListItem from '../components/ListItem';
@@ -91,8 +92,8 @@ function renderRemove (item, count, onRemove) {
 
 
 ContentNodeEditor.propTypes = {
-	item: React.PropTypes.object,
-	associations: React.PropTypes.object
+	item: PropTypes.object,
+	associations: PropTypes.object
 };
 function ContentNodeEditor ({item, associations}) {
 	const active = associations.getAssociationFor(item);

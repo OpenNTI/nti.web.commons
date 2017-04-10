@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {ASCENDING, DESCENDING} from './Constants';
@@ -6,15 +7,15 @@ import {ASCENDING, DESCENDING} from './Constants';
 
 export default class ListHeaderCell extends React.Component {
 	static propTypes = {
-		cell: React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			className: React.PropTypes.string,
-			display: React.PropTypes.string,
-			sortFn: React.PropTypes.func.isRequired
+		cell: PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			className: PropTypes.string,
+			display: PropTypes.string,
+			sortFn: PropTypes.func.isRequired
 		}),
-		active: React.PropTypes.bool,
-		direction: React.PropTypes.string,
-		onSort: React.PropTypes.func,
+		active: PropTypes.bool,
+		direction: PropTypes.string,
+		onSort: PropTypes.func,
 	}
 
 

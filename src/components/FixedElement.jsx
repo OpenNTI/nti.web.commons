@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {buffer, equals} from 'nti-commons';
 
@@ -6,8 +7,8 @@ const SCROLL_STOP_TIMEOUT = 500;
 
 export default class FixedElement extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.any,
-		className: React.PropTypes.string
+		children: PropTypes.any,
+		className: PropTypes.string
 	}
 
 	attachRef = x => this.el = x

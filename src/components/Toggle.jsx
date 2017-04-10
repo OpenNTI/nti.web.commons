@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 export default React.createClass({
 	displayName: 'Toggle',
 
 	propTypes: {
-		active: React.PropTypes.string,
-		options: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-		onToggle: React.PropTypes.func.isRequired,
+		active: PropTypes.string,
+		options: PropTypes.arrayOf(PropTypes.string).isRequired,
+		onToggle: PropTypes.func.isRequired,
 
-		children: React.PropTypes.any
+		children: PropTypes.any
 	},
 
 	onToggle (e) {

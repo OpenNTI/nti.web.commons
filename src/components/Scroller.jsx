@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ease from 'eases/cubic-out';
 import cx from 'classnames';
 import {buffer} from 'nti-commons';
@@ -16,10 +17,10 @@ export default class Scroller extends React.Component {
 	}
 
 	static propTypes = {
-		children: React.PropTypes.element.isRequired,
-		duration: React.PropTypes.number.isRequired,
-		distance: React.PropTypes.number.isRequired,
-		className: React.PropTypes.string
+		children: PropTypes.element.isRequired,
+		duration: PropTypes.number.isRequired,
+		distance: PropTypes.number.isRequired,
+		className: PropTypes.string
 	}
 
 	componentDidMount = () => {

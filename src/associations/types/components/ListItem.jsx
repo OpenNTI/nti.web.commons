@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 AssociationsListItem.propTypes = {
-	className: React.PropTypes.string,
-	active: React.PropTypes.bool,
-	children: React.PropTypes.any
+	className: PropTypes.string,
+	active: PropTypes.bool,
+	children: PropTypes.any
 };
 export default function AssociationsListItem ({className, active, children}) {
 	const cls = cx(className, 'associations-list-item', {active});

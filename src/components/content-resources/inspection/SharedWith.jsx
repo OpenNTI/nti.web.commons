@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import LabeledValue from '../../LabeledValue';
@@ -33,7 +34,7 @@ function getOutlineAndUnitsFromPath (path) {
 export default class SharedWith extends React.Component {
 
 	static propTypes = {
-		item: React.PropTypes.object.isRequired
+		item: PropTypes.object.isRequired
 	}
 
 	state = {}

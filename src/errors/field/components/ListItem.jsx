@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 ErrorListItem.propTypes = {
-	error: React.PropTypes.object.isRequired,
-	isWarning: React.PropTypes.bool,
-	onErrorFocus: React.PropTypes.func
+	error: PropTypes.object.isRequired,
+	isWarning: PropTypes.bool,
+	onErrorFocus: PropTypes.func
 };
 
 function ErrorListItem ({error, isWarning, onErrorFocus}) {

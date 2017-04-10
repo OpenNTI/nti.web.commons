@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import t from 'nti-lib-locale';
 import {getAppUsername, User} from 'nti-web-client';
@@ -16,18 +17,18 @@ import {getAppUsername, User} from 'nti-web-client';
 export default class DisplayName extends React.Component {
 
 	static propTypes = {
-		className: React.PropTypes.string,
+		className: PropTypes.string,
 
-		localeKey: React.PropTypes.oneOfType([
-			React.PropTypes.string,
-			React.PropTypes.func
+		localeKey: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.func
 		]),
 
-		tag: React.PropTypes.any,
+		tag: PropTypes.any,
 
-		entity: React.PropTypes.oneOfType([
-			React.PropTypes.object,
-			React.PropTypes.string
+		entity: PropTypes.oneOfType([
+			PropTypes.object,
+			PropTypes.string
 		]).isRequired,
 
 		/**
@@ -35,9 +36,9 @@ export default class DisplayName extends React.Component {
 		 *
 		 * @type {boolean|string}
 		 */
-		usePronoun: React.PropTypes.oneOfType([
-			React.PropTypes.bool,
-			React.PropTypes.string
+		usePronoun: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.string
 		]),
 
 		/**
@@ -46,7 +47,7 @@ export default class DisplayName extends React.Component {
 		 *
 		 * @type {boolean}
 		 */
-		useGeneralName: React.PropTypes.bool
+		useGeneralName: PropTypes.bool
 	}
 
 

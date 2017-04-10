@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {DataURIs} from '../constants';
@@ -11,16 +12,16 @@ export default React.createClass({
 	mixins: [ItemChanges],
 
 	propTypes: {
-		children: React.PropTypes.node,
-		className: React.PropTypes.string,
+		children: PropTypes.node,
+		className: PropTypes.string,
 
 		/**
 		 * @type {object} Any model that implements getPresentationProperties()
 		 */
-		item: React.PropTypes.shape({
-			getPresentationProperties: React.PropTypes.func }).isRequired,
+		item: PropTypes.shape({
+			getPresentationProperties: PropTypes.func }).isRequired,
 
-		preferBackground: React.PropTypes.bool
+		preferBackground: PropTypes.bool
 	},
 
 	render () {

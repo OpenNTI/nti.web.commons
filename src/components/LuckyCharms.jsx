@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Favorite from './Favorite';
 import Like from './Like';
 
-LuckyCharms.propTypes = { item: React.PropTypes.object.isRequired };
+LuckyCharms.propTypes = { item: PropTypes.object.isRequired };
 export default function LuckyCharms (props) {
 	let {item} = props;
 

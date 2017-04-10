@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {getScreenWidth, getScreenHeight, getScrollParent} from 'nti-lib-dom';
 
 const EMPTY = ()=>{};
@@ -7,8 +8,8 @@ export default React.createClass({
 	displayName: 'ScrollTrigger',
 
 	propTypes: {
-		onEnterView: React.PropTypes.func.isRequired,
-		children: React.PropTypes.node
+		onEnterView: PropTypes.func.isRequired,
+		children: PropTypes.node
 	},
 
 

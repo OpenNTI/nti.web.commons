@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 export default function ListHeader (props) {
@@ -10,5 +11,5 @@ export default function ListHeader (props) {
 }
 
 ListHeader.propTypes = {
-	className: React.PropTypes.string
+	className: PropTypes.string
 };

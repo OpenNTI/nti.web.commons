@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 Filename.propTypes = {
-	item: React.PropTypes.object.isRequired
+	item: PropTypes.object.isRequired
 };
 
 export default function Filename (props) {

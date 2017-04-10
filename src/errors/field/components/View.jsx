@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const DEFAULT_MESSAGE = 'Unknown Error';
 
 export default class ErrorView extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		error: React.PropTypes.object.isRequired,
-		isWarning: React.PropTypes.bool,
-		onFocus: React.PropTypes.func
+		className: PropTypes.string,
+		error: PropTypes.object.isRequired,
+		isWarning: PropTypes.bool,
+		onFocus: PropTypes.func
 	}
 
 	setErrorCmpRef = x => this.errorCmp = x

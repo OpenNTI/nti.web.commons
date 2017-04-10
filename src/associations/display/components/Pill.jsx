@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
@@ -18,14 +19,14 @@ const t = scoped('ASSOCIATION_DISPLAY_PILL', DEFAULT_TEXT);
 
 export default class AssociationPill extends React.Component {
 	static propTypes = {
-		item: React.PropTypes.shape({
-			associationCount: React.PropTypes.number,
-			getAssociations: React.PropTypes.func
+		item: PropTypes.shape({
+			associationCount: PropTypes.number,
+			getAssociations: PropTypes.func
 		}).isRequired,
-		scope: React.PropTypes.object,
-		onShow: React.PropTypes.func,
-		getString: React.PropTypes.func,
-		className: React.PropTypes.string
+		scope: PropTypes.object,
+		onShow: PropTypes.func,
+		getString: PropTypes.func,
+		className: PropTypes.string
 	}
 
 	onClick = () => {

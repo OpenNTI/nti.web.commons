@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import TimePicker from '../TimePicker';
 
@@ -6,7 +7,7 @@ import DayPicker, {DateUtils} from './DayPicker';
 
 export default class DayTimePicker extends React.Component {
 	static propTypes = {
-		value: React.PropTypes.instanceOf(Date),
+		value: PropTypes.instanceOf(Date),
 		onChange: PropTypes.func,
 		disabledDays: PropTypes.func,
 		disablePastNow: PropTypes.bool

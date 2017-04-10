@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 const t = scoped('BUTTONS');
@@ -7,12 +8,12 @@ export default React.createClass({
 	displayName: 'OkCancelButtons',
 
 	propTypes: {
-		cancelText: React.PropTypes.string,
-		okText: React.PropTypes.string,
+		cancelText: PropTypes.string,
+		okText: PropTypes.string,
 
-		onCancel: React.PropTypes.func,
-		onOk: React.PropTypes.func.isRequired,
-		okEnabled: React.PropTypes.bool
+		onCancel: PropTypes.func,
+		onOk: PropTypes.func.isRequired,
+		okEnabled: PropTypes.bool
 	},
 
 	getDefaultProps () {

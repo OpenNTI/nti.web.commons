@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {getEnvironment} from 'react-router-component/lib/environment/LocalStorageKeyEnvironment';
 import {Locations, Location, NotFound as DefaultRoute} from 'react-router-component';
 
@@ -12,17 +13,17 @@ export default React.createClass({
 		/**
 		 *	An array or object with a filter() method.
 		 */
-		list: React.PropTypes.oneOfType([
-			React.PropTypes.array,
-			React.PropTypes.shape({
-				filter: React.PropTypes.func
+		list: PropTypes.oneOfType([
+			PropTypes.array,
+			PropTypes.shape({
+				filter: PropTypes.func
 			})
 		]),
 
 		/**
 		 *	A (single) component for rendering the (filtered) list.
 		 */
-		children: React.PropTypes.element.isRequired,
+		children: PropTypes.element.isRequired,
 
 		/** filters should be a collection of named filter functions.
 		 * for example:
@@ -35,16 +36,16 @@ export default React.createClass({
 		 * 		}
 		 *	}
 		 */
-		filters: React.PropTypes.array,
+		filters: PropTypes.array,
 
 
-		title: React.PropTypes.string,
+		title: PropTypes.string,
 
 
-		defaultFilter: React.PropTypes.string,
+		defaultFilter: PropTypes.string,
 
 
-		localStorageKey: React.PropTypes.string
+		localStorageKey: PropTypes.string
 	},
 
 

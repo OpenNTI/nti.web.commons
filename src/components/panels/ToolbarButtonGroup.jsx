@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 ToolbarButtonGroup.propTypes = {
-	children: React.PropTypes.any
+	children: PropTypes.any
 };
 
 export default function ToolbarButtonGroup (props) {

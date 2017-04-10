@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 TitleBar.propTypes = {
-	title: React.PropTypes.string.isRequired,
-	className: React.PropTypes.string,
-	iconAction: React.PropTypes.func,
-	iconCls: React.PropTypes.string,
-	iconLabel: React.PropTypes.string
+	title: PropTypes.string.isRequired,
+	className: PropTypes.string,
+	iconAction: PropTypes.func,
+	iconCls: PropTypes.string,
+	iconLabel: PropTypes.string
 };
 export default function TitleBar ({title, className, iconAction, iconCls = 'icon-light-x', iconLabel = 'Close'}) {
 	const cls = cx('panel-title-bar', className);

@@ -1,4 +1,5 @@
-import {PropTypes} from 'react';
+import 'react';
+import PropTypes from 'prop-types';
 
 const ENVIRONMENT_TYPE = PropTypes.shape({
 	getPath: PropTypes.func.isRequired,

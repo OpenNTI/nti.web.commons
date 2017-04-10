@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Filters} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 
@@ -45,9 +46,9 @@ function getAvailable (associations) {
 
 export default class AssociationsEditor extends React.Component {
 	static propTypes = {
-		associations: React.PropTypes.object.isRequired,
-		filterFn: React.PropTypes.func,
-		getString: React.PropTypes.func
+		associations: PropTypes.object.isRequired,
+		filterFn: PropTypes.func,
+		getString: PropTypes.func
 	}
 
 

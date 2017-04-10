@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 Link.propTypes = {
-	course: React.PropTypes.object,
-	unit: React.PropTypes.object,
-	outlineNode: React.PropTypes.object
+	course: PropTypes.object,
+	unit: PropTypes.object,
+	outlineNode: PropTypes.object
 };
 
 export default function Link (props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Whats the point of this component? why not just use the element with classname?
@@ -9,7 +10,7 @@ export default React.createClass({
 	displayName: 'Notice',
 
 	propTypes: {
-		className: React.PropTypes.string
+		className: PropTypes.string
 	},
 
 

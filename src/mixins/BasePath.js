@@ -1,9 +1,9 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 export default {
 
 	contextTypes: {
-		basePath: React.PropTypes.string.isRequired
+		basePath: PropTypes.string.isRequired
 	},
 
 	getBasePath () {

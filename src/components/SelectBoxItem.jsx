@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default React.createClass({
 	displayName: 'SelectBoxItem',
 
 	propTypes: {
-		option: React.PropTypes.shape({
-			label: React.PropTypes.string,
-			value: React.PropTypes.any
+		option: PropTypes.shape({
+			label: PropTypes.string,
+			value: PropTypes.any
 		}),
-		onClick: React.PropTypes.func
+		onClick: PropTypes.func
 	},
 
 	onClick (e) {

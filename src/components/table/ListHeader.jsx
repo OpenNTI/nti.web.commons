@@ -1,20 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import ListHeaderItem from './ListHeaderItem';
 
 export default class ListHeader extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		cells: React.PropTypes.arrayOf(React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			className: React.PropTypes.string,
-			display: React.PropTypes.string,
-			sortFn: React.PropTypes.func.isRequired
+		className: PropTypes.string,
+		cells: PropTypes.arrayOf(PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			className: PropTypes.string,
+			display: PropTypes.string,
+			sortFn: PropTypes.func.isRequired
 		})),
-		activeSort: React.PropTypes.string,
-		activeDirection: React.PropTypes.string,
-		onSortChagne: React.PropTypes.func
+		activeSort: PropTypes.string,
+		activeDirection: PropTypes.string,
+		onSortChagne: PropTypes.func
 	}
 
 

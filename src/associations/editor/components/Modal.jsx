@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {modal} from '../../../prompts';
 import TitleBar from '../../../components/panels/TitleBar';
@@ -7,8 +8,8 @@ import DialogButtons from '../../../components/DialogButtons';
 import Editor from './View';
 
 AssociationEditorModal.propTypes = {
-	title: React.PropTypes.string,
-	onDismiss: React.PropTypes.func
+	title: PropTypes.string,
+	onDismiss: PropTypes.func
 };
 export default function AssociationEditorModal (props) {
 	const {title, onDismiss, ...otherProps} = props;

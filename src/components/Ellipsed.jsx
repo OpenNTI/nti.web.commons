@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Tasks, getRefHandler} from 'nti-commons';
 
 function setTextContent (node, text) {
@@ -21,8 +22,8 @@ function setTextContent (node, text) {
 export default class Ellipsed extends React.Component {
 
 	static propTypes = {
-		tag: React.PropTypes.string,
-		measureOverflow: React.PropTypes.oneOf(['self', 'parent']).isRequired
+		tag: PropTypes.string,
+		measureOverflow: PropTypes.oneOf(['self', 'parent']).isRequired
 	}
 
 

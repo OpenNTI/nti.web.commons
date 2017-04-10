@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {Events} from 'nti-commons';
 
 export default class Button extends React.Component {
 	static propTypes = {
-		component: React.PropTypes.any,
-		className: React.PropTypes.string,
-		onClick: React.PropTypes.func,
+		component: PropTypes.any,
+		className: PropTypes.string,
+		onClick: PropTypes.func,
 
-		rounded: React.PropTypes.bool,
-		disabled: React.PropTypes.bool,
-		secondary: React.PropTypes.bool
+		rounded: PropTypes.bool,
+		disabled: PropTypes.bool,
+		secondary: PropTypes.bool
 	}
 
 

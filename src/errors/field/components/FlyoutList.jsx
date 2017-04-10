@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
@@ -42,9 +43,9 @@ function renderFlyout (errors, isWarnings, alignment) {
 }
 
 ErrorListFlyout.propTypes = {
-	errors: React.PropTypes.array,
-	warnings: React.PropTypes.array,
-	alignment: React.PropTypes.string
+	errors: PropTypes.array,
+	warnings: PropTypes.array,
+	alignment: PropTypes.string
 };
 
 function ErrorListFlyout ({

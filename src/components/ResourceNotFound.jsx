@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 const DEFAULT_TEXT = {
@@ -9,11 +10,11 @@ const DEFAULT_TEXT = {
 const t = scoped('RESOURCE_NOT_FOUND', DEFAULT_TEXT);
 
 ResourceNotFound.propTypes = {
-	actions: React.PropTypes.arrayOf(React.PropTypes.shape({
-		label: React.PropTypes.string,
-		handler: React.PropTypes.func
+	actions: PropTypes.arrayOf(PropTypes.shape({
+		label: PropTypes.string,
+		handler: PropTypes.func
 	})),
-	getString: React.PropTypes.func
+	getString: PropTypes.func
 };
 export default function ResourceNotFound ({actions = [], getString}) {
 	const stringFn = getString ? t.override(getString) : t;

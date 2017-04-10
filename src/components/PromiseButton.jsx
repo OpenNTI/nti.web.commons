@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {wait} from 'nti-commons';
 
@@ -28,11 +29,11 @@ export default React.createClass({
 	displayName: 'PromiseButton',
 
 	propTypes: {
-		children: React.PropTypes.string,
-		className: React.PropTypes.string,
+		children: PropTypes.string,
+		className: PropTypes.string,
 
 		// The callback can return a promise if the work to be done will be async...
-		onClick: React.PropTypes.func
+		onClick: PropTypes.func
 	},
 
 

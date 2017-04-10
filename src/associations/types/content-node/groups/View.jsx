@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 
@@ -15,9 +16,9 @@ const t = scoped('ASSOCIATIONS_CONTENT_NODE_GROUPS', DEFAULT_TEXT);
 
 export default class ContentNodeGroups extends React.Component {
 	static propTypes = {
-		node: React.PropTypes.object,
-		onAdd: React.PropTypes.func,
-		error: React.PropTypes.string
+		node: PropTypes.object,
+		onAdd: PropTypes.func,
+		error: PropTypes.string
 	}
 
 

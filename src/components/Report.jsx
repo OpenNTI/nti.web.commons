@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
@@ -12,11 +13,11 @@ export default React.createClass({
 	mixins: [ItemChanges],
 
 	propTypes: {
-		icon: React.PropTypes.bool,
-		label: React.PropTypes.bool,
-		item: React.PropTypes.object.isRequired,
+		icon: PropTypes.bool,
+		label: PropTypes.bool,
+		item: PropTypes.object.isRequired,
 
-		className: React.PropTypes.string
+		className: PropTypes.string
 	},
 
 

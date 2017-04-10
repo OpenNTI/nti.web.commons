@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Logger from 'nti-util-logger';
 import {rawContent} from 'nti-commons';
 
@@ -10,7 +11,7 @@ export default React.createClass({
 	displayName: 'Error',
 
 	propTypes: {
-		error: React.PropTypes.any
+		error: PropTypes.any
 	},
 
 	componentDidMount () {

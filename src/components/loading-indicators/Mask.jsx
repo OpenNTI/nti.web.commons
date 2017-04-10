@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import isEmpty from 'isempty';
 
 export default React.createClass({
 	displayName: 'LoadingMask',
 
 	propTypes: {
-		maskScreen: React.PropTypes.bool,
-		loading: React.PropTypes.bool,
-		message: React.PropTypes.string,
-		tag: React.PropTypes.string,
+		maskScreen: PropTypes.bool,
+		loading: PropTypes.bool,
+		message: PropTypes.string,
+		tag: PropTypes.string,
 
-		children: React.PropTypes.any
+		children: PropTypes.any
 	},
 
 
@@ -42,8 +43,8 @@ export default React.createClass({
 
 
 Mask.propTypes = {
-	children: React.PropTypes.element,
-	mask: React.PropTypes.bool
+	children: PropTypes.element,
+	mask: PropTypes.bool
 };
 function Mask (props) {
 	const {children, mask} = props;

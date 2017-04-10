@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ListItem from '../components/ListItem';
 import ItemInfo from '../components/ItemInfo';
@@ -6,8 +7,8 @@ import AddButton from '../components/AddButton';
 import RemoveButton from '../components/RemoveButton';
 
 DefaultEditor.propTypes = {
-	item: React.PropTypes.object,
-	associations: React.PropTypes.object
+	item: PropTypes.object,
+	associations: PropTypes.object
 };
 export default function DefaultEditor ({item, associations}) {
 	const active = associations.isSharedWith(item);

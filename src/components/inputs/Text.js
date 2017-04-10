@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 
@@ -6,11 +7,11 @@ const stop = e => e.preventDefault();
 
 export default class TextInput extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		value: React.PropTypes.string,
-		label: React.PropTypes.string,
-		disableClear: React.PropTypes.bool,
-		onChange: React.PropTypes.func
+		className: PropTypes.string,
+		value: PropTypes.string,
+		label: PropTypes.string,
+		disableClear: PropTypes.bool,
+		onChange: PropTypes.func
 	}
 
 	attachInputRef = x => this.input = x;

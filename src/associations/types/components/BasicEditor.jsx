@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
@@ -20,12 +21,12 @@ const t = scoped('BASIC_ASSOCIATION_EDITOR', DEFAULT_TEXT);
 
 class BasicEditor extends React.Component {
 	static propTypes = {
-		item: React.PropTypes.object.isRequired,
-		associations: React.PropTypes.object.isRequired,
-		subLabels: React.PropTypes.array,
-		className: React.PropTypes.string,
-		getString: React.PropTypes.func,
-		disabled: React.PropTypes.bool
+		item: PropTypes.object.isRequired,
+		associations: PropTypes.object.isRequired,
+		subLabels: PropTypes.array,
+		className: PropTypes.string,
+		getString: PropTypes.func,
+		disabled: PropTypes.bool
 	}
 
 

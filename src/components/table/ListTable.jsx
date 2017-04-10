@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {DESCENDING} from './Constants';
@@ -13,18 +14,18 @@ function applySortTo (items, sortFn) {
 
 export default class ListTable extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		headerClassName: React.PropTypes.string,
-		bodyClassName: React.PropTypes.string,
-		items: React.PropTypes.array,
-		renderItem: React.PropTypes.func.isRequired,
-		cells: React.PropTypes.arrayOf(React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			className: React.PropTypes.string,
-			display: React.PropTypes.string,
-			sortFn: React.PropTypes.func.isRequired
+		className: PropTypes.string,
+		headerClassName: PropTypes.string,
+		bodyClassName: PropTypes.string,
+		items: PropTypes.array,
+		renderItem: PropTypes.func.isRequired,
+		cells: PropTypes.arrayOf(PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			className: PropTypes.string,
+			display: PropTypes.string,
+			sortFn: PropTypes.func.isRequired
 		})),
-		defaultSort: React.PropTypes.string
+		defaultSort: PropTypes.string
 	}
 
 

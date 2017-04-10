@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {createMountPoint} from '../utils';
 
 class RemoteWrapper extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node
+		children: PropTypes.node
 	}
 
 	render () {
@@ -20,11 +21,11 @@ class RemoteWrapper extends React.Component {
  */
 export default class RemoteMountPoint extends React.Component {
 	static propTypes = {
-		appendTo: React.PropTypes.shape({
-			appendChild: React.PropTypes.func
+		appendTo: PropTypes.shape({
+			appendChild: PropTypes.func
 		}).isRequired,
-		className: React.PropTypes.string,
-		children: React.PropTypes.node
+		className: PropTypes.string,
+		children: PropTypes.node
 	}
 
 

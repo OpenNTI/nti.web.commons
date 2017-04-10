@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import AssetIcon from '../../AssetIcon';
 
 Preview.propTypes = {
-	item: React.PropTypes.object.isRequired
+	item: PropTypes.object.isRequired
 };
 
 export default function Preview (props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'invariant';
 
@@ -27,40 +28,40 @@ export default React.createClass({
 		 * PageSourceItem-like objects.
 		 * @type {Store}
 		 */
-		pageSource: React.PropTypes.object,
+		pageSource: PropTypes.object,
 
 		/**
 		 * An object that has at least two properties: href, title
 		 *	This prop represents the forward link.
 		 * @type {PageSourceItem}
 		 */
-		next: React.PropTypes.object,
+		next: PropTypes.object,
 
 		/**
 		 * An object that has at least two properties: href, title
 		 * 	This prop represents the backward link.
 		 * @type {PageSourceItem}
 		 */
-		prev: React.PropTypes.object,
+		prev: PropTypes.object,
 
 		/**
 		 * The "current" page ID (ntiid)
 		 * @type {string}
 		 */
-		current: React.PropTypes.string,
+		current: PropTypes.string,
 
 		/**
 		 * The imposed content root.
 		 * @type {string}
 		 */
-		root: React.PropTypes.string,
+		root: PropTypes.string,
 
 
 		/**
 		 * Describes which style this pager will take on. "bottom" vs Default.
 		 * @type {string}
 		 */
-		position: React.PropTypes.string,
+		position: PropTypes.string,
 
 
 		/**
@@ -70,14 +71,14 @@ export default React.createClass({
 		 *
 		 * @type {ReactElement}
 		 */
-		navigatableContext: React.PropTypes.shape({
-			makeHref: React.PropTypes.func
+		navigatableContext: PropTypes.shape({
+			makeHref: PropTypes.func
 		})
 	},
 
 
 	contextTypes: {
-		isMobile: React.PropTypes.bool
+		isMobile: PropTypes.bool
 	},
 
 

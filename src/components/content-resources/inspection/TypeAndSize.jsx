@@ -1,6 +1,7 @@
 import {extname} from 'path';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import filesize from 'filesize';
 import mime from 'mime-types';
 import {scoped} from 'nti-lib-locale';
@@ -26,7 +27,7 @@ function getType (item) {
 
 
 TypeAndSize.propTypes = {
-	item: React.PropTypes.object.isRequired
+	item: PropTypes.object.isRequired
 };
 
 export default function TypeAndSize (props) {

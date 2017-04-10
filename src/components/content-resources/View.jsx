@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {FileAPI, Selection} from 'nti-commons';
 import {addClass, removeClass, getEventTarget} from 'nti-lib-dom';

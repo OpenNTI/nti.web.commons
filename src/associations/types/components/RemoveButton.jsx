@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
@@ -13,10 +14,10 @@ const t = scoped('ASSOCIATION_REMOVE_BUTTON', DEFAULT_TEXT);
 
 export default class AssociationRemove extends React.Component {
 	static propTypes = {
-		onRemove: React.PropTypes.func,
-		error: React.PropTypes.bool,
-		getString: React.PropTypes.func,
-		disabled: React.PropTypes.bool
+		onRemove: PropTypes.func,
+		error: PropTypes.bool,
+		getString: PropTypes.func,
+		disabled: PropTypes.bool
 	}
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Logger from 'nti-util-logger';
 
 import FilterBar from './FilterBar';
@@ -11,10 +12,10 @@ export default React.createClass({
 	displayName: 'FilterableView',
 
 	propTypes: {
-		filtername: React.PropTypes.string,
-		filters: React.PropTypes.array,
-		list: React.PropTypes.object,
-		listcomp: React.PropTypes.node
+		filtername: PropTypes.string,
+		filters: PropTypes.array,
+		list: PropTypes.object,
+		listcomp: PropTypes.node
 	},
 
 	/**

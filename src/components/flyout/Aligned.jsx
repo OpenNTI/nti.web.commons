@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {
@@ -84,31 +85,31 @@ function getAlignmentInfoForViewport () {
  */
 export default class AlignedFlyout extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		children: React.PropTypes.node,
+		className: PropTypes.string,
+		children: PropTypes.node,
 
-		visible: React.PropTypes.bool,
-		arrow: React.PropTypes.bool,
-		alignToArrow: React.PropTypes.bool,
-		dark: React.PropTypes.bool,
+		visible: PropTypes.bool,
+		arrow: PropTypes.bool,
+		alignToArrow: PropTypes.bool,
+		dark: PropTypes.bool,
 
-		alignTo: React.PropTypes.shape({
-			getBoundingClientRect: React.PropTypes.func
+		alignTo: PropTypes.shape({
+			getBoundingClientRect: PropTypes.func
 		}).isRequired,
-		parent: React.PropTypes.shape({
-			getBoundingClientRect: React.PropTypes.func
+		parent: PropTypes.shape({
+			getBoundingClientRect: PropTypes.func
 		}),
 
 		//For now this can only be vertical
-		primaryAxis: React.PropTypes.oneOf([VERTICAL]),
-		verticalAlign: React.PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
-		horizontalAlign: React.PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER]),
+		primaryAxis: PropTypes.oneOf([VERTICAL]),
+		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
+		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER]),
 		//Set the max-(height|width) to keep the flyout within the parent
-		constrain: React.PropTypes.bool,
-		sizing: React.PropTypes.oneOf([MATCH_SIDE]),
+		constrain: PropTypes.bool,
+		sizing: PropTypes.oneOf([MATCH_SIDE]),
 
 
-		afterAlign: React.PropTypes.func
+		afterAlign: PropTypes.func
 	}
 
 	static defaultProps = {

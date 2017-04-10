@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
@@ -14,11 +15,11 @@ const DEFAULT_TEXT = {
 const t = scoped('LIMITED_LIST', DEFAULT_TEXT);
 
 LimitedList.propTypes = {
-	children: React.PropTypes.node,
-	className: React.PropTypes.string,
-	onShowMore: React.PropTypes.func,
-	max: React.PropTypes.number,
-	getString: React.PropTypes.func
+	children: PropTypes.node,
+	className: PropTypes.string,
+	onShowMore: PropTypes.func,
+	max: PropTypes.number,
+	getString: PropTypes.func
 };
 export default function LimitedList ({children, className = () => {}, onShowMore, max = Infinity, getString, ...otherProps}) {
 	children = React.Children.toArray(children);

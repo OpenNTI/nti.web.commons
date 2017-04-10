@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 
@@ -9,18 +10,18 @@ export default React.createClass({
 	mixins: [ActiveStateBehavior],
 
 	propTypes: {
-		activeClassName: React.PropTypes.string,
-		className: React.PropTypes.string,
-		hasChildren: React.PropTypes.oneOfType([
-			React.PropTypes.bool,
-			React.PropTypes.shape({
-				test: React.PropTypes.func.isRequired
+		activeClassName: PropTypes.string,
+		className: PropTypes.string,
+		hasChildren: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.shape({
+				test: PropTypes.func.isRequired
 			})
 		]),
-		href: React.PropTypes.string,
-		link: React.PropTypes.bool, //force onClick handler for non-'a' tags
-		tag: React.PropTypes.any,
-		onClick: React.PropTypes.func
+		href: PropTypes.string,
+		link: PropTypes.bool, //force onClick handler for non-'a' tags
+		tag: PropTypes.any,
+		onClick: PropTypes.func
 	},
 
 

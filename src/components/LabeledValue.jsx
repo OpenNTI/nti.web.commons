@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 LabeledValue.propTypes = {
-	label: React.PropTypes.any,
-	children: React.PropTypes.any,
-	className: React.PropTypes.string,
-	arrow: React.PropTypes.bool,
-	disabled: React.PropTypes.bool
+	label: PropTypes.any,
+	children: PropTypes.any,
+	className: PropTypes.string,
+	arrow: PropTypes.bool,
+	disabled: PropTypes.bool
 };
 
 export default function LabeledValue (props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
 
@@ -10,9 +11,9 @@ export default React.createClass({
 	mixins: [NavigatableMixin],
 
 	propTypes: {
-		filters: React.PropTypes.array,
-		list: React.PropTypes.array,
-		defaultFilter: React.PropTypes.string
+		filters: PropTypes.array,
+		list: PropTypes.array,
+		defaultFilter: PropTypes.string
 	},
 
 	startRedirect () {

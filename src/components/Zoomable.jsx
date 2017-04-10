@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Point} from 'nti-commons';
 
 const pointFromTouch = t => new Point(t.pageX, t.pageY, t.identifier);
@@ -9,8 +10,8 @@ export default React.createClass({
 	displayName: 'Zoomable:View',
 
 	propTypes: {
-		src: React.PropTypes.string,
-		onClose: React.PropTypes.func
+		src: PropTypes.string,
+		onClose: PropTypes.func
 	},
 
 	attachContainerRef (x) {this.container = x;},

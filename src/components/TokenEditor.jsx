@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEmpty from 'isempty';
 import Logger from 'nti-util-logger';
@@ -10,14 +11,14 @@ const logger = Logger.get('common:components:TokenEditor');
 export default class TokenEditor extends React.Component {
 
 	static propTypes = {
-		tokens: React.PropTypes.array,//deprecated... we need to conform to the "value/onChange" api.
-		value: React.PropTypes.array,
-		onChange: React.PropTypes.func,
-		onFocus: React.PropTypes.func,
-		className: React.PropTypes.string,
-		preprocessToken: React.PropTypes.func,
-		placeholder: React.PropTypes.string,
-		disabled: React.PropTypes.bool
+		tokens: PropTypes.array,//deprecated... we need to conform to the "value/onChange" api.
+		value: PropTypes.array,
+		onChange: PropTypes.func,
+		onFocus: PropTypes.func,
+		className: PropTypes.string,
+		preprocessToken: PropTypes.func,
+		placeholder: PropTypes.string,
+		disabled: PropTypes.bool
 	}
 
 	state = {inputValue: ''}

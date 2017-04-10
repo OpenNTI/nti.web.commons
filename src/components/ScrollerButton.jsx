@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 export default class ScrollerButton extends React.Component {
 
 	static propTypes = {
-		className: React.PropTypes.string,
-		children: React.PropTypes.any,
-		amount: React.PropTypes.number.isRequired,
-		onClick: React.PropTypes.func.isRequired,
-		disabled: React.PropTypes.bool
+		className: PropTypes.string,
+		children: PropTypes.any,
+		amount: PropTypes.number.isRequired,
+		onClick: PropTypes.func.isRequired,
+		disabled: PropTypes.bool
 	}
 
 	handleClick = () => {

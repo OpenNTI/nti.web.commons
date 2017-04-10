@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
@@ -9,14 +10,14 @@ const DEFAULT_TEXT = {
 
 const t = scoped('CONTENT_RESOURCES', DEFAULT_TEXT);
 
-const SCOPE_TYPE = React.PropTypes.shape({
-	getFileName: React.PropTypes.func
+const SCOPE_TYPE = PropTypes.shape({
+	getFileName: PropTypes.func
 });
 
 SearchScopeBar.propTypes = {
-	scopes: React.PropTypes.arrayOf(SCOPE_TYPE),
+	scopes: PropTypes.arrayOf(SCOPE_TYPE),
 	scope: SCOPE_TYPE,
-	onChange: React.PropTypes.func
+	onChange: PropTypes.func
 };
 
 export default function SearchScopeBar (props) {

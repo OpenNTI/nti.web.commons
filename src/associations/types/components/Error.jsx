@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 Error.propTypes = {
-	className: React.PropTypes.string,
-	error: React.PropTypes.string,
-	white: React.PropTypes.bool
+	className: PropTypes.string,
+	error: PropTypes.string,
+	white: PropTypes.bool
 };
 export default function Error ({className, error, white}) {
 	const cls = cx(className, 'association-error', {white});

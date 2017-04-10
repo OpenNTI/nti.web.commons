@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import EmptyState from '../../../components/EmptyState';
 
@@ -6,10 +7,10 @@ import Group from './Group';
 
 
 AssociationsEditorContainer.propTypes = {
-	label: React.PropTypes.string,
-	associations: React.PropTypes.object,
-	emptyHeader: React.PropTypes.string,
-	emptySubHeader: React.PropTypes.string
+	label: PropTypes.string,
+	associations: PropTypes.object,
+	emptyHeader: PropTypes.string,
+	emptySubHeader: PropTypes.string
 };
 export default function AssociationsEditorContainer ({label, associations, emptyHeader, emptySubHeader}) {
 	const groups = associations.destinations;

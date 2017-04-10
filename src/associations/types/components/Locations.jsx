@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 const DEFAULT_TEXT = {
@@ -12,7 +13,7 @@ const t = scoped('ASSOCIATION_LOCATIONS', DEFAULT_TEXT);
 
 
 AssociationLocations.propTypes = {
-	count: React.PropTypes.number
+	count: PropTypes.number
 };
 export default function AssociationLocations ({count}) {
 	return (

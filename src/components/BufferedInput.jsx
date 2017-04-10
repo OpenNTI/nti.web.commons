@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class BufferedInput extends React.Component {
 	static propTypes = {
-		defaultValue: React.PropTypes.string,
-		onChange: React.PropTypes.func,
-		delay: React.PropTypes.number
+		defaultValue: PropTypes.string,
+		onChange: PropTypes.func,
+		delay: PropTypes.number
 	}
 
 	attachRef = x => this.input = x

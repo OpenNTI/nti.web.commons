@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import t from 'nti-lib-locale';
 
 
@@ -9,12 +10,12 @@ export default React.createClass({
 	displayName: 'PanelButton',
 
 	propTypes: {
-		linkText: React.PropTypes.string, // the text of the button
-		href: React.PropTypes.string, // the href of the button, if applicable
-		onClick: React.PropTypes.func, // click handler for the button
-		button: React.PropTypes.element, // pass in your own button if you need special behavior or treatment
+		linkText: PropTypes.string, // the text of the button
+		href: PropTypes.string, // the href of the button, if applicable
+		onClick: PropTypes.func, // click handler for the button
+		button: PropTypes.element, // pass in your own button if you need special behavior or treatment
 
-		children: React.PropTypes.any
+		children: PropTypes.any
 	},
 
 	getDefaultProps () {

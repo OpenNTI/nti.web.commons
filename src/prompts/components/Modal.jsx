@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Transition from 'react-transition-group/CSSTransitionGroup';
 import isIOS from 'nti-util-ios-version';
@@ -16,16 +17,16 @@ const stopEvent = e => e.stopPropagation();
 export default class Modal extends React.Component {
 
 	static propTypes = {
-		onDismiss: React.PropTypes.func.isRequired,
-		children: React.PropTypes.node,
-		className: React.PropTypes.string,
-		closeOnMaskClick: React.PropTypes.bool,
-		tall: React.PropTypes.bool
+		onDismiss: PropTypes.func.isRequired,
+		children: PropTypes.node,
+		className: PropTypes.string,
+		closeOnMaskClick: PropTypes.bool,
+		tall: PropTypes.bool
 	}
 
 
 	static childContextTypes = {
-		close: React.PropTypes.func
+		close: PropTypes.func
 	}
 
 	attachMaskRef = x => this.mask = x

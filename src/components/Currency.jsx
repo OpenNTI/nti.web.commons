@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Logger from 'nti-util-logger';
 
 const logger = Logger.get('Currency');
 
 Currency.propTypes = {
-	amount: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
+	amount: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
 	]).isRequired,
-	omitFractional: React.PropTypes.bool
+	omitFractional: PropTypes.bool
 };
 
 export default function Currency ({amount, omitFractional, ...other}) {

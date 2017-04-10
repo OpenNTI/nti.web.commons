@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import t from 'nti-lib-locale';
 
 export default React.createClass({
 	displayName: 'LocalizedHTML',
 
 	propTypes: {
-		stringId: React.PropTypes.string.isRequired,
+		stringId: PropTypes.string.isRequired,
 
-		tag: React.PropTypes.string,
+		tag: PropTypes.string,
 
-		className: React.PropTypes.string
+		className: PropTypes.string
 	},
 
 

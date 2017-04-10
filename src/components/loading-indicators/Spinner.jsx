@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 LoadingSpinner.propTypes = {
-	white: React.PropTypes.bool,
-	blue: React.PropTypes.bool,
-	grey: React.PropTypes.bool,
-	size: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number
+	white: PropTypes.bool,
+	blue: PropTypes.bool,
+	grey: PropTypes.bool,
+	size: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number
 	]),
-	strokeWidth: React.PropTypes.string,
-	className: React.PropTypes.string
+	strokeWidth: PropTypes.string,
+	className: PropTypes.string
 };
 export default function LoadingSpinner ({className, white, grey, size = '25px', strokeWidth = '5'}) {
 	const cls = cx('loading-spinner', className, {white, grey, blue: !white && !grey});

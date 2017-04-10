@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 DialogButtons.propTypes = {
-	flat: React.PropTypes.bool,
-	buttons: React.PropTypes.array
+	flat: PropTypes.bool,
+	buttons: PropTypes.array
 };
 export default function DialogButtons (props) {
 	const {buttons = [], flat} = props;

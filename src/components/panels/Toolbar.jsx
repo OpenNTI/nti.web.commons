@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-Toolbar.propTypes = { className: React.PropTypes.string };
+Toolbar.propTypes = { className: PropTypes.string };
 export default function Toolbar (props) {
 	return (
 		<div {...props} className={cx('toolbar-component', props.className)}/>
@@ -9,7 +10,7 @@ export default function Toolbar (props) {
 }
 
 
-Spacer.propTypes = { className: React.PropTypes.string };
+Spacer.propTypes = { className: PropTypes.string };
 export function Spacer (props) {
 	return <span {...props} className={cx('spacer', props.className)}/>;
 }

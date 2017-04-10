@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
@@ -12,9 +13,9 @@ export default React.createClass({
 	mixins: [NavigatableMixin],
 
 	propTypes: {
-		href: React.PropTypes.string,
-		className: React.PropTypes.string,
-		children: React.PropTypes.any
+		href: PropTypes.string,
+		className: PropTypes.string,
+		children: PropTypes.any
 	},
 
 	componentWillMount () {

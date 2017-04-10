@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Radio from './Radio';
 
@@ -9,10 +10,10 @@ export default class RadioGroup extends React.Component {
 	}
 
 	static propTypes = {
-		name: React.PropTypes.string,
-		options: React.PropTypes.array,
-		value: React.PropTypes.string,
-		onChange: React.PropTypes.func
+		name: PropTypes.string,
+		options: PropTypes.array,
+		value: PropTypes.string,
+		onChange: PropTypes.func
 	}
 
 

@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Token extends React.Component {
 
 	static propTypes = {
-		onRemove: React.PropTypes.func,
-		value: React.PropTypes.string.isRequired
+		onRemove: PropTypes.func,
+		value: PropTypes.string.isRequired
 	}
 
 	remove = () => {

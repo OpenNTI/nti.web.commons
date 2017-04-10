@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Notice from './Notice';
 
 EmptyState.propTypes = {
-	header: React.PropTypes.string,
-	subHeader: React.PropTypes.string
+	header: PropTypes.string,
+	subHeader: PropTypes.string
 };
 export default function EmptyState ({header, subHeader}) {
 	return (

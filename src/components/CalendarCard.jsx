@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import DateTime from './DateTime';
 
@@ -6,7 +7,7 @@ import DateTime from './DateTime';
 export default class CalendarCard extends React.Component {
 
 	static propTypes = {
-		date: React.PropTypes.instanceOf(Date)
+		date: PropTypes.instanceOf(Date)
 	}
 
 	render () {

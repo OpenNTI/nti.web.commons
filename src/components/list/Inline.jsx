@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import {getParts, RENDERERS} from './InlineUtils';
@@ -24,10 +25,10 @@ const t = scoped('INLINE_LIST', DEFAULT_TEXT);
 
 
 InlineList.propTypes = {
-	children: React.PropTypes.node,
-	limit: React.PropTypes.number,
-	getString: React.PropTypes.func,
-	renderOverrides: React.PropTypes.object
+	children: PropTypes.node,
+	limit: PropTypes.number,
+	getString: PropTypes.func,
+	renderOverrides: PropTypes.object
 };
 export default function InlineList ({children, limit = 1, getString, renderOverrides = {}, ...otherProps}) {
 	children = React.Children.toArray(children);

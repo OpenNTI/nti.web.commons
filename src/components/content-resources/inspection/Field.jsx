@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import DateTime from '../../DateTime';
@@ -15,8 +16,8 @@ const capitalize = x => x[0].toUpperCase() + x.substr(1);
 
 
 Field.propTypes = {
-	field: React.PropTypes.string.isRequired,
-	item: React.PropTypes.object.isRequired
+	field: PropTypes.string.isRequired,
+	item: PropTypes.object.isRequired
 };
 
 export default function Field (props) {

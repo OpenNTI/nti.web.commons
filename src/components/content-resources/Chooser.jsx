@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {modal} from '../../prompts';
@@ -8,14 +9,14 @@ import Browser from './Browser';
 
 export default class Chooser extends React.Component {
 	static propTypes = {
-		accept: React.PropTypes.func,
-		filter: React.PropTypes.func,
-		limited: React.PropTypes.bool,
-		sourceID: React.PropTypes.string,
-		onCancel: React.PropTypes.func,
-		onDismiss: React.PropTypes.func,
-		onSelect: React.PropTypes.func,
-		selectButtonLabel: React.PropTypes.string
+		accept: PropTypes.func,
+		filter: PropTypes.func,
+		limited: PropTypes.bool,
+		sourceID: PropTypes.string,
+		onCancel: PropTypes.func,
+		onDismiss: PropTypes.func,
+		onSelect: PropTypes.func,
+		selectButtonLabel: PropTypes.string
 	}
 
 	/**

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import ListItem from './ListItem';
@@ -12,10 +13,10 @@ function renderListItem (error, isWarning, onErrorFocus) {
 const DEFAULT_EMPTY_TEXT = 'No Issues';
 
 ErrorList.propTypes = {
-	errors: React.PropTypes.array,
-	isWarnings: React.PropTypes.bool,
-	emptyText: React.PropTypes.string,
-	onErrorFocus: React.PropTypes.func
+	errors: PropTypes.array,
+	isWarnings: PropTypes.bool,
+	emptyText: PropTypes.string,
+	onErrorFocus: PropTypes.func
 };
 
 function ErrorList ({errors = [], isWarnings, emptyText = DEFAULT_EMPTY_TEXT, onErrorFocus}) {

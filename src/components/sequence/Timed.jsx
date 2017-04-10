@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const DEFAULT_TIME = 3000;//3 seconds
 
@@ -6,9 +7,9 @@ const UPDATE_TIMEOUT = Symbol('Update Timeout');
 
 export default class TimedSequence extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.any,
-		defaultShowFor: React.PropTypes.number,
-		onFinish: React.PropTypes.func
+		children: PropTypes.any,
+		defaultShowFor: PropTypes.number,
+		onFinish: PropTypes.func
 	}
 
 

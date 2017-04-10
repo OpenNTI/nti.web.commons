@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 
 DrillUp.propTypes = {
-	className: React.PropTypes.string,
-	label: React.PropTypes.string,
-	href: React.PropTypes.string,
-	onClick: React.PropTypes.func
+	className: PropTypes.string,
+	label: PropTypes.string,
+	href: PropTypes.string,
+	onClick: PropTypes.func
 };
 
 export default function DrillUp (props) {

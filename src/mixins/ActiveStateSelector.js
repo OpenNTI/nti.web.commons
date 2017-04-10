@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 import NavigatableMixin from './NavigatableMixin';
 import BasePath from './BasePath';
@@ -23,9 +23,9 @@ export default {
 	},
 
 	childContextTypes: {
-		[isActive]: React.PropTypes.func,
-		[register]: React.PropTypes.func,
-		[unregister]: React.PropTypes.func
+		[isActive]: PropTypes.func,
+		[register]: PropTypes.func,
+		[unregister]: PropTypes.func
 	},
 
 	getChildContext () {
@@ -88,18 +88,18 @@ export const child = {
 	mixins: [BasePath, NavigatableMixin],
 
 	contextTypes: {
-		[isActive]: React.PropTypes.func,
-		[register]: React.PropTypes.func,
-		[unregister]: React.PropTypes.func
+		[isActive]: PropTypes.func,
+		[register]: PropTypes.func,
+		[unregister]: PropTypes.func
 	},
 
 	propTypes: {
-		href: React.PropTypes.string.isRequired,
+		href: PropTypes.string.isRequired,
 
-		hasChildren: React.PropTypes.oneOfType([
-			React.PropTypes.bool,
-			React.PropTypes.shape({
-				test: React.PropTypes.func.isRequired
+		hasChildren: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.shape({
+				test: PropTypes.func.isRequired
 			})
 		])
 	},

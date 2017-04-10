@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
@@ -6,18 +7,18 @@ const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 
 export default class NumberInput extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		value: React.PropTypes.oneOfType([
-			React.PropTypes.oneOf(['']),
-			React.PropTypes.number
+		className: PropTypes.string,
+		value: PropTypes.oneOfType([
+			PropTypes.oneOf(['']),
+			PropTypes.number
 		]),
-		onChange: React.PropTypes.func,
-		pad: React.PropTypes.oneOfType([
-			React.PropTypes.bool,
-			React.PropTypes.number
+		onChange: PropTypes.func,
+		pad: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.number
 		]),
-		max: React.PropTypes.number,
-		min: React.PropTypes.number
+		max: PropTypes.number,
+		min: PropTypes.number
 	}
 
 

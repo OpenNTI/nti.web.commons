@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Sticky as ReactSticky} from 'react-sticky';
 
 const offsetProp = 'nti-sticky-top-offset';
 
 Sticky.propTypes = {
-	children: React.PropTypes.any
+	children: PropTypes.any
 };
 
 export default function Sticky (props) {

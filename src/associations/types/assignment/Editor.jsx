@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import BasicEditor from '../components/BasicEditor';
@@ -54,8 +55,8 @@ function getSubLabels (item) {
 }
 
 AssignmentAssociationEditor.propTypes = {
-	item: React.PropTypes.object.isRequired,
-	associations: React.PropTypes.object
+	item: PropTypes.object.isRequired,
+	associations: PropTypes.object
 };
 export default function AssignmentAssociationEditor ({item, associations}) {
 	return (

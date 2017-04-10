@@ -1,18 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {List, Loading} from '../../../components';
 
 export default class PillToolTip extends React.Component {
 	static propTypes = {
-		item: React.PropTypes.shape({
-			associationCount: React.PropTypes.number,
-			getAssociations: React.PropTypes.func
+		item: PropTypes.shape({
+			associationCount: PropTypes.number,
+			getAssociations: PropTypes.func
 		}).isRequired,
-		scope: React.PropTypes.object,
-		onShow: React.PropTypes.func,
-		getString: React.PropTypes.func,
-		className: React.PropTypes.string
+		scope: PropTypes.object,
+		onShow: PropTypes.func,
+		getString: PropTypes.func,
+		className: PropTypes.string
 	}
 
 	constructor (props) {

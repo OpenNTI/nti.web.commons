@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {buffer as buffered} from 'nti-commons';
 
@@ -17,7 +18,7 @@ const BUFFERED_TIME = 2000;//two seconds
 
 class Tags extends React.Component {
 	static propTypes = {
-		item: React.PropTypes.object
+		item: PropTypes.object
 	}
 
 	attachRef = x => this.tagField = x

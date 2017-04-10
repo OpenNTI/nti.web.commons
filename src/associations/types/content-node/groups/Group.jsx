@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 ContentNodeGroup.propTypes = {
-	item: React.PropTypes.object,
-	onAdd: React.PropTypes.func
+	item: PropTypes.object,
+	onAdd: PropTypes.func
 };
 export default function ContentNodeGroup ({item, onAdd = () => {}}) {
 	function onClick () {

@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {Events} from 'nti-commons';
 
 export default class Header extends React.Component {
 	static propTypes = {
-		className: React.PropTypes.string,
-		children: React.PropTypes.any,
-		onClose: React.PropTypes.func
+		className: PropTypes.string,
+		children: PropTypes.any,
+		onClose: PropTypes.func
 	}
 
 	onClose = (e) => {

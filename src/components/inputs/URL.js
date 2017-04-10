@@ -1,6 +1,7 @@
 import Url from 'url';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Text from './Text';
 
@@ -24,8 +25,8 @@ function getFullHref (href) {
 
 export default class URLInput extends React.Component {
 	static propTypes = {
-		value: React.PropTypes.string,
-		onChange: React.PropTypes.func
+		value: PropTypes.string,
+		onChange: PropTypes.func
 	}
 
 

@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 export default class InlineFlyout extends React.Component {
 	static propTypes = {
-		trigger: React.PropTypes.node,
-		children: React.PropTypes.any
+		trigger: PropTypes.node,
+		children: PropTypes.any
 	}
 
 

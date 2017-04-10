@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
 
@@ -7,10 +8,10 @@ export default React.createClass({
 	mixins: [NavigatableMixin],
 
 	propTypes: {
-		filters: React.PropTypes.array,
-		filter: React.PropTypes.object,
-		list: React.PropTypes.object,
-		title: React.PropTypes.string
+		filters: PropTypes.array,
+		filter: PropTypes.object,
+		list: PropTypes.object,
+		title: PropTypes.string
 	},
 
 

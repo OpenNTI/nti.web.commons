@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {User} from 'nti-web-client';
 
@@ -13,12 +14,12 @@ const DEFAULT_GROUP = { entity: {avatarURL: BLANK_GROUP_AVATAR }};
 export default class Avatar extends React.Component {
 
 	static propTypes = {
-		entity: React.PropTypes.oneOfType([
-			React.PropTypes.object,
-			React.PropTypes.string
+		entity: PropTypes.oneOfType([
+			PropTypes.object,
+			PropTypes.string
 		]),
 
-		className: React.PropTypes.string
+		className: PropTypes.string
 	}
 
 

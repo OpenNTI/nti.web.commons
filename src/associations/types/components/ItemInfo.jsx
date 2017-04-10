@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 
@@ -19,8 +20,8 @@ function renderSubLabels (labels) {
 
 
 AssociationItemInfo.propTypes = {
-	label: React.PropTypes.string,
-	subLabels: React.PropTypes.array
+	label: PropTypes.string,
+	subLabels: PropTypes.array
 };
 export default function AssociationItemInfo ({label, subLabels = []}) {
 	const hasSubLabels = subLabels && subLabels.length;

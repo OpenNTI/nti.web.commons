@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import DialogButtons from '../../components/DialogButtons';
@@ -21,10 +22,10 @@ const t = scoped('CONTENT_VERSION_CONFLICT_PROMPT', DEFAULT_TEXT);
 
 export default class ContentVersionConflictPrompt extends React.Component {
 	static propTypes = {
-		challenge: React.PropTypes.object,
-		onDismiss: React.PropTypes.func,
-		onConfirm: React.PropTypes.func,
-		onCancel: React.PropTypes.func
+		challenge: PropTypes.object,
+		onDismiss: PropTypes.func,
+		onConfirm: PropTypes.func,
+		onCancel: PropTypes.func
 	}
 
 	static defaultProps = {

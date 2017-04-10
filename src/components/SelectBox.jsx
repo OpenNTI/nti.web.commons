@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import SelectBoxItem from './SelectBoxItem';
@@ -7,11 +8,11 @@ export default React.createClass({
 	displayName: 'SelectBox',
 
 	propTypes: {
-		options: React.PropTypes.array.isRequired,
-		value: React.PropTypes.any,
-		onChange: React.PropTypes.func,
-		className: React.PropTypes.string,
-		disabled: React.PropTypes.bool
+		options: PropTypes.array.isRequired,
+		value: PropTypes.any,
+		onChange: PropTypes.func,
+		className: PropTypes.string,
+		disabled: PropTypes.bool
 	},
 
 	getInitialState () {

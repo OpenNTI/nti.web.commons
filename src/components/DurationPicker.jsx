@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import NumberInput from './NumberInput';
@@ -80,8 +81,8 @@ export default class DurationPicker extends React.Component {
 	}
 
 	static propTypes = {
-		onChange: React.PropTypes.func,
-		value: React.PropTypes.number
+		onChange: PropTypes.func,
+		value: PropTypes.number
 	}
 
 

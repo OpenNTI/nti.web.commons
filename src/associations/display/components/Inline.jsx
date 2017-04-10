@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import {List, Loading, Flyout} from '../../../components';
@@ -15,13 +16,13 @@ const t = scoped('ASSOCIATIONS_INLINE_DISPLAY', DEFAULT_TEXT);
 
 export default class InlineAssociations extends React.Component {
 	static propTypes = {
-		item: React.PropTypes.shape({
-			associationCount: React.PropTypes.number,
-			getAssociations: React.PropTypes.func
+		item: PropTypes.shape({
+			associationCount: PropTypes.number,
+			getAssociations: PropTypes.func
 		}).isRequired,
-		scope: React.PropTypes.object,
-		onShow: React.PropTypes.func,
-		getString: React.PropTypes.func
+		scope: PropTypes.object,
+		onShow: PropTypes.func,
+		getString: PropTypes.func
 	}
 
 

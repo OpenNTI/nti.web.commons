@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Preview from './inspection/Preview';
 import Filename from './inspection/Filename';
@@ -10,7 +11,7 @@ import Tags from './inspection/Tags';
 
 export default class Inspector extends React.Component {
 	static propTypes = {
-		item: React.PropTypes.object
+		item: PropTypes.object
 	}
 
 	state = {}
