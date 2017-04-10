@@ -2,81 +2,88 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {DESCENDING} from './Constants';
+import {ASCENDING} from './Constants';
 import ListHeader from './ListHeader';
 
 
-function applySortTo (items, sortFn) {
-	return items.sort(sortFn);
+function applySortTo (rows, sortFn) {
+	return rows.sort(sortFn);
 }
 
 
 
 export default class ListTable extends React.Component {
 	static propTypes = {
-		className: PropTypes.string,
-		headerClassName: PropTypes.string,
-		bodyClassName: PropTypes.string,
-		items: PropTypes.array,
-		renderItem: PropTypes.func.isRequired,
-		cells: PropTypes.arrayOf(PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			className: PropTypes.string,
-			display: PropTypes.string,
-			sortFn: PropTypes.func.isRequired
-		})),
-		defaultSort: PropTypes.string
+		classes: React.PropTypes.shape({
+			className: React.PropTypes.string,
+			headerClassName: React.PropTypes.string,
+			bodyClassName: React.PropTypes.string,
+		}),
+		renderRow: React.PropTypes.func.isRequired,
+		rows: React.PropTypes.array,
+		columns: React.PropTypes.arrayOf(React.PropTypes.shape({
+			name: React.PropTypes.string.isRequired,
+			classes: React.PropTypes.shape({
+				name: React.PropTypes.string,
+				default: React.PropTypes.string,
+				inactive: React.PropTypes.string,
+				active: React.PropTypes.string,
+				asc: React.PropTypes.string,
+				desc: React.PropTypes.string
+			}),
+			display: React.PropTypes.string,
+			sortFn: React.PropTypes.func.isRequired,
+			defaultSort: React.PropTypes.bool
+		}))
 	}
 
 
 	constructor (props) {
 		super(props);
 
-		const {items} = props;
+		const {rows} = props;
 		const activeSort = this.getDefaultSort(props);
 
 		this.state = {
-			items: applySortTo(items, activeSort.sortFn),
+			rows: applySortTo(rows, activeSort.sortFn),
 			activeSortFn: activeSort.sortFn,
 			activeSort: activeSort.name,
-			activeDirection: DESCENDING
+			activeDirection: ASCENDING
 		};
 	}
 
 
 	componentWillReceiveProps (nextProps) {
-		const {items:nextItems} = nextProps;
-		const {items:oldItems} = this.props;
+		const {rows:nextRows} = nextProps;
+		const {rows:oldRows} = this.props;
 		const {activeSortFn} = this.state;
 
-		if (nextItems !== oldItems) {
+		if (nextRows !== oldRows) {
 			this.setState({
-				items: applySortTo(nextItems, activeSortFn)
+				rows: applySortTo(nextRows, activeSortFn)
 			});
 		}
 	}
 
 
 	getDefaultSort (props = this.props) {
-		const {cells, defaultSort} = props;
+		const {columns} = props;
 
-		if (!defaultSort) { return cells[0]; }
-
-		for (let cell of cells) {
-			if (cell.name === defaultSort) {
-				return cell;
+		for (let column of columns) {
+			if (column.defaultSort) {
+				return column;
 			}
 		}
 
-		throw new Error('Default Sort Not in Cells');
+		return columns[0];
 	}
 
 
 	onSortChange = (sortFn, name, direction) => {
-		const {items} = this.state;
+		const {rows} = this.state;
 
 		this.setState({
-			items: applySortTo(items, sortFn),
+			rows: applySortTo(rows, sortFn),
 			activeSortFn: sortFn,
 			activeSort: name,
 			activeDirection: direction
@@ -85,9 +92,9 @@ export default class ListTable extends React.Component {
 
 
 	render () {
-		const {className} = this.props;
+		const {classes} = this.props;
 		const {activeSort, activeDirection} = this.state;
-		const cls = cx('list-table', className, activeSort, activeDirection);
+		const cls = cx('list-table', classes.className, activeSort, activeDirection);
 
 		return (
 			<div className={cls}>
@@ -99,24 +106,24 @@ export default class ListTable extends React.Component {
 
 
 	renderHeader () {
-		const {cells, headerClassName} = this.props;
+		const {columns, classes} = this.props;
 		const {activeSort, activeDirection} = this.state;
 
 		return (
-			<ListHeader className={headerClassName} cells={cells} activeSort={activeSort} activeDirection={activeDirection} onSortChange={this.onSortChange} />
+			<ListHeader className={classes.headerClassName} columns={columns} activeSort={activeSort} activeDirection={activeDirection} onSortChange={this.onSortChange} />
 		);
 	}
 
 
 	renderList () {
-		const {renderItem, bodyClassName} = this.props;
-		const {items} = this.state;
-		const cls = cx('list-table-body', bodyClassName);
+		const {renderRow, classes} = this.props;
+		const {rows} = this.state;
+		const cls = cx('list-table-body', classes.bodyClassName);
 
 		return (
 			<ul className={cls}>
-				{items.map((x, index) => {
-					return (<li key={index}>{renderItem(x, index)}</li>);
+				{rows.map((x, index) => {
+					return (<li key={index}>{renderRow(x, index)}</li>);
 				})}
 			</ul>
 		);
