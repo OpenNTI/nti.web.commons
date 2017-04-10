@@ -5,6 +5,7 @@ import {
 	ALIGN_CENTER,
 	ALIGN_LEFT,
 	ALIGN_RIGHT,
+	ALIGN_LEFT_OR_RIGHT,
 	MATCH_SIDE,
 	// DEFAULT_HORIZONTAL,
 	DEFAULT_VERTICAL
@@ -88,6 +89,22 @@ describe('Flyout util tests', () => {
 
 					expect(position.left).toEqual(null);
 					expect(position.right).toEqual(45);
+				});
+
+				describe('Left Or Right Alignment', () => {
+					it('More space to the left', () => {
+						const position = ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 850, right: 950}, {width: 100}, viewSize);
+
+						expect(position.left).toEqual(null);
+						expect(position.right).toEqual(50);
+					});
+
+					it('More space to the right', () => {
+						const position = ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 50, right: 150}, {width: 100}, viewSize);
+
+						expect(position.left).toEqual(50);
+						expect(position.right).toEqual(null);
+					});
 				});
 
 				it ('Center Alignment, Trigger wider', () => {

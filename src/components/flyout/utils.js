@@ -11,6 +11,7 @@ import {
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
+	ALIGN_LEFT_OR_RIGHT,
 
 	MATCH_SIDE
 } from './Constants';
@@ -146,6 +147,26 @@ export const ALIGNMENT_POSITIONS = {
 				left: null,
 				right: viewWidth - right
 			};
+		},
+
+		[ALIGN_LEFT_OR_RIGHT] ({left, right}, {offsetWidth: flyoutWidth}, {width: viewWidth}) {
+			const leftSpace = left;
+			const rightSpace = viewWidth - right;
+
+			const leftAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_LEFT](...arguments);
+			const rightAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_RIGHT](...arguments);
+
+			let position;
+
+			if (rightSpace >= flyoutWidth) {
+				position = leftAlignment;
+			} else if (leftSpace >= flyoutWidth) {
+				position = rightAlignment;
+			} else {
+				position = leftSpace >= rightSpace ? rightAlignment : leftAlignment;
+			}
+
+			return position;
 		},
 
 		/**

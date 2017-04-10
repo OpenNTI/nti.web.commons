@@ -11,4 +11,7 @@ export const ALIGN_LEFT = 'left';
 export const ALIGN_CENTER = 'center';
 export const ALIGN_RIGHT = 'right';
 
+export const ALIGN_LEFT_OR_RIGHT = 'left-or-right';
+export const ALIGN_TOP_OR_BOTTOM = 'top-or-bottom';
+
 export const MATCH_SIDE = 'matchSize';
