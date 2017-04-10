@@ -2,7 +2,7 @@ import {dirname} from 'path';
 
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-import Transition from 'react-addons-css-transition-group';
+import Transition from 'react-transition-group/CSSTransitionGroup';
 import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';

@@ -51,7 +51,7 @@
     "nti-util-ios-version": "^1.0.0",
     "nti-util-logger": "^1.0.0",
     "nti-web-client": "^1.1.0",
-    "react-addons-css-transition-group": "^15.1.0",
+    "react-transition-group": "^1.1.0",
     "react-day-picker": "^2.1.0",
     "react-router-component": "^0.36.0",
     "react-sticky": "^5.0.5",

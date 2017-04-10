@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
-import Transition from 'react-addons-css-transition-group';
+import Transition from 'react-transition-group/CSSTransitionGroup';
 
 export default class ProgressBar extends React.Component {
 	static propTypes = {

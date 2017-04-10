@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import Transition from 'react-addons-css-transition-group';
+import Transition from 'react-transition-group/CSSTransitionGroup';
 import isIOS from 'nti-util-ios-version';
 import {declareCustomElement} from 'nti-lib-dom';
 
