@@ -15,6 +15,7 @@ import {
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
+	ALIGN_LEFT_OR_RIGHT,
 
 	MATCH_SIDE
 } from './Constants';
@@ -103,7 +104,7 @@ export default class AlignedFlyout extends React.Component {
 		//For now this can only be vertical
 		primaryAxis: PropTypes.oneOf([VERTICAL]),
 		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
-		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER]),
+		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER, ALIGN_LEFT_OR_RIGHT]),
 		//Set the max-(height|width) to keep the flyout within the parent
 		constrain: PropTypes.bool,
 		sizing: PropTypes.oneOf([MATCH_SIDE]),
