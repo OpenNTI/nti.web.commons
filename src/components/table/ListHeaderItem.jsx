@@ -7,21 +7,21 @@ import {ASCENDING, DESCENDING} from './Constants';
 
 export default class ListHeaderCell extends React.Component {
 	static propTypes = {
-		column: React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			classes: React.PropTypes.shape({
-				name: React.PropTypes.string,
-				inactive: React.PropTypes.string,
-				active: React.PropTypes.string,
-				asc: React.PropTypes.string,
-				desc: React.PropTypes.string
+		column: PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			classes: PropTypes.shape({
+				name: PropTypes.string,
+				inactive: PropTypes.string,
+				active: PropTypes.string,
+				asc: PropTypes.string,
+				desc: PropTypes.string
 			}),
-			display: React.PropTypes.string,
-			sortFn: React.PropTypes.func.isRequired
+			display: PropTypes.string,
+			sortFn: PropTypes.func.isRequired
 		}),
-		active: React.PropTypes.bool,
-		direction: React.PropTypes.string,
-		onSort: React.PropTypes.func
+		active: PropTypes.bool,
+		direction: PropTypes.string,
+		onSort: PropTypes.func
 	}
 
 	onClick = () => {
