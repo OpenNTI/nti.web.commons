@@ -14,26 +14,26 @@ function applySortTo (rows, sortFn) {
 
 export default class ListTable extends React.Component {
 	static propTypes = {
-		classes: React.PropTypes.shape({
-			className: React.PropTypes.string,
-			headerClassName: React.PropTypes.string,
-			bodyClassName: React.PropTypes.string,
+		classes: PropTypes.shape({
+			className: PropTypes.string,
+			headerClassName: PropTypes.string,
+			bodyClassName: PropTypes.string,
 		}),
-		renderRow: React.PropTypes.func.isRequired,
-		rows: React.PropTypes.array,
-		columns: React.PropTypes.arrayOf(React.PropTypes.shape({
-			name: React.PropTypes.string.isRequired,
-			classes: React.PropTypes.shape({
-				name: React.PropTypes.string,
-				default: React.PropTypes.string,
-				inactive: React.PropTypes.string,
-				active: React.PropTypes.string,
-				asc: React.PropTypes.string,
-				desc: React.PropTypes.string
+		renderRow: PropTypes.func.isRequired,
+		rows: PropTypes.array,
+		columns: PropTypes.arrayOf(PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			classes: PropTypes.shape({
+				name: PropTypes.string,
+				default: PropTypes.string,
+				inactive: PropTypes.string,
+				active: PropTypes.string,
+				asc: PropTypes.string,
+				desc: PropTypes.string
 			}),
-			display: React.PropTypes.string,
-			sortFn: React.PropTypes.func.isRequired,
-			defaultSort: React.PropTypes.bool
+			display: PropTypes.string,
+			sortFn: PropTypes.func.isRequired,
+			defaultSort: PropTypes.bool
 		}))
 	}
 
