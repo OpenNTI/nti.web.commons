@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
-const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
+const getNumber = n => (n = parseFloat(n, 10), isNaN(n) ? null : n);
 
 export default class NumberInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		value: PropTypes.oneOfType([
-			PropTypes.oneOf(['']),
-			PropTypes.number
-		]),
+		value: PropTypes.number,
 		onChange: PropTypes.func,
 
 		constrain: PropTypes.bool,
@@ -62,7 +59,7 @@ export default class NumberInput extends React.Component {
 			input.max = max;
 		}
 
-		return input.validity;
+		return input.validit || {};//or with {} for testing
 	}
 
 
@@ -147,10 +144,11 @@ export default class NumberInput extends React.Component {
 	 */
 	onKeyPress = (e) => {
 		//if the owner component wants a KeyPress listener, don't hijack it.
-		const {onKeyPress} = this.props;
+		const {onKeyPress, min} = this.props;
+		const minNumber = getNumber(min);
 		const allowed = {
 			44: ',',
-			45: '-',
+			45: minNumber && minNumber < 0 ? '-' : false, //don't allow 'negative sign' if min is specified and positive.
 			46: '.'
 		};
 
@@ -195,6 +193,7 @@ export default class NumberInput extends React.Component {
 
 	render () {
 		const {value: givenValue, className, pad, ...props} = this.props;
+		const {validity} = this;
 
 		let value = givenValue;
 
@@ -208,11 +207,11 @@ export default class NumberInput extends React.Component {
 			<input {...props}
 				type="text"
 				pattern="[0-9]*"
-				className={cx('number-input-component', className)}
+				className={cx('number-input-component', className, {valid: validity.valid, invalid: !validity.valid})}
 				onKeyPress={this.onKeyPress}
 				onKeyDown={this.onKeyDown}
 				onChange={this.onInputChange}
-				value={value}
+				value={value == null ? '' : value}
 				ref={this.attachInputRef}
 			/>
 		);
