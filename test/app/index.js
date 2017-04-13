@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, Input} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, DateTimeField} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -104,9 +104,8 @@ function openEditor () {
 	openEditorModal('Test Associations', testInterface);
 }
 
-
-class TestInput extends React.Component {
-	state = {value: 5}
+class TestCmp extends React.Component {
+	state = {value: null}
 
 	onChange = (value) => {
 		this.setState({value});
@@ -116,16 +115,17 @@ class TestInput extends React.Component {
 		const {value} = this.state;
 
 		return (
-			<Input.Number value={value} min={0} max={24} onChange={this.onChange} constrain/>
+			<DateTimeField value={value} currentDate onChange={this.onChange} />
 		);
 	}
 }
+
 
 //Kitchen Sink
 ReactDOM.render(
 	<div className="test-kitchen">
 		<button onClick={openEditor}>Open Editor</button>
-		<TestInput />
+		<TestCmp />
 	</div>,
 	document.getElementById('content')
 );
