@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, Input} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -104,10 +104,28 @@ function openEditor () {
 	openEditorModal('Test Associations', testInterface);
 }
 
+
+class TestInput extends React.Component {
+	state = {value: 5}
+
+	onChange = (value) => {
+		this.setState({value});
+	}
+
+	render () {
+		const {value} = this.state;
+
+		return (
+			<Input.Number value={value} min={0} max={24} onChange={this.onChange}/>
+		);
+	}
+}
+
 //Kitchen Sink
 ReactDOM.render(
 	<div className="test-kitchen">
 		<button onClick={openEditor}>Open Editor</button>
+		<TestInput />
 	</div>,
 	document.getElementById('content')
 );
