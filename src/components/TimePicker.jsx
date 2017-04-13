@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Time} from 'nti-commons';
 
 import SelectBox from './SelectBox';
-import NumberInput from './NumberInput';
+import {Number as NumberInput} from './inputs';
 
 const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 const TimeMap = new WeakMap();
@@ -73,47 +73,37 @@ export default class TimePicker extends React.Component {
 	}
 
 
-	onHourInputChange = (e) => {
-		const {target: {value: hours}} = e;
+	onHourInputChange = (hours) => {
 		const {tfTime} = this.state;
 		const value = this.getValue(true);
 
 		if(!isValidHour(getNumber(hours))) { return; }
 
-		let num = getNumber(hours);
-		if (num == null) {
+		if (hours == null) {
 			//reset
 			this.setState({
 				tfTime: false,
-				editingHour: hours === ''
+				editingHour: true
 			});
-		} else if (num === 0 || num > 12) {
+		} else if (hours === 0 || hours > 12) {
 			//turn on 24hour
 			this.setState({
 				tfTime: true,
 				editingHour: false
 			});
 		} else if (!tfTime) {
-			num = this.convertHours(num);
+			hours = this.convertHours(hours);
 			this.setState({
 				editingHour: false
 			});
 		}
 
-		this.onChange(value.setHours(num));
+		this.onChange(value.setHours(hours));
 	}
 
 
-	onMinuteInputChange = (e) => {
-		const {target: {value: minuteString}} = e;
+	onMinuteInputChange = (minutes) => {
 		const value = this.getValue(true);
-		const minutes = getNumber(minuteString);
-
-		if (!value) {
-			e.stopPropagation();
-			e.preventDefault();
-			return;
-		}
 
 		if(minutes >= MIN_MINUTES && minutes <= MAX_MINUTES || minutes === null) {
 			this.onChange(value.setMinutes(getNumber(minutes)));
@@ -124,29 +114,6 @@ export default class TimePicker extends React.Component {
 	onMeridiemChange = (period) => {
 		const value = this.getValue(true);
 		this.onChange(value.setPeriod(period));
-	}
-
-
-	onKeyDown = (e) => {
-		const {key, target: {name}} = e;
-		const value = this.getValue(true);
-		const KeyDownMap = {
-			hoursArrowUp: 'incrementHours',
-			hoursArrowDown: 'decrementHours',
-			minutesArrowUp: 'incrementMinutes',
-			minutesArrowDown: 'decrementMinutes'
-		};
-
-		const fn = KeyDownMap[name + key];
-
-		if(fn) {
-			e.stopPropagation();
-			e.preventDefault();
-			this.setState({
-				editingHour: false
-			});
-			this.onChange(value[fn]());
-		}
 	}
 
 
@@ -187,6 +154,35 @@ export default class TimePicker extends React.Component {
 	}
 
 
+	onHourIncrement = () => {
+		debugger;
+		const value = this.getValue(true);
+
+		this.onChange(value.incrementHours());
+	}
+
+
+	onHourDecrement = () => {
+		const value = this.getValue(true);
+
+		this.onChange(value.decrementHours());
+	}
+
+
+	onMinuteIncrement = () => {
+		const value = this.getValue(true);
+
+		this.onChange(value.incrementMinutes());
+	}
+
+
+	onMinuteDecrement = () => {
+		const value = this.getValue(true);
+
+		this.onChange(value.decrementMinutes());
+	}
+
+
 	render () {
 		const {tfTime, editingHour} = this.state;
 		const {allowEmpty} = this.props;
@@ -202,17 +198,19 @@ export default class TimePicker extends React.Component {
 			<div className="TimePicker">
 				<div className="time">
 					<NumberInput
-						onKeyDown={this.onKeyDown}
 						onChange={this.onHourInputChange}
 						onBlur={this.onHourInputBlur}
+						onIncrement={this.onHourIncrement}
+						onDecrement={this.onHourDecrement}
 						value={hours}
 						name="hours"
 						min={0} max={23}
 						/>
 					<span> : </span>
 					<NumberInput
-						onKeyDown={this.onKeyDown}
 						onChange={this.onMinuteInputChange}
+						onIncrement={this.onMinuteIncrement}
+						onDecrement={this.onMinuteDecrement}
 						value={minutes}
 						name="minutes"
 						min={0} max={59}

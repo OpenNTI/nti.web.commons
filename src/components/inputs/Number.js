@@ -23,7 +23,10 @@ export default class NumberInput extends React.Component {
 		//TODO: implement stepUp and stepDown props
 
 		onKeyPress: PropTypes.func,
-		onKeyDown: PropTypes.func
+		onKeyDown: PropTypes.func,
+
+		onIncrement: PropTypes.func,
+		onDecrement: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -93,8 +96,10 @@ export default class NumberInput extends React.Component {
 
 
 	handleUpKey () {
-		const {value, step, max, min} = this.props;
+		const {value, step, max, min, onIncrement} = this.props;
 		let newValue = getNumber(value || 0);
+
+		if (onIncrement) { return onIncrement(); }
 
 		//If the newValue is already greater than the max
 		//don't do anything
@@ -110,13 +115,16 @@ export default class NumberInput extends React.Component {
 			newValue = Math.max(newValue, getNumber(min));
 		}
 
+
 		this.onValueChange(newValue);
 	}
 
 
 	handleDownKey () {
-		const {value, step, min, max} = this.props;
+		const {value, step, min, max, onDecrement} = this.props;
 		let newValue = getNumber(value || 0);
+
+		if (onDecrement) { return onDecrement(); }
 
 		//If the newValue is already less than the min
 		//don't do anything
@@ -131,6 +139,7 @@ export default class NumberInput extends React.Component {
 		if (!isNaN(max)) {
 			newValue = Math.min(newValue, getNumber(max));
 		}
+
 
 		this.onValueChange(newValue);
 	}
@@ -202,6 +211,8 @@ export default class NumberInput extends React.Component {
 		}
 
 		delete props.constrain;
+		delete props.onIncrement;
+		delete props.onDecrement;
 
 		return (
 			<input {...props}
