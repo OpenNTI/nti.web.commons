@@ -116,7 +116,7 @@ class TestInput extends React.Component {
 		const {value} = this.state;
 
 		return (
-			<Input.Number value={value} min={0} max={24} onChange={this.onChange}/>
+			<Input.Number value={value} min={0} max={24} onChange={this.onChange} constrain/>
 		);
 	}
 }

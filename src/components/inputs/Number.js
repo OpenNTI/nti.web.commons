@@ -13,13 +13,17 @@ export default class NumberInput extends React.Component {
 			PropTypes.number
 		]),
 		onChange: PropTypes.func,
+
+		constrain: PropTypes.bool,
 		pad: PropTypes.oneOfType([
 			PropTypes.bool,
 			PropTypes.number
 		]),
+
 		max: PropTypes.number,
 		min: PropTypes.number,
 		step: PropTypes.number,
+		//TODO: implement stepUp and stepDown props
 
 		onKeyPress: PropTypes.func,
 		onKeyDown: PropTypes.func
@@ -70,7 +74,15 @@ export default class NumberInput extends React.Component {
 
 
 	onValueChange (value) {
-		const {onChange, value:oldValue} = this.props;
+		const {onChange, value:oldValue, min, max, constrain} = this.props;
+
+		if (constrain && !isNaN(max)) {
+			value = Math.min(value, getNumber(max));
+		}
+
+		if (constrain && !isNaN(min)) {
+			value = Math.max(value, getNumber(min));
+		}
 
 		if (value !== oldValue && onChange) {
 			onChange(isNaN(value) ? '' : value);
@@ -84,11 +96,21 @@ export default class NumberInput extends React.Component {
 
 
 	handleUpKey () {
-		const {value, step, max} = this.props;
-		let newValue = getNumber(value || 0) + step;
+		const {value, step, max, min} = this.props;
+		let newValue = getNumber(value || 0);
+
+		//If the newValue is already greater than the max
+		//don't do anything
+		if (newValue >= max) { return; }
+
+		newValue += step;
 
 		if (!isNaN(max)) {
 			newValue = Math.min(newValue, getNumber(max));
+		}
+
+		if (!isNaN(min)) {
+			newValue = Math.max(newValue, getNumber(min));
 		}
 
 		this.onValueChange(newValue);
@@ -96,11 +118,21 @@ export default class NumberInput extends React.Component {
 
 
 	handleDownKey () {
-		const {value, step, min} = this.props;
-		let newValue = getNumber(value || 0) - step;
+		const {value, step, min, max} = this.props;
+		let newValue = getNumber(value || 0);
+
+		//If the newValue is already less than the min
+		//don't do anything
+		if (newValue <= min) { return; }
+
+		newValue -= step;
 
 		if (!isNaN(min)) {
 			newValue = Math.max(newValue, getNumber(min));
+		}
+
+		if (!isNaN(max)) {
+			newValue = Math.min(newValue, getNumber(max));
 		}
 
 		this.onValueChange(newValue);
@@ -115,11 +147,10 @@ export default class NumberInput extends React.Component {
 	 */
 	onKeyPress = (e) => {
 		//if the owner component wants a KeyPress listener, don't hijack it.
-		const {onKeyPress, min} = this.props;//eslint-disable-line react/prop-types
-		const minNumber = getNumber(min);
+		const {onKeyPress} = this.props;
 		const allowed = {
 			44: ',',
-			45: minNumber && minNumber < 0 ? '-' : false, //don't allow 'negative sign' if min is specified and positive.
+			45: '-',
 			46: '.'
 		};
 
@@ -170,6 +201,8 @@ export default class NumberInput extends React.Component {
 		if (pad) {
 			value = zpad(value, (typeof pad === 'number') ? pad : 2);
 		}
+
+		delete props.constrain;
 
 		return (
 			<input {...props}
