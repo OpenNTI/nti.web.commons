@@ -9,6 +9,7 @@ export default class NumberInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		value: PropTypes.number,
+		label: PropTypes.string,
 		onChange: PropTypes.func,
 
 		constrain: PropTypes.bool,
@@ -201,8 +202,9 @@ export default class NumberInput extends React.Component {
 
 
 	render () {
-		const {value: givenValue, className, pad, ...props} = this.props;
+		const {value: givenValue, className, pad, label, ...otherProps} = this.props;
 		const {validity} = this;
+		const cls = cx('number-input-component', className, {valid: validity.valid, invalid: !validity.valid});
 
 		let value = givenValue;
 
@@ -210,21 +212,25 @@ export default class NumberInput extends React.Component {
 			value = zpad(value, (typeof pad === 'number') ? pad : 2);
 		}
 
-		delete props.constrain;
-		delete props.onIncrement;
-		delete props.onDecrement;
+		delete otherProps.constrain;
+		delete otherProps.onIncrement;
+		delete otherProps.onDecrement;
+
+		//TODO: add a label prop similar to whats in the text input
 
 		return (
-			<input {...props}
-				type="text"
-				pattern="[0-9]*"
-				className={cx('number-input-component', className, {valid: validity.valid, invalid: !validity.valid})}
-				onKeyPress={this.onKeyPress}
-				onKeyDown={this.onKeyDown}
-				onChange={this.onInputChange}
-				value={value == null ? '' : value}
-				ref={this.attachInputRef}
-			/>
+			<label className={cls}>
+				{label && (<span className="label">{label}</span>)}
+				<input {...otherProps}
+					type="text"
+					pattern="[0-9]*"
+					onKeyPress={this.onKeyPress}
+					onKeyDown={this.onKeyDown}
+					onChange={this.onInputChange}
+					value={value == null ? '' : value}
+					ref={this.attachInputRef}
+				/>
+			</label>
 		);
 	}
 }
