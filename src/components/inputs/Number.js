@@ -45,12 +45,23 @@ export default class NumberInput extends React.Component {
 		return this.value;
 	}
 
-
+	/**
+	 * Return the value of the input, you shouldn't need to use this though.
+	 *
+	 * @return {String} the value of the input
+	 */
 	get value () {
 		return getNumber(this.input.value);
 	}
 
-
+	/**
+	 * Since we are using text input for usability (namely leading zeros, looking at you FF)
+	 * create a number input to check validity, see below for more details:
+	 *
+	 * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+	 *
+	 * @return {Object} the validity of the input
+	 */
 	get validity () {
 		const {value, min, max} = this.props;
 		const input = Object.assign(document.createElement('input'), {type: 'number', value});
