@@ -155,7 +155,6 @@ export default class TimePicker extends React.Component {
 
 
 	onHourIncrement = () => {
-		debugger;
 		const value = this.getValue(true);
 
 		this.onChange(value.incrementHours());
