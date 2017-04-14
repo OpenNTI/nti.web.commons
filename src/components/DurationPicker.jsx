@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-import NumberInput from './NumberInput';
+import {Number as NumberInput} from './inputs';
 
-export const secondsPerHour = 3600;
+export const secondsPerMinute = 60;
+export const secondsPerHour = secondsPerMinute * 60;
 export const secondsPerDay = secondsPerHour * 24;
 
 const DEFAULT_TEXT = {
@@ -19,7 +20,10 @@ const DEFAULT_TEXT = {
 	minutes: {
 		one: '%(count)s Minute',
 		other: '%(count)s Minutes'
-	}
+	},
+	daysLabel: 'Days',
+	hoursLabel: 'Hours',
+	minutesLabel: 'Minutes'
 };
 
 const t = scoped('DURATION_UNITS', DEFAULT_TEXT);
@@ -55,6 +59,17 @@ function getDays (seconds) {
 }
 
 /**
+ * Get the number of seconds for the given days, hours, and minutes
+ * @param  {Number} days    number of days
+ * @param  {Number} hours   number of hours
+ * @param  {Number} minutes number of minutes
+ * @return {Number}         number of seconds
+ */
+function getValue (days, hours, minutes) {
+	return Math.max(0, (days * secondsPerDay) + (hours * secondsPerHour) + (minutes * secondsPerMinute));
+}
+
+/**
  * Get a display string for the duration of a given number of
  * seconds
  * @param  {Number} seconds the number of seconds
@@ -72,29 +87,13 @@ export function getDisplay (seconds) {
 
 
 export default class DurationPicker extends React.Component {
-	constructor (props) {
-		super(props);
-
-		this.state = {};
-		this.inputChanged = this.inputChanged.bind(this);
-		this.getValue = this.getValue.bind(this);
-	}
-
-	static propTypes = {
-		onChange: PropTypes.func,
-		value: PropTypes.number
-	}
-
-
 	static minutes (seconds) {
 		return getMinutes(seconds);
 	}
 
-
 	static hours (seconds) {
 		return getHours(seconds);
 	}
-
 
 	static days (seconds) {
 		return getDays(seconds);
@@ -104,74 +103,76 @@ export default class DurationPicker extends React.Component {
 		return getDisplay(value);
 	}
 
-	attachDaysRef = x => this.days = x
-	attachHoursRef = x => this.hours = x
-	attachMinutesRef = x => this.minutes = x
 
-	componentWillMount () {
-		const {value = 0} = this.props;
-		this.setState({value});
+	static propTypes = {
+		value: PropTypes.number,//the duration in seconds
+		onChange: PropTypes.func
 	}
 
-	componentDidMount () {
-		// this.hours.focus();
+	constructor (props) {
+		super(props);
+
+		const {value} = props;
+
+		this.state = {
+			days: getDays(value),
+			hours: getHours(value),
+			minutes: getMinutes(value)
+		};
 	}
 
-	getValue () {
-		const days = this.days.value;
-		const hours = this.hours.value;
-		const minutes = this.minutes.value;
-		return Math.max(0, (days * secondsPerDay) + (hours * secondsPerHour) + (minutes * 60));
-	}
+	componentWillReceiveProps (nextProps) {
+		const {value:nextValue} = nextProps;
+		const {value:oldValue} = this.props;
 
-	inputChanged () {
-
-		const value = this.getValue();
-
-		this.setState({value});
-
-		if (typeof this.props.onChange === 'function') {
-			this.props.onChange(value);
+		if (nextValue !== oldValue) {
+			this.setState({
+				days: getDays(nextValue),
+				hours: getHours(nextValue),
+				minutes: getMinutes(nextValue)
+			});
 		}
 	}
 
-	render () {
 
-		const {value} = this.state;
-		const days = this.constructor.days(value);
-		const hours = this.constructor.hours(value);
-		const minutes = this.constructor.minutes(value);
+	onChange (days, hours, minutes) {
+		const {value:oldValue, onChange} = this.props;
+		const newValue = getValue(days, hours, minutes);
+
+		if (newValue !== oldValue && onChange) {
+			onChange(newValue);
+		}
+	}
+
+
+	onDaysChanged = (days) => {
+		const {hours, minutes} = this.state;
+
+		this.onChange(days, hours, minutes);
+	}
+
+
+	onHoursChanged = (hours) => {
+		const {days, minutes} = this.state;
+
+		this.onChange(days, hours, minutes);
+	}
+
+
+	onMinutesChanged = (minutes) => {
+		const {days, hours} = this.state;
+
+		this.onChange(days, hours, minutes);
+	}
+
+	render () {
+		const {days, hours, minutes} = this.state;
 
 		return (
 			<div className="duration-picker">
-				<label>
-					<span className="label">Days</span>
-					<NumberInput ref={this.attachDaysRef}
-						type="number"
-						onChange={this.inputChanged}
-						defaultValue={days}
-						min="0"
-					/>
-				</label>
-				<label>
-					<span className="label">Hours</span>
-					<NumberInput ref={this.attachHoursRef}
-						type="number"
-						onChange={this.inputChanged}
-						defaultValue={hours}
-						min={0} max={23}
-					/>
-				</label>
-				<label>
-					<span className="label">Minutes</span>
-					<NumberInput ref={this.attachMinutesRef}
-						type="number"
-						onChange={this.inputChanged}
-						defaultValue={minutes}
-						min="0"
-						max="59"
-					/>
-				</label>
+				<NumberInput onChange={this.onDaysChanged} value={days} label={t('daysLabel')} />
+				<NumberInput onChange={this.onHoursChanged} value={hours} label={t('hoursLabel')} />
+				<NumberInput onChange={this.onMinutesChanged} value={minutes} label={t('minutesLabel')} />
 			</div>
 		);
 	}
