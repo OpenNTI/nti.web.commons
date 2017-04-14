@@ -10,7 +10,7 @@
 		flex: 0 0 auto;
 	}
 
-	.number-input-component {
+	.number-input-component input {
 		width: 2.125rem;
 		padding: .3125rem 0 .3125rem 0;
 		text-align: center;
@@ -18,7 +18,7 @@
 		text-align: center;
 		color: $secondary-grey;
 
-		&:invalid {
+		&.valid {
 			border: 1px solid $border-red;
 		}
 	}
