@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
+const UP_ARROW_KEY = 38;
+const DOWN_ARROW_KEY = 40;
+
 const getNumber = n => (n = parseFloat(n, 10), isNaN(n) ? null : n);
 
 export default class NumberInput extends React.Component {
@@ -195,13 +198,13 @@ export default class NumberInput extends React.Component {
 		const {onKeyDown} = this.props;
 
 		//up arrow
-		if (e.keyCode === 38) {
+		if (e.keyCode === UP_ARROW_KEY) {
 			this.handleUpKey();
 			e.preventDefault();
 		}
 
 		//down arrow
-		if (e.keyCode === 40) {
+		if (e.keyCode === DOWN_ARROW_KEY) {
 			this.handleDownKey();
 			e.preventDefault();
 		}
