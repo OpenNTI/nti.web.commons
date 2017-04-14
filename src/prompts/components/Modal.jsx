@@ -29,7 +29,6 @@ export default class Modal extends React.Component {
 		close: PropTypes.func
 	}
 
-	attachMaskRef = x => this.mask = x
 	attachContentRef = x => this.content = x
 
 	getChildContext = () => ({
@@ -72,7 +71,7 @@ export default class Modal extends React.Component {
 
 	onMaskClick = (e) => {
 		const {closeOnMaskClick} = this.props;
-		if (closeOnMaskClick && (e.target === this.mask || e.target === this.content)) {
+		if (closeOnMaskClick) {
 			this.close(e);
 		}
 	}
@@ -113,8 +112,7 @@ export default class Modal extends React.Component {
 				transitionLeaveTimeout={timeout}
 			>
 				<LockScroll />
-				<div ref={this.attachMaskRef}
-					key={className}
+				<div key={className}
 					className={classes}
 					onFocus={this.onFocus}
 					onBlur={this.onBlur}
