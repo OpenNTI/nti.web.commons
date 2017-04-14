@@ -16,7 +16,12 @@ export default class TextInput extends React.Component {
 
 	attachInputRef = x => this.input = x;
 
-
+	/**
+	 * Return the validity of the input see below for more details:
+	 * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+	 *
+	 * @return {Object} the validity of the input
+	 */
 	get validity () {
 		return this.input.validity;
 	}

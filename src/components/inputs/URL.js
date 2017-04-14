@@ -38,7 +38,14 @@ export default class URLInput extends React.Component {
 		}
 	}
 
-
+	/**
+	 * Since we are using a text input for usability, we create a url input
+	 * to check the validity, see below for more details:
+	 *
+	 * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+	 *
+	 * @return {Object} the validity of the input
+	 */
 	get validity () {
 		const {value} = this.props;
 		const input = Object.assign(document.createElement('input'), {type: 'url', value: getFullHref(value)});
