@@ -53,7 +53,7 @@ export default class ListHeaderCell extends React.Component {
 		});
 
 		return (
-			<div className={cls} onClick={this.onClick}>
+			<div className={cls} onClick={this.onClick} role="columnheader">
 				<span>{column.display || column.name}</span>
 			</div>
 		);
