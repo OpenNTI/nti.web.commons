@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {getRefHandler} from 'nti-commons';
 
 
 export default class LabeledInput extends React.Component {
@@ -45,6 +46,6 @@ export default class LabeledInput extends React.Component {
 		const {children} = this.props;
 		const child = React.Children.only(children);
 
-		return React.cloneElement(child, {ref: this.attachInputRef});
+		return React.cloneElement(child, {ref: getRefHandler(child.ref, this.attachInputRef)});
 	}
 }
