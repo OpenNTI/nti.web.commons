@@ -1,0 +1,19 @@
+@import "~nti-style-common";
+
+.nti-clearable-input {
+	display: inline-block;
+	position: relative;
+
+	.reset {
+		position: absolute;
+		width: rem-calc(16px);
+		height: rem-calc(16px);
+		top: 50%;
+		right: rem-calc(10px);
+		margin-top: rem-calc(-8px);
+		cursor: pointer;
+
+		background-image: url(../assets/circle-x-grey-16.png);
+		background-color: transparent;
+	}
+}

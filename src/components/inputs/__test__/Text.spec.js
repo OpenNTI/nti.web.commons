@@ -45,41 +45,41 @@ describe('Text Input', () => {
 		});
 	});
 
-	describe('clear', () => {
-		it('Clear calls on change', () => {
-			const props = {onChange: () => {}};
-			spyOn(props, 'onChange');
+	// describe('clear', () => {
+	// 	it('Clear calls on change', () => {
+	// 		const props = {onChange: () => {}};
+	// 		spyOn(props, 'onChange');
 
-			const wrapper = mount(<Text {...props} />);
+	// 		const wrapper = mount(<Text {...props} />);
 
-			const clear = wrapper.find('.reset');
+	// 		const clear = wrapper.find('.reset');
 
-			clear.simulate('click');
+	// 		clear.simulate('click');
 
-			expect(props.onChange).toHaveBeenCalledWith('');
-		});
+	// 		expect(props.onChange).toHaveBeenCalledWith('');
+	// 	});
 
-		it('Disable Clear doesn\'t render the button', () => {
-			const wrapper = mount(<Text disableClear />);
-			const clear = wrapper.find('.reset');
+	// 	it('Disable Clear doesn\'t render the button', () => {
+	// 		const wrapper = mount(<Text disableClear />);
+	// 		const clear = wrapper.find('.reset');
 
-			expect(clear.getNodes().length).toEqual(0);
-		});
-	});
+	// 		expect(clear.getNodes().length).toEqual(0);
+	// 	});
+	// });
 
-	describe('label', () => {
-		it('Renders label', () => {
-			const wrapper = mount(<Text label="label" />);
-			const label = wrapper.find('.label');
+	// describe('label', () => {
+	// 	it('Renders label', () => {
+	// 		const wrapper = mount(<Text label="label" />);
+	// 		const label = wrapper.find('.label');
 
-			expect(label.text()).toEqual('label');
-		});
+	// 		expect(label.text()).toEqual('label');
+	// 	});
 
-		it('Doesn\'t render label', () => {
-			const wrapper = mount(<Text />);
-			const label = wrapper.find('.label');
+	// 	it('Doesn\'t render label', () => {
+	// 		const wrapper = mount(<Text />);
+	// 		const label = wrapper.find('.label');
 
-			expect(label.getNodes().length).toEqual(0);
-		});
-	});
+	// 		expect(label.getNodes().length).toEqual(0);
+	// 	});
+	// });
 });
