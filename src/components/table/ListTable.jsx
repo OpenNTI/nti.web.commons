@@ -6,8 +6,8 @@ import {ASCENDING} from './Constants';
 import ListHeader from './ListHeader';
 
 
-function applySortTo (rows, sortFn) {
-	return rows.sort(sortFn);
+function applySortTo (items, sortFn) {
+	return items.sort(sortFn);
 }
 
 
@@ -19,8 +19,8 @@ export default class ListTable extends React.Component {
 			headerClassName: PropTypes.string,
 			bodyClassName: PropTypes.string,
 		}),
-		renderRow: PropTypes.func.isRequired,
-		rows: PropTypes.array,
+		renderItem: PropTypes.func.isRequired,
+		items: PropTypes.array,
 		columns: PropTypes.arrayOf(PropTypes.shape({
 			name: PropTypes.string.isRequired,
 			classes: PropTypes.shape({
@@ -41,11 +41,11 @@ export default class ListTable extends React.Component {
 	constructor (props) {
 		super(props);
 
-		const {rows} = props;
+		const {items} = props;
 		const activeSort = this.getDefaultSort(props);
 
 		this.state = {
-			rows: applySortTo(rows, activeSort.sortFn),
+			items: applySortTo(items, activeSort.sortFn),
 			activeSortFn: activeSort.sortFn,
 			activeSort: activeSort.name,
 			activeDirection: ASCENDING
@@ -54,13 +54,13 @@ export default class ListTable extends React.Component {
 
 
 	componentWillReceiveProps (nextProps) {
-		const {rows:nextRows} = nextProps;
-		const {rows:oldRows} = this.props;
+		const {items:nextItems} = nextProps;
+		const {items:oldItems} = this.props;
 		const {activeSortFn} = this.state;
 
-		if (nextRows !== oldRows) {
+		if (nextItems !== oldItems) {
 			this.setState({
-				rows: applySortTo(nextRows, activeSortFn)
+				items: applySortTo(nextItems, activeSortFn)
 			});
 		}
 	}
@@ -80,10 +80,10 @@ export default class ListTable extends React.Component {
 
 
 	onSortChange = (sortFn, name, direction) => {
-		const {rows} = this.state;
+		const {items} = this.state;
 
 		this.setState({
-			rows: applySortTo(rows, sortFn),
+			items: applySortTo(items, sortFn),
 			activeSortFn: sortFn,
 			activeSort: name,
 			activeDirection: direction
@@ -118,14 +118,14 @@ export default class ListTable extends React.Component {
 
 
 	renderList () {
-		const {renderRow, classes} = this.props;
-		const {rows} = this.state;
+		const {renderItem, classes} = this.props;
+		const {items} = this.state;
 		const cls = cx('list-table-body', classes.bodyClassName);
 
 		return (
 			<div className={cls} role="rowgroup">
-				{rows.map((x, index) => {
-					return (<div key={index} role="row">{renderRow(x, index)}</div>);
+				{items.map((x, index) => {
+					return (<div key={index} role="row">{renderItem(x, index)}</div>);
 				})}
 			</div>
 		);
