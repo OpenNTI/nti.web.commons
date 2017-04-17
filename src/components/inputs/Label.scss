@@ -1,0 +1,10 @@
+@import "~nti-style-common";
+
+.nti-labeled-input {
+	.label {
+		display: block;
+		font: normal bold 0.625rem/1rem $body-font-family;
+		text-transform: uppercase;
+		color: $secondary-grey;
+	}
+}

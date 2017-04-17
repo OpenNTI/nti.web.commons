@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, DateTimeField} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, Input} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -115,7 +115,11 @@ class TestCmp extends React.Component {
 		const {value} = this.state;
 
 		return (
-			<DateTimeField value={value} onChange={this.onChange} />
+			<Input.Label label="Test Label">
+				<Input.Clearable>
+					<Input.Text value={value} onChange={this.onChange} />
+				</Input.Clearable>
+			</Input.Label>
 		);
 	}
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-import {Number as NumberInput} from './inputs';
+import {Number as NumberInput, Label} from './inputs';
 
 export const secondsPerMinute = 60;
 export const secondsPerHour = secondsPerMinute * 60;
@@ -170,9 +170,17 @@ export default class DurationPicker extends React.Component {
 
 		return (
 			<div className="duration-picker">
-				<NumberInput onChange={this.onDaysChanged} value={days} label={t('daysLabel')} />
-				<NumberInput onChange={this.onHoursChanged} value={hours} label={t('hoursLabel')} />
-				<NumberInput onChange={this.onMinutesChanged} value={minutes} label={t('minutesLabel')} />
+				<Label label={t('daysLabel')}>
+					<NumberInput onChange={this.onDaysChanged} value={days} />
+				</Label>
+
+				<Label label={t('hoursLabel')}>
+					<NumberInput onChange={this.onHoursChanged} value={hours} />
+				</Label>
+
+				<Label label={t('minutesLabel')}>
+					<NumberInput onChange={this.onMinutesChanged} value={minutes} label={t('minutesLabel')} />
+				</Label>
 			</div>
 		);
 	}
