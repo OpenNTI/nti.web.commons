@@ -97,7 +97,7 @@ export default class ListTable extends React.Component {
 		const cls = cx('list-table', classes.className, activeSort, activeDirection);
 
 		return (
-			<div className={cls}>
+			<div className={cls} role="table">
 				{this.renderHeader()}
 				{this.renderList()}
 			</div>
@@ -110,7 +110,9 @@ export default class ListTable extends React.Component {
 		const {activeSort, activeDirection} = this.state;
 
 		return (
-			<ListHeader className={classes.headerClassName} columns={columns} activeSort={activeSort} activeDirection={activeDirection} onSortChange={this.onSortChange} />
+			<div role="rowgroup">
+				<ListHeader className={classes.headerClassName} columns={columns} activeSort={activeSort} activeDirection={activeDirection} onSortChange={this.onSortChange} />
+			</div>
 		);
 	}
 
@@ -121,11 +123,11 @@ export default class ListTable extends React.Component {
 		const cls = cx('list-table-body', classes.bodyClassName);
 
 		return (
-			<ul className={cls}>
+			<div className={cls} role="rowgroup">
 				{rows.map((x, index) => {
-					return (<li key={index}>{renderRow(x, index)}</li>);
+					return (<div key={index} role="row">{renderRow(x, index)}</div>);
 				})}
-			</ul>
+			</div>
 		);
 	}
 }
