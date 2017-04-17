@@ -32,7 +32,7 @@ export default class ListHeader extends React.Component {
 		const cls = cx('list-table-header', className);
 
 		return (
-			<div className={cls}>
+			<div className={cls} role="row">
 				{columns.map(this.renderCell)}
 			</div>
 		);
