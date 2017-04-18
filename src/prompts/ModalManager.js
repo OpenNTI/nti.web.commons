@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createDOM, getScrollPosition, getScrollParent} from 'nti-lib-dom';
+import {createDOM, getScrollPosition, getScrollParent, scrollElementTo} from 'nti-lib-dom';
 import {buffer} from 'nti-commons';
 
 import Modal from './components/Modal';
@@ -10,7 +10,7 @@ import Modal from './components/Modal';
 
 const setHidden = (node, hidden) => node.setAttribute('aria-hidden', hidden);
 const focusElement = (node) => node && node.focus();
-const setScroll = ({left, top} = {}) => top > 0 && (setTimeout(() => getScrollParent().scrollTo(left, top)), 1);
+const setScroll = ({scroller, left, top} = {}) => top > 0 && (setTimeout(() => scrollElementTo(scroller, left, top)), 1);
 
 const EVENT = 'updated';
 
@@ -82,11 +82,16 @@ export class ModalManager extends EventEmitter {
 		const dismiss = buffer(1, () =>
 				(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
 
+		const scroller = getScrollParent(container);
+
 		const reference = {
 			dismiss,
 			mountPoint: container,
 			refocus,
-			scrollPosition: restoreScroll ? getScrollPosition(getScrollParent()) : undefined
+			scroll: !restoreScroll ? void 0 : {
+				scroller,
+				...getScrollPosition(scroller)
+			}
 		};
 
 		const setReference = x => reference.component = x;
@@ -159,7 +164,7 @@ export class ModalManager extends EventEmitter {
 	}
 
 
-	remove ({mountPoint, refocus, scrollPosition}) {
+	remove ({mountPoint, refocus, scroll}) {
 		const {lastIndex, active} = this;
 
 		const index = active.findIndex(x => x.mountPoint === mountPoint);
@@ -180,7 +185,7 @@ export class ModalManager extends EventEmitter {
 		//Only refocus if the top modal was removed.
 		if (removingTopModal) {
 			focusElement(refocus || (ref && ref.refocus));
-			setScroll(scrollPosition || (ref && ref.scrollPosition));
+			setScroll(scroll || (ref && ref.scroll));
 		}
 	}
 
