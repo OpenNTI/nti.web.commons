@@ -46,7 +46,7 @@ class Tags extends React.Component {
 			<div className="resource-viewer-inspector-file-tags">
 				<LabeledValue label={t('Tags')}>
 					<TagField value={item.tags}
-						disabled={!item.hasLink('edit')}
+						disabled={!item.isModifiable}
 						placeholder={t('TagsPlaceholder')}
 						onChange={this.onChange}
 						ref={this.attachRef}

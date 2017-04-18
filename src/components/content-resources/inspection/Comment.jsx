@@ -41,7 +41,7 @@ class Comment extends React.Component {
 
 	render () {
 		const {item} = this.props;
-		const disabled = !item.hasLink('edit') || !item.hasOwnProperty('comment');
+		const disabled = !item.isModifiable || !item.hasOwnProperty('comment');
 		return (
 			<div className="resource-viewer-inspector-file-tags">
 				<LabeledValue label={t('Comment')}>
