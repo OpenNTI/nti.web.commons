@@ -8,8 +8,8 @@ const stop = e => e.preventDefault();
 export default class ClearableInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		children: React.PropTypes.element,
-		onClear: React.PropTypes.func
+		children: PropTypes.element,
+		onClear: PropTypes.func
 	}
 
 	attachInputRef = x => this.input = x
