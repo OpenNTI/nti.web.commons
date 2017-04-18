@@ -4,8 +4,8 @@ import {Time} from 'nti-commons';
 
 import TimePicker from '../TimePicker';
 
-const ARROW_UP = 40;
-const ARROW_DOWN = 38;
+const ARROW_UP = 38;
+const ARROW_DOWN = 40;
 
 describe('TimePicker', () => {
 	// const sharedWrapper = mount(<TimePicker />);
@@ -43,7 +43,7 @@ describe('TimePicker', () => {
 				noon.setMinutes(0);
 				picker.setState({value: new Time(noon)});
 				const hourInput = picker.find('input[name="hours"]');
-				hourInput.simulate('keyDown', {code: ARROW_UP, key: 'ArrowUp'});
+				hourInput.simulate('keyDown', {keyCode: ARROW_UP, key: 'ArrowUp'});
 				return picker.state('value');
 			})
 			.forEach( (value) => {
@@ -63,7 +63,7 @@ describe('TimePicker', () => {
 				picker.setState({value: new Time(onePM)});
 
 				const hourInput = picker.find('input[name="hours"]');
-				hourInput.simulate('keyDown', {code: ARROW_DOWN, key: 'ArrowDown'});
+				hourInput.simulate('keyDown', {keyCode: ARROW_DOWN, key: 'ArrowDown'});
 				return picker.state('value');
 			})
 			.forEach( (value) => {
@@ -92,7 +92,7 @@ describe('TimePicker', () => {
 			.map(picker => {
 				const hourInput = picker.find('input[name="hours"]');
 				hourInput.simulate('change', {target: {value: '23'}});
-				hourInput.simulate('keyDown', {code: ARROW_UP, key: 'ArrowUp'});
+				hourInput.simulate('keyDown', {keyCode: ARROW_UP, key: 'ArrowUp'});
 				return picker.state('value');
 			})
 			.forEach(value => {
@@ -106,7 +106,7 @@ describe('TimePicker', () => {
 			.map(picker => {
 				const hourInput = picker.find('input[name="hours"]');
 				hourInput.simulate('change', {target: {value: '0'}});
-				hourInput.simulate('keyDown', {code: ARROW_DOWN, key: 'ArrowDown'});
+				hourInput.simulate('keyDown', {keyCode: ARROW_DOWN, key: 'ArrowDown'});
 				return picker.state('value');
 			})
 			.forEach(value => {

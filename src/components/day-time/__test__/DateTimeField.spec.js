@@ -93,7 +93,7 @@ describe('DateTimeField', () => {
 		value.setDate('1');
 		value.setHours(23);
 		value.setMinutes(59);
-		
+
 		test({ onChange: onChangeSpy})
 			.forEach(x => {
 				const monthSelect = x.find('.month-wrapper Select');
@@ -142,8 +142,9 @@ describe('DateTimeField', () => {
 			.forEach(x => {
 				const timePicker = x.find(TimePicker) && x.find(TimePicker).shallow();
 				const time = timePicker.childAt(0);
-				const minuteInput = time.childAt(2);
-				minuteInput.simulate('change', { target: { value: '8' }, stopPropagation: () => {}, preventDefault: () => {} });
+				const minute = time.childAt(2);
+				const minuteInput = minute.shallow().find('input');
+				minuteInput.simulate('change', { target: { value: 8 }, stopPropagation: () => {}, preventDefault: () => {} });
 
 				expect(onChangeSpy).toHaveBeenCalledWith(value);
 			});
