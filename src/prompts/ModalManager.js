@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createDOM} from 'nti-lib-dom';
+import {createDOM, getScrollPosition, getScrollParent} from 'nti-lib-dom';
 import {buffer} from 'nti-commons';
 
 import Modal from './components/Modal';
@@ -10,6 +10,7 @@ import Modal from './components/Modal';
 
 const setHidden = (node, hidden) => node.setAttribute('aria-hidden', hidden);
 const focusElement = (node) => node && node.focus();
+const setScroll = ({left, top} = {}) => top > 0 && (setTimeout(() => getScrollParent().scrollTo(left, top)), 1);
 
 const EVENT = 'updated';
 
@@ -59,13 +60,22 @@ export class ModalManager extends EventEmitter {
 	 * @param {Boolean} options.tall Indicates that the content will be tall; triggers css changes
 	 * @param {Node} options.mountPoint the DOM node that the dialog should mount/re-render to.
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
+	 * @param {Boolean} options.restoreScroll restore scroll position on dismissal
 	 * @return {ModalReference} Stuff & Things
 	 */
 	show (content, options = {}) {
 		//Back-compat... if the second arg is a string, wrap it into an "options" object...otherwise, passthrough.
 		options = (typeof options === 'string') ? {className: options} : options;
 
-		const {className, closeOnMaskClick, onBeforeDismiss, tall, mountPoint, refocus = document.activeElement} = options;
+		const {
+			className,
+			closeOnMaskClick,
+			onBeforeDismiss,
+			tall,
+			mountPoint,
+			refocus = document.activeElement,
+			restoreScroll,
+		} = options;
 
 		const container = this.getContainer(mountPoint);
 
@@ -75,7 +85,8 @@ export class ModalManager extends EventEmitter {
 		const reference = {
 			dismiss,
 			mountPoint: container,
-			refocus
+			refocus,
+			scrollPosition: restoreScroll ? getScrollPosition(getScrollParent()) : undefined
 		};
 
 		const setReference = x => reference.component = x;
@@ -148,7 +159,7 @@ export class ModalManager extends EventEmitter {
 	}
 
 
-	remove ({mountPoint, refocus}) {
+	remove ({mountPoint, refocus, scrollPosition}) {
 		const {lastIndex, active} = this;
 
 		const index = active.findIndex(x => x.mountPoint === mountPoint);
@@ -169,6 +180,7 @@ export class ModalManager extends EventEmitter {
 		//Only refocus if the top modal was removed.
 		if (removingTopModal) {
 			focusElement(refocus || (ref && ref.refocus));
+			setScroll(scrollPosition || (ref && ref.scrollPosition));
 		}
 	}
 
