@@ -6,6 +6,7 @@
 	border: solid 1px $border-grey-light;
 	color: $secondary-grey;
 	font: normal 400 0.875rem/2rem $body-font-family;
+	height: 2rem;//for IE
 	padding: rem-calc(0 10px);
 
 	.nti-clearable-input & {
