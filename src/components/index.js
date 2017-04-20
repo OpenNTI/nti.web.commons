@@ -26,6 +26,7 @@ export DayTimePicker from './day-time/DayTimePicker';
 export DayTimeToggle from './day-time/DayTimeToggle';
 export DateTimeField from './day-time/DateTimeField';
 export DayTimeToggleTrigger from './day-time/DayTimeToggleTrigger';
+export DeauthListener from './DeauthListener';
 export DefaultPath from './DefaultPath';
 export DialogButtons from './DialogButtons';
 export DisplayName from './DisplayName';
