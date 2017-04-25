@@ -8,11 +8,16 @@ const DOWN_ARROW_KEY = 40;
 
 const getNumber = n => (n = parseFloat(n, 10), isNaN(n) ? null : n);
 
+//https://github.com/vlad-ignatov/react-numeric-input
+
+
 export default class NumberInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		value: PropTypes.number,
 		onChange: PropTypes.func,
+
+		format: PropTypes.func,
 
 		constrain: PropTypes.bool,
 		pad: PropTypes.oneOfType([
@@ -54,6 +59,21 @@ export default class NumberInput extends React.Component {
 	 */
 	get value () {
 		return getNumber(this.input.value);
+	}
+
+	get formattedValue () {
+		const {value, format, pad} = this.props;
+		const num = getNumber(value);
+
+		let formatted;
+
+		if (pad) {
+			formatted = zpad(value, (typeof pad === 'number') ? pad : 2);
+		} else {
+			formatted = num.toFixed(0);
+		}
+
+		return format ? format(formatted) : formatted;
 	}
 
 	/**
@@ -215,21 +235,17 @@ export default class NumberInput extends React.Component {
 
 
 	render () {
-		const {value: givenValue, className, pad, ...otherProps} = this.props;
+		const {className, ...otherProps} = this.props;
 		const {validity} = this;
 		const cls = cx('number-input-component', className, {valid: validity.valid, invalid: !validity.valid});
 
-		let value = givenValue;
-
-		if (pad) {
-			value = zpad(value, (typeof pad === 'number') ? pad : 2);
-		}
+		let value = this.formattedValue;
 
 		delete otherProps.constrain;
 		delete otherProps.onIncrement;
 		delete otherProps.onDecrement;
-
-		//TODO: add a label prop similar to whats in the text input
+		delete otherProps.value;
+		delete otherProps.pad;
 
 		return (
 			<input {...otherProps}

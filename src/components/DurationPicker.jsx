@@ -165,21 +165,111 @@ export default class DurationPicker extends React.Component {
 		this.onChange(days, hours, minutes);
 	}
 
+
+	onHoursIncrement = () => {
+		const {days, hours, minutes} = this.state;
+		let newHours = hours + 1;
+		let newDays = days;
+
+		if (newHours >= 24) {
+			newDays += 1;
+			newHours = 0;
+		}
+
+		this.onChange(newDays, newHours, minutes);
+	}
+
+
+	onHoursDecrement = () => {
+		const {days, hours, minutes} = this.state;
+		let newHours = hours - 1;
+		let newDays = days;
+
+		if (newHours < 0 && newDays >= 1) {
+			newDays -= 1;
+			newHours = 23;
+		} else if (newHours < 0) {
+			newHours = 0;
+		}
+
+		this.onChange(newDays, newHours, minutes);
+	}
+
+
+	onMinutesIncrement = () => {
+		const {days, hours, minutes} = this.state;
+		let newMinutes = minutes + 1;
+		let newHours = hours;
+		let newDays = days;
+
+		if (newMinutes >= 60) {
+			newHours += 1;
+			newMinutes = 0;
+		}
+
+		if (newHours >= 24) {
+			newDays += 1;
+			newHours = 0;
+		}
+
+		this.onChange(newDays, newHours, newMinutes);
+	}
+
+
+	onMinutesDecrement = () => {
+		const {days, hours, minutes} = this.state;
+		let newMinutes = minutes - 1;
+		let newHours = hours;
+		let newDays = days;
+
+		if (newMinutes < 0 && newHours > 0) {
+			newHours -= 1;
+			newMinutes = 59;
+		} else if (newMinutes < 0 && newDays > 0) {
+			newDays -= 1;
+			newHours = 23;
+			newMinutes = 59;
+		} else if (newMinutes < 0) {
+			newMinutes = 0;
+		}
+
+
+		this.onChange(newDays, newHours, newMinutes);
+	}
+
+
 	render () {
 		const {days, hours, minutes} = this.state;
 
 		return (
 			<div className="duration-picker">
 				<Label label={t('daysLabel')}>
-					<NumberInput onChange={this.onDaysChanged} value={days} />
+					<NumberInput
+						onChange={this.onDaysChanged}
+						value={days}
+					/>
 				</Label>
 
 				<Label label={t('hoursLabel')}>
-					<NumberInput onChange={this.onHoursChanged} value={hours} />
+					<NumberInput
+						onChange={this.onHoursChanged}
+						value={hours}
+						constrain
+						min={0} max={23}
+						onIncrement={this.onHoursIncrement}
+						onDecrement={this.onHoursDecrement}
+					/>
 				</Label>
 
 				<Label label={t('minutesLabel')}>
-					<NumberInput onChange={this.onMinutesChanged} value={minutes} label={t('minutesLabel')} />
+					<NumberInput
+						onChange={this.onMinutesChanged}
+						value={minutes}
+						constrain
+						min={0} max={59}
+						onIncrement={this.onMinutesIncrement}
+						onDecrement={this.onMinutesDecrement}
+					/>
 				</Label>
 			</div>
 		);

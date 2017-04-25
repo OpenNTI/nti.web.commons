@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {addFeatureCheckClasses} from 'nti-lib-dom';
-import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, Input} from '../../src';
+import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, TimePicker} from '../../src';
 
 import 'normalize.css';
 import 'nti-style-common/all.scss';
@@ -105,7 +105,7 @@ function openEditor () {
 }
 
 class TestCmp extends React.Component {
-	state = {value: null}
+	state = {value: 0}
 
 	onChange = (value) => {
 		this.setState({value});
@@ -115,11 +115,7 @@ class TestCmp extends React.Component {
 		const {value} = this.state;
 
 		return (
-			<Input.Label label="Test Label">
-				<Input.Clearable>
-					<Input.Text value={value} onChange={this.onChange} />
-				</Input.Clearable>
-			</Input.Label>
+			<TimePicker value={value} onChange={this.onChange} />
 		);
 	}
 }
