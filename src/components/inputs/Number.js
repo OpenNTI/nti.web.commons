@@ -69,8 +69,10 @@ export default class NumberInput extends React.Component {
 
 		if (pad) {
 			formatted = zpad(value, (typeof pad === 'number') ? pad : 2);
-		} else {
+		} else if (num) {
 			formatted = num.toFixed(0);
+		} else {
+			formatted = null;
 		}
 
 		return format ? format(formatted) : formatted;
