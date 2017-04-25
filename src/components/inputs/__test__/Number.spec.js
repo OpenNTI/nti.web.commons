@@ -28,11 +28,11 @@ describe('Number Input', () => {
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
 
-			expect(input.prop('value')).toEqual(5);
+			expect(input.prop('value')).toEqual('5');
 
 			wrapper.setProps({value: 10});
 
-			expect(input.prop('value')).toEqual(10);
+			expect(input.prop('value')).toEqual('10');
 		});
 	});
 
