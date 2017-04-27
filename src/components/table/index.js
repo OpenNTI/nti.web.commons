@@ -1,2 +1,2 @@
-export ListTable from './list-table/ListTable';
+export ListTable from './list-table/ListTable'; //deprecated
 export Table from './Table';

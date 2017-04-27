@@ -11,7 +11,10 @@ function applySortTo (items, sortFn) {
 }
 
 
-
+/** @deprecated - Don't use this for new UIs. This component sorts data, mutating props,
+ * and violates the Flux/React directive. Components DO NO WORK. Components issue actions,
+ * which trigger work done on stores and the views Redraw.
+ */
 export default class ListTable extends React.Component {
 	static propTypes = {
 		classes: PropTypes.shape({
@@ -60,7 +63,7 @@ export default class ListTable extends React.Component {
 
 		if (nextItems !== oldItems) {
 			this.setState({
-				items: applySortTo(nextItems, activeSortFn)
+				items: applySortTo(nextItems, activeSortFn) ///!! sort mutates the array!
 			});
 		}
 	}
