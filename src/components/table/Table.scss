@@ -1,0 +1,14 @@
+table.nti-generic-table {
+	// By default, tables strink to fit their contents, nearly all NextThought's use of tables is for grids, so make this
+	// 100% like other "block" elememnts
+	width: 100%;
+
+	// https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
+	// Table and column widths are set by the widths of table and col elements or by the width of the first row of cells.
+	// Cells in subsequent rows do not affect column widths.
+	table-layout: fixed;
+
+	//HTML spec defines the default table cells have individual borders. We typically want thin shared borders.
+	border-collapse: collapse;
+	border-spacing: 0;
+}
