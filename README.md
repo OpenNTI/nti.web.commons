@@ -12,7 +12,7 @@ module-dir:
  ├ components
  │  ├ assets
  │  │  └ ...png
- │  ├ some-usefull-directory-grouping-of-components
+ │  ├ some-useful-directory-grouping-of-components
  │  │  ├ assets
  │  │  │  └ ...png
  │  │  └ ...jsx
