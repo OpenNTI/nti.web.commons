@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import string from 'rollup-plugin-string';
+import image from 'rollup-plugin-image';
 
 const pkg = require('./package.json');
 
@@ -31,6 +32,7 @@ export default {
 		json(),
 		string({
 			include: '**/*.svg',
-		})
+		}),
+		image()
 	]
 };
