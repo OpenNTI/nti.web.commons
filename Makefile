@@ -22,4 +22,4 @@ clean:
 
 bundle:
 	@webpack --progress --cache --bail --hide-modules=true --display-chunks=false
-	@rollup -c
+	@NODE_ENV="rollup" rollup -c
