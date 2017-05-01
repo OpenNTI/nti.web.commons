@@ -56,14 +56,14 @@ export default class DayPicker extends React.Component {
 
 	/**
 	 * Handles a day being clicked
-	 * @param  {event} e - Click event.
 	 * @param  {Date} day - This is the day that was clicked.
 	 * @param  {object} modifiers - Modifiers from react-day-picker
 	 * @param  {boolean} modifiers.selected - This is true if the day clicked is currently selected.
 	 * @param  {boolean} modifiers.disabled - This is true if the day is disabled.
+	 * @param  {event} e - Click event.
 	 * @return {void}
 	 */
-	handleDayClick (e, day, { selected, disabled }) {
+	handleDayClick (day, { selected, disabled }, e) {
 		const {onChange} = this.props;
 		const value = selected ? null : day;
 
@@ -91,6 +91,7 @@ export default class DayPicker extends React.Component {
 			<Picker
 				weekdayElement={ <Weekday/> }
 				initialMonth={ value || void value }
+				// month={value || void value }
 				selectedDays={ this.selectedDays }
 				disabledDays={ this.props.disabledDays }
 				onDayClick={ this.handleDayClick }

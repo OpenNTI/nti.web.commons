@@ -53,7 +53,7 @@
     "nti-util-logger": "^1.0.0",
     "nti-web-client": "^1.1.0",
     "prop-types": "^15.5.6",
-    "react-day-picker": "^2.1.0",
+    "react-day-picker": "^5.4.1",
     "react-router-component": "^0.37.0",
     "react-sticky": "^6.0.0",
     "react-transition-group": "^1.1.0",
