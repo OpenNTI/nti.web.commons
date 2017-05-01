@@ -4,21 +4,27 @@ import Logger from 'nti-util-logger';
 
 const logger = Logger.get('Currency');
 
-Currency.propTypes = {
-	amount: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]).isRequired,
-	omitFractional: PropTypes.bool
-};
 
-export default function Currency ({amount, omitFractional, ...other}) {
+export default class Currency extends React.PureComponent {
 
-	const a = parseFloat(amount);
+	static propTypes = {
+		amount: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number,
+		]).isRequired,
+		omitFractional: PropTypes.bool
+	}
 
-	return (
-		isNaN(a) ? null : <span {...other}>{format(amount, omitFractional)}</span>
-	);
+	render () {
+
+		const {amount, omitFractional, ...other} = this.props;
+
+		const a = parseFloat(amount);
+
+		return (
+			isNaN(a) ? null : <span {...other}>{format(amount, omitFractional)}</span>
+		);
+	}
 }
 
 (function () {
