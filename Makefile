@@ -3,8 +3,6 @@
 REPORTS = reports
 LIB = lib
 
-MAKE_PACKAGE=webpack --progress --cache --bail --hide-modules=true --display-chunks=false
-
 all: node_modules bundle
 
 node_modules: package.json
@@ -23,4 +21,5 @@ clean:
 	@rm -rf $(REPORTS)
 
 bundle:
-	@$(MAKE_PACKAGE)
+	@webpack --progress --cache --bail --hide-modules=true --display-chunks=false
+	@rollup -c

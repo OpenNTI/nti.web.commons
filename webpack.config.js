@@ -15,7 +15,7 @@ exports = module.exports = {
 	},
 	output: {
 		path: path.join(__dirname, 'lib/'),
-		filename: 'index.js',
+		filename: 'cjs-index.js',
 		library: pkg.name,
 		libraryTarget: 'commonjs-module'
 	},

@@ -1,6 +1,6 @@
 export Interface from './interface';
 export {
-	createInterfaceForRecord,
+	// createInterfaceForRecord, (symbol not exported by ./interface)
 	createInterfaceForActive,
 	createInterfaceForItem,
 	createGroupedInterfaceForItem
