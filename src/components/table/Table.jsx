@@ -56,8 +56,8 @@ export default function Table ({className, columns, items, store}) {
 			{hasHeader && (
 				<thead>
 					<tr>
-						{columns.map(({HeaderComponent = EMPTY},i) => (
-							<th key={i}>
+						{columns.map(({HeaderComponent = EMPTY, cssClassName},i) => (
+							<th key={i} className={cssClassName}>
 								<HeaderComponent store={store}/>
 							</th>
 						))}
@@ -69,7 +69,7 @@ export default function Table ({className, columns, items, store}) {
 				{items.map((item, row) => (
 					<tr key={row}>
 						{columns.map((Cell, cell) => (
-							<td key={cell}><Cell item={item} store={store}/></td>
+							<td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
 						))}
 					</tr>
 				))}
@@ -78,8 +78,8 @@ export default function Table ({className, columns, items, store}) {
 			{hasFooter && (
 				<tfoot>
 					<tr>
-						{columns.map(({FooterComponent = EMPTY},i) => (
-							<th key={i}>
+						{columns.map(({FooterComponent = EMPTY, cssClassName},i) => (
+							<th key={i} className={cssClassName}>
 								<FooterComponent store={store}/>
 							</th>
 						))}
