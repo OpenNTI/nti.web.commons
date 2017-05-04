@@ -5,22 +5,22 @@ import {Sticky as ReactSticky} from 'react-sticky';
 const offsetProp = 'nti-sticky-top-offset';
 
 Sticky.propTypes = {
-	children: PropTypes.any
+	children: PropTypes.node
 };
 
 export default function Sticky (props) {
-	const {children} = props;
-	let styles = {};
+	const child = React.Children.only(props.children);
+	let containerStyles = {};
 	let topOffset = 0;
 
 	if (window && window[offsetProp]) {
 		topOffset = -window[offsetProp];
-		styles.top = window[offsetProp] + 'px';
+		containerStyles.top = window[offsetProp] + 'px';
 	}
 
 	return (
-		<ReactSticky topOffset={topOffset} stickyStyle={styles}>
-			{children}
+		<ReactSticky topOffset={topOffset} stickyStyle={containerStyles}>
+			{({style}) => React.cloneElement(child, {style: {...(child.props.style || {}), ...style}})}
 		</ReactSticky>
 	);
 }
