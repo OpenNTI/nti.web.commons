@@ -8,8 +8,7 @@ Sticky.propTypes = {
 	children: PropTypes.node
 };
 
-export default function Sticky (props) {
-	const child = React.Children.only(props.children);
+export default function Sticky ({children}) {
 	let containerStyles = {};
 	let topOffset = 0;
 
@@ -20,7 +19,7 @@ export default function Sticky (props) {
 
 	return (
 		<ReactSticky topOffset={topOffset} stickyStyle={containerStyles}>
-			{({style}) => React.cloneElement(child, {style: {...(child.props.style || {}), ...style}})}
+			{({style}) => <div style={style}>{children}</div>}
 		</ReactSticky>
 	);
 }
