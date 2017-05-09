@@ -4,6 +4,7 @@ export * from './components';
 import * as ConflictResolution from './conflict-resolution';
 export * as Associations from './associations';
 export * as Constants from './constants';
+export * as DnD from './drag-and-drop';
 export * as Errors from './errors';
 export * as HOC from './HighOrderComponents';
 export * as Mixins from './mixins';
