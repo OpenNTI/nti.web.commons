@@ -33,6 +33,13 @@ export default class Draggable extends React.Component {
 	}
 
 
+	get childProp () {
+		const {children} = this.props;
+
+		return React.Children.only(children);
+	}
+
+
 	componentWillReceiveProps (nextProps) {
 		const {data:newData} = nextProps;
 		const {data:oldData} = this.props;
@@ -123,6 +130,7 @@ export default class Draggable extends React.Component {
 
 
 	onMouseDown = (e) => {
+		const {childProp} = this;
 
 		e.stopPropagation();
 
@@ -132,15 +140,24 @@ export default class Draggable extends React.Component {
 			onMouseDown(e);
 		}
 
+		if (childProp.props.onMouseDown) {
+			childProp.props.onMouseDown(e);
+		}
+
 		this.setDraggable(true);
 	}
 
 
 	onMouseUp = (e) => {
 		const {onMouseUp} = this.props;
+		const {childProp} = this;
 
 		if (onMouseUp) {
 			onMouseUp(e);
+		}
+
+		if (childProp.props.onMouseUp) {
+			childProp.props.onMouseUp(e);
 		}
 
 		this.setDraggable(false);
