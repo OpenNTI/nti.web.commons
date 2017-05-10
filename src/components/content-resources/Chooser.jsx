@@ -49,6 +49,13 @@ export default class Chooser extends React.Component {
 	state = {}
 
 
+	componentWillUnmount () {
+		if (this.unmountCallback) {
+			this.unmountCallback();
+		}
+	}
+
+
 	dismiss () {
 		const {onDismiss} = this.props;
 		if (onDismiss) {
@@ -64,9 +71,12 @@ export default class Chooser extends React.Component {
 		}
 		const {onCancel} = this.props;
 
-		if (onCancel) {
-			onCancel();
-		}
+		//Use this call back to wait until the Chooser has been closed
+		this.unmountCallback = () => {
+			if (onCancel) {
+				onCancel();
+			}
+		};
 
 		this.dismiss();
 	}
@@ -78,11 +88,16 @@ export default class Chooser extends React.Component {
 			e.stopPropagation();
 		}
 		const {props: {onSelect}, state: {selected}} = this;
+
 		if (!selected) { return; }
 
-		if (onSelect) {
-			onSelect(selected);
-		}
+		//Use this call back to wait until the Chooser has been closed
+		this.unmountCallback = () => {
+			if (onSelect) {
+				onSelect(selected);
+			}
+		};
+
 		this.dismiss();
 		return true;
 	}
