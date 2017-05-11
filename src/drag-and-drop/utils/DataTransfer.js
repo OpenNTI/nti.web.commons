@@ -87,7 +87,7 @@ export default class DataTransfer {
 			return;
 		}
 
-		if (value.dataForTransfer) {
+		if (typeof value.dataForTransfer === 'string') {
 			value = value.dataForTransfer;
 		} else {
 			value = JSON.stringify(value);
