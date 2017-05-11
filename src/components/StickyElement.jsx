@@ -9,17 +9,22 @@ Sticky.propTypes = {
 };
 
 export default function Sticky ({children}) {
-	let containerStyles = {};
+	const offset = window && window[offsetProp];
 	let topOffset = 0;
 
-	if (window && window[offsetProp]) {
-		topOffset = -window[offsetProp];
-		containerStyles.top = window[offsetProp] + 'px';
+	if (offset) {
+		topOffset = -offset;
 	}
 
 	return (
-		<ReactSticky topOffset={topOffset} stickyStyle={containerStyles}>
-			{({style}) => <div className="sticky" style={style}>{children}</div>}
+		<ReactSticky topOffset={topOffset}>
+			{({style}) => {
+				if (offset && style.top != null) {
+					style.top += offset;
+				}
+
+				return (<div className="sticky" style={style}>{children}</div>);
+			}}
 		</ReactSticky>
 	);
 }
