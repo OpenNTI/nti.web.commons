@@ -19,7 +19,7 @@ export default function Sticky ({children}) {
 
 	return (
 		<ReactSticky topOffset={topOffset} stickyStyle={containerStyles}>
-			{({style}) => <div style={style}>{children}</div>}
+			{({style}) => <div className="sticky" style={style}>{children}</div>}
 		</ReactSticky>
 	);
 }
