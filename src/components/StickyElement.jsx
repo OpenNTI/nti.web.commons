@@ -19,7 +19,7 @@ export default function Sticky ({children}) {
 	return (
 		<ReactSticky topOffset={topOffset}>
 			{({style}) => {
-				if (offset && style.top != null) {
+				if (offset && style.top != null && style.top === 0) {
 					style.top += offset;
 				}
 
