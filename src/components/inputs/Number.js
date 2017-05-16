@@ -14,7 +14,10 @@ const getNumber = n => (n = parseFloat(n, 10), isNaN(n) ? null : n);
 export default class NumberInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		value: PropTypes.number,
+		value: PropTypes.oneOfType([
+			PropTypes.oneOf(['']),
+			PropTypes.number
+		]),
 		onChange: PropTypes.func,
 
 		format: PropTypes.func,
