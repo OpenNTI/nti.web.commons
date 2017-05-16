@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
-const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
+const [THOUSAND_SEP, DECIMAL] = (1000.5).toLocaleString().replace(/\d/g, '');
+
+//exported for testing
+export const clean = s => typeof s !== 'string' ? s : s.replace(new RegExp(THOUSAND_SEP, 'g'), '').replace(DECIMAL, '.');
+
+//exported for testing
+export const getNumber = n => (n = parseInt(clean(n), 10), isNaN(n) ? null : n);
+
 
 export default class NumberInput extends React.Component {
 	static propTypes = {
