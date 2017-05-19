@@ -45,10 +45,11 @@ Table.propTypes = {
 	items: PropTypes.shape({
 		map: PropTypes.func
 	}).isRequired, //rows
-	store: PropTypes.any //Optional
+	store: PropTypes.any, //Optional
+	rowClassName: PropTypes.func
 };
 
-export default function Table ({className, columns, items, store}) {
+export default function Table ({className, columns, items, store, rowClassName}) {
 	const hasHeader = columns.some(x => x.HeaderComponent);
 	const hasFooter = columns.some(x => x.FooterComponent);
 	return (
@@ -67,7 +68,7 @@ export default function Table ({className, columns, items, store}) {
 
 			<tbody>
 				{items.map((item, row) => (
-					<tr key={row}>
+					<tr key={row} className={!rowClassName ? void 0 : rowClassName(item, row, items)}>
 						{columns.map((Cell, cell) => (
 							<td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
 						))}
