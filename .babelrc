@@ -5,6 +5,7 @@
 			"presets": [
 				["env", {
 					"modules": false,
+					"useBuiltIns": true,
 					"targets": {
 						"browsers": ["> 1% in US", "last 2 versions", "safari >= 6"]
 					}
@@ -17,6 +18,7 @@
 			"presets": [
 				["env", {
 					"modules": false,
+					"useBuiltIns": true,
 					"targets": {
 						"browsers": ["> 1% in US", "last 2 versions", "safari >= 6"]
 					}
