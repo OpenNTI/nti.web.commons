@@ -4,7 +4,7 @@ import cx from 'classnames';
 import {getRefHandler} from 'nti-commons';
 
 
-export default class LabeledInput extends React.Component {
+export default class Label extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		label: PropTypes.string,
