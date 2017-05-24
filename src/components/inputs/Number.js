@@ -6,7 +6,8 @@ import zpad from 'zpad';
 const UP_ARROW_KEY = 38;
 const DOWN_ARROW_KEY = 40;
 
-const [THOUSAND_SEP, DECIMAL] = (1000.5).toLocaleString().replace(/\d/g, '');
+const NUMBER_WITH_BOTH_SYMBOLS = 1000.5;
+const [THOUSAND_SEP, DECIMAL] = NUMBER_WITH_BOTH_SYMBOLS.toLocaleString().replace(/\d/g, '').split('');
 
 //exported for testing
 export const clean = s => typeof s !== 'string' ? s : s.replace(new RegExp(THOUSAND_SEP, 'g'), '').replace(DECIMAL, '.');
