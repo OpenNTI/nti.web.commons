@@ -25,6 +25,12 @@ class Input extends React.Component {
 		}
 	}
 
+	focus () {
+		if (this.input) {
+			this.input.focus();
+		}
+	}
+
 	render () {
 		return ( <input {...this.props} ref={this.attachRef}/> );
 	}
