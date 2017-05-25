@@ -45,6 +45,8 @@ form.search-component {
 			color: $tertiary-grey;
 			font-weight: 300;
 		}
+
+		&::-ms-clear { display:none; }
 	}
 
 	input[type=reset] {
