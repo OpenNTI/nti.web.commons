@@ -491,6 +491,23 @@ export default class Flyout extends React.Component {
 		);
 	}
 
+	renderFlyoutChildren (children) {
+		const newChildren = React.Children.map(children, child => {
+			if (!React.isValidElement(child)) {
+				return child;
+			}
+			let newProps = {};
+			newProps.children = this.renderFlyoutChildren(child.props.children);
+			newProps.onMouseDown = this.onToggle;
+			return React.cloneElement(child, newProps);
+		});
+
+		if (Array.isArray(newChildren) && newChildren.length === 1) {
+			return newChildren[0];
+		}
+
+		return newChildren;
+	}
 
 	renderFlyout = () => {
 		const {
@@ -517,7 +534,7 @@ export default class Flyout extends React.Component {
 			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle} {...listeners} >
 				{arrow && <div className="flyout-arrow"/>}
 				<div className="flyout-inner" style={innerStyle}>
-					{children}
+					{this.renderFlyoutChildren(children)}
 				</div>
 			</div>
 		, this.fly, () => {
