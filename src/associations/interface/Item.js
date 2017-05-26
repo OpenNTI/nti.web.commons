@@ -92,7 +92,7 @@ export default class AssociationItem extends EventEmitter {
 		this[SAVING] = true;
 		this.emit('change');
 
-		this[method](container || this.item, association)
+		Promise.resolve(this[method](container || this.item, association))
 			.then(() => {
 				this[SAVING] = false;
 
