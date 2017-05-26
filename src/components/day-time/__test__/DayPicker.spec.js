@@ -27,7 +27,7 @@ describe('DayPicker', () => {
 
 	xit('Simulate Selecting a Day', () => {
 		// TODO: Implament me
-		// const onChange = jasmine.createSpy('onChange');
+		// const onChange = jest.fn();
 		// const date = new Date();
 		// const wrapper = mount(<DayPicker value={date} onChange={onChange} />);
 	});

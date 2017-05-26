@@ -1,9 +1,12 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import {Date as DateUtils} from 'nti-commons';
 
 import DateTimeField from '../DateTimeField';
 import TimePicker from '../../TimePicker';
 import Select from '../../Select';
+
+const {MockDate} = DateUtils;
 
 describe('DateTimeField', () => {
 	const emptyOnChagne = () => {};
@@ -13,6 +16,10 @@ describe('DateTimeField', () => {
 		shallow(<DateTimeField {...props} children={children}/>),
 		sharedWrapper.setProps({...props, children})
 	];
+
+	afterEach(() => {
+		MockDate.uninstall();
+	});
 
 	it('Base case: Nothing Passed - Value to be undefined', () => {
 		test({ onChange: () => {} })
@@ -70,9 +77,9 @@ describe('DateTimeField', () => {
 	});
 
 	it('clicking current date calls onchange with current date', () => {
-		const onChangeSpy = jasmine.createSpy();
+		const onChangeSpy = jest.fn();
 		const now = new Date();
-		jasmine.clock().mockDate(now);
+		MockDate.install(now);
 
 		test({ onChange: onChangeSpy, currentDate: true })
 			.forEach(x => {
@@ -83,10 +90,10 @@ describe('DateTimeField', () => {
 	});
 
 	it('Selecting a month updates every select box', () => {
-		const onChangeSpy = jasmine.createSpy();
+		const onChangeSpy = jest.fn();
 
 		const now = new Date();
-		jasmine.clock().mockDate(now);
+		MockDate.install(now);
 
 		const value = new Date();
 		value.setMonth('7');
@@ -105,10 +112,10 @@ describe('DateTimeField', () => {
 	});
 
 	it('updating when a prop value was intially passed', () => {
-		const onChangeSpy = jasmine.createSpy();
+		const onChangeSpy = jest.fn();
 
 		const now = new Date();
-		jasmine.clock().mockDate(now);
+		MockDate.install(now);
 
 		const value = new Date();
 		value.setMonth(6);
@@ -130,10 +137,10 @@ describe('DateTimeField', () => {
 
 
 	it('change the time updates the time and keeps the date', () => {
-		const onChangeSpy = jasmine.createSpy();
+		const onChangeSpy = jest.fn();
 
 		const now = new Date();
-		jasmine.clock().mockDate(now);
+		MockDate.install(now);
 
 		const value = new Date();
 		value.setMinutes(8);

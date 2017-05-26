@@ -1,17 +1,14 @@
 import Interface from '../Interface';
 
 function makeDestination (id, onAdd, onRemove) {
-	return Interface.createItem({
-		NTIID: id,
-		label: `${id} Label`
-	}, onAdd, onRemove);
+	return Interface.createItem({ NTIID: id, label: `${id} Label` }, onAdd, onRemove);
 }
 
 describe('Association Interface Tests', () => {
 	let associations;
 	let items;
 
-	beforeEach(() => {
+	const before = () => {
 		function onAdd (item) {
 			associations.addActive(item);
 		}
@@ -29,9 +26,13 @@ describe('Association Interface Tests', () => {
 		];
 
 		associations = new Interface(items, [{NTIID: '2'}, {NTIID: '4'}]);
-	});
+	};
+
+	beforeEach(before);
 
 	describe('Active Association Tests', () => {
+		beforeEach(before);
+
 		it('isSharedWith is true for active', () => {
 			expect(associations.isSharedWith({NTIID: '2'})).toBeTruthy();
 			expect(associations.isSharedWith({NTIID: '4'})).toBeTruthy();
@@ -45,6 +46,8 @@ describe('Association Interface Tests', () => {
 	});
 
 	describe('Adding and Removing Associations', () => {
+		beforeEach(before);
+
 		it('adding an association makes it active', (done) => {
 			const item = items[0];
 
@@ -58,7 +61,7 @@ describe('Association Interface Tests', () => {
 
 			expect(associations.isSharedWith(item)).toBeFalsy();
 
-			item.onAddTo();
+			item.onAddTo(null, associations);
 		});
 
 		it('removing an association makes it inactive', (done) => {
