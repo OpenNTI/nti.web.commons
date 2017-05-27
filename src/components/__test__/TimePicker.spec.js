@@ -11,7 +11,7 @@ describe('TimePicker', () => {
 	// const sharedWrapper = mount(<TimePicker />);
 
 	const test = (props = {}, ...children) => [
-		mount(<TimePicker {...props} children={children}/>),
+		mount(<TimePicker {...props}>{children}</TimePicker>),
 		// sharedWrapper.setProps({...props, children})
 	];
 

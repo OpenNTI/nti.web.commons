@@ -39,7 +39,7 @@ describe('Inline List Tests', () => {
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {children}),
+				React.createElement(Inline, {}, ...children),
 				div,
 				done
 			);
@@ -85,7 +85,7 @@ describe('Inline List Tests', () => {
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {children, limit: 5}),
+				React.createElement(Inline, {limit: 5}, ...children),
 				div,
 				done
 			);
@@ -131,7 +131,7 @@ describe('Inline List Tests', () => {
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {children, limit: 5}),
+				React.createElement(Inline, {limit: 5}, ...children),
 				div,
 				done
 			);
@@ -177,7 +177,7 @@ describe('Inline List Tests', () => {
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {children, limit: 2}),
+				React.createElement(Inline, {limit: 2}, ...children),
 				div,
 				done
 			);

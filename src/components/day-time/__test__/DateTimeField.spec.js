@@ -13,7 +13,7 @@ describe('DateTimeField', () => {
 	const sharedWrapper = shallow(<DateTimeField onChange={emptyOnChagne} />);
 
 	const test = (props, ...children) => [
-		shallow(<DateTimeField {...props} children={children}/>),
+		shallow(<DateTimeField {...props}>{children}</DateTimeField>),
 		sharedWrapper.setProps({...props, children})
 	];
 

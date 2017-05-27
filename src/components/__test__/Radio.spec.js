@@ -7,7 +7,7 @@ describe('Radio', () => {
 	const sharedWrapper = shallow(<Radio />);
 
 	const test = (props, ...children) => [
-		shallow(<Radio {...props} children={children} />),
+		shallow(<Radio {...props}>{children}</Radio>),
 		sharedWrapper.setProps({...props, children})
 	];
 

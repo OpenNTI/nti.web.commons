@@ -11,7 +11,7 @@ function applySortTo (items, sortFn) {
 }
 
 
-/** @deprecated - Don't use this for new UIs. This component sorts data, mutating props,
+/* @deprecated - Don't use this for new UIs. This component sorts data, mutating props,
  * and violates the Flux/React directive. Components DO NO WORK. Components issue actions,
  * which trigger work done on stores and the views Redraw.
  */

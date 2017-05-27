@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {ASCENDING, DESCENDING} from './Constants';
 import ListHeaderItem from './ListHeaderItem';
 
 export default class ListHeader extends React.Component {

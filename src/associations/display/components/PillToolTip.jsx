@@ -59,11 +59,10 @@ export default class PillToolTip extends React.Component {
 	render () {
 		const {getString, className} = this.props;
 		const {loading, associations} = this.state;
-		const cls = cx('association-pill-tooltip', className, {loading});
 		const children = (associations || []).map(x => x.title || x.label);
 
 		return (
-			<div className={cls}>
+			<div className={cx('association-pill-tooltip', className, {loading})}>
 				{
 					loading ?
 						(<Loading.Spinner white size="20px" />) :
@@ -71,9 +70,11 @@ export default class PillToolTip extends React.Component {
 							<List.Limited
 								className="association-pill-tooltip-list"
 								onShowMore={this.showMore}
-								children={children} max={3}
+								max={3}
 								getString={getString}
-							/>
+							>
+								{children}
+							</List.Limited>
 						)
 				}
 			</div>

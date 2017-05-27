@@ -14,7 +14,7 @@ export default function Checkbox (props) {
 	const {checked, children, green, label, name, ...otherProps} = props;
 	return (
 		<label className="checkbox-component" name={name}>
-			<input {...otherProps} name={name} checked={checked} type="checkbox" children={void 0}/>
+			<input {...otherProps} name={name} checked={checked} type="checkbox"/>
 			<span className={cx('label', {green})}>{label}</span>
 			{children && checked && (
 				<div className="sub">

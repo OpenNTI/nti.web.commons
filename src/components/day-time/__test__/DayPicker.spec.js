@@ -7,7 +7,7 @@ describe('DayPicker', () => {
 	const sharedWrapper = shallow(<DayPicker />);
 
 	const test = (props, ...children) => [
-		shallow(<DayPicker {...props} children={children}/>),
+		shallow(<DayPicker {...props}>{children}</DayPicker>),
 		sharedWrapper.setProps({...props, children})
 	];
 

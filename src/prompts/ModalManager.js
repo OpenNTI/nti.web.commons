@@ -103,8 +103,9 @@ export class ModalManager extends EventEmitter {
 					className={className}
 					tall={tall}
 					closeOnMaskClick={closeOnMaskClick}
-					children={content}
-					/>
+				>
+					{content}
+				</Modal>
 			),
 			container
 		);

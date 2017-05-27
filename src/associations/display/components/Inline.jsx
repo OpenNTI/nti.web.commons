@@ -135,16 +135,20 @@ export default class InlineAssociations extends React.Component {
 
 	renderAssociations () {
 		const {associations} = this.state;
-		const getString = this.getStringFn();
-		const children = associations.map(x => x.title || x.label);
+
+		const props = {
+			children: associations.map(x => x.title || x.label),
+			getString: this.getStringFn(),
+			max: 1
+		};
 
 		const trigger = (
-			<List.Inline children={children} max={1} getString={getString} />
+			<List.Inline {...props} />
 		);
 
 		return (
 			<Flyout.Triggered arrow hover trigger={trigger} dark>
-				<List.Limited className="inline-association-list" onShowMore={this.showMore} children={children} max={3} getString={getString} />
+				<List.Limited {...props} className="inline-association-list" onShowMore={this.showMore} max={3} />
 			</Flyout.Triggered>
 		);
 	}

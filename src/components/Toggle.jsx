@@ -25,12 +25,13 @@ export default class extends React.Component {
 		return (
 			<div className="toggle-group-container">
 				<ul className="toggle-group">
-					{options.map(option =>
+					{options.map(option => (
 
 						<li key={option} className={cx('toggle-option', {'active': option === active})}>
-							<a href="#" data-option={option} onClick={this.onToggle}>{option}</a></li>
+							<a href="#" data-option={option} onClick={this.onToggle}>{option}</a>
+						</li>
 
-					)}
+					))}
 
 					{children}
 				</ul>
