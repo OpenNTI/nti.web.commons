@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
+import {getNumber} from './utils';
+
 const UP_ARROW_KEY = 38;
 const DOWN_ARROW_KEY = 40;
-
-const NUMBER_WITH_BOTH_SYMBOLS = 1000.5;
-const [THOUSAND_SEP, DECIMAL] = NUMBER_WITH_BOTH_SYMBOLS.toLocaleString().replace(/\d/g, '').split('');
-
-//exported for testing
-export const clean = s => typeof s !== 'string' ? s : s.replace(new RegExp(THOUSAND_SEP, 'g'), '').replace(DECIMAL, '.');
-
-//exported for testing
-export const getNumber = n => (n = parseFloat(clean(n), 10), isNaN(n) ? null : n);
 
 //https://github.com/vlad-ignatov/react-numeric-input
 

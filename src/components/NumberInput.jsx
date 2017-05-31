@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
-import {getNumber} from './inputs/Number';
+import {getNumber} from './inputs/utils';
 
 //TODO: stop using this and prefer the Number input component
 export default class NumberInput extends React.Component {
