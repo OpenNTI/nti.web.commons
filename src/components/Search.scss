@@ -52,18 +52,18 @@ form.search-component {
 	input[type=reset] {
 		transition: opacity 0.5s;
 		opacity: 1;
-
+		//
 		position: absolute;
 		display: block;
-
+		//
 		background-image: url(./assets/circle-x-grey-16.png);
 		background-color: transparent;
 		border: 0;
 		cursor: pointer;
-
+		//
 		margin: 0;
 		padding: 0;
-
+		//
 		text-indent: 18px;
 		width: rem-calc(16px);
 		height: rem-calc(16px);
@@ -71,6 +71,9 @@ form.search-component {
 		transform: translateY(-50%);
 		right: rem-calc(9px);
 		left: auto;
+		//
+		overflow: hidden;
+		text-indent: -1000px;
 
 		&:focus, &:active {
 			outline: none;
