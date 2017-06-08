@@ -209,7 +209,6 @@ export default class Publish extends React.Component {
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
 		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext, disableDraft, disableSave} = this.props;
-		const {PUBLISH, DRAFT, SCHEDULE} = PUBLISH_STATES;
 
 		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error, 'disabled': disableSave});
 
@@ -228,10 +227,10 @@ export default class Publish extends React.Component {
 				trigger={trigger}
 				onDismiss={this.onDismiss}
 			>
-				<Radio name="publish-radio" value={PUBLISH} label={t('publish.label')} checked={PUBLISH === selected} onChange={this.onChange}>
+				<Radio name="publish-radio" value={PUBLISH_STATES.PUBLISH} label={t('publish.label')} checked={PUBLISH_STATES.PUBLISH === selected} onChange={this.onChange}>
 					{t('publish.text')}
 				</Radio>
-				<Radio name="publish-radio" value={SCHEDULE} label={t('schedule.label')} checked={SCHEDULE === selected} onChange={this.onChange}>
+				<Radio name="publish-radio" value={PUBLISH_STATES.SCHEDULE} label={t('schedule.label')} checked={PUBLISH_STATES.SCHEDULE === selected} onChange={this.onChange}>
 					{dayClicked ? t('schedule.selectedText', {date: date && DateTime.format(date, 'MMMM D'), time: DateTime.format(date, 'LT')}) : t('schedule.text')}
 					<DayTimePicker
 						value={date}
@@ -241,9 +240,9 @@ export default class Publish extends React.Component {
 				</Radio>
 				<Radio
 					name="publish-radio"
-					value={DRAFT}
+					value={PUBLISH_STATES.DRAFT}
 					label={t('draft.label')}
-					checked={DRAFT === selected}
+					checked={PUBLISH_STATES.DRAFT === selected}
 					onChange={this.onChange}
 					disabled={disableDraft}
 				>
