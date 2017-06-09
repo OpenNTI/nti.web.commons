@@ -35,8 +35,13 @@ label.checkbox-component {
 			@include retina-asset('./assets/checkbox/select-green', $xCount: 3);
 		}
 
-		&:disabled + span.label::before {
+		&:disabled + span.label {
 			opacity: 0.5;
+			pointer-events: none;
+
+			&::before {
+				opacity: 0.5;
+			}
 		}
 	}
 

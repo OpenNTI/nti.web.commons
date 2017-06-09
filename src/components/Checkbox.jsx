@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 Checkbox.propTypes = {
 	checked: PropTypes.bool,
+	disabled: PropTypes.bool,
 	children: PropTypes.any,
 	green: PropTypes.bool,
 	label: PropTypes.string,
@@ -11,10 +12,11 @@ Checkbox.propTypes = {
 };
 
 export default function Checkbox (props) {
-	const {checked, children, green, label, name, ...otherProps} = props;
+	const {checked, disabled, children, green, label, name, ...otherProps} = props;
 	return (
-		<label className="checkbox-component" name={name}>
-			<input {...otherProps} name={name} checked={checked} type="checkbox"/>
+		<label className={cx('checkbox-component', {disabled})} name={name}>
+			<input {...otherProps} name={name} checked={checked}
+				disabled={disabled} type="checkbox"/>
 			<span className={cx('label', {green})}>{label}</span>
 			{children && checked && (
 				<div className="sub">
