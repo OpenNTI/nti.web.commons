@@ -9,7 +9,7 @@ const EMPTY = () => null;
  *
  * You may be tempted to extend this with sort handling.
  * Remember: components render their data and call actions to update that data.
- * Therefor the burden of "sort" falls on the store and the column components
+ * Therefore the burden of "sort" falls on the store and the column components
  * to know how to display sort state.
  *
  * As a concession, it takes an optional prop "store" and passes it to the cells
