@@ -6,6 +6,7 @@ export {
 	createGroupedInterfaceForItem
 } from './interface';
 
+export * as Sharing from './sharing';
 export Editor from './editor';
 export {openEditorModal} from './editor';
 
