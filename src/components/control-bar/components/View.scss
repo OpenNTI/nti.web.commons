@@ -14,7 +14,7 @@
 		width: 94%;
 		max-width: 1060px;
 		padding: 0 rem-calc(18px);//(1060-1024)/2
-		height: 60px;
+		height: rem-calc(52px);
 		margin: 0 auto;
 
 		&.slideUp-enter {
