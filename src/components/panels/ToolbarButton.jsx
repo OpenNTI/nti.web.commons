@@ -35,7 +35,7 @@ export default function ToolbarButton (props) {
 			onClick={disabled ? disable : onClick}
 			onKeyDown={disabled ? disable : onClick}
 			tabIndex={!disabled ? 0 : void 0}
-			>
+		>
 			<i className={`small icon-${icon}`}/>
 			<span>{children || label}</span>
 		</a>

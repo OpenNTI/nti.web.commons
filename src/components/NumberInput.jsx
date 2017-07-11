@@ -99,7 +99,7 @@ export default class NumberInput extends React.Component {
 				onKeyPress={this.onKeyPress}
 				value={value}
 				ref={this.attachRef}
-				/>
+			/>
 		);
 	}
 }

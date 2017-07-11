@@ -104,11 +104,11 @@ export function trim (value, len, word) {
 		if (word) {
 			const vs = value.substr(0, len - 2);
 			const index = Math.max(
-					vs.lastIndexOf(' '),
-					vs.lastIndexOf('.'),
-					vs.lastIndexOf('!'),
-					vs.lastIndexOf('?')
-				);
+				vs.lastIndexOf(' '),
+				vs.lastIndexOf('.'),
+				vs.lastIndexOf('!'),
+				vs.lastIndexOf('?')
+			);
 
 			if (index !== -1 && index >= (len - 15)) {
 				return vs.substr(0, index) + '...';

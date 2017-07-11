@@ -137,15 +137,15 @@ export default createReactClass({
 		}
 
 		return (
-				<div className="zoomable"
-					ref={this.attachContainerRef}
-					onTouchStart={this.touchStart}
-					onTouchMove={this.touchMove}
-					onTouchEnd={this.touchEnd}
-				>
-					<img src={src} style={style} ref={this.attachImageRef} className="zoomable-img" />
-					<button className="zoomable-close" onClick={this.close}/>
-				</div>
+			<div className="zoomable"
+				ref={this.attachContainerRef}
+				onTouchStart={this.touchStart}
+				onTouchMove={this.touchMove}
+				onTouchEnd={this.touchEnd}
+			>
+				<img src={src} style={style} ref={this.attachImageRef} className="zoomable-img" />
+				<button className="zoomable-close" onClick={this.close}/>
+			</div>
 		);
 	}
 });

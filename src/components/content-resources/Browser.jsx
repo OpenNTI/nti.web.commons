@@ -289,34 +289,34 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							available={!limited && currentFolderCan('upload')}
 							onChange={this.onUploadFile}
 							multiple
-							/>
+						/>
 						<ToolbarButton
 							icon="folder-add"
 							label={t('TOOLBAR.mkdir')}
 							disabled={disabled}
 							available={currentFolderCan('mkdir')}
 							onClick={this.onMakeDirectory}
-							/>
+						/>
 						<ToolbarButton
 							icon="rename"
 							label={t('TOOLBAR.rename')}
 							disabled={disabled}
 							available={selected === 1 && selectionCan('rename')}
 							onClick={this.onRename}
-							/>
+						/>
 						<ToolbarButton
 							icon="move"
 							label={t('TOOLBAR.move')}
 							disabled={disabled}
 							available={selectionCan('move')}
 							onClick={this.onMoveSelectTarget}
-							/>
+						/>
 						<ToolbarButton
 							icon="delete"
 							label={t('TOOLBAR.delete')}
 							available={selectionCan('delete')}
 							onClick={this.onDelete}
-							/>
+						/>
 
 						<ToolbarSpacer/>
 
@@ -330,13 +330,13 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							checked={showInfo}
 							onClick={this.toggle}
 							disabled={disabled || !hasInfo}
-							/>
+						/>
 						<Search
 							disabled={disabled || !currentFolderCan('search')}
 							value={search || ''}
 							onChange={this.onSearch}
 							buffered={false}
-							/>
+						/>
 					</Toolbar>
 				</Header>
 
@@ -358,7 +358,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						onFileDrop={this.onFileDrop}
 						onSortChanged={this.onSortChanged}
 						limited={limited || searching}
-						>
+					>
 						{showInfo && (
 							<Inspector item={inspectItem}/>
 						)}
@@ -371,7 +371,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						transitionName="content-resource-browser-drop"
 						transitionEnterTimeout={1}
 						transitionLeaveTimeout={1}
-						>
+					>
 						{!dragover && progress && (
 							<ProgressBar key="progress"
 								max={progress.max}
@@ -379,7 +379,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 								text={progress.text}
 								onCancel={progress.abort}
 								onDismiss={progress.dismiss}
-								/>
+							/>
 						)}
 
 						{dragover && (

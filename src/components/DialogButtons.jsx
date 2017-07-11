@@ -24,7 +24,7 @@ export default function DialogButtons (props) {
 						key={label}
 						className={classes}
 						onClick={onClick}>
-							{label}
+						{label}
 					</div>
 				);
 			})}

@@ -6,18 +6,18 @@ import Select from '../Select';
 import TimePicker from '../TimePicker';
 
 const MONTHS = [
-		{longLabel: 'January', shortLabel: 'JAN', value: 0, days: 31},
-		{longLabel: 'February', shortLabel: 'FEB', value: 1, days: 28, leapDays: 29},
-		{longLabel: 'March', shortLabel: 'MAR', value: 2, days: 31},
-		{longLabel: 'April', shortLabel: 'APR', value: 3, days: 30},
-		{longLabel: 'May', shortLabel: 'MAY', value: 4, days: 31},
-		{longLabel: 'June', shortLabel: 'JUN', value: 5, days: 30},
-		{longLabel: 'July', shortLabel: 'JUL', value: 6, days: 31},
-		{longLabel: 'August', shortLabel: 'AUG', value: 7, days: 31},
-		{longLabel: 'September', shortLabel: 'SEP', value: 8, days: 30},
-		{longLabel: 'October', shortLabel: 'OCT', value: 9, days: 31},
-		{longLabel: 'November', shortLabel: 'NOV', value: 10, days: 30},
-		{longLabel: 'December', shortLabel: 'DEC', value: 11, days: 31}
+	{longLabel: 'January', shortLabel: 'JAN', value: 0, days: 31},
+	{longLabel: 'February', shortLabel: 'FEB', value: 1, days: 28, leapDays: 29},
+	{longLabel: 'March', shortLabel: 'MAR', value: 2, days: 31},
+	{longLabel: 'April', shortLabel: 'APR', value: 3, days: 30},
+	{longLabel: 'May', shortLabel: 'MAY', value: 4, days: 31},
+	{longLabel: 'June', shortLabel: 'JUN', value: 5, days: 30},
+	{longLabel: 'July', shortLabel: 'JUL', value: 6, days: 31},
+	{longLabel: 'August', shortLabel: 'AUG', value: 7, days: 31},
+	{longLabel: 'September', shortLabel: 'SEP', value: 8, days: 30},
+	{longLabel: 'October', shortLabel: 'OCT', value: 9, days: 31},
+	{longLabel: 'November', shortLabel: 'NOV', value: 10, days: 30},
+	{longLabel: 'December', shortLabel: 'DEC', value: 11, days: 31}
 ];
 
 

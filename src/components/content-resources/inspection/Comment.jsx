@@ -50,7 +50,7 @@ class Comment extends React.Component {
 						placeholder={disabled ? void 0 : t('CommentPlaceholder')}
 						onChange={this.onChange}
 						ref={this.attachRef}
-						/>
+					/>
 				</LabeledValue>
 			</div>
 		);

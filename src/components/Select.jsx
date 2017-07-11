@@ -7,10 +7,10 @@ export default function Select (props) {
 	const selectClassNames = classNames('nti-select-native', className);
 
 	const selected = React.Children.toArray(children)
-					.find(child => (
-						child = child.props,
-						React.Children.count(child.children) > 0 && child.value === value
-					));
+		.find(child => (
+			child = child.props,
+			React.Children.count(child.children) > 0 && child.value === value
+		));
 
 	let valueLabel = value;
 

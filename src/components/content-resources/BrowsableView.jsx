@@ -259,9 +259,9 @@ export default class BrowsableView extends React.Component {
 				.sort(largestLast)
 				.map(item => new Promise(done =>
 					this.taskQueue.add(new UploadTask(item, folder, (o)=> {add(o);done();} ))
-					)
 				)
-			)
+				)
+		)
 
 			.then(() => folder.refresh())
 

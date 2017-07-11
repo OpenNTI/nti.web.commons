@@ -117,7 +117,7 @@ export default class Modal extends React.Component {
 					onFocus={this.onFocus}
 					onBlur={this.onBlur}
 					onClick={this.onMaskClick}
-					>
+				>
 					<i className="icon-close" onClick={this.close}/>
 					<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent}>
 						{React.cloneElement(

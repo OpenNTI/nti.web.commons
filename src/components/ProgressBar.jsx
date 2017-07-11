@@ -62,7 +62,7 @@ export default class ProgressBar extends React.Component {
 				transitionName="progress-bar-transition"
 				transitionEnterTimeout={300}
 				transitionLeaveTimeout={300}
-				>
+			>
 				{complete ? (
 					<div key="complete" className="complete">
 						<i className="icon-check"/>

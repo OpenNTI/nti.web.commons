@@ -144,7 +144,7 @@ export default class ContentResourcesView extends React.Component {
 					onDragEnter={this.onDragEnter}
 					onDragLeave={this.onDragLeave}
 					onDrop={this.onDrop}
-					>
+				>
 					<Layout contents={contents} selection={selection} sort={sort} onSortChanged={onSortChanged}/>
 				</div>
 				{hasSubView && (

@@ -108,7 +108,7 @@ export default class Search extends React.Component {
 					onFocus={this.onFocus}
 					ref={this.attachRef}
 					required
-					/>
+				/>
 				<input type="reset" onClick={this.clearFilter}/>
 			</form>
 		);

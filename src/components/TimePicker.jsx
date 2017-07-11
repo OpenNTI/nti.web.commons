@@ -204,7 +204,7 @@ export default class TimePicker extends React.Component {
 						value={hours}
 						name="hours"
 						min={0} max={23}
-						/>
+					/>
 					<span> : </span>
 					<NumberInput
 						onChange={this.onMinuteInputChange}
@@ -214,7 +214,7 @@ export default class TimePicker extends React.Component {
 						name="minutes"
 						min={0} max={59}
 						pad={!allowEmpty || value != null}
-						/>
+					/>
 				</div>
 				{this.renderMeridiem()}
 			</div>

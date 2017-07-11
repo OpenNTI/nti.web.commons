@@ -118,8 +118,8 @@ export default class DateTime extends React.Component {
 		const omitSuffix = suffixExplicitlySuppressed || hasCustomSuffix;
 
 		let text = relative || relativeTo ?
-					m.fromNow(omitSuffix) :
-					m.format(format);
+			m.fromNow(omitSuffix) :
+			m.format(format);
 
 		if ((showToday || !isEmpty(todayText)) && m.isSame(new Date(), 'day')) {
 			text = (todayText || 'Today').replace('{time}', text);

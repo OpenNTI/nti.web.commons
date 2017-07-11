@@ -96,7 +96,7 @@ export default class DayPicker extends React.Component {
 				disabledDays={ this.props.disabledDays }
 				onDayClick={ this.handleDayClick }
 				enableOutsideDays
-				/>
+			/>
 		);
 	}
 }

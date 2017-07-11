@@ -20,13 +20,13 @@ class Folder extends Entity {
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
-				>
+			>
 				<td className="column-name"
 					onDragOver={this.onDragOver}
 					onDragEnter={this.onDragEnter}
 					onDragLeave={this.onDragLeave}
 					onDrop={this.onDrop}
-					>
+				>
 					<div className={cx('entity-row-item row-folder-asset', {renameable, renaming: rename})}
 						role="button"
 						aria-label={filename}
@@ -35,7 +35,7 @@ class Folder extends Entity {
 
 						onDragEnd={this.canDrag() && this.onDragEnd}
 						onDragStart={this.canDrag() && this.onDragStart}
-						>
+					>
 						<div className="icon-column"><i className="icon-folder small"/></div>
 						<div className="filename">
 							<span onClick={this.onTrigger}>{filename}</span>
@@ -46,7 +46,7 @@ class Folder extends Entity {
 									onBlur={this.onCommitRename}
 									onKeyDown={this.onFilenameKeyDown}
 									defaultValue={rename}
-									/>
+								/>
 							)}
 						</div>
 					</div>

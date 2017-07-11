@@ -21,7 +21,7 @@ function getType (item) {
 		ext !== 'bin' && ext
 			? ext
 			: extname(item.getFileName()).replace(/^\./, '')
-		)
+	)
 		.toUpperCase() || 'Unknown';
 }
 

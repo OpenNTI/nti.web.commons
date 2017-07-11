@@ -35,8 +35,8 @@ function renderItem (item, key, remaining) {
 export const RENDERERS = {
 	['{listItem}'] (item, getString, renderOverrides, key, remaining) {
 		return renderOverrides['{listItem}'] ?
-					renderOverrides['{listItem}'](item, getString, key, remaining) :
-					renderItem(item, key, remaining);
+			renderOverrides['{listItem}'](item, getString, key, remaining) :
+			renderItem(item, key, remaining);
 	},
 
 

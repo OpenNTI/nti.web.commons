@@ -58,8 +58,8 @@ describe('Triggered Flyout', () => {
 	it('Base Case', (done) => {
 		Promise.all(test())
 			.then(cmps => cmps
-					.map(getText)
-					.forEach(x => expect(x).toEqual('Trigger')))
+				.map(getText)
+				.forEach(x => expect(x).toEqual('Trigger')))
 			.then(done, e => done.fail(e));
 	});
 

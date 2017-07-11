@@ -75,8 +75,8 @@ export default {
 		const active = items.filter(x => x
 									&& x.getActiveState()
 									&& getRef(x).length >= href.length
-							)
-							.sort((a, b) => getRef(b).length - getRef(a).length);
+		)
+			.sort((a, b) => getRef(b).length - getRef(a).length);
 
 
 		return cmp === active[0];

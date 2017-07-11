@@ -15,7 +15,7 @@ function getType (item) {
 		ext !== 'bin' && ext
 			? ext
 			: extname(item.getFileName()).replace(/^\./, '')
-		)
+	)
 		.toUpperCase() || 'Unknown';
 }
 
@@ -36,7 +36,7 @@ class File extends Entity {
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
-				>
+			>
 				<td className="column-name">
 					<div className={cx('entity-row-item row-file-asset', {renameable, renaming: rename})}
 						role="button"
@@ -45,7 +45,7 @@ class File extends Entity {
 						tabIndex="0"
 						onDragEnd={this.canDrag() && this.onDragEnd}
 						onDragStart={this.canDrag() && this.onDragStart}
-						>
+					>
 						<div className="icon-column">
 							<div className="file-asset-icon">
 								{!imgSrc && ( <AssetIcon mimeType={mimeType} href={filename} svg/> )}
@@ -56,10 +56,10 @@ class File extends Entity {
 							<span>{filename}</span>
 							{rename && (
 								<input type="text"
-								ref={this.attachInputRef}
-								onBlur={this.onCommitRename}
-								onKeyDown={this.onFilenameKeyDown}
-								defaultValue={rename}
+									ref={this.attachInputRef}
+									onBlur={this.onCommitRename}
+									onKeyDown={this.onFilenameKeyDown}
+									defaultValue={rename}
 								/>
 							)}
 						</div>

@@ -40,7 +40,7 @@ export default class Chooser extends React.Component {
 					onCancel={reject}
 					onSelect={select}
 					limited={!!limited}
-					/>,
+				/>,
 				'content-resource-chooser-dialog'
 			);
 		});
@@ -158,7 +158,7 @@ export default class Chooser extends React.Component {
 					onSelectionChange={this.onSelectionChange}
 					onTrigger={this.onTrigger}
 					limited={limited}
-					/>
+				/>
 				<DialogButtons buttons={buttons}/>
 			</div>
 		);

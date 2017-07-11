@@ -520,16 +520,16 @@ export default class Flyout extends React.Component {
 					{children}
 				</div>
 			</div>
-		, this.fly, () => {
+			, this.fly, () => {
 
-			if (this.flyout) {
-				const prev = this.flyoutSize;
-				const {offsetWidth: width, offsetHeight: height} = this.flyout;
-				this.flyoutSize = {width, height};
-				if (prev && (prev.width !== width || prev.height !== height)) {
-					this.realign();
+				if (this.flyout) {
+					const prev = this.flyoutSize;
+					const {offsetWidth: width, offsetHeight: height} = this.flyout;
+					this.flyoutSize = {width, height};
+					if (prev && (prev.width !== width || prev.height !== height)) {
+						this.realign();
+					}
 				}
-			}
-		});
+			});
 	}
 }

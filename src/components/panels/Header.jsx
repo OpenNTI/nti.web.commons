@@ -31,7 +31,7 @@ export default class Header extends React.Component {
 						tabIndex="0"
 						onClick={this.onClose}
 						onKeyDown={this.onClose}
-						/>
+					/>
 				)}
 			</div>
 		);

@@ -33,7 +33,7 @@ class Folder extends Entity {
 				onDragLeave={this.onDragLeave}
 
 				onDrop={this.onDrop}
-				>
+			>
 				<i className="icon-folder small"/>
 				<span className="filename" onClick={this.onTrigger}>{filename}</span>
 				{rename && (
@@ -43,7 +43,7 @@ class Folder extends Entity {
 						onBlur={this.onCommitRename}
 						onKeyDown={this.onFilenameKeyDown}
 						defaultValue={rename}
-						/>
+					/>
 				)}
 			</div>
 		);

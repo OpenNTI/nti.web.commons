@@ -89,8 +89,8 @@ export default class Avatar extends React.Component {
 		const NUM_COLORS = 12;
 
 		let hashedString = (typeof entity === 'string'
-								? entity
-								: (entity || {}).Username) || 'unknown';
+			? entity
+			: (entity || {}).Username) || 'unknown';
 
 		let idx = Math.abs(hash(hashedString)) % NUM_COLORS;
 
@@ -134,13 +134,13 @@ export default class Avatar extends React.Component {
 		delete childProps.entity;
 
 		return avatarURL ? (
-				<img {...childProps} src={avatarURL} onError={this.setUnknown}/>
-			) : initials ? (
-				<svg {...childProps} viewBox="0 0 32 32">
-					<text textAnchor="middle" x="16px" y="21px">{initials}</text>
-				</svg>
-			) : (
-				<img {...childProps} src={this.fallback()}/>
-			);
+			<img {...childProps} src={avatarURL} onError={this.setUnknown}/>
+		) : initials ? (
+			<svg {...childProps} viewBox="0 0 32 32">
+				<text textAnchor="middle" x="16px" y="21px">{initials}</text>
+			</svg>
+		) : (
+			<img {...childProps} src={this.fallback()}/>
+		);
 	}
 }

@@ -113,8 +113,8 @@ export default class extends React.Component {
 				filters={filters}
 				list={list}
 				defaultFilter={defaultFilter}
-				/>
-			);
+			/>
+		);
 
 		return routes;
 	};

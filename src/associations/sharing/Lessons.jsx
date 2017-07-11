@@ -57,12 +57,12 @@ export default class Lessons extends React.Component {
 		const cls = cx('item-sharing', {single: count === 1, none: count === 0});
 
 		return item && item.hasLink('Lessons') ?
-					(
-						<div className={cls} onClick={this.onClick}>
-							<i className="icon-folder" />
-							<Inline item={item} scope={scope} getString={t} onShow={this.onClick} />
-						</div>
-					) :
-					null;
+			(
+				<div className={cls} onClick={this.onClick}>
+					<i className="icon-folder" />
+					<Inline item={item} scope={scope} getString={t} onShow={this.onClick} />
+				</div>
+			) :
+			null;
 	}
 }

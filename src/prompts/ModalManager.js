@@ -80,7 +80,7 @@ export class ModalManager extends EventEmitter {
 		const container = this.getContainer(mountPoint);
 
 		const dismiss = buffer(1, () =>
-				(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
+			(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
 
 		const scroller = getScrollParent(container);
 
@@ -97,17 +97,17 @@ export class ModalManager extends EventEmitter {
 		const setReference = x => reference.component = x;
 
 		ReactDOM.render((
-				<Modal
-					ref={setReference}
-					onDismiss={dismiss}
-					className={className}
-					tall={tall}
-					closeOnMaskClick={closeOnMaskClick}
-				>
-					{content}
-				</Modal>
-			),
-			container
+			<Modal
+				ref={setReference}
+				onDismiss={dismiss}
+				className={className}
+				tall={tall}
+				closeOnMaskClick={closeOnMaskClick}
+			>
+				{content}
+			</Modal>
+		),
+		container
 		);
 
 		this.add(reference);

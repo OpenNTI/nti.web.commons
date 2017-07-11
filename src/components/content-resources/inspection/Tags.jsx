@@ -50,7 +50,7 @@ class Tags extends React.Component {
 						placeholder={t('TagsPlaceholder')}
 						onChange={this.onChange}
 						ref={this.attachRef}
-						/>
+					/>
 				</LabeledValue>
 			</div>
 		);

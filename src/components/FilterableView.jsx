@@ -18,7 +18,7 @@ export default class extends React.Component {
 		listcomp: PropTypes.node
 	};
 
-    /**
+	/**
 	 * filter the list according using the currently selected filter.
 	 * @param {object} list Any object that implements filter.
 	 * @return {object} The result of calling filter on the `list`

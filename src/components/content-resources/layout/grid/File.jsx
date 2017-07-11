@@ -31,7 +31,7 @@ class File extends Entity {
 
 				onDragEnd={this.canDrag() && this.onDragEnd}
 				onDragStart={this.canDrag() && this.onDragStart}
-				>
+			>
 				<div className="select">
 					<div className="file-asset-icon">
 						{!imgSrc && ( <AssetIcon mimeType={mimeType} href={filename} svg/> )}
@@ -41,10 +41,10 @@ class File extends Entity {
 						<span>{filename}</span>
 						{rename && (
 							<input type="text"
-							ref={this.attachInputRef}
-							onBlur={this.onCommitRename}
-							onKeyDown={this.onFilenameKeyDown}
-							defaultValue={rename}
+								ref={this.attachInputRef}
+								onBlur={this.onCommitRename}
+								onKeyDown={this.onFilenameKeyDown}
+								defaultValue={rename}
 							/>
 						)}
 					</div>
