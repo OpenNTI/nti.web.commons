@@ -23,14 +23,14 @@ export default class FixedElement extends React.Component {
 
 	componentDidMount () {
 		this.record();
-		addEventListener('scroll', this.onWindowScroll);
-		addEventListener('resize', this.onResize);
+		global.addEventListener('scroll', this.onWindowScroll);
+		global.addEventListener('resize', this.onResize);
 	}
 
 
 	componentWillUnmount () {
-		removeEventListener('scroll', this.onWindowScroll);
-		removeEventListener('resize', this.onResize);
+		global.removeEventListener('scroll', this.onWindowScroll);
+		global.removeEventListener('resize', this.onResize);
 	}
 
 

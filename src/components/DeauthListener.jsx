@@ -38,9 +38,9 @@ export default class DeauthListener extends React.Component {
 
 		const hasBeenDeauthorized = typeof AuthCheck === 'function' ? AuthCheck(err.response) : AuthCheck;
 
-		if (hasBeenDeauthorized && typeof location !== 'undefined') {
+		if (hasBeenDeauthorized && typeof global.location !== 'undefined') {
 			logger.info('XHR recieved an `%d: Not Authorized`, needs reauth. Redirecting to: %s', err.statusCode, basePath);
-			location.replace(basePath);
+			global.location.replace(basePath);
 		}
 	}
 

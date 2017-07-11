@@ -18,7 +18,7 @@ export function getParts (list, remaining, getString) {
 
 	const label = getString(name, data);
 
-	return label.split(/(\{[^\}]+\})/);
+	return label.split(/(\{[^}]+\})/);
 }
 
 

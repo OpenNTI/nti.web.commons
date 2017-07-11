@@ -87,7 +87,7 @@ function truncateText (el, measure) {
 				if (getText() !== '...') {
 					setTitleOnce();
 
-					setText(getText().replace(/[^\.](\.*)$/, '...'));
+					setText(getText().replace(/[^.](\.*)$/, '...'));
 
 					return Tasks.SharedExecution.schedule(trimStep);
 				}

@@ -21,7 +21,7 @@ export default class NestableLink extends React.Component {
 			return;
 		}
 
-		Object.assign(location, {href});
+		Object.assign(global.location, {href});
 	}
 
 
