@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import DurationPicker, {secondsPerHour, secondsPerDay} from '../DurationPicker';
 
 describe('DurationPicker Tests', () => {

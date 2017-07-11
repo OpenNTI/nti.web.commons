@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import Interface from '../Interface';
 
 function makeDestination (id, onAdd, onRemove) {

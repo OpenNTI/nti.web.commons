@@ -1,3 +1,5 @@
+/* globals spyOn */
+/* eslint-env jest */
 import SelectionManager from '../SelectionManager';
 import SelectionItem from '../SelectionItem';
 

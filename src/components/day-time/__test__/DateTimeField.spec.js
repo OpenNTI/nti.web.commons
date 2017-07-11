@@ -1,3 +1,5 @@
+/* globals spyOn */
+/* eslint-env jest */
 import React from 'react';
 import {shallow} from 'enzyme';
 import {Date as DateUtils} from 'nti-commons';
