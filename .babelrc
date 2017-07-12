@@ -1,46 +1,5 @@
 {
-	"compact": false,
-	"env": {
-		"development": {
-			"presets": [
-				["env", {
-					"modules": false,
-					"useBuiltIns": true,
-					"targets": {
-						"browsers": ["> 1% in US", "last 2 versions", "safari >= 6"]
-					}
-				}],
-				"stage-1",
-				"react"
-			]
-		},
-		"rollup": {
-			"presets": [
-				["env", {
-					"modules": false,
-					"useBuiltIns": true,
-					"targets": {
-						"browsers": ["> 1% in US", "last 2 versions", "safari >= 6"]
-					}
-				}],
-				"stage-1",
-				"react"
-			],
-			"plugins": [
-				"external-helpers"
-			]
-		},
-		"test": {
-			"presets": [
-				["env", {
-					"targets": {
-						"node": "current"
-					}
-				}],
-				"stage-1",
-				"react"
-			]
-		}
-	},
-	"sourceMaps": "both"
+	"presets":[
+		"./node_modules/nti-cmp-scripts/config/babelrc.js"
+	]
 }
