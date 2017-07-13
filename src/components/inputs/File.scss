@@ -1,0 +1,22 @@
+@import "~nti-style-common";
+
+.nti-file-input {
+	display: inline-block;
+	position: relative;
+
+	.file-select-filename {
+		margin-left: 5px;
+		font-size: 12px;
+
+		.nofile {
+			color: #787878;
+			font-style: italic;
+		}
+	}
+
+	.file-select-reset {
+		color: #787878;
+		margin-left: 10px;
+		cursor: pointer;
+	}
+}
