@@ -4,7 +4,7 @@ import {mount} from 'enzyme';
 import File from '../File';
 
 describe('File Input', () => {
-	it('clears file', () => {
+	test('clears file', () => {
 		const cmp = mount(<File label="testLabel"/>);
 
 		cmp.setState({ file : { name: 'testFile' }});
@@ -20,7 +20,7 @@ describe('File Input', () => {
 		expect(cmp.state().file).toBeUndefined();
 	});
 
-	it('has correct contents', () => {
+	test('has correct contents', () => {
 		const cmp = mount(<File label="choose a file" defaultText="this is the default"/>);
 
 		expect(cmp.text()).toMatch(/this is the default/);
@@ -32,7 +32,7 @@ describe('File Input', () => {
 		expect(cmp.find('.file-select-reset').length).toBe(1);
 	});
 
-	it('calls on change', () => {
+	test('calls on change', () => {
 		const onFileChange = () => {};
 
 		const cmp = mount(<File label="choose a file" defaultText="this is the default" onFileChange={onFileChange}/>);
