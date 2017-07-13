@@ -58,7 +58,7 @@ export default class File extends React.Component {
 		return (<div className="nti-file-input">
 			<FilePickerButton
 				icon="upload"
-				label={'Choose file'}
+				label={this.props.label || 'Choose file'}
 				available
 				onChange={onChange}
 				onDrop={onChange}
