@@ -34,12 +34,12 @@ describe('Association Interface Tests', () => {
 	describe('Active Association Tests', () => {
 		beforeEach(before);
 
-		it('isSharedWith is true for active', () => {
+		test('isSharedWith is true for active', () => {
 			expect(associations.isSharedWith({NTIID: '2'})).toBeTruthy();
 			expect(associations.isSharedWith({NTIID: '4'})).toBeTruthy();
 		});
 
-		it('isSharedWith is false for non-active', () => {
+		test('isSharedWith is false for non-active', () => {
 			expect(associations.isSharedWith({NTIID: '1'})).toBeFalsy();
 			expect(associations.isSharedWith({NTIID: '3'})).toBeFalsy();
 			expect(associations.isSharedWith({NTIID: '5'})).toBeFalsy();
@@ -49,7 +49,7 @@ describe('Association Interface Tests', () => {
 	describe('Adding and Removing Associations', () => {
 		beforeEach(before);
 
-		it('adding an association makes it active', (done) => {
+		test('adding an association makes it active', (done) => {
 			const item = items[0];
 
 			function onChange () {
@@ -65,7 +65,7 @@ describe('Association Interface Tests', () => {
 			item.onAddTo(null, associations);
 		});
 
-		it('removing an association makes it inactive', (done) => {
+		test('removing an association makes it inactive', (done) => {
 			const item = items[1];
 
 			function onChange () {

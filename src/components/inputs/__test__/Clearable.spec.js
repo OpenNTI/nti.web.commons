@@ -16,7 +16,7 @@ describe('Clearable Inputs', () => {
 		return newProps;
 	}
 
-	it('No onClear calls onChange with null on the input', () => {
+	test('No onClear calls onChange with null on the input', () => {
 		const inputProps = buildProps({});
 		const clearProps = buildProps({});
 
@@ -28,7 +28,7 @@ describe('Clearable Inputs', () => {
 		expect(inputProps.onChange).toHaveBeenCalledWith(null);
 	});
 
-	it('onClear is called when present and onChange is not', () => {
+	test('onClear is called when present and onChange is not', () => {
 		const inputProps = buildProps({});
 		const clearProps = buildProps({onClear: () => {}});
 

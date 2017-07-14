@@ -7,15 +7,15 @@ import DayPicker from '../DayPicker';
 describe('DayPicker', () => {
 	const sharedWrapper = shallow(<DayPicker />);
 
-	const test = (props, ...children) => [
+	const testRender = (props, ...children) => [
 		shallow(<DayPicker {...props}>{children}</DayPicker>),
 		sharedWrapper.setProps({...props, children})
 	];
 
-	it('Base case: Day Prop passed is Day State', () => {
+	test('Base case: Day Prop passed is Day State', () => {
 		const now = new Date();
 
-		test({value: now})
+		testRender({value: now})
 			.map(x => x.state('value'))
 			.forEach(value => {
 				expect(value.getHours()).toEqual(now.getHours());
@@ -26,7 +26,7 @@ describe('DayPicker', () => {
 			});
 	});
 
-	xit('Simulate Selecting a Day', () => {
+	test.skip('Simulate Selecting a Day', () => {
 		// TODO: Implament me
 		// const onChange = jest.fn();
 		// const date = new Date();

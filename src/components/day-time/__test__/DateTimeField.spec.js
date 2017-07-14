@@ -14,7 +14,7 @@ describe('DateTimeField', () => {
 	const emptyOnChagne = () => {};
 	const sharedWrapper = shallow(<DateTimeField onChange={emptyOnChagne} />);
 
-	const test = (props, ...children) => [
+	const testRender = (props, ...children) => [
 		shallow(<DateTimeField {...props}>{children}</DateTimeField>),
 		sharedWrapper.setProps({...props, children})
 	];
@@ -23,8 +23,8 @@ describe('DateTimeField', () => {
 		MockDate.uninstall();
 	});
 
-	it('Base case: Nothing Passed - Value to be undefined', () => {
-		test({ onChange: () => {} })
+	test('Base case: Nothing Passed - Value to be undefined', () => {
+		testRender({ onChange: () => {} })
 			.forEach(x => {
 				const dateSelects = x.find(Select);
 				const time = x.find(TimePicker);
@@ -33,8 +33,8 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	it('on date change is called with clicked month', () => {
-		test({ onChange: value => value })
+	test('on date change is called with clicked month', () => {
+		testRender({ onChange: value => value })
 			.forEach(x => {
 				const cmp = x.instance();
 				spyOn(cmp,'onDateChange');
@@ -48,8 +48,8 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	it('on date change is called with clicked date', () => {
-		test({ onChange: value => value })
+	test('on date change is called with clicked date', () => {
+		testRender({ onChange: value => value })
 			.forEach(x => {
 				const cmp = x.instance();
 				spyOn(cmp,'onDateChange');
@@ -63,8 +63,8 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	it('on date change is called with clicked year', () => {
-		test({ onChange: value => value })
+	test('on date change is called with clicked year', () => {
+		testRender({ onChange: value => value })
 			.forEach(x => {
 				const cmp = x.instance();
 				spyOn(cmp,'onDateChange');
@@ -78,12 +78,12 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	it('clicking current date calls onchange with current date', () => {
+	test('clicking current date calls onchange with current date', () => {
 		const onChangeSpy = jest.fn();
 		const now = new Date();
 		MockDate.install(now);
 
-		test({ onChange: onChangeSpy, currentDate: true })
+		testRender({ onChange: onChangeSpy, currentDate: true })
 			.forEach(x => {
 				const currentDate = x.find('.set-current-date a');
 				currentDate.simulate('click');
@@ -91,7 +91,7 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	it('Selecting a month updates every select box', () => {
+	test('Selecting a month updates every select box', () => {
 		const onChangeSpy = jest.fn();
 
 		const now = new Date();
@@ -103,7 +103,7 @@ describe('DateTimeField', () => {
 		value.setHours(23);
 		value.setMinutes(59);
 
-		test({ onChange: onChangeSpy})
+		testRender({ onChange: onChangeSpy})
 			.forEach(x => {
 				const monthSelect = x.find('.month-wrapper Select');
 				const event = { target: {value: '7'}};
@@ -113,7 +113,7 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	it('updating when a prop value was intially passed', () => {
+	test('updating when a prop value was intially passed', () => {
 		const onChangeSpy = jest.fn();
 
 		const now = new Date();
@@ -127,7 +127,7 @@ describe('DateTimeField', () => {
 		expectedValue.setMonth(7);
 		expectedValue.setDate(3);
 
-		test({ onChange: onChangeSpy, value })
+		testRender({ onChange: onChangeSpy, value })
 			.forEach(x => {
 				const monthSelect = x.find('.month-wrapper Select');
 				const event = { target: {value: '7'}};
@@ -138,7 +138,7 @@ describe('DateTimeField', () => {
 	});
 
 
-	it('change the time updates the time and keeps the date', () => {
+	test('change the time updates the time and keeps the date', () => {
 		const onChangeSpy = jest.fn();
 
 		const now = new Date();
@@ -147,7 +147,7 @@ describe('DateTimeField', () => {
 		const value = new Date();
 		value.setMinutes(8);
 
-		test({ onChange: onChangeSpy })
+		testRender({ onChange: onChangeSpy })
 			.forEach(x => {
 				const timePicker = x.find(TimePicker) && x.find(TimePicker).shallow();
 				const time = timePicker.childAt(0);
@@ -160,9 +160,9 @@ describe('DateTimeField', () => {
 	});
 
 
-	it('show the error message passed to it', () => {
+	test('show the error message passed to it', () => {
 		const errorMessage = 'Can\'t set due date before end date.';
-		test({ onChange: () => {}, error: errorMessage})
+		testRender({ onChange: () => {}, error: errorMessage})
 			.forEach(x => {
 				const error = x.find('.date-time-field-error');
 				expect(error.text()).toBe(errorMessage);

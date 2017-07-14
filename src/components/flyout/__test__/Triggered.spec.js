@@ -48,24 +48,24 @@ describe('Triggered Flyout', () => {
 		document.body.removeChild(container);
 	});
 
-	const test = (props, ...children) => [
+	const testRender = (props, ...children) => [
 		render(newNode, Flyout, props, ...children),
 		render(container, Flyout, props, ...children)
 	];
 
 	setup();
 
-	it('Base Case', (done) => {
-		Promise.all(test())
+	test('Base Case', (done) => {
+		Promise.all(testRender())
 			.then(cmps => cmps
 				.map(getText)
 				.forEach(x => expect(x).toEqual('Trigger')))
 			.then(done, e => done.fail(e));
 	});
 
-	it('Base Case: Specify Trigger', (done) => {
+	test('Base Case: Specify Trigger', (done) => {
 		const value = 'Test';
-		Promise.all(test({trigger: 'input', type: 'button', value}))
+		Promise.all(testRender({trigger: 'input', type: 'button', value}))
 			.then(cmps => cmps
 				.map(getDom)
 				.forEach(x => {
@@ -76,13 +76,13 @@ describe('Triggered Flyout', () => {
 			.then(done, e => done.fail(e));
 	});
 
-	it('Base Case: Specify Element Trigger', (done) => {
+	test('Base Case: Specify Element Trigger', (done) => {
 		const value = 'Test';
 		const element = (
 			<a href="#test" className="foobar">{value}</a>
 		);
 
-		Promise.all(test({trigger: element}))
+		Promise.all(testRender({trigger: element}))
 			.then(cmps => cmps
 				.map(getDom)
 				.forEach(x => {
@@ -95,7 +95,7 @@ describe('Triggered Flyout', () => {
 			.then(done, e => done.fail(e));
 	});
 
-	it('Opening the flyout should add listeners to window, and document', (done) => {
+	test('Opening the flyout should add listeners to window, and document', (done) => {
 		spyOn(window, 'addEventListener');
 		spyOn(window, 'removeEventListener');
 		spyOn(window.document, 'addEventListener');
@@ -107,7 +107,7 @@ describe('Triggered Flyout', () => {
 			step();
 		}
 
-		Promise.all(test({afterAlign}, <div>Foobar</div>))
+		Promise.all(testRender({afterAlign}, <div>Foobar</div>))
 			.then(([component]) => new Promise(next =>{
 
 				step = () => {
@@ -122,7 +122,7 @@ describe('Triggered Flyout', () => {
 			.then(done, e => done.fail(e));
 	});
 
-	it('Closing the flyout should remove listeners to window, and document', (done) => {
+	test('Closing the flyout should remove listeners to window, and document', (done) => {
 		spyOn(window, 'addEventListener');
 		spyOn(window, 'removeEventListener');
 		spyOn(window.document, 'addEventListener');
@@ -135,7 +135,7 @@ describe('Triggered Flyout', () => {
 			step();
 		}
 
-		Promise.all(test({afterAlign}, <div>Foobar2</div>))
+		Promise.all(testRender({afterAlign}, <div>Foobar2</div>))
 			.then(([component]) => new Promise(next => {
 
 				step = () => {
@@ -152,9 +152,9 @@ describe('Triggered Flyout', () => {
 			.then(done, e => done.fail(e));
 	});
 
-	it('Flys echo classnames', (done) => {
+	test('Flys echo classnames', (done) => {
 
-		Promise.all(test({className: 'awesome sauce'}, <div>Lala</div> ))
+		Promise.all(testRender({className: 'awesome sauce'}, <div>Lala</div> ))
 			.then(cmps => Promise.all(cmps
 				.map(x => new Promise(next => x.onToggle(null, ()=> next(x))))
 			))
