@@ -6,7 +6,7 @@ import {mount} from 'enzyme';
 import Text from '../Text';
 
 describe('Text Input', () => {
-	it('attaches ref', () => {
+	test('attaches ref', () => {
 		const wrapper = mount(<Text />);
 		const input = wrapper.find('input');
 
@@ -28,7 +28,7 @@ describe('Text Input', () => {
 			wrapper = mount(<Text {...props} />);
 		});
 
-		it('Change to the input triggers the on change callback', () => {
+		test('Change to the input triggers the on change callback', () => {
 			const input = wrapper.find('input');
 
 			input.simulate('change', {target: {value: 'new'}});
@@ -36,7 +36,7 @@ describe('Text Input', () => {
 			expect(props.onChange).toHaveBeenCalledWith('new');
 		});
 
-		it('Setting new prop updates input', () => {
+		test('Setting new prop updates input', () => {
 			const input = wrapper.find('input');
 
 			expect(input.prop('value')).toEqual('test');
@@ -48,7 +48,7 @@ describe('Text Input', () => {
 	});
 
 	// describe('clear', () => {
-	// 	it('Clear calls on change', () => {
+	// 	test('Clear calls on change', () => {
 	// 		const props = {onChange: () => {}};
 	// 		spyOn(props, 'onChange');
 

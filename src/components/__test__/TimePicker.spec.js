@@ -11,15 +11,15 @@ const ARROW_DOWN = 40;
 describe('TimePicker', () => {
 	// const sharedWrapper = mount(<TimePicker />);
 
-	const test = (props = {}, ...children) => [
+	const testRender = (props = {}, ...children) => [
 		mount(<TimePicker {...props}>{children}</TimePicker>),
 		// sharedWrapper.setProps({...props, children})
 	];
 
 	/* INTERNAL STATE TESTS: NO PROPS, NO CHANGE HANDLER */
-	it('Base case: Check if it defaults to now', () => {
+	test('Base case: Check if it defaults to now', () => {
 		const now = new Date();
-		test()
+		testRender()
 			.map(x => x.state('value'))
 			.forEach(value => {
 				expect(value.getHours()).toEqual(now.getHours());
@@ -27,8 +27,8 @@ describe('TimePicker', () => {
 			});
 	});
 
-	it('Check if twentyFourHourTime is false', () => {
-		test()
+	test('Check if twentyFourHourTime is false', () => {
+		testRender()
 			.map(x => x.state('tfTime'))
 			.forEach(tfTime => {
 				expect(tfTime).toEqual(false);
@@ -36,8 +36,8 @@ describe('TimePicker', () => {
 	});
 
 	// check if wrapping up work
-	it('wraps to from noon to 1 pm works', () => {
-		test()
+	test('wraps to from noon to 1 pm works', () => {
+		testRender()
 			.map((picker) => {
 				const noon = new Date();
 				noon.setHours(12);
@@ -55,8 +55,8 @@ describe('TimePicker', () => {
 	});
 
 	// Check if wrapping down works
-	it('wraps to from 1pm to noon works', () => {
-		test()
+	test('wraps to from 1pm to noon works', () => {
+		testRender()
 			.map((picker) => {
 				const onePM = new Date();
 				onePM.setHours(13);
@@ -75,8 +75,8 @@ describe('TimePicker', () => {
 	});
 
 	//
-	it('changes to twentyFourHourTime when typed in', () => {
-		test()
+	test('changes to twentyFourHourTime when typed in', () => {
+		testRender()
 			.map((picker) => {
 				// Increment Hours
 				const hourInput = picker.find('input[name="hours"]');
@@ -88,8 +88,8 @@ describe('TimePicker', () => {
 			});
 	});
 
-	it('wraps when in twentyFourHourTime from 23 to 0', () => {
-		test()
+	test('wraps when in twentyFourHourTime from 23 to 0', () => {
+		testRender()
 			.map(picker => {
 				const hourInput = picker.find('input[name="hours"]');
 				hourInput.simulate('change', {target: {value: '23'}});
@@ -102,8 +102,8 @@ describe('TimePicker', () => {
 			});
 	});
 
-	it('wraps when in twentyFourHourTime from 0 to 23', () => {
-		test()
+	test('wraps when in twentyFourHourTime from 0 to 23', () => {
+		testRender()
 			.map(picker => {
 				const hourInput = picker.find('input[name="hours"]');
 				hourInput.simulate('change', {target: {value: '0'}});

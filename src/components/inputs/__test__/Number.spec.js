@@ -15,7 +15,7 @@ describe('Number Input', () => {
 	}
 
 	describe('onChange', () => {
-		it('Change to the input triggers the on change prop', () => {
+		test('Change to the input triggers the on change prop', () => {
 			const props = buildProps({});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -25,7 +25,7 @@ describe('Number Input', () => {
 			expect(props.onChange).toHaveBeenCalledWith(5);
 		});
 
-		it('Changing the props updates the input', () => {
+		test('Changing the props updates the input', () => {
 			const props = buildProps({value: 5});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -40,7 +40,7 @@ describe('Number Input', () => {
 
 
 	describe('Arrow Keys', () => {
-		it('Up Arrow increases value by step', () => {
+		test('Up Arrow increases value by step', () => {
 			const props = buildProps({value: 5, step: 5});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -50,7 +50,7 @@ describe('Number Input', () => {
 			expect(props.onChange).toHaveBeenCalledWith(10);
 		});
 
-		it('Down Arrow decreases value by step', () => {
+		test('Down Arrow decreases value by step', () => {
 			const props = buildProps({value: 5, step: 5});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -60,7 +60,7 @@ describe('Number Input', () => {
 			expect(props.onChange).toHaveBeenCalledWith(0);
 		});
 
-		it('Default step is 1', () => {
+		test('Default step is 1', () => {
 			const props = buildProps({value: 5});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -70,7 +70,7 @@ describe('Number Input', () => {
 			expect(props.onChange).toHaveBeenCalledWith(6);
 		});
 
-		it('Doesn\'t step above max', () => {
+		test('Doesn\'t step above max', () => {
 			const props = buildProps({value: 5, max: 5});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -80,7 +80,7 @@ describe('Number Input', () => {
 			expect(props.onChange).not.toHaveBeenCalled();
 		});
 
-		it('Doesn\'t step below min', () => {
+		test('Doesn\'t step below min', () => {
 			const props = buildProps({value: 5, min: 5});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -92,7 +92,7 @@ describe('Number Input', () => {
 	});
 
 	describe('Constrain', () => {
-		it('Doesn\'t call on change with a value greater than max', () => {
+		test('Doesn\'t call on change with a value greater than max', () => {
 			const props = buildProps({max: 5, constrain: true});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');
@@ -102,7 +102,7 @@ describe('Number Input', () => {
 			expect(props.onChange).toHaveBeenCalledWith(5);
 		});
 
-		it('Doesn\'t call on change with a value less than min', () => {
+		test('Doesn\'t call on change with a value less than min', () => {
 			const props = buildProps({min: 5, constrain: true});
 			const wrapper = mount(<NumberInput {...props} />);
 			const input = wrapper.find('input');

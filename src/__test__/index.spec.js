@@ -1,7 +1,7 @@
 /* eslint-env jest */
 describe('Test', () => {
 
-	it ('Test', () => {
+	test ('Test', () => {
 		expect(true).toBe(true);
 	});
 

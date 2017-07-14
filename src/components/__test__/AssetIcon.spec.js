@@ -5,7 +5,7 @@ import {shallow} from 'enzyme';
 import AssetIcon from '../AssetIcon';
 
 describe('AssetIcon', () => {
-	it('should render a \'jpeg\' label', () => {
+	test('should render a \'jpeg\' label', () => {
 		const wrapper = shallow(<AssetIcon mimeType="image/jpeg" />);
 		expect(wrapper.find('.file-type label').length === 1);
 		expect(wrapper.find('label').text()).toEqual('jpeg');

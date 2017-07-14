@@ -46,13 +46,13 @@ describe('Inline List Tests', () => {
 			);
 		});
 
-		it('Has One Item', () => {
+		test('Has One Item', () => {
 			const items = getItemsFromDOM();
 
 			expect(items.length).toEqual(1);
 		});
 
-		it('Preserves Item Order', () => {
+		test('Preserves Item Order', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
@@ -60,19 +60,19 @@ describe('Inline List Tests', () => {
 			}
 		});
 
-		it('Has No Separators', () => {
+		test('Has No Separators', () => {
 			const separators = getSeparatorsFromDOM();
 
 			expect(separators.length).toEqual(0);
 		});
 
-		it('Has No Remaining', () => {
+		test('Has No Remaining', () => {
 			const remaining = getRemainingFromDOM();
 
 			expect(remaining.length).toEqual(0);
 		});
 
-		it('Has Expected Text', () => {
+		test('Has Expected Text', () => {
 			const list = getListDOM();
 			const text = list.textContent;
 
@@ -92,13 +92,13 @@ describe('Inline List Tests', () => {
 			);
 		});
 
-		it ('Has One Item', () => {
+		test('Has One Item', () => {
 			const items = getItemsFromDOM();
 
 			expect(items.length).toEqual(2);
 		});
 
-		it('Preserves Item Order', () => {
+		test('Preserves Item Order', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
@@ -106,19 +106,19 @@ describe('Inline List Tests', () => {
 			}
 		});
 
-		it('Has No Separators', () => {
+		test('Has No Separators', () => {
 			const separators = getSeparatorsFromDOM();
 
 			expect(separators.length).toEqual(0);
 		});
 
-		it('Has One Remaining', () => {
+		test('Has One Remaining', () => {
 			const remaining = getRemainingFromDOM();
 
 			expect(remaining.length).toEqual(1);
 		});
 
-		it('Has Expected Text', () => {
+		test('Has Expected Text', () => {
 			const list = getListDOM();
 			const text = list.textContent;
 
@@ -138,13 +138,13 @@ describe('Inline List Tests', () => {
 			);
 		});
 
-		it('Has All Items', () => {
+		test('Has All Items', () => {
 			const items = getItemsFromDOM();
 
 			expect(items.length).toEqual(children.length);
 		});
 
-		it('Preserves Item Order', () => {
+		test('Preserves Item Order', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
@@ -152,19 +152,19 @@ describe('Inline List Tests', () => {
 			}
 		});
 
-		it('Has Separators', () => {
+		test('Has Separators', () => {
 			const separators = getSeparatorsFromDOM();
 
 			expect(separators.length).toEqual(1);
 		});
 
-		it('Has One Remaining', () => {
+		test('Has One Remaining', () => {
 			const remaining = getRemainingFromDOM();
 
 			expect(remaining.length).toEqual(1);
 		});
 
-		it('Has Expected Text', () => {
+		test('Has Expected Text', () => {
 			const list = getListDOM();
 			const text = list.textContent;
 
@@ -184,13 +184,13 @@ describe('Inline List Tests', () => {
 			);
 		});
 
-		it('Has Max Items', () => {
+		test('Has Max Items', () => {
 			const items = getItemsFromDOM();
 
 			expect(items.length).toEqual(2);
 		});
 
-		it('Preserves Item Order', () => {
+		test('Preserves Item Order', () => {
 			const items = getItemsFromDOM();
 
 			for (let i = 0; i < items.length; i++) {
@@ -198,14 +198,14 @@ describe('Inline List Tests', () => {
 			}
 		});
 
-		it('Has Remaining', () => {
+		test('Has Remaining', () => {
 			const remaining = getRemainingFromDOM();
 
 			expect(remaining.length).toEqual(1);
 			expect(remaining[0].textContent).toEqual('2 Others');
 		});
 
-		it('Has Expected Text', () => {
+		test('Has Expected Text', () => {
 			const list = getListDOM();
 			const text = list.textContent;
 

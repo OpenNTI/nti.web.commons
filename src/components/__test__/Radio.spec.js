@@ -7,13 +7,13 @@ import Radio from '../Radio';
 describe('Radio', () => {
 	const sharedWrapper = shallow(<Radio />);
 
-	const test = (props, ...children) => [
+	const testRender = (props, ...children) => [
 		shallow(<Radio {...props}>{children}</Radio>),
 		sharedWrapper.setProps({...props, children})
 	];
 
-	it('Base Case', () => {
-		test({label: 'test'})
+	test('Base Case', () => {
+		testRender({label: 'test'})
 			.map(x => x.find('.label').text())
 			.forEach(x => expect(x).toEqual('test'));
 	});

@@ -6,7 +6,7 @@ import URL from '../URL';
 import Text from '../Text';
 
 describe('URL Input', () => {
-	it('attaches ref', () => {
+	test('attaches ref', () => {
 		const wrapper = mount(<URL />);
 		const text = wrapper.find(Text);
 
