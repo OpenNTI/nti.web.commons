@@ -7,6 +7,8 @@ export default class File extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		label: PropTypes.string,
+		accept: PropTypes.string,
+		value: PropTypes.string,
 		defaultText: PropTypes.string,
 		onFileChange: PropTypes.func
 	}
@@ -27,8 +29,12 @@ export default class File extends React.Component {
 		const clearFile = (e) => {
 			me.setState( { file: undefined });
 
-			if(this.props.onFileChange) {
-				this.props.onFileChange();
+			if(me.input) {
+				me.input.value = '';
+			}
+
+			if(me.props.onFileChange) {
+				me.props.onFileChange();
 			}
 
 			e.stopPropagation();
@@ -55,13 +61,26 @@ export default class File extends React.Component {
 			}
 		};
 
+		const attachRef = (x) => {
+			this.input = x;
+		};
+
+		let props = {
+			icon: 'upload',
+			label: this.props.label || 'Choose file',
+			available: true,
+			onChange: onChange,
+			onDrop: onChange,
+			attachRef: attachRef
+		};
+
+		if(this.props.accept) {
+			props.accept = this.props.accept;
+		}
+
 		return (<div className="nti-file-input">
 			<FilePickerButton
-				icon="upload"
-				label={this.props.label || 'Choose file'}
-				available
-				onChange={onChange}
-				onDrop={onChange}
+				{...props}
 			/>
 			<span className="file-select-filename">{this.renderFileName()}</span>
 			{this.renderClear()}
