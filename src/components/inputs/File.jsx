@@ -18,7 +18,7 @@ export default class File extends React.Component {
 			return (<span>{this.state.file.name}</span>);
 		}
 
-		const text = this.props.defaultText ? this.props.defaultText : 'None';
+		const text = this.props.defaultText ? this.props.defaultText : '';
 
 		return (<span className="nofile">{text}</span>);
 	}
