@@ -10,7 +10,8 @@ export default class File extends React.Component {
 		accept: PropTypes.string,
 		value: PropTypes.string,
 		defaultText: PropTypes.string,
-		onFileChange: PropTypes.func
+		onFileChange: PropTypes.func,
+		checkValid: PropTypes.func
 	}
 
 	renderFileName () {
@@ -47,16 +48,21 @@ export default class File extends React.Component {
 	}
 
 	render () {
-		const me = this;
-
 		const onChange = (e) => {
 			const {target: {files}} = e;
 
 			if(files && files.length === 1) {
-				me.setState({ file : files[0] });
+				let inputValid = true;
+				if(this.props.checkValid) {
+					inputValid = this.props.checkValid(files[0]);
+				}
 
-				if(me.props.onFileChange) {
-					me.props.onFileChange(files[0]);
+				if(inputValid) {
+					this.setState({ file : files[0] });
+
+					if(this.props.onFileChange) {
+						this.props.onFileChange(files[0]);
+					}
 				}
 			}
 		};
