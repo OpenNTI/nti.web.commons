@@ -24,7 +24,7 @@ const MONTHS = [
 const isLeapYear = (y) => ((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0);
 
 
-export default class DataTimeField extends Component {
+export default class DateTimeField extends Component {
 	static propTypes = {
 		value: PropTypes.instanceOf(Date),
 		onChange: PropTypes.func.isRequired,
