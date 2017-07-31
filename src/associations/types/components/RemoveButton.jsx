@@ -10,7 +10,7 @@ const DEFAULT_TEXT = {
 	confirmRemoveMessage: 'You are about to remove this item. You must manually add it back to undo this action.'
 };
 
-const t = scoped('ASSOCIATION_REMOVE_BUTTON', DEFAULT_TEXT);
+const t = scoped('common.components.associations.buttons.remove', DEFAULT_TEXT);
 
 export default class AssociationRemove extends React.Component {
 	static propTypes = {

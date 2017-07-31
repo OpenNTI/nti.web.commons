@@ -20,7 +20,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('PUBLISH_TRIGGER', DEFAULT_TEXT);
+const t = scoped('common.components.publish-controls.trigger', DEFAULT_TEXT);
 
 export default function PublishTrigger (props) {
 	const {value, label:labelOverride} = props;

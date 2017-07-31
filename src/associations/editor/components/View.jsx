@@ -25,7 +25,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('ASSOCIATIONS_EDITOR', DEFAULT_TEXT);
+const t = scoped('common.components.associations.editor', DEFAULT_TEXT);
 
 
 function matchesTerm (item, term) {

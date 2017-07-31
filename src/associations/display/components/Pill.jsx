@@ -15,7 +15,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('ASSOCIATION_DISPLAY_PILL', DEFAULT_TEXT);
+const t = scoped('common.components.associations.pill', DEFAULT_TEXT);
 
 export default class AssociationPill extends React.Component {
 	static propTypes = {

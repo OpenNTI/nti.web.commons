@@ -5,7 +5,11 @@ import {scoped} from 'nti-lib-locale';
 
 import {areYouSure} from '../prompts/';
 
-let t = scoped('CONTACTS');
+const DEFAULT_TEXT = {
+	unfollowPrompt: 'Remove this contact?',
+};
+
+let t = scoped('common.components.buttons.follow', DEFAULT_TEXT);
 
 
 export default class extends React.Component {

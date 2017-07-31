@@ -16,7 +16,7 @@ const DEFAULT_TEXT = {
 	timeLimit: '%(limit)s Time Limit'
 };
 
-const t = scoped('ASSIGNMENT_ASSOCIATION_EDITOR', DEFAULT_TEXT);
+const t = scoped('common.components.associations.editor.assignment', DEFAULT_TEXT);
 
 function getSubLabels (item) {
 	const assignment = item.item;

@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('LIMITED_LIST', DEFAULT_TEXT);
+const t = scoped('common.components.lists.limited', DEFAULT_TEXT);
 
 LimitedList.propTypes = {
 	children: PropTypes.node,

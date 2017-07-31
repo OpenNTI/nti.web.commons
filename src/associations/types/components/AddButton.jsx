@@ -7,7 +7,7 @@ const DEFAULT_TEXT = {
 	tryAgain: 'Try Again'
 };
 
-const t = scoped('ASSOCIATION_ADD_BUTTON', DEFAULT_TEXT);
+const t = scoped('common.components.associations.buttons.add', DEFAULT_TEXT);
 
 AddButton.propTypes = {
 	label: PropTypes.string,

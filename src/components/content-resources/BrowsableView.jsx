@@ -20,11 +20,11 @@ const ONE_MINUTE = 60000;//60 * 1000ms
 const isFile = x => x && /nextthought.+(folder|file)/i.test(x.MimeType);
 
 const DEFAULT_TEXT = {
-	ACTIVE: {
+	active: {
 		move: 'Moving %(filename)s...',
 		upload: 'Uploading %(filename)s...'
 	},
-	COMPLETE: {
+	complete: {
 		unknown: 'Something went wrong.',
 		PermissionDeniedNoLink: 'Permission Denied.',
 		movefail: {
@@ -50,7 +50,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('CONTENT_RESOURCES', DEFAULT_TEXT);
+const t = scoped('common.components.content-resources', DEFAULT_TEXT);
 
 const BUFFERED_TIME = 1000;
 
@@ -324,14 +324,14 @@ export default class BrowsableView extends React.Component {
 			let [first, ...others] = x;
 
 			const {error} = first;
-			const errorKey = error && `COMPLETE.${error.code}`;
+			const errorKey = error && `complete.${error.code}`;
 			const specificErrorMessage = !error || t.isMissing(errorKey) ? null : t(errorKey);
 
-			return t(`COMPLETE.${first.verb}${postfix}`, {
+			return t(`complete.${first.verb}${postfix}`, {
 				filename: first.filename,
 				count: others.length,
 				folderName: first.folder && first.folder.getFileName(),
-				message: specificErrorMessage || (error || {}).message || t('COMPLETE.unknown')
+				message: specificErrorMessage || (error || {}).message || t('complete.unknown')
 			});
 		}
 
@@ -370,7 +370,7 @@ export default class BrowsableView extends React.Component {
 
 
 	onTaskProgress = (task, value, max, abort) => {
-		const key = value === max ? 'COMPLETE' : 'ACTIVE';
+		const key = value === max ? 'complete' : 'active';
 		clearTimeout(this.progressDismissTimeout);
 
 		this.setState({

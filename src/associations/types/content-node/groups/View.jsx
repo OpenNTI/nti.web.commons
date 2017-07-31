@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	empty: 'There are no sections in this group'
 };
 
-const t = scoped('ASSOCIATIONS_CONTENT_NODE_GROUPS', DEFAULT_TEXT);
+const t = scoped('common.components.associations.groups.content_node', DEFAULT_TEXT);
 
 export default class ContentNodeGroups extends React.Component {
 	static propTypes = {

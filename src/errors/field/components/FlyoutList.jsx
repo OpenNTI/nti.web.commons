@@ -19,7 +19,7 @@ const defaultText = {
 		other: '%(count)s Errors'
 	}
 };
-const t = scoped('FIELD_ERROR_FLYOUT', defaultText);
+const t = scoped('common.components.flyouts.field-error', defaultText);
 
 const DEFAULT_ALIGNMENT = 'top-center';
 

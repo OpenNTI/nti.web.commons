@@ -7,7 +7,7 @@ const DEFAULT_TEXT = {
 	message: 'Your link may contain errors or the page may no longer exist.'
 };
 
-const t = scoped('RESOURCE_NOT_FOUND', DEFAULT_TEXT);
+const t = scoped('common.components.resource-not-found', DEFAULT_TEXT);
 
 ResourceNotFound.propTypes = {
 	actions: PropTypes.arrayOf(PropTypes.shape({

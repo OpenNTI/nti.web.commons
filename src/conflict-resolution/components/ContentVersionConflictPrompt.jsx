@@ -18,7 +18,7 @@ const DEFAULT_TEXT = {
 	take: 'Take Theirs'
 };
 
-const t = scoped('CONTENT_VERSION_CONFLICT_PROMPT', DEFAULT_TEXT);
+const t = scoped('common.components.content.version-conflict-prompt', DEFAULT_TEXT);
 
 export default class ContentVersionConflictPrompt extends React.Component {
 	static propTypes = {

@@ -9,7 +9,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('ASSOCIATION_LOCATIONS', DEFAULT_TEXT);
+const t = scoped('common.components.associations.locations', DEFAULT_TEXT);
 
 
 AssociationLocations.propTypes = {

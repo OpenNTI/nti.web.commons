@@ -8,7 +8,7 @@ const DEFAULT_TEXT = {
 	SearchScopeRootLabel: 'All Files'
 };
 
-const t = scoped('CONTENT_RESOURCES', DEFAULT_TEXT);
+const t = scoped('common.components.content-resources', DEFAULT_TEXT);
 
 const SCOPE_TYPE = PropTypes.shape({
 	getFileName: PropTypes.func

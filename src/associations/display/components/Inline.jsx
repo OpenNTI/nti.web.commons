@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	empty: 'Add to Item'
 };
 
-const t = scoped('ASSOCIATIONS_INLINE_DISPLAY', DEFAULT_TEXT);
+const t = scoped('common.components.associations.inline', DEFAULT_TEXT);
 
 export default class InlineAssociations extends React.Component {
 	static propTypes = {

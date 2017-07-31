@@ -7,7 +7,12 @@ import {scoped} from 'nti-lib-locale';
 import {areYouSure} from '../prompts/';
 import ItemChanges from '../mixins/ItemChanges';
 
-const t = scoped('DISCUSSIONS.ACTIONS');
+const DEFAULT_TEXT = {
+	flag: 'Report',
+	flagged: 'Reported',
+};
+
+const t = scoped('common.components.buttons', DEFAULT_TEXT);
 
 export default createReactClass({
 	displayName: 'ReportLink',

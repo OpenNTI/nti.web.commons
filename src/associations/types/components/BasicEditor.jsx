@@ -17,7 +17,7 @@ const DEFAULT_TEXT = {
 	failedToRemove: 'Failed to remove.'
 };
 
-const t = scoped('BASIC_ASSOCIATION_EDITOR', DEFAULT_TEXT);
+const t = scoped('common.components.associations.editor.basic', DEFAULT_TEXT);
 
 class BasicEditor extends React.Component {
 	static propTypes = {

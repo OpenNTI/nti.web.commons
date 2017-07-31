@@ -21,7 +21,7 @@ const DEFAULT_TEXT = {
 	empty: 'None'
 };
 
-const t = scoped('INLINE_LIST', DEFAULT_TEXT);
+const t = scoped('common.components.lists.inline', DEFAULT_TEXT);
 
 
 InlineList.propTypes = {

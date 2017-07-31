@@ -26,7 +26,7 @@ const DEFAULT_TEXT = {
 	minutesLabel: 'Minutes'
 };
 
-const t = scoped('DURATION_UNITS', DEFAULT_TEXT);
+const t = scoped('common.components.durations.units', DEFAULT_TEXT);
 
 
 /**

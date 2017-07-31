@@ -32,7 +32,7 @@ const DEFAULT_TEXT = {
 	},
 };
 
-const t = scoped('Lessons', DEFAULT_TEXT);
+const t = scoped('common.components.associations.lessons', DEFAULT_TEXT);
 
 export default class Lessons extends React.Component {
 	static propTypes = {

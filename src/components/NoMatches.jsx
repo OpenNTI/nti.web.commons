@@ -5,7 +5,7 @@ const DEFAULT_TEXT = {
 	noMatches: 'No items match the selected filter.'
 };
 
-const t = scoped('LISTS', DEFAULT_TEXT);
+const t = scoped('common.components.lists', DEFAULT_TEXT);
 
 export default function NoMatches () {
 	return (

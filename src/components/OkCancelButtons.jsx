@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const t = scoped('BUTTONS');
+const DEFAULT_TEXT = {
+	ok: 'Okay',
+	cancel: 'Cancel',
+	save: 'Save',
+	post: 'Post'
+};
+
+const t = scoped('common.components.buttons', DEFAULT_TEXT);
 
 export default class extends React.Component {
 	static displayName = 'OkCancelButtons';

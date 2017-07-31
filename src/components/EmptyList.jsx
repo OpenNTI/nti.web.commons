@@ -7,37 +7,34 @@ import Notice from './Notice';
 
 
 const DEFAULT_TEXT = {
-	emptyList: 'This list is empty.',
-	'emptyList:discussions': 'No discussions.',
-	'emptyList:lesson-overview': 'Empty Overview :(\nThis lesson is missing content.',
-	'emptyList:library-admin': 'No Administered Courses.',
-	'emptyList:library-books': 'You don\'t have any books.',
-	'emptyList:library-courses': 'You don\'t have any courses yet.',
-	'emptyList:library-communities': 'You aren\'t in any communities yet.',
-	'emptyList:videos': 'No videos.',
-	'emptyList:activity': 'No Activity.',
-	'emptyList:user-details': 'Empty Profile :(\nNo additional profile information available.',
-	'emptyList:memberships': 'No memberships',
-	'emptyList:communities': 'No communities',
-	'emptyList:groups': 'No groups',
-	'emptyList:friendslists': 'No Lists.',
-	'emptyList:dynamicfriendslists': 'No Groups.',
-	'emptyList:contacts': 'No contacts.',
-	'emptyList:contactssearch': 'No contacts found.',
-	'emptyList:entity-search': 'No one found',
-	'emptyList:assignments': 'No assignments currently available.',
-	'emptyList:search': 'No Results Found.\nTry a different search.',
-	'emptyList:content-resources': 'Empty Folder.'
+	'default': 'This list is empty.',
+	'discussions': 'No discussions.',
+	'lesson-overview': 'Empty Overview :(\nThis lesson is missing content.',
+	'library-admin': 'No Administered Courses.',
+	'library-books': 'You don\'t have any books.',
+	'library-courses': 'You don\'t have any courses yet.',
+	'library-communities': 'You aren\'t in any communities yet.',
+	'videos': 'No videos.',
+	'activity': 'No Activity.',
+	'user-details': 'Empty Profile :(\nNo additional profile information available.',
+	'memberships': 'No memberships',
+	'communities': 'No communities',
+	'groups': 'No groups',
+	'friendslists': 'No Lists.',
+	'dynamicfriendslists': 'No Groups.',
+	'contacts': 'No contacts.',
+	'contactssearch': 'No contacts found.',
+	'entity-search': 'No one found',
+	'assignments': 'No assignments currently available.',
+	'search': 'No Results Found.\nTry a different search.',
+	'content-resources': 'Empty Folder.'
 };
 
-const t = scoped('LISTS', DEFAULT_TEXT);
+const t = scoped('common.components.lists.empty', DEFAULT_TEXT);
 
 export default function EmptyList ({type}) {
 	let heading;
-	let message = t('emptyList');
-	if (type) {
-		message = t('emptyList:' + type);
-	}
+	let message = t(type || 'default');
 
 	message = message.split('\n');
 	if (message.length === 1) {

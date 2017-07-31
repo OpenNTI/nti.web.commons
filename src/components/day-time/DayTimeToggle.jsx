@@ -14,11 +14,11 @@ const TOGGLE = {
 };
 
 const DEFAULT_TEXT = {
-	[`date-error-${TOGGLE.BEGIN}`]: 'Begin Date cannot come after Finish Date.',
-	[`date-error-${TOGGLE.END}`]: 'Finish Date cannot come before Begin Date.'
+	'date-error-availableBeginning': 'Begin Date cannot come after Finish Date.',
+	'date-error-availableEnding': 'Finish Date cannot come before Begin Date.'
 };
 
-const t = scoped('common.components.DayTimeToggle', DEFAULT_TEXT);
+const t = scoped('common.components.day-time.DayTimeToggle', DEFAULT_TEXT);
 
 export default class DayTimeToggle extends React.Component {
 	static propTypes = {

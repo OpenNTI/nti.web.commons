@@ -49,7 +49,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const tt = scoped('PUBLISH_CONTROLS', DEFAULT_TEXT);
+const tt = scoped('common.components.publish-controls', DEFAULT_TEXT);
 export const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
 const CHANGES = {
 	[PUBLISH_STATES.DRAFT]: true,

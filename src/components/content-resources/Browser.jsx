@@ -43,10 +43,10 @@ const LAYOUTS = {
 const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
-	DRAG_DROP: {
+	drag_drop: {
 		'drag-over-mesasge': 'Drop files here to upload them to your library.'
 	},
-	TOOLBAR: {
+	toolbar: {
 		'upload': 'Upload',
 		'mkdir': 'Create Folder',
 		'move': 'Move',
@@ -55,7 +55,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('CONTENT_RESOURCES.BROWSER', DEFAULT_TEXT);
+const t = scoped('common.components.content-resources.browser', DEFAULT_TEXT);
 
 export default class ContentResourcesBrowser extends BrowsableView {
 	static propTypes = {
@@ -284,7 +284,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 					<Toolbar>
 						<FilePickerButton
 							icon="upload"
-							label={t('TOOLBAR.upload')}
+							label={t('toolbar.upload')}
 							disabled={disabled}
 							available={!limited && currentFolderCan('upload')}
 							onChange={this.onUploadFile}
@@ -292,28 +292,28 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						/>
 						<ToolbarButton
 							icon="folder-add"
-							label={t('TOOLBAR.mkdir')}
+							label={t('toolbar.mkdir')}
 							disabled={disabled}
 							available={currentFolderCan('mkdir')}
 							onClick={this.onMakeDirectory}
 						/>
 						<ToolbarButton
 							icon="rename"
-							label={t('TOOLBAR.rename')}
+							label={t('toolbar.rename')}
 							disabled={disabled}
 							available={selected === 1 && selectionCan('rename')}
 							onClick={this.onRename}
 						/>
 						<ToolbarButton
 							icon="move"
-							label={t('TOOLBAR.move')}
+							label={t('toolbar.move')}
 							disabled={disabled}
 							available={selectionCan('move')}
 							onClick={this.onMoveSelectTarget}
 						/>
 						<ToolbarButton
 							icon="delete"
-							label={t('TOOLBAR.delete')}
+							label={t('toolbar.delete')}
 							available={selectionCan('delete')}
 							onClick={this.onDelete}
 						/>
@@ -384,7 +384,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 
 						{dragover && (
 							<div key="drag" className="drag-over-message">
-								{t('DRAG_DROP.drag-over-mesasge')}
+								{t('drag_drop.drag-over-mesasge')}
 							</div>
 						)}
 					</Transition>

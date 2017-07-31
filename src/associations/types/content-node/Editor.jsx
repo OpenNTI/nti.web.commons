@@ -26,7 +26,7 @@ const DEFAULT_TEXT = {
 	failedToRemove: 'Failed to remove.'
 };
 
-const t = scoped('ASSOCIATION_CONTENT_NODE_EDITOR', DEFAULT_TEXT);
+const t = scoped('common.components.associations.editor.content_node', DEFAULT_TEXT);
 
 function getCountFor (item, overview) {
 	const refs = overview.getRefsTo(item);
