@@ -43,10 +43,10 @@ const LAYOUTS = {
 const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
-	drag_drop: {
+	'drag-drop': {
 		'drag-over-mesasge': 'Drop files here to upload them to your library.'
 	},
-	toolbar: {
+	'toolbar': {
 		'upload': 'Upload',
 		'mkdir': 'Create Folder',
 		'move': 'Move',
@@ -384,7 +384,7 @@ export default class ContentResourcesBrowser extends BrowsableView {
 
 						{dragover && (
 							<div key="drag" className="drag-over-message">
-								{t('drag_drop.drag-over-mesasge')}
+								{t('drag-drop.drag-over-mesasge')}
 							</div>
 						)}
 					</Transition>
