@@ -5,14 +5,14 @@ export default class LockScroll extends React.Component {
 	static refCount = 0;
 
 	componentDidMount () {
-		LockScroll.refCount ++;
+		LockScroll.refCount++;
 		addClass(document.body.parentNode, 'scroll-lock');
 	}
 
 	componentWillUnmount () {
-		LockScroll.refCount --;
+		LockScroll.refCount--;
 
-		if (LockScroll.refCount <= 0) {
+		if (LockScroll.refCount <= 0) {
 			LockScroll.refCount = 0;
 			removeClass(document.body.parentNode, 'scroll-lock');
 		}
