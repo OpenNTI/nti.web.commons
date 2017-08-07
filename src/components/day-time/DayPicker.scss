@@ -110,7 +110,7 @@
 }
 
 /* Default modifiers */
-.DayPicker-Day--today:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled) {
+.DayPicker-Day--today:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected) {
 	color: $primary-blue;
 }
 .DayPicker-Day--disabled {
@@ -122,7 +122,7 @@
 .DayPicker-Day--outside {
 }
 
-.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled) {
 	@extend %selected-treatment;
 	color: #ffffff;
 	&::before {

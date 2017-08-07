@@ -1,0 +1,67 @@
+@import "~nti-style-common";
+
+.date-picker-range {
+	.selected-dates {
+		display: flex;
+		margin-left: 28%;
+
+		.date {
+			width: 180px;
+			height: 65px;
+			position: relative;
+			overflow: hidden;
+			word-wrap: normal;
+			background: #fafafa;
+			-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
+			box-shadow: 0 0 0 0.0625rem #eaeaea;
+			border: solid 2px #fafafa;
+			margin: 0.5rem;
+			text-align: left;
+			padding: 5px;
+			padding-left: 15px;
+			border-radius: 3px;
+
+			.label {
+				font-size: 10px;
+			}
+
+			.value {
+				font-size: 26px;
+			}
+
+			&.selected {
+				border: solid 2px rgb(63, 179, 246);
+			}
+		}
+	}
+
+	.DayPicker-Week {
+		border: solid 10px rgba(0, 0, 0, 0);
+	}
+
+	.DayPicker-Day--selected:not(.DayPicker-Day--rangeonly):not(.DayPicker-Day--rangeopen):not(.DayPicker-Day--rangeclose) {
+		background-color: rgb(223, 239, 256);
+		color: black;
+
+		&::before {
+			opacity: 0;
+			height: 1em !important;
+		}
+	}
+
+	.DayPicker-Day--rangeopen {
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, rgb(223, 239, 256) 50%);
+	}
+
+	.DayPicker-Day--rangeclose {
+		background: linear-gradient(90deg, rgb(223, 239, 256) 50%, rgba(0, 0, 0, 0) 50%);
+	}
+
+	.DayPicker {
+		width: 400px;
+	}
+
+	.DayPicker-Day {
+		width: 40px;
+	}
+}

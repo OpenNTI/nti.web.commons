@@ -23,6 +23,7 @@ export DarkMode from './DarkMode';
 export DateTime from './DateTime';
 export DayPicker from './day-time/DayPicker';
 export DayTimePicker from './day-time/DayTimePicker';
+export DayPickerRange from './day-time/DayPickerRange';
 export DayTimeToggle from './day-time/DayTimeToggle';
 export DateTimeField from './day-time/DateTimeField';
 export DayTimeToggleTrigger from './day-time/DayTimeToggleTrigger';
