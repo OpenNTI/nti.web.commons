@@ -19,7 +19,8 @@ export default class DayPicker extends React.Component {
 	static propTypes = {
 		value: PropTypes.object,
 		onChange: PropTypes.func,
-		disabledDays: PropTypes.func
+		disabledDays: PropTypes.func,
+		selectedDays: PropTypes.object
 	}
 
 
@@ -86,14 +87,16 @@ export default class DayPicker extends React.Component {
 
 
 	render () {
+		const {disabledDays, selectedDays, ...otherProps} = this.props;
 		const {value} = this.state;
 		return (
 			<Picker
+				{...otherProps}
 				weekdayElement={ <Weekday/> }
 				initialMonth={ value || void value }
 				// month={value || void value }
-				selectedDays={ this.selectedDays }
-				disabledDays={ this.props.disabledDays }
+				selectedDays={ selectedDays || this.selectedDays }
+				disabledDays={ disabledDays }
 				onDayClick={ this.handleDayClick }
 				enableOutsideDays
 			/>

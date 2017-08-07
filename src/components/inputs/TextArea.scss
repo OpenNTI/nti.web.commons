@@ -1,0 +1,15 @@
+@import "~nti-style-common";
+
+textarea.nti-text-input {
+	-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
+	box-shadow: 0 0 0 0.0625rem #eaeaea;
+	margin: 0.5rem;
+	line-height: 2.375rem;
+	resize: none;
+
+	&::placeholder {
+		font-style: italic;
+		color: $tertiary-grey;
+		font-weight: 300;
+	}
+}
