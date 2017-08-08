@@ -20,7 +20,7 @@ export default class DayPicker extends React.Component {
 		value: PropTypes.object,
 		onChange: PropTypes.func,
 		disabledDays: PropTypes.func,
-		selectedDays: PropTypes.object
+		selectedDays: PropTypes.arrayOf(PropTypes.object)
 	}
 
 
