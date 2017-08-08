@@ -66,22 +66,21 @@ export default class DayPicker extends React.Component {
 	 */
 	handleDayClick (day, { selected, disabled }, e) {
 		const {onChange} = this.props;
-		const value = selected ? null : day;
 
 		e.preventDefault();
 
-		if (disabled || value == null) { return; }
+		if (disabled || day == null) { return; }
 
 		// Default the time to 12:00 AM per Design
-		value.setHours(0);
-		value.setMinutes(0);
+		day.setHours(0);
+		day.setMinutes(0);
 
 		if(onChange) {
-			onChange(value);
+			onChange(day);
 		}
 
 		this.setState({
-			value
+			value: day
 		});
 	}
 
