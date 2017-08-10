@@ -64,6 +64,7 @@ export default class Entity extends React.Component {
 
 	componentWillReceiveProps (nextProps) {
 		if (this.props.item !== nextProps.item) {
+			//eslint-disable-next-line react/no-direct-mutation-state
 			this.setState(this.state = {});
 		}
 	}

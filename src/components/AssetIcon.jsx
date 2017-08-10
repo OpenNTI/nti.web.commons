@@ -51,6 +51,7 @@ export default class Icon extends React.Component {
 			'unknown': ext === 'bin'
 		});
 
+		//eslint-disable-next-line react/no-direct-mutation-state
 		const setState = o => this.state ? this.setState(o) : (this.state = o);
 		setState({cls, label});
 	}

@@ -23,6 +23,7 @@ export default class RadioGroup extends React.Component {
 
 
 	setup (props = this.props) {
+		//eslint-disable-next-line react/no-direct-mutation-state
 		const setState = s => this.state ? this.setState(s) : (this.state = s);
 		const {initialValue} = props;
 		setState({
