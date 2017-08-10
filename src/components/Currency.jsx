@@ -6,6 +6,7 @@ const logger = Logger.get('Currency');
 
 
 export default class Currency extends React.PureComponent {
+	static format = formatInternal
 
 	static propTypes = {
 		amount: PropTypes.oneOfType([
@@ -22,7 +23,7 @@ export default class Currency extends React.PureComponent {
 		const a = parseFloat(amount);
 
 		return (
-			isNaN(a) ? null : <span {...other}>{format(amount, omitFractional)}</span>
+			isNaN(a) ? null : <span {...other}>{formatInternal(amount, omitFractional)}</span>
 		);
 	}
 }
@@ -45,7 +46,7 @@ function supports () {
 	return typeof Intl === 'object' && Intl && typeof Intl.NumberFormat === 'function';
 }
 
-function format (amount, omitFractional, locale = 'en-US', currency = 'USD') {
+function formatInternal (amount, omitFractional, locale = 'en-US', currency = 'USD') {
 	if (supports()) {
 
 		const options = {
