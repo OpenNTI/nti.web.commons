@@ -8,7 +8,8 @@ export default class SwitchTrigger extends React.Component {
 		className: PropTypes.string,
 		item: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		onClick: PropTypes.func,
-		children: PropTypes.node
+		children: PropTypes.node,
+		action: PropTypes.func
 	}
 
 	static contextTypes = {
@@ -41,12 +42,20 @@ export default class SwitchTrigger extends React.Component {
 
 
 	onClick = (e) => {
-		const {item, onClick} = this.props;
+		const {item, onClick, action} = this.props;
 		const {setActiveItem} = this.switchContext;
+		const done = () => {
+			if (setActiveItem && !this.disabled) {
+				setActiveItem(item);
+			}
+		};
 
-		if (setActiveItem && !this.disabled) {
-			setActiveItem(item);
+		if (action) {
+			action(done);
+		} else {
+			done();
 		}
+
 
 		if (onClick) {
 			onClick(e);
