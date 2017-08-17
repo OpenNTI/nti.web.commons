@@ -94,7 +94,6 @@ export default class SwitchPanel extends React.Component {
 
 
 	setActiveItem (key) {
-		debugger;
 		const active = resolveKey(this.items, this.getActiveItem(), key);
 
 		this.setState({
