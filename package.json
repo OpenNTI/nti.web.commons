@@ -67,6 +67,5 @@
     "react-dom": "^15.1.0",
     "react-test-renderer": "^15.5.4",
     "sinon": "^2.3.2"
-  },
-  "testEnvironment": "jsdom"
+  }
 }
