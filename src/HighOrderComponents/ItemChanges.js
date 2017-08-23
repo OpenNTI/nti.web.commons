@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import Logger from 'nti-util-logger';
-import {getRefHandler} from 'nti-commons';
+import {getRefHandler, HOC} from 'nti-commons';
 
 const logger = Logger.get('common:high-order-components:ItemChanges');
 
@@ -70,13 +70,15 @@ export default class ItemChanges extends React.Component {
 
 	static compose (Component) {
 
-		return function ItemChangesComposer (props, context) {
+		const cmp = function (props, context) {
 			return (
 				<ItemChanges item={getItem(Component, props, {}, context)}>
 					<Component {...props}/>
 				</ItemChanges>
 			);
 		};
+
+		return HOC.hoistStatics(cmp, Component, 'ItemChanges');
 	}
 
 
