@@ -15,13 +15,9 @@ export default function Select (props) {
 	let valueLabel = value;
 
 	if (selected) {
-		let {props: {children: selectedLabel}} = selected;
-		if (Array.isArray(selectedLabel)) {
-			selectedLabel = selectedLabel[0];
-		}
-
-		if (selectedLabel) {
-			valueLabel = selectedLabel;
+		const labelElements = React.Children.map(selected.props.children, React.cloneElement);
+		if (labelElements) {
+			valueLabel = labelElements;
 		}
 	}
 
