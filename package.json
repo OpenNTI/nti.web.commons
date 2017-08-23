@@ -44,7 +44,7 @@
     "mime-types": "^2.1.11",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.4",
-    "nti-commons": "^2.5.4",
+    "nti-commons": "^2.8.0",
     "nti-lib-dom": "^1.6.6",
     "nti-lib-interfaces": "^1.11.0",
     "nti-lib-locale": "^1.0.9",
