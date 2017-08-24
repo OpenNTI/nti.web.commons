@@ -15,7 +15,7 @@ export default function Select (props) {
 	let valueLabel = value;
 
 	if (selected) {
-		const labelElements = React.Children.map(selected.props.children, React.cloneElement);
+		const labelElements = React.Children.map(selected.props.children, (c) => typeof c !== 'object' ? c : React.cloneElement(c));
 		if (labelElements) {
 			valueLabel = labelElements;
 		}
