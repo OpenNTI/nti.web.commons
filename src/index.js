@@ -12,7 +12,6 @@ export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';
 export * as Selection from './selection';
 export * as Switch from './switch';
-export getEmitter from './utils/events';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
