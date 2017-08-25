@@ -44,7 +44,7 @@ export default class FixedElement extends React.Component {
 		const oldValues = this.fixedPosition && {...this.fixedPosition};
 		const width = this.el && this.el.offsetWidth;
 
-		let top = window[offsetProp] || 0;
+		let top = (window[offsetProp] && window[offsetProp]()) || 0;
 		let left = 0;
 
 		let el = this.el;
