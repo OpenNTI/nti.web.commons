@@ -2,41 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Sticky as ReactSticky} from 'react-sticky';
 
-import getEmitter from '../utils/events';
-
-const offsetProp = 'nti-sticky-top-offset';
-
 export default class Sticky extends React.Component {
 	static propTypes = {
 		children: PropTypes.node
 	}
 
+	static contextTypes = {
+		stickyTopOffset: PropTypes.number.isRequired
+	}
+
 	constructor (props) {
 		super(props);
-
-		this.state = this.getOffset();
 	}
 
-	onMsgBarUpdated = () => {
-		this.updateOffset();
-	}
-
-	componentDidMount () {
-		getEmitter().addListener('msg-bar-opened', this.onMsgBarUpdated);
-		getEmitter().addListener('msg-bar-closed', this.onMsgBarUpdated);
-	}
-
-	componentWillUnmount () {
-		getEmitter().removeListener('msg-bar-opened', this.onMsgBarUpdated);
-		getEmitter().removeListener('msg-bar-closed', this.onMsgBarUpdated);
-	}
-
-	updateOffset () {
-		this.setState(this.getOffset());
-	}
-
-	getOffset () {
-		const offset = window && window[offsetProp]();
+	getOffset (offset) {
 		let topOffset = 0;
 
 		if (offset) {
@@ -51,7 +30,8 @@ export default class Sticky extends React.Component {
 
 	render () {
 		const { children } = this.props;
-		const { offset, topOffset } = this.state;
+		const { stickyTopOffset } = this.context;
+		const { offset, topOffset } = this.getOffset(stickyTopOffset);
 
 		return (
 			<ReactSticky topOffset={topOffset}>
