@@ -17,14 +17,18 @@ export default class Sticky extends React.Component {
 		this.state = this.getOffset();
 	}
 
+	onMsgBarUpdated = () => {
+		this.updateOffset();
+	}
+
 	componentDidMount () {
-		getEmitter().addListener('msg-bar-opened', () => { this.updateOffset(); });
-		getEmitter().addListener('msg-bar-closed', () => { this.updateOffset(); });
+		getEmitter().addListener('msg-bar-opened', this.onMsgBarUpdated);
+		getEmitter().addListener('msg-bar-closed', this.onMsgBarUpdated);
 	}
 
 	componentWillUnmount () {
-		getEmitter().removeListener('msg-bar-opened');
-		getEmitter().removeListener('msg-bar-closed');
+		getEmitter().removeListener('msg-bar-opened', this.onMsgBarUpdated);
+		getEmitter().removeListener('msg-bar-closed', this.onMsgBarUpdated);
 	}
 
 	updateOffset () {
