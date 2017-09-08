@@ -184,8 +184,10 @@ describe('DateTimeField', () => {
 
 
 	test('render the correct years when passed startYear and numYears', () => {
+
 		const startYear = 2001;
 		const numYears = 5;
+
 		testRender({ startYear: startYear, numYears: numYears, onChange: () => {} })
 			.forEach(x => {
 				const yearSelect = x.find('.year-wrapper Select');
