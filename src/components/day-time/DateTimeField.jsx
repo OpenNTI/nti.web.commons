@@ -32,7 +32,9 @@ export default class DateTimeField extends Component {
 		useShortDates: PropTypes.bool,
 		error: PropTypes.string,
 		disabled: PropTypes.bool,
-		defaultTime: PropTypes.instanceOf(Date)
+		defaultTime: PropTypes.instanceOf(Date),
+		startYear: PropTypes.number,
+		numYears: PropTypes.number
 	}
 
 	onDateChange = (value, method) => {
@@ -104,12 +106,8 @@ export default class DateTimeField extends Component {
 
 
 	renderYears () {
-		const years = [];
-		const now = new Date();
-		for(let i = now.getFullYear(); i < now.getFullYear() + 6; i++) {
-			years.push(<option key={i} value={i}>{i}</option>);
-		}
-		return years;
+		const {startYear = new Date().getFullYear(), numYears = 6} = this.props;
+		return Array.from({length: numYears}).map((_, i) => <option key={startYear + i} value={startYear + i}>{startYear + i}</option>);
 	}
 
 
