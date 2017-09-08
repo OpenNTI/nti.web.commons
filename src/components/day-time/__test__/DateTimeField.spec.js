@@ -11,8 +11,8 @@ import Select from '../../Select';
 const {MockDate} = DateUtils;
 
 describe('DateTimeField', () => {
-	const emptyOnChagne = () => {};
-	const sharedWrapper = shallow(<DateTimeField onChange={emptyOnChagne} />);
+	const emptyOnChange = () => {};
+	const sharedWrapper = shallow(<DateTimeField onChange={emptyOnChange} />);
 
 	const testRender = (props, ...children) => [
 		shallow(<DateTimeField {...props}>{children}</DateTimeField>),
