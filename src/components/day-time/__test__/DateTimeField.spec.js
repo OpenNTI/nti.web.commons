@@ -159,6 +159,57 @@ describe('DateTimeField', () => {
 			});
 	});
 
+	// this test has to come before the one below that sets startYear and numYears props
+	// because of the way props are set on sharedWrapper in testRender. (the sharedWrapper
+	// instance retains any previously set props unless they're explicitly overwritten.)
+	test('render the current year and five subsequent years by default', () => {
+
+		const currentYear = new Date().getFullYear();
+		const numYears = 6;
+
+		testRender({ onChange: () => {} })
+			.forEach(x => {
+				const yearSelect = x.find('.year-wrapper Select');
+
+				// all the correct years
+				Array.from({length: numYears}).forEach((_, i) => expect(yearSelect.find(`option[value=${currentYear + i}]`).exists()).toBeTruthy());
+
+				// not earlier
+				expect(yearSelect.find(`option[value=${currentYear - 1}]`).exists()).toBeFalsy();
+
+				// not later
+				expect(yearSelect.find(`option[value=${currentYear + numYears}]`).exists()).toBeFalsy();
+			});
+	});
+
+
+	test('render the correct years when passed startYear and numYears', () => {
+		const startYear = 2001;
+		const numYears = 5;
+		testRender({ startYear: startYear, numYears: numYears, onChange: () => {} })
+			.forEach(x => {
+				const yearSelect = x.find('.year-wrapper Select');
+
+				// all the correct years
+				Array.from({length: numYears}).forEach((_, i) => expect(yearSelect.find(`option[value=${startYear + i}]`).exists()).toBeTruthy());
+
+				// not earlier
+				expect(yearSelect.find(`option[value=${startYear - 1}]`).exists()).toBeFalsy();
+
+				// not later
+				expect(yearSelect.find(`option[value=${startYear + numYears}]`).exists()).toBeFalsy();
+
+				// why doesn't this work?
+				// expect(yearSelect.containsAllMatchingElements([
+				// 	<option value={2001}>2001</option>,
+				// 	<option value={2002}>2002</option>,
+				// 	<option value={2003}>2003</option>,
+				// 	<option value={2004}>2004</option>,
+				// 	<option value={2005}>2005</option>
+				// ])).toBeTruthy();
+			});
+	});
+
 
 	test('show the error message passed to it', () => {
 		const errorMessage = 'Can\'t set due date before end date.';
