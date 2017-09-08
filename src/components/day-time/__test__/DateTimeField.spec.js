@@ -159,9 +159,9 @@ describe('DateTimeField', () => {
 			});
 	});
 
-	// this test has to come before the one below that sets startYear and numYears props
-	// because of the way props are set on sharedWrapper in testRender. (the sharedWrapper
-	// instance retains any previously set props unless they're explicitly overwritten.)
+	// this test has to come before the one below—the one that sets startYear and numYears
+	// props—because the sharedWrapper instance retains any previously set props unless they're
+	// explicitly overwritten.
 	test('render the current year and five subsequent years by default', () => {
 
 		const currentYear = new Date().getFullYear();
