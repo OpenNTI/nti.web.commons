@@ -102,8 +102,19 @@ export default class DateTimeField extends Component {
 
 
 	renderYears () {
-		const {startYear = new Date().getFullYear(), numYears = 6} = this.props;
-		return Array.from({length: numYears}).map((_, i) => <option key={startYear + i} value={startYear + i}>{startYear + i}</option>);
+		const {startYear = new Date().getFullYear(), numYears = 6, value} = this.props;
+		const years = Array.from({length: numYears}).map((_, i) => startYear + i);
+		const valueYear = value && value.getFullYear ? value.getFullYear() : null;
+
+		if (valueYear && valueYear > startYear + numYears) {
+			years.push(valueYear);
+		}
+
+		if (valueYear && valueYear < startYear) {
+			years.unshift(valueYear);
+		}
+
+		return years.map(year => <option key={year} value={year}>{year}</option>);
 	}
 
 

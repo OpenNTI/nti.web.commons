@@ -239,4 +239,25 @@ describe('DateTimeField', () => {
 				expect(error.text()).toBe(errorMessage);
 			});
 	});
+
+
+	test('inclue an option for the specified value\'s year when it\'s outside regular option bounds', () => {
+		const value = new Date();
+
+		// the past
+		value.setYear(1980);
+		testRender({value, onChange: () => {}})
+			.forEach(x => {
+				const yearSelect = x.find('.year-wrapper Select');
+				expect(yearSelect.find('option[value=1980]').exists()).toBeTruthy();
+			});
+
+		// the future
+		value.setYear(2038);
+		testRender({value, onChange: () => {}})
+			.forEach(x => {
+				const yearSelect = x.find('.year-wrapper Select');
+				expect(yearSelect.find('option[value=2038]').exists()).toBeTruthy();
+			});
+	});
 });
