@@ -159,6 +159,24 @@ describe('DateTimeField', () => {
 			});
 	});
 
+	test('render the correct day options', () => {
+		const value = new Date();
+
+		value.setYear(2017);
+		value.setMonth(1); // february, zero-based.
+		value.setDate(1); // the first, one-based.
+
+		testRender({value, onChange: () => {}})
+			.forEach(x => {
+				const daySelect = x.find('.date-wrapper Select');
+				expect(daySelect.find('option[value=1]').exists()).toBeTruthy();
+				expect(daySelect.find('option[value=28]').exists()).toBeTruthy();
+
+				expect(daySelect.find('option[value=0]').exists()).toBeFalsy();
+				expect(daySelect.find('option[value=29]').exists()).toBeFalsy();
+			});
+	});
+
 	// this test has to come before the one below—the one that sets startYear and numYears
 	// props—because the sharedWrapper instance retains any previously set props unless they're
 	// explicitly overwritten.

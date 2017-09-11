@@ -91,17 +91,13 @@ export default class DateTimeField extends Component {
 	}
 
 	renderDays ({days = 31, value, leapDays = void 0}, year) {
-		const daysArray = [];
 
 		// Check for Leap Year
 		if(isLeapYear(year || new Date().getFullYear()) && value === 1) {
 			days = leapDays;
 		}
 
-		for(let i = 1; i <= days; i++) {
-			daysArray.push(<option key={i} value={i}>{i}</option>);
-		}
-		return daysArray;
+		return Array.from({length: days}).map((_, i) => <option key={i} value={i + 1}>{i + 1}</option>);
 	}
 
 
