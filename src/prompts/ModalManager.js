@@ -82,7 +82,9 @@ export class ModalManager extends EventEmitter {
 		const dismiss = buffer(1, () =>
 			(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
 
-		const scroller = getScrollParent(container);
+		const scroller = mountPoint
+			? getScrollParent(container)
+			: document.scrollingElement || document.documentElement;
 
 		const reference = {
 			dismiss,
