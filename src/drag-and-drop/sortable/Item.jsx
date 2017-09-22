@@ -126,9 +126,7 @@ class Item extends React.Component {
 
 		const content = connectDragSource(connectDropTarget(
 			<li className={classes}>
-				<div className="sortable-item-content">
-					{children}
-				</div>
+				{children}
 			</li>
 		));
 

@@ -112,7 +112,7 @@ class Container extends React.Component {
 						moveItem={isModifiable ? this.moveItem : null}
 						deleteItem={isModifiable ? this.deleteItem : null}
 					>
-						<span>{child}</span>
+						{child}
 					</Item>
 				))}
 				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview"/> )}
