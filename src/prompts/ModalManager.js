@@ -86,7 +86,7 @@ export class ModalManager extends EventEmitter {
 		// but in old browsers we need to fallback to getScrollParent(container)
 		// mountPoint is not intended to be provided by the first invocation, but subsequent
 		// calls (to re-render and update) will have the "reference" object passed as "options".
-		const scroller = document.scrollingElement || getScrollParent(container),
+		const scroller = document.scrollingElement || getScrollParent(container);
 
 		const reference = {
 			dismiss,
