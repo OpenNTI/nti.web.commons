@@ -82,16 +82,16 @@ export class ModalManager extends EventEmitter {
 		const dismiss = buffer(1, () =>
 			(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
 
-		const scroller = mountPoint
-			? getScrollParent(container)
-			: document.scrollingElement || document.documentElement;
-
 		const reference = {
 			dismiss,
 			mountPoint: container,
 			refocus,
 			scroll: !restoreScroll ? void 0 : {
-				scroller,
+				// scrollingElement is what we want ALL the time. (modals are appended to <body>),
+				// but in old browsers we need to fallback to getScrollParent(container)
+				// mountPoint is not intended to be provided by the first invocation, but subsequent
+				// calls (to re-render and update) will have the "reference" object passed as "options".
+				scroller: document.scrollingElement || getScrollParent(container),
 				...getScrollPosition(scroller)
 			}
 		};
