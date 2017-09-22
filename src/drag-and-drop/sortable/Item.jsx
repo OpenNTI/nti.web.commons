@@ -114,8 +114,6 @@ class Item extends React.Component {
 	render () {
 
 		const {
-			index,
-			moveItem,
 			className,
 			isDragging,
 			connectDragSource,
@@ -124,17 +122,13 @@ class Item extends React.Component {
 			children
 		} = this.props;
 
-		const showDragHandle = !!moveItem;
-
 		const classes = cx('sortable-item', className, {dragging: isDragging});
 
 		const content = connectDragSource(connectDropTarget(
 			<li className={classes}>
-				<span className="position">{index + 1}</span>
 				<div className="sortable-item-content">
 					{children}
 				</div>
-				{showDragHandle && <span className="drag-handle" />}
 			</li>
 		));
 
