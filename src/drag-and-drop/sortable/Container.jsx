@@ -8,6 +8,7 @@ import isTouch from 'nti-util-detection-touch';
 
 import DragLayer from './SortDragLayer';
 import Item from './Item';
+import LockedItem from './LockedItem';
 
 const isIE = /(Trident|Edge)\//.test((global.navigator || {}).userAgent);
 const polyfillDrag = isTouch && !isIE;
@@ -80,41 +81,39 @@ class Container extends React.Component {
 		}
 	}
 
-	onDragEnd = () => {
-		const {onDragEnd} = this.props;
-		if (onDragEnd) {
-			onDragEnd();
-		}
-	}
-
-	moveItem = (dragIndex, hoverIndex) => {
-		const {onMove} = this.props;
-		onMove(dragIndex, hoverIndex);
-	}
-
 	render () {
 
 		const {
+			onMove,
+			onDragEnd,
 			readOnly,
 			className,
 			children
 		} = this.props;
 
 		const isModifiable = !readOnly;
+		let locked = 0;
 
 		return (
 			<ol className={cx('sortable-container', className)} ref={this.attachRef}>
-				{React.Children.map(children, (child, index) => (
-					<Item
-						key={child.key}
-						index={index}
-						onDragEnd={this.onDragEnd}
-						moveItem={isModifiable ? this.moveItem : null}
-						deleteItem={isModifiable ? this.deleteItem : null}
-					>
-						{child}
-					</Item>
-				))}
+				{React.Children.map(children, (child, index) => {
+
+					if (child.type === LockedItem) {
+						locked++;
+						return child;
+					}
+					return (
+						<Item
+							key={child.key}
+							index={index - locked}
+							onDragEnd={onDragEnd}
+							moveItem={isModifiable ? onMove : null}
+							deleteItem={isModifiable ? this.deleteItem : null}
+						>
+							{child}
+						</Item>
+					);
+				})}
 				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview"/> )}
 			</ol>
 		);
