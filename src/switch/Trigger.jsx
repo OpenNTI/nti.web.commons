@@ -6,7 +6,7 @@ import cx from 'classnames';
 export default class SwitchTrigger extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		item: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+		item: PropTypes.string,
 		onClick: PropTypes.func,
 		children: PropTypes.node,
 		action: PropTypes.func
