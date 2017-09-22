@@ -1,7 +1,8 @@
 @import "~nti-style-common";
-@import "~util/variables";
 
 .sortable-item {
+	$controls-color-1: #3344d6;
+
 	cursor: move;
 	position: relative;
 	display: flex;
