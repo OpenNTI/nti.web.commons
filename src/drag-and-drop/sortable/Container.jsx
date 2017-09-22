@@ -49,7 +49,8 @@ class Sortable extends React.Component {
 }
 */
 
-
+export default
+@DragDropContext(DNDBackend)
 class Container extends React.Component {
 
 	static propTypes = {
@@ -119,5 +120,3 @@ class Container extends React.Component {
 		);
 	}
 }
-
-export default DragDropContext(DNDBackend)(Container);
