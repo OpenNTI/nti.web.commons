@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DragLayer} from 'react-dnd';
 
-import {RemoteMount} from '../../remote-mount/';
+import {MountToBody} from '../../remote-mount/';
 
 import Item from './Item';
 
@@ -72,13 +72,13 @@ class SortDragLayer extends React.Component {
 		}
 
 		return (
-			<RemoteMount.MountToBody className="sortable-item-drag-ghost">
+			<MountToBody className="sortable-item-drag-ghost">
 				<div style={LAYER_STYLES}>
 					<ContextWrapper style={getItemStyles(this.props)} {...this.context}>
 						{isDragging && this.renderItem(item)}
 					</ContextWrapper>
 				</div>
-			</RemoteMount.MountToBody>
+			</MountToBody>
 		);
 	}
 }
