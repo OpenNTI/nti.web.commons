@@ -108,7 +108,6 @@ class Container extends React.Component {
 							index={index - locked}
 							onDragEnd={onDragEnd}
 							moveItem={isModifiable ? onMove : null}
-							deleteItem={isModifiable ? this.deleteItem : null}
 						>
 							{child}
 						</Item>
