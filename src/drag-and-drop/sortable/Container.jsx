@@ -103,7 +103,7 @@ class Container extends React.Component {
 
 					if (child.type === Inert) {
 						inert++;
-						return child;
+						return <li key={child.key}>{child}</li>;
 					}
 
 					return (
