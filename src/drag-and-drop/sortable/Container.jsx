@@ -8,6 +8,7 @@ import isTouch from 'nti-util-detection-touch';
 
 import DragLayer from './SortDragLayer';
 import Item from './Item';
+import Inert from './Inert';
 import LockedItem from './LockedItem';
 
 const isIE = /(Trident|Edge)\//.test((global.navigator || {}).userAgent);
@@ -92,22 +93,25 @@ class Container extends React.Component {
 		} = this.props;
 
 		const isModifiable = !readOnly;
-		let locked = 0;
+		let inert = 0;
 
 		return (
 			<ol className={cx('sortable-container', className)} ref={this.attachRef}>
 				{React.Children.map(children, (child, index) => {
 
-					if (child.type === LockedItem) {
-						locked++;
+					const itemLocked = child.type === LockedItem;
+
+					if (child.type === Inert) {
+						inert++;
 						return child;
 					}
+
 					return (
 						<Item
 							key={child.key}
-							index={index - locked}
+							index={index - inert}
 							onDragEnd={onDragEnd}
-							moveItem={isModifiable ? onMove : null}
+							moveItem={isModifiable && !itemLocked ? onMove : null}
 						>
 							{child}
 						</Item>
