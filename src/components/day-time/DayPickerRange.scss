@@ -20,6 +20,7 @@
 			padding: 5px;
 			padding-left: 15px;
 			border-radius: 3px;
+			display: flex;
 
 			.label {
 				font-size: 10px;
@@ -27,6 +28,19 @@
 
 			.value {
 				font-size: 26px;
+			}
+
+			.remove-date {
+				margin: 22px 0 0 126px;
+				padding: 2px 2px 2px 4px;
+				color: white;
+				background-color: #ddd;
+				height: 22px;
+				width: 22px;
+				border-radius: 16px;
+				cursor: pointer;
+				font-size: 14px;
+				position: absolute;
 			}
 
 			&.selected {
