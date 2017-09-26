@@ -33,8 +33,6 @@ export default class DayPickerRange extends React.Component {
 			value,
 			selectedType: 'Start'
 		};
-
-		this.handleDayClick = this.handleDayClick.bind(this);
 	}
 
 
@@ -60,15 +58,15 @@ export default class DayPickerRange extends React.Component {
 	 * @param  {event} e - Click event.
 	 * @return {void}
 	 */
-	handleDayClick (value) {
+	handleDayClick = (value) => {
 		const { selectedType } = this.state;
-		const { updateStartDate, updateEndDate } = this.props;
+		const { updateStartDate, updateEndDate, startDate, endDate } = this.props;
 
-		if(selectedType === 'Start' && DateUtils.isDayAfter(value, this.props.endDate)) {
+		if(selectedType === 'Start' && endDate && DateUtils.isDayAfter(value, endDate)) {
 			return;
 		}
 
-		if(selectedType === 'End' && DateUtils.isDayBefore(value, this.props.startDate)) {
+		if(selectedType === 'End' && startDate && DateUtils.isDayBefore(value, startDate)) {
 			return;
 		}
 
@@ -78,6 +76,25 @@ export default class DayPickerRange extends React.Component {
 		else if(selectedType === 'End' && updateEndDate) {
 			updateEndDate(value);
 		}
+	}
+
+	renderRemoveButton (type, date) {
+		if(!date) {
+			return null;
+		}
+
+		const removeDate = () => {
+			const { updateStartDate, updateEndDate } = this.props;
+
+			if(type === 'Start') {
+				updateStartDate && updateStartDate();
+			}
+			else {
+				updateEndDate && updateEndDate();
+			}
+		};
+
+		return (<div className="remove-date" onClick={removeDate}><i className="icon-light-x"/></div>);
 	}
 
 	renderDate (type, date) {
@@ -92,8 +109,11 @@ export default class DayPickerRange extends React.Component {
 		}
 
 		return (<div className={className} onClick={onSelect}>
-			<div className="label">{type}</div>
-			<div className="value">{DateTime.format(date, 'MMM. D')}</div>
+			<div className="field-contents">
+				<div className="label">{type}</div>
+				<div className="value">{date ? DateTime.format(date, 'MMM. D') : ''}</div>
+			</div>
+			{this.renderRemoveButton(type, date)}
 		</div>);
 	}
 
@@ -107,38 +127,43 @@ export default class DayPickerRange extends React.Component {
 	}
 
 	render () {
-		const { startDate, endDate } = this.props;
-		const modifiers = DateUtils.isSameDay(startDate, endDate)
-			? {
-				rangeonly: startDate
-			} :
-			{
-				rangeopen: startDate,
-				rangeclose: endDate
-			};
+		const { startDate, endDate, disabledDays } = this.props;
 
-		const selectedDays = [
-			startDate,
-			{
-				from: startDate,
-				to: endDate
-			}
-		];
+		let modifiers = null, selectedDays = null;
+
+		if(startDate && endDate) {
+			modifiers = DateUtils.isSameDay(startDate, endDate)
+				? {
+					rangeonly: startDate
+				} :
+				{
+					rangeopen: startDate,
+					rangeclose: endDate
+				};
+
+			selectedDays = [
+				startDate,
+				{
+					from: startDate,
+					to: endDate
+				}
+			];
+		}
 
 		const value = this.state.selectedType === 'Start' ? startDate : endDate;
 		return (
 			<div className="date-picker-range">
 				<div className="course-panel-choosedates">
 					<div className="selected-dates">
-						{this.renderDate('Start', this.props.startDate)}
-						{this.renderDate('End', this.props.endDate)}
+						{this.renderDate('Start', startDate)}
+						{this.renderDate('End', endDate)}
 					</div>
 				</div>
 				<DayPicker
 					initialMonth={ value || void value }
 					month={value || void value }
 					selectedDays={ selectedDays }
-					disabledDays={ this.props.disabledDays }
+					disabledDays={ disabledDays }
 					onChange={ this.handleDayClick }
 					modifiers={ modifiers }
 					enableOutsideDays
