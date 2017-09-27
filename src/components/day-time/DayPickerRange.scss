@@ -49,8 +49,9 @@
 		}
 	}
 
-	.DayPicker-Week {
-		border: solid 10px rgba(0, 0, 0, 0);
+	.DayPicker-Month {
+		border-collapse: separate;
+		border-spacing: 0 10px;
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--rangeonly):not(.DayPicker-Day--rangeopen):not(.DayPicker-Day--rangeclose) {
