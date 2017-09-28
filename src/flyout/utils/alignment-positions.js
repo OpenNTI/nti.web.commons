@@ -1,7 +1,6 @@
 import {
 	DEFAULT_VERTICAL,
 	DEFAULT_HORIZONTAL,
-	DEFAULT_SIZING,
 
 	VERTICAL,
 	// HORIZONTAL,
@@ -11,21 +10,11 @@ import {
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
-	ALIGN_LEFT_OR_RIGHT,
+	ALIGN_LEFT_OR_RIGHT
+} from '../Constants';
 
-	MATCH_SIDE
-} from './Constants';
 
-const ARROW_HEIGHT = 15;
-const ARROW_OFFSET = 23;
-
-const styleProps = ['top', 'bottom', 'left', 'right', 'width'];
-
-/**
- * Functions to compute the different types of alignments
- * @type {Object}
- */
-export const ALIGNMENT_POSITIONS = {
+const ALIGNMENT_POSITIONS = {
 	//TODO: add horizontal positioning
 	[VERTICAL]: {
 		/**
@@ -213,104 +202,4 @@ export const ALIGNMENT_POSITIONS = {
 	}
 };
 
-
-export const ALIGNMENT_SIZINGS = {
-	//TODO: add horizontal sizing
-	[VERTICAL]: {
-		[MATCH_SIDE] ({width}) {
-			return {
-				width: width
-			};
-		},
-		[DEFAULT_SIZING] () {
-			return {};
-		}
-	}
-};
-
-
-export function constrainAlignment (alignment = {}, {height: viewHeight, width: viewWidth}) {
-	const clone = {...alignment};
-
-	if (clone.top != null) {
-		clone.maxHeight = viewHeight - clone.top;
-	} else if (clone.bottom != null) {
-		clone.maxHeight = viewHeight - clone.bottom;
-	}
-
-	if (clone.left != null) {
-		clone.maxWidth = viewWidth - clone.left;
-	} else if (clone.right != null) {
-		clone.maxWidth = viewWidth - clone.right;
-	}
-
-	return clone;
-}
-
-
-export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis, alignToArrow) {
-	const clone = {...alignment};
-
-	if (primaryAxis === VERTICAL && arrow) {
-		if (clone.top != null) {
-			clone.top = clone.top + ARROW_HEIGHT;
-		} else if (clone.bottom != null) {
-			clone.bottom = clone.bottom + ARROW_HEIGHT;
-		}
-
-		if (alignToArrow) {
-			if (clone.left != null) {
-				clone.left = clone.left - ARROW_OFFSET;
-			} else if (clone.right != null) {
-				clone.right = clone.right - ARROW_OFFSET;
-			}
-		}
-	}
-
-	return styleProps.reduce((acc, prop) => {
-		if (clone[prop] != null) {
-			acc[prop] = `${clone[prop]}px`;
-		}
-
-		return acc;
-	}, {});
-}
-
-
-export function getInnerStylesForAlignment (alignment, arrow, primaryAxis) {
-	let {maxWidth, maxHeight} = alignment;
-
-	if (primaryAxis === VERTICAL && arrow) {
-		maxHeight = maxHeight - ARROW_HEIGHT;
-	}
-
-	//TODO: figure out what to do for horizontal alignment
-
-	return {
-		maxWidth: maxWidth ? `${maxWidth}px` : null,
-		maxHeight: maxHeight ? `${maxHeight}px` : null
-	};
-}
-
-
-export function getAlignmentClass (alignment, vAlign, hAlign) {
-	//TODO: figure out what to do for horizontal alignment
-	let vCls = '';
-	let hCls = '';
-
-	if (alignment.top != null) {
-		vCls = 'bottom';
-	} else if (alignment.bottom != null) {
-		vCls = 'top';
-	}
-
-	if (!hAlign || hAlign === ALIGN_CENTER) {
-		hCls = 'center';
-	} else if (alignment.left != null) {
-		hCls = 'left';
-	} else if (alignment.right != null) {
-		hCls = 'right';
-	}
-
-	return vCls && hCls ? `${vCls} ${hCls}` : (vCls || hCls);
-}
+export default ALIGNMENT_POSITIONS;

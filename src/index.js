@@ -6,6 +6,7 @@ export * as Associations from './associations';
 export * as Constants from './constants';
 export * as DnD from './drag-and-drop';
 export * as Errors from './errors';
+export * as Flyout from './flyout';
 export * as HOC from './HighOrderComponents';
 export * as Mixins from './mixins';
 export * as Prompt from './prompts';

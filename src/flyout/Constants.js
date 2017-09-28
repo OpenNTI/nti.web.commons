@@ -15,3 +15,11 @@ export const ALIGN_LEFT_OR_RIGHT = 'left-or-right';
 export const ALIGN_TOP_OR_BOTTOM = 'top-or-bottom';
 
 export const MATCH_SIDE = 'matchSize';
+
+export const CONSTRAIN_WIDTH = 'constrain-width';
+export const CONSTRAIN_HEIGHT = 'constrain-height';
+export const CONSTRAIN_BOTH = 'constrain-both';
+
+export const ARROW_HEIGHT = 15;
+export const ARROW_OFFSET = 23;
+
