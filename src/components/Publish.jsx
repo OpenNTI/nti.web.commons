@@ -5,10 +5,10 @@ import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
 
 import {PUBLISH_STATES} from '../constants';
+import * as Flyout from '../flyout';
 
 import DateTime from './DateTime';
 import DayTimePicker from './day-time/DayTimePicker';
-import * as Flyout from './flyout';
 import Radio from './Radio';
 import PublishTrigger from './PublishTrigger';
 

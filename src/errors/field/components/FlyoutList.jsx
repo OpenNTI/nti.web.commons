@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
-import {Flyout} from '../../../components';
+import * as Flyout from '../../../flyout';
 
 import List from './List';
 

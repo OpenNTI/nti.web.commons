@@ -10,7 +10,7 @@ import Locations from '../components/Locations';
 import ErrorCmp from '../components/Error';
 //
 import DateTime from '../../../components/DateTime';
-import {InlineFlyout} from '../../../components/flyout';
+import {InlineFlyout} from '../../../flyout';
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
 import {Loading} from '../../../components';
 

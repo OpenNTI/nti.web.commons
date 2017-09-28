@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-import {List, Loading, Flyout} from '../../../components';
+import * as Flyout from '../../../flyout';
+import {List, Loading} from '../../../components';
 
 const DEFAULT_TEXT = {
 	loading: {

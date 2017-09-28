@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
-import * as Flyout from '../flyout';
+import * as Flyout from '../../flyout';
 
 import DayTimeToggleTrigger from './DayTimeToggleTrigger';
 import DayTimePicker from './DayTimePicker';
