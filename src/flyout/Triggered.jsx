@@ -238,9 +238,8 @@ export default class Flyout extends React.Component {
 		const {target} = e || {};
 		const {trigger, flyout, state: {open}} = this;
 		const finish = () => typeof cb === 'function' && cb();
-		const inDom = document.contains(target); // If the target was removed from dom after click or rerender it will not be in the dom anymore.
 
-		if (e && (!trigger || !flyout || !open || !inDom || target === trigger || trigger.contains(target))) {
+		if (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target))) {
 			return finish();
 		}
 
