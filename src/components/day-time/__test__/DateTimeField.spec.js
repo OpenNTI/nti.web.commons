@@ -160,11 +160,7 @@ describe('DateTimeField', () => {
 	});
 
 	test('render the correct day options', () => {
-		const value = new Date();
-
-		value.setYear(2017);
-		value.setMonth(1); // february, zero-based.
-		value.setDate(1); // the first, one-based.
+		const value = new Date('Wed Feb 1 2017 18:00:00 GMT-0600 (CST)');
 
 		testRender({value, onChange: () => {}})
 			.forEach(x => {
