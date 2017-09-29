@@ -62,7 +62,7 @@ class SortDragLayer extends React.Component {
 	}
 
 	renderItem (item) {
-		return <Item residence={item.residence} index={item.index}/> ;
+		return <Item index={item.index} /> ;
 	}
 
 	render () {
