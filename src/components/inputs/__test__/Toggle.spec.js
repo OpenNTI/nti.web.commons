@@ -22,7 +22,7 @@ describe('Toggle Input', () => {
 		expect(toggler.prop('className')).toMatch(/ off/);
 		expect(toggleButton.prop('className')).toMatch(/ off/);
 
-		expect(toggleLabel.text()).toEqual('OFF');
+		expect(toggleLabel.text()).toEqual('Off');
 
 		// simulate toggling ON
 		toggler.find('input').simulate('change', { target: { checked: true } });
@@ -55,7 +55,7 @@ describe('Toggle Input', () => {
 		expect(toggler.prop('className')).not.toMatch(/ off/);
 		expect(toggleButton.prop('className')).not.toMatch(/ off/);
 
-		expect(toggleLabel.text()).toEqual('ON');
+		expect(toggleLabel.text()).toEqual('On');
 
 		// simulate toggling OFF
 		toggler.find('input').simulate('change', { target: { checked: false } });

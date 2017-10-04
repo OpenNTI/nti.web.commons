@@ -1,5 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+import {scoped} from 'nti-lib-locale';
+
+const DEFAULT_TEXT = {
+	on: 'On',
+	off: 'Off'
+};
+
+const t = scoped('COURSE_OVERVIEW_CONTOLRS', DEFAULT_TEXT);
 
 export default class Toggle extends React.Component {
 	static propTypes = {
@@ -45,8 +54,8 @@ export default class Toggle extends React.Component {
 			return null;
 		}
 
-		const cls = value ? 'toggle-label on' : 'toggle-label off';
-		const text = value ? 'ON' : 'OFF';
+		const cls = cx('toggle-label', {on: value, off: !value});
+		const text = value ? t('on') : t('off');
 
 		return (<div className={cls}>{text}</div>);
 	}
@@ -54,17 +63,8 @@ export default class Toggle extends React.Component {
 	renderToggler () {
 		const { value } = this.props;
 
-		let togglerCls = 'toggler';
-		let buttonCls = 'toggle-button';
-
-		if(value) {
-			togglerCls += ' on';
-			buttonCls += ' on';
-		}
-		else {
-			togglerCls += ' off';
-			buttonCls += ' off';
-		}
+		const togglerCls = cx('toggler', {on: value, off: !value});
+		const buttonCls = cx('toggle-button', {on: value, off: !value});
 
 		return (
 			<div className={togglerCls}>
