@@ -6,9 +6,9 @@ import Toggle from '../Toggle';
 
 describe('Toggle Input', () => {
 	test('Test default state', (done) => {
-		const onValueChange = jest.fn();
+		const onChange = jest.fn();
 
-		const cmp = mount(<Toggle onValueChange={onValueChange}/>);
+		const cmp = mount(<Toggle onChange={onChange}/>);
 
 		let toggleLabel = cmp.find('.toggle-label').first();
 		let toggler = cmp.find('.toggler').first();
@@ -24,11 +24,11 @@ describe('Toggle Input', () => {
 
 		expect(toggleLabel.text()).toEqual('OFF');
 
-		// click to toggle to ON
-		toggler.simulate('click');
+		// simulate toggling ON
+		toggler.find('input').simulate('change', { target: { checked: true } });
 
 		const verifyCalled = () => {
-			expect(onValueChange).toHaveBeenCalledWith(true);
+			expect(onChange).toHaveBeenCalledWith(true);
 
 			done();
 		};
@@ -37,9 +37,9 @@ describe('Toggle Input', () => {
 	});
 
 	test('Test provided value', (done) => {
-		const onValueChange = jest.fn();
+		const onChange = jest.fn();
 
-		const cmp = mount(<Toggle className="test-name" value onValueChange={onValueChange}/>);
+		const cmp = mount(<Toggle className="test-name" value onChange={onChange}/>);
 
 		let toggleLabel = cmp.find('.toggle-label').first();
 		let toggler = cmp.find('.toggler').first();
@@ -57,15 +57,23 @@ describe('Toggle Input', () => {
 
 		expect(toggleLabel.text()).toEqual('ON');
 
-		// click to toggle to OFF
-		toggler.simulate('click');
+		// simulate toggling OFF
+		toggler.find('input').simulate('change', { target: { checked: false } });
 
 		const verifyCalled = () => {
-			expect(onValueChange).toHaveBeenCalledWith(false);
+			expect(onChange).toHaveBeenCalledWith(false);
 
 			done();
 		};
 
 		setTimeout(verifyCalled, 300);
+	});
+
+	test('Test hide label', () => {
+		const cmp = mount(<Toggle hideLabel/>);
+
+		// label should not appear, but toggler should still be there
+		expect(cmp.find('.toggle-label').exists()).toBeFalsy();
+		expect(cmp.find('.toggler').exists()).toBeTruthy();
 	});
 });
