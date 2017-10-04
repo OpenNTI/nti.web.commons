@@ -4,19 +4,31 @@ import PropTypes from 'prop-types';
 export default class Toggle extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
+		hideLabel: PropTypes.bool,
 		value: PropTypes.bool,
-		onValueChange: PropTypes.func
+		onChange: PropTypes.func
 	}
+
+	attachInputRef = x => this.input = x;
 
 	constructor (props) {
 		super(props);
 	}
 
-	toggleValue = () => {
-		const { onValueChange, value } = this.props;
-		const newValue = !value;
+	get validity () {
+		return this.input.validity;
+	}
 
-		onValueChange && onValueChange(newValue);
+	focus () {
+		if (this.input) {
+			this.input.focus();
+		}
+	}
+
+	toggleValue = (e) => {
+		const { onChange } = this.props;
+
+		onChange && onChange(e.target.checked);
 	}
 
 	renderToggle () {
@@ -27,7 +39,11 @@ export default class Toggle extends React.Component {
 	}
 
 	renderOnOff () {
-		const { value } = this.props;
+		const { value, hideLabel } = this.props;
+
+		if(hideLabel) {
+			return null;
+		}
 
 		const cls = value ? 'toggle-label on' : 'toggle-label off';
 		const text = value ? 'ON' : 'OFF';
@@ -50,7 +66,12 @@ export default class Toggle extends React.Component {
 			buttonCls += ' off';
 		}
 
-		return (<div onClick={this.toggleValue} className={togglerCls}><div className={buttonCls}/></div>);
+		return (
+			<div className={togglerCls}>
+				<input onChange={this.toggleValue} checked={value} type="checkbox" ref={this.attachInputRef}/>
+				<div className={buttonCls}/>
+			</div>
+		);
 	}
 
 	render () {
