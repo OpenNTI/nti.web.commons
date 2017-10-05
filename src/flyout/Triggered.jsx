@@ -237,7 +237,11 @@ export default class Flyout extends React.Component {
 	maybeDismiss = (e, cb) => {
 		const {target} = e || {};
 		const {trigger, flyout, state: {open}} = this;
-		const finish = () => typeof cb === 'function' && cb();
+		const finish = () => {
+			delete this.flyoutWasClicked;
+
+			typeof cb === 'function' && cb();
+		};
 
 		if (this.flyoutWasClicked || (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target)))) {
 			return finish();
