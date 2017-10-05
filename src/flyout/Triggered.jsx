@@ -239,7 +239,7 @@ export default class Flyout extends React.Component {
 		const {trigger, flyout, state: {open}} = this;
 		const finish = () => typeof cb === 'function' && cb();
 
-		if (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target))) {
+		if (this.flyoutWasClicked || (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target)))) {
 			return finish();
 		}
 
@@ -281,6 +281,9 @@ export default class Flyout extends React.Component {
 		}
 	}
 
+	flyoutClicked = () => {
+		this.flyoutWasClicked = true;
+	}
 
 	attachFlyoutRef = (ref) => {
 
@@ -288,8 +291,12 @@ export default class Flyout extends React.Component {
 			window.addEventListener('resize', this.realign);
 			window.document.addEventListener('click', this.maybeDismiss);
 			this.listenToScroll(getScrollParent(ref) || window);
+			ref.addEventListener('click', this.flyoutClicked, true);
 		} else if (!ref) {
+			this.flyout.removeEventListener('click', this.flyoutClicked, true);
+
 			delete this.flyoutSize;
+			delete this.flyoutWasClicked;
 			window.removeEventListener('resize', this.realign);
 			window.document.removeEventListener('click', this.maybeDismiss);
 			this.listenToScroll(null);
