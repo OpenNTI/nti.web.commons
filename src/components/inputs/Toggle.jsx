@@ -8,7 +8,7 @@ const DEFAULT_TEXT = {
 	off: 'Off'
 };
 
-const t = scoped('COURSE_OVERVIEW_CONTOLRS', DEFAULT_TEXT);
+const t = scoped('common.components.course.overview.controls.toggle', DEFAULT_TEXT);
 
 export default class Toggle extends React.Component {
 	static propTypes = {
