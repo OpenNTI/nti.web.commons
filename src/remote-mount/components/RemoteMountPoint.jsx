@@ -61,7 +61,6 @@ export default class RemoteMountPoint extends React.Component {
 
 	render () {
 		const {props: {children}, mountPoint: m} = this;
-		const {mountPoint: m} = this;
 		return m.isPortal ? m.render(RemoteWrapper, {}, children) : (
 			<span data-placeholder="mount point placeholder"/>
 		);
