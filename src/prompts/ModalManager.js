@@ -271,10 +271,9 @@ export class ModalManager extends EventEmitter {
 		if (!top.mountPoint.contains(e.target) && !isAfter(e.target) && document.contains(e.target)) {
 			e.stopPropagation();
 			try {
-				// top.mountPoint.querySelector('dialog').focus();
 				top.component.focus();
 			} catch (er) {
-				console.error(er.stack || er.message || er); //eslint-disable-line no-console
+				console.error('Could not focus top most component: %o', top); //eslint-disable-line no-console
 			}
 		}
 	}
