@@ -39,9 +39,10 @@ export class ModalManager extends EventEmitter {
 
 	hide (node) {
 		const ref = this.active.find(x => x.mountPoint === node);
-		if (ref && !ref.isPortal)
+		if (ref && !ref.isPortal) {
 			ReactDOM.unmountComponentAtNode(node);
 		}
+
 		if (node.parentNode) {
 			document.body.removeChild(node);
 		}
