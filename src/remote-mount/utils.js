@@ -54,7 +54,9 @@ class MountPoint {
 
 
 	remove () {
-		ReactDOM.unmountComponentAtNode(this.mountPoint);
+		if (!this.isPortal) {
+			ReactDOM.unmountComponentAtNode(this.mountPoint);
+		}
 
 		if (this.parent && this.parent.removeChild) {
 			this.parent.removeChild(this.mountPoint);

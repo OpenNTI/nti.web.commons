@@ -38,12 +38,14 @@ export class ModalManager extends EventEmitter {
 
 
 	hide (node) {
-		ReactDOM.unmountComponentAtNode(node);
+		const ref = this.active.find(x => x.mountPoint === node);
+		if (ref && !ref.isPortal)
+			ReactDOM.unmountComponentAtNode(node);
+		}
 		if (node.parentNode) {
 			document.body.removeChild(node);
 		}
 
-		const ref = this.active.find(x => x.mountPoint === node);
 		if (ref) {
 			this.remove(ref);
 		}
