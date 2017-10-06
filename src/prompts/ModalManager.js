@@ -89,6 +89,7 @@ export class ModalManager extends EventEmitter {
 		const scroller = document.scrollingElement || getScrollParent(container);
 
 		const reference = {
+			isPortal: Boolean(ReactDOM.createPortal),
 			dismiss,
 			mountPoint: container,
 			refocus,
@@ -98,9 +99,11 @@ export class ModalManager extends EventEmitter {
 			}
 		};
 
+		const render = ReactDOM.createPortal ? 'createPortal' : 'render';
 		const setReference = x => reference.component = x;
 
-		ReactDOM.render((
+
+		reference.portalRef = ReactDOM[render]((
 			<Modal
 				ref={setReference}
 				onDismiss={dismiss}

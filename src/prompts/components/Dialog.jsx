@@ -12,7 +12,7 @@ const logger = Logger.get('prompts:components:Dialog');
 const emptyFunction = () => {};
 
 const MOUNT_POINT_CLS = 'nti-dialog-mount-point';
-
+//XXX: Convert this to be an instance of 'Modal'...and go through the modal manager
 export default class Dialog extends React.Component {
 
 	static getMountPoint () {
@@ -43,7 +43,7 @@ export default class Dialog extends React.Component {
 
 
 	static show (props) {
-		if (this.active) {
+		if (this.active && this.active.dismiss) {
 			this.active.dismiss();
 		}
 

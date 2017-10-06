@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {addClass} from 'nti-lib-dom';
 
-import {setRefOnProps} from '../utils/mergeRefHandlers';
-
 const MOUNT_POINT_NODE = Symbol('Mount Point Node');
 
 
@@ -21,9 +19,9 @@ class MountPoint {
 	constructor (parent, className) {
 		this.className = className;
 		this.parent = parent;
+		this.isPortal = Boolean(ReactDOM.createPortal);
+		this.renderer = this.isPortal ? 'createPortal' : 'render';
 	}
-
-	setChild = x => this.child = x
 
 	/**
 	 * Return the existing dom node, or create one and append it to the parent
@@ -45,16 +43,13 @@ class MountPoint {
 	 * @param  {Object} cmpCls   the react class to render
 	 * @param  {Object} props    the props to render the class with
 	 * @param  {Object} children the children to render with the class
-	 * @return {Promise}          fulfills with the cmp that was created
+	 * @return {*} React opaque pointer... don't use in React15. See portal documentation.
 	 */
 	render (cmpCls, props, children) {
-		return new Promise ((fulfill) => {
-			ReactDOM.render(
-				React.createElement(cmpCls, setRefOnProps(props, this.setChild), children),
-				this.mountPoint,
-				() => fulfill(this.child)
-			);
-		});
+		return ReactDOM[this.renderer](
+			React.createElement(cmpCls, props, children),
+			this.mountPoint
+		);
 	}
 
 

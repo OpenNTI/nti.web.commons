@@ -29,12 +29,13 @@ export default class RemoteMountPoint extends React.Component {
 	}
 
 
-	componentDidMount () {
-		const {className, appendTo, children} = this.props;
-
+	componentWillMount () {
+		const {className, appendTo} = this.props;
 		this.mountPoint = createMountPoint(appendTo, className);
+	}
 
-		this.mountPoint.render(RemoteWrapper, {}, children);
+	componentDidMount () {
+		this.renderNonPortal();
 	}
 
 
@@ -47,16 +48,20 @@ export default class RemoteMountPoint extends React.Component {
 
 
 	componentDidUpdate () {
-		const {children} = this.props;
-
-		if (this.mountPoint) {
-			this.mountPoint.render(RemoteWrapper, {}, children);
-		}
+		this.renderNonPortal();
 	}
 
 
+	renderNonPortal () {
+		const {props: {children}, mountPoint: m} = this;
+		if (m && !m.isPortal) {
+			m.render(RemoteWrapper, {}, children);
+		}
+	}
+
 	render () {
-		return (
+		const {mountPoint: m} = this;
+		return m.isPortal ? m.render() : (
 			<span data-placeholder="mount point placeholder"/>
 		);
 	}
