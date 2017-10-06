@@ -78,7 +78,7 @@ export default class extends React.Component {
 		return (
 			<div className={classes} tabIndex="-1">
 				{isOpen && <div className="click-mask" onClick={this.toggle} />}
-				<div className="menu-label selected" onClick={!disabled && this.toggle}>{optionLabel(selectedOption.label)}</div>
+				<div className="menu-label selected" onClick={disabled ? null : this.toggle}>{optionLabel(selectedOption.label)}</div>
 				{isOpen && (
 					<ul>
 						{options.filter(item => item !== selectedOption).map((option, index) =>

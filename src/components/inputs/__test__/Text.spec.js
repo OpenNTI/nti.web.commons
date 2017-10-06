@@ -10,7 +10,7 @@ describe('Text Input', () => {
 		const wrapper = mount(<Text />);
 		const input = wrapper.find('input');
 
-		expect(wrapper.getNode().input).toEqual(input.getNode());
+		expect(wrapper.instance().input).toEqual(input.instance());
 	});
 
 	describe('onChange', () => {
@@ -37,12 +37,12 @@ describe('Text Input', () => {
 		});
 
 		test('Setting new prop updates input', () => {
-			const input = wrapper.find('input');
+			let input = wrapper.find('input');
 
 			expect(input.prop('value')).toEqual('test');
 
 			wrapper.setProps({value: 'new'});
-
+			input = wrapper.find('input');
 			expect(input.prop('value')).toEqual('new');
 		});
 	});
@@ -65,7 +65,7 @@ describe('Text Input', () => {
 	// 		const wrapper = mount(<Text disableClear />);
 	// 		const clear = wrapper.find('.reset');
 
-	// 		expect(clear.getNodes().length).toEqual(0);
+	// 		expect(clear.instances().length).toEqual(0);
 	// 	});
 	// });
 
@@ -81,7 +81,7 @@ describe('Text Input', () => {
 	// 		const wrapper = mount(<Text />);
 	// 		const label = wrapper.find('.label');
 
-	// 		expect(label.getNodes().length).toEqual(0);
+	// 		expect(label.instances().length).toEqual(0);
 	// 	});
 	// });
 });

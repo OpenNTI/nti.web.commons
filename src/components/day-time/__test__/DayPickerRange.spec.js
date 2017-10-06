@@ -40,14 +40,17 @@ describe('DayPickerRange', () => {
 	});
 
 	test('Test date selection', () => {
-		const startDate = cmp.find('.date').first();
-		const endDate = cmp.find('.date').last();
+		let startDate = cmp.find('.date').first();
+		let endDate = cmp.find('.date').last();
 
 		expect(startDate.prop('className')).toMatch(/selected/);
 		expect(endDate.prop('className')).not.toMatch(/selected/);
 		expect(cmp.find('.DayPicker-Caption').first().text()).toEqual('September 2017');
 
 		endDate.simulate('click');
+
+		startDate = cmp.find('.date').first();
+		endDate = cmp.find('.date').last();
 
 		expect(startDate.prop('className')).not.toMatch(/selected/);
 		expect(endDate.prop('className')).toMatch(/selected/);

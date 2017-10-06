@@ -28,12 +28,13 @@ describe('Number Input', () => {
 		test('Changing the props updates the input', () => {
 			const props = buildProps({value: 5});
 			const wrapper = mount(<NumberInput {...props} />);
-			const input = wrapper.find('input');
+			let input = wrapper.find('input');
 
 			expect(input.prop('value')).toEqual('5');
 
 			wrapper.setProps({value: 10});
 
+			input = wrapper.find('input');
 			expect(input.prop('value')).toEqual('10');
 		});
 	});

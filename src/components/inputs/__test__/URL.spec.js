@@ -10,6 +10,6 @@ describe('URL Input', () => {
 		const wrapper = mount(<URL />);
 		const text = wrapper.find(Text);
 
-		expect(wrapper.getNode().input).toEqual(text.getNode());
+		expect(wrapper.instance().input).toEqual(text.instance());
 	});
 });

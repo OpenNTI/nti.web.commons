@@ -1,9 +1,10 @@
-/* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Flyout from '../Triggered';
+
+const spyOn = (...args) => jest.spyOn(...args);
 
 //We cannot currently get around not using this method...
 //there are other test utils that allow better component access to tests.
@@ -42,6 +43,10 @@ describe('Triggered Flyout', () => {
 			}
 		});
 	}
+
+	beforeAll(()=> {
+		jest.clearAllMocks();
+	});
 
 	afterAll(()=> {
 		ReactDOM.unmountComponentAtNode(container);
@@ -122,12 +127,11 @@ describe('Triggered Flyout', () => {
 			.then(done, e => done.fail(e));
 	});
 
-	test('Closing the flyout should remove listeners to window, and document', (done) => {
+	test('Closing the flyout should remove listeners to window, and document', () => {
 		spyOn(window, 'addEventListener');
 		spyOn(window, 'removeEventListener');
 		spyOn(window.document, 'addEventListener');
 		spyOn(window.document, 'removeEventListener');
-
 
 		let step = null;
 
@@ -135,21 +139,26 @@ describe('Triggered Flyout', () => {
 			step();
 		}
 
-		Promise.all(testRender({afterAlign}, <div>Foobar2</div>))
-			.then(([component]) => new Promise(next => {
+		return Promise.all(testRender({afterAlign}, <div>Foobar2</div>))
+			.then(([component]) => new Promise((next,fail) => {
 
 				step = () => {
+					step = () => {};
 					component.onToggle(null, () => {
-						expect(window.removeEventListener).toHaveBeenCalledWith('resize', component.realign);
-						expect(window.removeEventListener).toHaveBeenCalledWith('scroll', component.realign);
-						expect(window.document.removeEventListener).toHaveBeenCalledWith('click', component.maybeDismiss);
-						next();
+						try {
+							expect(window.removeEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
+							expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
+							expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
+							next();
+						}
+						catch (e) {
+							fail(e);
+						}
 					});
 				};
 
 				component.onToggle();
-			}))
-			.then(done, e => done.fail(e));
+			}));
 	});
 
 	test('Flys echo classnames', (done) => {
