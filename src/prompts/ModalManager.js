@@ -102,7 +102,8 @@ export class ModalManager extends EventEmitter {
 			}
 		};
 
-		const render = ReactDOM.createPortal ? 'createPortal' : 'render';
+		const isPortal = Boolean(ReactDOM.createPortal);
+		const render = isPortal ? 'createPortal' : 'render';
 		const setReference = x => reference.component = x;
 
 
@@ -113,6 +114,7 @@ export class ModalManager extends EventEmitter {
 				className={className}
 				tall={tall}
 				closeOnMaskClick={closeOnMaskClick}
+				isPortal={isPortal}
 			>
 				{content}
 			</Modal>

@@ -21,6 +21,7 @@ export default class Modal extends React.Component {
 		children: PropTypes.node,
 		className: PropTypes.string,
 		closeOnMaskClick: PropTypes.bool,
+		isPortal: PropTypes.bool,//sent by ModalManager
 		tall: PropTypes.bool
 	}
 
@@ -50,7 +51,7 @@ export default class Modal extends React.Component {
 	}
 
 
-	onManagerUpdate = () => this.forceUpdate()
+	onManagerUpdate = () => !this.props.isPortal && this.forceUpdate()
 
 
 	close = (e) => {
