@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DragLayer} from 'react-dnd';
 
-import {MountToBody} from '../../remote-mount/';
-
 import Item from './Item';
 
 const LAYER_STYLES = {
@@ -54,7 +52,8 @@ class SortDragLayer extends React.Component {
 			x: PropTypes.number.isRequired,
 			y: PropTypes.number.isRequired
 		}),
-		isDragging: PropTypes.bool.isRequired
+		isDragging: PropTypes.bool.isRequired,
+		getChildAtIndex: PropTypes.func
 	}
 
 	static contextTypes = {
@@ -62,7 +61,11 @@ class SortDragLayer extends React.Component {
 	}
 
 	renderItem (item) {
-		return <Item index={item.index} /> ;
+		if (this.props.getChildAtIndex) {
+			const child = this.props.getChildAtIndex(item.index);
+			return <Item index={item.index}>{child}</Item>;
+		}
+		return <Item index={item.index}><span>OH HAI</span></Item>;
 	}
 
 	render () {
@@ -71,14 +74,16 @@ class SortDragLayer extends React.Component {
 			return null;
 		}
 
+		const style = getItemStyles(this.props);
+
 		return (
-			<MountToBody className="sortable-item-drag-ghost">
-				<div style={LAYER_STYLES}>
-					<ContextWrapper style={getItemStyles(this.props)} {...this.context}>
-						{isDragging && this.renderItem(item)}
-					</ContextWrapper>
-				</div>
-			</MountToBody>
+
+			<div style={LAYER_STYLES} className="sortable-item-drag-ghost">
+				<ContextWrapper style={style} {...this.context}>
+					{isDragging && this.renderItem(item)}
+				</ContextWrapper>
+			</div>
+
 		);
 	}
 }

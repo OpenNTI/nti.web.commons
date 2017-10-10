@@ -82,6 +82,18 @@ class Container extends React.Component {
 		}
 	}
 
+	/**
+	 * Provides a mechanism by which the drag preview can get the child element at the specified index to render
+	 * during drag operations.
+	 * @param  {integer} index The index of the element being dragged
+	 * @return {Element}       The child (in the React.Children sense) at the given index
+	 */
+	getChildAtIndex = (index) => {
+		const {children} = this.props;
+		return React.Children.toArray(children)
+			.filter(child => child.type !== Inert)[index];
+	}
+
 	render () {
 
 		const {
@@ -117,7 +129,7 @@ class Container extends React.Component {
 						</Item>
 					);
 				})}
-				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview"/> )}
+				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview" getChildAtIndex={this.getChildAtIndex} /> )}
 			</ol>
 		);
 	}
