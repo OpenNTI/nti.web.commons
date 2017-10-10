@@ -15,7 +15,7 @@ const itemSource = {
 		};
 	},
 	canDrag (props/*, monitor */) {
-		return !!props.moveItem;
+		return !!props.moveItem && !props.locked;
 	},
 	endDrag (props) {
 		const {onDragEnd} = props;
