@@ -10,8 +10,8 @@ const ITEM_TYPE = 'sortable-item-type';
 const itemSource = {
 	beginDrag (props) {
 		return {
-			id: props.id,
-			index: props.index
+			index: props.index,
+			item: props.item
 		};
 	},
 	canDrag (props/*, monitor */) {
@@ -53,7 +53,7 @@ const itemTarget = {
 		// Get pixels to the top
 		const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-		// Only perform the move when the mouse has crossed half of the items height
+		// Only perform the move when the mouse has crossed half of the item's height
 		// When dragging downwards, only move when the cursor is below 50%
 		// When dragging upwards, only move when the cursor is above 50%
 
@@ -93,7 +93,7 @@ function collectDrop (connect) {
 	};
 }
 
-class Item extends React.Component {
+class SortableItem extends React.Component {
 
 	static propTypes = {
 		index: PropTypes.number.isRequired,
@@ -133,5 +133,5 @@ class Item extends React.Component {
 		return connectDragPreview ? connectDragPreview(content) : content;
 	}
 }
-const dragSource = DragSource(ITEM_TYPE, itemSource, collect)(Item);
+const dragSource = DragSource(ITEM_TYPE, itemSource, collect)(SortableItem);
 export default DropTarget(ITEM_TYPE, itemTarget, collectDrop)(dragSource);

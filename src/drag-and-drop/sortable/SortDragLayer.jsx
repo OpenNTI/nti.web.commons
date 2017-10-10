@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DragLayer} from 'react-dnd';
 
-import Item from './Item';
-
 const LAYER_STYLES = {
 	position: 'fixed',
 	pointerEvents: 'none',
@@ -53,7 +51,7 @@ class SortDragLayer extends React.Component {
 			y: PropTypes.number.isRequired
 		}),
 		isDragging: PropTypes.bool.isRequired,
-		getChildAtIndex: PropTypes.func
+		getDragPreview: PropTypes.func
 	}
 
 	static contextTypes = {
@@ -61,11 +59,11 @@ class SortDragLayer extends React.Component {
 	}
 
 	renderItem (item) {
-		if (this.props.getChildAtIndex) {
-			const child = this.props.getChildAtIndex(item.index);
-			return <Item index={item.index}>{child}</Item>;
+		const {getDragPreview} = this.props;
+		if (typeof getDragPreview === 'function') {
+			return getDragPreview(item);
 		}
-		return <Item index={item.index}><span>OH HAI</span></Item>;
+		return <span>{item.index}</span>;
 	}
 
 	render () {

@@ -7,9 +7,6 @@ import TouchBackend from 'react-dnd-touch-backend';
 import isTouch from 'nti-util-detection-touch';
 
 import DragLayer from './SortDragLayer';
-import Item from './Item';
-import Inert from './Inert';
-import LockedItem from './LockedItem';
 
 const isIE = /(Trident|Edge)\//.test((global.navigator || {}).userAgent);
 const polyfillDrag = isTouch && !isIE;
@@ -40,12 +37,17 @@ class Sortable extends React.Component {
 		// do something when drag ends; persist changes, etc.
 	}
 
+	// Must return a DnD.Item;
+	// Must include a key unique to the item.
+	// Must pass props to the DnD.Item
+	renderItem = (item, props) => {
+		return <DnD.Item key={item} {...props}>{item}</DnD.Item>
+	}
+
 	render () {
 		const {items} = this.state;
 		return (
-			<Container onMove={this.onMove} onDragEnd={this.onDragEnd}>
-				{items.map((item, index) => <div key={item}>{item}</div>)}
-			</Container>
+			<Container onMove={this.onMove} onDragEnd={this.onDragEnd} items={items} renderer={this.renderItem} />
 		);
 	}
 }
@@ -56,10 +58,12 @@ export default
 class Container extends React.Component {
 
 	static propTypes = {
+		items: PropTypes.array.isRequired,
+		renderer: PropTypes.func.isRequired,
+		children: PropTypes.any,
 		onMove: PropTypes.func.isRequired,
 		onDragEnd: PropTypes.func.isRequired,
 		readOnly: PropTypes.bool,
-		children: PropTypes.any,
 		className: PropTypes.string
 	}
 
@@ -82,54 +86,35 @@ class Container extends React.Component {
 		}
 	}
 
-	/**
-	 * Provides a mechanism by which the drag preview can get the child element at the specified index to render
-	 * during drag operations.
-	 * @param  {integer} index The index of the element being dragged
-	 * @return {Element}       The child (in the React.Children sense) at the given index
-	 */
-	getChildAtIndex = (index) => {
-		const {children} = this.props;
-		return React.Children.toArray(children)
-			.filter(child => child.type !== Inert)[index];
+
+	getDragPreview = (item) => {
+		const {renderer} = this.props;
+		return renderer(item.item);
 	}
 
 	render () {
 
 		const {
+			items = [],
+			renderer,
 			onMove,
 			onDragEnd,
-			readOnly,
 			className,
-			children
 		} = this.props;
-
-		const isModifiable = !readOnly;
-		let inert = 0;
 
 		return (
 			<ol className={cx('sortable-container', className)} ref={this.attachRef}>
-				{React.Children.map(children, (child, index) => {
-
-					const itemLocked = child.type === LockedItem;
-
-					if (child.type === Inert) {
-						inert++;
-						return <li key={child.key}>{child}</li>;
-					}
-
-					return (
-						<Item
-							key={child.key}
-							index={index - inert}
-							onDragEnd={onDragEnd}
-							moveItem={isModifiable && !itemLocked ? onMove : null}
-						>
-							{child}
-						</Item>
-					);
-				})}
-				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview" getChildAtIndex={this.getChildAtIndex} /> )}
+				{
+					items.map((item, index) =>
+						renderer(item, {
+							index,
+							item,
+							onDragEnd,
+							moveItem: onMove
+						})
+					)
+				}
+				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview" getDragPreview={this.getDragPreview} /> )}
 			</ol>
 		);
 	}
