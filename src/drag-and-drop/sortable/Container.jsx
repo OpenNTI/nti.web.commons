@@ -89,7 +89,9 @@ class Container extends React.Component {
 
 	getDragPreview = (item) => {
 		const {renderer} = this.props;
-		return renderer(item.item);
+		return renderer(item.item, {
+			isDragPreview: true
+		});
 	}
 
 	render () {
