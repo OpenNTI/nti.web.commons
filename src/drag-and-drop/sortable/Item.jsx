@@ -37,7 +37,7 @@ const itemTarget = {
 		}
 
 		// can't move the item
-		if (typeof props.moveItem !== 'function') {
+		if (typeof props.moveItem !== 'function' || props.locked) {
 			return;
 		}
 
