@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DragLayer} from 'react-dnd';
 
+import {MountToBody} from '../../remote-mount/';
+
 const LAYER_STYLES = {
 	position: 'fixed',
 	pointerEvents: 'none',
@@ -75,13 +77,13 @@ class SortDragLayer extends React.Component {
 		const style = getItemStyles(this.props);
 
 		return (
-
-			<div style={LAYER_STYLES} className="sortable-item-drag-ghost">
-				<ContextWrapper style={style} {...this.context}>
-					{isDragging && this.renderItem(item)}
-				</ContextWrapper>
-			</div>
-
+			<MountToBody>
+				<div style={LAYER_STYLES} className="sortable-item-drag-ghost">
+					<ContextWrapper style={style} {...this.context}>
+						{isDragging && this.renderItem(item)}
+					</ContextWrapper>
+				</div>
+			</MountToBody>
 		);
 	}
 }
