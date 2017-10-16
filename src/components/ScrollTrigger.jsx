@@ -101,6 +101,7 @@ export default class extends React.Component {
 }
 
 function isElementInView (el) {
+	if (!el) {return false;}
 	const rect = el.getBoundingClientRect();
 	const scroller = getScrollParent(el);
 	const {top, left} = scroller.getBoundingClientRect ? scroller.getBoundingClientRect() : {top: 0, left: 0};
