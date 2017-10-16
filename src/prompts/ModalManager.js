@@ -10,7 +10,10 @@ import Modal from './components/Modal';
 
 const setHidden = (node, hidden) => node.setAttribute('aria-hidden', hidden);
 const focusElement = (node) => node && node.focus();
-const setScroll = ({scroller, left, top} = {}) => top > 0 && (setTimeout(() => scrollElementTo(scroller, left, top)), 1);
+const setScroll = ({maybeRestoreScroll, scroller, left, top} = {}) => top > 0
+	&& maybeRestoreScroll()
+	&& (setTimeout(() => scrollElementTo(scroller, left, top), 1));
+const YesFn = () => true;
 
 const EVENT = 'updated';
 
@@ -63,7 +66,7 @@ export class ModalManager extends EventEmitter {
 	 * @param {Boolean} options.tall Indicates that the content will be tall; triggers css changes
 	 * @param {Node} options.mountPoint the DOM node that the dialog should mount/re-render to.
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
-	 * @param {Boolean} options.restoreScroll restore scroll position on dismissal
+	 * @param {Boolean|Function} options.restoreScroll restore scroll position on dismissal
 	 * @return {ModalReference} Stuff & Things
 	 */
 	show (content, options = {}) {
@@ -97,6 +100,7 @@ export class ModalManager extends EventEmitter {
 			mountPoint: container,
 			refocus,
 			scroll: !restoreScroll ? void 0 : {
+				maybeRestoreScroll: typeof restoreScroll === 'function' ? restoreScroll : YesFn,
 				scroller,
 				...getScrollPosition(scroller)
 			}
