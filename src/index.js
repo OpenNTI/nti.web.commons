@@ -9,6 +9,7 @@ export * as Errors from './errors';
 export * as Flyout from './flyout';
 export * as HOC from './HighOrderComponents';
 export * as Mixins from './mixins';
+export * as Presentation from './presentation-assets';
 export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';
 export * as Selection from './selection';
