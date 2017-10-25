@@ -3,10 +3,8 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {DataURIs} from '../constants';
 import {ItemChanges} from '../mixins';
-
-const {BLANK_IMAGE} = DataURIs;
+import {Asset} from '../presentation-assets';
 
 export default createReactClass({
 	displayName: 'Content:Banner',
@@ -32,11 +30,11 @@ export default createReactClass({
 		}
 		const p = item.getPresentationProperties();
 
-		const icon = preferBackground ? (p.background || p.icon) : p.icon;
-
 		return (
 			<div className={cx('content-banner', className)}>
-				<img src={icon || BLANK_IMAGE} />
+				<Asset contentPackage={item && item.CatalogEntry} type={preferBackground ? 'background' : 'landing'}>
+					<img/>
+				</Asset>
 				<label>
 					<h3>{p.title}</h3>
 					<h5>{p.label}</h5>
