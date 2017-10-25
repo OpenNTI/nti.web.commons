@@ -1,0 +1,16 @@
+.course-asset-image {
+	position: absolute;
+	opacity: 0;
+
+	&.thumb {
+		background-image: url(./assets/default-course/contentpackage-thumb-60x60.png);
+	}
+
+	&.landing {
+		background-image: url(./assets/default-course/contentpackage-landing-232x170.png);
+	}
+
+	&.background {
+		background-image: url(./assets/default-course/background.png);
+	}
+}
