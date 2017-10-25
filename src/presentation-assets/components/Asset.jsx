@@ -71,6 +71,7 @@ export default class Asset extends React.Component {
 		propName: PropTypes.string,
 		contentPackage: PropTypes.object,
 		type: PropTypes.string,
+		computeProps: PropTypes.func,
 		children: PropTypes.any
 	}
 
@@ -134,11 +135,15 @@ export default class Asset extends React.Component {
 	}
 
 	render () {
-		const {children, propName} = this.props;
+		const {children, computeProps, propName} = this.props;
 		const child = React.Children.only(children);
 
+		const childProps = computeProps
+			? computeProps(this.state.resolvedUrl)
+			: {[propName || 'src']: this.state.resolvedUrl};
+
 		return (
-			React.cloneElement(child, {[propName || 'src']: this.state.resolvedUrl})
+			React.cloneElement(child, childProps)
 		);
 	}
 }
