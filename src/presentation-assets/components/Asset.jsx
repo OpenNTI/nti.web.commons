@@ -69,7 +69,7 @@ function initializeAssetMap () {
 export default class Asset extends React.Component {
 	static propTypes = {
 		propName: PropTypes.string,
-		content: PropTypes.object,
+		contentPackage: PropTypes.object,
 		type: PropTypes.string,
 		children: PropTypes.any
 	}
@@ -96,20 +96,20 @@ export default class Asset extends React.Component {
 	}
 
 	getAssetRoot () {
-		const { content } = this.props;
+		const { contentPackage } = this.props;
 
-		if (content.presentationroot) { return content.presentationroot; }
+		if (contentPackage.presentationroot) { return contentPackage.presentationroot; }
 
-		let resources = content.PlatformPresentationResources || [],
+		let resources = contentPackage.PlatformPresentationResources || [],
 			root;
 
 		resources.every(
 			resource=> !(root = (resource.PlatformName === 'webapp') ? resource.href : root)
 		);
 
-		content.presentationroot = root || this.getDefaultAssetRoot(content);
+		contentPackage.presentationroot = root || this.getDefaultAssetRoot(contentPackage);
 
-		return content.presentationroot;
+		return contentPackage.presentationroot;
 	}
 
 	getAsset (name, resolve = false) {
