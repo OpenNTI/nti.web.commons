@@ -138,7 +138,7 @@ export default class Asset extends React.Component {
 		const child = React.Children.only(children);
 
 		return (
-			React.cloneElement(child, {[propName]: this.state.resolvedUrl})
+			React.cloneElement(child, {[propName || 'src']: this.state.resolvedUrl})
 		);
 	}
 }
