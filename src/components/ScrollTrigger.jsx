@@ -55,15 +55,15 @@ export default class ScrollTrigger extends React.Component {
 	scheduleCheck = (force) => {
 		clearTimeout(this.schedule);
 		this.schedule = setTimeout(()=> this.checkInView(force), 20);
-	};
+	}
 
 	inView = () => {
 		return isElementInView(this.el);
-	};
+	}
 
 	onScroll = () => {
 		this.checkInView();
-	};
+	}
 
 	checkInView = (force) => {
 		const {inView} = this.state || {};
