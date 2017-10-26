@@ -74,9 +74,11 @@ const ALIGNMENT_POSITIONS = {
 		 * @param {Object} viewSize the size of the viewport
 		 * @return {Object} the vertical positioning
 		 */
-		[DEFAULT_VERTICAL] ({top, bottom}, {offsetHeight: flyoutHeight}, {height: viewHeight}) {
-			const topSpace = top;
-			const bottomSpace = viewHeight - bottom;
+		[DEFAULT_VERTICAL] ({top, bottom}, {offsetHeight: flyoutHeight}, {height: viewHeight}, reservedMargin) {
+			const {top: reservedTop, bottom: reservedBottom} = reservedMargin || {};
+
+			const topSpace = top - (reservedTop || 0);
+			const bottomSpace = viewHeight - bottom - (reservedBottom || 0);
 
 			const bottomAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_BOTTOM](...arguments);
 			const topAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_TOP](...arguments);

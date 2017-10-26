@@ -105,10 +105,12 @@ export default class AlignedFlyout extends React.Component {
 		primaryAxis: PropTypes.oneOf([VERTICAL]),
 		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
 		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER, ALIGN_LEFT_OR_RIGHT]),
+
 		//Set the max-(height|width) to keep the flyout within the parent
 		constrain: PropTypes.bool,
 		sizing: PropTypes.oneOf([MATCH_SIDE]),
 
+		reservedMargin: PropTypes.object,
 
 		afterAlign: PropTypes.func
 	}
@@ -153,7 +155,7 @@ export default class AlignedFlyout extends React.Component {
 			finish(oldAlignment);
 		}
 
-		const {alignTo, parent} = this.props;
+		const {alignTo, parent, reservedMargin} = this.props;
 		const {alignToRect, coordinateRoot} = parent ? getAlignmentInfoForParent(alignTo, parent) : getAlignmentInfoForViewport(alignTo);
 		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing} = this.props;
 
@@ -163,7 +165,8 @@ export default class AlignedFlyout extends React.Component {
 		const layoutArgs = [
 			alignToRect,
 			this.flyout,
-			coordinateRoot
+			coordinateRoot,
+			reservedMargin
 		];
 
 		const verticalPosition = alignmentPositions[verticalAlign || DEFAULT_VERTICAL](...layoutArgs);
