@@ -4,15 +4,14 @@ import {getScreenWidth, getScreenHeight, getScrollParent} from 'nti-lib-dom';
 
 const EMPTY = ()=>{};
 
-export default class extends React.Component {
-	static displayName = 'ScrollTrigger';
+export default class ScrollTrigger extends React.Component {
 
 	static propTypes = {
 		onEnterView: PropTypes.func.isRequired,
 		children: PropTypes.node
-	};
+	}
 
-	attachDOMRef = (x) => {this.el = x;};
+	attachDOMRef = x => this.el = x
 
 	subscribeScroll = () => {
 		const scroller = getScrollParent(this.el);
@@ -26,12 +25,12 @@ export default class extends React.Component {
 		scroller.addEventListener('scroll', this.onScroll);
 
 		this.unsubscribeScroll = unsub;
-	};
+	}
 
 	scrollerChanged = () => {
 		const scroller = getScrollParent(this.el);
 		return scroller !== (this.unsubscribeScroll || {}).dom;
-	};
+	}
 
 	componentDidMount () {
 		this.subscribeScroll();
@@ -48,6 +47,8 @@ export default class extends React.Component {
 	}
 
 	componentWillUnmount () {
+		clearTimeout(this.schedule);
+		this.setState = () => {};
 		this.unsubscribeScroll();
 	}
 
