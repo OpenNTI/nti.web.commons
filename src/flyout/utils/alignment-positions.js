@@ -72,6 +72,7 @@ const ALIGNMENT_POSITIONS = {
 		 * @param {Object} triggerRect the rect for the trigger
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
+		 * @param {Object} reservedMargin the space to reserve between the edge of the screen
 		 * @return {Object} the vertical positioning
 		 */
 		[DEFAULT_VERTICAL] ({top, bottom}, {offsetHeight: flyoutHeight}, {height: viewHeight}, reservedMargin) {
