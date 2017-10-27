@@ -42,7 +42,7 @@ function getHandler (scope) {
 
 
 function listen (scope, item) {
-	if (item ) {
+	if (item) {
 		if (typeof item.addListener !== 'function') {
 			logger.warn('Item is not observable: %o', item);
 			return;
@@ -70,13 +70,18 @@ export default class ItemChanges extends React.Component {
 
 	static compose (Component) {
 
-		const cmp = function (props, context) {
-			return (
-				<ItemChanges item={getItem(Component, props, {}, context)}>
-					<Component {...props}/>
-				</ItemChanges>
-			);
+		//eslint-disable-next-line react/prefer-stateless-function
+		const cmp = class ItemChangesWrapper extends React.Component {
+			render () {
+				return (
+					<ItemChanges item={getItem(Component, this.props, {}, this.context)}>
+						<Component {...this.props}/>
+					</ItemChanges>
+				);
+			}
 		};
+
+		cmp.WrappedComponent = Component.WrappedComponent || Component;
 
 		return HOC.hoistStatics(cmp, Component, 'ItemChanges');
 	}
