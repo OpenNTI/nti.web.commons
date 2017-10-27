@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Sticky as ReactSticky} from 'react-sticky';
+import {Sticky as ReactSticky} from '@nti/react-sticky';
 
 export default class Sticky extends React.Component {
 	static propTypes = {
