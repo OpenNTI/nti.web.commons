@@ -55,7 +55,7 @@
     "nti-util-logger": "^1.0.0",
     "nti-web-client": "^1.1.0",
     "prop-types": "^15.5.6",
-    "react-day-picker": "^5.5.3",
+    "react-day-picker": "^6.2.0",
     "react-dnd-html5-backend": "^2.5.1",
     "react-dnd-touch-backend": "^0.3.15",
     "react-dnd": "^2.5.1",
