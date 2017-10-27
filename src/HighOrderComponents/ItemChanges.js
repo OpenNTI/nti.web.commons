@@ -70,7 +70,6 @@ export default class ItemChanges extends React.Component {
 
 	static compose (Component) {
 
-		//eslint-disable-next-line react/prefer-stateless-function
 		const cmp = class ItemChangesWrapper extends React.Component {
 			render () {
 				return (
