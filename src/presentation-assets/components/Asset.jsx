@@ -99,6 +99,8 @@ export default class Asset extends React.Component {
 	getAssetRoot () {
 		const { contentPackage } = this.props;
 
+		if(!contentPackage) { return ''; }
+
 		if (contentPackage.presentationroot) { return contentPackage.presentationroot; }
 
 		let resources = contentPackage.PlatformPresentationResources || [],
