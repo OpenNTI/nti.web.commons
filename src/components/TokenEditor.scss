@@ -35,4 +35,20 @@
 		top: rem-calc(14px);
 		left: rem-calc(24px);
 	}
+
+	.suggestions-container {
+		position: absolute;
+		z-index: 9999;
+		background: white;
+		border: solid 1px #eaeaea;
+		box-shadow: 0 0 2px 0 #ccc;
+
+		.suggestion {
+			padding: 5px;
+
+			&.selected {
+				background-color: #eaeaea;
+			}
+		}
+	}
 }

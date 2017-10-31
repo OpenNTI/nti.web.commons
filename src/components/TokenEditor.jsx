@@ -8,6 +8,8 @@ import Token from './Token';
 
 const logger = Logger.get('common:components:TokenEditor');
 
+const SUGGESTION_BUFFER = 300;
+
 export default class TokenEditor extends React.Component {
 
 	static propTypes = {
@@ -18,7 +20,8 @@ export default class TokenEditor extends React.Component {
 		className: PropTypes.string,
 		preprocessToken: PropTypes.func,
 		placeholder: PropTypes.string,
-		disabled: PropTypes.bool
+		disabled: PropTypes.bool,
+		suggestionProvider: PropTypes.func
 	}
 
 	state = {inputValue: ''}
@@ -38,6 +41,11 @@ export default class TokenEditor extends React.Component {
 			logger.warn('tokens prop is deprecated, use value instead.');
 		}
 		super(props);
+
+		this.state = {
+			selectedSuggestionIndex: -1,
+			suggestions: []
+		};
 	}
 
 
@@ -61,7 +69,19 @@ export default class TokenEditor extends React.Component {
 	}
 
 
+	resetSuggestionState () {
+		clearTimeout(this.inputBuffer);
+
+		this.setState({
+			suggestions: [],
+			selectedSuggestionIndex: -1
+		});
+	}
+
+
 	add = (value) => {
+		this.resetSuggestionState();
+
 		let v = value;
 		if (isEmpty(v)) {
 			return;
@@ -94,7 +114,7 @@ export default class TokenEditor extends React.Component {
 
 
 	clearInput = () => {
-		this.setState({ inputValue: '' });
+		this.setState({ inputValue: '', suggestions: [], loadingSuggestions: false });
 	}
 
 
@@ -111,6 +131,8 @@ export default class TokenEditor extends React.Component {
 	onBlur = (/*e*/) => {
 		// this.add(e.target.value);
 		// this.clearInput();
+
+		this.resetSuggestionState();
 	}
 
 
@@ -124,19 +146,92 @@ export default class TokenEditor extends React.Component {
 
 
 	onInputChange = (e) => {
-		this.setState({
-			inputValue: e.target.value
-		});
+		const { selectedSuggestionIndex, suggestions } = this.state;
+		const value = e.target.value;
+
+		clearTimeout(this.inputBuffer);
+
+		let newState = {
+			inputValue: value
+		};
+
+		if(selectedSuggestionIndex >= suggestions.length) {
+			newState.selectedSuggestionIndex = -1;
+		}
+
+		if(value === '') {
+			newState.suggestions = [];
+			newState.selectedSuggestionIndex = -1;
+		}
+
+		this.setState(newState);
+
+		if(value !== '') {
+			// load suggestions if there is anything search for
+			this.inputBuffer = setTimeout(() => {
+				this.loadSuggestions(value);
+			}, SUGGESTION_BUFFER);
+		}
+	}
+
+	loadSuggestions (value, forceEmpty, callback) {
+		const { suggestionProvider } = this.props;
+
+		if(value === '' && !forceEmpty) {
+			this.setState({suggestions: []});
+		}
+		else if(suggestionProvider) {
+			this.setState({ loadingSuggestions: true });
+
+			suggestionProvider(value).then((newSuggestions) => {
+				this.setState({
+					suggestions: newSuggestions,
+					loadingSuggestions: false
+				}, () => { callback && callback(); });
+			});
+		}
 	}
 
 
 	onKeyDown = (e) => {
+		const { suggestions, selectedSuggestionIndex } = this.state;
+
 		const finishingKeys = ['Enter', 'Tab', ' ', ','];
 		if (finishingKeys.indexOf(e.key) > -1) {
 			e.stopPropagation();
 			e.preventDefault();
-			this.add(e.target.value);
+
+			if(suggestions.length > 0 && selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
+				this.add(suggestions[selectedSuggestionIndex]);
+			}
+			else {
+				this.add(e.target.value);
+			}
 			this.clearInput();
+		}
+		else if(e.key === 'ArrowDown') {
+			if(suggestions && suggestions.length > 0) {
+				let newSelection = Math.min(selectedSuggestionIndex + 1, suggestions.length - 1);
+
+				this.setState({selectedSuggestionIndex: newSelection, inputValue: suggestions[newSelection]});
+			}
+			else {
+				this.loadSuggestions('', true, () => {
+					if(this.state.suggestions && this.state.suggestions.length > 0) {
+						this.setState({
+							selectedSuggestionIndex: 0,
+							inputValue: this.state.suggestions[0]
+						});
+					}
+				});
+			}
+		}
+		else if(e.key === 'ArrowUp') {
+			if(suggestions && suggestions.length > 0) {
+				let newSelection = Math.max(selectedSuggestionIndex - 1, 0);
+
+				this.setState({selectedSuggestionIndex: newSelection, inputValue: suggestions[newSelection]});
+			}
 		}
 		else if(isEmpty(e.target.value) && e.key === 'Backspace') {
 			e.preventDefault();
@@ -152,6 +247,36 @@ export default class TokenEditor extends React.Component {
 			this.remove(lastValue);
 			this.setState({ inputValue: lastValue });
 		}
+	}
+
+	renderSuggestion = (suggestion, index) => {
+		const { selectedSuggestionIndex } = this.state;
+
+		const suggestionClick = () => {
+			this.add(suggestion);
+			this.clearInput();
+		};
+
+		const classes = cx('suggestion', selectedSuggestionIndex === index ? 'selected' : '');
+
+		return (<div className={classes} key={suggestion} onClick={suggestionClick}>{suggestion}</div>);
+	}
+
+	renderSuggestions () {
+		const { loadingSuggestions, suggestions } = this.state;
+
+		const style = {
+			marginLeft: (this.input && this.input.offsetLeft) + 'px'
+		};
+
+		if(loadingSuggestions) {
+			return (<div style={style}>Loading suggestions...</div>);
+		}
+		else if(suggestions && suggestions.length > 0) {
+			return (<div style={style} className="suggestions-container">{suggestions.map(this.renderSuggestion)}</div>);
+		}
+
+		return null;
 	}
 
 
@@ -175,6 +300,7 @@ export default class TokenEditor extends React.Component {
 					onBlur={this.onBlur}
 					value={inputValue}
 				/>
+				{this.renderSuggestions()}
 			</div>
 		);
 	}
