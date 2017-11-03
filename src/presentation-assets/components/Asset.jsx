@@ -38,7 +38,6 @@ const ASSET_MAP = {
  */
 function initializeAssetMap () {
 	if(typeof document !== 'undefined' && !ASSET_MAP.loaded) {
-		ASSET_MAP.loaded = true;
 
 		for(let key of Object.keys(ASSET_MAP)) {
 			const el = document.createElement('div');
@@ -63,6 +62,8 @@ function initializeAssetMap () {
 				el.remove();
 			}
 		}
+
+		ASSET_MAP.loaded = true;
 	}
 }
 
