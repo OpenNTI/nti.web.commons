@@ -41,6 +41,7 @@ export default class TokenEditor extends React.Component {
 		preprocessToken: PropTypes.func,
 		placeholder: PropTypes.string,
 		disabled: PropTypes.bool,
+		tokenDelimiterKeys: PropTypes.arrayOf(PropTypes.string),
 		suggestionProvider: PropTypes.func
 	}
 
@@ -122,7 +123,7 @@ export default class TokenEditor extends React.Component {
 
 	remove = (value) => {
 		const {values} = this.state;
-		const filtered =  values.filter(x => x !== value);
+		const filtered =  values.filter(x => x !== value && x.display !== value);
 
 		if (filtered.length < values.length) {
 			this.setState(
@@ -223,7 +224,7 @@ export default class TokenEditor extends React.Component {
 	onKeyDown = (e) => {
 		const { suggestions, selectedSuggestionIndex, loadingSuggestions } = this.state;
 
-		const finishingKeys = ['Enter', 'Tab', ' ', ','];
+		const finishingKeys = this.props.tokenDelimiterKeys || ['Enter', 'Tab', ' ', ','];
 		if (finishingKeys.indexOf(e.key) > -1) {
 			e.stopPropagation();
 			e.preventDefault();
@@ -287,7 +288,7 @@ export default class TokenEditor extends React.Component {
 		if (values.length > 0) {
 			const lastValue = values[values.length - 1];
 			this.remove(lastValue);
-			this.setState({ inputValue: lastValue });
+			this.setState({ inputValue: lastValue.display || lastValue });
 		}
 	}
 
