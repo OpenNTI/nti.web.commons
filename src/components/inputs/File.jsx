@@ -47,26 +47,29 @@ export default class File extends React.Component {
 		}
 	}
 
-	render () {
-		const onChange = (e) => {
-			const {target: {files}} = e;
+	onChange = (e) => {
+		const {target: {files}} = e;
 
-			if(files && files.length === 1) {
-				let inputValid = true;
-				if(this.props.checkValid) {
-					inputValid = this.props.checkValid(files[0]);
-				}
+		if(files && files.length === 1) {
+			let inputValid = true;
+			if(this.props.checkValid) {
+				inputValid = this.props.checkValid(files[0]);
+			}
 
-				if(inputValid) {
-					this.setState({ file : files[0] });
+			if(inputValid) {
+				this.setState({ file : files[0] });
 
-					if(this.props.onFileChange) {
-						this.props.onFileChange(files[0]);
-					}
+				if(this.props.onFileChange) {
+					this.props.onFileChange(files[0]);
 				}
 			}
-		};
+		}
 
+		e.stopPropagation();
+		e.preventDefault();
+	};
+
+	render () {
 		const attachRef = (x) => {
 			this.input = x;
 		};
@@ -75,8 +78,8 @@ export default class File extends React.Component {
 			icon: 'upload',
 			label: this.props.label || 'Choose file',
 			available: true,
-			onChange: onChange,
-			onDrop: onChange,
+			onChange: this.onChange,
+			onDrop: this.onChange,
 			attachRef: attachRef
 		};
 
