@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getEnvironment} from 'react-router-component/lib/environment/LocalStorageKeyEnvironment';
-import {Locations, Location, NotFound as DefaultRoute} from 'react-router-component';
+import {LocalStorage} from 'nti-web-storage';
 
 import FilterableView from './FilterableView';
 import DefaultPath from './DefaultPath';
 
-export default class extends React.Component {
-	static displayName = 'Filter';
-
+export default class Filter extends React.Component {
 	static propTypes = {
 		/**
 		 *	An array or object with a filter() method.
@@ -46,76 +43,119 @@ export default class extends React.Component {
 
 
 		localStorageKey: PropTypes.string
-	};
+	}
 
 	static defaultProps = {
 		localStorageKey: null,
 		list: [],
 		filters: {}
-	};
+	}
 
-	componentWillMount () {
-		let key = this.props.localStorageKey;
+
+	static childContextTypes = {
+		setFilter: PropTypes.func
+	}
+
+
+	state = {}
+
+
+	getChildContext = () => ({
+		setFilter: this.setFilter
+	})
+
+
+	readStore ({localStorageKey} = this.props) {
+		const key = localStorageKey;
 		if (!key) {
 			throw new Error('The "localStorageKey" is required.');
 		}
-		let env = getEnvironment(key);
-		this.setState({env});
+
+		if (this.state.key !== key) {
+			this.setState({
+				selected: LocalStorage.getItem(key)
+			});
+		}
 	}
 
+
+	setFilter = (filterValue) => {
+		const {localStorageKey: key} = this.props;
+		// this.setState({selected: filterValue});
+		LocalStorage.setItem(key, filterValue);
+	}
+
+
+	componentWillMount () {
+		this.readStore();
+		LocalStorage.addListener('change', this.onStorageChanged);
+	}
+
+
+	componentWillReceiveProps (nextProps) {
+		this.readStore(nextProps);
+	}
+
+
+	componentWillUnmount () {
+		LocalStorage.removeListener('change', this.onStorageChanged);
+	}
+
+
+	onStorageChanged = () => this.readStore()
+
+
 	render () {
-		let {env} = this.state || {};
-		let {children, list, filters} = this.props;
-
-		if (!env) { return; }
-
+		const {selected} = this.state;
+		const {children, list, filters} = this.props;
 		if(!filters || filters.length === 0) {
 			//console.debug('No filters. Returning list view.');
 			return React.cloneElement(children, {list: list});
 		}
 
-		return (
-			<Locations environment={env}>
-				{this.getRoutes()}
-			</Locations>
-		);
+		const [fallback, ...views] = this.getViews();
+
+		const view = views.find(x => x.path === selected) || fallback;
+
+		return view.render();
 	}
 
-	getRoutes = () => {
-		let {children, defaultFilter, list, filters, title} = this.props;
-		let listComp = children;
 
+	getViews = () => {
+		const {children, defaultFilter, list, filters, title} = this.props;
+		const listComp = children;
 
-		let routes = Object.keys(filters).map(filtername => {
-			let filter = filters[filtername];
-			let filterpath = filter.kind || filtername.toLowerCase();
-			return (
-				<Location
-					key={filterpath}
-					path={`/${filterpath}`}
-					filter={filter}
-					filtername={filtername}
-					filterpath={filterpath}
-					handler={FilterableView}
-
-					list={list}
-					listcomp={React.cloneElement(listComp, {list: list})}
+		const fallback = {
+			render: () => (
+				<DefaultPath
+					key="default"
 					filters={filters}
-					title={title}
+					list={list}
+					defaultFilter={defaultFilter}
 				/>
-			);
-		});
+			)
+		};
 
-		routes.push(
-			<DefaultRoute
-				key="default"
-				handler={DefaultPath}
-				filters={filters}
-				list={list}
-				defaultFilter={defaultFilter}
-			/>
-		);
+		return [fallback, ...Object.keys(filters).map(filtername => {
+			const filter = filters[filtername];
+			const filterpath = filter.kind || filtername.toLowerCase();
+			return ({
+				path: filterpath,
+				render: () => (
+					<FilterableView
+						key={filterpath}
+						path={filterpath}
+						filter={filter}
+						filtername={filtername}
+						filterpath={filterpath}
 
-		return routes;
+						list={list}
+						listcomp={React.cloneElement(listComp, {list: list})}
+						filters={filters}
+						title={title}
+					/>
+				)
+			});
+		})];
 	};
 }

@@ -1,19 +1,31 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import {getEventTarget} from 'nti-lib-dom';
 
-import NavigatableMixin from '../mixins/NavigatableMixin';
-
-export default createReactClass({
-	displayName: 'FilterBar',
-	mixins: [NavigatableMixin],
-
-	propTypes: {
+export default class FilterBar extends React.Component {
+	static propTypes = {
 		filters: PropTypes.array,
 		filter: PropTypes.object,
 		list: PropTypes.object,
 		title: PropTypes.string
-	},
+	}
+
+	static contextTypes = {
+		setFilter: PropTypes.func.isRequired
+	}
+
+
+	onSelectFilter = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+		const {setFilter} = this.context;
+		const {target} = e;
+
+		const anchor = getEventTarget(target, 'a[href]');
+		const filter = anchor.hash.substr(1);
+
+		setFilter(filter);
+	}
 
 
 	getItemCount (filter) {
@@ -22,7 +34,7 @@ export default createReactClass({
 			return list.filter(filter.test).length;
 		}
 		return 0;
-	},
+	}
 
 	render () {
 		return (
@@ -31,7 +43,7 @@ export default createReactClass({
 				{this.renderFilterBar()}
 			</div>
 		);
-	},
+	}
 
 
 	renderFilterBar  () {
@@ -41,24 +53,23 @@ export default createReactClass({
 				{filters.map(this.renderFilterLink)}
 			</ul>
 		);
-	},
+	}
 
 
 	renderFilterLink (filter) {
 		const {name, kind} = filter;
 		const {props: {filter: propsFilter}} = this;
 		const isActive = propsFilter.kind === filter.kind || propsFilter.name === filter.name;
-		const Link = this.getLinkComponent();
 
 		return (
 			<li key={name} className={isActive ? 'active' : null}>
-				<Link href={`/${kind}`}>
+				<a href={`#${kind}`} onClick={this.onSelectFilter}>
 					<span className="filtername">{name}</span>
 					{' '/*preserves the space between spans*/}
 					<span className="count">{this.getItemCount(filter)}</span>
-				</Link>
+				</a>
 			</li>
 		);
 	}
 
-});
+}
