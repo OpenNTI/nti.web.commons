@@ -4,8 +4,7 @@
   "author": "nextthought",
   "description": "ReactJS Common Components",
   "license": "UNLICENSED",
-  "main": "./lib/cjs-index.js",
-  "module": "./lib/index.js",
+  "main": "./lib/index-cjs.js",
   "style": "./lib/index.css",
   "files": [
     "lib"
