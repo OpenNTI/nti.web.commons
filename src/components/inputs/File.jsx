@@ -28,6 +28,9 @@ export default class File extends React.Component {
 		const me = this;
 
 		const clearFile = (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
 			me.setState( { file: undefined });
 
 			if(me.input) {
@@ -37,9 +40,6 @@ export default class File extends React.Component {
 			if(me.props.onFileChange) {
 				me.props.onFileChange();
 			}
-
-			e.stopPropagation();
-			e.preventDefault();
 		};
 
 		if(this.state && this.state.file) {
@@ -48,6 +48,9 @@ export default class File extends React.Component {
 	}
 
 	onChange = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
 		const {target: {files}} = e;
 
 		if(files && files.length === 1) {
@@ -64,9 +67,6 @@ export default class File extends React.Component {
 				}
 			}
 		}
-
-		e.stopPropagation();
-		e.preventDefault();
 	};
 
 	render () {
