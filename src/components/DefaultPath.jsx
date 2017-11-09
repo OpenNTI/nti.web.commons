@@ -11,6 +11,10 @@ export default class DefaultPath extends React.Component {
 		defaultFilter: PropTypes.string
 	}
 
+	static contextTypes = {
+		setFilter: PropTypes.func.isRequired
+	}
+
 	startRedirect () {
 		clearTimeout(this.pendingRedirect);
 		this.pendingRedirect = setTimeout(()=> this.performRedirect(), 1);
@@ -20,7 +24,7 @@ export default class DefaultPath extends React.Component {
 	performRedirect () {
 		let path = this.defaultFilterPath();
 		if (path) {
-			this.navigate(`/${path}`, {replace: true});
+			this.context.setFilter(path);
 		}
 	}
 
