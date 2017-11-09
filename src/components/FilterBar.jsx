@@ -21,9 +21,8 @@ export default class FilterBar extends React.Component {
 		e.stopPropagation();
 		e.preventDefault();
 		const {setFilter} = this.context;
-		const {target} = e;
 
-		const anchor = getEventTarget(target, 'a[href]');
+		const anchor = getEventTarget(e, 'a[href]');
 		const filter = anchor.hash.substr(1);
 
 		setFilter(filter);
