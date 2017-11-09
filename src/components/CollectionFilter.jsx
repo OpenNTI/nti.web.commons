@@ -5,6 +5,7 @@ import {LocalStorage} from 'nti-web-storage';
 import FilterableView from './FilterableView';
 import DefaultPath from './DefaultPath';
 
+//@deprecated: This, FilterBar, & DefaultPath probably belong in the mobile app code... the filter data structure is not generic.
 export default class Filter extends React.Component {
 	static propTypes = {
 		/**
