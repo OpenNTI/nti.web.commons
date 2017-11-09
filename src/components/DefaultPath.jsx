@@ -1,26 +1,20 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-
-import NavigatableMixin from '../mixins/NavigatableMixin';
 
 import {Mask as Loading} from './loading-indicators';
 
-
-export default createReactClass({
-	displayName: 'DefaultPath',
-	mixins: [NavigatableMixin],
-
-	propTypes: {
+//Only Used by CollectionFilter.jsx
+export default class DefaultPath extends React.Component {
+	static propTypes = {
 		filters: PropTypes.array,
 		list: PropTypes.array,
 		defaultFilter: PropTypes.string
-	},
+	}
 
 	startRedirect () {
 		clearTimeout(this.pendingRedirect);
 		this.pendingRedirect = setTimeout(()=> this.performRedirect(), 1);
-	},
+	}
 
 
 	performRedirect () {
@@ -28,12 +22,12 @@ export default createReactClass({
 		if (path) {
 			this.navigate(`/${path}`, {replace: true});
 		}
-	},
+	}
 
 
 	findFilter (name) {
 		return this.props.filters.find(f => f.name === name);
-	},
+	}
 
 
 	/**
@@ -62,7 +56,7 @@ export default createReactClass({
 		});
 
 		return result;
-	},
+	}
 
 
 	isDefaulted () {
@@ -73,25 +67,25 @@ export default createReactClass({
 
 
 		return /^.?null$/i.test(p) || !inSet(p);
-	},
+	}
 
 
 	componentDidUpdate () {
 		if(this.isDefaulted()) {
 			this.startRedirect();
 		}
-	},
+	}
 
 
 	componentDidMount () {
 		if(this.isDefaulted()) {
 			this.startRedirect();
 		}
-	},
+	}
 
 
 	render () {
 		return (<Loading/>);
 	}
 
-});
+}

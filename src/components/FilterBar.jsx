@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {getEventTarget} from 'nti-lib-dom';
 
+
+//Only Used by CollectionFilter.jsx
 export default class FilterBar extends React.Component {
 	static propTypes = {
 		filters: PropTypes.array,
