@@ -171,6 +171,8 @@ export default class TokenEditor extends React.Component {
 		this.currentTask = taskId;
 		const timerId = setTimeout(() => this.currentTask === taskId && this.resetSuggestionState(), BLUR_DELAY);
 
+		this.cancel(); // cancels existing timer if any
+
 		this.cancelReset = () => clearTimeout(timerId);
 	}
 
