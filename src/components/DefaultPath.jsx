@@ -12,6 +12,7 @@ export default class DefaultPath extends React.Component {
 	}
 
 	static contextTypes = {
+		getFilter: PropTypes.func.isRequired,
 		setFilter: PropTypes.func.isRequired
 	}
 
@@ -65,7 +66,7 @@ export default class DefaultPath extends React.Component {
 
 	isDefaulted () {
 		let {filters = []} = this.props;
-		let p = this.getPath() || '';
+		let p = this.context.getFilter() || '';
 
 		let inSet = ()=> filters.reduce((x, f)=> x || (f.kind === p), null);
 

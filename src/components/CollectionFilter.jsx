@@ -54,6 +54,7 @@ export default class Filter extends React.Component {
 
 
 	static childContextTypes = {
+		getFilter: PropTypes.func,
 		setFilter: PropTypes.func
 	}
 
@@ -62,18 +63,19 @@ export default class Filter extends React.Component {
 
 
 	getChildContext = () => ({
+		getFilter: this.getFilter,
 		setFilter: this.setFilter
 	})
 
 
-	readStore ({localStorageKey} = this.props) {
-		const key = localStorageKey;
+	readStore ({localStorageKey: key} = this.props) {
 		if (!key) {
 			throw new Error('The "localStorageKey" is required.');
 		}
 
 		if (this.state.key !== key) {
 			this.setState({
+				key,
 				selected: LocalStorage.getItem(key)
 			});
 		}
@@ -84,6 +86,12 @@ export default class Filter extends React.Component {
 		const {localStorageKey: key} = this.props;
 		// this.setState({selected: filterValue});
 		LocalStorage.setItem(key, filterValue);
+	}
+
+
+	getFilter = () => {
+		const {localStorageKey: key} = this.props;
+		return LocalStorage.getItem(key);
 	}
 
 
