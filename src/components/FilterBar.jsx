@@ -52,7 +52,7 @@ export default class FilterBar extends React.Component {
 		const {props: {filters = []}} = this;
 		return filters.length === 0 ? null : (
 			<ul className="filter-bar">
-				{filters.map(this.renderFilterLink)}
+				{filters.map(this.renderFilterLink, this)}
 			</ul>
 		);
 	}
