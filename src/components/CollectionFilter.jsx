@@ -73,12 +73,9 @@ export default class Filter extends React.Component {
 			throw new Error('The "localStorageKey" is required.');
 		}
 
-		if (this.state.key !== key) {
-			this.setState({
-				key,
-				selected: LocalStorage.getItem(key)
-			});
-		}
+		this.setState({
+			selected: LocalStorage.getItem(key)
+		});
 	}
 
 
