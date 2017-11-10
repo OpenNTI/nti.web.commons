@@ -67,6 +67,7 @@ export class ModalManager extends EventEmitter {
 	 * @param {Node} options.mountPoint the DOM node that the dialog should mount/re-render to.
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
 	 * @param {Boolean|Function} options.restoreScroll restore scroll position on dismissal
+	 * @param {Boolean} options.forceFront push the mount point to the front of the stack on re-renders
 	 * @return {ModalReference} Stuff & Things
 	 */
 	show (content, options = {}) {
@@ -81,9 +82,10 @@ export class ModalManager extends EventEmitter {
 			mountPoint,
 			refocus = document.activeElement,
 			restoreScroll,
+			forceFront,
 		} = options;
 
-		const container = this.getContainer(mountPoint);
+		const container = this.getContainer(mountPoint, forceFront);
 
 		const dismiss = buffer(1, () =>
 			(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
@@ -133,11 +135,13 @@ export class ModalManager extends EventEmitter {
 	}
 
 
-	getContainer (existing) {
+	getContainer (existing, forceFront) {
 		const container = existing || createDOM({class: 'modal'});
-		const {body} = document;
-		if (body.lastChild !== container) {
-			body.appendChild(container);
+		if (forceFront) {
+			const {body} = document;
+			if (body.lastChild !== container) {
+				body.appendChild(container);
+			}
 		}
 		return container;
 	}
