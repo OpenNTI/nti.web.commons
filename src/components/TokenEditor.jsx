@@ -43,7 +43,8 @@ export default class TokenEditor extends React.Component {
 		placeholder: PropTypes.string,
 		disabled: PropTypes.bool,
 		tokenDelimiterKeys: PropTypes.arrayOf(PropTypes.string),
-		suggestionProvider: PropTypes.func
+		suggestionProvider: PropTypes.func,
+		onlyAllowSuggestions: PropTypes.bool
 	}
 
 	state = {inputValue: ''}
@@ -242,6 +243,7 @@ export default class TokenEditor extends React.Component {
 
 	onKeyDown = (e) => {
 		const { suggestions, selectedSuggestionIndex, loadingSuggestions } = this.state;
+		const { onlyAllowSuggestions } = this.props;
 
 		const finishingKeys = this.props.tokenDelimiterKeys || ['Enter', 'Tab', ' ', ','];
 		if (finishingKeys.indexOf(e.key) > -1) {
@@ -250,11 +252,14 @@ export default class TokenEditor extends React.Component {
 
 			if(suggestions.length > 0 && selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
 				this.add(suggestions[selectedSuggestionIndex]);
+				this.clearInput();
 			}
-			else {
+			else if(!onlyAllowSuggestions) {
+				// if onlyAllowSuggestions mode, don't allow this free text to be entered as a token.  Force user to
+				// select from a suggestion
 				this.add(e.target.value);
+				this.clearInput();
 			}
-			this.clearInput();
 		}
 		else if(e.key === 'ArrowDown') {
 			if(loadingSuggestions) {
