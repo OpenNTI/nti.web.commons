@@ -137,7 +137,7 @@ export class ModalManager extends EventEmitter {
 
 	getContainer (existing, forceFront) {
 		const container = existing || createDOM({class: 'modal'});
-		if (forceFront) {
+		if (forceFront || !existing) {
 			const {body} = document;
 			if (body.lastChild !== container) {
 				body.appendChild(container);
