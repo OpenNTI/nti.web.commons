@@ -42,6 +42,8 @@
 		background: white;
 		border: solid 1px #eaeaea;
 		box-shadow: 0 0 2px 0 #ccc;
+		overflow-y: scroll;
+		max-height: 400px;
 
 		.suggestion {
 			padding: 5px;
