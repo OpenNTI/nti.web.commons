@@ -241,9 +241,55 @@ export default class TokenEditor extends React.Component {
 	}
 
 
+	getTokenEditor = (el) => {
+		let parent = el.parentNode;
+
+		while(parent) {
+			if(parent.className === 'token-editor') {
+				return parent;
+			}
+
+			parent = parent.parentNode;
+		}
+
+		return null;
+	}
+
+
+	getSuggestionsContainer = (tokenEditor) => {
+		return tokenEditor.getElementsByClassName('suggestions-container')[0];
+	}
+
+
+	getSelectedSuggestion = (suggestionContainer) => {
+		const selected = suggestionContainer.getElementsByClassName('selected');
+
+		return selected && selected[0];
+	}
+
+
+	adjustSuggestionScroll = (el) => {
+		const suggestionsContainer = this.getSuggestionsContainer(this.getTokenEditor(el));
+		const selectedSuggestion = this.getSelectedSuggestion(suggestionsContainer);
+
+		if(selectedSuggestion) {
+			const containerRect = suggestionsContainer.getBoundingClientRect();
+			const itemRect = selectedSuggestion.getBoundingClientRect();
+
+			if(itemRect.top > containerRect.bottom) {
+				suggestionsContainer.scrollTop += itemRect.height;
+			}
+			else if(itemRect.top < containerRect.top) {
+				suggestionsContainer.scrollTop = selectedSuggestion.offsetTop;
+			}
+		}
+	}
+
+
 	onKeyDown = (e) => {
 		const { suggestions, selectedSuggestionIndex, loadingSuggestions } = this.state;
 		const { onlyAllowSuggestions } = this.props;
+		const { target } = e;
 
 		const finishingKeys = this.props.tokenDelimiterKeys || ['Enter', 'Tab', ' ', ','];
 		if (finishingKeys.indexOf(e.key) > -1) {
@@ -257,7 +303,7 @@ export default class TokenEditor extends React.Component {
 			else if(!onlyAllowSuggestions) {
 				// if onlyAllowSuggestions mode, don't allow this free text to be entered as a token.  Force user to
 				// select from a suggestion
-				this.add(e.target.value);
+				this.add(target.value);
 				this.clearInput();
 			}
 		}
@@ -270,7 +316,12 @@ export default class TokenEditor extends React.Component {
 			if(suggestions && suggestions.length > 0) {
 				let newSelection = Math.min(selectedSuggestionIndex + 1, suggestions.length - 1);
 
-				this.setState({selectedSuggestionIndex: newSelection, inputValue: this.getValueForSuggestion(suggestions[newSelection])});
+				this.setState({
+					selectedSuggestionIndex: newSelection,
+					inputValue: this.getValueForSuggestion(suggestions[newSelection])
+				}, () => {
+					this.adjustSuggestionScroll(target);
+				});
 			}
 			else {
 				this.loadSuggestions('', true, () => {
@@ -292,7 +343,12 @@ export default class TokenEditor extends React.Component {
 			if(suggestions && suggestions.length > 0) {
 				let newSelection = Math.max(selectedSuggestionIndex - 1, 0);
 
-				this.setState({selectedSuggestionIndex: newSelection, inputValue: this.getValueForSuggestion(suggestions[newSelection])});
+				this.setState({
+					selectedSuggestionIndex: newSelection,
+					inputValue: this.getValueForSuggestion(suggestions[newSelection])
+				}, () => {
+					this.adjustSuggestionScroll(target);
+				});
 			}
 		}
 		else if(isEmpty(e.target.value) && e.key === 'Backspace') {
