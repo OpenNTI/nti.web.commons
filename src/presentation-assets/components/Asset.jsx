@@ -88,7 +88,7 @@ export default class Asset extends React.Component {
 		const { type } = props;
 
 		return {
-			resolvedUrl: this.getAsset(type)
+			resolvedUrl: this.getAsset(type, props)
 		};
 	}
 
@@ -116,8 +116,8 @@ export default class Asset extends React.Component {
 		return '';
 	}
 
-	getAssetRoot () {
-		const { contentPackage } = this.props;
+	getAssetRoot (props) {
+		const { contentPackage } = props;
 
 		if(!contentPackage) { return ''; }
 
@@ -135,9 +135,9 @@ export default class Asset extends React.Component {
 		return contentPackage.presentationroot;
 	}
 
-	getAsset (name, resolve = false) {
+	getAsset (name, props, resolve = false) {
 		const assetPath = (ASSET_MAP[name] && ASSET_MAP[name].path) || `missing-${name}-asset.png`;
-		const root = this.getAssetRoot();
+		const root = this.getAssetRoot(props);
 		return root && URL.resolve(root, assetPath);
 	}
 
