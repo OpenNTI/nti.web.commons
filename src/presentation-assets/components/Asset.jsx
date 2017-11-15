@@ -79,13 +79,23 @@ export default class Asset extends React.Component {
 	constructor (props) {
 		super(props);
 
-		const { type } = props;
-
 		initializeAssetMap();
 
-		this.state = {
+		this.init(props);
+	}
+
+	init (props) {
+		const { type } = props;
+
+		this.setState({
 			resolvedUrl: this.getAsset(type)
-		};
+		});
+	}
+
+	componentWillReceiveProps (nextProps) {
+		if (this.props.contentPackage !== nextProps.contentPackage || this.props.type !== nextProps.type) {
+			this.init(nextProps);
+		}
 	}
 
 	getDefaultAssetRoot (scope) {
