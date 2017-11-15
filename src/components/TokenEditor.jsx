@@ -377,7 +377,7 @@ export default class TokenEditor extends React.Component {
 		const { selectedSuggestionIndex } = this.state;
 
 		const suggestionClick = () => {
-			this.add(this.getValueForSuggestion(suggestion));
+			this.add(suggestion);
 			this.clearInput();
 		};
 
