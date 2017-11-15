@@ -81,20 +81,29 @@ export default class Asset extends React.Component {
 
 		initializeAssetMap();
 
-		this.init(props);
+		this.state = this.getStateFor(props);
 	}
 
-	init (props) {
+	getStateFor (props) {
 		const { type } = props;
 
-		this.setState({
+		return {
 			resolvedUrl: this.getAsset(type)
-		});
+		};
+	}
+
+	verifyImage () {
+		const loaderImage = new Image();
+
+		loaderImage.onerror = this.onImgLoadError;
+		loaderImage.src = this.state.resolvedUrl;
 	}
 
 	componentWillReceiveProps (nextProps) {
 		if (this.props.contentPackage !== nextProps.contentPackage || this.props.type !== nextProps.type) {
-			this.init(nextProps);
+			this.setState(this.getStateFor(nextProps), () => {
+				this.verifyImage();
+			});
 		}
 	}
 
@@ -133,10 +142,7 @@ export default class Asset extends React.Component {
 	}
 
 	componentDidMount () {
-		const loaderImage = new Image();
-
-		loaderImage.onerror = this.onImgLoadError;
-		loaderImage.src = this.state.resolvedUrl;
+		this.verifyImage();
 	}
 
 	onImgLoadError = () => {
