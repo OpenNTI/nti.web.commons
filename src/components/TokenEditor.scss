@@ -45,6 +45,10 @@
 		overflow-y: scroll;
 		max-height: 400px;
 
+		&.loading, &.no-matches {
+			padding: 10px;
+		}
+
 		.suggestion {
 			padding: 5px;
 			cursor: pointer;

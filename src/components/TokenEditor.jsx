@@ -67,7 +67,7 @@ export default class TokenEditor extends React.Component {
 
 		this.state = {
 			selectedSuggestionIndex: -1,
-			suggestions: []
+			suggestions: undefined
 		};
 	}
 
@@ -108,7 +108,7 @@ export default class TokenEditor extends React.Component {
 		clearTimeout(this.inputBuffer);
 
 		this.setState({
-			suggestions: [],
+			suggestions: undefined,
 			selectedSuggestionIndex: -1
 		});
 	}
@@ -149,7 +149,7 @@ export default class TokenEditor extends React.Component {
 
 
 	clearInput = () => {
-		this.setState({ inputValue: '', suggestions: [], loadingSuggestions: false });
+		this.setState({ inputValue: '', suggestions: undefined, loadingSuggestions: false });
 	}
 
 
@@ -197,12 +197,12 @@ export default class TokenEditor extends React.Component {
 			inputValue: value
 		};
 
-		if(selectedSuggestionIndex >= suggestions.length) {
+		if(suggestions && selectedSuggestionIndex >= suggestions.length) {
 			newState.selectedSuggestionIndex = -1;
 		}
 
 		if(value === '') {
-			newState.suggestions = [];
+			newState.suggestions = undefined;
 			newState.selectedSuggestionIndex = -1;
 		}
 
@@ -221,7 +221,7 @@ export default class TokenEditor extends React.Component {
 		const { suggestionProvider } = this.props;
 
 		if(value === '' && !forceEmpty) {
-			this.setState({suggestions: []});
+			this.setState({suggestions: undefined});
 		}
 		else if(suggestionProvider) {
 			this.setState({ loadingSuggestions: true });
@@ -233,7 +233,7 @@ export default class TokenEditor extends React.Component {
 				}, () => { callback && callback(); });
 			}).catch(() => {
 				this.setState({
-					suggestions: [],
+					suggestions: undefined,
 					loadingSuggestions: false
 				}, () => { callback && callback(); });
 			});
@@ -296,7 +296,7 @@ export default class TokenEditor extends React.Component {
 			e.stopPropagation();
 			e.preventDefault();
 
-			if(suggestions.length > 0 && selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
+			if(suggestions && suggestions.length > 0 && selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
 				this.add(suggestions[selectedSuggestionIndex]);
 				this.clearInput();
 			}
@@ -395,10 +395,13 @@ export default class TokenEditor extends React.Component {
 		};
 
 		if(loadingSuggestions) {
-			return (<div style={style}>Loading suggestions...</div>);
+			return (<div style={style} className="suggestions-container loading">Loading suggestions...</div>);
 		}
 		else if(suggestions && suggestions.length > 0) {
 			return (<div style={style} className="suggestions-container">{suggestions.map(this.renderSuggestion)}</div>);
+		}
+		else if(suggestions && suggestions.length === 0) {
+			return (<div style={style} className="suggestions-container no-matches">No matches found</div>);
 		}
 
 		return null;
