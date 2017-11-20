@@ -24,26 +24,24 @@ export default class File extends React.Component {
 		return (<span className="nofile">{text}</span>);
 	}
 
+	clearFile = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		this.setState( { file: undefined });
+
+		if(this.input) {
+			this.input.value = '';
+		}
+
+		if(this.props.onFileChange) {
+			this.props.onFileChange();
+		}
+	};
+
 	renderClear () {
-		const me = this;
-
-		const clearFile = (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			me.setState( { file: undefined });
-
-			if(me.input) {
-				me.input.value = '';
-			}
-
-			if(me.props.onFileChange) {
-				me.props.onFileChange();
-			}
-		};
-
 		if(this.state && this.state.file) {
-			return(<span className="file-select-reset" onClick={clearFile}>x</span>);
+			return(<span className="file-select-reset" onClick={this.clearFile}>x</span>);
 		}
 	}
 

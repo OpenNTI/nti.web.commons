@@ -10,8 +10,9 @@ import Select from '../../Select';
 
 const {MockDate} = DateUtils;
 
+const emptyOnChange = jest.fn();
+
 describe('DateTimeField', () => {
-	const emptyOnChange = () => {};
 	const sharedWrapper = shallow(<DateTimeField onChange={emptyOnChange} />);
 
 	const testRender = (props, ...children) => [

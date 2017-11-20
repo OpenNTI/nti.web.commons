@@ -4,6 +4,8 @@ import {mount} from 'enzyme';
 
 import File from '../File';
 
+const onFileChange = jest.fn();
+
 describe('File Input', () => {
 	test('clears file', () => {
 		const cmp = mount(<File label="testLabel"/>);
@@ -34,8 +36,6 @@ describe('File Input', () => {
 	});
 
 	test('calls on change', () => {
-		const onFileChange = () => {};
-
 		const cmp = mount(<File label="choose a file" defaultText="this is the default" onFileChange={onFileChange}/>);
 
 		const fileInput = cmp.find('input[type="file"]');

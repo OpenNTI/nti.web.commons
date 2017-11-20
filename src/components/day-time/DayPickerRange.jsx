@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DateUtils } from 'react-day-picker';
 
-import DateTime from '../DateTime';
-
+import Date from './Date';
 import DayPicker from './DayPicker';
 
 export {DateUtils};
@@ -78,43 +77,19 @@ export default class DayPickerRange extends React.Component {
 		}
 	}
 
-	renderRemoveButton (type, date) {
-		if(!date) {
-			return null;
+	onDateRemove = (type) => {
+		const { updateStartDate, updateEndDate } = this.props;
+
+		if(type === 'Start') {
+			updateStartDate && updateStartDate();
 		}
-
-		const removeDate = () => {
-			const { updateStartDate, updateEndDate } = this.props;
-
-			if(type === 'Start') {
-				updateStartDate && updateStartDate();
-			}
-			else {
-				updateEndDate && updateEndDate();
-			}
-		};
-
-		return (<div className="remove-date" onClick={removeDate}><i className="icon-light-x"/></div>);
+		else {
+			updateEndDate && updateEndDate();
+		}
 	}
 
-	renderDate (type, date) {
-		const onSelect = () => {
-			this.setState({selectedType: type});
-		};
-
-		let className = 'date';
-
-		if(this.state.selectedType === type) {
-			className += ' selected';
-		}
-
-		return (<div className={className} onClick={onSelect}>
-			<div className="field-contents">
-				<div className="label">{type}</div>
-				<div className="value">{date ? DateTime.format(date, 'MMM. D') : ''}</div>
-			</div>
-			{this.renderRemoveButton(type, date)}
-		</div>);
+	onDateSelect = (type) => {
+		this.setState({selectedType: type});
 	}
 
 	getDateValue () {
@@ -155,8 +130,18 @@ export default class DayPickerRange extends React.Component {
 			<div className="date-picker-range">
 				<div className="course-panel-choosedates">
 					<div className="selected-dates">
-						{this.renderDate('Start', startDate)}
-						{this.renderDate('End', endDate)}
+						<Date
+							date={startDate}
+							type="Start"
+							onSelect={this.onDateSelect}
+							onRemove={this.onDateRemove}
+							selected={this.state.selectedType === 'Start'}/>
+						<Date
+							date={endDate}
+							type="End"
+							onSelect={this.onDateSelect}
+							onRemove={this.onDateRemove}
+							selected={this.state.selectedType === 'End'}/>
 					</div>
 				</div>
 				<DayPicker

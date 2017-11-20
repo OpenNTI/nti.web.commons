@@ -112,7 +112,16 @@ export class ModalManager extends EventEmitter {
 		const render = isPortal ? 'createPortal' : 'render';
 		const setReference = x => reference.component = x;
 
+		this.createModal(reference, render, setReference, dismiss, className, tall, closeOnMaskClick, isPortal, content, container);
 
+		this.add(reference);
+
+		return reference;
+
+	}
+
+
+	createModal (reference, render, setReference, dismiss, className, tall, closeOnMaskClick, isPortal, content, container) {
 		reference.portalRef = ReactDOM[render]((
 			<Modal
 				ref={setReference}
@@ -127,11 +136,6 @@ export class ModalManager extends EventEmitter {
 		),
 		container
 		);
-
-		this.add(reference);
-
-		return reference;
-
 	}
 
 
