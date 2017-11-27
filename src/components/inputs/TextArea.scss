@@ -1,15 +1,75 @@
 @import "~nti-style-common";
 
-textarea.nti-text-input {
-	-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
-	box-shadow: 0 0 0 0.0625rem #eaeaea;
-	margin: 0.5rem;
-	line-height: 2.375rem;
-	resize: none;
 
-	&::placeholder {
-		font-style: italic;
-		color: $tertiary-grey;
-		font-weight: 300;
+// Sync Size
+.textarea-container {
+	position: relative;
+
+	&.syncSize {
+		min-height: 8em;
+		-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
+		box-shadow: 0 0 0 0.0625rem #eaeaea;
+
+		background-color: $panel-background;
+		border: solid 1px $border-grey-light;
+		border-radius: 2px;
+		margin: 0.5rem;
+	}
+
+
+	textarea.nti-text-area {
+		-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
+		box-shadow: 0 0 0 0.0625rem #eaeaea;
+
+		background-color: $panel-background;
+		border: solid 1px $border-grey-light;
+		border-radius: 2px;
+		margin: 0.5rem;
+
+		font: normal 400 0.875rem/2rem $body-font-family;
+		padding: rem-calc(0 10px);
+		line-height: 2.375rem;
+
+		color: $secondary-grey;
+		resize: none;
+
+		&::placeholder {
+			font-style: italic;
+			color: $tertiary-grey;
+			font-weight: 300;
+		}
+
+		&.syncSize {
+			box-shadow: none;
+			border: none;
+			margin: 0;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			min-height: 8em;
+			resize: none;
+			height: 100%; // firefox
+			overflow: hidden;
+		}
+	}
+
+
+	.sizer {
+		margin: 0.5rem;
+		
+		font: normal 400 0.875rem/2rem $body-font-family;
+		padding: rem-calc(0 10px);
+		line-height: 2.375rem;
+
+		white-space: pre-wrap;
+		visibility: hidden;
+
+		&::placeholder {
+			font-style: italic;
+			color: $tertiary-grey;
+			font-weight: 300;
+		}
 	}
 }
