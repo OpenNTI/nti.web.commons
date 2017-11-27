@@ -29,7 +29,7 @@ class Suggestion extends React.Component {
 
 		const classes = cx('suggestion', { selected });
 
-		return (<div className={classes} key={this.getValueForSuggestion(suggestion)} onClick={this.onSuggestionClick}>{suggestion.view || suggestion}</div>);
+		return (<div className={classes} onClick={this.onSuggestionClick}>{suggestion.view || suggestion}</div>);
 	}
 }
 
