@@ -6,9 +6,18 @@ import {Mask as Loading} from './loading-indicators';
 //Only Used by CollectionFilter.jsx
 export default class DefaultPath extends React.Component {
 	static propTypes = {
+		defaultFilter: PropTypes.string,
 		filters: PropTypes.array,
-		list: PropTypes.array,
-		defaultFilter: PropTypes.string
+
+		/**
+		 *	An array or object with a filter() method.
+		 */
+		list: PropTypes.oneOfType([
+			PropTypes.array,
+			PropTypes.shape({
+				filter: PropTypes.func
+			})
+		]),
 	}
 
 	static contextTypes = {

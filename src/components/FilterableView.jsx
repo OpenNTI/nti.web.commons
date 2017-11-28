@@ -8,14 +8,22 @@ import NoMatches from './NoMatches';
 
 const logger = Logger.get('common:components:FilterableView');
 
-export default class extends React.Component {
-	static displayName = 'FilterableView';
+export default class FilterableView extends React.Component {
 
 	static propTypes = {
 		filtername: PropTypes.string,
 		filters: PropTypes.array,
-		list: PropTypes.object,
-		listcomp: PropTypes.node
+		listcomp: PropTypes.node,
+
+		/**
+		 *	An array or object with a filter() method.
+		 */
+		list: PropTypes.oneOfType([
+			PropTypes.array,
+			PropTypes.shape({
+				filter: PropTypes.func
+			})
+		]),
 	};
 
 	/**

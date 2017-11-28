@@ -8,8 +8,17 @@ export default class FilterBar extends React.Component {
 	static propTypes = {
 		filters: PropTypes.array,
 		filter: PropTypes.object,
-		list: PropTypes.object,
-		title: PropTypes.string
+		title: PropTypes.string,
+
+		/**
+		 *	An array or object with a filter() method.
+		 */
+		list: PropTypes.oneOfType([
+			PropTypes.array,
+			PropTypes.shape({
+				filter: PropTypes.func
+			})
+		]),
 	}
 
 	static contextTypes = {
