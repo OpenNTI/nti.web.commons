@@ -23,10 +23,7 @@ export default class Avatar extends React.Component {
 	}
 
 
-	constructor (props) {
-		super(props);
-		this.state = {};
-	}
+	state = {}
 
 
 	componentDidMount () {
@@ -118,14 +115,17 @@ export default class Avatar extends React.Component {
 
 	render () {
 		const {loading, entity, color} = this.state;
-		const {className} = this.props;
+		const {className, ...props} = this.props;
 
 		if (loading) { return null; }
 
 		const {avatarURL, initials, displayName} = entity || {};
 
+		delete props.entity;
+		delete props.entityId;
+
 		const childProps = {
-			...this.props,
+			...props,
 			'data-for': User.getDebugUsernameString(entity),
 			alt: 'Avatar for ' + displayName,
 			className: cx('avatar', color, className)
