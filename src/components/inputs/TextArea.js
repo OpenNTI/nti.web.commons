@@ -8,6 +8,7 @@ export default class TextArea extends React.Component {
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		autoGrow: PropTypes.bool,
+		placeholder: PropTypes.string
 	}
 
 	attachInputRef = x => this.input = x;
@@ -51,17 +52,17 @@ export default class TextArea extends React.Component {
 
 
 	render () {
-		const {value, className, autoGrow, ...otherProps} = this.props;
+		const {value, className, autoGrow, placeholder, ...otherProps} = this.props;
 
-		const sizerCls = cx('sizer', {'textarea-text': autoGrow });
+		const sizerCls = cx('sizer', {'textarea-text': autoGrow }, {'placeholder': !value && placeholder });
 		const textareaCls = cx('textarea', className, 'textarea-text', { 'autogrow': autoGrow });
 
 		delete otherProps.onChange;
 
 		return (
 			<div className="textarea-container">
-				{autoGrow && <div className={sizerCls} dangerouslySetInnerHTML={{ __html: value + '|' }} />}
-				<textarea className={textareaCls} type="text" value={value || ''} onChange={this.onChange} ref={this.attachInputRef} {...otherProps} />
+				{autoGrow && <div className={sizerCls} dangerouslySetInnerHTML={{ __html: (value || placeholder || '') + '|' }} />}
+				<textarea className={textareaCls} type="text" value={value || ''} onChange={this.onChange} ref={this.attachInputRef} placeholder={placeholder} {...otherProps} />
 			</div>
 		);
 	}
