@@ -1,6 +1,5 @@
 @import "~nti-style-common";
 
-
 // Sync Size
 .textarea-container {
 	position: relative;
@@ -27,11 +26,11 @@
 	}
 
 	.textarea {
+		box-shadow: none;
 		background: none;
 		resize: none;
 		border: none;
 		width: 100%;
-		box-shadow: none;
 
 		&::placeholder {
 			@extend .placeholder
@@ -44,6 +43,15 @@
 			bottom: 0;
 			height: 100%; // firefox
 			overflow: hidden;
+		}
+
+		// Styles for default textarea
+		&.default-text {
+			line-height: 2.375rem;
+			color: $secondary-grey;
+			font: normal 400 0.875rem/2rem $body-font-family;
+			padding: rem-calc(0 10px);
+			min-height: 8em;
 		}
 	}
 

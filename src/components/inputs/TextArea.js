@@ -54,7 +54,7 @@ export default class TextArea extends React.Component {
 		const {value, className, autoGrow, ...otherProps} = this.props;
 
 		const sizerCls = cx('sizer', { 'textarea-text': autoGrow });
-		const textareaCls = cx('textarea', className, { 'textarea-text': autoGrow });
+		const textareaCls = cx('textarea', className, { 'textarea-text': autoGrow }, { 'default-text': !autoGrow });
 
 		delete otherProps.onChange;
 
