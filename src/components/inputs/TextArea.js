@@ -7,7 +7,7 @@ export default class TextArea extends React.Component {
 		className: PropTypes.string,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
-		syncSize: PropTypes.bool
+		autoGrow: PropTypes.bool,
 	}
 
 	attachInputRef = x => this.input = x;
@@ -51,16 +51,17 @@ export default class TextArea extends React.Component {
 
 
 	render () {
-		const {value, className, syncSize, ...otherProps} = this.props;
-		const cls = cx('nti-text-area', className, { syncSize });
-		const containerCls = cx('textarea-container', { syncSize });
+		const {value, className, autoGrow, ...otherProps} = this.props;
+
+		const sizerCls = cx('sizer', { 'textarea-text': autoGrow });
+		const textareaCls = cx('textarea', className, { 'textarea-text': autoGrow });
 
 		delete otherProps.onChange;
 
 		return (
-			<div className={containerCls}>
-				{syncSize && <div className="sizer" dangerouslySetInnerHTML={{ __html: value + '|' }} />}
-				<textarea className={cls} type="text" value={value || ''} onChange={this.onChange} ref={this.attachInputRef} {...otherProps} />
+			<div className="textarea-container">
+				{autoGrow && <div className={sizerCls} dangerouslySetInnerHTML={{ __html: value + '|' }} />}
+				<textarea className={textareaCls} type="text" value={value || ''} onChange={this.onChange} ref={this.attachInputRef} {...otherProps} />
 			</div>
 		);
 	}
