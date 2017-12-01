@@ -66,7 +66,8 @@ export default class TokenEditor extends React.Component {
 		disabled: PropTypes.bool,
 		tokenDelimiterKeys: PropTypes.arrayOf(PropTypes.string),
 		suggestionProvider: PropTypes.func,
-		onlyAllowSuggestions: PropTypes.bool
+		onlyAllowSuggestions: PropTypes.bool,
+		maxTokenLength: PropTypes.number
 	}
 
 	state = {inputValue: ''}
@@ -433,7 +434,7 @@ export default class TokenEditor extends React.Component {
 
 	render () {
 
-		const {placeholder, disabled} = this.props;
+		const {placeholder, disabled, maxTokenLength} = this.props;
 		const {values, inputValue} = this.state;
 
 		const classes = cx('token-editor', this.props.className);
@@ -450,6 +451,7 @@ export default class TokenEditor extends React.Component {
 					onChange={this.onInputChange}
 					onBlur={this.onBlur}
 					value={inputValue}
+					maxLength={maxTokenLength}
 				/>
 				{this.renderSuggestions()}
 			</div>
