@@ -185,6 +185,12 @@ export default class TokenEditor extends React.Component {
 		}
 	}
 
+	addIfValid (value) {
+		if(value && value.trim() !== '') {
+			this.add(value);
+			this.clearInput();
+		}
+	}
 
 	onBlur = (e) => {
 		const { onlyAllowSuggestions } = this.props;
@@ -202,8 +208,7 @@ export default class TokenEditor extends React.Component {
 
 		if(!onlyAllowSuggestions) {
 			// on blur, add token as if a delimiter key was hit
-			this.add(e.target.value);
-			this.clearInput();
+			this.addIfValid(e.target.value);
 		}
 	}
 
@@ -333,8 +338,7 @@ export default class TokenEditor extends React.Component {
 			else if(!onlyAllowSuggestions) {
 				// if onlyAllowSuggestions mode, don't allow this free text to be entered as a token.  Force user to
 				// select from a suggestion
-				this.add(target.value);
-				this.clearInput();
+				this.addIfValid(target.value);
 			}
 		}
 		else if(e.key === 'ArrowDown') {
