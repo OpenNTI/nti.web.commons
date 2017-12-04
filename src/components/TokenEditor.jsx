@@ -63,11 +63,11 @@ export default class TokenEditor extends React.Component {
 		className: PropTypes.string,
 		preprocessToken: PropTypes.func,
 		placeholder: PropTypes.string,
-		disabled: PropTypes.bool,
 		tokenDelimiterKeys: PropTypes.arrayOf(PropTypes.string),
 		suggestionProvider: PropTypes.func,
-		onlyAllowSuggestions: PropTypes.bool,
-		maxTokenLength: PropTypes.number
+		maxTokenLength: PropTypes.number,
+		disabled: PropTypes.bool,
+		onlyAllowSuggestions: PropTypes.bool
 	}
 
 	state = {inputValue: ''}
@@ -186,7 +186,8 @@ export default class TokenEditor extends React.Component {
 	}
 
 
-	onBlur = (/*e*/) => {
+	onBlur = (e) => {
+		const { onlyAllowSuggestions } = this.props;
 		// this.add(e.target.value);
 		// this.clearInput();
 
@@ -198,6 +199,12 @@ export default class TokenEditor extends React.Component {
 		this.cancel(); // cancels existing timer if any
 
 		this.cancelReset = () => clearTimeout(timerId);
+
+		if(!onlyAllowSuggestions) {
+			// on blur, add token as if a delimiter key was hit
+			this.add(e.target.value);
+			this.clearInput();
+		}
 	}
 
 
