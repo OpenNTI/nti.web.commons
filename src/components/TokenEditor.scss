@@ -24,6 +24,11 @@
 		&:focus {
 			outline: none;
 		}
+
+		&.error {
+			text-decoration: underline;
+			text-decoration-color: red;
+		}
 	}
 	&.disabled {
 		opacity: .5;

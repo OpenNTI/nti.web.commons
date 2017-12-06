@@ -65,6 +65,7 @@ export default class TokenEditor extends React.Component {
 		placeholder: PropTypes.string,
 		tokenDelimiterKeys: PropTypes.arrayOf(PropTypes.string),
 		suggestionProvider: PropTypes.func,
+		validator: PropTypes.func,
 		maxTokenLength: PropTypes.number,
 		disabled: PropTypes.bool,
 		onlyAllowSuggestions: PropTypes.bool
@@ -90,7 +91,10 @@ export default class TokenEditor extends React.Component {
 
 		this.state = {
 			selectedSuggestionIndex: -1,
-			suggestions: undefined
+			suggestions: undefined,
+			validationState: {
+				isValid: true // initially valid until invalid data is entered
+			}
 		};
 	}
 
@@ -186,7 +190,9 @@ export default class TokenEditor extends React.Component {
 	}
 
 	addIfValid (value) {
-		if(value && value.trim() !== '') {
+		const { validationState } = this.state;
+
+		if(validationState && validationState.isValid && value && value.trim() !== '') {
 			this.add(value);
 			this.clearInput();
 		}
@@ -223,13 +229,27 @@ export default class TokenEditor extends React.Component {
 
 
 	onInputChange = (e) => {
+		const { validator } = this.props;
 		const { selectedSuggestionIndex, suggestions } = this.state;
 		const value = e.target.value;
 
 		clearTimeout(this.inputBuffer);
 
+		let validationState = {
+			isValid: true
+		};
+
+		if(validator) {
+			const validationResults = validator(value);
+			validationState = {
+				isValid: validationResults && validationResults.length === 0,
+				errors: validationResults
+			};
+		}
+
 		let newState = {
-			inputValue: value
+			inputValue: value,
+			validationState
 		};
 
 		if(suggestions && selectedSuggestionIndex >= suggestions.length) {
@@ -446,9 +466,11 @@ export default class TokenEditor extends React.Component {
 	render () {
 
 		const {placeholder, disabled, maxTokenLength} = this.props;
-		const {values, inputValue} = this.state;
+		const {values, inputValue, validationState} = this.state;
 
 		const classes = cx('token-editor', this.props.className);
+
+		const inputCls = cx('token', { error: validationState && !validationState.isValid });
 
 		return (
 			<div className={classes} onClick={this.focusInput}>
@@ -456,7 +478,7 @@ export default class TokenEditor extends React.Component {
 				{values.map(x => <Token key={x.display || x} value={x.display || x} onRemove={disabled ? void 0 : this.remove} />)}
 				<input
 					disabled={disabled}
-					className="token"
+					className={inputCls}
 					ref={this.attachInputRef}
 					onKeyDown={this.onKeyDown}
 					onChange={this.onInputChange}
