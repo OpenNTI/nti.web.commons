@@ -4,11 +4,16 @@ const DATA = Symbol('Data');
 
 function getMessageForReason (reason, overrides) {
 	const {ErrorCode: code} = reason || {};
+	const override = overrides[code];
 
-	//TODO: fill this out more
-	if (overrides[code]) {
-		return overrides[code];
+	if (typeof override === 'function') {
+		return override(reason);
 	}
+
+	if (override) {
+		return override;
+	}
+
 
 	return (reason && reason.message) || 'Unknown Error';
 }
