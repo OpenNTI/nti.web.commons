@@ -68,6 +68,12 @@ function initializeAssetMap () {
 }
 
 export default class Asset extends React.Component {
+	static getDefaultURLForType (type) {
+		initializeAssetMap();
+
+		return ASSET_MAP[type] && ASSET_MAP[type].defaultValue;
+	}
+
 	static propTypes = {
 		propName: PropTypes.string,
 		contentPackage: PropTypes.object,
