@@ -433,7 +433,7 @@ export default class TokenEditor extends React.Component {
 
 	renderSuggestion = (suggestion, index) => {
 		return (
-			<Suggestion key={this.getValueForSuggestion(suggestion)}
+			<Suggestion key={suggestion.key || suggestion.display || suggestion}
 				suggestion={suggestion}
 				onClick={this.onSuggestionClick}
 				selected={this.state.selectedSuggestionIndex === index}
