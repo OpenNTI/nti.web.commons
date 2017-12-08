@@ -3,7 +3,8 @@ import EventEmitter from 'events';
 const DATA = Symbol('Data');
 
 function getMessageForReason (reason, overrides) {
-	const {ErrorCode: code} = reason || {};
+	const {ErrorCode, code: reasonCode} = reason || {};
+	const code = ErrorCode || reasonCode;
 	const override = overrides[code];
 
 	if (typeof override === 'function') {
