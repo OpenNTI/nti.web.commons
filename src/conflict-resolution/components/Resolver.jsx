@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {getServer} from 'nti-web-client';
 import {REQUEST_CONFLICT_EVENT} from 'nti-lib-interfaces';
 
@@ -9,6 +10,10 @@ import Registry from '../Registry';
 Registry.register(Code, contentVersionConflictHandler);
 
 export default class Resolver extends React.Component {
+
+	static propTypes = {
+		noDefault: PropTypes.bool
+	}
 
 	constructor (...args) {
 		super(...args);
@@ -27,7 +32,8 @@ export default class Resolver extends React.Component {
 
 
 	onConflict = (challenge) => {
-		return Registry.handleConflict(challenge) || defaultConflictHandler(challenge);
+		const {noDefault} = this.props;
+		return Registry.handleConflict(challenge) || (noDefault ? false : defaultConflictHandler(challenge));
 	}
 
 
