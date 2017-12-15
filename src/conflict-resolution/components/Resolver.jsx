@@ -33,7 +33,13 @@ export default class Resolver extends React.Component {
 
 	onConflict = (challenge) => {
 		const {noDefault} = this.props;
-		return Registry.handleConflict(challenge) || (noDefault ? false : defaultConflictHandler(challenge));
+		return Registry.handleConflict(challenge) || (
+			noDefault
+				// return values are ignored... auto reject conflicts if no handler and the
+				// app has opted out of the default handler.
+				? challenge.reject()
+				: defaultConflictHandler(challenge)
+		);
 	}
 
 
