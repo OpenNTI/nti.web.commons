@@ -22,10 +22,11 @@ export DefaultConfirmPrompt from './components/DefaultConfirmPrompt';
  *
  * @param  {string} code - the error code.
  * @param  {Responder} responder - a responder's callback.
+ * @param  {boolean} [prepend=true] - register the handler as a first responder or a last responder
  * @return {void}
  */
-export function registerHandler (code, responder) {
-	Registry.register(code, responder);
+export function registerHandler (code, responder, prepend) {
+	Registry.register(code, responder, prepend);
 }
 
 /**

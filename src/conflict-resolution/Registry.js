@@ -45,9 +45,10 @@ export default new class Registry {
 	 *
 	 * @param  {string} code - the error code.
 	 * @param  {Responder} responder - a responder's callback.
+	 * @param  {boolean} [prepend=true] - register the handler as a first responder or a last responder
 	 * @return {void}
 	 */
-	register (code, responder) {
+	register (code, responder, prepend = true) {
 		if (!code) {
 			throw new TypeError('An error code to handle is required');
 		}
@@ -55,7 +56,11 @@ export default new class Registry {
 		const handlers = (this.handlers[code] = (this.handlers[code] || []));
 
 		if (!handlers.includes(responder)) {
-			handlers.unshift(responder); //first responder
+			if (prepend) {
+				handlers.unshift(responder); //first responder
+			} else {
+				handlers.push(responder);
+			}
 		}
 	}
 
