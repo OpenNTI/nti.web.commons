@@ -182,7 +182,7 @@ describe('DateTimeField', () => {
 		const currentYear = new Date().getFullYear();
 		const numYears = 6;
 
-		testRender({ onChange: () => {} })
+		testRender({ value: null, onChange: () => {} })
 			.forEach(x => {
 				const yearSelect = x.find('.year-wrapper Select');
 
