@@ -7,7 +7,7 @@ const logger = Logger.get('common:high-order-components:ItemChanges');
 
 const CHANGE_HANDLERS = new WeakMap();
 
-function itemChanged (scope) {
+function itemChanged (scope, ...args) {
 	const {refChild, props: {onItemChanged}} = scope;
 	if (!scope.mounted) {
 		stopListening(scope);
@@ -15,10 +15,10 @@ function itemChanged (scope) {
 	}
 
 	if (onItemChanged) {
-		onItemChanged();
+		onItemChanged(...args);
 	}
 	else if (refChild && refChild.onItemChanged) {
-		refChild.onItemChanged();
+		refChild.onItemChanged(...args);
 	} else {
 		scope.forceUpdate();
 	}
