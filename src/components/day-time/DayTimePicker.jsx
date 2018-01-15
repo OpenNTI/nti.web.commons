@@ -18,7 +18,15 @@ export default class DayTimePicker extends React.Component {
 		disablePastNow: false
 	}
 
-	onDateChange = (date) => {
+	onDateValueChange = (date) => {
+		this.onDateChange(date, false);
+	}
+
+	onTimeChange = (date) => {
+		this.onDateChange(date, true);
+	}
+
+	onDateChange (date, timeChanged) {
 		const {onChange, disablePastNow} = this.props;
 
 		if (DateUtils.isPastDay(date) && disablePastNow) {
@@ -28,7 +36,7 @@ export default class DayTimePicker extends React.Component {
 		}
 
 		if(onChange) {
-			onChange(date);
+			onChange(date, timeChanged);
 		}
 	}
 
@@ -41,12 +49,12 @@ export default class DayTimePicker extends React.Component {
 				<DayPicker
 					value={value}
 					disabledDays={disabledDays}
-					onChange={this.onDateChange}
+					onChange={this.onDateValueChange}
 				/>
 				<div className="TimePicker-Header-Text">YOUR LOCAL TIME</div>
 				<TimePicker
 					value={value}
-					onChange={this.onDateChange}
+					onChange={this.onTimeChange}
 				/>
 			</div>
 		);
