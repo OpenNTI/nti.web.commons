@@ -10,7 +10,8 @@ export default class DayTimePicker extends React.Component {
 		value: PropTypes.instanceOf(Date),
 		onChange: PropTypes.func,
 		disabledDays: PropTypes.func,
-		disablePastNow: PropTypes.bool
+		disablePastNow: PropTypes.bool,
+		retainTime: PropTypes.bool	// when selecting a new day, specify whether to keep the old day's time on the newly selected date
 	}
 
 	static defaultProps = {
@@ -19,7 +20,15 @@ export default class DayTimePicker extends React.Component {
 	}
 
 	onDateValueChange = (date) => {
-		this.onDateChange(date, false);
+		const { value, retainTime } = this.props;
+
+		let newDate = date;
+
+		if(retainTime && value && value.getHours && value.getMinutes) {
+			newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), value.getHours(), value.getMinutes(), 0);
+		}
+
+		this.onDateChange(newDate, false);
 	}
 
 	onTimeChange = (date) => {
