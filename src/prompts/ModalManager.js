@@ -68,6 +68,7 @@ export class ModalManager extends EventEmitter {
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
 	 * @param {Boolean|Function} options.restoreScroll restore scroll position on dismissal
 	 * @param {Boolean} options.forceFront push the mount point to the front of the stack on re-renders
+	 * @param {Boolean} options.usePortal opt into using a portal
 	 * @return {ModalReference} Stuff & Things
 	 */
 	show (content, options = {}) {
@@ -83,6 +84,7 @@ export class ModalManager extends EventEmitter {
 			refocus = document.activeElement,
 			restoreScroll,
 			forceFront,
+			usePortal,
 		} = options;
 
 		const container = this.getContainer(mountPoint, forceFront);
@@ -96,8 +98,9 @@ export class ModalManager extends EventEmitter {
 		// calls (to re-render and update) will have the "reference" object passed as "options".
 		const scroller = document.scrollingElement || getScrollParent(container);
 
+		const isPortal = Boolean(ReactDOM.createPortal && usePortal);
 		const reference = {
-			isPortal: Boolean(ReactDOM.createPortal),
+			isPortal,
 			dismiss,
 			mountPoint: container,
 			refocus,
@@ -108,7 +111,6 @@ export class ModalManager extends EventEmitter {
 			}
 		};
 
-		const isPortal = Boolean(ReactDOM.createPortal);
 		const render = isPortal ? 'createPortal' : 'render';
 		const setReference = x => reference.component = x;
 
