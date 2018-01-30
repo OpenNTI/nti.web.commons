@@ -4,7 +4,7 @@ import Logger from 'nti-util-logger';
 
 import DataTransfer from './utils/DataTransfer';
 
-const log = Logger.get('web:common:draganddrop:Draggable');
+const log = Logger.get('common:draganddrop:Draggable');
 
 export default class Draggable extends React.Component {
 	static propTypes = {

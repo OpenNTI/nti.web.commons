@@ -6,7 +6,7 @@ import Logger from 'nti-util-logger';
 import Nav from './Nav';
 import Content from './Content';
 
-const log = Logger.get('web:common:layouts:nav-content:container');
+const log = Logger.get('common:layouts:nav-content:container');
 
 NavContentContainer.propTypes = {
 	className: PropTypes.string,

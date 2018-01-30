@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logger from 'nti-util-logger';
 
-const logger = Logger.get('nti-web-commons:sync-height:HeightChange');
+const logger = Logger.get('common:sync-height:HeightChange');
 
 const OBSERVER_INIT = {
 	childList: true,

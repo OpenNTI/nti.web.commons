@@ -4,7 +4,7 @@ import Logger from 'nti-util-logger';
 import {getServer} from 'nti-web-client';
 import {REQUEST_ERROR_EVENT} from 'nti-lib-interfaces';
 
-const logger = Logger.get('nti:commons:DeauthListener');
+const logger = Logger.get('common:DeauthListener');
 
 const DEAUTH_CODES = {
 	401: true,

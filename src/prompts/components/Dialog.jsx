@@ -8,7 +8,7 @@ import {rawContent} from 'nti-commons';
 import Manager from '../ModalManager';
 import DialogButtons from '../../components/DialogButtons';
 
-const logger = Logger.get('prompts:components:Dialog');
+const logger = Logger.get('common:prompts:Dialog');
 const emptyFunction = () => {};
 
 const MOUNT_POINT_CLS = 'nti-dialog-mount-point';

@@ -1,6 +1,6 @@
 import Logger from 'nti-util-logger';
 
-const logger = Logger.get('web:commons:draganddrop:DataTransfer');
+const logger = Logger.get('commons:draganddrop:DataTransfer');
 
 export function getTransferKey (obj) {
 	let key = '';

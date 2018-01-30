@@ -6,7 +6,7 @@ import {getAvailableItems, resolveKey} from './utils';
 import Container from './Container';
 import Controls from './Controls';
 
-const log = Logger.get('web:common:switch:Panel');
+const log = Logger.get('common:switch:Panel');
 
 export default class SwitchPanel extends React.Component {
 	static propTypes = {

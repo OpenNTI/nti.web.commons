@@ -4,7 +4,7 @@ import Logger from 'nti-util-logger';
 
 import Item from './Item';
 
-const log = Logger.get('web:common:switch:Container');
+const log = Logger.get('common:switch:Container');
 
 export default class SwitchContainer extends React.Component {
 	static getItems (container) {
