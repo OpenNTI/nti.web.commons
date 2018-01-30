@@ -23,6 +23,36 @@ export default class Avatar extends React.Component {
 	}
 
 
+	static getColorClass (entity) {
+
+		function hash (str) {
+			let h = 0, c;
+			if (str.length === 0) {
+				return h;
+			}
+
+			for (let i = 0; i < str.length; i++) {
+				c = str.charCodeAt(i);
+				/*eslint-disable no-bitwise */
+				h = ((h << 5) - h) + c;
+				h = h & h; // Convert to 32bit integer
+				/*eslint-enable no-bitwise */
+			}
+			return h;
+		}
+
+		const NUM_COLORS = 12;
+
+		let hashedString = (typeof entity === 'string'
+			? entity
+			: (entity || {}).Username) || 'unknown';
+
+		let idx = Math.abs(hash(hashedString)) % NUM_COLORS;
+
+		return `avatar-color-${idx}`;
+	}
+
+
 	state = {}
 
 
@@ -59,39 +89,9 @@ export default class Avatar extends React.Component {
 			.catch(() => DEFAULT)
 			.then(x => set({
 				entity: x,
-				color: this.getColorClass(x),
+				color: Avatar.getColorClass(x),
 				loading: false
 			}));
-	}
-
-
-	getColorClass (entity) {
-
-		function hash (str) {
-			let h = 0, c;
-			if (str.length === 0) {
-				return h;
-			}
-
-			for (let i = 0; i < str.length; i++) {
-				c = str.charCodeAt(i);
-				/*eslint-disable no-bitwise */
-				h = ((h << 5) - h) + c;
-				h = h & h; // Convert to 32bit integer
-				/*eslint-enable no-bitwise */
-			}
-			return h;
-		}
-
-		const NUM_COLORS = 12;
-
-		let hashedString = (typeof entity === 'string'
-			? entity
-			: (entity || {}).Username) || 'unknown';
-
-		let idx = Math.abs(hash(hashedString)) % NUM_COLORS;
-
-		return `avatar-color-${idx}`;
 	}
 
 
