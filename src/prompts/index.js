@@ -1,9 +1,9 @@
-import Dialog from './components/Dialog';
+import Prompt from './components/Prompt';
 import Manager from './ModalManager';
 
 export function alert (message, title = 'Alert', extra = {}) {
 	return new Promise(acknowledge=> {
-		Dialog.show({
+		Prompt.show({
 			...extra,
 			confirmButtonClass: extra.confirmButtonClass || 'caution',
 			iconClass: extra.iconClass || 'caution',
@@ -15,7 +15,7 @@ export function alert (message, title = 'Alert', extra = {}) {
 
 export function areYouSure (message, title = 'Are you sure?', extra = {}) {
 	return new Promise((acknowledge, cancel)=> {
-		Dialog.show({
+		Prompt.show({
 			...extra,
 			confirmButtonClass: extra.confirmButtonClass || 'caution',
 			iconClass: extra.iconClass || 'caution',

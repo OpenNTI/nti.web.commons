@@ -8,12 +8,12 @@ import {rawContent} from 'nti-commons';
 import Manager from '../ModalManager';
 import DialogButtons from '../../components/DialogButtons';
 
-const logger = Logger.get('common:prompts:Dialog');
+const logger = Logger.get('common:prompts:Prompt');
 const emptyFunction = () => {};
 
 const MOUNT_POINT_CLS = 'nti-dialog-mount-point';
 //XXX: Convert this to be an instance of 'Modal'...and go through the modal manager
-export default class Dialog extends React.Component {
+export default class Prompt extends React.Component {
 
 	static getMountPoint () {
 		let mountPoint = document.querySelector(`.${MOUNT_POINT_CLS}`);
@@ -49,7 +49,7 @@ export default class Dialog extends React.Component {
 
 		try {
 			this.active = ReactDOM.render(
-				React.createElement(Dialog, props),
+				React.createElement(Prompt, props),
 				this.getMountPoint());
 		}
 		catch (e) {
@@ -103,7 +103,7 @@ export default class Dialog extends React.Component {
 			refocus: document.activeElement,
 			dismiss: () => this.dismiss(),
 			component: this,
-			mountPoint: Dialog.getMountPoint()
+			mountPoint: Prompt.getMountPoint()
 		});
 	}
 
@@ -240,7 +240,7 @@ function dismiss (dialog) {
 	//Wait for animation before we remove it.
 	setTimeout(
 		()=> {
-			if (!Dialog.clear()) {
+			if (!Prompt.clear()) {
 				logger.warn('React did not unmount %o', dialog);
 			}
 		},
