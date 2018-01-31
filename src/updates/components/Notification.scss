@@ -1,0 +1,43 @@
+@import "~nti-style-common";
+
+.application-update-notification {
+	color: $secondary-grey;
+	background-color: #fffbe3;
+	border-width: 0;
+	border-bottom: 3px solid #f5e28a;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 999999;
+	text-align: center;
+	padding: 15px 20%;
+	margin: 0;
+	box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.5);
+	font-weight: 500;
+	font-size: 1rem;
+	line-height: 1.1;
+	animation: update-notification-drop-in 1s ease-in-out 1s 1 normal both;
+
+	a {
+		font-weight: inherit;
+		color: $primary-grey;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	@include respond-to(handhelds) {
+		font-size: 14px;
+		padding: 15px 10px;
+	}
+}
+
+@keyframes update-notification-drop-in {
+	0% {
+		transform: translateY(-100%);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}
