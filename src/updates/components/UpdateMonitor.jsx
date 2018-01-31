@@ -49,7 +49,7 @@ export default class UpdateMonitor extends React.Component {
 			this.setState({update: true});
 		}
 		else if (!previous && version) {
-			logger.log('Version recorded %s', version);
+			logger.debug('Version recorded %s', version);
 		}
 	}
 
