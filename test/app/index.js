@@ -10,23 +10,41 @@ import {Layouts} from '../../src';
 
 const {Responsive} = Layouts;
 
-Echo.propTypes = {
-	text: PropTypes.string
+class Store {
+	getTotalCount () {
+		return 100;
+	}
+
+	loadPage (page) {
+		return {
+			page: page
+		};
+	}
+
+	cancelLoadPage () {}
+}
+
+const StoreInstance = new Store();
+
+
+Page.propTypes = {
+	page: PropTypes.object,
+	loading: PropTypes.bool
 };
-function Echo ({text}) {
+function Page ({page, loading}) {
 	return (
-		<div>
-			{text}
+		<div style={{minHeight: 100}}>
+			{loading && (<span>Loading</span>)}
+			{!loading && (<span>{page.page}</span>)}
 		</div>
 	);
 }
 
+
 function Test () {
 	return (
 		<div>
-			<Responsive.Item query={Responsive.isMobile} component={Echo} text="Mobile" />
-			<Responsive.Item query={Responsive.isTablet} component={Echo} text="Tablet" />
-			<Responsive.Item query={Responsive.isDesktop} component={Echo} text="Desktop" />
+			<InfiniteLoad store={StoreInstance} pageComponent={Page} defaultPageHeight={500} />
 		</div>
 	);
 }
