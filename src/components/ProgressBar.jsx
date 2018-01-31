@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Transition from 'react-transition-group/CSSTransitionGroup';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
+
+const Transition = (props) => ( <CSSTransition classNames="progress-bar-transition" timeout={300} {...props} />);
 
 export default class ProgressBar extends React.Component {
 	static propTypes = {
@@ -56,41 +58,39 @@ export default class ProgressBar extends React.Component {
 		const timeleft = '';
 
 		return (
-			<Transition
-				component="div"
-				className={cx('progress-bar-component', {complete})}
-				transitionName="progress-bar-transition"
-				transitionEnterTimeout={300}
-				transitionLeaveTimeout={300}
-			>
+			<TransitionGroup className={cx('progress-bar-component', {complete})}>
 				{complete ? (
-					<div key="complete" className="complete">
-						<i className="icon-check"/>
-						<span className="status-message">{text}</span>
-						<a href="#" onClick={this.onDismiss}><i className="icon-remove small"/></a>
-					</div>
+					<Transition key="complete">
+						<div className="complete">
+							<i className="icon-check"/>
+							<span className="status-message">{text}</span>
+							<a href="#" onClick={this.onDismiss}><i className="icon-remove small"/></a>
+						</div>
+					</Transition>
 				) : (
-					<div className="in-progress" key="in-progress">
-						<div className="progress-header">
-							<span>
-								<span className="status-message">{text}</span>
-								{cancelable && (<a href="#" onClick={this.onCancel}>Cancel</a>)}
-							</span>
-							<span className="time-left">
-								{timeleft}
-							</span>
-						</div>
+					<Transition key="in-progress">
+						<div className="in-progress">
+							<div className="progress-header">
+								<span>
+									<span className="status-message">{text}</span>
+									{cancelable && (<a href="#" onClick={this.onCancel}>Cancel</a>)}
+								</span>
+								<span className="time-left">
+									{timeleft}
+								</span>
+							</div>
 
-						<div>
-							<progress max={max} value={value}>
-								<div className="progress-bar-fallback">
-									<span style={{width: `${percent}%`}}/>
-								</div>
-							</progress>
+							<div>
+								<progress max={max} value={value}>
+									<div className="progress-bar-fallback">
+										<span style={{width: `${percent}%`}}/>
+									</div>
+								</progress>
+							</div>
 						</div>
-					</div>
+					</Transition>
 				)}
-			</Transition>
+			</TransitionGroup>
 		);
 	}
 }

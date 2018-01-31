@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 import {MountToBody} from '../../../remote-mount';
 
@@ -88,13 +88,15 @@ export default class ControlBarView extends React.Component {
 
 		return (
 			<MountToBody className="nti-control-bar-mount">
-				<ReactCSSTransitionGroup transitionName="slideUp" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+				<TransitionGroup>
 					{visible && (
-						<div key="control-bar" className="nti-control-bar">
-							{children}
-						</div>
+						<CSSTransition key="control-bar" timeout={500}  classNames="slide-up">
+							<div className="nti-control-bar">
+								{children}
+							</div>
+						</CSSTransition>
 					)}
-				</ReactCSSTransitionGroup>
+				</TransitionGroup>
 			</MountToBody>
 		);
 	}

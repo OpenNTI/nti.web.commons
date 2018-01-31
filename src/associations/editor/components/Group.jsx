@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 import {getEditorCmpFor} from '../../types';
 
@@ -12,7 +12,7 @@ function renderSubGroup (group, associations) {
 	}
 
 	return (
-		<li key={group.ID}>
+		<li>
 			{group.label && (<h5>group.label</h5>)}
 			{renderItems(items, associations)}
 		</li>
@@ -28,7 +28,7 @@ function renderSingleItem (item, associations) {
 	}
 
 	return (
-		<li key={item.NTIID || item.ID}>
+		<li>
 			<Editor item={item} associations={associations} />
 		</li>
 	);
@@ -44,15 +44,13 @@ function renderItems (items, associations) {
 	items = items || [];
 
 	return (
-		<ReactCSSTransitionGroup
-			component="ul"
-			className="association-group-list"
-			transitionName="fadeAndCollapse"
-			transitionEnterTimeout={300}
-			transitionLeaveTimeout={300}
-		>
-			{items.map(x => renderItem(x, associations))}
-		</ReactCSSTransitionGroup>
+		<TransitionGroup component="ul" className="association-group-list">
+			{items.map(x => (
+				<CSSTransition key={x.NTIID || x.ID} classNames="fadeAndCollapse" timeout={300}>
+					{renderItem(x, associations)}
+				</CSSTransition>
+			))}
+		</TransitionGroup>
 	);
 }
 

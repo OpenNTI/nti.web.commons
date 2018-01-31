@@ -3,38 +3,41 @@
 .modal-mask-appear,
 .modal-mask-enter {
 	opacity: 0.01;
-	transition: opacity .26s ease-out; //make this transition 10ms longer to let the .modal-content animation playout
+	transition: opacity 0.26s ease-out; //make this transition 10ms longer to let the .modal-content animation playout
 }
 
 .modal-mask-appear.modal-mask-appear-active,
 .modal-mask-enter.modal-mask-enter-active {
 	opacity: 1;
+
 	.modal-content {
-		animation: modal-content .25s ease both;
+		animation: modal-content 0.25s ease both;
 	}
 }
 
-.modal-mask-leave {
+.modal-mask-exit {
 	opacity: 1;
-	transition: opacity .25s ease-out;
+	transition: opacity 0.25s ease-out;
 }
 
-.modal-mask-leave.modal-mask-leave-active {
+.modal-mask-exit.modal-mask-exit-active {
 	opacity: 0.01;
 }
 
-
 .modal-mask {
 	@include touch-scroll;
-	overflow: { x: hidden; y: auto; }
+	overflow: {
+		x: hidden;
+		y: auto;
+	}
+
 	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background: rgba(0,0,0,.7);
+	background: rgba(0, 0, 0, 0.7);
 	perspective: 300px;
-
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -51,6 +54,7 @@
 	&.safari-fix {
 		position: absolute !important;
 		bottom: auto;
+
 		.modal-content {
 			animation: none;
 		}
@@ -87,7 +91,7 @@
 }
 
 .modal-content {
-	animation-delay: .15s;
+	animation-delay: 0.15s;
 	flex: 0 0 auto;
 
 	& > * {
@@ -98,13 +102,14 @@
 			&::after {
 				content: '';
 				position: absolute;
-				top: 0; bottom: 0;
-				left: 0; right: 0;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
 				background: rgba(255, 255, 255, 0.5);
 			}
 		}
 	}
-
 }
 
 @keyframes modal-content {
@@ -114,11 +119,10 @@
 	}
 
 	100% {
-		transform: translate3d(0,0,0);
+		transform: translate3d(0, 0, 0);
 		opacity: 1;
 	}
 }
-
 
 body > .modal + .modal {
 	.modal-mask {

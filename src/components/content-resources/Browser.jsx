@@ -3,7 +3,7 @@ import {dirname} from 'path';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Transition from 'react-transition-group/CSSTransitionGroup';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 import {wait} from 'nti-commons';
 import {scoped} from 'nti-lib-locale';
 import Logger from 'nti-util-logger';
@@ -31,6 +31,15 @@ import View from './View';
 import TableLayout from './layout/table';
 import GridLayout from './layout/grid';
 
+const DropTransition = (props) => (
+	<CSSTransition
+		// Why was the timeout 1ms?
+		timeout={1}
+		// This transition doesn't seem to be defined anywhere??
+		classNames="content-resource-browser-drop"
+		{...props}
+	/>
+);
 
 const GRID_LAYOUT = 'grid';
 const TABLE_LAYOUT = 'table';
@@ -367,27 +376,27 @@ export default class ContentResourcesBrowser extends BrowsableView {
 
 
 				<div className={cx('status-bar', {dragover})}>
-					<Transition component="div" className=""
-						transitionName="content-resource-browser-drop"
-						transitionEnterTimeout={1}
-						transitionLeaveTimeout={1}
-					>
+					<TransitionGroup>
 						{!dragover && progress && (
-							<ProgressBar key="progress"
-								max={progress.max}
-								value={progress.value}
-								text={progress.text}
-								onCancel={progress.abort}
-								onDismiss={progress.dismiss}
-							/>
+							<DropTransition key="progress">
+								<ProgressBar
+									max={progress.max}
+									value={progress.value}
+									text={progress.text}
+									onCancel={progress.abort}
+									onDismiss={progress.dismiss}
+								/>
+							</DropTransition>
 						)}
 
 						{dragover && (
-							<div key="drag" className="drag-over-message">
-								{t('drag-drop.drag-over-mesasge')}
-							</div>
+							<DropTransition key="drag">
+								<div className="drag-over-message">
+									{t('drag-drop.drag-over-mesasge')}
+								</div>
+							</DropTransition>
 						)}
-					</Transition>
+					</TransitionGroup>
 				</div>
 			</div>
 		);

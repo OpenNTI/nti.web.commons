@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Transition from 'react-transition-group/CSSTransitionGroup';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import isIOS from 'nti-util-ios-version';
-import {declareCustomElement} from 'nti-lib-dom';
+import { declareCustomElement } from 'nti-lib-dom';
 
 import LockScroll from '../../components/LockScroll';
 import Manager from '../ModalManager';
@@ -101,33 +101,38 @@ export default class Modal extends React.Component {
 
 		const ios = isIOS();
 		const timeout = 500;
+		//Fragment will be undefined on react 15.
+		const Wrapper = Fragment || 'div';
 
 		return (
-			<Transition
-				transitionName="modal-mask"
-				transitionAppear={!ios}
-				transitionEnter={!ios}
-				transitionLeave={!ios}
-				transitionAppearTimeout={timeout}
-				transitionEnterTimeout={timeout}
-				transitionLeaveTimeout={timeout}
-			>
+			<Wrapper>
 				<LockScroll />
-				<div key={className}
-					className={classes}
-					onFocus={this.onFocus}
-					onBlur={this.onBlur}
-					onClick={this.onMaskClick}
-				>
-					<i className="icon-close" onClick={this.close}/>
-					<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent}>
-						{React.cloneElement(
-							React.Children.only(children),
-							{ onDismiss: this.close }
-						)}
-					</dialog>
-				</div>
-			</Transition>
+				<TransitionGroup>
+					<CSSTransition
+						key={className}
+						classNames="modal-mask"
+						timeout={timeout}
+						appear={!ios}
+						enter={!ios}
+						exit={!ios}
+					>
+						<div
+							className={classes}
+							onFocus={this.onFocus}
+							onBlur={this.onBlur}
+							onClick={this.onMaskClick}
+						>
+							<i className="icon-close" onClick={this.close}/>
+							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent}>
+								{React.cloneElement(
+									React.Children.only(children),
+									{ onDismiss: this.close }
+								)}
+							</dialog>
+						</div>
+					</CSSTransition>
+				</TransitionGroup>
+			</Wrapper>
 		);
 	}
 
