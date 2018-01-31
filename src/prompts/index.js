@@ -1,6 +1,8 @@
 import Prompt from './components/Prompt';
 import Manager from './ModalManager';
 
+export Dialog from './components/Dialog';
+
 export function alert (message, title = 'Alert', extra = {}) {
 	return new Promise(acknowledge=> {
 		Prompt.show({
