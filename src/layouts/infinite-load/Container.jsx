@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {Events} from 'nti-commons';
 
 import Page from './Page';
-import {initPages} from './utils';
+import {initPageState, updatePageState} from './utils';
 
 export default class InfiniteLoadContainer extends React.Component {
 	static propTypes = {
@@ -12,16 +13,23 @@ export default class InfiniteLoadContainer extends React.Component {
 			getTotalCount: PropTypes.func.isRequired
 		}),
 
-		pageComponent: PropTypes.element,
+		pageComponent: PropTypes.element.isRequired,
+		defaultPageHeight: PropTypes.number.isRequired,
 		pageProps: PropTypes.object,
-		defaultPageHeight: PropTypes.number,
+		buffer: PropTypes.number,
 
 		renderLoading: PropTypes.func,
 		renderError: PropTypes.func,
 		renderEmpty: PropTypes.func
 	}
 
+	static defaultProps = {
+		buffer: 1
+	}
+
 	state = {}
+
+	setContainer = x => this.container = x
 
 	get scrollingEl () {
 		return document && document.scrollingElement;
@@ -30,12 +38,22 @@ export default class InfiniteLoadContainer extends React.Component {
 	componentDidMount () {
 		this.setUpFor(this.props);
 
-		//TODO: listen for scroll and the store to emit a reload
+		global.ref = this;
+
+		if (Events.supportsPassive()) {
+			global.addEventListener('scroll', this.onScroll, {passive: true});
+		} else {
+			global.addEventListener('scroll', this.onScroll);
+		}
 	}
 
 
 	componentWillUnmount () {
-		//TODO: remove listeners
+		if (Events.supportsPassive()) {
+			global.removeEventListener('scroll', this.onScroll, {passive: true});
+		} else {
+			global.removeEventListener('scroll', this.onScroll);
+		}
 	}
 
 
@@ -50,7 +68,7 @@ export default class InfiniteLoadContainer extends React.Component {
 
 
 	setUpFor (props = this.props) {
-		const {store, defaultPageHeight} = this.props;
+		const {store, defaultPageHeight, buffer} = this.props;
 
 		this.setState({
 			loading: true,
@@ -58,13 +76,12 @@ export default class InfiniteLoadContainer extends React.Component {
 		}, async () => {
 			try {
 				const totalCount = await store.getTotalCount();
-				const {pages, buffer} = initPages(totalCount, defaultPageHeight, this.scrollingEl);
+				const pageState = initPageState(totalCount, defaultPageHeight, buffer, this.scrollingEl);
 
 				this.setState({
 					loading: false,
 					error: null,
-					buffer,
-					pages
+					pageState
 				});
 			} catch (e) {
 				this.setState({
@@ -77,16 +94,48 @@ export default class InfiniteLoadContainer extends React.Component {
 	}
 
 
+	onScroll = () => {
+		if (this.coolDownTimeout) {
+			this.callAfterCooldown = true;
+			return;
+		}
+
+		this.coolDownTimeout = setTimeout(() => {
+			delete this.coolDownTimeout;
+
+			if (this.callAfterCooldown) {
+				this.onScroll();
+				delete this.callAfterCooldown;
+			}
+		}, 17);
+
+		const {buffer} = this.props;
+		const {pageState} = this.state;
+		const updatedPageState = updatePageState(pageState, buffer, this.scrollingEl);
+
+		if (updatedPageState !== pageState) {
+			this.setState({
+				pageState: updatedPageState
+			});
+		} else {
+			console.log('Page State is Equal', updatedPageState, pageState);
+		}
+
+	}
+
+
 	render () {
 		const {className,} = this.props;
-		const {loading, error, pages} = this.state;
+		const {loading, error, pageState} = this.state;
+
+		const styles = pageState ? {height: pageState.totalHeight} : {};
 
 		return (
-			<div className={cx('infinite-loader', className)}>
+			<div className={cx('nti-infinite-loader', className)} style={styles} ref={this.setContainer}>
 				{loading && (this.renderLoading())}
 				{!loading && error && (this.renderError(error))}
-				{!loading && !error && (!pages || !pages.length)  && (this.renderEmpty())}
-				{pages && pages.map((page) => this.renderPage(page))}
+				{!loading && !error && (!pageState || !pageState.pages.length)  && (this.renderEmpty())}
+				{!loading && !error && pageState && pageState.pages.length && (this.renderPageState())}
 			</div>
 		);
 	}
@@ -113,8 +162,24 @@ export default class InfiniteLoadContainer extends React.Component {
 	}
 
 
+	renderPageState () {
+		const {pageState} = this.state;
+		const {visiblePages, visibleOffset} = pageState;
+
+		const styles = {top: visibleOffset};
+
+		return (
+			<div className="visible-pages" style={styles}>
+				{
+					visiblePages.map(page => this.renderPage(page))
+				}
+			</div>
+		);
+	}
+
+
 	renderPage (page) {
-		const {key, index, minPageHeight, visible} = page;
+		const {key, index, pageHeight} = page;
 		const {pageComponent, pageProps, store} = this.props;
 
 		return (
@@ -124,9 +189,8 @@ export default class InfiniteLoadContainer extends React.Component {
 				pageIndex={index}
 				pageComponent={pageComponent}
 				pageProps={pageProps}
-				minPageheight={minPageHeight}
+				pageHeight={pageHeight}
 				store={store}
-				visible={visible}
 			/>
 		);
 	}

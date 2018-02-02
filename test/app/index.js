@@ -12,7 +12,7 @@ const {Responsive} = Layouts;
 
 class Store {
 	getTotalCount () {
-		return 100;
+		return 1000;
 	}
 
 	loadPage (page) {
@@ -33,7 +33,7 @@ Page.propTypes = {
 };
 function Page ({page, loading}) {
 	return (
-		<div style={{minHeight: 100}}>
+		<div style={{minHeight: 500}}>
 			{loading && (<span>Loading</span>)}
 			{!loading && (<span>{page.page}</span>)}
 		</div>
