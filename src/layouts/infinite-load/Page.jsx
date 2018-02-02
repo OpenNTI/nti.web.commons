@@ -21,22 +21,22 @@ export default class InfiniteLoadPage extends React.Component {
 		const {pageKey:oldKey} = this.props;
 
 		if (newKey !== oldKey) {
-			this.cleanUpFor(this.props);
-			this.setUpFor(nextProps);
+			this.cleanupFor(this.props);
+			this.setupFor(nextProps);
 		}
 	}
 
 	componentDidMount () {
-		this.setUpFor(this.props);
+		this.setupFor(this.props);
 	}
 
 
 	componentWillUnmount () {
-		this.cleanUpFor(this.props);
+		this.cleanupFor(this.props);
 	}
 
 
-	cleanUpFor (props = this.props) {
+	cleanupFor (props = this.props) {
 		const {store, pageIndex, pageKey} = props;
 		const {loading} = this.state;
 
@@ -47,7 +47,7 @@ export default class InfiniteLoadPage extends React.Component {
 	}
 
 
-	setUpFor (props = this.props) {
+	setupFor (props = this.props) {
 		const {store, pageIndex, pageKey} = props;
 
 		this.setState({

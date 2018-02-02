@@ -2,7 +2,7 @@
 // import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import {addFeatureCheckClasses} from 'nti-lib-dom';
 // import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, TimePicker} from '../../src';
 
@@ -10,41 +10,79 @@ import {Layouts} from '../../src';
 
 const {Responsive} = Layouts;
 
-class Store {
-	getTotalCount () {
-		return 1000;
+const SIZES = [
+	{height: 100, background: 'red'},
+	{height: 250, background: 'green'},
+	{height: 500, background: 'blue'},
+	{height: 750, background: 'yellow'},
+	{height: 1000, background: 'orange'},
+	{height: '110vh', background: 'pink'}
+];
+
+const REMEMBER = {};
+
+function getSize (page) {
+	if (!REMEMBER[page]) {
+		const max = SIZES.length;
+		const index = Math.floor(Math.random() * (max - 1));
+
+		REMEMBER[page] = SIZES[index];
 	}
 
-	loadPage (page) {
-		return {
-			page: page
-		};
-	}
-
-	cancelLoadPage () {}
+	return REMEMBER[page];
 }
 
-const StoreInstance = new Store();
+// class Store {
+// 	getTotalCount () {
+// 		return 1000;
+// 	}
+
+// 	loadPage (page) {
+// 		return {
+// 			page: page
+// 		};
+// 	}
+
+// 	cancelLoadPage () {}
+// }
+
+// const StoreInstance = new Store();
 
 
-Page.propTypes = {
-	page: PropTypes.object,
-	loading: PropTypes.bool
-};
-function Page ({page, loading}) {
+// Page.propTypes = {
+// 	page: PropTypes.object,
+// 	loading: PropTypes.bool
+// };
+// function Page ({page, loading}) {
+// 	const size = page && getSize(page.page);
+
+// 	return (
+// 		<div style={size}>
+// 			{loading && (<span>Loading</span>)}
+// 			{!loading && (<span>{page.page}</span>)}
+// 		</div>
+// 	);
+// }
+
+
+function renderPage (index) {
+	const size = getSize(index);
+
 	return (
-		<div style={{minHeight: 500}}>
-			{loading && (<span>Loading</span>)}
-			{!loading && (<span>{page.page}</span>)}
+		<div style={size}>
+			<span>{index}</span>
 		</div>
 	);
 }
 
-
 function Test () {
 	return (
 		<div>
-			<InfiniteLoad store={StoreInstance} pageComponent={Page} defaultPageHeight={500} />
+			<InfiniteLoad.List
+				totalPages={1000}
+				renderPage={renderPage}
+				defaultPageHeight={500}
+			/>
 		</div>
 	);
 }

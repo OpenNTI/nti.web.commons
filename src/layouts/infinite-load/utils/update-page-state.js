@@ -42,7 +42,7 @@ function pagesChanged (pagesA, pagesB) {
 }
 
 
-export default  function updatePages (pageState, buffer, scrollingEl) {
+export default  function updatePages (pageState, buffer, scrollingEl, getPageHeight) {
 	const {pages, visiblePages:currentVisible} = pageState;
 	const {scrollTop, clientHeight} = scrollingEl;
 
@@ -52,18 +52,18 @@ export default  function updatePages (pageState, buffer, scrollingEl) {
 	let visibleOffset = 0;
 
 	for (let page of pages) {
-		const visible = isInVisibleRange(distanceFromTop, page.pageHeight, scrollTop, clientHeight);
+		const height = getPageHeight(page);
+		const visible = isInVisibleRange(distanceFromTop, height, scrollTop, clientHeight);
 
 		if (visible) {
 			if (!newVisible.length) {
-				console.log('Visible Page: ', page.key);
 				visibleOffset = distanceFromTop;
 			}
 
 			newVisible.push(page);
 		}
 
-		distanceFromTop += page.pageHeight;
+		distanceFromTop += height;
 	}
 
 

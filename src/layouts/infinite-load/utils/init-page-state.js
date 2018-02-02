@@ -1,13 +1,12 @@
 import updatePageState from './update-page-state';
 
-export default function initPages (total, defaultHeight, buffer, scrollingEl) {
+export default function initPages (total, buffer, scrollingEl, getPageHeight) {
 	let pages = [];
 
 	for (let i = 0; i < total; i++) {
 		pages.push({
 			key: `page-${i}`,
 			index: i,
-			pageHeight: defaultHeight,
 			visible: false
 		});
 	}
@@ -15,7 +14,5 @@ export default function initPages (total, defaultHeight, buffer, scrollingEl) {
 	return updatePageState({
 		pages,
 		visiblePages: [],
-		visibleOffset: 0,
-		totalHeight: total * defaultHeight
-	}, buffer, scrollingEl);
+	}, buffer, scrollingEl, getPageHeight);
 }
