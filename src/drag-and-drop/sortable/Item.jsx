@@ -114,24 +114,44 @@ class SortableItem extends React.Component {
 	render () {
 
 		const {
-			className,
-			isDragging,
 			connectDragSource,
 			connectDropTarget,
 			connectDragPreview,
-			children
+			...others
 		} = this.props;
 
-		const classes = cx('sortable-item', className, {dragging: isDragging});
-
 		const content = connectDragSource(connectDropTarget(
-			<li className={classes}>
-				{children}
-			</li>
+			ListItem(others) // no jsx here because the dnd connectors only work with native element nodes.
 		));
 
 		return connectDragPreview ? connectDragPreview(content) : content;
 	}
 }
 const dragSource = DragSource(ITEM_TYPE, itemSource, collect)(SortableItem);
-export default DropTarget(ITEM_TYPE, itemTarget, collectDrop)(dragSource);
+const Sortable = DropTarget(ITEM_TYPE, itemTarget, collectDrop)(dragSource);
+
+ListItem.propTypes = {
+	className: PropTypes.string,
+	isDragging: PropTypes.bool,
+	children: PropTypes.any
+};
+
+function ListItem ({className, children, isDragging: dragging}) {
+	const classes = cx('sortable-item', className, {dragging});
+
+	return (
+		<li className={classes}>
+			{children}
+		</li>
+	);
+}
+
+
+Item.propTypes = {
+	readOnly: PropTypes.bool
+};
+
+export default function Item (props) {
+	const C = props.readOnly ? ListItem : Sortable;
+	return <C {...props} />;
+}

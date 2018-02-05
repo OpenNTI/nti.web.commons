@@ -52,8 +52,6 @@ class Sortable extends React.Component {
 	}
 }
 */
-
-export default
 @DragDropContext(DNDBackend)
 class Container extends React.Component {
 
@@ -65,7 +63,25 @@ class Container extends React.Component {
 		onDragEnd: PropTypes.func.isRequired,
 		readOnly: PropTypes.bool,
 		className: PropTypes.string
+	};
+
+	getDragPreview = (item) => {
+		const {renderer} = this.props;
+		return renderer(item.item, {
+			isDragPreview: true
+		});
 	}
+
+	render () {
+		return <Items {...this.props} />;
+	}
+}
+
+
+
+class Items extends React.Component {
+
+	static propTypes = Container.PropTypes
 
 	attachRef = el => {
 		const prev = this.containerNode;
@@ -86,18 +102,10 @@ class Container extends React.Component {
 		}
 	}
 
-
-	getDragPreview = (item) => {
-		const {renderer} = this.props;
-		return renderer(item.item, {
-			isDragPreview: true
-		});
-	}
-
 	render () {
-
 		const {
 			items = [],
+			readOnly,
 			renderer,
 			onMove,
 			onDragEnd,
@@ -105,19 +113,29 @@ class Container extends React.Component {
 		} = this.props;
 
 		return (
-			<ol className={cx('sortable-container', className)} ref={this.attachRef}>
+			<ol className={cx('sortable-container', {'read-only': readOnly}, className)} ref={this.attachRef}>
 				{
 					items.map((item, index) =>
 						renderer(item, {
 							index,
 							item,
-							onDragEnd,
-							moveItem: onMove
+							readOnly,
+							onDragEnd: readOnly ? void 0 : onDragEnd,
+							moveItem: readOnly ? void 0 : onMove
 						})
 					)
 				}
-				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview" getDragPreview={this.getDragPreview} /> )}
+				{(!polyfillDrag || readOnly) ? void 0 : ( <DragLayer key="__preview" getDragPreview={this.getDragPreview} /> )}
 			</ol>
 		);
 	}
+}
+
+Sortable.propTypes = {
+	readOnly: PropTypes.bool
+};
+
+export default function Sortable ({readOnly, ...props}) {
+	const C = readOnly ? Items : Container;
+	return <C {...{readOnly, ...props}} />;
 }
