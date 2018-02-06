@@ -113,6 +113,23 @@ export default class Asset extends React.Component {
 		}
 	}
 
+
+	getPresentationResource (props) {
+		const {contentPackage} = props;
+
+		if (!contentPackage) { return {}; }
+
+		const resources = contentPackage.PlatformPresentationResources || [];
+
+		for (let resource of resources) {
+			if (resource.PlatformName === 'webapp') {
+				return resource;
+			}
+		}
+
+		return null;
+	}
+
 	getDefaultAssetRoot (scope) {
 		if (scope.getDefaultAssetRoot) {
 			return scope.getDefaultAssetRoot();
@@ -129,23 +146,31 @@ export default class Asset extends React.Component {
 
 		if (contentPackage.presentationroot) { return contentPackage.presentationroot; }
 
-		let resources = contentPackage.PlatformPresentationResources || [],
-			root;
-
-		resources.every(
-			resource=> !(root = (resource.PlatformName === 'webapp') ? resource.href : root)
-		);
+		const resource = this.getPresentationResource(props);
+		const root = resource && resource.href;
 
 		contentPackage.presentationroot = root || this.getDefaultAssetRoot(contentPackage);
 
 		return contentPackage.presentationroot;
 	}
 
+
+	getLastModified (props) {
+		const resource = this.getPresentationResource(props);
+
+		return resource ? resource['Last Modified'] : 0;
+	}
+
+
 	getAsset (name, props, resolve = false) {
 		const assetPath = (ASSET_MAP[name] && ASSET_MAP[name].path) || `missing-${name}-asset.png`;
 		const root = this.getAssetRoot(props);
-		return root && URL.resolve(root, assetPath);
+		const lastMod = this.getLastModified(props);
+		const url = root && URL.resolve(root, assetPath);
+
+		return url && `${url}?t=${lastMod}`;
 	}
+
 
 	componentDidMount () {
 		this.verifyImage();
