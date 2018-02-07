@@ -2,7 +2,7 @@
 // import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import {addFeatureCheckClasses} from 'nti-lib-dom';
 // import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, TimePicker} from '../../src';
 
@@ -32,45 +32,37 @@ function getSize (page) {
 	return REMEMBER[page];
 }
 
-// class Store {
-// 	getTotalCount () {
-// 		return 1000;
-// 	}
+class Store {
+	getTotalCount () {
+		return 1000;
+	}
 
-// 	loadPage (page) {
-// 		return {
-// 			page: page
-// 		};
-// 	}
+	loadPage (page) {
+		return getSize(page);
+	}
 
-// 	cancelLoadPage () {}
-// }
+	cancelLoadPage (page) {
+		console.log('Canceling Load For: ', page);
+	}
+}
 
-// const StoreInstance = new Store();
-
-
-// Page.propTypes = {
-// 	page: PropTypes.object,
-// 	loading: PropTypes.bool
-// };
-// function Page ({page, loading}) {
-// 	const size = page && getSize(page.page);
-
-// 	return (
-// 		<div style={size}>
-// 			{loading && (<span>Loading</span>)}
-// 			{!loading && (<span>{page.page}</span>)}
-// 		</div>
-// 	);
-// }
+const StoreInstance = new Store();
 
 
-function renderPage (index) {
-	const size = getSize(index);
+renderPage.propTypes = {
+	page: PropTypes.object,
+	loading: PropTypes.bool,
+	pageIndex: PropTypes.number,
+	pageHeight: PropTypes.number
+};
+function renderPage ({loading, pageIndex, pageHeight}) {
+	if (loading) { return (<div>Loading...</div>); }
+
+	const style = getSize(pageIndex);
 
 	return (
-		<div style={size}>
-			<span>{index}</span>
+		<div style={style}>
+			<span>{pageIndex}</span>
 		</div>
 	);
 }
@@ -78,8 +70,8 @@ function renderPage (index) {
 function Test () {
 	return (
 		<div>
-			<InfiniteLoad.List
-				totalPages={1000}
+			<InfiniteLoad.Store
+				store={StoreInstance}
 				renderPage={renderPage}
 				defaultPageHeight={500}
 			/>

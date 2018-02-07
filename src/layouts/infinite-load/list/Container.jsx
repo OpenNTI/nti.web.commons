@@ -17,7 +17,8 @@ export default class InifiniteLoadList extends React.Component {
 		buffer: PropTypes.number,
 
 		renderPage: PropTypes.func.isRequired,
-		renderEmpty: PropTypes.func
+		renderEmpty: PropTypes.func,
+		renderLoading: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -29,7 +30,10 @@ export default class InifiniteLoadList extends React.Component {
 	setContainer = x => this.container = x
 
 	get scrollingEl () {
-		return document && document.scrollingElement;
+		return document && {
+			scrollTop: document.scrollingElement.scrollTop,
+			clientHeight: document.documentElement.clientHeight
+		};
 	}
 
 	getPageHeight = (page) => {
@@ -72,9 +76,9 @@ export default class InifiniteLoadList extends React.Component {
 
 
 	setupFor (props = this.props) {
-		const {totalPages, buffer} = this.props;
+		const {totalPages, buffer} = props;
 
-		const pageState = initPageState(totalPages || 0, buffer, this.scrollingEl, this.getPageHeight);
+		const pageState = totalPages != null && initPageState(totalPages, buffer, this.scrollingEl, this.getPageHeight);
 
 		this.setState({
 			pageState
@@ -99,9 +103,9 @@ export default class InifiniteLoadList extends React.Component {
 
 		const {buffer} = this.props;
 		const {pageState} = this.state;
-		const updatedPageState = updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
+		const updatedPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
 
-		if (updatedPageState !== pageState) {
+		if (updatedPageState && updatedPageState !== pageState) {
 			this.setState({
 				pageState: updatedPageState
 			});
@@ -129,6 +133,7 @@ export default class InifiniteLoadList extends React.Component {
 				style={styles}
 				ref={this.setContainer}
 			>
+				{!pageState && (this.renderLoading())}
 				{pageState && (!totalPages) && (this.renderEmpty())}
 				{pageState && (totalPages) && (this.renderPageState())}
 			</div>
@@ -136,12 +141,17 @@ export default class InifiniteLoadList extends React.Component {
 	}
 
 
+	renderLoading () {
+		const {renderLoading} = this.props;
+
+		return renderLoading ? renderLoading() : null;
+	}
+
+
 	renderEmpty () {
 		const {renderEmpty} = this.props;
 
-		if (renderEmpty) {
-			renderEmpty();
-		}
+		return renderEmpty ? renderEmpty() : null;
 	}
 
 
@@ -175,6 +185,7 @@ export default class InifiniteLoadList extends React.Component {
 				key={key}
 				pageKey={key}
 				pageIndex={index}
+				pageHeight={this.getPageHeight(page)}
 				renderPage={renderPage}
 			/>
 		);

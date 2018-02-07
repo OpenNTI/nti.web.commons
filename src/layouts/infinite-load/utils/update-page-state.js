@@ -66,7 +66,6 @@ export default  function updatePages (pageState, buffer, scrollingEl, getPageHei
 		distanceFromTop += height;
 	}
 
-
 	if (!pagesChanged(currentVisible, newVisible)) {
 		return pageState;
 	}
