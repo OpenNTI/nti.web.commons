@@ -18,7 +18,7 @@ export default class UpdateMonitor extends React.Component {
 	}
 
 	static defaultProps = {
-		versionPath: 'js/nti-versions.txt',
+		versionPath: 'js/version',
 		getVersionString: parseVersionFromTextFile
 	}
 
