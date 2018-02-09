@@ -2,6 +2,10 @@
 	position: absolute;
 	opacity: 0;
 
+	&.promo {
+		background-image: url(./assets/default-course/course-promo-large-16x9.png);
+	}
+
 	&.thumb {
 		background-image: url(./assets/default-course/contentpackage-thumb-60x60.png);
 	}

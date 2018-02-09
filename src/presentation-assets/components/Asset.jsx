@@ -23,7 +23,8 @@ const ASSET_MAP = {
 		defaultValue: 'background'
 	},
 	promo: {
-		path: 'course-promo-large-16x9.png'
+		path: 'course-promo-large-16x9.png',
+		defaultValue: 'promo'
 	}
 };
 
