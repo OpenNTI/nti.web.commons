@@ -6,7 +6,7 @@ import DateTime from '../DateTime';
 
 export default class Date extends React.Component {
 	static propTypes = {
-		date: PropTypes.object.isRequired,
+		date: PropTypes.object,
 		type: PropTypes.string.isRequired,
 		selected: PropTypes.bool,
 		onSelect: PropTypes.func,
