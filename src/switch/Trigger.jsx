@@ -69,6 +69,7 @@ export default class SwitchTrigger extends React.Component {
 		const {className, children, ...otherProps} = this.props;
 
 		delete otherProps.item;
+		delete otehrProps.action;
 
 		return (
 			<div {...otherProps} className={cx(className, {active, disabled})} onClick={this.onClick} >
