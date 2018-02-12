@@ -5,7 +5,7 @@ export default class ResponsiveItem extends React.Component {
 	static propTypes = {
 		query: PropTypes.func.isRequired,
 
-		component: PropTypes.element,
+		component: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 		render: PropTypes.func
 	}
 
