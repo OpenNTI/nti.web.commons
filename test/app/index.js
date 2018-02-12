@@ -32,13 +32,27 @@ function getSize (page) {
 	return REMEMBER[page];
 }
 
+function getWait () {
+	const max = 4;
+	const wait = Math.floor(Math.random() * (max - 1));
+
+	return wait * 10 * 1000;//0 to 40 in increments of 10
+}
+
 class Store {
 	getTotalCount () {
 		return 1000;
 	}
 
 	loadPage (page) {
-		return getSize(page);
+		const size = getSize(page);
+		const wait = 600;
+
+		return new Promise(fulfill => {
+			setTimeout(() => {
+				fulfill(size);
+			}, wait);
+		});
 	}
 
 	cancelLoadPage (page) {

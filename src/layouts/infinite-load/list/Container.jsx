@@ -87,27 +87,31 @@ export default class InifiniteLoadList extends React.Component {
 
 
 	onScroll = () => {
-		// if (this.coolDownTimeout) {
-		// 	this.callAfterCoolDown = true;
-		// 	return;
-		// }
+		if (this.handlingScroll) {
+			this.callScrollAgain = true;
+			return;
+		}
 
-		// this.coolDownTimeout = setTimeout(() => {
-		// 	delete this.coolDownTimeout;
-
-		// 	if (this.callAfterCoolDown) {
-		// 		this.onScroll();
-		// 		delete this.callAfterCoolDown;
-		// 	}
-		// }, 17);
 
 		const {buffer} = this.props;
 		const {pageState} = this.state;
 		const updatedPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
 
 		if (updatedPageState && updatedPageState !== pageState) {
+			this.handlingScroll = true;
+
 			this.setState({
 				pageState: updatedPageState
+			}, () => {
+				setTimeout(() => {
+					delete this.handlingScroll;
+
+					if (this.callScrollAgain) {
+						delete this.callScrollAgain;
+
+						this.onScroll();
+					}
+				}, 17);
 			});
 		}
 	}
