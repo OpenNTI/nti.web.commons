@@ -8,10 +8,18 @@ export default class File extends React.Component {
 		className: PropTypes.string,
 		label: PropTypes.string,
 		accept: PropTypes.string,
-		value: PropTypes.string,
+		value: PropTypes.object,	// existing file
 		defaultText: PropTypes.string,
 		onFileChange: PropTypes.func,
 		checkValid: PropTypes.func
+	}
+
+	constructor (props) {
+		super(props);
+
+		this.state = {
+			file: props.value
+		};
 	}
 
 	renderFileName () {
