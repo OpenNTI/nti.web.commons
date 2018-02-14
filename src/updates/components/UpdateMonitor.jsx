@@ -25,7 +25,7 @@ export default class UpdateMonitor extends React.Component {
 	state = {}
 
 	componentDidMount () {
-		const monitor = this.activeStateMonitor = new InactivityMonitor(document.body);
+		const monitor = this.activeStateMonitor = new InactivityMonitor();
 		this.unsubscribe = monitor.addChangeListener(this.onActiveStateChanged);
 
 		this.check();
