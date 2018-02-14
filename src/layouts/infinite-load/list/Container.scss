@@ -1,9 +1,14 @@
 .nti-infinite-load-list {
 	position: relative;
 
-	.visible-pages {
+	.pages {
 		position: absolute;
 		width: 100%;
 		left: 0;
+	}
+
+	.infinite-load-list-page {
+		overflow: hidden;
+		position: relative;
 	}
 }

@@ -6,7 +6,6 @@ import {Events} from 'nti-commons';
 import ChildHeightMonitor from '../ChildHeightMonitor';
 import {initPageState, updatePageState} from '../utils';
 
-import Page from './Page';
 
 export default class InifiniteLoadList extends React.Component {
 	static propTypes = {
@@ -28,6 +27,8 @@ export default class InifiniteLoadList extends React.Component {
 	state = {}
 
 	setContainer = x => this.container = x
+	setBeforeContainer = x => this.beforeContainer = x
+	setAfterContainer = x => this.afterContainer = x
 
 	get scrollingEl () {
 		return document && {
@@ -92,7 +93,6 @@ export default class InifiniteLoadList extends React.Component {
 			return;
 		}
 
-
 		const {buffer} = this.props;
 		const {pageState} = this.state;
 		const updatedPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
@@ -121,6 +121,7 @@ export default class InifiniteLoadList extends React.Component {
 		const pageKey = node.dataset.pageKey;
 
 		this.pageHeights = this.pageHeights || {};
+
 		this.pageHeights[pageKey] = height;
 	}
 
@@ -161,21 +162,30 @@ export default class InifiniteLoadList extends React.Component {
 
 	renderPageState () {
 		const {pageState} = this.state;
-		const {visiblePages, visibleOffset} = pageState;
+		const {activePages, totalHeight} = pageState;
+		const {before, after, anchor, anchorOffset} = activePages;
 
-		const styles = {top: visibleOffset};
 
 		return (
-			<ChildHeightMonitor
-				className="visible-pages"
-				style={styles}
-				childSelector="[data-page-key]"
-				onHeightChange={this.onHeightChange}
-			>
-				{
-					visiblePages.map(page => this.renderPage(page))
-				}
-			</ChildHeightMonitor>
+			<React.Fragment>
+				<div className="pages before" style={{bottom: totalHeight - anchorOffset}} ref={this.setBeforeContainer}>
+					<ChildHeightMonitor
+						childSelector="[data-page-key]"
+						onHeightChange={this.onHeightChange}
+					>
+						{before.map(page => this.renderPage(page))}
+					</ChildHeightMonitor>
+				</div>
+				<div className="pages active after" style={{top: anchorOffset}} ref={this.setActiveContainer}>
+					<ChildHeightMonitor
+						childSelector="[data-page-key]"
+						onHeightChange={this.onHeightChange}
+					>
+						{this.renderPage(anchor)}
+						{after.map(page => this.renderPage(page))}
+					</ChildHeightMonitor>
+				</div>
+			</React.Fragment>
 		);
 	}
 
@@ -185,13 +195,13 @@ export default class InifiniteLoadList extends React.Component {
 		const {renderPage} = this.props;
 
 		return (
-			<Page
-				key={key}
-				pageKey={key}
-				pageIndex={index}
-				pageHeight={this.getPageHeight(page)}
-				renderPage={renderPage}
-			/>
+			<div className="infinite-load-list-page" data-page-key={key} key={key}>
+				{renderPage({
+					pageKey: key,
+					pageIndex: index,
+					pageHeight: this.getPageHeight(page)
+				})}
+			</div>
 		);
 	}
 }
