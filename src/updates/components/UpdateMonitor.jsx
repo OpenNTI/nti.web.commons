@@ -6,6 +6,9 @@ import Logger from 'nti-util-logger';
 
 import Notification from './Notification';
 
+const ONE_MINUTE = 60000;//ms
+// const FIFTEEN_MINUTES = 900000;//ms
+
 const logger = Logger.get('common:update-monitor');
 
 const parseVersionFromTextFile = txt => (txt || '').split(/\n/)[0].split(' ')[0];
@@ -28,7 +31,7 @@ export default class UpdateMonitor extends React.Component {
 		const monitor = this.activeStateMonitor = new InactivityMonitor();
 		this.unsubscribe = monitor.addChangeListener(this.onActiveStateChanged);
 
-		this.check();
+		this.onActiveStateChanged(true);
 	}
 
 
@@ -38,6 +41,8 @@ export default class UpdateMonitor extends React.Component {
 
 		this.unmounted = true;
 		this.setState = () => {};
+
+		this.onActiveStateChanged(false);
 	}
 
 
@@ -56,18 +61,35 @@ export default class UpdateMonitor extends React.Component {
 
 	onActiveStateChanged = (active) => {
 		logger.debug('Active State changed. (active: %s)', active);
+		this.active = active;
+
+		clearInterval(this.recheck);
+		delete this.recheck;
+
 		if (active) {
 			this.check();
+			// this.recheck = setInterval(this.check, FIFTEEN_MINUTES);
 		}
 	}
 
 
 	check = async () => {
-		const {baseUrl, versionPath} = this.props;
+		const {
+			props: {
+				baseUrl,
+				versionPath
+			},
+			state: {
+				version: lastVersion,
+				update,
+			}
+		} = this;
 
-		if (!baseUrl || !versionPath) {
+		if (!this.active || !baseUrl || !versionPath || update || (Date.now() - this.lastChecked) < ONE_MINUTE) {
 			return;
 		}
+
+		this.lastChecked = Date.now();
 
 		const r = await fetch (UrlUtils.join(baseUrl, versionPath), {
 			method: 'GET',
@@ -86,7 +108,7 @@ export default class UpdateMonitor extends React.Component {
 
 		const version = this.props.getVersionString(txt);
 
-		if (this.state.version !== version) {
+		if (lastVersion !== version) {
 			this.setState({version});
 		}
 	}
