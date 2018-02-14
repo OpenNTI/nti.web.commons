@@ -94,8 +94,8 @@ export default class UpdateMonitor extends React.Component {
 		const r = await fetch (UrlUtils.join(baseUrl, versionPath), {
 			method: 'GET',
 			headers: {
-				// 'pragma': 'no-cache',
-				// 'cache-control': 'no-cache'
+				'pragma': 'no-cache',
+				'cache-control': 'no-cache'
 			}
 		});
 
