@@ -4,7 +4,7 @@ import cx from 'classnames';
 import {Events} from 'nti-commons';
 
 import ChildHeightMonitor from '../ChildHeightMonitor';
-import {initPageState, updatePageState} from '../utils';
+import {initPageState, updatePageState, fixPageState} from '../utils';
 
 
 export default class InifiniteLoadList extends React.Component {
@@ -28,7 +28,7 @@ export default class InifiniteLoadList extends React.Component {
 
 	setContainer = x => this.container = x
 	setBeforeContainer = x => this.beforeContainer = x
-	setActiveContainer = x => this.activeContainer = x
+	setAfterContainer = x => this.afterContainer = x
 
 	get scrollingEl () {
 		return document && {
@@ -112,7 +112,7 @@ export default class InifiniteLoadList extends React.Component {
 
 			if (this.syncOnScrollStop) {
 				delete this.syncOnScrollStop;
-				this.maybeSyncHeights();
+				this.maybeSyncScroll();
 			}
 		}, 17);
 
@@ -146,8 +146,50 @@ export default class InifiniteLoadList extends React.Component {
 		this.pageHeights = this.pageHeights || {};
 
 		const pageIndex = node.dataset.pageIndex;
+		const sync = this.pageHeights[pageIndex] !== height;
 
 		this.pageHeights[pageIndex] = height;
+
+		if (sync) {
+			this.maybeSyncScroll();
+		}
+	}
+
+
+	maybeSyncScroll () {
+		if (this.syncScrollTimeout) {
+			return;
+		}
+
+		this.syncScrollTimeout = setTimeout(() => {
+			delete this.syncScrollTimeout;
+			delete this.syncOnScrollStop;
+
+			if (this.isScrolling || !this.beforeContainer || !this.afterContainer) {
+				this.syncOnScrollStop = true;
+				return;
+			}
+
+			const {buffer} = this.props;
+			const {pageState} = this.state;
+			const fixedPageState = fixPageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
+
+			if (fixedPageState.scrollTop === pageState.scrollTop) { return; }
+
+			const {activePages, totalHeight} = fixedPageState;
+			const {anchorOffset} = activePages;
+
+			this.container.style.height = `${totalHeight}px`;
+			this.beforeContainer.style.bottom = `${totalHeight - anchorOffset}px`;
+			this.afterContainer.style.top = `${anchorOffset}px`;
+
+			this.scrollingEl.scrollTop = fixedPageState.scrollTop;
+
+			this.setState({
+				pageState: fixedPageState
+			});
+		}, 100);
+
 	}
 
 
@@ -201,7 +243,7 @@ export default class InifiniteLoadList extends React.Component {
 						{before.map(page => this.renderPage(page))}
 					</ChildHeightMonitor>
 				</div>
-				<div className="pages active after" style={{top: anchorOffset}} ref={this.setActiveContainer}>
+				<div className="pages after" style={{top: anchorOffset}} ref={this.setAfterContainer}>
 					<ChildHeightMonitor
 						childSelector="[data-page-index]"
 						onHeightChange={this.onHeightChange}

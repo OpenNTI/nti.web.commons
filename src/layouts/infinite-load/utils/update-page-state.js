@@ -1,14 +1,7 @@
 import isPossibleAnchor from './is-possible-anchor';
-
-function getAnchor (pageState) {
-	const {activePages} = pageState;
-	const {after, anchorOffset} = activePages || {};
-
-	return {
-		anchorPage: after ? after[0] : 0,
-		anchorOffset: anchorOffset || 0
-	};
-}
+import getAnchor from './get-anchor-from-page-state';
+import getAfterAnchor from './get-after-anchor';
+import getBeforeAnchor from './get-before-anchor';
 
 function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight) {
 	const {scrollTop, clientHeight} = scrollingEl;
@@ -65,62 +58,6 @@ function moveAnchor (scrollTop, oldScrollTop, pageState, buffer, scrollingEl, ge
 }
 
 
-function getBeforeAnchor (anchor, pageState, buffer, scrollingEl, getPageHeight) {
-	const {clientHeight} = scrollingEl;
-	const {anchorPage} = anchor;
-	const beforeBufferSize = clientHeight * buffer;
-
-	let before = [];
-
-	let beforeHeight = 0;
-	let beforeIndex = anchorPage - 1;
-
-	while (beforeIndex >= 0) {
-		const height = getPageHeight(beforeIndex);
-
-		if (beforeHeight < beforeBufferSize) {
-			before.push(beforeIndex);
-		}
-
-		beforeHeight += height;
-		beforeIndex -= 1;
-	}
-
-	return {
-		before: before.reverse(),
-		beforeHeight
-	};
-}
-
-
-function getAfterAnchor (anchor, pageState, buffer, scrollingEl, getPageHeight) {
-	const {clientHeight} = scrollingEl;
-	const {anchorPage} = anchor;
-	const afterBufferSize = clientHeight * (buffer + 1);
-
-	let after = [anchorPage];
-
-	let afterHeight = getPageHeight(anchorPage);
-	let afterIndex = anchorPage + 1;
-
-	while (afterIndex < pageState.total) {
-		const height = getPageHeight(afterIndex);
-
-		if (afterHeight < afterBufferSize) {
-			after.push(afterIndex);
-		}
-
-		afterHeight += height;
-		afterIndex += 1;
-	}
-
-	return {
-		after,
-		afterHeight
-	};
-}
-
-
 export default function updatePageState (pageState, buffer, scrollingEl, getPageHeight) {
 	const {scrollTop} = scrollingEl;
 	const {scrollTop:oldScrollTop} = pageState;
@@ -134,7 +71,9 @@ export default function updatePageState (pageState, buffer, scrollingEl, getPage
 	return {
 		activePages: {
 			before,
+			beforeHeight,
 			after,
+			afterHeight,
 			anchorOffset: anchor.anchorOffset
 		},
 		scrollTop,
