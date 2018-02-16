@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 export default class InfiniteLoadStorePage extends React.Component {
 	static propTypes = {
-		pageKey: PropTypes.string.isRequired,
 		pageIndex: PropTypes.number.isRequired,
 		pageHeight: PropTypes.number,
+		isScrolling: PropTypes.bool,
 		renderPage: PropTypes.func.isRequired,
 		store: PropTypes.shape({
 			loadPage: PropTypes.func,
@@ -17,10 +17,10 @@ export default class InfiniteLoadStorePage extends React.Component {
 	state = {loading: true}
 
 	componentWillReceiveProps (nextProps) {
-		const {pageKey:newKey} = nextProps;
-		const {pageKey:oldKey} = this.props;
+		const {pageIndex:newIndex} = nextProps;
+		const {pageIndex:oldIndex} = this.props;
 
-		if (newKey !== oldKey) {
+		if (newIndex !== oldIndex) {
 			this.cleanupFor(this.props);
 			this.setupFor(nextProps);
 		}
@@ -88,14 +88,14 @@ export default class InfiniteLoadStorePage extends React.Component {
 
 
 	render () {
-		const {renderPage, pageIndex, pageKey, pageHeight} = this.props;
+		const {renderPage, pageIndex, isScrolling, pageHeight} = this.props;
 		const {loading, error, page} = this.state;
 
 		const styles = loading ? {height: pageHeight} : {};
 
 		return (
 			<div style={styles}>
-				{renderPage({loading, error, page, pageIndex, pageHeight, pageKey})}
+				{renderPage({loading, error, page, pageIndex, pageHeight, isScrolling})}
 			</div>
 		);
 	}

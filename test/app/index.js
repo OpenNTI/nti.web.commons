@@ -15,7 +15,7 @@ const SIZES = [
 	{height: 250, background: 'green'},
 	{height: 500, background: 'blue'},
 	{height: 750, background: 'yellow'},
-	{height: 1000, background: 'orange'},
+	{height: '120vh', background: 'orange'},
 	{height: '110vh', background: 'pink'}
 ];
 
@@ -32,27 +32,31 @@ function getSize (page) {
 	return REMEMBER[page];
 }
 
-function getWait () {
-	const max = 4;
-	const wait = Math.floor(Math.random() * (max - 1));
+// function getWait () {
+// 	const max = 4;
+// 	const wait = Math.floor(Math.random() * (max - 1));
 
-	return wait * 10 * 1000;//0 to 40 in increments of 10
-}
+// 	return wait * 10 * 1000;//0 to 40 in increments of 10
+// }
 
 class Store {
+	loaded = {}
+
 	getTotalCount () {
-		return 1000;
+		return 20;
 	}
 
 	loadPage (page) {
-		const size = getSize(page);
-		const wait = 600;
+		if (this.loaded[page]) { return this.loaded[page]; }
 
-		return new Promise(fulfill => {
+
+		this.loaded[page] = new Promise(fulfill => {
 			setTimeout(() => {
-				fulfill(size);
-			}, wait);
+				fulfill(getSize(page));
+			}, 1000);
 		});
+
+		return this.loaded[page];
 	}
 
 	cancelLoadPage (page) {
@@ -69,13 +73,13 @@ renderPage.propTypes = {
 	pageIndex: PropTypes.number,
 	pageHeight: PropTypes.number
 };
-function renderPage ({loading, pageIndex, pageHeight}) {
-	if (loading) { return (<div>Loading...</div>); }
-
-	const style = getSize(pageIndex);
+function renderPage ({loading, page, pageIndex, pageHeight}) {
+	if (loading) {
+		return (<div>Loading</div>);
+	}
 
 	return (
-		<div style={style}>
+		<div className="test-page" style={page}>
 			<span>{pageIndex}</span>
 		</div>
 	);
@@ -220,3 +224,4 @@ ReactDOM.render(
 // 	</div>,
 // 	document.getElementById('content')
 // );
+//

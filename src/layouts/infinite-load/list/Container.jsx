@@ -28,12 +28,17 @@ export default class InifiniteLoadList extends React.Component {
 
 	setContainer = x => this.container = x
 	setBeforeContainer = x => this.beforeContainer = x
-	setAfterContainer = x => this.afterContainer = x
+	setActiveContainer = x => this.activeContainer = x
 
 	get scrollingEl () {
 		return document && {
-			scrollTop: document.scrollingElement.scrollTop,
-			clientHeight: document.documentElement.clientHeight
+			clientHeight: document.documentElement.clientHeight,
+			get scrollTop () {
+				return document.scrollingElement.scrollTop;
+			},
+			set scrollTop (top) {
+				return document.scrollingElement.scrollTop = top;
+			}
 		};
 	}
 
@@ -41,7 +46,7 @@ export default class InifiniteLoadList extends React.Component {
 		const {defaultPageHeight} = this.props;
 		const heights = this.pageHeights || {};
 
-		return heights[page.key] || defaultPageHeight || 0;
+		return heights[page] || defaultPageHeight || 0;
 	}
 
 
@@ -86,22 +91,42 @@ export default class InifiniteLoadList extends React.Component {
 		});
 	}
 
-
 	onScroll = () => {
 		if (this.handlingScroll) {
 			this.callScrollAgain = true;
 			return;
 		}
 
+		if (!this.state.isScrolling) {
+			this.setState({
+				isScrolling: true
+			});
+		}
+
+		clearTimeout(this.scrollingTimeout);
+
+		this.scrollingTimeout = setTimeout(() => {
+			this.setState({
+				isScrolling: false
+			});
+
+			if (this.syncOnScrollStop) {
+				delete this.syncOnScrollStop;
+				this.maybeSyncHeights();
+			}
+		}, 17);
+
 		const {buffer} = this.props;
 		const {pageState} = this.state;
-		const updatedPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
+		const newPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
 
-		if (updatedPageState && updatedPageState !== pageState) {
+		if (newPageState && newPageState.activePages.anchorOffset !== pageState.activePages.anchorOffset) {
 			this.handlingScroll = true;
 
+			updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
+
 			this.setState({
-				pageState: updatedPageState
+				pageState: newPageState
 			}, () => {
 				setTimeout(() => {
 					delete this.handlingScroll;
@@ -118,11 +143,11 @@ export default class InifiniteLoadList extends React.Component {
 
 
 	onHeightChange = (node, height) => {
-		const pageKey = node.dataset.pageKey;
-
 		this.pageHeights = this.pageHeights || {};
 
-		this.pageHeights[pageKey] = height;
+		const pageIndex = node.dataset.pageIndex;
+
+		this.pageHeights[pageIndex] = height;
 	}
 
 
@@ -163,14 +188,14 @@ export default class InifiniteLoadList extends React.Component {
 	renderPageState () {
 		const {pageState} = this.state;
 		const {activePages, totalHeight} = pageState;
-		const {before, after, anchor, anchorOffset} = activePages;
+		const {before, after, anchorOffset} = activePages;
 
 
 		return (
 			<React.Fragment>
 				<div className="pages before" style={{bottom: totalHeight - anchorOffset}} ref={this.setBeforeContainer}>
 					<ChildHeightMonitor
-						childSelector="[data-page-key]"
+						childSelector="[data-page-index]"
 						onHeightChange={this.onHeightChange}
 					>
 						{before.map(page => this.renderPage(page))}
@@ -178,10 +203,9 @@ export default class InifiniteLoadList extends React.Component {
 				</div>
 				<div className="pages active after" style={{top: anchorOffset}} ref={this.setActiveContainer}>
 					<ChildHeightMonitor
-						childSelector="[data-page-key]"
+						childSelector="[data-page-index]"
 						onHeightChange={this.onHeightChange}
 					>
-						{this.renderPage(anchor)}
 						{after.map(page => this.renderPage(page))}
 					</ChildHeightMonitor>
 				</div>
@@ -191,15 +215,14 @@ export default class InifiniteLoadList extends React.Component {
 
 
 	renderPage (page) {
-		const {key, index} = page;
 		const {renderPage} = this.props;
 
 		return (
-			<div className="infinite-load-list-page" data-page-key={key} key={key}>
+			<div className="infinite-load-list-page" data-page-index={page} key={page}>
 				{renderPage({
-					pageKey: key,
-					pageIndex: index,
-					pageHeight: this.getPageHeight(page)
+					pageIndex: page,
+					pageHeight: this.getPageHeight(page),
+					isScrolling: this.state.isScrolling
 				})}
 			</div>
 		);

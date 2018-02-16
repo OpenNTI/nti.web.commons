@@ -93,11 +93,11 @@ export default class InfiniteStoreLoad extends React.Component {
 	}
 
 
-	renderPage = ({pageIndex, pageKey, pageHeight}) => {
+	renderPage = ({pageIndex, pageKey, isScrolling, pageHeight}) => {
 		const {renderPage, store} = this.props;
 
 		return (
-			<Page store={store} pageKey={pageKey} pageIndex={pageIndex} pageHeight={pageHeight} renderPage={renderPage} />
+			<Page store={store} pageKey={pageKey} pageIndex={pageIndex} pageHeight={pageHeight} isScrolling={isScrolling} renderPage={renderPage} />
 		);
 	}
 }
