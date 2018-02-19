@@ -11,7 +11,7 @@ function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight) {
 
 	let distanceFromOffset = -getPageHeight(possibleAnchor);
 
-	while (possibleAnchor >= 0) {
+	while (possibleAnchor > 0) {
 		const height = getPageHeight(possibleAnchor);
 
 		distanceFromOffset += height;
