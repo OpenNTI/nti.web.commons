@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 
-import {child as ActiveStateBehavior} from '../mixins/ActiveStateSelector';
+import {child as ActiveStateBehavior} from './ActiveStateContainer';
 
 export default createReactClass({
 	displayName: 'ActiveState',

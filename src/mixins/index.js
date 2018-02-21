@@ -1,4 +1,3 @@
-export ActiveStateSelector from './ActiveStateSelector';
 export BasePath from './BasePath';
 export ItemChanges from './ItemChanges';
 export NavigatableMixin from './NavigatableMixin';

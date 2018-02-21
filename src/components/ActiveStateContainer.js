@@ -1,7 +1,8 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import NavigatableMixin from './NavigatableMixin';
-import BasePath from './BasePath';
+import NavigatableMixin from '../mixins/NavigatableMixin';
+import BasePath from '../mixins/BasePath';
 
 const register = 'active-state-group-register';
 const unregister = 'active-state-group-unregister';
@@ -12,21 +13,25 @@ const initPrivate = (x, o = {}) => PRIVATE.set(x, o);
 const freePrivate = x => PRIVATE.delete(x);
 const getPrivate = x => PRIVATE.get(x) || {};
 
-export default {
+export default class ActiveStateSelector extends React.Component {
+	static propTypes = {
+		children: PropTypes.any
+	}
 
-	componentWillMount () {
-		initPrivate(this, {items: []});
-	},
-
-	componentWillUnmount () {
-		freePrivate(this);
-	},
-
-	childContextTypes: {
+	static childContextTypes = {
 		[isActive]: PropTypes.func,
 		[register]: PropTypes.func,
 		[unregister]: PropTypes.func
-	},
+	}
+
+	componentWillMount () {
+		initPrivate(this, {items: []});
+	}
+
+	componentWillUnmount () {
+		freePrivate(this);
+	}
+
 
 	getChildContext () {
 		return {
@@ -34,10 +39,10 @@ export default {
 			[register]: this.registerActiveStateGroupChild,
 			[unregister]: this.unregisterActiveStateGroupChild
 		};
-	},
+	}
 
 
-	registerActiveStateGroupChild (cmp) {
+	registerActiveStateGroupChild = (cmp) => {
 		const {items} = getPrivate(this);
 		if (items) {
 			if (!items.includes(cmp)) {
@@ -46,10 +51,10 @@ export default {
 
 			this.setState({});
 		}
-	},
+	}
 
 
-	unregisterActiveStateGroupChild (cmp) {
+	unregisterActiveStateGroupChild = (cmp) => {
 		const {items} = getPrivate(this);
 
 		if (items) {
@@ -61,10 +66,10 @@ export default {
 
 			this.setState({});
 		}
-	},
+	}
 
 
-	isChildActive (cmp) {
+	isChildActive = (cmp) => {
 		const {items} = getPrivate(this);
 		if (!items) {return false;}
 
@@ -81,16 +86,21 @@ export default {
 
 		return cmp === active[0];
 	}
-};
+
+
+	render () {
+		return this.props.children;
+	}
+}
 
 
 export const child = {
 	mixins: [BasePath, NavigatableMixin],
 
 	contextTypes: {
-		[isActive]: PropTypes.func,
-		[register]: PropTypes.func,
-		[unregister]: PropTypes.func
+		[isActive]: PropTypes.func.isRequired,
+		[register]: PropTypes.func.isRequired,
+		[unregister]: PropTypes.func.isRequired
 	},
 
 	propTypes: {

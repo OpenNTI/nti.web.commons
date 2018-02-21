@@ -7,6 +7,7 @@ export * as Table from './table';
 export * as Input from './inputs';
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
+export ActiveStateContainer from './ActiveStateContainer';
 export AssetIcon from './AssetIcon';
 export Avatar from './Avatar';
 export Background from './Background';
