@@ -6,7 +6,7 @@ import {areYouSure} from '../prompts/';
 
 export default class RemoveButton extends React.Component {
 	static propTypes = {
-		onDelete: PropTypes.func.isRequired,
+		onRemove: PropTypes.func.isRequired,
 		confirmationMessage: PropTypes.string
 	};
 
@@ -15,15 +15,15 @@ export default class RemoveButton extends React.Component {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {onDelete, confirmationMessage} = this.props;
+		const {onRemove, confirmationMessage} = this.props;
 
 		if(confirmationMessage) {
 			areYouSure(confirmationMessage).then(() => {
-				onDelete && onDelete();
+				onRemove && onRemove();
 			});
 		}
 		else {
-			onDelete && onDelete();
+			onRemove && onRemove();
 		}
 	};
 
