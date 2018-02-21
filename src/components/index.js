@@ -60,6 +60,7 @@ export Publish from './Publish';
 export PublishTrigger from './PublishTrigger';
 export Radio from './Radio';
 export RadioGroup from './RadioGroup';
+export RemoveButton from './RemoveButton';
 export Report from './Report';
 export ResourceNotFound from './ResourceNotFound';
 export Scroller from './Scroller';
