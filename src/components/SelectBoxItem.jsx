@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 export default class extends React.Component {
 	static displayName = 'SelectBoxItem';
@@ -9,7 +10,8 @@ export default class extends React.Component {
 			label: PropTypes.string,
 			value: PropTypes.any
 		}),
-		onClick: PropTypes.func
+		onClick: PropTypes.func,
+		selected: PropTypes.bool
 	};
 
 	onClick = (e) => {
@@ -23,10 +25,12 @@ export default class extends React.Component {
 	};
 
 	render () {
-		const {option} = this.props;
+		const {option, selected} = this.props;
+
+		const className = cx('option-label', { selected });
 
 		return (
-			<li onClick={this.onClick}><span className="option-label">{option.label}</span></li>
+			<li onClick={this.onClick}><span className={className}>{option.label}</span></li>
 		);
 	}
 }

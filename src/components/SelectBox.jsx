@@ -12,7 +12,8 @@ export default class extends React.Component {
 		value: PropTypes.any,
 		onChange: PropTypes.func,
 		className: PropTypes.string,
-		disabled: PropTypes.bool
+		disabled: PropTypes.bool,
+		showSelectedOption: PropTypes.bool
 	};
 
 	state = {
@@ -67,7 +68,7 @@ export default class extends React.Component {
 	render () {
 		const {
 			state: {isOpen, selectedOption},
-			props: {disabled, className, options}
+			props: {disabled, showSelectedOption, className, options}
 		} = this;
 
 		let classes = cx('select-box', className, {'open': isOpen, disabled});
@@ -81,8 +82,16 @@ export default class extends React.Component {
 				<div className="menu-label selected" onClick={disabled ? null : this.toggle}>{optionLabel(selectedOption.label)}</div>
 				{isOpen && (
 					<ul>
-						{options.filter(item => item !== selectedOption).map((option, index) =>
-							<SelectBoxItem key={index} option={option} onClick={this.onClick} />
+						{options.filter(item => showSelectedOption || item !== selectedOption).map((option, index) => {
+							return (
+								<SelectBoxItem
+									key={index}
+									selected={showSelectedOption && option === selectedOption}
+									option={option}
+									onClick={this.onClick}
+								/>
+							);
+						}
 						)}
 					</ul>
 				)}
