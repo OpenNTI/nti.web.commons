@@ -65,7 +65,7 @@ class SortDragLayer extends React.Component {
 		if (typeof getDragPreview === 'function') {
 			return getDragPreview(item);
 		}
-		return <span>{item.index}</span>;
+		return <span>{item.index + 1}</span>;
 	}
 
 	render () {
