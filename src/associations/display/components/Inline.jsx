@@ -144,7 +144,7 @@ export default class InlineAssociations extends React.Component {
 		};
 
 		const trigger = (
-			<List.Inline {...props} />
+			<List.LimitedInline {...props} />
 		);
 
 		return (
