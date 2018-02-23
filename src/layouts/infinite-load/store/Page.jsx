@@ -61,7 +61,8 @@ export default class InfiniteLoadStorePage extends React.Component {
 			error: null
 		}, async () => {
 			try {
-				const page = await store.loadPage(pageIndex);
+				//infinite-load list is 0 index but our pages are 1 indexed
+				const page = await store.loadPage(pageIndex + 1);
 
 				if (!this.canceledLoads || !this.canceledLoads[pageIndex]) {
 					this.setState({
