@@ -1,11 +1,11 @@
-/*
- * @class Registry
+/**
  * Singltion instance maintains custom handlers for conflict resolution.
  */
 export default new class Registry {
 
 	/**
-	 * @type {Object} Maps error codes to a list of responders.
+	 * Maps error codes to a list of responders.
+	 * @type {Object}
 	 */
 	handlers = {}
 

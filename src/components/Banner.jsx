@@ -15,7 +15,8 @@ export default createReactClass({
 		className: PropTypes.string,
 
 		/**
-		 * @type {object} Any model that implements getPresentationProperties()
+		 * Any model that implements getPresentationProperties()
+		 * @type {object}
 		 */
 		item: PropTypes.shape({
 			getPresentationProperties: PropTypes.func }).isRequired,

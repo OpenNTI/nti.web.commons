@@ -34,7 +34,6 @@ class FieldError extends EventEmitter {
 	 * @param  {String} message user facing message
 	 * @param  {Object} raw     the raw response from the server
 	 * @param  {Function} onClear callback for when the error is cleared
-	 * @return {void}
 	 */
 	constructor (id, attachedTo, message, raw, onClear) {
 		super();
@@ -126,7 +125,7 @@ export default class Factory {
 	 * @param  {Object} attachedTo  describes what the error is on. See comment on FieldError's constructor
 	 * @param  {Object} reason  describes what the error is (i.e. the server's error response)
 	 * @param  {Function} onClear what to do when the error is cleared
-	 * @return {[type]}         [description]
+	 * @return {FieldError} A FieldError
 	 */
 	make (attachedTo, reason, onClear) {
 		this.seenCount += 1;

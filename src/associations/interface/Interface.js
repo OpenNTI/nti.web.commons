@@ -16,7 +16,7 @@ const CLONE = Symbol('Clone Interface');
 class ActiveInterface extends EventEmitter {
 	/**
 	 * Create an ActiveInterface
-	 * @param  {[Object]} active the list of active IDs
+	 * @param  {Object} active the list of active IDs
 	 * @return {Object}        the Active Interface
 	 */
 	constructor (active) {
@@ -118,7 +118,7 @@ export default class AssociationInterface extends EventEmitter {
 
 	/**
 	 * Set the possible destinations to create associations with
-	 * @param  {[Object]} destinations the list of destinations
+	 * @param  {Object} destinations the list of destinations
 	 * @return {void}
 	 */
 	set destinations (destinations) {
@@ -132,7 +132,7 @@ export default class AssociationInterface extends EventEmitter {
 
 	/**
 	 * Set the active associations in the possible destinations
-	 * @param  {[Object]} active list of active associations either object or ID
+	 * @param  {Object} active list of active associations either object or ID
 	 * @return {void}
 	 */
 	set active (active) {
@@ -169,7 +169,7 @@ export default class AssociationInterface extends EventEmitter {
 	/**
 	 * Remove an active association
 	 * @param  {Object|String} active active destination to remo
-	 * @return {[type]}        [description]
+	 * @return {void}
 	 */
 	removeActive (active) {
 		if (this[ACTIVE]) {
@@ -204,7 +204,7 @@ export default class AssociationInterface extends EventEmitter {
 	 * Create a new interface with the given destinations, but with the
 	 * same active.
 	 *
-	 * @param {[Object]} destinations the destinations to have in the clone
+	 * @param {Object} destinations the destinations to have in the clone
 	 * @return {Object} a new associations interface
 	 */
 	[CLONE] (destinations) {
