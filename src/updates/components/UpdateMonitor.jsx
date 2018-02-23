@@ -85,7 +85,12 @@ export default class UpdateMonitor extends React.Component {
 			}
 		} = this;
 
-		if (!this.active || !baseUrl || !versionPath || update || (Date.now() - this.lastChecked) < ONE_MINUTE) {
+		const valid = Boolean(baseUrl && versionPath);
+
+		if (!this.active || !valid || update || (Date.now() - this.lastChecked) < ONE_MINUTE) {
+			if (valid && update) {
+				this.setState({updated: Date.now()});
+			}
 			return;
 		}
 
@@ -116,7 +121,7 @@ export default class UpdateMonitor extends React.Component {
 
 	render () {
 		return this.state.update ? (
-			<Notification/>
+			<Notification lastUpdated={this.state.updated}/>
 		) : (
 			null
 		);

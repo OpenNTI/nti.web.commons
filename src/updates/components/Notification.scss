@@ -26,9 +26,28 @@
 		cursor: pointer;
 	}
 
+	i {
+		position: absolute;
+		transform: translateY(-50%);
+		top: 50%;
+		right: 15px;
+		font-size: 16px;
+		cursor: pointer;
+	}
+
 	@include respond-to(handhelds) {
 		font-size: 14px;
 		padding: 15px 10px;
+
+		i {
+			right: 5px;
+		}
+	}
+
+	&.dismissed {
+		animation-delay: 0s;
+		animation-duration: 0.25s;
+		animation-name: update-notification-fly-out;
 	}
 }
 
@@ -39,5 +58,17 @@
 
 	100% {
 		transform: translateY(0);
+	}
+}
+
+@keyframes update-notification-fly-out {
+	0% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+
+	100% {
+		transform: translateY(-100%);
+		opacity: 0;
 	}
 }
