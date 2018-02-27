@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Inline from '../Inline';
+import Inline from '../LimitedInline';
 
 
 describe('Inline List Tests', () => {
