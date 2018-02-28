@@ -45,6 +45,27 @@ export default class DateTime extends React.Component {
 		return date && moment(new Date(date)).tz(tz).fromNow();
 	}
 
+
+	/**
+	 * Format seconds into a human readable duration
+	 *
+	 * Taken from: https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss/40350003#40350003
+	 *
+	 * @param  {Number} duration number of seconds to format
+	 * @return {String}          human readable format
+	 */
+	static formatDuration (duration) {
+		const h = Math.floor(duration / 3600);
+		const m = Math.floor((duration % 3600) / 60);
+		const s = duration % 60;
+
+		return [
+			h,
+			m > 9 ? m : (h ? '0' + m : m || '0'),
+			s > 9 ? s : '0' + s,
+		].filter(a => a).join(':');
+	}
+
 	static propTypes = {
 		date: PropTypes.any,//Date
 		relativeTo: PropTypes.any,//Date
