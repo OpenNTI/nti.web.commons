@@ -1,0 +1,80 @@
+@import '~nti-style-common';
+
+.nti-web-commons-filedrop {
+	width: 100%;
+	background: $panel-background;
+	border: 2px dashed $border-grey;
+	border-radius: 7px;
+	padding: rem-calc(26px);
+	overflow: hidden;
+
+	position: relative;
+
+	input {
+		cursor: pointer;
+		position: absolute;
+		font-size: 25rem;
+		right: 0;
+		bottom: 0;
+		opacity: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		i {
+			margin-top: 2rem;
+			font-size: 2rem;
+			color: $secondary-grey;
+			flex: 1 1 auto;
+		}
+
+		.title {
+			font-size: 1.125rem;
+			color: $secondary-grey;
+			flex: 0 0 auto;
+			margin: 1rem 0;
+		}
+
+		.choose-container {
+			flex: 0 0 auto;
+			margin-bottom: 1rem;
+
+			.choose {
+				display: block;
+				padding: 0 1.25rem;
+				background: white;
+				border: 1px solid $border-grey-light;
+				border-radius: 4px;
+				line-height: 2.5rem;
+				font-size: 0.875rem;
+				color: $secondary-grey;
+			}
+		}
+
+		.error-container {
+			margin-bottom: 1rem;
+			flex: 0 0 auto;
+			opacity: 0;
+
+			&.error {
+				opacity: 1;
+			}
+
+			.error {
+				color: $primary-red;
+			}
+		}
+
+		.requirements {
+			flex: 1 1 auto;
+			color: $tertiary-grey;
+			font-size: 0.875rem;
+		}
+	}
+}
