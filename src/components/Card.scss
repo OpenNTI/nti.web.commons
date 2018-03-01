@@ -4,10 +4,12 @@
 %icon-external-link-hover { background-image: url(./assets/extern-link_hover.png); }
 %circle-white-check-large { background-image: url(./assets/circle-check-white-large.png); }
 
-.content-link.related-work-ref {
+a.content-link.related-work-ref {
 	$gap: 0.625rem;
 	$icon-width: 80px;
 
+	color: inherit;
+	text-decoration: inherit;
 	position: relative;
 	overflow: hidden;
 	display: block;

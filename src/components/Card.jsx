@@ -18,7 +18,12 @@ const {BLANK_IMAGE} = DataURIs;
 
 const logger = Logger.get('common:components:card');
 
-const t = scoped('common.units');
+const t = scoped('common.units', {
+	comments: {
+		one: '%(count)s Comment',
+		other: '%(count)s Comments'
+	},
+});
 
 const Seen = Symbol('Seen');
 
@@ -128,7 +133,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		context: PropTypes.arrayOf(PropTypes.string)
 	}
 
-	static contextTypes: {
+	static contextTypes = {
 		analyticsManager: PropTypes.object.isRequired
 	}
 
