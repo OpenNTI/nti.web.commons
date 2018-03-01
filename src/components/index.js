@@ -14,6 +14,7 @@ export Background from './Background';
 export Banner from './Banner';
 export BufferedInput from './BufferedInput';
 export Button from './Button';
+export Card from './Card';
 export CalendarCard from './CalendarCard';
 export Checkbox from './Checkbox';
 export CollectionFilter from './CollectionFilter';
