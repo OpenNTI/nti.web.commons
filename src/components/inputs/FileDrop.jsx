@@ -18,6 +18,7 @@ export default class Upload extends React.Component {
 	static propTypes = {
 		onChange: PropTypes.func.isRequired,
 		onError: PropTypes.func.isRequired,
+		value: PropTypes.object,
 		getString: PropTypes.func,
 		sizeLimit: PropTypes.number,
 		allowedTypes: PropTypes.object,
@@ -57,17 +58,50 @@ export default class Upload extends React.Component {
 	}
 
 
+	onFileRemove = () => {
+		const {onChange} = this.props;
+
+		if(this.input) {
+			this.input.value = '';
+		}
+
+		// pass empty to onChange, effectively indicating removal
+		onChange();
+	}
+
+
+	renderFileName () {
+		return (
+			<div className={cx('file-name')}>
+				<div className={cx('name')}>{this.props.value && this.props.value.name}</div>
+				<div onClick={this.onFileRemove} className={cx('remove-file')}>
+					<i className="icon-light-x"/>
+				</div>
+			</div>
+		);
+	}
+
+
+	attachRef = (x) => {
+		this.input = x;
+	}
+
+
 	render () {
 		const {getString} = this;
-		const {error, className} = this.props;
-		
+		const {error, className, value} = this.props;
+
 		return (
 			<div className={cx('nti-web-commons-filedrop', className)}>
-				<input type="file" className="asset-file" onChange={this.onFileChange} />
+				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileChange} />
 				<div className="container">
 					<i className="icon-upload" />
 					<span className="title">{getString('title')}</span>
-					<div className="choose-container"><span className="choose">{getString('choose')}</span></div>
+					{
+						value
+							? this.renderFileName()
+							: (<div className="choose-container"><span className="choose">{getString('choose')}</span></div>)
+					}
 					<div className={cx('error-container', {error})}>
 						<span className="error">{error || 'no error'}</span>
 					</div>
