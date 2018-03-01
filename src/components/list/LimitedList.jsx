@@ -22,11 +22,12 @@ LimitedList.propTypes = {
 	getString: PropTypes.func
 };
 export default function LimitedList ({children, className = () => {}, onShowMore, max = Infinity, getString, ...otherProps}) {
-	children = React.Children.toArray(children);
+	const renderableChildren = React.Children.toArray(children)
+		.filter(x => x !== false && x != null);
 
 	const hasLimit = max !== Infinity;
-	const items = hasLimit ? children.slice(0, max) : children;
-	const remaining = hasLimit ? (children.length - max) : 0;
+	const items = hasLimit ? renderableChildren.slice(0, max) : renderableChildren;
+	const remaining = hasLimit ? (renderableChildren.length - max) : 0;
 	const cls = cx('limited-list', className);
 	const remainingCls = cx('remaining', {'has-handler': !!onShowMore});
 	const stringFn = getString ? t.override(getString) : t;

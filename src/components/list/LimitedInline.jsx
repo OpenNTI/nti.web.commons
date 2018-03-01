@@ -31,16 +31,19 @@ InlineList.propTypes = {
 	renderOverrides: PropTypes.object
 };
 export default function InlineList ({children, limit = 1, getString, renderOverrides = {}, ...otherProps}) {
-	children = React.Children.toArray(children);
+	const renderableChildren = React.Children.toArray(children).filter(x => x !== false && x != null);
 
-	if (children.length === 0) {
+	if (renderableChildren.length === 0) {
 		return t('empty');
 	}
 
 	const override = getString ? t.override(getString) : t;
 
-	const list = children.length === 2 || children.length < limit ? children : children.slice(0, limit);
-	const remaining = children.length - list.length;
+	const list = renderableChildren.length === 2 || renderableChildren.length < limit
+		? renderableChildren
+		: renderableChildren.slice(0, limit);
+
+	const remaining = renderableChildren.length - list.length;
 	const parts = getParts(list, remaining, override);
 
 

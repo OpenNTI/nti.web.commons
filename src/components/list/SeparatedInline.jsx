@@ -7,9 +7,10 @@ SeparatedInlineList.propTypes = {
 	className: PropTypes.string
 };
 export default function SeparatedInlineList ({children, className, ...otherProps}) {
+	const renderableChildren = React.Children.toArray(children).filter(x => x !== false && x != null);
 	return (
 		<ul className={cx('nti-separated-inline-list', className)}>
-			{React.Children.map(children, (child, index) => {
+			{renderableChildren.map(children, (child, index) => {
 				return (
 					<li key={index}>
 						{child}
