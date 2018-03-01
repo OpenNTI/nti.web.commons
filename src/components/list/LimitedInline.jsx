@@ -31,7 +31,8 @@ InlineList.propTypes = {
 	renderOverrides: PropTypes.object
 };
 export default function InlineList ({children, limit = 1, getString, renderOverrides = {}, ...otherProps}) {
-	const renderableChildren = React.Children.toArray(children).filter(x => x !== false && x != null);
+	const renderableChildren = React.Children.toArray(children)
+		.filter(x => x !== false && x != null);
 
 	if (renderableChildren.length === 0) {
 		return t('empty');
