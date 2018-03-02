@@ -4,6 +4,7 @@ import isEmpty from 'isempty';
 import moment from 'moment-timezone';
 import invariant from 'invariant';
 import jstz from 'jstimezonedetect';
+import {scoped} from 'nti-lib-locale';
 
 const returnFalse = () => false;
 
@@ -13,6 +14,54 @@ const localeData = moment.localeData('en');
 const RELATIVE_TIME_KEY = '_relativeTime';
 const relativeTimeData = localeData[RELATIVE_TIME_KEY];
 invariant(relativeTimeData, 'momentjs changed where they store relativeTime in localeData');
+
+const DEFAULT_TEXT = {
+	timeUnits: {
+		singular: {
+			years: '%(count)s Year',
+			months: '%(count)s Month',
+			weeks: '%(count)s Week',
+			days: '%(count)s Day',
+			hours: '%(count)s Hour',
+			minutes: '%(count)s Minute',
+			seconds: '%(count)s Second',
+			milliseconds: '%(count)s Millisecond'
+		},
+		years: {
+			one: '%(count)s Year',
+			other: '%(count)s Years'
+		},
+		months: {
+			one: '%(count)s Month',
+			other: '%(count)s Months'
+		},
+		weeks: {
+			one: '%(count)s Week',
+			other: '%(count)s Weeks'
+		},
+		days: {
+			one: '%(count)s Day',
+			other: '%(count)s Days'
+		},
+		hours: {
+			one: '%(count)s Hour',
+			other: '%(count)s Hours'
+		},
+		minutes: {
+			one: '%(count)s Minute',
+			other: '%(count)s Minutes'
+		},
+		seconds: {
+			one: '%(count)s Second',
+			other: '%(count)s Seconds'
+		},
+		milliseconds: {
+			one: '%(count)s Millisecond',
+			other: '%(count)s Milliseconds'
+		},
+	}
+};
+const t = scoped('nti-web-common.components.DateTime', DEFAULT_TEXT);
 
 //Add custom plural day callback to handle weeks. moment doesn't merge sub-objects...so we have
 //to include the entire relativeTime object with our custom dd
@@ -65,6 +114,36 @@ export default class DateTime extends React.Component {
 			s > 9 ? s : '0' + s,
 		].filter(a => a).join(':');
 	}
+
+
+	static getNaturalDuration (duration, accuracy, singular) {
+		const d = new moment.duration(duration);
+		const getUnit = (unit, data) => singular ? t(`timeUnits.singular.${unit}`, data) : t(`timeUnits.${unit}`, data);
+
+		let out = [];
+
+		function maybeAdd (unit) {
+			let u = d.get(unit);
+			if (u > 0 && (!accuracy || out.length < accuracy)) {
+				out.push(getUnit(unit, {count: u}));
+			}
+		}
+
+		maybeAdd('years');
+		maybeAdd('months');
+		maybeAdd('weeks');
+		maybeAdd('days');
+		maybeAdd('hours');
+		maybeAdd('minutes');
+		maybeAdd('seconds');
+
+		if (out.length === 0) {
+			out.push(getUnit('seconds', {count: 0}));
+		}
+
+		return out.join(', ');
+	}
+
 
 	static propTypes = {
 		date: PropTypes.any,//Date

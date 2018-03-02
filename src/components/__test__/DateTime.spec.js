@@ -211,4 +211,17 @@ describe('DateTime', () => {
 		});
 	});
 
+	describe('getNaturalDuration', () => {
+		const getDays = n => n * 24 * 60 * 60 * 1000;
+		const n = (...args) => DateTime.getNaturalDuration(...args);
+
+		test('days', () => {
+			expect(n(getDays(1), 1)).toEqual('1 Day');
+			expect(n(getDays(2), 1)).toEqual('2 Days');
+			expect(n(getDays(2), 1, true)).toEqual('2 Day');
+		});
+
+		//TODO: add more tests
+	});
+
 });
