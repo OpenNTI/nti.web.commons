@@ -57,6 +57,7 @@ a.content-link.related-work-ref {
 		$icon-width: 80px;
 		$gap: 10px;
 
+		margin: 10px 0;
 		padding-left: $icon-width + $gap;
 		min-height: ceil($icon-width * $icon-ratio);
 
