@@ -63,6 +63,7 @@ export default class Prompt extends React.Component {
 		iconClass: PropTypes.string,
 		title: PropTypes.string,
 		message: PropTypes.string,
+		promptType: PropTypes.string,
 
 		confirmButtonLabel: PropTypes.string,
 		confirmButtonClass: PropTypes.string,
@@ -80,6 +81,7 @@ export default class Prompt extends React.Component {
 		iconClass: 'alert',
 		message: '...',
 		title: 'Alert',
+		promptType: 'alert',
 		confirmButtonClass: 'primary',
 		confirmButtonLabel: 'OK',
 		cancelButtonClass: '',
@@ -170,6 +172,7 @@ export default class Prompt extends React.Component {
 				iconClass,
 				message,
 				title,
+				promptType,
 
 				confirmButtonLabel,
 				confirmButtonClass,
@@ -202,7 +205,7 @@ export default class Prompt extends React.Component {
 		].filter(x => x);
 
 		return (
-			<div ref={this.attachFrameRef} className={`modal dialog mask ${state}`}>
+			<div ref={this.attachFrameRef} className={`modal dialog mask ${promptType} ${state}`}>
 
 				<div className={`dialog window ${state}`}>
 					{this.renderDismissControl()}

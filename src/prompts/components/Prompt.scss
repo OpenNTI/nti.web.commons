@@ -24,6 +24,22 @@
 	}
 }
 
+.nti-dialog-mount-point .modal.dialog.info .dialog.window {
+	.icon {
+		display: none;
+	}
+
+	.content-area {
+		padding-left: 0;
+		text-align: center;
+	}
+
+	.dialog-buttons .primary {
+		background-color: $primary-blue;
+		box-shadow: inset 1px 0 0 0 $primary-blue;
+	}
+}
+
 
 .nti-dialog-mount-point .dialog.window {
 	padding-top: 30px;
@@ -39,7 +55,6 @@
 	transform: translate3d(-50%,0,0);
 	background: white;
 	box-shadow: 0 0 3px 1px rgba(0,0,0,0.1);
-
 
 	.close {
 		position: absolute !important;
