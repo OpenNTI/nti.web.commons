@@ -166,7 +166,11 @@ export default class RelatedWorkRefCard extends React.Component {
 	componentWillReceiveProps (props) {
 		const {item} = this.props;
 		if(item !== props.item) {
-			this.replaceState({});
+			this.setState({
+				icon: null,
+				iconResolved: false,
+				href: null
+			});
 			this.resolveIcon(props);
 			this.resolveHref(props);
 		}
