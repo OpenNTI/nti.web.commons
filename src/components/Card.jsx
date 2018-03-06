@@ -242,7 +242,7 @@ export default class RelatedWorkRefCard extends React.Component {
 	}
 
 
-	onClick (e) {
+	onClick = (e) => {
 		const {
 			context: {
 				analyticsManager
@@ -283,7 +283,7 @@ export default class RelatedWorkRefCard extends React.Component {
 	}
 
 
-	onClickDiscussion (e) {
+	onClickDiscussion = (e) => {
 		const {anchor, props: {disableLink, item}} = this;
 
 		if (disableLink) { return; }
