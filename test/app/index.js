@@ -8,9 +8,6 @@ import PropTypes from 'prop-types';
 
 import {Layouts} from '../../src';
 
-// import 'normalize.css';
-import 'nti-style-common/all.scss';
-
 const {Responsive} = Layouts;
 
 Echo.propTypes = {
