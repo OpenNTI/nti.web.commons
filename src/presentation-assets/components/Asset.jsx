@@ -78,10 +78,17 @@ export default class Asset extends React.Component {
 	static propTypes = {
 		propName: PropTypes.string,
 		contentPackage: PropTypes.object,
+		item: PropTypes.object,
 		type: PropTypes.string,
 		computeProps: PropTypes.func,
 		children: PropTypes.any
 	}
+
+
+	getItem ({contentPackage, item} = this.props) {
+		return contentPackage || item;
+	}
+
 
 	constructor (props) {
 		super(props);
@@ -91,6 +98,7 @@ export default class Asset extends React.Component {
 		this.state = this.getStateFor(props);
 	}
 
+
 	getStateFor (props) {
 		const { type } = props;
 
@@ -99,6 +107,7 @@ export default class Asset extends React.Component {
 		};
 	}
 
+
 	verifyImage () {
 		const loaderImage = new Image();
 
@@ -106,8 +115,9 @@ export default class Asset extends React.Component {
 		loaderImage.src = this.state.resolvedUrl;
 	}
 
+
 	componentWillReceiveProps (nextProps) {
-		if (this.props.contentPackage !== nextProps.contentPackage || this.props.type !== nextProps.type) {
+		if (this.getItem() !== this.getItem(nextProps) || this.props.type !== nextProps.type) {
 			this.setState(this.getStateFor(nextProps), () => {
 				this.verifyImage();
 			});
@@ -116,11 +126,11 @@ export default class Asset extends React.Component {
 
 
 	getPresentationResource (props) {
-		const {contentPackage} = props;
+		const item = this.getItem(props);
 
-		if (!contentPackage) { return {}; }
+		if (!item) { return {}; }
 
-		const resources = contentPackage.PlatformPresentationResources || [];
+		const resources = item.PlatformPresentationResources || [];
 
 		for (let resource of resources) {
 			if (resource.PlatformName === 'webapp') {
@@ -131,28 +141,34 @@ export default class Asset extends React.Component {
 		return null;
 	}
 
+
 	getDefaultAssetRoot (scope) {
+		//eslint-disable-next-line no-console
+		console.warn('Legacy Path: getDefaultAssetRoot() should only be called for old content.');
+
 		if (scope.getDefaultAssetRoot) {
 			return scope.getDefaultAssetRoot();
 		}
 
-		console.warn('Missing implementation of "getDefaultAssetRoot" in', scope); //eslint-disable-line no-console
+		//eslint-disable-next-line no-console
+		console.warn('Missing implementation of "getDefaultAssetRoot" in', scope);
 		return '';
 	}
 
+
 	getAssetRoot (props) {
-		const { contentPackage } = props;
+		const item = this.getItem(props);
 
-		if(!contentPackage) { return ''; }
+		if(!item) { return ''; }
 
-		if (contentPackage.presentationroot) { return contentPackage.presentationroot; }
+		if (item.presentationroot) { return item.presentationroot; }
 
 		const resource = this.getPresentationResource(props);
 		const root = resource && resource.href;
 
-		contentPackage.presentationroot = root || this.getDefaultAssetRoot(contentPackage);
+		item.presentationroot = root || this.getDefaultAssetRoot(item);
 
-		return contentPackage.presentationroot;
+		return item.presentationroot;
 	}
 
 
@@ -177,6 +193,7 @@ export default class Asset extends React.Component {
 		this.verifyImage();
 	}
 
+
 	onImgLoadError = () => {
 		const { resolvedUrl } = this.state;
 
@@ -184,6 +201,7 @@ export default class Asset extends React.Component {
 
 		this.setState({resolvedUrl: defaultValue || resolvedUrl});
 	}
+
 
 	render () {
 		const {children, computeProps, propName} = this.props;
