@@ -343,10 +343,22 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		const by = 'byline' in item ? byline : creator;
 
+		const props = {
+			className: cx('content-link', 'related-work-ref', classes),
+			href: ref,
+			target: external ? '_blank' : null,
+			onClick: this.onClick,
+			ref: this.attachRef
+		};
+
+		//This assumes we have a "LinkTo.Object" component as our wrapper...
+		if (typeof Wrapper === 'object' && external) {
+			props.object = props.href;
+			props.innerRef = this.attachRef;
+		}
+
 		return (
-			<Wrapper className={cx('content-link', 'related-work-ref', classes)}
-				href={ref} target={external ? '_blank' : null}
-				onClick={this.onClick} ref={this.attachRef}>
+			<Wrapper {...props}>
 
 				<AssetIcon src={iconSrc} mimeType={this.getType()} href={href}>
 					{external && <div className="external"/>}
