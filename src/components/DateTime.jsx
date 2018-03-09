@@ -95,6 +95,11 @@ export default class DateTime extends React.Component {
 	}
 
 
+	static isToday (date) {
+		return moment(date).isSame(new Date(), 'day');
+	}
+
+
 	/**
 	 * Format seconds into a human readable duration
 	 *
