@@ -130,7 +130,15 @@ export default class RelatedWorkRefCard extends React.Component {
 		 *
 		 * @type {string[]}
 		 */
-		context: PropTypes.arrayOf(PropTypes.string)
+		context: PropTypes.arrayOf(PropTypes.string),
+
+		/**
+		 * An element to wrap this component. Defaults to 'a'
+		 *
+		 * @type {string|Class|function}
+		 */
+
+		component: PropTypes.any
 	}
 
 	static contextTypes = {
@@ -316,9 +324,10 @@ export default class RelatedWorkRefCard extends React.Component {
 			},
 			props: {
 				item,
+				component: Wrapper = 'a',
 				contentPackage,
 				commentCount,
-				disableLink
+				disableLink,
 			}
 		} = this;
 
@@ -335,7 +344,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		const by = 'byline' in item ? byline : creator;
 
 		return (
-			<a className={cx('content-link', 'related-work-ref', classes)}
+			<Wrapper className={cx('content-link', 'related-work-ref', classes)}
 				href={ref} target={external ? '_blank' : null}
 				onClick={this.onClick} ref={this.attachRef}>
 
@@ -354,7 +363,7 @@ export default class RelatedWorkRefCard extends React.Component {
 							: commentCount
 					}
 				</div>
-			</a>
+			</Wrapper>
 		);
 	}
 }
