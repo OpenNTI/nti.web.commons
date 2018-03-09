@@ -328,6 +328,7 @@ export default class RelatedWorkRefCard extends React.Component {
 				contentPackage,
 				commentCount,
 				disableLink,
+				...remainder
 			}
 		} = this;
 
@@ -343,8 +344,12 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		const by = 'byline' in item ? byline : creator;
 
+		for (let key of Object.keys(RelatedWorkRefCard.propTypes)) {
+			delete remainder[key];
+		}
+
 		const props = {
-			...this.props,
+			...remainder,
 			className: cx('content-link', 'related-work-ref', classes),
 			href: ref,
 			target: external ? '_blank' : null,
