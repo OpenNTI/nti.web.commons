@@ -138,7 +138,7 @@ export default class Icon extends React.Component {
 		}
 
 		return (
-			<div className={css} style={inlineStyles}>
+			<div className={css} style={inlineStyles || {}}>
 				{children}
 				{label && (<label>{label}</label>)}
 			</div>
