@@ -358,7 +358,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		};
 
 		//This assumes we have a "LinkTo.Object" component as our wrapper...
-		if (typeof Wrapper === 'object') {
+		if (typeof Wrapper !== 'string') {
 			props.innerRef = this.attachRef;
 			delete props.ref;
 
