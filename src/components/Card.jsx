@@ -344,6 +344,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		const by = 'byline' in item ? byline : creator;
 
 		const props = {
+			...this.props,
 			className: cx('content-link', 'related-work-ref', classes),
 			href: ref,
 			target: external ? '_blank' : null,
@@ -352,9 +353,13 @@ export default class RelatedWorkRefCard extends React.Component {
 		};
 
 		//This assumes we have a "LinkTo.Object" component as our wrapper...
-		if (typeof Wrapper === 'object' && external) {
-			props.object = props.href;
+		if (typeof Wrapper === 'object') {
 			props.innerRef = this.attachRef;
+			delete props.ref;
+
+			if (external) {
+				props.object = props.href;
+			}
 		}
 
 		return (
