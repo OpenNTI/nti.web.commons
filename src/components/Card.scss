@@ -114,6 +114,7 @@
 	.description {
 		@include limit-lines($line-height: 1.4);
 
+		min-height: 2.8em;
 		font-size: rem-calc(13px);
 		font-weight: 400;
 		line-height: 1.4;
