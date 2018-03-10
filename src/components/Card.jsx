@@ -324,7 +324,7 @@ export default class RelatedWorkRefCard extends React.Component {
 			},
 			props: {
 				item,
-				component: Wrapper = 'a',
+				component = 'a',
 				contentPackage,
 				commentCount,
 				disableLink,
@@ -347,6 +347,8 @@ export default class RelatedWorkRefCard extends React.Component {
 		for (let key of Object.keys(RelatedWorkRefCard.propTypes)) {
 			delete remainder[key];
 		}
+
+		const Wrapper = (external && typeof component !== 'string') ? 'a' : component;
 
 		const props = {
 			...remainder,
