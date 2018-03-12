@@ -75,6 +75,54 @@ export default class Asset extends React.Component {
 		return ASSET_MAP[type] && ASSET_MAP[type].defaultValue;
 	}
 
+
+	static getAssetRoot (props) {
+		const { contentPackage } = props;
+
+		if(!contentPackage) { return ''; }
+
+		if (contentPackage.presentationroot) { return contentPackage.presentationroot; }
+
+		const resource = Asset.getPresentationResource(props);
+		const root = resource && resource.href;
+
+		contentPackage.presentationroot = root || Asset.getDefaultAssetRoot(contentPackage);
+
+		return contentPackage.presentationroot;
+	}
+
+
+	static getPresentationResource (props) {
+		const {contentPackage} = props;
+
+		if (!contentPackage) { return {}; }
+
+		const resources = contentPackage.PlatformPresentationResources || [];
+
+		for (let resource of resources) {
+			if (resource.PlatformName === 'webapp') {
+				return resource;
+			}
+		}
+
+		return null;
+	}
+
+
+	static getDefaultAssetRoot (scope) {
+		//eslint-disable-next-line no-console
+		console.warn('Legacy Path: getDefaultAssetRoot() should only be called for old content.');
+
+		if (scope.getDefaultAssetRoot) {
+			return scope.getDefaultAssetRoot();
+		}
+
+		//eslint-disable-next-line no-console
+		console.warn('Missing implementation of "getDefaultAssetRoot" in', scope);
+		return '';
+	}
+
+
 	static propTypes = {
 		propName: PropTypes.string,
 		contentPackage: PropTypes.object,
@@ -142,20 +190,6 @@ export default class Asset extends React.Component {
 	}
 
 
-	getDefaultAssetRoot (scope) {
-		//eslint-disable-next-line no-console
-		console.warn('Legacy Path: getDefaultAssetRoot() should only be called for old content.');
-
-		if (scope.getDefaultAssetRoot) {
-			return scope.getDefaultAssetRoot();
-		}
-
-		//eslint-disable-next-line no-console
-		console.warn('Missing implementation of "getDefaultAssetRoot" in', scope);
-		return '';
-	}
-
-
 	getAssetRoot (props) {
 		const item = this.getItem(props);
 
@@ -166,14 +200,14 @@ export default class Asset extends React.Component {
 		const resource = this.getPresentationResource(props);
 		const root = resource && resource.href;
 
-		item.presentationroot = root || this.getDefaultAssetRoot(item);
+		item.presentationroot = root || Asset.getDefaultAssetRoot(item);
 
 		return item.presentationroot;
 	}
 
 
 	getLastModified (props) {
-		const resource = this.getPresentationResource(props);
+		const resource = Asset.getPresentationResource(props);
 
 		return resource ? resource['Last Modified'] : 0;
 	}
@@ -181,7 +215,7 @@ export default class Asset extends React.Component {
 
 	getAsset (name, props, resolve = false) {
 		const assetPath = (ASSET_MAP[name] && ASSET_MAP[name].path) || `missing-${name}-asset.png`;
-		const root = this.getAssetRoot(props);
+		const root = Asset.getAssetRoot(props);
 		const lastMod = this.getLastModified(props);
 		const url = root && URL.resolve(root, assetPath);
 
