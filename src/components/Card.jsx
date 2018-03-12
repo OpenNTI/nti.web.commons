@@ -225,7 +225,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		let {icon = ''} = item;
 		try {
-			const u = Url.parse(icon);
+			const u = icon && Url.parse(icon);
 			if (!u || (!u.host && u.path[0] !== '/')) {
 				icon = item.resolveIcon
 					? await item.resolveIcon(contentPackage)
