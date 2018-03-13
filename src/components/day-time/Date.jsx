@@ -44,12 +44,14 @@ export default class Date extends React.Component {
 
 		const cls = cx('date', { selected });
 
-		return (<div className={cls} onClick={this.doSelect}>
-			<div className="field-contents">
-				<div className="label">{type}</div>
-				<div className="value">{date ? DateTime.format(date, 'MMM. D') : ''}</div>
+		return (
+			<div className={cls} onClick={this.doSelect}>
+				<div className="field-contents">
+					<div className="label">{type}</div>
+					<div className="value">{date ? DateTime.format(date, 'MMM. D') : ''}</div>
+				</div>
+				{this.renderRemoveButton(type, date)}
 			</div>
-			{this.renderRemoveButton(type, date)}
-		</div>);
+		);
 	}
 }

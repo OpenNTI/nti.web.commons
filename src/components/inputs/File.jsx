@@ -93,12 +93,14 @@ export default class File extends React.Component {
 			props.accept = this.props.accept;
 		}
 
-		return (<div className="nti-file-input">
-			<FilePickerButton
-				{...props}
-			/>
-			<span className="file-select-filename">{this.renderFileName()}</span>
-			{this.renderClear()}
-		</div>);
+		return (
+			<div className="nti-file-input">
+				<FilePickerButton
+					{...props}
+				/>
+				<span className="file-select-filename">{this.renderFileName()}</span>
+				{this.renderClear()}
+			</div>
+		);
 	}
 }

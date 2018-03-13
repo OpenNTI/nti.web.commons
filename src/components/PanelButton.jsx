@@ -37,12 +37,14 @@ export default class extends React.Component {
 				return null;
 			}
 
-			return button || <a {...{
-				href,
-				onClick: onClick,
-				className: 'button tiny column',
-				children: linkText
-			}}/>;
+			return button || (
+				<a {...{
+					href,
+					onClick: onClick,
+					className: 'button tiny column',
+					children: linkText
+				}}/>
+			);
 		}
 
 		return (

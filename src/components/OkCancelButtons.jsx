@@ -46,11 +46,11 @@ export default class extends React.Component {
 
 		return (
 			<div className="buttons">
-				{this.props.onCancel &&
+				{this.props.onCancel && (
 					<a href="#"
 						onClick={this.onCancel}
 						className="cancel button">{this.props.cancelText || t('cancel')}</a>
-				}
+				)}
 
 				<a href="#"
 					onClick={this.props.okEnabled ? this.onConfirm : this.killEvent}

@@ -41,10 +41,12 @@ export default class Toggle extends React.Component {
 	}
 
 	renderToggle () {
-		return (<div className="toggler-container">
-			{this.renderOnOff()}
-			{this.renderToggler()}
-		</div>);
+		return (
+			<div className="toggler-container">
+				{this.renderOnOff()}
+				{this.renderToggler()}
+			</div>
+		);
 	}
 
 	renderOnOff () {
@@ -79,8 +81,10 @@ export default class Toggle extends React.Component {
 
 		const cls = className ? 'nti-toggle-input ' + className : 'nti-toggle-input';
 
-		return (<div className={cls}>
-			{this.renderToggle()}
-		</div>);
+		return (
+			<div className={cls}>
+				{this.renderToggle()}
+			</div>
+		);
 	}
 }
