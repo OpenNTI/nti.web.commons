@@ -65,6 +65,26 @@ External Links:
 
 
 export default class RelatedWorkRefCard extends React.Component {
+	static async resolveIcon (item = {}, contentPackage) {
+		let {icon = ''} = item;
+
+		try {
+			const u = icon && Url.parse(icon);
+			if (!u || (!u.host && u.path[0] !== '/')) {
+				icon = item.resolveIcon
+					? await item.resolveIcon(contentPackage)
+					: item.icon;
+
+				icon = (icon && await contentPackage.resolveContentURL(icon)) || null;
+			}
+		} catch (e) {
+			icon = null;
+		}
+
+		return icon;
+	}
+
+
 	static propTypes = {
 		/**
 		 * Make the widget render without the link behavior.
@@ -223,19 +243,7 @@ export default class RelatedWorkRefCard extends React.Component {
 	async resolveIcon (props) {
 		const {contentPackage, item = {}} = props;
 
-		let {icon = ''} = item;
-		try {
-			const u = icon && Url.parse(icon);
-			if (!u || (!u.host && u.path[0] !== '/')) {
-				icon = item.resolveIcon
-					? await item.resolveIcon(contentPackage)
-					: item.icon;
-
-				icon = (icon && await contentPackage.resolveContentURL(icon)) || null;
-			}
-		} catch (e) {
-			icon = null;
-		}
+		const icon = await RelatedWorkRefCard.resolveIcon(item, contentPackage);
 
 		if (canSetState(this)) {
 			this.setState({iconResolved: true, icon});
