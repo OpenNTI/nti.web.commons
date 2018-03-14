@@ -91,7 +91,7 @@
 		font-size: rem-calc(10px);
 	}
 
-	.label, .comment-count {
+	.label, .extra-labels {
 		text-transform: uppercase;
 		font-family: $body-font-family;
 		font-weight: 600;
@@ -99,15 +99,14 @@
 		line-height: 1.4;
 	}
 
-	.comment-count {
+	.extra-labels {
 		&:empty { display: none; }
 
 		margin: rem-calc(15px 0 0 0);
 		color: $tertiary-grey;
 
-		&[href] {
+		a, .nti-link-to-path {
 			color: $primary-blue;
-			float: left;//NTI-2258 - setting display: inline-block adds descender space below, floating just makes it shrink w/o adding height.
 		}
 	}
 

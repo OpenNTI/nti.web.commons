@@ -1,4 +1,3 @@
-import path from 'path';
 import Url from 'url';
 
 import React from 'react';
@@ -7,22 +6,22 @@ import cx from 'classnames';
 import {rawContent} from 'nti-commons';
 import {Progress} from 'nti-lib-interfaces';
 import {scoped} from 'nti-lib-locale';
-import Logger from 'nti-util-logger';
 import {isNTIID} from 'nti-lib-ntiids';
 
 import {DataURIs} from '../constants';
 
+import {SeparatedInline} from './list';
 import AssetIcon from './AssetIcon';
 
 const {BLANK_IMAGE} = DataURIs;
 
-const logger = Logger.get('common:components:card');
 
 const t = scoped('common.units', {
 	comments: {
 		one: '%(count)s Comment',
 		other: '%(count)s Comments'
 	},
+	by: 'By %(by)s'
 });
 
 const Seen = Symbol('Seen');
@@ -87,13 +86,6 @@ export default class RelatedWorkRefCard extends React.Component {
 
 	static propTypes = {
 		/**
-		 * Make the widget render without the link behavior.
-		 *
-		 * @type {boolean}
-		 */
-		disableLink: PropTypes.bool,
-
-		/**
 		 * The owning contentPackage to provide a method "resolveContentURL"
 		 * @type {Package}
 		 */
@@ -118,47 +110,17 @@ export default class RelatedWorkRefCard extends React.Component {
 		 */
 		internalOverride: PropTypes.bool,
 
-		/**
-		 * HREF factory method for Object Ids.
-		 * Givn an NTIID as the first argument, and an optional object as the second with named options.
-		 *
-		 * @type {function}
-		 */
-		getRoute: PropTypes.func,
-
-		/**
-		 * Allow the parent to have final word on the resolved url. (not called for OBJECT IDs)
-		 * The function must take one argument, and return a string.
-		 * @type {function}
-		 */
-		resolveUrlHook: PropTypes.func,
-
 
 		onClick: PropTypes.func,
-
-
 		icon: PropTypes.string,
-
-
-		commentCount: PropTypes.oneOfType([
-			PropTypes.number,
-			PropTypes.string
-		]),
+		seen: PropTypes.bool,
 
 		/**
-		 * An array of ntiids
-		 *
-		 * @type {string[]}
+		 * Items to render as the labels of the card (i.e Comment count)
+		 * @type {object}
 		 */
-		context: PropTypes.arrayOf(PropTypes.string),
+		labels: PropTypes.array,
 
-		/**
-		 * An element to wrap this component. Defaults to 'a'
-		 *
-		 * @type {string|Class|function}
-		 */
-
-		component: PropTypes.any
 	}
 
 	static contextTypes = {
@@ -166,8 +128,7 @@ export default class RelatedWorkRefCard extends React.Component {
 	}
 
 	static defaultProps = {
-		internalOverride: false,
-		resolveUrlHook: x => x
+		internalOverride: false
 	}
 
 	static isExternal = isExternal
@@ -176,7 +137,6 @@ export default class RelatedWorkRefCard extends React.Component {
 		icon: null
 	}
 
-	attachRef = (x) => this.anchor = x
 
 	isExternal (props = this.props) {
 		const {item, internalOverride} = props || {};
@@ -187,7 +147,6 @@ export default class RelatedWorkRefCard extends React.Component {
 	componentDidMount () {
 		this.shouldHaveDOM = true;
 		this.resolveIcon(this.props);
-		this.resolveHref(this.props);
 	}
 
 
@@ -200,42 +159,6 @@ export default class RelatedWorkRefCard extends React.Component {
 				href: null
 			});
 			this.resolveIcon(props);
-			this.resolveHref(props);
-		}
-	}
-
-
-	getHref (ntiid, options) {
-		return this.props.getRoute(ntiid, options);
-	}
-
-
-	async resolveHref (props) {
-		const {resolveUrlHook, contentPackage, item} = props;
-		const {href} = item;
-
-		const setState = (...args) => {
-			try {
-				if (canSetState(this)) {
-					this.setState(...args);
-				}
-			}
-			catch (e) { logger.warn(e.message || e); }
-		};
-
-		if (isNTIID(href)) {
-			setState({href: this.getHref(href)});
-			return;
-		}
-
-
-		const u = href && Url.parse(href);
-
-		if (u && (u.host || (u.path && u.path[0] === '/'))) {
-			setState({href: resolveUrlHook(href)});
-		}
-		else if (contentPackage && href) {
-			setState({ href: resolveUrlHook(await contentPackage.resolveContentURL(href)) });
 		}
 	}
 
@@ -252,69 +175,9 @@ export default class RelatedWorkRefCard extends React.Component {
 
 
 	isSeen () {
-		const {item} = this.props;
+		const {item, seen} = this.props;
 		const progress = item[Progress];
-		return item[Seen] || (progress && progress.hasProgress());
-	}
-
-
-	onClick = (e) => {
-		const {
-			context: {
-				analyticsManager
-			},
-			props: {
-				context,
-				item,
-				onClick,
-				disableLink
-			}
-		} = this;
-
-		if (disableLink || (!this.state.href && this.isExternal())) {
-			e.preventDefault();
-			e.stopPropagation();
-			return;
-		}
-
-		if (this.ignoreClick) {
-			delete this.ignoreClick;
-			return;
-		}
-
-
-		if (onClick) {
-			onClick(e);
-		}
-
-		if (!this.isSeen()) {
-			item[Seen] = true;
-		}
-
-		if (analyticsManager && context && this.isExternal()) {
-			const resourceId = item.NTIID || item.ntiid; //Cards built from DOM have lowercase.
-			// const contentId = contentPackage.getID();//this can be a CourseInstance, ContentBundle, or ContentPackage
-			analyticsManager.ExternalResourceView.send(resourceId, {context});
-		}
-	}
-
-
-	onClickDiscussion = (e) => {
-		const {anchor, props: {disableLink, item}} = this;
-
-		if (disableLink) { return; }
-		const subRef = e.target.getAttribute('href');
-
-		this.ignoreClick = true;
-
-		if (this.isExternal()) {
-			anchor.setAttribute('target', '');
-			anchor.setAttribute('href', this.getHref(item.NTIID, {external: true}));
-		}
-
-		const href = path.join(anchor.getAttribute('href'), subRef);
-
-		anchor.setAttribute('href', href);
+		return seen || item[Seen] || (progress && progress.hasProgress());
 	}
 
 
@@ -332,10 +195,7 @@ export default class RelatedWorkRefCard extends React.Component {
 			},
 			props: {
 				item,
-				component = 'a',
-				contentPackage,
-				commentCount,
-				disableLink,
+				labels,
 				...remainder
 			}
 		} = this;
@@ -343,10 +203,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		const external = this.isExternal();
 		const seen = this.isSeen();
 
-		const classes = { external, seen };
-
 		const iconSrc = (seen && !icon) ? BLANK_IMAGE : icon;
-		const ref = disableLink || !contentPackage ? null : href;
 
 		const {label, title, desc, description, byline, creator} = item;
 
@@ -356,46 +213,33 @@ export default class RelatedWorkRefCard extends React.Component {
 			delete remainder[key];
 		}
 
-		const Wrapper = (external && typeof component !== 'string') ? 'a' : component;
-
 		const props = {
 			...remainder,
-			className: cx('content-link', 'related-work-ref', classes),
-			href: ref,
+			className: cx('content-link', 'related-work-ref', {external, seen}),
 			target: external ? '_blank' : null,
 			onClick: this.onClick,
 			ref: this.attachRef
 		};
 
-		//This assumes we have a "LinkTo.Object" component as our wrapper...
-		if (typeof Wrapper !== 'string') {
-			props.innerRef = this.attachRef;
-			delete props.ref;
-
-			if (external) {
-				props.object = props.href;
-			}
-		}
 
 		return (
-			<Wrapper {...props}>
+			<div {...props}>
 
 				<AssetIcon src={iconSrc} mimeType={this.getType()} href={href}>
 					{external && <div className="external"/>}
 				</AssetIcon>
 
 				<h5 {...rawContent(label || title)}/>
-				{by && by.trim().length > 0 && <div className="label" {...rawContent('By ' + by)/*TODO: localize*/}/>}
+				{by && by.trim().length > 0 && (
+					<div className="label" {...rawContent(t('by', {by: 'By ' + by}))}/>
+				)}
 				<div className="description" {...rawContent(description || desc)}/>
-				<div className="comment-count" href="/discussions/" onClick={this.onClickDiscussion}>
-					{commentCount == null
-						? null
-						: typeof commentCount === 'number'
-							? t('comments', {count: commentCount})
-							: commentCount
-					}
-				</div>
-			</Wrapper>
+				{labels && (
+					<SeparatedInline className="extra-labels">
+						{labels}
+					</SeparatedInline>
+				)}
+			</div>
 		);
 	}
 }
