@@ -110,9 +110,6 @@ export default class Asset extends React.Component {
 
 
 	static getDefaultAssetRoot (scope) {
-		//eslint-disable-next-line no-console
-		console.warn('Legacy Path: getDefaultAssetRoot() should only be called for old content.');
-
 		if (scope.getDefaultAssetRoot) {
 			return scope.getDefaultAssetRoot();
 		}
