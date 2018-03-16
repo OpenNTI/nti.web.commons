@@ -114,9 +114,6 @@ export default class RelatedWorkRefCard extends React.Component {
 
 	}
 
-	static contextTypes = {
-		analyticsManager: PropTypes.object.isRequired
-	}
 
 	static defaultProps = {
 		internalOverride: false
@@ -177,7 +174,9 @@ export default class RelatedWorkRefCard extends React.Component {
 
 	getType () {
 		const {item} = this.props;
-		return [item.type, item.targetMimeType].filter(x => x);
+		return [item.type, item.targetMimeType]
+			.filter(x => x)
+			.reduce((a, b) => a.concat(b), []);
 	}
 
 
