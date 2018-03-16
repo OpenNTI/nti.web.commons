@@ -28,15 +28,6 @@ const Seen = Symbol('Seen');
 
 const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
 
-function canSetState (cmp) {
-	let can = false;
-
-	try { can = !cmp.shouldHaveDOM || !!cmp.anchor; }
-	catch (e) {} //eslint-disable-line
-
-	return can;
-}
-
 
 /*
 Internal Links:
@@ -150,6 +141,11 @@ export default class RelatedWorkRefCard extends React.Component {
 	}
 
 
+	componentWillUnmount () {
+		this.setState = () => {};
+	}
+
+
 	componentWillReceiveProps (props) {
 		const {item} = this.props;
 		if(item !== props.item) {
@@ -168,9 +164,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		const icon = await RelatedWorkRefCard.resolveIcon(item, contentPackage);
 
-		if (canSetState(this)) {
-			this.setState({iconResolved: true, icon});
-		}
+		this.setState({iconResolved: true, icon});
 	}
 
 
