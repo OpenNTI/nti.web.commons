@@ -1,27 +1,35 @@
-@import "~nti-style-common";
+@import '~nti-style-common';
 
 label.checkbox-component {
 	line-height: 1; // fixes a safari issue where clicking the label doesn't affect the checkbox
-	input[type=checkbox] {
+	input[type='checkbox'] {
 		opacity: 0;
 		position: absolute;
 
 		& + span.label {
 			position: relative;
 
+			//
+			//override foundation's '.label'
+			background: inherit;
+			color: inherit;
+			padding-left: 0;
+			line-height: inherit;
+
 			// May be necessary to keep labels with links clickable?
-			// //iOS workaround
+			// iOS workaround?
 			// pointer-events: none;
 			// a { pointer-events: all; }
 
 			&::before {
 				content: '';
 				position: absolute;
-				top: .125rem;
+				top: 0.125rem;
 				left: -1.625rem;
 				width: 1rem;
 				height: 1rem;
 				background: transparent center/100% no-repeat;
+
 				@include retina-asset('./assets/checkbox/base', $xCount: 3);
 			}
 		}
@@ -45,6 +53,13 @@ label.checkbox-component {
 		}
 	}
 
+	//reset foundation's 'label' & '.label'
+	&, & span.label {
+		font-weight: inherit;
+		font-size: inherit;
+		font-style: inherit;
+	}
+
 	input + span.label,
 	div.sub {
 		margin-left: 1.625rem;
@@ -61,5 +76,4 @@ label.checkbox-component {
 	// 		}
 	// 	}
 	// }
-
 }
