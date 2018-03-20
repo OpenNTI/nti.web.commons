@@ -24,10 +24,10 @@ label.checkbox-component {
 			&::before {
 				content: '';
 				position: absolute;
-				top: 0.125rem;
-				left: -1.625rem;
-				width: 1rem;
-				height: 1rem;
+				top: rem-calc(1px);
+				left: rem-calc(-26px);
+				width: 16px;
+				height: 16px;
 				background: transparent center/100% no-repeat;
 
 				@include retina-asset('./assets/checkbox/base', $xCount: 3);
