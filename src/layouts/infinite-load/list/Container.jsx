@@ -20,6 +20,15 @@ export default class InifiniteLoadList extends React.Component {
 		renderLoading: PropTypes.func
 	}
 
+	static contextTypes = {
+		infiniteLoadContainer: PropTypes.shape({
+			addEventListener: PropTypes.func,
+			removeEventListener: PropTypes.func,
+			clientHeight: PropTypes.number,
+			scrollTop: PropTypes.number
+		})
+	}
+
 	static defaultProps = {
 		buffer: 1
 	}
@@ -31,7 +40,11 @@ export default class InifiniteLoadList extends React.Component {
 	setAfterContainer = x => this.afterContainer = x
 
 	get scrollingEl () {
+		if (this.context.infiniteLoadContainer) { return this.context.infiniteLoadContainer; }
+
 		return document && {
+			addEventListener: (...args) => global.addEventListener(...args),
+			removeEventListener: (...args) => global.removeEventListener(...args),
 			clientHeight: document.documentElement.clientHeight,
 			get scrollTop () {
 				return document.scrollingElement.scrollTop;
@@ -54,18 +67,18 @@ export default class InifiniteLoadList extends React.Component {
 		this.setupFor(this.props);
 
 		if (Events.supportsPassive()) {
-			global.addEventListener('scroll', this.onScroll, {passive: true});
+			this.scrollingEl.addEventListener('scroll', this.onScroll, {passive: true});
 		} else {
-			global.addEventListener('scroll', this.onScroll);
+			this.scrollingEl.addEventListener('scroll', this.onScroll);
 		}
 	}
 
 
 	componentWillUnmount () {
 		if (Events.supportsPassive()) {
-			global.removeEventListener('scroll', this.onScroll, {passive: true});
+			this.scrollingEl.removeEventListener('scroll', this.onScroll, {passive: true});
 		} else {
-			global.removeEventListener('scroll', this.onScroll);
+			this.scrollingEl.removeEventListener('scroll', this.onScroll);
 		}
 	}
 

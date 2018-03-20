@@ -1,221 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import {Events} from 'nti-commons';
-
-import Page from './Page';
-import ChildHeightMonitor from './ChildHeightMonitor';
-import {initPageState, updatePageState} from './utils';
 
 export default class InfiniteLoadContainer extends React.Component {
-	static propTypes = {
-		className: PropTypes.string,
-		store: PropTypes.shape({
-			getTotalCount: PropTypes.func.isRequired
-		}),
-
-		pageComponent: PropTypes.element.isRequired,
-		defaultPageHeight: PropTypes.number.isRequired,
-		pageProps: PropTypes.object,
-		buffer: PropTypes.number,
-
-		renderLoading: PropTypes.func,
-		renderError: PropTypes.func,
-		renderEmpty: PropTypes.func
+	static childContextTypes = {
+		infiniteLoadContainer: PropTypes.shape({
+			addEventListener: PropTypes.func,
+			removeEventListener: PropTypes.func,
+			clientHeight: PropTypes.number,
+			scrollTop: PropTypes.number
+		})
 	}
 
-	static defaultProps = {
-		buffer: 1
-	}
-
-	state = {}
-
-	setContainer = x => this.container = x
-
-	get scrollingEl () {
-		return document && document.scrollingElement;
-	}
-
-	getPageHeight = (page) => {
-		const {defaultPageHeight} = this.props;
-		const heights = this.pageHeights || {};
-
-		return heights[page.key] || defaultPageHeight || 0;
-	}
-
-	componentDidMount () {
-		this.setUpFor(this.props);
-
-		global.ref = this;
-
-		if (Events.supportsPassive()) {
-			global.addEventListener('scroll', this.onScroll, {passive: true});
-		} else {
-			global.addEventListener('scroll', this.onScroll);
-		}
-	}
+	attachContainer = x => this.container = x
 
 
-	componentWillUnmount () {
-		if (Events.supportsPassive()) {
-			global.removeEventListener('scroll', this.onScroll, {passive: true});
-		} else {
-			global.removeEventListener('scroll', this.onScroll);
-		}
-	}
+	getChildContext () {
+		const container = {
+			addEventListener: (...args) => this.container && this.container.addEventListener(...args),
+			removeEventListener: (...args) => this.container && this.container.removeEventListener(...args)
+		};
 
-
-	componentWillReceiveProps (nextProps) {
-		const {store: newStore} = nextProps;
-		const {store: oldStore} = this.props;
-
-		if (newStore !== oldStore) {
-			this.pageHeights = {};
-			this.setUpFor(nextProps);
-		}
-	}
-
-
-	setUpFor (props = this.props) {
-		const {store, buffer} = this.props;
-
-		this.setState({
-			loading: true,
-			error: null
-		}, async () => {
-			try {
-				const totalCount = await store.getTotalCount();
-				const pageState = initPageState(totalCount, buffer, this.scrollingEl, this.getPageHeight);
-
-				this.setState({
-					loading: false,
-					error: null,
-					pageState
-				});
-			} catch (e) {
-				this.setState({
-					loading: false,
-					error: e,
-					totalCount: 0
-				});
+		Object.defineProperties(container, {
+			clientHeight: {
+				get: () => this.container ? this.container.clientHeight : 0
+			},
+			scrollTop: {
+				get: () => this.container ? this.container.scrollTop : 0,
+				set: (scrollTop) => {
+					if (this.container) {
+						this.container.scrollTop = scrollTop;
+					}
+				}
 			}
 		});
-	}
 
-
-	onScroll = () => {
-		if (this.coolDownTimeout) {
-			this.callAfterCooldown = true;
-			return;
-		}
-
-		this.coolDownTimeout = setTimeout(() => {
-			delete this.coolDownTimeout;
-
-			if (this.callAfterCooldown) {
-				this.onScroll();
-				delete this.callAfterCooldown;
-			}
-		}, 17);
-
-		const {buffer} = this.props;
-		const {pageState} = this.state;
-		const updatedPageState = updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
-
-		if (updatedPageState !== pageState) {
-			this.setState({
-				pageState: updatedPageState
-			});
-		}
-	}
-
-
-	onHeightChange = (node, height) => {
-		const pageKey = node.dataset.pageKey;
-
-		this.pageHeights = this.pageHeights || {};
-
-		this.pageHeights[pageKey] = height;
+		return {
+			infiniteLoadContainer: container
+		};
 	}
 
 
 	render () {
-		const {className,} = this.props;
-		const {loading, error, pageState} = this.state;
-
-		const styles = pageState ? {height: pageState.totalHeight} : {};
-
 		return (
-			<div
-				className={cx('nti-infinite-loader', className)}
-				style={styles}
-				ref={this.setContainer}
-			>
-				{loading && (this.renderLoading())}
-				{!loading && error && (this.renderError(error))}
-				{!loading && !error && (!pageState || !pageState.pages.length)  && (this.renderEmpty())}
-				{!loading && !error && pageState && pageState.pages.length && (this.renderPageState())}
-			</div>
-		);
-	}
-
-
-	renderLoading () {
-		const {renderLoading} = this.props;
-
-		return renderLoading ? renderLoading() : null;
-	}
-
-
-	renderError (error) {
-		const {renderError} = this.props;
-
-		return renderError ? renderError(error) : null;
-	}
-
-
-	renderEmpty () {
-		const {renderEmpty} = this.props;
-
-		return renderEmpty ? renderEmpty () : null;
-	}
-
-
-	renderPageState () {
-		const {pageState} = this.state;
-		const {visiblePages, visibleOffset} = pageState;
-
-		const styles = {top: visibleOffset};
-
-		return (
-			<ChildHeightMonitor
-				className="visible-pages"
-				style={styles}
-				childSelector="[data-page-key]"
-				onHeightChange={this.onHeightChange}
-			>
-				{
-					visiblePages.map(page => this.renderPage(page))
-				}
-			</ChildHeightMonitor>
-		);
-	}
-
-
-	renderPage (page) {
-		const {key, index, pageHeight} = page;
-		const {pageComponent, pageProps, store} = this.props;
-
-		return (
-			<Page
-				key={key}
-				pageKey={key}
-				pageIndex={index}
-				pageComponent={pageComponent}
-				pageProps={pageProps}
-				pageHeight={pageHeight}
-				store={store}
-			/>
+			<div {...this.props} ref={this.attachContainer} />
 		);
 	}
 }
