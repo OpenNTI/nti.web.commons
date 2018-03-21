@@ -224,7 +224,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 				<h5 {...rawContent(label || title)}/>
 				{by && by.trim().length > 0 && (
-					<div className="label" {...rawContent(t('by', {by: 'By ' + by}))}/>
+					<div className="label" {...rawContent(t('by', {by: by}))}/>
 				)}
 				<div className="description" {...rawContent(description || desc)}/>
 				{labels && (
