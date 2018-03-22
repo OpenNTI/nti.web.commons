@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {rawContent} from 'nti-commons';
-import {Progress} from 'nti-lib-interfaces';
 import {scoped} from 'nti-lib-locale';
 import {isNTIID} from 'nti-lib-ntiids';
 
@@ -167,8 +166,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 	isSeen () {
 		const {item, seen} = this.props;
-		const progress = item[Progress];
-		return seen || item[Seen] || (progress && progress.hasProgress());
+		return seen || item[Seen] || (item.hasCompleted && item.hasCompleted());
 	}
 
 
