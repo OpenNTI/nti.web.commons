@@ -4,22 +4,24 @@
 	margin: 0;
 
 	li {
-		display: inline-block;
-		vertical-align: middle;
+		display: inline;
+		// vertical-align: middle;
 		margin-right: 0.3rem;
 
 		div {
-			display: inline-block;
-			vertical-align: middle;
+			display: inline;
+			// vertical-align: middle;
 		}
 
 		&:not(:last-of-type)::after {
 			display: inline-block;
 			vertical-align: middle;
-
 			content: '\b7';
-			font-size: 1rem;
+			font-size: 1rem; //16px, we want a 14px height... thats a ratio of .875 for line-height.
+			line-height: 0.875;
 			margin-left: 0.3rem;
+			position: relative;
+			top: -1px;//middle is not quite middle...
 		}
 	}
 }
