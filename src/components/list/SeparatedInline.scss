@@ -8,6 +8,11 @@
 		vertical-align: middle;
 		margin-right: 0.3rem;
 
+		div {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
 		&:not(:last-of-type)::after {
 			display: inline-block;
 			vertical-align: middle;
