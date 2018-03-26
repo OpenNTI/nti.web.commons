@@ -53,7 +53,19 @@ function moveAnchorDown (pageState, buffer, scrollingEl, getPageHeight, topOffse
 }
 
 
+function moveAnchorToTop () {
+	return {
+		anchorPage: 0,
+		anchorOffset: 0
+	};
+}
+
+
 function moveAnchor (scrollTop, oldScrollTop, pageState, buffer, scrollingEl, getPageHeight, topOffset) {
+	if (scrollTop === 0) {
+		return moveAnchorToTop();
+	}
+
 	return scrollTop < oldScrollTop ? moveAnchorUp(pageState, buffer, scrollingEl, getPageHeight, topOffset) : moveAnchorDown(pageState, buffer, scrollingEl, getPageHeight, topOffset);
 }
 
