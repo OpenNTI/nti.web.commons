@@ -21,6 +21,9 @@ export default class InfiniteLoadContainer extends React.Component {
 		};
 
 		Object.defineProperties(container, {
+			offsetTop: {
+				get: () => this.container ? this.container.offsetTop : 0
+			},
 			clientHeight: {
 				get: () => this.container ? this.container.clientHeight : 0
 			},

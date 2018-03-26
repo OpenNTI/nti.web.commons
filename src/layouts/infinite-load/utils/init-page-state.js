@@ -4,14 +4,14 @@
 
 import updatePageState from './update-page-state';
 
-export default function initPages (total, buffer, scrollingEl, getPageHeight) {
+export default function initPages (total, buffer, scrollingEl, getPageHeight, topOffset) {
 	return updatePageState({
 		activePages: {
 			anchorOffset: 0
 		},
 		scrollTop: -1,
 		total,
-	}, buffer, scrollingEl, getPageHeight);
+	}, buffer, scrollingEl, getPageHeight, topOffset);
 
 	// let before = [];
 	// let after = [];

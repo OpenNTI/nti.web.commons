@@ -45,6 +45,7 @@ export default class InifiniteLoadList extends React.Component {
 		return document && {
 			addEventListener: (...args) => global.addEventListener(...args),
 			removeEventListener: (...args) => global.removeEventListener(...args),
+			offsetTop: 0,
 			clientHeight: document.documentElement.clientHeight,
 			get scrollTop () {
 				return document.scrollingElement.scrollTop;
@@ -53,6 +54,13 @@ export default class InifiniteLoadList extends React.Component {
 				return document.scrollingElement.scrollTop = top;
 			}
 		};
+	}
+
+
+	get topOffset () {
+		const {scrollingEl, container} = this;
+
+		return container ? container.offsetTop - scrollingEl.offsetTop : 0;
 	}
 
 	getPageHeight = (page) => {
@@ -97,7 +105,7 @@ export default class InifiniteLoadList extends React.Component {
 	setupFor (props = this.props) {
 		const {totalPages, buffer} = props;
 
-		const pageState = totalPages != null && initPageState(totalPages, buffer, this.scrollingEl, this.getPageHeight);
+		const pageState = totalPages != null && initPageState(totalPages, buffer, this.scrollingEl, this.getPageHeight, this.topOffset);
 
 		this.setState({
 			pageState
@@ -131,7 +139,7 @@ export default class InifiniteLoadList extends React.Component {
 
 		const {buffer} = this.props;
 		const {pageState} = this.state;
-		const newPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
+		const newPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight, this.topOffset);
 
 		if (newPageState && newPageState.activePages.anchorOffset !== pageState.activePages.anchorOffset) {
 			this.handlingScroll = true;
@@ -185,7 +193,7 @@ export default class InifiniteLoadList extends React.Component {
 
 			const {buffer} = this.props;
 			const {pageState} = this.state;
-			const fixedPageState = fixPageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
+			const fixedPageState = fixPageState(pageState, buffer, this.scrollingEl, this.getPageHeight, this.topOffset);
 
 			if (fixedPageState.scrollTop === pageState.scrollTop) { return; }
 

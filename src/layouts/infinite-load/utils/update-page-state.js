@@ -3,7 +3,7 @@ import getAnchor from './get-anchor-from-page-state';
 import getAfterAnchor from './get-after-anchor';
 import getBeforeAnchor from './get-before-anchor';
 
-function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight) {
+function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight, topOffset) {
 	const {scrollTop, clientHeight} = scrollingEl;
 	const {anchorPage, anchorOffset} = getAnchor(pageState);
 
@@ -16,7 +16,7 @@ function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight) {
 
 		distanceFromOffset += height;
 
-		if (!isPossibleAnchor(anchorOffset - distanceFromOffset, height, scrollTop, clientHeight)) {
+		if (isPossibleAnchor(anchorOffset - distanceFromOffset, height, Math.max(0, scrollTop - topOffset), clientHeight)) {
 			break;
 		}
 
@@ -29,7 +29,7 @@ function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight) {
 	};
 }
 
-function moveAnchorDown (pageState, buffer, scrollingEl, getPageHeight) {
+function moveAnchorDown (pageState, buffer, scrollingEl, getPageHeight, topOffset) {
 	const {scrollTop, clientHeight} = scrollingEl;
 	const {anchorPage, anchorOffset} = getAnchor(pageState);
 
@@ -39,7 +39,7 @@ function moveAnchorDown (pageState, buffer, scrollingEl, getPageHeight) {
 	while (possibleAnchor < pageState.total) {
 		const height = getPageHeight(possibleAnchor);
 
-		if (isPossibleAnchor(distanceFromOffset + anchorOffset, height, scrollTop, clientHeight)) {
+		if (isPossibleAnchor(distanceFromOffset + anchorOffset, height, Math.max(0, scrollTop - topOffset), clientHeight)) {
 			break;
 		}
 		distanceFromOffset += height;
@@ -53,18 +53,18 @@ function moveAnchorDown (pageState, buffer, scrollingEl, getPageHeight) {
 }
 
 
-function moveAnchor (scrollTop, oldScrollTop, pageState, buffer, scrollingEl, getPageHeight) {
-	return scrollTop < oldScrollTop ? moveAnchorUp(pageState, buffer, scrollingEl, getPageHeight) : moveAnchorDown(pageState, buffer, scrollingEl, getPageHeight);
+function moveAnchor (scrollTop, oldScrollTop, pageState, buffer, scrollingEl, getPageHeight, topOffset) {
+	return scrollTop < oldScrollTop ? moveAnchorUp(pageState, buffer, scrollingEl, getPageHeight, topOffset) : moveAnchorDown(pageState, buffer, scrollingEl, getPageHeight, topOffset);
 }
 
 
-export default function updatePageState (pageState, buffer, scrollingEl, getPageHeight) {
+export default function updatePageState (pageState, buffer, scrollingEl, getPageHeight, topOffset) {
 	const {scrollTop} = scrollingEl;
 	const {scrollTop:oldScrollTop} = pageState;
 
 	if (scrollTop === oldScrollTop) { return pageState; }
 
-	const anchor = moveAnchor(scrollTop, oldScrollTop, pageState, buffer, scrollingEl, getPageHeight);
+	const anchor = moveAnchor(scrollTop, oldScrollTop, pageState, buffer, scrollingEl, getPageHeight, topOffset);
 	const {after, afterHeight} = getAfterAnchor(anchor, pageState, buffer, scrollingEl, getPageHeight);
 	const {before, beforeHeight} = getBeforeAnchor(anchor, pageState, buffer, scrollingEl, getPageHeight);
 
