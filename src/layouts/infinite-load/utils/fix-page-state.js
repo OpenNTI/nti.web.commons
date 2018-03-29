@@ -12,6 +12,7 @@ export default function fixPageState (pageState, buffer, scrollingEl, getPageHei
 	const {after, afterHeight} = getAfterAnchor(anchor, pageState, buffer, scrollingEl, getPageHeight);
 
 	const topDiff = beforeHeight - oldBeforeHeight;
+	const anchorOffset = anchor.anchorOffset + topDiff;
 
 	return {
 		activePages: {
@@ -19,10 +20,10 @@ export default function fixPageState (pageState, buffer, scrollingEl, getPageHei
 			beforeHeight,
 			after,
 			afterHeight,
-			anchorOffset: anchor.anchorOffset + topDiff
+			anchorOffset
 		},
 		scrollTop: oldScrollTop + topDiff,
 		total: pageState.total,
-		totalHeight: beforeHeight + afterHeight
+		totalHeight: anchorOffset + afterHeight
 	};
 }

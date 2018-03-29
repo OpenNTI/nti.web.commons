@@ -112,13 +112,10 @@ export default class InifiniteLoadList extends React.Component {
 		});
 	}
 
-	onScroll = () => {
-		if (this.handlingScroll) {
-			this.callScrollAgain = true;
-			return;
-		}
 
-		if (!this.state.isScrolling) {
+	setScrolling () {
+		if (!this.isScrolling) {
+			this.isScrolling = true;
 			this.setState({
 				isScrolling: true
 			});
@@ -127,6 +124,7 @@ export default class InifiniteLoadList extends React.Component {
 		clearTimeout(this.scrollingTimeout);
 
 		this.scrollingTimeout = setTimeout(() => {
+			this.isScrolling = false;
 			this.setState({
 				isScrolling: false
 			});
@@ -136,6 +134,15 @@ export default class InifiniteLoadList extends React.Component {
 				this.maybeSync();
 			}
 		}, 17);
+	}
+
+	onScroll = () => {
+		if (this.handlingScroll) {
+			this.callScrollAgain = true;
+			return;
+		}
+
+		this.setScrolling();
 
 		const {buffer} = this.props;
 		const {pageState} = this.state;
@@ -148,13 +155,15 @@ export default class InifiniteLoadList extends React.Component {
 			this.setState({
 				pageState: newPageState
 			}, () => {
-				delete this.handlingScroll;
+				setTimeout(() => {
+					delete this.handlingScroll;
 
-				if (this.callScrollAgain) {
-					delete this.callScrollAgain;
+					if (this.callScrollAgain) {
+						delete this.callScrollAgain;
 
-					this.onScroll();
-				}
+						this.onScroll();
+					}
+				}, 17);
 			});
 		}
 	}
@@ -183,7 +192,7 @@ export default class InifiniteLoadList extends React.Component {
 			delete this.syncScrollTimeout;
 			delete this.syncOnScrollStop;
 
-			if (this.state.isScrolling || !this.beforeContainer || !this.afterContainer) {
+			if (this.isScrolling || !this.beforeContainer || !this.afterContainer) {
 				this.syncOnScrollStop = true;
 				return;
 			}
@@ -249,7 +258,6 @@ export default class InifiniteLoadList extends React.Component {
 		const {pageState} = this.state;
 		const {activePages, totalHeight} = pageState;
 		const {before, after, anchorOffset} = activePages;
-
 
 		return (
 			<React.Fragment>

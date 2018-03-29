@@ -11,7 +11,7 @@ function moveAnchorUp (pageState, buffer, scrollingEl, getPageHeight, topOffset)
 
 	let distanceFromOffset = -getPageHeight(possibleAnchor);
 
-	while (possibleAnchor > 0) {
+	while (possibleAnchor > 1) {
 		const height = getPageHeight(possibleAnchor);
 
 		distanceFromOffset += height;
@@ -36,7 +36,7 @@ function moveAnchorDown (pageState, buffer, scrollingEl, getPageHeight, topOffse
 	let distanceFromOffset = 0;
 	let possibleAnchor = anchorPage;
 
-	while (possibleAnchor < pageState.total) {
+	while (possibleAnchor < pageState.total - 1) {
 		const height = getPageHeight(possibleAnchor);
 
 		if (isPossibleAnchor(distanceFromOffset + anchorOffset, height, Math.max(0, scrollTop - topOffset), clientHeight)) {
@@ -90,6 +90,6 @@ export default function updatePageState (pageState, buffer, scrollingEl, getPage
 		},
 		scrollTop,
 		total: pageState.total,
-		totalHeight: beforeHeight + afterHeight
+		totalHeight: anchor.anchorOffset + afterHeight
 	};
 }
