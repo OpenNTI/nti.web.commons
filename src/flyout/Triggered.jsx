@@ -65,12 +65,22 @@ function getViewportRelativeAlignments (element, alignment, viewport) {
 }
 
 function getRectInDocument (el) {
-	const p = e => e && e.offsetParent;
-	const r = e => p(e) ? [e].concat(r(p(e))) : [e];
-	const sum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
+	const offsetParent = e => e && e.offsetParent;
+	const parentNode = e => e && e.parentNode && e.parentNode.tagName !== 'BODY' && e.parentNode;
 
+	const offsetParents = e => offsetParent(e) ? [e].concat(offsetParents(offsetParent(e))) : [e];
+	const parentNodes = e => parentNode(e) ? [e].concat(parentNodes(parentNode(e))) : [e];
 
-	const tl = r(el).reduce(sum, {top: 0, left: 0});
+	const scrollSum = (a, e) => (a.top += e.scrollTop, a.left += e.scrollLeft, a);
+	const offsetSum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
+
+	const offset = offsetParents(el).reduce(offsetSum, {top: 0, left: 0});
+	const scrolls = parentNodes(el).reduce(scrollSum, {top: 0, left: 0});
+	const tl = {
+		top: offset.top - scrolls.top,
+		left: offset.left - scrolls.left
+	};
+
 	const sz = {
 		width: el.offsetWidth,
 		height: el.offsetHeight
