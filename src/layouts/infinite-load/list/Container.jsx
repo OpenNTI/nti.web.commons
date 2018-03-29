@@ -133,7 +133,7 @@ export default class InifiniteLoadList extends React.Component {
 
 			if (this.syncOnScrollStop) {
 				delete this.syncOnScrollStop;
-				this.maybeSyncScroll();
+				this.maybeSync();
 			}
 		}, 17);
 
@@ -141,23 +141,20 @@ export default class InifiniteLoadList extends React.Component {
 		const {pageState} = this.state;
 		const newPageState = pageState && updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight, this.topOffset);
 
+
 		if (newPageState && newPageState.activePages.anchorOffset !== pageState.activePages.anchorOffset) {
 			this.handlingScroll = true;
-
-			updatePageState(pageState, buffer, this.scrollingEl, this.getPageHeight);
 
 			this.setState({
 				pageState: newPageState
 			}, () => {
-				setTimeout(() => {
-					delete this.handlingScroll;
+				delete this.handlingScroll;
 
-					if (this.callScrollAgain) {
-						delete this.callScrollAgain;
+				if (this.callScrollAgain) {
+					delete this.callScrollAgain;
 
-						this.onScroll();
-					}
-				}, 17);
+					this.onScroll();
+				}
 			});
 		}
 	}
@@ -172,12 +169,12 @@ export default class InifiniteLoadList extends React.Component {
 		this.pageHeights[pageIndex] = height;
 
 		if (sync) {
-			this.maybeSyncScroll();
+			this.maybeSync();
 		}
 	}
 
 
-	maybeSyncScroll () {
+	maybeSync () {
 		if (this.syncScrollTimeout) {
 			return;
 		}
@@ -186,7 +183,7 @@ export default class InifiniteLoadList extends React.Component {
 			delete this.syncScrollTimeout;
 			delete this.syncOnScrollStop;
 
-			if (this.isScrolling || !this.beforeContainer || !this.afterContainer) {
+			if (this.state.isScrolling || !this.beforeContainer || !this.afterContainer) {
 				this.syncOnScrollStop = true;
 				return;
 			}
