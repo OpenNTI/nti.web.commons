@@ -109,6 +109,7 @@ export default class DateTime extends React.Component {
 	 * @return {String}          human readable format
 	 */
 	static formatDuration (duration) {
+		duration = Math.round(duration);
 		const h = Math.floor(duration / 3600);
 		const m = Math.floor((duration % 3600) / 60);
 		const s = duration % 60;
