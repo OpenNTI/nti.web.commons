@@ -2,14 +2,11 @@
 
 .nt-remove-button {
 	cursor: pointer;
-	position: relative;
 
 	i {
 		color: white;
-		position: absolute;
-		font-size: 8px;
-		left: 3px;
-		top: 3px;
+		font-size: 10px;
+		font-weight: bold;
 		background-color: $secondary-grey;
 		text-align: center;
 		padding: 3px;
