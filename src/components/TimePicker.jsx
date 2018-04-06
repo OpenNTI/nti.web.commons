@@ -17,7 +17,8 @@ export default class TimePicker extends React.Component {
 	static propTypes = {
 		value: PropTypes.object,
 		onChange: PropTypes.func,
-		allowEmpty: PropTypes.bool
+		allowEmpty: PropTypes.bool,
+		disabled: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -138,11 +139,12 @@ export default class TimePicker extends React.Component {
 			{label: 'PM', value: 'PM'}
 		];
 		const {tfTime} = this.state;
+		const {disabled} = this.props;
 		const value = this.getValue();
 		const meridiem = !value ? meridiemOptions[0].value : value.getPeriod();
 
 		return (
-			<SelectBox className="meridiem-select-box" disabled={tfTime} value={meridiem} options={meridiemOptions} onChange={this.onMeridiemChange}/>
+			<SelectBox className="meridiem-select-box" disabled={tfTime || disabled} value={meridiem} options={meridiemOptions} onChange={this.onMeridiemChange}/>
 		);
 	}
 
@@ -184,7 +186,7 @@ export default class TimePicker extends React.Component {
 
 	render () {
 		const {tfTime, editingHour} = this.state;
-		const {allowEmpty} = this.props;
+		const {allowEmpty, disabled} = this.props;
 		const value = this.getValue();
 
 		let hours = !value ? '' : (tfTime ? value.getHours() : ((value.getHours() % 12) || 12));
@@ -204,6 +206,7 @@ export default class TimePicker extends React.Component {
 						value={hours}
 						name="hours"
 						min={0} max={23}
+						disabled={disabled}
 					/>
 					<span> : </span>
 					<NumberInput
@@ -214,6 +217,7 @@ export default class TimePicker extends React.Component {
 						name="minutes"
 						min={0} max={59}
 						pad={!allowEmpty || value != null}
+						disabled={disabled}
 					/>
 				</div>
 				{this.renderMeridiem()}
