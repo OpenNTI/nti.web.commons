@@ -1,0 +1,21 @@
+@import '~nti-style-common';
+
+.nti-iframe-viewer {
+	background: white;
+
+	&.modal {
+		width: rem-calc(875px);
+		max-width: 98vx;
+		height: calc(98vh - 100px);//account for the header and footer
+
+		.content {
+			width: 100%;
+			height: 100%;
+		}
+
+		iframe {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
