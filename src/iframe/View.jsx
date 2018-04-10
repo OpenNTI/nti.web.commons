@@ -10,7 +10,7 @@ import Header from './Header';
 
 const t = scoped('nti-web-common.iframe.Viewer', {
 	loading: 'Loading',
-	error: 'Unable to view contents'
+	error: 'Unable to view contents.'
 });
 
 export default class IframeViewer extends React.Component {
@@ -43,7 +43,7 @@ export default class IframeViewer extends React.Component {
 	}
 
 
-	state = {loading: true, error: null}
+	state = {loading: true}
 
 
 	get embedLink () {
@@ -61,7 +61,6 @@ export default class IframeViewer extends React.Component {
 
 
 	onError = () => {
-		debugger;
 		const {onError} = this.props;
 
 		if (onError) {
@@ -119,9 +118,9 @@ export default class IframeViewer extends React.Component {
 		const {errorMessage} = this.props;
 
 		return (
-			<span className="error">
+			<div className="error">
 				{errorMessage || t('error')}
-			</span>
+			</div>
 		);
 	}
 }

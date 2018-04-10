@@ -6,16 +6,27 @@
 	&.modal {
 		width: rem-calc(875px);
 		max-width: 98vx;
-		height: calc(98vh - 100px);//account for the header and footer
 
 		.content {
 			width: 100%;
-			height: 100%;
+			height: calc(98vh - 100px);//account for the header and footer
+			position: relative;
 		}
 
 		iframe {
 			width: 100%;
 			height: 100%;
+		}
+
+		.error {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			font: normal 400 1.25rem/1.3 $body-font-family;
+			color: $primary-red;
 		}
 	}
 }
