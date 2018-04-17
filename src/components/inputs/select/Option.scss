@@ -1,0 +1,13 @@
+@import "~nti-style-common";
+
+.nti-select-input-option {
+	padding: 0.5rem;
+
+	&:hover {
+		background-color: $panel-background;
+	}
+
+	&.selected {
+		background-color: $border-grey-light;
+	}
+}
