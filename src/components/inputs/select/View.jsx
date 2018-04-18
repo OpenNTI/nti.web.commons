@@ -103,7 +103,7 @@ export default class SelectInput extends React.Component {
 					focusedIndex: selectedIndex
 				});
 			}
-		});
+		}, 300);
 	}
 
 
