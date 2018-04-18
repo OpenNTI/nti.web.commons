@@ -8,7 +8,7 @@ import {Loading} from '../components';
 import {getEmbedLink} from './utils';
 import Header from './Header';
 
-const t = scoped('nti-web-common.iframe.Viewer', {
+const t = scoped('web-common.iframe.Viewer', {
 	loading: 'Loading',
 	error: 'Unable to view contents.'
 });

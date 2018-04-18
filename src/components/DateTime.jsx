@@ -61,7 +61,7 @@ const DEFAULT_TEXT = {
 		},
 	}
 };
-const t = scoped('nti-web-common.components.DateTime', DEFAULT_TEXT);
+const t = scoped('web-common.components.DateTime', DEFAULT_TEXT);
 
 //Add custom plural day callback to handle weeks. moment doesn't merge sub-objects...so we have
 //to include the entire relativeTime object with our custom dd

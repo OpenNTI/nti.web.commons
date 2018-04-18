@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	unknownError: 'Unable to upload file.'
 };
 
-const t = scoped('@nti/web-commons.inputs.FileDrop', DEFAULT_TEXT);
+const t = scoped('web-commons.inputs.FileDrop', DEFAULT_TEXT);
 
 export default class Upload extends React.Component {
 	static propTypes = {

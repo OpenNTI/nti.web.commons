@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-const t = scoped('nti-web-common.iframe.Header', {
+const t = scoped('web-common.iframe.Header', {
 	download: 'Download'
 });
 

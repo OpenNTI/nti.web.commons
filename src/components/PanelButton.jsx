@@ -6,7 +6,7 @@ const DEFAULTS = {
 	ok: 'OK'
 };
 
-const t = scoped('@nti/web-commons.components.panelbutton', DEFAULTS);
+const t = scoped('web-commons.components.panelbutton', DEFAULTS);
 
 /**
  *	Renders an info panel with a link/button.
