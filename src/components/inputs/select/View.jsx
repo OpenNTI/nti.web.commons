@@ -5,7 +5,11 @@ import cx from 'classnames';
 import Text from '../Text';
 
 import Option from './Option';
-import {keyDownStateModifier, getValueForOption} from './utils';
+import {
+	keyDownStateModifier,
+	getValueForOption,
+	optionMatchesTerm
+} from './utils';
 
 export default class SelectInput extends React.Component {
 	static Option = Option
@@ -30,7 +34,8 @@ export default class SelectInput extends React.Component {
 		isOpen: false,
 		selectedIndex: -1,
 		focusedIndex: -1,
-		activeOptions: []
+		activeOptions: [],
+		inputBuffer: ''
 	}
 
 
@@ -152,6 +157,47 @@ export default class SelectInput extends React.Component {
 	}
 
 
+	onInputChange = (value) => {
+		const {activeOptions, isOpen, focusedIndex} = this.state;
+
+		clearTimeout(this.clearInputBufferTimeout);
+
+		let newFocused = focusedIndex;
+
+		for (let i = 0; i < activeOptions.length; i++) {
+			const option = activeOptions[i];
+
+			if (optionMatchesTerm(option, value)) {
+				if (!isOpen) {
+					this.selectOption(getValueForOption(activeOptions[i]));
+				}
+
+				newFocused = i;
+
+				break;
+			}
+		}
+
+
+		this.setState({
+			inputBuffer: value,
+			focusedIndex: newFocused
+		}, () => {
+			this.clearInputBufferTimeout = setTimeout(() => {
+				this.setState({
+					inputBuffer: ''
+				});
+			}, 250);
+		});
+
+	}
+
+
+	onSearchableInputChange = (value) => {
+
+	}
+
+
 	render () {
 		const {disabled, className, searchable} = this.props;
 		const {isOpen, activeOptions, selectedIndex, focusedIndex, focused} = this.state;
@@ -180,17 +226,17 @@ export default class SelectInput extends React.Component {
 
 
 	renderLabel () {
-		const {searchable, placeholder, value} = this.props;
-		const {activeOptions, focusedIndex} = this.state;
+		const {searchable, placeholder} = this.props;
+		const {activeOptions, focusedIndex, inputBuffer} = this.state;
 		const selectedOption = activeOptions[focusedIndex];
 
 		return (
 			<div className={cx('select-label', {searchable})}>
 				<Text
 					ref={this.attachLabelInputRef}
-					value={value}
+					value={inputBuffer}
 					placeholder={placeholder}
-					readOnly={!searchable}
+					onChange={searchable ? this.onSearchableInputChange : this.onInputChange}
 					onFocus={this.onInputFocus}
 					onBlur={this.onInputBlur}
 					onKeyDown={this.onInputKeyDown}
@@ -198,6 +244,7 @@ export default class SelectInput extends React.Component {
 				<div className="selected-option" onClick={this.onLabelClick}>
 					{selectedOption && React.cloneElement(selectedOption, {display: true})}
 				</div>
+				<i className="icon-chevron-down" />
 			</div>
 		);
 	}

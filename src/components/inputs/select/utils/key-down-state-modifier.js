@@ -98,11 +98,6 @@ function handleEscape (e, state) {
 }
 
 
-function defaultHandler (e, state) {
-	return state;
-}
-
-
 const HANDLERS = {
 	'nti-arrowdown': moveDown,
 	'nti-shift-arrowdown': moveDown,
@@ -133,8 +128,7 @@ const HANDLERS = {
 
 export default function keyDownStateModifier (e, state) {
 	const keyCode = Events.getKeyCode(e);
-	console.log(keyCode);
 	const handler = HANDLERS[keyCode];
 
-	return handler ? handler(e, state) : defaultHandler(e, state);
+	return handler ? handler(e, state) : state;
 }

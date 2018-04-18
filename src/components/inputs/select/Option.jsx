@@ -7,6 +7,7 @@ export default class SelectInputOption extends React.Component {
 		value: PropTypes.string,
 		className: PropTypes.string,
 		children: PropTypes.node,
+		matches: PropTypes.func,
 
 		onClick: PropTypes.func,
 		selected: PropTypes.bool,
