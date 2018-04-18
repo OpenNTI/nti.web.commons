@@ -46,10 +46,17 @@
 			}
 		}
 
+		&.searchable {
+			.selected-option {
+				display: none;
+			}
+		}
+
 		.nti-text-input {
 			border-radius: 0;
 			border: none;
 			background-color: white;
+			width: 100%;
 		}
 
 		.selected-option {

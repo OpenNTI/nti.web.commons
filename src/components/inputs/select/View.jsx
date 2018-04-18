@@ -23,7 +23,9 @@ export default class SelectInput extends React.Component {
 
 		disabled: PropTypes.bool,
 
-		searchable: PropTypes.bool
+		searchable: PropTypes.bool,
+		applySearchTerm: PropTypes.func,
+		allowOtherValues: PropTypes.bool
 	}
 
 
@@ -130,9 +132,15 @@ export default class SelectInput extends React.Component {
 
 
 	onInputFocus = () => {
+		const {searchable} = this.props;
+
 		this.setState({
 			focused: true
 		});
+
+		if (searchable) {
+			this.openMenu();
+		}
 	}
 
 
@@ -194,7 +202,21 @@ export default class SelectInput extends React.Component {
 
 
 	onSearchableInputChange = (value) => {
+		const {options} = this.state;
 
+		const newActive = options.reduce((acc, option) => {
+			if (optionMatchesTerm(option, value)) {
+				acc.push(option);
+			}
+
+			return acc;
+		}, []);
+
+		this.setState({
+			inputBuffer: value,
+			activeOptions: newActive,
+			focusedIndex: 0
+		});
 	}
 
 
