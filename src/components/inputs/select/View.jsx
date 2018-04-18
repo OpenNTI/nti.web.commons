@@ -5,6 +5,7 @@ import cx from 'classnames';
 import Text from '../Text';
 
 import Option from './Option';
+import {keyDownStateModifier, getValueForOption} from './utils';
 
 export default class SelectInput extends React.Component {
 	static Option = Option
@@ -28,6 +29,7 @@ export default class SelectInput extends React.Component {
 	state = {
 		isOpen: false,
 		selectedIndex: -1,
+		focusedIndex: -1,
 		activeOptions: []
 	}
 
@@ -48,7 +50,6 @@ export default class SelectInput extends React.Component {
 
 
 	setupFor (props) {
-		debugger;
 		const {children, value} = this.props;
 		const options = React.Children.toArray(children);
 
@@ -57,7 +58,7 @@ export default class SelectInput extends React.Component {
 		for (let i = 0; i < options.length; i++) {
 			const option = options[i];
 
-			if (option.props.value === value) {
+			if (getValueForOption(option) === value) {
 				selectedIndex = i;
 				break;
 			}
@@ -66,7 +67,8 @@ export default class SelectInput extends React.Component {
 		this.setState({
 			options,
 			activeOptions: options,
-			selectedIndex
+			selectedIndex,
+			focusedIndex: selectedIndex
 		});
 	}
 
@@ -78,7 +80,34 @@ export default class SelectInput extends React.Component {
 	}
 
 
-	onOptionClick = (value) => {
+	openMenu () {
+		const {isOpen} = this.state;
+
+		clearTimeout(this.closeMenuTimeout);
+
+		if (!isOpen) {
+			this.setState({
+				isOpen: true
+			});
+		}
+	}
+
+
+	closeMenu () {
+		this.closeMenuTimeout = setTimeout(() => {
+			const {isOpen, selectedIndex} = this.state;
+
+			if (isOpen) {
+				this.setState({
+					isOpen: false,
+					focusedIndex: selectedIndex
+				});
+			}
+		});
+	}
+
+
+	selectOption = (value) => {
 		const {onChange} = this.props;
 
 		if (onChange) {
@@ -91,39 +120,45 @@ export default class SelectInput extends React.Component {
 
 	onLabelClick = () => {
 		this.focus();
+		this.openMenu();
 	}
 
 
 	onInputFocus = () => {
-		clearTimeout(this.closeMenuTimeout);
-		this.setState({isOpen: true});
+		this.setState({
+			focused: true
+		});
 	}
 
 
 	onInputBlur = () => {
-		this.closeMenuTimeout = setTimeout(() => {
-			this.setState({isOpen: false});
-		}, 300);
+		this.setState({
+			focused: false
+		});
+		this.closeMenu();
 	}
 
 
-	onInputKeyDown = () => {
+	onInputKeyDown = (e) => {
+		const {selectedIndex:oldSelected} = this.state;
+		const newState = keyDownStateModifier(e, this.state);
+		const {selectedIndex:newSelected, activeOptions} = newState;
 
-	}
+		if (oldSelected !== newSelected) {
+			this.selectOption(getValueForOption(activeOptions[newSelected]));
+		}
 
-
-	onInputKeyPress = () => {
-
+		this.setState(newState);
 	}
 
 
 	render () {
 		const {disabled, className, searchable} = this.props;
-		const {isOpen, activeOptions, selectedIndex} = this.state;
+		const {isOpen, activeOptions, selectedIndex, focusedIndex, focused} = this.state;
 
 		return (
 			<div
-				className={cx('nti-select-input', className, {open: isOpen, disabled, searchable})}
+				className={cx('nti-select-input', className, {open: isOpen, disabled, searchable, focused})}
 				role="listbox"
 			>
 				{this.renderLabel()}
@@ -133,8 +168,9 @@ export default class SelectInput extends React.Component {
 
 						return React.cloneElement(option, {
 							index,
-							onClick: this.onOptionClick,
-							selected: selectedIndex === index
+							onClick: this.selectOption,
+							selected: selectedIndex === index,
+							focused: focusedIndex === index
 						});
 					})}
 				</ul>
@@ -145,8 +181,8 @@ export default class SelectInput extends React.Component {
 
 	renderLabel () {
 		const {searchable, placeholder, value} = this.props;
-		const {activeOptions, selectedIndex} = this.state;
-		const selectedOption = activeOptions[selectedIndex];
+		const {activeOptions, focusedIndex} = this.state;
+		const selectedOption = activeOptions[focusedIndex];
 
 		return (
 			<div className={cx('select-label', {searchable})}>
@@ -157,10 +193,10 @@ export default class SelectInput extends React.Component {
 					readOnly={!searchable}
 					onFocus={this.onInputFocus}
 					onBlur={this.onInputBlur}
-					onKeyDown={this.onInput}
+					onKeyDown={this.onInputKeyDown}
 				/>
 				<div className="selected-option" onClick={this.onLabelClick}>
-					{selectedOption && React.cloneElement(selectedOption)}
+					{selectedOption && React.cloneElement(selectedOption, {display: true})}
 				</div>
 			</div>
 		);

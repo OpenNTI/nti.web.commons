@@ -9,6 +9,12 @@
 		}
 	}
 
+	&.focused {
+		.select-label {
+			border-color: $primary-blue;
+		}
+	}
+
 	& > ul.options {
 		margin: 0;
 		padding: 0;

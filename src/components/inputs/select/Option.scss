@@ -3,7 +3,7 @@
 .nti-select-input-option {
 	padding: 0.5rem;
 
-	&:hover {
+	&:not(.display):hover, &.focused {
 		background-color: $panel-background;
 	}
 
