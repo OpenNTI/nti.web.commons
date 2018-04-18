@@ -1,4 +1,4 @@
-@import '~nti-style-common';
+@import '~@nti/style-common';
 
 label.checkbox-component {
 	line-height: 1; // fixes a safari issue where clicking the label doesn't affect the checkbox

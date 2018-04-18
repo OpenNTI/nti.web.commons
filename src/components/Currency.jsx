@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'nti-util-logger';
+import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:components:Currency');
 
@@ -36,7 +36,7 @@ export default class Currency extends React.PureComponent {
 			el.src = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en';
 			el.defer = true;
 			el.async = true;
-			el.setAttribute('data-script-added-by', 'nti-web-commons:Currency');
+			el.setAttribute('data-script-added-by', '@nti/web-commons:Currency');
 			document.getElementsByTagName('body')[0].appendChild(el);
 		}
 	}

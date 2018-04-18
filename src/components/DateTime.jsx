@@ -4,7 +4,7 @@ import isEmpty from 'isempty';
 import moment from 'moment-timezone';
 import invariant from 'invariant';
 import jstz from 'jstimezonedetect';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 const returnFalse = () => false;
 

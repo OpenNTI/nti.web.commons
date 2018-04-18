@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {FileAPI, Selection} from 'nti-commons';
-import {addClass, removeClass, getEventTarget} from 'nti-lib-dom';
-import Logger from 'nti-util-logger';
+import {FileAPI, Selection} from '@nti/lib-commons';
+import {addClass, removeClass, getEventTarget} from '@nti/lib-dom';
+import Logger from '@nti/util-logger';
 
 import Grid from './layout/grid';
 

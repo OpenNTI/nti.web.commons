@@ -2,7 +2,7 @@
 /* eslint-env jest */
 import React from 'react';
 import {shallow} from 'enzyme';
-import {Date as DateUtils} from 'nti-commons';
+import {Date as DateUtils} from '@nti/lib-commons';
 
 import DateTimeField from '../DateTimeField';
 import TimePicker from '../../TimePicker';

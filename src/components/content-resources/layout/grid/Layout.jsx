@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Selection} from 'nti-commons';
+import {Selection} from '@nti/lib-commons';
 
 import Folder from './Folder';
 import File from './File';

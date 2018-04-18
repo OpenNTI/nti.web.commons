@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import mime from 'mime-types';
-import {isNTIID} from 'nti-lib-ntiids';
+import {isNTIID} from '@nti/lib-ntiids';
 
 const CONTENT_TYPE = 'application/vnd.nextthought.content';
 const EXTERNAL_TYPE = 'application/vnd.nextthought.externallink';

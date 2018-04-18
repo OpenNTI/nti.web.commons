@@ -1,7 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import {Point} from 'nti-commons';
+import {Point} from '@nti/lib-commons';
 
 const pointFromTouch = t => new Point(t.pageX, t.pageY, t.identifier);
 

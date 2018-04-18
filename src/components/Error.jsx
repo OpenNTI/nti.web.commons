@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'nti-util-logger';
-import {rawContent} from 'nti-commons';
+import Logger from '@nti/util-logger';
+import {rawContent} from '@nti/lib-commons';
 
 const logger = Logger.get('common:components:Error');
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from 'nti-web-client';
-import {scoped} from 'nti-lib-locale';
-import Logger from 'nti-util-logger';
-import {buffer as buffered, Selection} from 'nti-commons';
+import {getService} from '@nti/web-client';
+import {scoped} from '@nti/lib-locale';
+import Logger from '@nti/util-logger';
+import {buffer as buffered, Selection} from '@nti/lib-commons';
 
 import {alert} from '../../prompts';
 

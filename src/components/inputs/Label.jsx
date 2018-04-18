@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {getRefHandler} from 'nti-commons';
+import {getRefHandler} from '@nti/lib-commons';
 
 
 export default class Label extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Filters} from 'nti-commons';
-import {scoped} from 'nti-lib-locale';
+import {Filters} from '@nti/lib-commons';
+import {scoped} from '@nti/lib-locale';
 
 import EmptyState from '../../../components/EmptyState';
 import Search from '../../../components/Search';

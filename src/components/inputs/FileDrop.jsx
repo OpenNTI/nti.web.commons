@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { scoped } from 'nti-lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 const DEFAULT_TEXT = {
@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	unknownError: 'Unable to upload file.'
 };
 
-const t = scoped('nti-web-commons.inputs.FileDrop', DEFAULT_TEXT);
+const t = scoped('@nti/web-commons.inputs.FileDrop', DEFAULT_TEXT);
 
 export default class Upload extends React.Component {
 	static propTypes = {
@@ -92,7 +92,7 @@ export default class Upload extends React.Component {
 		const {error, className, value} = this.props;
 
 		return (
-			<div className={cx('nti-web-commons-filedrop', className)}>
+			<div className={cx('@nti/web-commons-filedrop', className)}>
 				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileChange} />
 				<div className="container">
 					<i className="icon-upload" />

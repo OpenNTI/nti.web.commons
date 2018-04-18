@@ -1,4 +1,4 @@
-import {URL} from 'nti-commons';
+import {URL} from '@nti/lib-commons';
 
 const ASSET_MAP = {
 	thumb: 'contentpackage-thumb-60x60.png',

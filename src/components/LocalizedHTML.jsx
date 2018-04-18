@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import t from 'nti-lib-locale';
+import t from '@nti/lib-locale';
 
 export default class extends React.Component {
 	static displayName = 'LocalizedHTML';

@@ -2,8 +2,8 @@ import EventEmitter from 'events';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createDOM, getScrollPosition, getScrollParent, scrollElementTo} from 'nti-lib-dom';
-import {buffer} from 'nti-commons';
+import {createDOM, getScrollPosition, getScrollParent, scrollElementTo} from '@nti/lib-dom';
+import {buffer} from '@nti/lib-commons';
 
 import Modal from './components/Modal';
 

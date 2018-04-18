@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getServer} from 'nti-web-client';
-import {REQUEST_CONFLICT_EVENT} from 'nti-lib-interfaces';
+import {getServer} from '@nti/web-client';
+import {REQUEST_CONFLICT_EVENT} from '@nti/lib-interfaces';
 
 import defaultConflictHandler from '../default-handler';
 import contentVersionConflictHandler, {Code} from '../content-version-conflict';

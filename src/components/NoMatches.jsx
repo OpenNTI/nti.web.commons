@@ -1,5 +1,5 @@
 import React from 'react';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
 	noMatches: 'No items match the selected filter.'

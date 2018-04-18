@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Logger from 'nti-util-logger';
-import {addClass} from 'nti-lib-dom';
-import {rawContent} from 'nti-commons';
+import Logger from '@nti/util-logger';
+import {addClass} from '@nti/lib-dom';
+import {rawContent} from '@nti/lib-commons';
 
 import Manager from '../ModalManager';
 import DialogButtons from '../../components/DialogButtons';

@@ -4,7 +4,7 @@ import cx from 'classnames';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
-import isTouch from 'nti-util-detection-touch';
+import isTouch from '@nti/util-detection-touch';
 
 import DragLayer from './SortDragLayer';
 

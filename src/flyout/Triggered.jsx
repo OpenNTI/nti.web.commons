@@ -8,7 +8,7 @@ import {
 	getViewportHeight,
 	getViewportWidth,
 	getScrollParent
-} from 'nti-lib-dom';
+} from '@nti/lib-dom';
 
 import {
 	DEFAULT_VERTICAL,

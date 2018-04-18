@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import jump from 'jump.js';
-import {getViewportHeight} from 'nti-lib-dom';
+import {getViewportHeight} from '@nti/lib-dom';
 
 import {DialogButtons, LockScroll} from '../components';
 import {HeightMonitor} from '../sync-height';

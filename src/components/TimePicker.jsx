@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Time} from 'nti-commons';
+import {Time} from '@nti/lib-commons';
 
 import SelectBox from './SelectBox';
 import {Number as NumberInput} from './inputs';

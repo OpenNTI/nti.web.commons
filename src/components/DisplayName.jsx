@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import t from 'nti-lib-locale';
-import {getAppUsername, User} from 'nti-web-client';
+import t from '@nti/lib-locale';
+import {getAppUsername, User} from '@nti/web-client';
 
 
 /**

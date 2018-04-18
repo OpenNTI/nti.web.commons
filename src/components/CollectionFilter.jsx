@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {LocalStorage} from 'nti-web-storage';
+import {LocalStorage} from '@nti/web-storage';
 
 import FilterableView from './FilterableView';
 import DefaultPath from './DefaultPath';

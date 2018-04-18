@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'nti-util-logger';
-import {matches} from 'nti-lib-dom';
+import Logger from '@nti/util-logger';
+import {matches} from '@nti/lib-dom';
 
 const logger = Logger.get('common:layout:infinite-scroll:HeightChange');
 

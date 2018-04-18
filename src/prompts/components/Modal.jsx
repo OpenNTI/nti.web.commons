@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import isIOS from 'nti-util-ios-version';
-import { declareCustomElement } from 'nti-lib-dom';
+import isIOS from '@nti/util-ios-version';
+import { declareCustomElement } from '@nti/lib-dom';
 
 import LockScroll from '../../components/LockScroll';
 import Manager from '../ModalManager';

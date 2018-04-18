@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'nti-util-logger';
-import {getRefHandler, HOC} from 'nti-commons';
+import Logger from '@nti/util-logger';
+import {getRefHandler, HOC} from '@nti/lib-commons';
 
 const logger = Logger.get('common:high-order-components:ItemChanges');
 

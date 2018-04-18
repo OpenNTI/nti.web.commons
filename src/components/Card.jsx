@@ -3,9 +3,9 @@ import Url from 'url';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {rawContent} from 'nti-commons';
-import {scoped} from 'nti-lib-locale';
-import {isNTIID} from 'nti-lib-ntiids';
+import {rawContent} from '@nti/lib-commons';
+import {scoped} from '@nti/lib-locale';
+import {isNTIID} from '@nti/lib-ntiids';
 
 import {DataURIs} from '../constants';
 

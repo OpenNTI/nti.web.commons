@@ -2,9 +2,9 @@ import path from 'path';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {addClass, removeClass, getEventTarget, getFragmentFromString} from 'nti-lib-dom';
-import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from 'nti-commons';
-import Logger from 'nti-util-logger';
+import {addClass, removeClass, getEventTarget, getFragmentFromString} from '@nti/lib-dom';
+import {FileAPI, Selection, Events, cooloff as getCoolOff, Parsing} from '@nti/lib-commons';
+import Logger from '@nti/util-logger';
 
 import FileDragImageTemplate from './assets/FileDragImage.template.svg';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {wait} from 'nti-commons';
+import {wait} from '@nti/lib-commons';
 
 import {Ellipse as TinyLoader} from './loading-indicators';
 

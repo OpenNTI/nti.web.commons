@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {wait} from 'nti-commons';
-import {scoped} from 'nti-lib-locale';
+import {wait} from '@nti/lib-commons';
+import {scoped} from '@nti/lib-locale';
 
 import {Spinner as Loading} from '../../../../components/loading-indicators';
 

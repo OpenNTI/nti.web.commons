@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import {mount} from 'enzyme';
-import {Time} from 'nti-commons';
+import {Time} from '@nti/lib-commons';
 
 import TimePicker from '../TimePicker';
 

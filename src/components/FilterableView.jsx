@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'nti-util-logger';
+import Logger from '@nti/util-logger';
 
 import FilterBar from './FilterBar';
 import NoMatches from './NoMatches';

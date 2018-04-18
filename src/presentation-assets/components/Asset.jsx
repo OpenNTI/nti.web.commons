@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {URL} from 'nti-commons';
-import Logger from 'nti-util-logger';
+import {URL} from '@nti/lib-commons';
+import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:presentation-assets:components:Asset');
 

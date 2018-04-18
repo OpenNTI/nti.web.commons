@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-// import {addFeatureCheckClasses} from 'nti-lib-dom';
+// import {addFeatureCheckClasses} from '@nti/lib-dom';
 // import {ConflictResolutionHandler, ContentResources, ControlBar, Associations, Button, TimePicker} from '../../src';
 
 import {Layouts} from '../../src';

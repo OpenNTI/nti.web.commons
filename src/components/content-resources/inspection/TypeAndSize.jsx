@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import filesize from 'filesize';
 import mime from 'mime-types';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 import LabeledValue from '../../LabeledValue';
 

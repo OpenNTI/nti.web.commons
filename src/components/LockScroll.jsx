@@ -1,5 +1,5 @@
 import React from 'react';
-import {addClass, removeClass} from 'nti-lib-dom';
+import {addClass, removeClass} from '@nti/lib-dom';
 
 export default class LockScroll extends React.Component {
 	static refCount = 0;

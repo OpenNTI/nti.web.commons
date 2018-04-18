@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getEventTarget} from 'nti-lib-dom';
+import {getEventTarget} from '@nti/lib-dom';
 
 
 //Only Used by CollectionFilter.jsx

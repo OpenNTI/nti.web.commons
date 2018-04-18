@@ -1,4 +1,4 @@
-import {wait} from 'nti-commons';
+import {wait} from '@nti/lib-commons';
 
 import AssociationsInterface from './Interface';
 import {groupItemsByParent} from './utils';

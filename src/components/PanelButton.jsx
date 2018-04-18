@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 const DEFAULTS = {
 	ok: 'OK'
 };
 
-const t = scoped('nti-web-commons.components.panelbutton', DEFAULTS);
+const t = scoped('@nti/web-commons.components.panelbutton', DEFAULTS);
 
 /**
  *	Renders an info panel with a link/button.
