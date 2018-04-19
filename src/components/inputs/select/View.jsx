@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {scoped} from 'nti-lib-locale';
 
 import Text from '../Text';
 
@@ -10,6 +11,10 @@ import {
 	getValueForOption,
 	optionMatchesTerm
 } from './utils';
+
+const t = scoped('common.components.inputs.select.View', {
+	emptySearch: 'No Results Found'
+});
 
 export default class SelectInput extends React.Component {
 	static Option = Option
@@ -252,6 +257,13 @@ export default class SelectInput extends React.Component {
 							focused: focusedIndex === index
 						});
 					})}
+					{searchable && activeOptions && activeOptions.length === 0 && (
+						<li>
+							<Option display>
+								{t('emptySearch')}
+							</Option>
+						</li>
+					)}
 				</ul>
 			</div>
 		);
