@@ -4,7 +4,10 @@ import cx from 'classnames';
 
 export default class SelectInputOption extends React.Component {
 	static propTypes = {
-		value: PropTypes.string,
+		value: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number
+		]),
 		className: PropTypes.string,
 		children: PropTypes.node,
 		matches: PropTypes.func,

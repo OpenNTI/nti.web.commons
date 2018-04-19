@@ -242,7 +242,7 @@ export default class NumberInput extends React.Component {
 	render () {
 		const {className, ...otherProps} = this.props;
 		const {validity} = this;
-		const cls = cx('number-input-component', className, {valid: validity.valid, invalid: !validity.valid});
+		const cls = cx('number-input-component', 'nti-number-input', className, {valid: validity.valid, invalid: !validity.valid});
 
 		let value = this.formattedValue;
 
