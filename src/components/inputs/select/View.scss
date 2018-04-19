@@ -40,7 +40,7 @@
 		min-height: 2rem;
 		position: relative;
 
-		&:not(.searchable), &.has-selected {
+		&:not(.searchable).focused, &.has-selected {
 			.nti-text-input {
 				text-indent: -9999px;
 			}

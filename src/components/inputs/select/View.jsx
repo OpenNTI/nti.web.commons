@@ -260,11 +260,11 @@ export default class SelectInput extends React.Component {
 
 	renderLabel () {
 		const {searchable, placeholder} = this.props;
-		const {activeOptions, selectedIndex, inputBuffer} = this.state;
+		const {activeOptions, selectedIndex, inputBuffer, focused} = this.state;
 		const selectedOption = activeOptions[selectedIndex];
 
 		return (
-			<div className={cx('select-label', {searchable, 'has-selected': selectedOption})}>
+			<div className={cx('select-label', {searchable, 'has-selected': selectedOption, focused})}>
 				<Text
 					ref={this.attachLabelInputRef}
 					value={inputBuffer}
