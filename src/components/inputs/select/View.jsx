@@ -58,6 +58,7 @@ export default class SelectInput extends React.Component {
 
 	setupFor (props) {
 		const {children, value} = this.props;
+		const {focusedIndex} = this.state;
 		const options = React.Children.toArray(children);
 
 		let selectedIndex = -1;
@@ -75,7 +76,7 @@ export default class SelectInput extends React.Component {
 			options,
 			activeOptions: options,
 			selectedIndex,
-			focusedIndex: selectedIndex
+			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex
 		});
 	}
 
@@ -122,6 +123,10 @@ export default class SelectInput extends React.Component {
 		}
 
 		this.focus();
+
+		this.setState({
+			inputBuffer: ''
+		});
 	}
 
 
@@ -186,7 +191,6 @@ export default class SelectInput extends React.Component {
 			}
 		}
 
-
 		this.setState({
 			inputBuffer: value,
 			focusedIndex: newFocused
@@ -202,7 +206,13 @@ export default class SelectInput extends React.Component {
 
 
 	onSearchableInputChange = (value) => {
-		const {options} = this.state;
+		const {options, selectedIndex} = this.state;
+		const selectedOption = options[selectedIndex];
+
+		if (selectedOption && !optionMatchesTerm(selectedOption, value)) {
+			this.selectOption(null);
+			value = value.charAt(value.length - 1);
+		}
 
 		const newActive = options.reduce((acc, option) => {
 			if (optionMatchesTerm(option, value)) {
@@ -213,6 +223,7 @@ export default class SelectInput extends React.Component {
 		}, []);
 
 		this.setState({
+			isOpen: true,
 			inputBuffer: value,
 			activeOptions: newActive,
 			focusedIndex: 0
@@ -249,11 +260,11 @@ export default class SelectInput extends React.Component {
 
 	renderLabel () {
 		const {searchable, placeholder} = this.props;
-		const {activeOptions, focusedIndex, inputBuffer} = this.state;
-		const selectedOption = activeOptions[focusedIndex];
+		const {activeOptions, selectedIndex, inputBuffer} = this.state;
+		const selectedOption = activeOptions[selectedIndex];
 
 		return (
-			<div className={cx('select-label', {searchable})}>
+			<div className={cx('select-label', {searchable, 'has-selected': selectedOption})}>
 				<Text
 					ref={this.attachLabelInputRef}
 					value={inputBuffer}

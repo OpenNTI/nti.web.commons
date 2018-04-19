@@ -3,12 +3,14 @@
 .nti-select-input-option {
 	padding: 0.5rem;
 	cursor: pointer;
+	color: $primary-grey;
 
 	&:not(.display):hover, &.focused {
-		background-color: $panel-background;
+		background-color: $border-grey-light;
 	}
 
 	&.selected {
-		background-color: $border-grey-light;
+		color: white;
+		background-color: $primary-blue;
 	}
 }

@@ -19,28 +19,24 @@ function moveDown (e, state) {
 		return open;
 	}
 
-	let newFocusedIndex = focusedIndex + 1;
-
 	return {
 		...state,
-		focusedIndex: newFocusedIndex <= activeOptions.length - 1 ?	newFocusedIndex : 0
+		focusedIndex: Math.min(focusedIndex + 1, activeOptions.length - 1)
 	};
 }
 
 function moveUp (e, state) {
 	stop(e);
-	const {activeOptions, focusedIndex} = state;
+	const {focusedIndex} = state;
 	const open = maybeOpen(e, state);
 
 	if (open) {
 		return open;
 	}
 
-	let newFocusedIndex = focusedIndex - 1;
-
 	return {
 		...state,
-		focusedIndex: newFocusedIndex >= 0 ? newFocusedIndex : activeOptions.length - 1
+		focusedIndex: Math.max(focusedIndex - 1, 0)
 	};
 }
 
