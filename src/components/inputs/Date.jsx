@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
+import cx from 'classnames';
 
 import SelectInput from './select';
 import NumberInput from './Number';
@@ -67,6 +68,7 @@ export default class DateInput extends React.Component {
 	static Precision = Precision
 
 	static propTypes = {
+		className: PropTypes.string,
 		value: PropTypes.object,
 		onChange: PropTypes.func,
 
@@ -149,8 +151,10 @@ export default class DateInput extends React.Component {
 
 
 	render () {
+		const {className, precision} = this.props;
+
 		return (
-			<div className="nti-date-input">
+			<div className={cx('nti-date-input', className, [`precision-${precision}`])}>
 				{this.renderMonth()}
 				{this.renderDay()}
 				{this.renderYear()}
@@ -167,6 +171,7 @@ export default class DateInput extends React.Component {
 
 		return (
 			<SelectInput
+				className="month-input"
 				value={month}
 				placeholder={t('placeholders.month')}
 				onChange={this.setMonth}
@@ -193,6 +198,7 @@ export default class DateInput extends React.Component {
 
 		return (
 			<NumberInput
+				className="year-input"
 				value={year}
 				placeholder={t('placeholders.year')}
 				onChange={this.setYear}

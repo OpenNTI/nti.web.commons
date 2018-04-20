@@ -37,8 +37,10 @@
 	.select-label {
 		border-radius: 2px;
 		background-color: $panel-background;
-		border: 1px solid $border-grey-light;
-		min-height: 2rem;
+		//since these are box-sizing: border-box the borders are eating into the
+		//height. We want the input themselves to be 32px tall. So we need to add
+		//2px to account for the borders
+		height: rem-calc(34px);
 		position: relative;
 
 		&:not(.searchable).focused, &.has-selected {
@@ -54,8 +56,6 @@
 		}
 
 		.nti-text-input {
-			border-radius: 0;
-			border: none;
 			background-color: white;
 			width: 100%;
 			padding: 0 2rem 0 0.625rem
@@ -63,10 +63,8 @@
 
 		.selected-option {
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
+			top: 0; bottom: 0;
+			left: 0; right: 0;
 		}
 
 		i {
