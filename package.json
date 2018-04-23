@@ -59,7 +59,7 @@
     "react-day-picker": "^7.1.4",
     "react-dnd": "^2.5.1",
     "react-dnd-html5-backend": "^2.5.1",
-    "react-dnd-touch-backend": "^0.3.15",
+    "react-dnd-touch-backend": "0.x.x",
     "react-transition-group": "^2.2.1",
     "zpad": "^0.5.0"
   },
