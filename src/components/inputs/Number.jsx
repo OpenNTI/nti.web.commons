@@ -252,6 +252,7 @@ export default class NumberInput extends React.Component {
 		delete otherProps.value;
 		delete otherProps.pad;
 
+		//TODO: use the Text input
 		return (
 			<input {...otherProps}
 				type="text"

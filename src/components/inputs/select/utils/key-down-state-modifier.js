@@ -1,4 +1,4 @@
-import {Events} from 'nti-commons';
+import {Events} from '@nti/lib-commons';
 
 const stop = e => { e.preventDefault(); e.stopPropagation(); };
 

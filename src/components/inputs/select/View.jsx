@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 import Text from '../Text';
 
@@ -131,6 +131,7 @@ export default class SelectInput extends React.Component {
 		}
 
 		this.focus();
+		this.closeMenu();
 
 		this.setState({
 			inputBuffer: ''

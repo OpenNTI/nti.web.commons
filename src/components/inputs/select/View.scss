@@ -1,4 +1,4 @@
-@import "~nti-style-common";
+@import "~@nti/style-common";
 
 .nti-select-input {
 	position: relative;
@@ -11,7 +11,7 @@
 	}
 
 	&.focused {
-		.select-label {
+		.select-label .nti-text-input {
 			border-color: $primary-blue;
 		}
 	}
