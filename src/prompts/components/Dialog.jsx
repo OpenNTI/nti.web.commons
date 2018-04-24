@@ -34,6 +34,8 @@ export default class ManagedDialog extends React.Component {
 
 		// Set to false to ignore clicks/touches on the mask.
 		closeOnMaskClick: PropTypes.bool,
+		// Set to false to ignore the escape key
+		closeOnEscape: PropTypes.bool,
 
 		//Use this to update your component's state to unmount the dialog.
 		onBeforeDismiss: PropTypes.func,
@@ -79,6 +81,7 @@ export default class ManagedDialog extends React.Component {
 				children,
 				className,
 				closeOnMaskClick = true,
+				closeOnEscape = true,
 				restoreScroll,
 				tall,
 			}
@@ -92,6 +95,7 @@ export default class ManagedDialog extends React.Component {
 				className: cx('managed-modal', className),
 				onBeforeDismiss: this.onBeforeDismiss,
 				closeOnMaskClick,
+				closeOnEscape,
 				restoreScroll,
 				mountPoint,
 				tall,

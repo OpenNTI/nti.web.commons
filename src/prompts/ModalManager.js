@@ -78,6 +78,7 @@ export class ModalManager extends EventEmitter {
 		const {
 			className,
 			closeOnMaskClick,
+			closeOnEscape,
 			onBeforeDismiss,
 			tall,
 			mountPoint,
@@ -104,6 +105,7 @@ export class ModalManager extends EventEmitter {
 			dismiss,
 			mountPoint: container,
 			refocus,
+			closeOnEscape,
 			scroll: !restoreScroll ? void 0 : {
 				maybeRestoreScroll: typeof restoreScroll === 'function' ? restoreScroll : YesFn,
 				scroller,
@@ -295,7 +297,7 @@ export class ModalManager extends EventEmitter {
 
 	onDocumentKeyDown = (e) => {
 		const top = this.getTopMost();
-		if (top && e.keyCode === 27) {
+		if (top && top.closeOnEscape && e.keyCode === 27) {
 			top.dismiss();
 		}
 	}

@@ -21,6 +21,7 @@ export default class Modal extends React.Component {
 		children: PropTypes.node,
 		className: PropTypes.string,
 		closeOnMaskClick: PropTypes.bool,
+		closeOnEscape: PropTypes.bool,
 		isPortal: PropTypes.bool,//sent by ModalManager
 		tall: PropTypes.bool
 	}
@@ -35,6 +36,10 @@ export default class Modal extends React.Component {
 	getChildContext = () => ({
 		close: this.close
 	})
+
+	get doNotCloseOnEscape () {
+		return !this.props.closeOnEscape;
+	}
 
 
 	state = {}
