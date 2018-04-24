@@ -1,0 +1,94 @@
+@import "~@nti/style-common";
+
+.nti-select-input {
+	position: relative;
+	display: inline-block;
+
+	&.open {
+		& > ul.options {
+			display: block;
+		}
+	}
+
+	&.focused {
+		.select-label .nti-text-input {
+			border-color: $primary-blue;
+		}
+	}
+
+	& > ul.options {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		position: absolute;
+		width: 100%;
+		top: calc(100% - 1px);
+		left: 0;
+		background: white;
+		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.1);
+		border: 1px solid $border-grey-light;
+		z-index: 99;
+		backface-visibility: hidden;
+
+		display: none;
+	}
+
+
+	.select-label {
+		border-radius: 2px;
+		background-color: $panel-background;
+		//since these are box-sizing: border-box the borders are eating into the
+		//height. We want the input themselves to be 32px tall. So we need to add
+		//2px to account for the borders
+		height: rem-calc(34px);
+		position: relative;
+
+		&:not(.searchable).focused, &.has-selected {
+			.nti-text-input {
+				text-indent: -9999px;
+			}
+		}
+
+		&.searchable:not(.has-selected) {
+			.selected-option {
+				display: none;
+			}
+		}
+
+		.nti-text-input {
+			background-color: white;
+			width: 100%;
+			padding: 0 2rem 0 0.625rem
+		}
+
+		.selected-option {
+			position: absolute;
+			top: 0; bottom: 0;
+			left: 0; right: 0;
+		}
+
+		i {
+			position: absolute;
+			top: 50%;
+			left: auto;
+			right: 0.625rem;
+			width: 1rem;
+			height: 1rem;
+			margin-top: -0.5rem;
+			color: $tertiary-grey;
+		}
+	}
+
+	.nti-clearable-input & {
+		.select-label {
+
+			.nti-text-input {
+				padding: 0 3rem 0 0.625rem;
+			}
+
+			i {
+				right: 1.875rem;
+			}
+		}
+	}
+}
