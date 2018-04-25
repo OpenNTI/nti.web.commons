@@ -1,6 +1,6 @@
 {
   "name": "@nti/web-commons",
-  "version": "0.33.0-alpha",
+  "version": "0.33.0",
   "author": "nextthought",
   "description": "ReactJS Common Components",
   "license": "UNLICENSED",
