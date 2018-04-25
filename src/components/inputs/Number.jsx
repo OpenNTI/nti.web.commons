@@ -101,7 +101,7 @@ export default class NumberInput extends React.Component {
 			input.max = max;
 		}
 
-		return input.validit || {};//or with {} for testing
+		return input.validity || {};//or with {} for testing
 	}
 
 
