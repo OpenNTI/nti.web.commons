@@ -262,12 +262,18 @@ export default class SelectInput extends React.Component {
 					{activeOptions && activeOptions.map((option, index) => {
 						if (option.type !== Option) { throw new Error('Children of select must be an option'); }
 
-						return React.cloneElement(option, {
+						const optionCmp = React.cloneElement(option, {
 							index,
 							onClick: this.selectOption,
 							selected: selectedIndex === index,
 							focused: focusedIndex === index
 						});
+
+						return (
+							<li key={index}>
+								{optionCmp}
+							</li>
+						);
 					})}
 					{searchable && activeOptions && activeOptions.length === 0 && (
 						<li>

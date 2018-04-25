@@ -31,6 +31,10 @@
 		backface-visibility: hidden;
 
 		display: none;
+
+		li {
+			border-bottom: 1px solid $border-grey-light;
+		}
 	}
 
 
@@ -78,7 +82,14 @@
 		.placeholder {
 			font: italic 400 0.875rem/2rem $body-font-family;
 			color: $tertiary-grey;
-			padding: rem-calc(0 10px)
+			padding: 0 2rem 0 0.625rem;
+		}
+
+
+		.selected-option {
+			.nti-select-input-option {
+				padding-right: 2rem;
+			}
 		}
 
 		i {

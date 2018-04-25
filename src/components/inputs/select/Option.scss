@@ -6,6 +6,13 @@
 	color: $secondary-grey;
 	font: normal 400 0.875rem/2rem $body-font-family;
 
+
+	&.display {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	&:not(.display):hover, &.focused {
 		background-color: $border-grey-light;
 	}
