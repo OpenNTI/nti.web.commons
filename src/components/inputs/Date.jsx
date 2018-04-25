@@ -28,6 +28,8 @@ const t = scoped('common.inputs.Date', {
 });
 const getMonthLabel = m => t(`months.${m}`);
 
+const stop = e => {e.stopPropagation(); e.preventDefault();};
+
 const Precision = {
 	year: 1,
 	month: 2,
@@ -202,6 +204,7 @@ export default class DateInput extends React.Component {
 				value={year}
 				placeholder={t('placeholders.year')}
 				onChange={this.setYear}
+				onClick={stop}
 				min={1900}
 			/>
 		);
