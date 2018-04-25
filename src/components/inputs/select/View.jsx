@@ -45,7 +45,8 @@ export default class SelectInput extends React.Component {
 		selectedIndex: -1,
 		focusedIndex: -1,
 		activeOptions: [],
-		inputBuffer: ''
+		inputBuffer: '',
+		inputValue: ''
 	}
 
 
@@ -134,12 +135,19 @@ export default class SelectInput extends React.Component {
 		this.closeMenu();
 
 		this.setState({
-			inputBuffer: ''
+			inputBuffer: '',
+			inputValue: ''
 		});
 	}
 
 
 	onLabelClick = () => {
+		this.focus();
+		this.openMenu();
+	}
+
+
+	onDownArrowClick = () => {
 		this.focus();
 		this.openMenu();
 	}
@@ -233,7 +241,7 @@ export default class SelectInput extends React.Component {
 
 		this.setState({
 			isOpen: true,
-			inputBuffer: value,
+			inputValue: value,
 			activeOptions: newActive,
 			focusedIndex: 0
 		});
@@ -276,24 +284,27 @@ export default class SelectInput extends React.Component {
 
 	renderLabel () {
 		const {searchable, placeholder} = this.props;
-		const {activeOptions, selectedIndex, inputBuffer, focused} = this.state;
+		const {activeOptions, selectedIndex, inputValue, focused} = this.state;
 		const selectedOption = activeOptions[selectedIndex];
 
 		return (
 			<div className={cx('select-label', {searchable, 'has-selected': selectedOption, focused})}>
 				<Text
 					ref={this.attachLabelInputRef}
-					value={inputBuffer}
+					value={inputValue}
 					placeholder={placeholder}
 					onChange={searchable ? this.onSearchableInputChange : this.onInputChange}
 					onFocus={this.onInputFocus}
 					onBlur={this.onInputBlur}
 					onKeyDown={this.onInputKeyDown}
 				/>
+				<div className="placeholder">
+					{placeholder || ''}
+				</div>
 				<div className="selected-option" onClick={this.onLabelClick}>
 					{selectedOption && React.cloneElement(selectedOption, {display: true})}
 				</div>
-				<i className="icon-chevron-down" />
+				<i className="icon-chevron-down" onClick={this.onDownArrowClick} />
 			</div>
 		);
 	}

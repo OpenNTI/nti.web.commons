@@ -43,9 +43,15 @@
 		height: rem-calc(34px);
 		position: relative;
 
-		&:not(.searchable).focused, &.has-selected {
+		&.has-selected, &:not(.searchable) {
 			.nti-text-input {
 				text-indent: -9999px;
+			}
+		}
+
+		&.has-selected, &.searchable {
+			.placeholder {
+				display: none;
 			}
 		}
 
@@ -55,16 +61,24 @@
 			}
 		}
 
+
 		.nti-text-input {
 			background-color: white;
 			width: 100%;
 			padding: 0 2rem 0 0.625rem
 		}
 
-		.selected-option {
+		.selected-option, .placeholder {
 			position: absolute;
 			top: 0; bottom: 0;
 			left: 0; right: 0;
+		}
+
+
+		.placeholder {
+			font: italic 400 0.875rem/2rem $body-font-family;
+			color: $tertiary-grey;
+			padding: rem-calc(0 10px)
 		}
 
 		i {
