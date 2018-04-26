@@ -7,12 +7,26 @@
 		.month-input {
 			.select-label .nti-text-input {
 				border-radius: 2px 0 0 2px;
-				border-right-width: 0;
 			}
 		}
 
 		.year-input {
 			border-radius: 0 2px 2px 0;
+			border-left-width: 0;
+		}
+
+		&.error:not(.focused) {
+			.month-input {
+				.select-label .nti-text-input {
+					border-left-color: $primary-red;
+					border-top-color: $primary-red;
+					border-bottom-color: $primary-red;
+				}
+			}
+
+			.year-input {
+				border-color: $primary-red;
+			}
 		}
 	}
 }

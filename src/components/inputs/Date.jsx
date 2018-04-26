@@ -40,7 +40,7 @@ const Precision = {
 
 const DateFromPrecision = {
 	[Precision.year]: (state) => {
-		if (state.year == null || state.year < 1900) { return null; }
+		if (state.year == null) { return null; }
 
 		const date = new Date();
 
@@ -74,7 +74,10 @@ export default class DateInput extends React.Component {
 		value: PropTypes.object,
 		onChange: PropTypes.func,
 
-		precision: PropTypes.oneOf(Object.values(Precision))
+		precision: PropTypes.oneOf(Object.values(Precision)),
+
+		min: PropTypes.object,
+		max: PropTypes.object
 	}
 
 	static defaultProps = {
@@ -118,13 +121,27 @@ export default class DateInput extends React.Component {
 			state.month = value.getMonth();
 		}
 
-		this.setState(state);
+		if (state.month !== this.state.month || state.year !== this.state.year) {
+			this.setState(state);
+		}
+
 	}
 
 
 	onChange () {
-		const {precision, onChange, value} = this.props;
-		const date = DateFromPrecision[precision](this.state);
+		const {precision, onChange, value, min, max} = this.props;
+		let date = DateFromPrecision[precision](this.state);
+
+		if (date && ((min && date < min) || (max && date > max))) {
+			date = null;
+			this.setState({
+				error: true
+			});
+		} else {
+			this.setState({
+				error: false
+			});
+		}
 
 		if (onChange && value !== date) {
 			onChange(date);
@@ -152,11 +169,30 @@ export default class DateInput extends React.Component {
 	}
 
 
+	onFocus = () => {
+		clearTimeout(this.blurTimeout);
+
+		this.setState({
+			focused: true
+		});
+	}
+
+
+	onBlur = () => {
+		this.blurTimeout = setTimeout(() => {
+			this.setState({
+				focused: false
+			});
+		}, 300);
+	}
+
+
 	render () {
 		const {className, precision} = this.props;
+		const {error, focused} = this.state;
 
 		return (
-			<div className={cx('nti-date-input', className, [`precision-${precision}`])}>
+			<div className={cx('nti-date-input', className, `precision-${precision}`, {error, focused})}>
 				{this.renderMonth()}
 				{this.renderDay()}
 				{this.renderYear()}
@@ -177,6 +213,8 @@ export default class DateInput extends React.Component {
 				value={month}
 				placeholder={t('placeholders.month')}
 				onChange={this.setMonth}
+				onFocus={this.onFocus}
+				onBlur={this.onBlur}
 			>
 				{possibleMonths.map((m) => {
 					return (
@@ -205,7 +243,8 @@ export default class DateInput extends React.Component {
 				placeholder={t('placeholders.year')}
 				onChange={this.setYear}
 				onClick={stop}
-				min={1900}
+				onFocus={this.onFocus}
+				onBlur={this.onBlur}
 			/>
 		);
 	}
