@@ -158,15 +158,13 @@ export default class SelectInput extends React.Component {
 
 
 	onInputFocus = () => {
-		const {searchable, onFocus} = this.props;
+		const {onFocus} = this.props;
 
 		this.setState({
 			focused: true
 		});
 
-		if (searchable) {
-			this.openMenu();
-		}
+		this.openMenu();
 
 		if (onFocus) {
 			onFocus();
