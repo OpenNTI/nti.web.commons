@@ -102,9 +102,13 @@ export default class Upload extends React.Component {
 							? this.renderFileName()
 							: (<div className="choose-container"><span className="choose">{getString('choose')}</span></div>)
 					}
-					<div className={cx('error-container', {error})}>
-						<span className="error">{error || 'no error'}</span>
-					</div>
+					{error &&
+						(
+							<div className={cx('error-container', {error})}>
+								<span className="error">{error || 'no error'}</span>
+							</div>
+						)
+					}
 					<span className="requirements">{getString('requirements')}</span>
 				</div>
 			</div>
