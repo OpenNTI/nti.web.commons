@@ -63,7 +63,7 @@ export default class SelectInput extends React.Component {
 		const {value: oldValue, children: oldChildren} = prevProps;
 		const {value: newValue, children: newChildren} = this.props;
 
-		if (oldValue !== newValue || oldChildren !== newChildren) {
+		if (oldValue !== newValue || React.Children.count(oldChildren) !== React.Children.count(newChildren)) {
 			this.setupFor(this.props);
 		}
 	}

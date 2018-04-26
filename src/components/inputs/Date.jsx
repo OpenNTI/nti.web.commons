@@ -132,7 +132,7 @@ export default class DateInput extends React.Component {
 		const {precision, onChange, value, min, max} = this.props;
 		let date = DateFromPrecision[precision](this.state);
 
-		if (date && ((min && date < min) || (max && date > max))) {
+		if (isNaN(date) || (date && ((min && date < min) || (max && date > max)))) {
 			date = null;
 			this.setState({
 				error: true
