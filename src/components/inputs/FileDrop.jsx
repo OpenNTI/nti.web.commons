@@ -92,7 +92,7 @@ export default class Upload extends React.Component {
 		const {error, className, value} = this.props;
 
 		return (
-			<div className={cx('@nti/web-commons-filedrop', className)}>
+			<div className={cx('.nti-web-commons-filedrop', className)}>
 				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileChange} />
 				<div className="container">
 					<i className="icon-upload" />
