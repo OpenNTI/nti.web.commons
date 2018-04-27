@@ -247,6 +247,8 @@ export default class DurationPicker extends React.Component {
 					<NumberInput
 						onChange={this.onDaysChanged}
 						value={days}
+						constrain
+						min={0} max={1000000}
 					/>
 				</Label>
 
