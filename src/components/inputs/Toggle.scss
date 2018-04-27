@@ -30,6 +30,14 @@
 			position: relative;
 			cursor: pointer;
 
+			&.disabled {
+				cursor: initial;
+
+				input[type=checkbox] {
+					cursor: initial;
+				}
+			}
+
 			input[type=checkbox] {
 				position: absolute;
 				top: 0;

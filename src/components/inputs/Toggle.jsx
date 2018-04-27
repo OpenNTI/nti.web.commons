@@ -15,7 +15,8 @@ export default class Toggle extends React.Component {
 		className: PropTypes.string,
 		hideLabel: PropTypes.bool,
 		value: PropTypes.bool,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		disabled: PropTypes.bool
 	}
 
 	attachInputRef = x => this.input = x;
@@ -63,14 +64,14 @@ export default class Toggle extends React.Component {
 	}
 
 	renderToggler () {
-		const { value } = this.props;
+		const { value, disabled } = this.props;
 
-		const togglerCls = cx('toggler', {on: value, off: !value});
+		const togglerCls = cx('toggler', {on: value, off: !value, disabled});
 		const buttonCls = cx('toggle-button', {on: value, off: !value});
 
 		return (
 			<div className={togglerCls}>
-				<input onChange={this.toggleValue} checked={value} type="checkbox" ref={this.attachInputRef}/>
+				<input onChange={this.toggleValue} checked={value} type="checkbox" ref={this.attachInputRef} disabled={disabled}/>
 				<div className={buttonCls}/>
 			</div>
 		);
