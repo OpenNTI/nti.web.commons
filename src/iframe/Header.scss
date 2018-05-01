@@ -11,6 +11,9 @@
 		flex: 1 1 auto;
 		font: normal 300 1.5rem/1.25 $body-font-family;
 		color: $primary-grey;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.download {
