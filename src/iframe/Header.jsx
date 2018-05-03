@@ -51,7 +51,7 @@ export default class IframeHeader extends React.Component {
 
 		return (
 			<a className="download" href={src} download>
-				<i className="icon-upload" />
+				<i className="icon-download" />
 				<span>{t('download')}</span>
 			</a>
 		);
