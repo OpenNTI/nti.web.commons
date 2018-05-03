@@ -2,7 +2,7 @@ export default function constrainAlignment (alignment = {}, {height: viewHeight,
 	const clone = {...alignment};
 
 	if (clone.top != null) {
-		clone.maxHeight = viewHeight - clone.top;
+		clone.maxHeight = viewHeight - (clone.top + (clone.height || 0));
 	} else if (clone.bottom != null) {
 		clone.maxHeight = viewHeight - clone.bottom;
 	}
