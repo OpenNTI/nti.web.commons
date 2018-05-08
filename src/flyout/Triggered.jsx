@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import {
+	getRefHandler
+} from '@nti/lib-commons';
+import {
 	getElementRect as getRectInViewport,
 	getEffectiveZIndex,
 	getViewportHeight,
@@ -199,14 +202,13 @@ export default class Flyout extends React.Component {
 
 	constructor (props) {
 		super(props);
+		this.triggerRef = React.createRef();
 		this.fly = makeDOM({className: cx('fly-wrapper', props.className)});
 	}
 
 
 	get trigger () {
-		//This is presently needed because we allow the trigger to be a dom element or a Component...
-		//we can't ref-hook Components and get a dom node, so the only current solution is this.
-		return ReactDOM.findDOMNode(this);//eslint-disable-line
+		return this.triggerRef.current;
 	}
 
 
@@ -216,7 +218,6 @@ export default class Flyout extends React.Component {
 
 
 	componentWillUnmount () {
-		ReactDOM.unmountComponentAtNode(this.fly);
 		document.body.removeChild(this.fly);
 	}
 
@@ -232,10 +233,13 @@ export default class Flyout extends React.Component {
 		const {props: {onDismiss}, state: {open}} = this;
 		const {open: wasOpen} = prevState;
 
-		if (open) {
-			this.renderFlyout();
-		} else {
-			ReactDOM.unmountComponentAtNode(this.fly);
+		if (open && this.flyout) {
+			const prev = this.flyoutSize;
+			const {offsetWidth: width, offsetHeight: height} = this.flyout;
+			this.flyoutSize = {width, height};
+			if (prev && (prev.width !== width || prev.height !== height)) {
+				this.realign();
+			}
 		}
 
 		if (wasOpen && !open && onDismiss) {
@@ -466,7 +470,7 @@ export default class Flyout extends React.Component {
 		const hover = this.isHover();
 		const {open} = this.state;
 		let {trigger: Trigger, ...props} = this.props;
-		let listeners = {};
+		let overrides = {};
 
 		delete props.children;
 		delete props.verticalAlign;
@@ -482,10 +486,10 @@ export default class Flyout extends React.Component {
 		delete props.hover;
 
 		if (hover) {
-			listeners.onMouseEnter = this.startShow;
-			listeners.onMouseLeave = this.startHide;
+			overrides.onMouseEnter = this.startShow;
+			overrides.onMouseLeave = this.startHide;
 		} else {
-			listeners.onClick = (e) => {
+			overrides.onClick = (e) => {
 				if (Trigger && Trigger.props.onClick) {
 					Trigger.props.onClick(e);
 				}
@@ -494,25 +498,32 @@ export default class Flyout extends React.Component {
 			};
 		}
 
-		//TODO: inform the trigger that the flyout is open
-
 		if (!Trigger) {
 			Trigger = ( <button>Trigger</button> );
 		}
 
-		listeners.className = cx(Trigger && Trigger.props && Trigger.props.className, {'flyout-open': open, 'flyout-closed': !open});
+		const {
+			className: parentClassName,
+			ref: parentRef
+		} = Trigger.props || {};
 
-		if (React.isValidElement(Trigger)) {
-			return React.cloneElement(Trigger, listeners);
-		}
+		overrides.className = cx(parentClassName, {'flyout-open': open, 'flyout-closed': !open});
+
+		const trigger = React.isValidElement(Trigger)
+			? React.cloneElement(Trigger, {...overrides, ref: getRefHandler(parentRef, this.triggerRef)})
+			: ( <Trigger ref={this.triggerRef} {...props} {...overrides} /> );
+
 
 		return (
-			<Trigger {...props} {...listeners} />
+			<React.Fragment>
+				{trigger}
+				{open && this.renderFlyout()}
+			</React.Fragment>
 		);
 	}
 
 
-	renderFlyout = () => {
+	renderFlyout () {
 		const {
 			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover},
 			state: {aligning, alignment}
@@ -533,23 +544,15 @@ export default class Flyout extends React.Component {
 
 		const listeners = this.isHover() ? {onMouseEnter: this.stopHide, onMouseLeave: this.startHide} : {};
 
-		ReactDOM.render(
+		const flyout = (
 			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle} {...listeners} >
 				{arrow && <div className="flyout-arrow"/>}
 				<div className="flyout-inner" style={innerStyle}>
 					{children}
 				</div>
 			</div>
-			, this.fly, () => {
+		);
 
-				if (this.flyout) {
-					const prev = this.flyoutSize;
-					const {offsetWidth: width, offsetHeight: height} = this.flyout;
-					this.flyoutSize = {width, height};
-					if (prev && (prev.width !== width || prev.height !== height)) {
-						this.realign();
-					}
-				}
-			});
+		return ReactDOM.createPortal(flyout, this.fly);
 	}
 }

@@ -60,47 +60,43 @@ describe('Triggered Flyout', () => {
 
 	setup();
 
-	test('Base Case', (done) => {
-		Promise.all(testRender())
-			.then(cmps => cmps
-				.map(getText)
-				.forEach(x => expect(x).toEqual('Trigger')))
-			.then(done, e => done.fail(e));
+	test('Base Case', async () => {
+		const cmps = await Promise.all(testRender());
+
+		cmps.map(getText)
+			.forEach(x => expect(x).toEqual('Trigger'));
 	});
 
-	test('Base Case: Specify Trigger', (done) => {
+	test('Base Case: Specify Trigger', async () => {
 		const value = 'Test';
-		Promise.all(testRender({trigger: 'input', type: 'button', value}))
-			.then(cmps => cmps
-				.map(getDom)
-				.forEach(x => {
-					expect(x.tagName).toEqual('INPUT');
-					expect(x.value).toEqual(value);
-				})
-			)
-			.then(done, e => done.fail(e));
+
+		const cmps = await Promise.all(testRender({trigger: 'input', type: 'button', value}));
+
+		cmps.map(getDom)
+			.forEach(x => {
+				expect(x.tagName).toEqual('INPUT');
+				expect(x.value).toEqual(value);
+			});
 	});
 
-	test('Base Case: Specify Element Trigger', (done) => {
+	test('Base Case: Specify Element Trigger', async () => {
 		const value = 'Test';
 		const element = (
 			<a href="#test" className="foobar">{value}</a>
 		);
 
-		Promise.all(testRender({trigger: element}))
-			.then(cmps => cmps
-				.map(getDom)
-				.forEach(x => {
-					expect(x.tagName).toEqual('A');
-					expect(x.getAttribute('href')).toEqual('#test');
-					expect(x.classList.contains('foobar')).toBeTruthy();
-					expect(x.textContent).toEqual(value);
-				})
-			)
-			.then(done, e => done.fail(e));
+		const cmps = await Promise.all(testRender({trigger: element}));
+
+		cmps.map(getDom)
+			.forEach(x => {
+				expect(x.tagName).toEqual('A');
+				expect(x.getAttribute('href')).toEqual('#test');
+				expect(x.classList.contains('foobar')).toBeTruthy();
+				expect(x.textContent).toEqual(value);
+			});
 	});
 
-	test('Opening the flyout should add listeners to window, and document', (done) => {
+	test('Opening the flyout should add listeners to window, and document', async () => {
 		spyOn(window, 'addEventListener');
 		spyOn(window, 'removeEventListener');
 		spyOn(window.document, 'addEventListener');
@@ -112,22 +108,19 @@ describe('Triggered Flyout', () => {
 			step();
 		}
 
-		Promise.all(testRender({afterAlign}, <div>Foobar</div>))
-			.then(([component]) => new Promise(next =>{
+		const [component] = await Promise.all(testRender({afterAlign}, <div>Foobar</div>));
 
-				step = () => {
-					expect(window.addEventListener).toHaveBeenCalledWith('resize', component.realign);
-					expect(window.addEventListener).toHaveBeenCalledWith('scroll', component.realign);
-					expect(window.document.addEventListener).toHaveBeenCalledWith('click', component.maybeDismiss);
-					next();
-				};
+		await new Promise(next =>{
+			step = next;
+			component.onToggle();
+		});
 
-				component.onToggle();
-			}))
-			.then(done, e => done.fail(e));
+		expect(window.addEventListener).toHaveBeenCalledWith('resize', component.realign);
+		expect(window.addEventListener).toHaveBeenCalledWith('scroll', component.realign);
+		expect(window.document.addEventListener).toHaveBeenCalledWith('click', component.maybeDismiss);
 	});
 
-	test('Closing the flyout should remove listeners to window, and document', () => {
+	test('Closing the flyout should remove listeners to window, and document', async () => {
 		spyOn(window, 'addEventListener');
 		spyOn(window, 'removeEventListener');
 		spyOn(window.document, 'addEventListener');
@@ -139,47 +132,33 @@ describe('Triggered Flyout', () => {
 			step();
 		}
 
-		return Promise.all(testRender({afterAlign}, <div>Foobar2</div>))
-			.then(([component]) => new Promise((next,fail) => {
+		const [component] = await Promise.all(testRender({afterAlign}, <div>Foobar2</div>));
 
-				step = () => {
-					step = () => {};
-					component.onToggle(null, () => {
-						try {
-							expect(window.removeEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
-							expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
-							expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
-							next();
-						}
-						catch (e) {
-							fail(e);
-						}
-					});
-				};
+		await new Promise(next =>{
+			step = next;
+			component.onToggle();
+		});
 
-				component.onToggle();
-			}));
+		await new Promise(next =>{
+			component.onToggle(null, next);
+		});
+
+		expect(window.removeEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
+		expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
+		expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
 	});
 
-	test('Flys echo classnames', (done) => {
+	test('Flys echo classnames', async () => {
+		const cmps = await Promise.all(testRender({className: 'awesome sauce'}, <div>Lala</div> ));
+		await Promise.all(cmps.map(x => new Promise(next => x.onToggle(null, next))));
 
-		Promise.all(testRender({className: 'awesome sauce'}, <div>Lala</div> ))
-			.then(cmps => Promise.all(cmps
-				.map(x => new Promise(next => x.onToggle(null, ()=> next(x))))
-			))
-			.then(components => {
-
-				for (let c of components) {
-					expect(c.state.open).toBeTruthy();
-					expect(c.fly.className).toEqual('fly-wrapper awesome sauce');
-					expect(c.flyout.className).toEqual('flyout awesome sauce bottom center');
-					expect(c.flyout.textContent).toEqual('Lala');
-					expect(c.fly.contains(c.flyout)).toBeTruthy();
-				}
-
-				done();
-			})
-			.catch(x => done.fail(x));
+		for (let c of cmps) {
+			expect(c.state.open).toBeTruthy();
+			expect(c.fly.className).toEqual('fly-wrapper awesome sauce');
+			expect(c.flyout.className).toEqual('flyout awesome sauce bottom center');
+			expect(c.flyout.textContent).toEqual('Lala');
+			expect(c.fly.contains(c.flyout)).toBeTruthy();
+		}
 
 	});
 });
