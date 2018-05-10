@@ -1,2 +1,22 @@
 @import "~normalize.css";
 @import "~@nti/style-common/all.scss";
+
+body {
+	margin: 1rem;
+	font-family: 'Open Sans';
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.test-kitchen .content-resource-browser {
+	margin: 0 auto;
+	box-shadow: 0 0 0 1px #e2e2e2;
+}
+
+.test-page {
+	color: white;
+	font-size: 5rem;
+	text-align: center;
+}
