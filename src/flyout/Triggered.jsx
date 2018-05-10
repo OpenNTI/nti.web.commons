@@ -208,16 +208,50 @@ export default class Flyout extends React.Component {
 
 
 	get trigger () {
-		return this.triggerRef.current;
+		let ref = this.triggerRef.current;
+		if (!ref && this.mounted) {
+			if (!this.warnedTriggerType) {
+				this.warnedTriggerType = true;
+				// eslint-disable-next-line no-console
+				console.warn(
+					'A Stateless Component null ref was returned for the Trigger. Forward its ref to the DOM node.\n%s%s\n%s%o',
+					'See: ',
+					'https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components'
+				);
+			}
+		}
+
+		{if (ref instanceof React.Component) {
+			if (ref.getDOMNode) {
+				return ref.getDOMNode();
+			}
+
+			if (!this.warnedTriggerType) {
+				this.warnedTriggerType = true;
+				// eslint-disable-next-line no-console
+				console.warn(
+					'A Component ref was returned for the Trigger.\n%s\n%s%o',
+					'Implement getDOMNode() or use a Stateless Component with a forwarded ref.',
+					'Ref received: ',
+					ref
+				);
+			}
+			// eslint-disable-next-line react/no-find-dom-node
+			ref = ReactDOM.findDOMNode(ref);
+		}}
+
+		return ref;
 	}
 
 
 	componentDidMount () {
+		this.mounted = true;
 		document.body.appendChild(this.fly);
 	}
 
 
 	componentWillUnmount () {
+		this.mounted = false;
 		document.body.removeChild(this.fly);
 	}
 
@@ -225,6 +259,10 @@ export default class Flyout extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.className !== this.props.className) {
 			this.fly.className = cx('fly-wrapper', nextProps.className);
+		}
+
+		if (nextProps.trigger !== this.props.trigger) {
+			delete this.warnedTriggerType;
 		}
 	}
 
@@ -490,7 +528,7 @@ export default class Flyout extends React.Component {
 			overrides.onMouseLeave = this.startHide;
 		} else {
 			overrides.onClick = (e) => {
-				if (Trigger && Trigger.props.onClick) {
+				if (Trigger && Trigger.props && Trigger.props.onClick) {
 					Trigger.props.onClick(e);
 				}
 
