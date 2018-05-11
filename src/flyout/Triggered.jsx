@@ -214,14 +214,14 @@ export default class Flyout extends React.Component {
 				this.warnedTriggerType = true;
 				// eslint-disable-next-line no-console
 				console.warn(
-					'A Stateless Component null ref was returned for the Trigger. Forward its ref to the DOM node.\n%s%s\n%s%o',
+					'A Stateless Component null ref was returned for the Trigger. Forward its ref to the DOM node.\n%s%s',
 					'See: ',
 					'https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components'
 				);
 			}
 		}
 
-		{if (ref instanceof React.Component) {
+		if (ref instanceof React.Component) {
 			if (ref.getDOMNode) {
 				return ref.getDOMNode();
 			}
@@ -238,7 +238,7 @@ export default class Flyout extends React.Component {
 			}
 			// eslint-disable-next-line react/no-find-dom-node
 			ref = ReactDOM.findDOMNode(ref);
-		}}
+		}
 
 		return ref;
 	}
