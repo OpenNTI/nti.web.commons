@@ -367,7 +367,21 @@ export default class Flyout extends React.Component {
 
 
 	align (cb = this.props.afterAlign) {
-		const {alignment:oldAlignment} = this.state;
+		const {
+			flyout,
+			trigger,
+			state: {
+				alignment:oldAlignment
+			},
+			props: {
+				primaryAxis,
+				verticalAlign,
+				horizontalAlign,
+				constrain,
+				sizing
+			}
+		} = this;
+
 		const finish = (alignment) => {
 			this.setState(
 				{aligning: false, alignment},
@@ -375,25 +389,21 @@ export default class Flyout extends React.Component {
 			);
 		};
 
-		if (!this.flyout) {
+		if (!flyout || !trigger) {
 			return finish(oldAlignment);
 		}
 
-		const {trigger} = this;
 		const fixed = isFixed(trigger);
 		const triggerRect = fixed ? getRectInViewport(trigger) : getRectInDocument(trigger);
 		const viewport = {top: 0, left: 0, width: getViewportWidth(), height: getViewportHeight()};
 		const coordinateRoot = fixed ? viewport : getBodySize();
-
-
-		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing} = this.props;
 
 		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
 		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
 
 		const layoutArgs = [
 			triggerRect,
-			this.flyout,
+			flyout,
 			coordinateRoot
 		];
 
