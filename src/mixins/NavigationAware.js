@@ -1,4 +1,3 @@
-import 'react';
 import PropTypes from 'prop-types';
 
 const ENVIRONMENT_TYPE = PropTypes.shape({
