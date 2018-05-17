@@ -6,6 +6,8 @@ import {Events} from '@nti/lib-commons';
 import ChildHeightMonitor from '../ChildHeightMonitor';
 import {initPageState, updatePageState, fixPageState} from '../utils';
 
+const pageScrollingElement = document ? document.scrollingElement || document.documentElement : null;
+
 
 export default class InifiniteLoadList extends React.Component {
 	static propTypes = {
@@ -48,10 +50,12 @@ export default class InifiniteLoadList extends React.Component {
 			offsetTop: 0,
 			clientHeight: document.documentElement.clientHeight,
 			get scrollTop () {
-				return document.scrollingElement.scrollTop;
+				return pageScrollingElement ? pageScrollingElement.scrollTop : 0;
 			},
 			set scrollTop (top) {
-				return document.scrollingElement.scrollTop = top;
+				if (pageScrollingElement) {
+					return pageScrollingElement.scrollTop = top;
+				}
 			}
 		};
 	}
