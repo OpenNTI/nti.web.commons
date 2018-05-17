@@ -201,7 +201,7 @@ export default class InifiniteLoadList extends React.Component {
 			const {pageState} = this.state;
 			const fixedPageState = fixPageState(pageState, buffer, this.scrollingEl, this.getPageHeight, this.topOffset);
 
-			if (fixedPageState.scrollTop === pageState.scrollTop) { return; }
+			if (fixedPageState.scrollTop === pageState.scrollTop && fixedPageState.totalHeight === pageState.totalHeight) { return; }
 
 			const {activePages, totalHeight} = fixedPageState;
 			const {anchorOffset} = activePages;
