@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getEffectiveScreenSize} from './utils';
+
 export default class ResponsiveItem extends React.Component {
 	static propTypes = {
 		query: PropTypes.func.isRequired,
 
 		component: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-		render: PropTypes.func
+		render: PropTypes.func,
+
+		additionalArguments: PropTypes.object
 	}
+
+	state = {}
 
 	constructor (props) {
 		super(props);
@@ -15,17 +21,32 @@ export default class ResponsiveItem extends React.Component {
 		if (!props.component && !props.render) {
 			throw new Error('Must have a component or render prop for a ResponsiveItem');
 		}
+	}
 
-		this.state = this.getStateFor(props);
+	componentDidMount () {
+		this.setupFor(this.props);
 	}
 
 
-	getStateFor (props = this.props) {
-		const {query} = props;
+	componentDidUpdate (prevProps) {
+		const {additionalArguments:oldArguments} = prevProps;
+		const {additionalArguments:newArguments} = this.props;
 
-		return {
-			visible: query()
-		};
+		if (oldArguments !== newArguments) {
+			this.setupFor(this.props);
+		}
+	}
+
+
+	setupFor (props) {
+		const {query, additionalArguments} = props;
+
+		this.setState({
+			visible: query({
+				screenSize: getEffectiveScreenSize(),
+				...additionalArguments
+			})
+		});
 	}
 
 
