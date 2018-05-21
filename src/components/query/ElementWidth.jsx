@@ -75,6 +75,7 @@ export default class QueryElementWidth extends React.Component {
 		const {extraProps} = this.state;
 
 		delete otherProps.queries;
+		delete otherProps.onChange;
 
 		return (
 			<Tag ref={this.attachRef} {...otherProps} {...extraProps} />
