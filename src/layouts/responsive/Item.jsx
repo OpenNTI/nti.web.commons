@@ -33,7 +33,7 @@ export default class ResponsiveItem extends React.Component {
 		const {additionalArguments:newArguments} = this.props;
 
 		// TODO: Eventually, have a more generic field comparison
-		if (oldArguments.containerWidth !== newArguments.containerWidth) {
+		if ((oldArguments || {}).containerWidth !== (newArguments || {}).containerWidth) {
 			this.setupFor(this.props);
 		}
 	}
