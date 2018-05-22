@@ -108,7 +108,7 @@ function getBodyDocumentGaps () {
 
 function getBodySize () {
 	const el = document.body;
-	const getDim = x => Math.max(el[`client${x}`], el[`offset${x}`], el[`scroll${x}`]);
+	const getDim = x => Math.max(el[`client${x}`], el[`offset${x}`]);
 	const tl = getBodyDocumentGaps();
 	return {
 		height: getDim('Height') - tl.top,
