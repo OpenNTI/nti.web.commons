@@ -12,57 +12,56 @@ const DEFAULT_TEXT = {
 let t = scoped('common.components.buttons.follow', DEFAULT_TEXT);
 
 
-export default class extends React.Component {
-	static displayName = 'FollowButton';
+export default class FollowButton extends React.Component {
 
 	static propTypes = {
 		entity: PropTypes.object.isRequired
-	};
-
-	componentWillMount () {
-		this.setFollowing();
 	}
 
-	componentWillReceiveProps (nextProps) {
-		this.setFollowing(nextProps);
-	}
-
-	setFollowing = (props = this.props) => {
-		let {entity} = props;
-		this.setState({
+	static getDerivedStateFromProps ({entity}) {
+		return {
 			following: entity && entity.following
-		});
-	};
+		};
+	}
 
-	toggleFollow = (e) => {
+	state = {}
+
+	toggleFollow = async (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		let {entity} = this.props;
 
-		let p = this.state.following ? areYouSure(t('unfollowPrompt')) : Promise.resolve();
-		p.then(() => {
+		const {state: {following}, props: {entity}} = this;
+
+		try {
+			if (following) {
+				await areYouSure(t('unfollowPrompt'));
+			}
+
+			this.setState({ loading: true });
+			await entity.follow();
+
+		}
+		catch (er) {
+			//derp
+		}
+
+		finally {
 			this.setState({
-				loading: true
+				following: entity.following,
+				loading: false
 			});
-			entity.follow()
-				.then(() => {
-					this.setState({
-						following: entity.following,
-						loading: false
-					});
-				});
-		});
-	};
+		}
+	}
 
 	render () {
-		let {following, loading} = this.state;
-		let classes = cx({
-			'follow-widget': true,
+		const {props: {entity}, state: {following, loading}} = this;
+		const classes = cx('follow-widget', {
 			'follow': !following,
 			'unfollow': following,
 			'loading': loading
 		});
-		return (
+
+		return (!entity || !entity.follow) ? null : (
 			<div className={classes} onClick={loading ? null : this.toggleFollow} />
 		);
 	}
