@@ -88,6 +88,11 @@ export default class DateTime extends React.Component {
 	}
 
 
+	static resolveTimeZone () {
+		return moment.tz.guess();
+	}
+
+
 	static fromNow (date) {
 		const tz = moment.tz.guess();
 		return date && moment(new Date(date)).tz(tz).fromNow();
