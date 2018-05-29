@@ -41,7 +41,6 @@ export Favorite from './Favorite';
 export FilterableView from './FilterableView';
 export FixedElement from './FixedElement';
 export FollowButton from './FollowButton';
-export FollowButtonOld from './FollowButtonOld';
 export Footer from './Footer';
 export HideNavigation from './HideNavigation';
 export LabeledValue from './LabeledValue';
