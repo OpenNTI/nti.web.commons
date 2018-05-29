@@ -28,7 +28,7 @@ function ensureDelayOf (delay, start) {
 export default class PromiseButton extends React.Component {
 
 	static propTypes = {
-		children: PropTypes.string,
+		children: PropTypes.any, //simple nodes only please
 		className: PropTypes.string,
 
 		// The callback can return a promise if the work to be done will be async...
@@ -96,8 +96,7 @@ export default class PromiseButton extends React.Component {
 	}
 
 	render () {
-		const {state: { status }, props: { children, className }} = this;
-		const label = React.Children.only(children);
+		const {state: { status }, props: { children: label, className }} = this;
 		const css = cx('promise-button', className, status);
 
 		return (
