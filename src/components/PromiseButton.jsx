@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {wait} from '@nti/lib-commons';
@@ -26,45 +25,41 @@ function ensureDelayOf (delay, start) {
 	};
 }
 
-export default createReactClass({
-	displayName: 'PromiseButton',
+export default class PromiseButton extends React.Component {
 
-	propTypes: {
+	static propTypes = {
 		children: PropTypes.string,
 		className: PropTypes.string,
 
 		// The callback can return a promise if the work to be done will be async...
 		onClick: PropTypes.func
-	},
+	}
 
 
-	getDefaultProps () {
-		return {
-			onClick: () => wait(2000)
-		};
-	},
+	static defaultProps = {
+		onClick: () => wait(2000)
+	}
 
 
-	getInitialState () {
-		return {
-			status: NORMAL,
-			reset: void 0
-		};
-	},
+	state = {
+		status: NORMAL
+	}
 
 
 	reset () {
-		this.setState(this.getInitialState());
-	},
+		this.setState({
+			status: NORMAL
+		});
+	}
 
 
 	componentWillUnmount () {
 		//clearTimeout is safe to call on any value.
-		clearTimeout(this.state.reset);
-	},
+		clearTimeout(this.resetTimer);
+	}
 
 
-	go (e) {
+	go = (e) => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -92,32 +87,24 @@ export default createReactClass({
 					// and schedule the reset. If the component is unmounted before the reset,
 					// the componentWillUnmount can cancel the timer.
 					.then(status => {
-						this.setState({
-							status,
-							reset: setTimeout(()=> { this.reset(); done(); }, RESET_DELAY)
-						});
+						this.setState({ status });
+						this.resetTimer = setTimeout(()=> { this.reset(); done(); }, RESET_DELAY);
 					});
 			});
 
 		});
-	},
+	}
 
 	render () {
-		const {children, className} = this.props;
-		const label = React.Children.toArray(children)[0];
-		const css = cx('promise-button', className, this.state.status);
-
-		// A dummy element used to size the container to match the default (first) state.
-		const sizer = `<span>${label}</span>`;
+		const {state: { status }, props: { children, className }} = this;
+		const label = React.Children.only(children);
+		const css = cx('promise-button', className, status);
 
 		return (
 			<button className={css} onClick={this.go}>
-				{
-					/*eslint-disable*/
-					//We rendered the content to string, so we know "sizer" is safe.
-					( <span className="sizer" dangerouslySetInnerHTML={{__html: sizer}}/> )
-					/*eslint-enable*/
-				}
+				<span className="sizer">
+					<span>{label}</span>
+				</span>
 				<ul>
 					<li><span>{label}</span></li>
 					<li className="processing"><TinyLoader /></li>
@@ -126,4 +113,4 @@ export default createReactClass({
 			</button>
 		);
 	}
-});
+}
