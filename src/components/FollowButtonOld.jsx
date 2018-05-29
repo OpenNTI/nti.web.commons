@@ -55,7 +55,7 @@ export default class FollowButton extends React.Component {
 
 	render () {
 		const {props: {entity}, state: {following, loading}} = this;
-		const classes = cx('follow-widget', {
+		const classes = cx('old-follow-widget', {
 			'follow': !following,
 			'unfollow': following,
 			'loading': loading
