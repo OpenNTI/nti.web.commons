@@ -7,7 +7,7 @@ import {scoped} from '@nti/lib-locale';
 import {ItemChanges} from '../HighOrderComponents';
 import {areYouSure} from '../prompts/';
 
-import {PromiseButton} from './PromiseButton';
+import PromiseButton from './PromiseButton';
 
 const DEFAULT_TEXT = {
 	unfollowPrompt: 'Remove this contact?',
