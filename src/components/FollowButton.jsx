@@ -17,7 +17,7 @@ let t = scoped('common.components.buttons.follow', DEFAULT_TEXT);
 
 
 export default
-@ItemChanges
+@ItemChanges.compose
 class FollowButton extends React.Component {
 
 	static propTypes = {
