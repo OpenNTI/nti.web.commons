@@ -70,11 +70,31 @@ export default class ItemChanges extends React.Component {
 
 	static compose (Component) {
 
-		const cmp = React.forwardRef((props, ref) => (
-			<ItemChanges item={getItem(Component, props, {}, this.context)}>
-				<Component {...props} ref={ref}/>
-			</ItemChanges>
-		));
+		// const cmp = React.forwardRef((props, ref) => (
+		// 	<ItemChanges item={getItem(Component, props, {}, {})}>
+		// 		<Component {...props} ref={ref}/>
+		// 	</ItemChanges>
+		// ));
+
+		const cmp = class ItemChangesWrapper extends React.Component {
+			render () {
+				const contextProxy = process.env.NODE_ENV === 'production'
+					? {}
+					: new Proxy(this.context, {
+						get (target, prop) {
+							logger.warn('Accessing ' + prop + ' in ItemChanges context');
+
+							return Reflect.get(...arguments);
+						}
+					});
+
+				return (
+					<ItemChanges item={getItem(Component, this.props, {}, contextProxy)}>
+						<Component {...this.props}/>
+					</ItemChanges>
+				);
+			}
+		};
 
 		cmp.WrappedComponent = Component.WrappedComponent || Component;
 
@@ -90,15 +110,8 @@ export default class ItemChanges extends React.Component {
 
 	attachRef = x => this.refChild = x
 
-	componentWillMount () {
+	componentDidMount () {
 		this.mounted = true;
-	}
-
-
-	componentWillReceiveProps (...next) {
-		const prev = [this.props, this.state, this.context];
-		stopListening(this, getItem(this, ...prev));
-		listen(this, getItem(this, ...next));
 	}
 
 
