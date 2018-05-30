@@ -70,15 +70,11 @@ export default class ItemChanges extends React.Component {
 
 	static compose (Component) {
 
-		const cmp = class ItemChangesWrapper extends React.Component {
-			render () {
-				return (
-					<ItemChanges item={getItem(Component, this.props, {}, this.context)}>
-						<Component {...this.props}/>
-					</ItemChanges>
-				);
-			}
-		};
+		const cmp = React.forwardRef((props, ref) => (
+			<ItemChanges item={getItem(Component, this.props, {}, this.context)}>
+				<Component {...this.props} ref={ref}/>
+			</ItemChanges>
+		));
 
 		cmp.WrappedComponent = Component.WrappedComponent || Component;
 
