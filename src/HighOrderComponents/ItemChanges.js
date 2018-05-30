@@ -71,8 +71,8 @@ export default class ItemChanges extends React.Component {
 	static compose (Component) {
 
 		const cmp = React.forwardRef((props, ref) => (
-			<ItemChanges item={getItem(Component, this.props, {}, this.context)}>
-				<Component {...this.props} ref={ref}/>
+			<ItemChanges item={getItem(Component, props, {}, this.context)}>
+				<Component {...props} ref={ref}/>
 			</ItemChanges>
 		));
 
