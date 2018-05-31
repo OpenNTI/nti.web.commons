@@ -110,9 +110,7 @@ export default class ItemChanges extends React.Component {
 
 	attachRef = x => this.refChild = x
 
-	componentDidMount () {
-		this.mounted = true;
-	}
+	mounted = true
 
 
 	componentDidUpdate (...prev) {
