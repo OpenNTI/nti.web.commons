@@ -1,0 +1,35 @@
+@import "~@nti/style-common";
+
+$offline: #747474;
+$online: #8eb737;
+$away: #ebcd25;
+$dnd: #F35252;
+
+.nti-user-presence-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 7px;
+	background: $offline;
+
+	&.Online, &.online, &.available {
+		background: $online;
+	}
+
+	&.away {
+		background: $away;
+	}
+
+	&.DnD, &.dnd {
+		background: $dnd;
+	}
+
+	&.border {
+		width: 11px;
+		height: 11px;
+		border: 2px solid white;
+
+		&.dark {
+			border-color: #313131;
+		}
+	}
+}

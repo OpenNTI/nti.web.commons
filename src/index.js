@@ -17,6 +17,7 @@ export * as RemoteMount from './remote-mount';
 export * as Selection from './selection';
 export * as Switch from './switch';
 export * as Updates from './updates';
+export * as User from './user';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
