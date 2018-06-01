@@ -4,7 +4,8 @@ import {Sticky as ReactSticky} from '@nti/react-sticky';
 
 export default class Sticky extends React.Component {
 	static propTypes = {
-		children: PropTypes.node
+		children: PropTypes.node,
+		topOffset: PropTypes.number
 	}
 
 	static contextTypes = {
@@ -29,9 +30,10 @@ export default class Sticky extends React.Component {
 	}
 
 	render () {
-		const { children } = this.props;
+		const { children, topOffset:offsetProp } = this.props;
 		const { stickyTopOffset } = this.context;
-		const { offset, topOffset } = this.getOffset(stickyTopOffset);
+		const { offset, topOffset } = this.getOffset((stickyTopOffset || 0) + offsetProp);
+		const child = React.Children.only(children);
 
 		return (
 			<ReactSticky topOffset={topOffset}>
@@ -40,7 +42,7 @@ export default class Sticky extends React.Component {
 						style.top += offset;
 					}
 
-					return (<div className="sticky" style={style}>{children}</div>);
+					return (<div className="sticky" style={style}>{React.cloneElement(child)}</div>);
 				}}
 			</ReactSticky>
 		);

@@ -38,6 +38,7 @@ export EmptyList from './EmptyList';
 export EmptyState from './EmptyState';
 export Error from './Error';
 export Favorite from './Favorite';
+export FillToBottom from './FillToBottom';
 export FilterableView from './FilterableView';
 export FixedElement from './FixedElement';
 export Footer from './Footer';
