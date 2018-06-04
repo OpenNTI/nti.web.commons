@@ -95,7 +95,10 @@
 .modal-mask-appear,
 .modal-mask-enter {
 	opacity: 0.01;
-	transition: opacity 300ms ease-out; //make this transition 10ms longer to let the .modal-content animation playout
+
+	html:not(.is-ie) & {
+		transition: opacity 300ms ease-out; //make this transition 10ms longer to let the .modal-content animation playout
+	}
 }
 
 .modal-mask-appear.modal-mask-appear-active,
