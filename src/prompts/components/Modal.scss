@@ -1,29 +1,5 @@
 @import "~@nti/style-common";
 
-.modal-mask-appear,
-.modal-mask-enter {
-	opacity: 0.01;
-	transition: opacity 0.26s ease-out; //make this transition 10ms longer to let the .modal-content animation playout
-}
-
-.modal-mask-appear.modal-mask-appear-active,
-.modal-mask-enter.modal-mask-enter-active {
-	opacity: 1;
-
-	.modal-content {
-		animation: modal-content 0.25s ease both;
-	}
-}
-
-.modal-mask-exit {
-	opacity: 1;
-	transition: opacity 0.25s ease-out;
-}
-
-.modal-mask-exit.modal-mask-exit-active {
-	opacity: 0.01;
-}
-
 .modal-mask {
 	@include touch-scroll;
 	overflow: {
@@ -47,8 +23,34 @@
 		z-index: 1;
 	}
 
+	body > .modal + .modal & {
+		background: none;
+	}
+
 	&.tall {
 		justify-content: flex-start;
+	}
+
+	.modal-content {
+		animation-delay: 0.15s;
+		flex: 0 0 auto;
+
+		& > * {
+			margin: 0 auto;
+			position: relative;
+
+			@include covered-modal {
+				&::after {
+					content: '';
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					background: rgba(255, 255, 255, 0.5);
+				}
+			}
+		}
 	}
 
 	&.safari-fix {
@@ -71,45 +73,47 @@
 		top: 1rem;
 		cursor: pointer;
 	}
-}
 
-.modal-mask dialog {
-	display: block;
-	position: static;
-	left: auto;
-	right: auto;
-	width: auto;
-	height: auto;
-	color: inherit;
-	margin: initial;
-	border-width: initial;
-	border-style: initial;
-	border-color: initial;
-	border-image: initial;
-	padding: initial;
-	background: none;
-}
-
-.modal-content {
-	animation-delay: 0.15s;
-	flex: 0 0 auto;
-
-	& > * {
-		margin: 0 auto;
-		position: relative;
-
-		@include covered-modal {
-			&::after {
-				content: '';
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				background: rgba(255, 255, 255, 0.5);
-			}
-		}
+	dialog {
+		display: block;
+		position: static;
+		left: auto;
+		right: auto;
+		width: auto;
+		height: auto;
+		color: inherit;
+		margin: initial;
+		border-width: initial;
+		border-style: initial;
+		border-color: initial;
+		border-image: initial;
+		padding: initial;
+		background: none;
 	}
+}
+
+.modal-mask-appear,
+.modal-mask-enter {
+	opacity: 0.01;
+	transition: opacity 300ms ease-out; //make this transition 10ms longer to let the .modal-content animation playout
+}
+
+.modal-mask-appear.modal-mask-appear-active,
+.modal-mask-enter.modal-mask-enter-active {
+	opacity: 1;
+
+	.modal-content {
+		animation: modal-content 250ms ease both;
+	}
+}
+
+.modal-mask-exit {
+	opacity: 1;
+	transition: opacity 250ms ease-out;
+}
+
+.modal-mask-exit.modal-mask-exit-active {
+	opacity: 0.01;
 }
 
 @keyframes modal-content {
@@ -121,11 +125,5 @@
 	100% {
 		transform: translate3d(0, 0, 0);
 		opacity: 1;
-	}
-}
-
-body > .modal + .modal {
-	.modal-mask {
-		background: none;
 	}
 }
