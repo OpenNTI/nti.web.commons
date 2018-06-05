@@ -588,7 +588,7 @@ export default class Flyout extends React.Component {
 
 		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
 
-		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {fixed, arrow, dark, hover});
+		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {'is-fixed': fixed, arrow, dark, hover});
 
 		const listeners = this.isHover() ? {onMouseEnter: this.stopHide, onMouseLeave: this.startHide} : {};
 
