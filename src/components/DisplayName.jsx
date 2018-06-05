@@ -4,6 +4,7 @@ import cx from 'classnames';
 import t from '@nti/lib-locale';
 import {getAppUsername, User} from '@nti/web-client';
 
+import BaseEntity from './BaseEntity';
 
 /**
  * This DisplayName component can use the full Entity instance if you have it.
@@ -14,9 +15,11 @@ import {getAppUsername, User} from '@nti/web-client';
  * likely, if its a link, or something, use the corresponding Component,
  * do not roll your own.
  */
-export default class DisplayName extends React.Component {
+export default class DisplayName extends BaseEntity {
 
 	static propTypes = {
+		...BaseEntity.propTypes,
+
 		className: PropTypes.string,
 
 		localeKey: PropTypes.oneOfType([
@@ -53,63 +56,36 @@ export default class DisplayName extends React.Component {
 
 	constructor (props) {
 		super(props);
-		this.state = {
-			displayName: ''
-		};
-	}
-
-
-	componentDidMount () { this.fillIn(); }
-
-	componentWillReceiveProps (nextProps) {
-		const {entity} = this.props;
-		if (entity !== nextProps.entity) {
-			this.fillIn(nextProps);
-		}
-	}
-
-	componentWillUnmount () {
-		this.unmounted = true;
-		this.setState = () => {};
-	}
-
-
-	fillIn (props = this.props) {
-		const appuser = getAppUsername();
-		const {usePronoun} = props;
-		const task = Date.now();
-
-		const set = state => {
-			if (this.task === task) {
-				this.setState(state);
-			}
-		};
-
-		this.task = task;
-		User.resolve(props)
-			.then(
-				entity => {
-					const displayName = (usePronoun && entity.getID() === appuser)
-						? (typeof usePronoun === 'string') ? usePronoun : 'You'
-						: entity.displayName;
-
-					const { generalName } = entity;
-
-					set({ displayName, generalName });
-				},
-				()=> set({ failed: true, displayName: 'Unknown' })
-			);
-
+		this.state.displayName = '';
 	}
 
 
 	render () {
+		const appuser = getAppUsername();
 		const {
-			props: {className, entity, localeKey, tag, useGeneralName,...otherProps},
-			state: {displayName, generalName}
+			props: {
+				className,
+				localeKey,
+				tag,
+				usePronoun,
+				useGeneralName,
+				...otherProps
+			},
+			state: {
+				entity
+			}
 		} = this;
-
 		const Tag = tag || (localeKey ? 'address' : 'span');
+
+		if (!entity) {
+			return null;
+		}
+
+		const { generalName } = entity;
+		const displayName = (usePronoun && entity.getID() === appuser)
+			? (typeof usePronoun === 'string') ? usePronoun : 'You'
+			: entity.displayName;
+
 		let name = (useGeneralName && generalName) || displayName;
 
 		const props = {
@@ -119,7 +95,9 @@ export default class DisplayName extends React.Component {
 			'data-for': User.getDebugUsernameString(entity)
 		};
 
-		delete props.usePronoun;
+		delete props.entity;
+		delete props.entityId;
+
 
 		if (localeKey) {
 			const innerTag = Tag === 'a' ? 'span' : 'a';

@@ -5,15 +5,19 @@ import {User} from '@nti/web-client';
 
 import {DataURIs} from '../constants';
 
+import BaseEntity from './BaseEntity';
+
 const {BLANK_AVATAR, BLANK_GROUP_AVATAR} = DataURIs;
 
 const DEFAULT = { entity: {avatarURL: BLANK_AVATAR }};
 const DEFAULT_GROUP = { entity: {avatarURL: BLANK_GROUP_AVATAR }};
 
 
-export default class Avatar extends React.Component {
+export default class Avatar extends BaseEntity {
 
 	static propTypes = {
+		...BaseEntity.propTypes,
+
 		entity: PropTypes.oneOfType([
 			PropTypes.object,
 			PropTypes.string
@@ -53,48 +57,6 @@ export default class Avatar extends React.Component {
 	}
 
 
-	state = {}
-
-
-	componentDidMount () {
-		this.fillIn();
-	}
-
-
-	componentWillReceiveProps (nextProps) {
-		if (this.props.entity !== nextProps.entity) {
-			this.fillIn(nextProps);
-		}
-	}
-
-	componentWillUnmount () {
-		this.unmounted = true;
-		this.setState = () => {};
-	}
-
-
-	fillIn (props = this.props) {
-
-		const task = Date.now();
-
-		const set = state => {
-			if (this.task === task) {
-				this.setState(state);
-			}
-		};
-
-		this.task = task;
-		set({loading: true});
-		User.resolve(props)
-			.catch(() => DEFAULT)
-			.then(x => set({
-				entity: x,
-				color: Avatar.getColorClass(x),
-				loading: false
-			}));
-	}
-
-
 	isGroup () {
 		return /\..*(friendslist|community)/i.test((this.state.entity || {}).MimeType);
 	}
@@ -114,11 +76,12 @@ export default class Avatar extends React.Component {
 
 
 	render () {
-		const {loading, entity, color} = this.state;
+		const {entity} = this.state;
 		const {className, ...props} = this.props;
 
-		if (loading) { return null; }
+		if (!entity) { return null; }
 
+		const color = Avatar.getColorClass(entity);
 		const {avatarURL, initials, displayName} = entity || {};
 
 		delete props.entity;
@@ -130,8 +93,6 @@ export default class Avatar extends React.Component {
 			alt: 'Avatar for ' + displayName,
 			className: cx('avatar', color, className)
 		};
-
-		delete childProps.entity;
 
 		return avatarURL ? (
 			<img {...childProps} src={avatarURL} onError={this.setUnknown}/>
