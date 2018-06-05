@@ -54,12 +54,6 @@ export default class DisplayName extends BaseEntity {
 	}
 
 
-	constructor (props) {
-		super(props);
-		this.state.displayName = '';
-	}
-
-
 	render () {
 		const appuser = getAppUsername();
 		const {
