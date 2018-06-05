@@ -16,7 +16,7 @@ export default class BaseEntity extends React.Component {
 			PropTypes.string
 		]).isRequired,
 
-		entityId: MorePropTypes.deprecated()
+		entityId: MorePropTypes.deprecated
 	}
 
 	static getDerivedStateFromProps ({entity}, state) {
