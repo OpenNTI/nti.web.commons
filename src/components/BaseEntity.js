@@ -25,8 +25,7 @@ export default class BaseEntity extends React.Component {
 
 	state = {}
 
-	constructor (props) {
-		super(props);
+	componentDidMount () {
 		this.fillIn();
 	}
 
