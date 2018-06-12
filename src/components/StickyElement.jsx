@@ -32,7 +32,7 @@ export default class Sticky extends React.Component {
 	render () {
 		const { children, topOffset:offsetProp } = this.props;
 		const { stickyTopOffset } = this.context;
-		const { offset, topOffset } = this.getOffset((stickyTopOffset || 0) + offsetProp);
+		const { offset, topOffset } = this.getOffset((stickyTopOffset || 0) + (offsetProp || 0));
 		const child = React.Children.only(children);
 
 		return (
