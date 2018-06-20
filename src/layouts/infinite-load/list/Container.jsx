@@ -6,7 +6,7 @@ import {Events} from '@nti/lib-commons';
 import ChildHeightMonitor from '../ChildHeightMonitor';
 import {initPageState, updatePageState, fixPageState} from '../utils';
 
-const pageScrollingElement = document ? document.scrollingElement || document.documentElement : null;
+const pageScrollingElement = typeof document !== 'undefined' && document ? document.scrollingElement || document.documentElement : null;
 
 
 export default class InifiniteLoadList extends React.Component {
