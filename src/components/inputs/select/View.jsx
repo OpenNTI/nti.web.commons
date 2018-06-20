@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
+import {Triggered} from '../../../flyout';
 import Text from '../Text';
 
 import Option from './Option';
@@ -25,6 +26,7 @@ export default class SelectInput extends React.Component {
 			PropTypes.number
 		]),
 		className: PropTypes.string,
+		optionsClassName: PropTypes.string,
 		onChange: PropTypes.func,
 		children: PropTypes.node,
 		placeholder: PropTypes.string,
@@ -235,13 +237,13 @@ export default class SelectInput extends React.Component {
 
 
 	onSearchableInputChange = (value) => {
-		const {options, selectedIndex} = this.state;
-		const selectedOption = options[selectedIndex];
+		const {options} = this.state;
+		// const selectedOption = options[selectedIndex];
 
-		if (selectedOption && !optionMatchesTerm(selectedOption, value)) {
-			this.selectOption(null);
-			value = value.charAt(value.length - 1);
-		}
+		// if (selectedOption && !optionMatchesTerm(selectedOption, value)) {
+		// 	this.selectOption(null);
+		// 	value = value.charAt(value.length - 1);
+		// }
 
 		const newActive = options.reduce((acc, option) => {
 			if (optionMatchesTerm(option, value)) {
@@ -261,7 +263,7 @@ export default class SelectInput extends React.Component {
 
 
 	render () {
-		const {disabled, className, searchable} = this.props;
+		const {disabled, className, searchable, optionsClassName} = this.props;
 		const {isOpen, activeOptions, selectedIndex, focusedIndex, focused} = this.state;
 
 		return (
@@ -269,32 +271,39 @@ export default class SelectInput extends React.Component {
 				className={cx('nti-select-input', className, {open: isOpen, disabled, searchable, focused})}
 				role="listbox"
 			>
-				{this.renderLabel()}
-				<ul className="options">
-					{activeOptions && activeOptions.map((option, index) => {
-						if (option.type !== Option) { throw new Error('Children of select must be an option'); }
+				<Triggered
+					trigger={this.renderLabel()}
+					verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
+					horizontalAlign={Triggered.ALIGNMENTS.LEFT_OR_RIGHT}
+					sizing={Triggered.SIZES.MATCH_SIDE}
+					open={isOpen}
+				>
+					<ul className={cx('nti-select-input-options', optionsClassName)}>
+						{activeOptions && activeOptions.map((option, index) => {
+							if (option.type !== Option) { throw new Error('Children of select must be an option'); }
 
-						const optionCmp = React.cloneElement(option, {
-							index,
-							onClick: this.selectOption,
-							selected: selectedIndex === index,
-							focused: focusedIndex === index
-						});
+							const optionCmp = React.cloneElement(option, {
+								index,
+								onClick: this.selectOption,
+								selected: selectedIndex === index,
+								focused: focusedIndex === index
+							});
 
-						return (
-							<li key={index}>
-								{optionCmp}
+							return (
+								<li key={index}>
+									{optionCmp}
+								</li>
+							);
+						})}
+						{searchable && activeOptions && activeOptions.length === 0 && (
+							<li>
+								<Option display>
+									{t('emptySearch')}
+								</Option>
 							</li>
-						);
-					})}
-					{searchable && activeOptions && activeOptions.length === 0 && (
-						<li>
-							<Option display>
-								{t('emptySearch')}
-							</Option>
-						</li>
-					)}
-				</ul>
+						)}
+					</ul>
+				</Triggered>
 			</div>
 		);
 	}

@@ -4,39 +4,11 @@
 	position: relative;
 	display: inline-block;
 
-	&.open {
-		& > ul.options {
-			display: block;
-		}
-	}
-
 	&.focused {
 		.select-label .nti-text-input {
 			border-color: $primary-blue;
 		}
 	}
-
-	& > ul.options {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		position: absolute;
-		width: 100%;
-		top: calc(100% - 1px);
-		left: 0;
-		background: white;
-		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.1);
-		border: 1px solid $border-grey-light;
-		z-index: 99;
-		backface-visibility: hidden;
-
-		display: none;
-
-		li {
-			border-bottom: 1px solid $border-grey-light;
-		}
-	}
-
 
 	.select-label {
 		border-radius: 2px;
@@ -69,7 +41,8 @@
 		.nti-text-input {
 			background-color: white;
 			width: 100%;
-			padding: 0 2rem 0 0.625rem
+			padding: 0 2rem 0 0.625rem;
+			display: block;
 		}
 
 		.selected-option, .placeholder {
@@ -115,5 +88,24 @@
 				right: 1.875rem;
 			}
 		}
+	}
+}
+
+ul.nti-select-input-options {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: absolute;
+	width: 100%;
+	top: calc(100% - 1px);
+	left: 0;
+	background: white;
+	box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.1);
+	border: 1px solid $border-grey-light;
+	z-index: 99;
+	backface-visibility: hidden;
+
+	li {
+		border-bottom: 1px solid $border-grey-light;
 	}
 }

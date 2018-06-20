@@ -26,6 +26,7 @@ import {
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
+	ALIGN_LEFT_OR_RIGHT,
 
 	MATCH_SIDE
 } from './Constants';
@@ -164,7 +165,8 @@ export default class Flyout extends React.Component {
 		BOTTOM: ALIGN_BOTTOM,
 		LEFT: ALIGN_LEFT,
 		CENTER: ALIGN_CENTER,
-		RIGHT: ALIGN_RIGHT
+		RIGHT: ALIGN_RIGHT,
+		LEFT_OR_RIGHT: ALIGN_LEFT_OR_RIGHT
 	}
 
 	static SIZES = {
@@ -185,11 +187,14 @@ export default class Flyout extends React.Component {
 		afterAlign: PropTypes.func,
 		onDismiss: PropTypes.func,
 		arrow: PropTypes.bool,
+		dark: PropTypes.bool,
+
 		hover: PropTypes.oneOfType([
 			PropTypes.bool,
 			PropTypes.object
 		]),
-		dark: PropTypes.bool
+
+		open: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -257,21 +262,30 @@ export default class Flyout extends React.Component {
 
 
 	componentWillReceiveProps (nextProps) {
-		if (nextProps.className !== this.props.className) {
-			this.fly.className = cx('fly-wrapper', nextProps.className);
-		}
-
-		if (nextProps.trigger !== this.props.trigger) {
-			delete this.warnedTriggerType;
-		}
 	}
 
 
 	componentDidUpdate (prevProps, prevState) {
-		const {props: {onDismiss}, state: {open}} = this;
+		const {props: {onDismiss, className, open:controlledOpen}, state: {open}, fly} = this;
 		const {open: wasOpen} = prevState;
 
-		if (open && this.flyout) {
+		const openInProps = controlledOpen != null;
+		const openInPrev = prevProps.open != null;
+
+		if (openInProps !== openInPrev) {
+			// eslint-disable-next-line no-console
+			console.warn('Flyout was moved from controlled to uncontrolled or vice versa.');
+		}
+
+		if (prevProps.className !== className) {
+			fly.className = cx('fly-wrapper', className);
+		}
+
+		if (prevProps.trigger !== this.props.trigger) {
+			delete this.warnedTriggerType;
+		}
+
+		if ((open || controlledOpen) && this.flyout) {
 			const prev = this.flyoutSize;
 			const {offsetWidth: width, offsetHeight: height} = this.flyout;
 			this.flyoutSize = {width, height};
@@ -516,9 +530,10 @@ export default class Flyout extends React.Component {
 
 	render () {
 		const hover = this.isHover();
-		const {open} = this.state;
-		let {trigger: Trigger, ...props} = this.props;
+		const {open:stateOpen} = this.state;
+		let {trigger: Trigger, open:controlledOpen, ...props} = this.props;
 		let overrides = {};
+		const open = stateOpen || controlledOpen;
 
 		delete props.children;
 		delete props.verticalAlign;
@@ -533,18 +548,21 @@ export default class Flyout extends React.Component {
 		delete props.arrow;
 		delete props.hover;
 
-		if (hover) {
-			overrides.onMouseEnter = this.startShow;
-			overrides.onMouseLeave = this.startHide;
-		} else {
-			overrides.onClick = (e) => {
-				if (Trigger && Trigger.props && Trigger.props.onClick) {
-					Trigger.props.onClick(e);
-				}
+		if (controlledOpen == null) {
+			if (hover) {
+				overrides.onMouseEnter = this.startShow;
+				overrides.onMouseLeave = this.startHide;
+			} else {
+				overrides.onClick = (e) => {
+					if (Trigger && Trigger.props && Trigger.props.onClick) {
+						Trigger.props.onClick(e);
+					}
 
-				this.onToggle(e);
-			};
+					this.onToggle(e);
+				};
+			}
 		}
+
 
 		if (!Trigger) {
 			Trigger = ( <button>Trigger</button> );
