@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -26,6 +27,9 @@ import {
 	getInnerStylesForAlignment,
 	getAlignmentClass
 } from './utils';
+
+const {createElement: ce} = global.document || {};
+const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
 
 function getRelativeRect (elementRect, parentRect) {
 	const top = elementRect.top - parentRect.top;
@@ -55,9 +59,34 @@ function getAlignmentInfoForParent (alignTo, parent) {
 }
 
 
-function getAlignmentInfoForViewport () {
-	//TODO: fill this in from Triggered's align once its is set up to use this component
-	return {};
+function getAlignmentInfoForViewport (el) {
+	const offsetParent = e => e && e.offsetParent;
+	const parentNode = e => e && e.parentNode && e.parentNode.tagName !== 'BODY' && e.parentNode;
+
+	const offsetParents = e => offsetParent(e) ? [e].concat(offsetParents(offsetParent(e))) : [e];
+	const parentNodes = e => parentNode(e) ? [e].concat(parentNodes(parentNode(e))) : [e];
+
+	const scrollSum = (a, e) => (a.top += e.scrollTop, a.left += e.scrollLeft, a);
+	const offsetSum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
+
+	const offset = offsetParents(el).reduce(offsetSum, {top: 0, left: 0});
+	const scrolls = parentNodes(el).reduce(scrollSum, {top: 0, left: 0});
+	const tl = {
+		top: offset.top - scrolls.top,
+		left: offset.left - scrolls.left
+	};
+
+	const sz = {
+		width: el.offsetWidth,
+		height: el.offsetHeight
+	};
+
+	return {
+		...tl,
+		...sz,
+		right: tl.left + sz.width,
+		bottom: tl.top + sz.height
+	};
 }
 
 
@@ -121,6 +150,22 @@ export default class AlignedFlyout extends React.Component {
 
 
 	state = {alignment: null, visible: false}
+
+	constructor (props) {
+		super(props);
+
+		this.fly = makeDOM({className: cx('fly-wrapper', props.className)});
+	}
+
+	componentDidMount () {
+		this.mounted = true;
+		document.body.appendChild(this.fly);
+	}
+
+	componentWillUnmount () {
+		this.mounted = false;
+		document.body.removeChild(this.fly);
+	}
 
 
 	componentDidUpdate (oldProps) {
@@ -201,7 +246,7 @@ export default class AlignedFlyout extends React.Component {
 		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
 		const cls = cx('aligned-flyout', className, getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign), {arrow, dark});
 
-		return (
+		const flyout = (
 			<div className={cls} ref={this.attachFlyoutRef} style={outerStyle}>
 				{arrow && <div className="flyout-arrow" />}
 				<div className="flyout-inner" style={innerStyle}>
@@ -209,5 +254,7 @@ export default class AlignedFlyout extends React.Component {
 				</div>
 			</div>
 		);
+
+		return ReactDOM.createPortal(flyout, this.fly);
 	}
 }
