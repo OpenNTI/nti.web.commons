@@ -72,12 +72,12 @@ function moveToStart (e, state) {
 
 function handleEnter (e, state) {
 	stop(e);
-	const {focusedIndex} = state;
+	const {focusedIndex, activeOptions} = state;
 
 	return {
 		...state,
 		isOpen: false,
-		selectedIndex: focusedIndex
+		selectedOption: activeOptions[focusedIndex]
 	};
 }
 

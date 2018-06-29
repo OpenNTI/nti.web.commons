@@ -76,12 +76,14 @@ export default class SelectInput extends React.Component {
 		const {focusedIndex} = this.state;
 		const options = React.Children.toArray(children);
 
+		let selectedOption = null;
 		let selectedIndex = -1;
 
 		for (let i = 0; i < options.length; i++) {
 			const option = options[i];
 
 			if (getValueForOption(option) === value) {
+				selectedOption = option;
 				selectedIndex = i;
 				break;
 			}
@@ -90,7 +92,7 @@ export default class SelectInput extends React.Component {
 		this.setState({
 			options,
 			activeOptions: options,
-			selectedIndex,
+			selectedOption,
 			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex
 		});
 	}
@@ -118,12 +120,12 @@ export default class SelectInput extends React.Component {
 
 	closeMenu () {
 		this.closeMenuTimeout = setTimeout(() => {
-			const {isOpen, selectedIndex} = this.state;
+			const {isOpen, selectedOption, activeOptions} = this.state;
 
 			if (isOpen) {
 				this.setState({
 					isOpen: false,
-					focusedIndex: selectedIndex
+					focusedIndex: activeOptions.indexOf(selectedOption)
 				});
 			}
 		}, 300);
@@ -189,12 +191,12 @@ export default class SelectInput extends React.Component {
 
 
 	onInputKeyDown = (e) => {
-		const {selectedIndex:oldSelected} = this.state;
+		const {selectedOption:oldSelected} = this.state;
 		const newState = keyDownStateModifier(e, this.state);
-		const {selectedIndex:newSelected, activeOptions} = newState;
+		const {selectedOption:newSelected} = newState;
 
 		if (oldSelected !== newSelected) {
-			this.selectOption(getValueForOption(activeOptions[newSelected]));
+			this.selectOption(getValueForOption(newSelected));
 		}
 
 		this.setState(newState);
@@ -264,7 +266,7 @@ export default class SelectInput extends React.Component {
 
 	render () {
 		const {disabled, className, searchable, optionsClassName} = this.props;
-		const {isOpen, activeOptions, selectedIndex, focusedIndex, focused} = this.state;
+		const {isOpen, activeOptions, selectedOption, focusedIndex, focused} = this.state;
 
 		return (
 			<div
@@ -285,7 +287,7 @@ export default class SelectInput extends React.Component {
 							const optionCmp = React.cloneElement(option, {
 								index,
 								onClick: this.selectOption,
-								selected: selectedIndex === index,
+								selected: selectedOption === option,
 								focused: focusedIndex === index
 							});
 
@@ -311,8 +313,7 @@ export default class SelectInput extends React.Component {
 
 	renderLabel () {
 		const {searchable, placeholder} = this.props;
-		const {activeOptions, selectedIndex, inputValue, focused} = this.state;
-		const selectedOption = activeOptions[selectedIndex];
+		const {selectedOption, inputValue, focused} = this.state;
 
 		return (
 			<div className={cx('select-label', {searchable, 'has-selected': selectedOption, focused})}>
