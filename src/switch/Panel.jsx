@@ -44,6 +44,8 @@ export default class SwitchPanel extends React.Component {
 				return child;
 			}
 		}
+
+		return null;
 	}
 
 
