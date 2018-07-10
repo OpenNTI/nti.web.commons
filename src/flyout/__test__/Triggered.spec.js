@@ -45,10 +45,12 @@ describe('Triggered Flyout', () => {
 	}
 
 	beforeAll(()=> {
-		jest.clearAllMocks();
+		document.scrollingElement = window; //jest's jsdom env doesn't define this
+		jest.restoreAllMocks();
 	});
 
 	afterAll(()=> {
+		delete document.scrollingElement;
 		ReactDOM.unmountComponentAtNode(container);
 		document.body.removeChild(container);
 	});
