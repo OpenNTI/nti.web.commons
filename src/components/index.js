@@ -64,6 +64,7 @@ export Radio from './Radio';
 export RadioGroup from './RadioGroup';
 export RemoveButton from './RemoveButton';
 export Report from './Report';
+export Resizable from './Resizable';
 export ResourceNotFound from './ResourceNotFound';
 export Scroller from './Scroller';
 export ScrollTrigger from './ScrollTrigger';

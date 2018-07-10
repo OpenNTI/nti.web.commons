@@ -1,0 +1,44 @@
+.resize-box {
+	position: relative;
+	border-radius: 4px;
+	overflow: hidden;
+	min-height: 250;
+	min-width: 250;
+	border: 1px solid #d9d9d9;
+	background: white;
+
+	.resize-control {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: 0;
+			height: 0;
+			border-bottom: 20px solid grey;
+			border-left: 20px solid transparent;
+			touch-action: none;
+	}
+
+	.resize-content {
+		overflow: auto;
+		height: calc(100% - 50px);
+		width: 100%;
+	}
+
+	.resize-header {
+		height: 50px;
+		border-bottom: 1px solid #dddddd;
+		padding-left: 1rem;
+		box-sizing: border-box;
+		color: #494949;
+		font: normal 400 1.5em/1.5 "Open Sans", sans-serif;
+		line-height: 50px;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	.resize-close {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		cursor: pointer;
+	}
+}
