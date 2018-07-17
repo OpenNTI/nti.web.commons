@@ -19,7 +19,7 @@
 		height: rem-calc(34px);
 		position: relative;
 
-		&.has-selected, &:not(.searchable) {
+		&:not(.searchable), &:not(.focused) {
 			.nti-text-input {
 				text-indent: -9999px;
 			}
@@ -32,6 +32,12 @@
 		}
 
 		&.searchable:not(.has-selected) {
+			.selected-option {
+				display: none;
+			}
+		}
+
+		&.searchable.focused {
 			.selected-option {
 				display: none;
 			}

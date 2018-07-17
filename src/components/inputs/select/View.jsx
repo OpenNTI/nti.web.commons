@@ -17,6 +17,10 @@ const t = scoped('common.components.inputs.select.View', {
 	emptySearch: 'No Results Found'
 });
 
+const SCROLL_TO_OPTION = Symbol('scroll to option');
+const SCROLL_LIST_TO_OPTION = Symbol('scroll list to option');
+const SCROLL_WINDOW_TO_OPTION = Symbol('scroll window to option');
+
 export default class SelectInput extends React.Component {
 	static Option = Option
 
@@ -44,6 +48,34 @@ export default class SelectInput extends React.Component {
 
 
 	attachLabelInputRef = x => this.input = x
+	attachOptionRef = () => {}
+
+	attachOptionListRef = (list) => {
+		this.optionList = list;
+
+		this[SCROLL_TO_OPTION]();
+	}
+
+	attachSelectedRef = (selected) => {
+		const changed = this.selectedOption !== selected;
+
+		this.selectedOption = selected;
+
+		if (changed) {
+			this[SCROLL_TO_OPTION]();
+		}
+	}
+
+
+	attachFocusedRef = (focused) => {
+		const changed = this.focusedOption !== focused;
+
+		this.focusedOption = focused;
+
+		if (changed) {
+			this[SCROLL_TO_OPTION]();
+		}
+	}
 
 
 	state = {
@@ -105,6 +137,46 @@ export default class SelectInput extends React.Component {
 	}
 
 
+	[SCROLL_TO_OPTION] () {
+		const option = this.focusedOption || this.selectedOption;
+		const {optionList} = this;
+
+		if (!option || !optionList) { return null; }
+
+
+		if (optionList.clientHeight < optionList.scrollHeight) {
+			this[SCROLL_LIST_TO_OPTION](optionList, option);
+		} else {
+			this[SCROLL_WINDOW_TO_OPTION](option);
+		}
+	}
+
+
+	[SCROLL_LIST_TO_OPTION] (optionList, option) {
+		const listRect = optionList.getBoundingClientRect();
+		const optionRect = option.getBoundingClientRect();
+
+		const listHeight = optionList.clientHeight;
+		const top = optionRect.top - listRect.top;
+		const bottom = top + optionRect.height;
+
+		let newTop = optionList.scrollTop;
+
+		if (bottom > listHeight) {
+			newTop = bottom - listHeight + newTop;
+		} else if (top < 0) {
+			newTop = newTop + top;
+		}
+
+		optionList.scrollTop = newTop;
+	}
+
+
+	[SCROLL_WINDOW_TO_OPTION] (option) {
+		//TODO: fill this out
+	}
+
+
 	openMenu () {
 		const {isOpen} = this.state;
 
@@ -139,7 +211,7 @@ export default class SelectInput extends React.Component {
 			onChange(value);
 		}
 
-		this.focus();
+		// this.focus();
 		this.closeMenu();
 
 		this.setState({
@@ -280,19 +352,28 @@ export default class SelectInput extends React.Component {
 					sizing={Triggered.SIZES.MATCH_SIDE}
 					open={isOpen}
 				>
-					<ul className={cx('nti-select-input-options', optionsClassName)}>
+					<ul className={cx('nti-select-input-options', optionsClassName)} ref={this.attachOptionListRef}>
 						{activeOptions && activeOptions.map((option, index) => {
 							if (option.type !== Option) { throw new Error('Children of select must be an option'); }
+
+							const selected = selectedOption === option;
+							const isFocused = focusedIndex === index;
+
+							const ref = selected ?
+								this.attachSelectedRef :
+								isFocused ?
+									this.attachFocusedRef :
+									this.attachOptionRef;
 
 							const optionCmp = React.cloneElement(option, {
 								index,
 								onClick: this.selectOption,
-								selected: selectedOption === option,
-								focused: focusedIndex === index
+								selected,
+								focused: isFocused
 							});
 
 							return (
-								<li key={index}>
+								<li key={index} ref={ref}>
 									{optionCmp}
 								</li>
 							);
