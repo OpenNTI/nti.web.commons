@@ -28,9 +28,9 @@ export default class ControlBarView extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {visible:nextVisible} = nextProps;
-		const {visible:currentVisible} = this.props;
+	componentDidUpdate (prevProps) {
+		const {visible:nextVisible} = this.props;
+		const {visible:currentVisible} = prevProps;
 
 		if (currentVisible !== nextVisible) {
 			this.setState({

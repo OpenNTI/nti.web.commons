@@ -25,14 +25,14 @@ export default class SyncHeightView extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {group:newGroup} = nextProps;
-		const {group:oldGroup} = this.props;
+	componentDidUpdate (prevProps) {
+		const {group:newGroup} = this.props;
+		const {group:oldGroup} = prevProps;
 
 		if (newGroup !== oldGroup) {
-			this.addListener(nextProps);
+			this.addListener(this.props);
 			this.updateHeight();
-			this.setState(this.getStateForGroup(nextProps));
+			this.setState(this.getStateForGroup(this.props));
 		}
 	}
 

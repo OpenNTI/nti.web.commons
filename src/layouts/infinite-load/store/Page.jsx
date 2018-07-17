@@ -16,13 +16,13 @@ export default class InfiniteLoadStorePage extends React.Component {
 
 	state = {loading: true}
 
-	componentWillReceiveProps (nextProps) {
-		const {pageIndex:newIndex} = nextProps;
-		const {pageIndex:oldIndex} = this.props;
+	componentDidUpdate (prevProps) {
+		const {pageIndex:newIndex} = this.props;
+		const {pageIndex:oldIndex} = prevProps;
 
 		if (newIndex !== oldIndex) {
-			this.cleanupFor(this.props);
-			this.setupFor(nextProps);
+			this.cleanupFor(prevProps);
+			this.setupFor(this.props);
 		}
 	}
 

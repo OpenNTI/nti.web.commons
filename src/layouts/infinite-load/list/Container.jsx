@@ -95,13 +95,13 @@ export default class InifiniteLoadList extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {totalPages: newTotal} = nextProps;
-		const {totalPages: oldTotal} = this.props;
+	componentDidUpdate (prevProps) {
+		const {totalPages: newTotal} = this.props;
+		const {totalPages: oldTotal} = prevProps;
 
 		if (newTotal !== oldTotal) {
 			this.pageHeights = {};
-			this.setupFor(nextProps);
+			this.setupFor(this.props);
 		}
 	}
 

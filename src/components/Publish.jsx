@@ -141,9 +141,9 @@ export default class Publish extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.value !== this.props.value) {
-			this.setupValue(nextProps);
+	componentDidUpdate (prevProps) {
+		if (prevProps.value !== this.props.value) {
+			this.setupValue();
 		}
 	}
 

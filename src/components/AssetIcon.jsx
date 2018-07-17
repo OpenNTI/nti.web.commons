@@ -34,8 +34,8 @@ export default class Icon extends React.Component {
 		this.setup(props);
 	}
 
-	componentWillReceiveProps (nextProps) {
-		const prevProps = this.props;
+	componentDidUpdate (prevProps) {
+		const nextProps = this.props;
 
 		if (nextProps.href !== prevProps.href || nextProps.mimeType !== prevProps.mimeType) {
 			this.setup(nextProps);

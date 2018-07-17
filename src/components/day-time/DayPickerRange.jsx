@@ -35,10 +35,11 @@ export default class DayPickerRange extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.value !== this.props.value) {
+	componentDidUpdate ({value: oldValue}) {
+		const {value} = this.props;
+		if (oldValue !== value) {
 			this.setState({
-				value: nextProps.value
+				value
 			});
 		}
 	}

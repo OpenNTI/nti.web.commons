@@ -43,11 +43,10 @@ export default class DayPicker extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.value !== this.props.value) {
-			this.setState({
-				value: nextProps.value
-			});
+	componentDidUpdate ({value: oldValue}) {
+		const {value} = this.props;
+		if (oldValue !== value) {
+			this.setState({ value });
 		}
 	}
 

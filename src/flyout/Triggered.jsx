@@ -261,10 +261,6 @@ export default class Flyout extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-	}
-
-
 	componentDidUpdate (prevProps, prevState) {
 		const {props: {onDismiss, className, open:controlledOpen}, state: {open}, fly} = this;
 		const {open: wasOpen} = prevState;

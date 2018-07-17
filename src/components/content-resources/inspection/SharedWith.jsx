@@ -44,9 +44,9 @@ export default class SharedWith extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.item !== this.props.item) {
-			this.load(nextProps);
+	componentDidUpdate (prevProps) {
+		if (prevProps.item !== this.props.item) {
+			this.load();
 		}
 	}
 

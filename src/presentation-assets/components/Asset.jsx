@@ -161,9 +161,9 @@ export default class Asset extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (this.getItem() !== this.getItem(nextProps) || this.props.type !== nextProps.type) {
-			this.setState(this.getStateFor(nextProps), () => {
+	componentDidUpdate (prevProps) {
+		if (this.getItem() !== this.getItem(prevProps) || this.props.type !== prevProps.type) {
+			this.setState(this.getStateFor(this.props), () => {
 				this.verifyImage();
 			});
 		}

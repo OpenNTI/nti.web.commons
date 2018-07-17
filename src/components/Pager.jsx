@@ -18,6 +18,8 @@ function buildHref (page, props, scope) {
 	return page && {href: ctx.makeHref(page.ref, false) + '/', title: page.title};
 }
 
+const get = (x, key) => x && x[key] ? {[key]: x[key]} : {};
+const getProps = x => ({ ...get(x, 'href'), ...get(x, 'title')});
 
 export default createReactClass({
 	mixins: [NavigatableMixin],
@@ -93,16 +95,6 @@ export default createReactClass({
 	attachDOMRef (x) {this.el = x;},
 
 
-	componentDidMount () {
-		this.setupLinks(this.props);
-	},
-
-
-	componentWillReceiveProps (props) {
-		this.setupLinks(props);
-	},
-
-
 	componentDidUpdate () {
 		const {el: dom} = this;
 		if (dom) {
@@ -113,42 +105,31 @@ export default createReactClass({
 	},
 
 
-	setupLinks (props) {
-		let pages, source = props.pageSource;
+	render () {
+		const {context: {isMobile}, props: {pageSource: source, current, root, position, ...props}} = this;
+		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile});
+
+		const pages = source && source.getPagesAround(current, root);
+		const page = pages ? pages.index + 1 : 0;
+		const total = pages ? pages.total : 0;
+
 		if (source) {
 			invariant(
 				!this.props.next && !this.props.prev,
 				'[Pager] A value was passed for `next` and/or `prev` as well as a `pageSource`. ' +
 				'The prop value will be honored over the state value derived from the pageSource.'
 			);
-
-			pages = source.getPagesAround(props.current, props.root);
-			this.setState({
-				page: pages.index + 1,
-				total: pages.total,
-				next: buildHref(pages.next, props, this),
-				prev: buildHref(pages.prev, props, this)
-			});
 		}
-	},
 
-
-	render () {
-		const {state} = this;
-		const {isMobile} = this.context;
-		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile});
-		let {props: {
-			position,
-			prev = state.prev || {},
-			next = state.next || {}
-		}} = this;
+		let {
+			prev = buildHref(pages.prev, this.props, this) || {},
+			next = buildHref(pages.next, this.props, this) || {},
+		} = props;
 
 		if (!prev.href && !next.href) {
 			return null;
 		}
 
-		let get = (x, key) => x && x[key] ? {[key]: x[key]} : {};
-		let getProps = x => Object.assign({}, get(x, 'href'), get(x, 'title'));
 
 		next = getProps(next);
 		prev = getProps(prev);
@@ -156,12 +137,12 @@ export default createReactClass({
 		return (position === 'bottom') ? (
 			<ul className="bottompager" ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
-				<li className="counts">{state.total > 1 && this.makeCounts() }</li>
+				<li className="counts">{total > 1 && this.makeCounts(page, total) }</li>
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
 			</ul>
 		) : (
 			<div className={cls} ref={this.attachDOMRef}>
-				{state.total > 1 && this.makeCounts() }
+				{total > 1 && this.makeCounts(page, total) }
 				<a className="prev" {...prev}/>
 				<a className="next" {...next}/>
 			</div>
@@ -169,10 +150,7 @@ export default createReactClass({
 	},
 
 
-	makeCounts () {
-		let s = this.state,
-			page = s.page,
-			total = s.total;
+	makeCounts (page, total) {
 		return (
 			<div className="counts">
 				<strong>{page}</strong> of <strong>{total}</strong>

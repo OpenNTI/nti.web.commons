@@ -14,9 +14,9 @@ export default class ErrorView extends React.Component {
 
 	setErrorCmpRef = x => this.errorCmp = x
 
-	componentWillReceiveProps (nextProps) {
-		const {error: newError} = nextProps;
-		const {error: oldError} = this.props;
+	componentDidUpdate (prevProps) {
+		const {error: newError} = this.props;
+		const {error: oldError} = prevProps;
 
 		if (newError !== oldError) {
 			this.addListener(newError);

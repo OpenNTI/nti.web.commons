@@ -4,29 +4,31 @@ import PropTypes from 'prop-types';
 import Radio from './Radio';
 
 export default class RadioGroup extends React.Component {
-	constructor (props) {
-		super(props);
-		this.setup();
-	}
 
 	static propTypes = {
 		name: PropTypes.string,
 		options: PropTypes.array,
 		value: PropTypes.string,
+		initialValue: PropTypes.string,
 		onChange: PropTypes.func
 	}
 
+	componentDidMount () {
+		this.setup();
+	}
 
-	componentWillReceiveProps (nextProps) {
-		this.setup(nextProps);
+	componentDidUpdate (prevProps) {
+		//FIXME: Honor controlled value pattern
+		if (this.props.initialValue !== prevProps.initialValue) {
+			this.setup();
+		}
 	}
 
 
 	setup (props = this.props) {
 		//eslint-disable-next-line react/no-direct-mutation-state
-		const setState = s => this.state ? this.setState(s) : (this.state = s);
 		const {initialValue} = props;
-		setState({
+		this.setState({
 			selected: initialValue
 		});
 	}
@@ -34,9 +36,7 @@ export default class RadioGroup extends React.Component {
 
 	onChange = (e) => {
 		const selected = e.target.value;
-		this.setState({
-			selected
-		});
+		this.setState({ selected });
 		if(this.props.onChange) {
 			this.props.onChange(selected);
 		}

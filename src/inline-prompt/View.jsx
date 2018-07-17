@@ -56,9 +56,9 @@ export default class InlinePrompt extends React.Component {
 		}
 	}
 
-	componentWillUpdate (nextProps) {
-		const {active} = nextProps;
-		const {active:isActive} = this.state;
+	componentDidUpdate (prevProps) {
+		const {active} = this.props;
+		const {active:isActive} = prevProps;
 
 		if (active && !isActive) {
 			this.activateModal();

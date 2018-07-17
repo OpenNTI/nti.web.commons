@@ -65,10 +65,10 @@ export default class TimePicker extends React.Component {
 		return time || (this.state || {}).value || ((allowEmpty && !force) ? void 0 : new Time());
 	}
 
-	componentWillReceiveProps (nextProps) {
-		if(nextProps.value !== this.props.value) {
+	componentDidUpdate (prevProps) {
+		if(prevProps.value !== this.props.value) {
 			this.setState({
-				value: this.getValue(false, nextProps)
+				value: this.getValue(false, this.props)
 			});
 		}
 	}

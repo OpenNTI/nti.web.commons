@@ -43,9 +43,9 @@ export default class DayTimeToggle extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.availableBeginning !== this.props.availableBeginning || nextProps.availableEnding !== this.props.availableEnding) {
-			this.setupValue(nextProps);
+	componentDidUpdate (prevProps) {
+		if (prevProps.availableBeginning !== this.props.availableBeginning || prevProps.availableEnding !== this.props.availableEnding) {
+			this.setupValue(this.props);
 		}
 	}
 

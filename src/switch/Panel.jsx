@@ -67,13 +67,13 @@ export default class SwitchPanel extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {active:currentActive} = this.props;
-		const {active:newActive} = nextProps;
+	componentDidUpdate (prevProps) {
+		const {active:prevActive} = prevProps;
+		const {active:nextActive} = this.props;
 
-		if (currentActive !== newActive) {
+		if (prevActive !== nextActive) {
 			this.setState({
-				active: newActive
+				active: nextActive
 			});
 		}
 	}

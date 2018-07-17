@@ -24,7 +24,8 @@ export default class ActiveStateSelector extends React.Component {
 		[unregister]: PropTypes.func
 	}
 
-	componentWillMount () {
+	constructor (props) {
+		super(props);
 		initPrivate(this, {items: []});
 	}
 
