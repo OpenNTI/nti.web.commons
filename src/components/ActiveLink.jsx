@@ -19,7 +19,7 @@ export default createReactClass({
 		children: PropTypes.any
 	},
 
-	componentWillMount () {
+	componentDidMount () {
 		console.warn('ActiveLink component is deprecated. Use ActiveState instead.'); //eslint-disable-line no-console
 	},
 

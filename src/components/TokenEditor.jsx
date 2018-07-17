@@ -96,6 +96,8 @@ export default class TokenEditor extends React.Component {
 				isValid: true // initially valid until invalid data is entered
 			}
 		};
+
+		this.initState();
 	}
 
 	cancelReset () {}
@@ -105,19 +107,14 @@ export default class TokenEditor extends React.Component {
 	}
 
 
-	componentWillMount () {
-		this.initState();
-	}
-
-
 	componentWillUnmount () {
 		this.cancel();
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.value !== this.props.value) {
-			this.initState(nextProps);
+	componentDidUpdate (prevProps) {
+		if (prevProps.value !== this.props.value) {
+			this.initState();
 			this.cancel();
 		}
 	}

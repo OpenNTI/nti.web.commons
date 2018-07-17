@@ -56,9 +56,9 @@ export default class ListTable extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {items:nextItems} = nextProps;
-		const {items:oldItems} = this.props;
+	componentDidUpdate (prevProps) {
+		const {items:nextItems} = this.props;
+		const {items:oldItems} = prevProps;
 		const {activeSortFn} = this.state;
 
 		if (nextItems !== oldItems) {

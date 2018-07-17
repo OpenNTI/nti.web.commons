@@ -20,14 +20,17 @@ export default class extends React.Component {
 		isOpen: false
 	};
 
-	componentWillMount () {
+	componentDidMount () {
 		let {value, options} = this.props;
 		this.setSelected(value || options[0].value, true);
 	}
 
-	componentWillReceiveProps (nextProps) {
-		let {value, options} = nextProps;
-		this.setSelected(value || options[0].value, true, nextProps);
+	componentDidUpdate (prevProps) {
+		let {value, options} = this.props;
+
+		if (value !== prevProps.value || options !== prevProps.options) {
+			this.setSelected(value || options[0].value, true);
+		}
 	}
 
 	setSelected = (value, silent, props = this.props) => {

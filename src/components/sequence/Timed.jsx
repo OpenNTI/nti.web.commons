@@ -19,17 +19,18 @@ export default class TimedSequence extends React.Component {
 
 	state = {}
 
-	componentWillMount () {
+	constructor (props) {
+		super(props);
 		this.setUpChildren();
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {children:nextChildren} = nextProps;
-		const {children:currentChildren} = this.props;
+	componentDidUpdate (prevProps) {
+		const {children:newChildren} = this.props;
+		const {children:oldChildren} = prevProps;
 
-		if (nextChildren !== currentChildren) {
-			this.setUpChildren(nextProps);
+		if (newChildren !== oldChildren) {
+			this.setUpChildren();
 		}
 	}
 

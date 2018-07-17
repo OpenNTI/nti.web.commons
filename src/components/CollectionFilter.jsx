@@ -92,14 +92,19 @@ export default class Filter extends React.Component {
 	}
 
 
-	componentWillMount () {
+	constructor (props) {
+		super(props);
 		this.readStore();
 		LocalStorage.addListener('change', this.onStorageChanged);
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		this.readStore(nextProps);
+	componentDidUpdate (prevProps) {
+		const propKeys = Object.keys(Filter.propTypes);
+
+		if (propKeys.some(x => this.props[x] !== prevProps[x])) {
+			this.readStore();
+		}
 	}
 
 

@@ -98,10 +98,10 @@ export default class BrowsableView extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
+	componentDidUpdate (prevProps) {
 		const {sourceID} = this.props;
-		if (sourceID !== nextProps.sourceID) {
-			this.setup(nextProps);
+		if (sourceID !== prevProps.sourceID) {
+			this.setup();
 		}
 	}
 

@@ -47,9 +47,9 @@ export default class extends React.Component {
 		this.setBodyBackground(imgUrl);
 	}
 
-	componentWillReceiveProps (nextProps) {
-		const {imgUrl} = nextProps;
-		if (imgUrl !== this.props.imgUrl) {
+	componentDidUpdate (prevProps) {
+		const {imgUrl} = this.props;
+		if (imgUrl !== prevProps.imgUrl) {
 			this.setBodyBackground(imgUrl);
 		}
 	}

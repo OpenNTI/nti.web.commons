@@ -59,11 +59,6 @@ export default class Entity extends React.Component {
 		if (item !== prev) {
 			prev.removeListener('rename', this.onBeginRename);
 			item.addListener('rename', this.onBeginRename);
-		}
-	}
-
-	componentWillReceiveProps (nextProps) {
-		if (this.props.item !== nextProps.item) {
 			//eslint-disable-next-line react/no-direct-mutation-state
 			this.setState(this.state = {});
 		}

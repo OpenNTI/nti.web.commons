@@ -29,8 +29,9 @@ export default class RemoteMountPoint extends React.Component {
 	}
 
 
-	componentWillMount () {
-		const {className, appendTo} = this.props;
+	constructor (props) {
+		super(props);
+		const {className, appendTo} = props;
 		this.mountPoint = createMountPoint(appendTo, className);
 	}
 

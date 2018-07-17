@@ -26,12 +26,12 @@ export default class InfiniteStoreLoad extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {store: newStore} = nextProps;
-		const {store: oldStore} = this.props;
+	componentDidUpdate (prevProps) {
+		const {store: newStore} = this.props;
+		const {store: oldStore} = prevProps;
 
 		if (newStore !== oldStore) {
-			this.setupFor(nextProps);
+			this.setupFor(this.props);
 		}
 	}
 

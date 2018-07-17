@@ -43,10 +43,12 @@ export default class InlineAssociations extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {item, scope} = nextProps;
+	componentDidUpdate (prevProps) {
+		const {item, scope} = this.props;
 
-		this.loadAssociations(item, scope);
+		if (prevProps.item !== item || prevProps.scope !== scope) {
+			this.loadAssociations(item, scope);
+		}
 	}
 
 

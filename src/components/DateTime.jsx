@@ -232,9 +232,7 @@ export default class DateTime extends React.Component {
 
 		text = (prefix || '') + text + (suffix || '');
 
-		const props = Object.assign({}, otherProps, {
-			dateTime: moment(date).format()
-		});
+		const props = { ...otherProps, dateTime: moment(date).format()};
 
 		return (<time {...props}>{text}</time>);
 	}

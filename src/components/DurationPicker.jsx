@@ -121,15 +121,15 @@ export default class DurationPicker extends React.Component {
 		};
 	}
 
-	componentWillReceiveProps (nextProps) {
-		const {value:nextValue} = nextProps;
-		const {value:oldValue} = this.props;
+	componentDidUpdate (prevProps) {
+		const {value:newValue} = this.props;
+		const {value:oldValue} = prevProps;
 
-		if (nextValue !== oldValue) {
+		if (newValue !== oldValue) {
 			this.setState({
-				days: getDays(nextValue),
-				hours: getHours(nextValue),
-				minutes: getMinutes(nextValue)
+				days: getDays(newValue),
+				hours: getHours(newValue),
+				minutes: getMinutes(newValue)
 			});
 		}
 	}

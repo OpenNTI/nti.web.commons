@@ -14,8 +14,8 @@ export default class UpdateNotice extends React.Component {
 	}
 
 
-	componentWillReceiveProps ({lastUpdated}) {
-		if (lastUpdated !== this.props.lastUpdated) {
+	componentDidUpdate ({lastUpdated}) {
+		if (this.state.hidden && lastUpdated !== this.props.lastUpdated) {
 			this.setState({hidden: false});
 		}
 	}

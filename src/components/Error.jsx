@@ -18,9 +18,9 @@ export default class extends React.Component {
 		this.log();
 	}
 
-	componentWillReceiveProps (props) {
+	componentDidUpdate (props) {
 		if (this.props.error !== props.error) {
-			this.log(props);
+			this.log(this.props);
 		}
 	}
 
