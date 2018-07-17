@@ -24,7 +24,7 @@ export default function DialogButtons (props) {
 						role="button"
 						key={label}
 						className={classes}
-						onClick={!disabled && onClick}>
+						onClick={disabled ? null : onClick}>
 						{label}
 					</div>
 				);
