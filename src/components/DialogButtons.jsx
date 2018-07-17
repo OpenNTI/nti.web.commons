@@ -13,8 +13,9 @@ export default function DialogButtons (props) {
 
 	return (
 		<div className={c}>
-			{buttons.map( ({label, onClick, className, ...buttonProps}, i) => {
+			{buttons.map( ({label, onClick, className, disabled, ...buttonProps}, i) => {
 				const classes = cx('button', className, {
+					disabled,
 					primary: i === buttons.length - 1,
 					secondary: i < buttons.length - 1
 				});
@@ -23,7 +24,7 @@ export default function DialogButtons (props) {
 						role="button"
 						key={label}
 						className={classes}
-						onClick={onClick}>
+						onClick={!disabled && onClick}>
 						{label}
 					</div>
 				);
