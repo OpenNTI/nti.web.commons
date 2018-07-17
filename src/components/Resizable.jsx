@@ -19,15 +19,13 @@ export default class Resizable extends React.Component {
 	constructor (props) {
 		super(props);
 
-		const { width, height } = props;
-
 		this.state = {
-			width,
-			height
+			width: this.props.width || 550,
+			height: this.props.height || 550
 		};
 
-		this.previousLeft = width;
-		this.previousRight = height;
+		this.previousLeft = this.state.width;
+		this.previousRight = this.state.height;
 	}
 
 	onDown = event => {
