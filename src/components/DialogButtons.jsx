@@ -19,7 +19,7 @@ export default function DialogButtons (props) {
 					primary: i === buttons.length - 1,
 					secondary: i < buttons.length - 1
 				});
-				let Button = tag || 'div';
+				let Button = tag || 'button';
 
 				return (
 					<Button {...buttonProps}
