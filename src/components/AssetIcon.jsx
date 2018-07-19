@@ -9,6 +9,7 @@ import {isNTIID} from '@nti/lib-ntiids';
 
 const CONTENT_TYPE = 'application/vnd.nextthought.content';
 const EXTERNAL_TYPE = 'application/vnd.nextthought.externallink';
+const EXTERNAL_TOOLS = ['application/vnd.nextthought.ltiexternaltoolasset'];
 
 export default class Icon extends React.Component {
 
@@ -44,7 +45,7 @@ export default class Icon extends React.Component {
 
 	setup (props = this.props) {
 		const fallback = !this.getBackgroundImage(props);
-		const ext = this.isContent(props) ? '' : this.getFileExtention(props);
+		const ext = this.isContent(props) && !this.isExternalTool(props) ? '' : this.getFileExtention(props);
 		const label = fallback && ext && !/^(www|bin)$/i.test(ext) ? ext : null;
 		const cls = fallback && cx('fallback', ext, {
 			'content-link': this.isContent(props),
@@ -66,6 +67,10 @@ export default class Icon extends React.Component {
 	isExternal (props = this.props) {
 		return this.getTypes(props).some(x => x === EXTERNAL_TYPE)
 			|| !isNTIID(props.href);
+	}
+
+	isExternalTool (props = this.props) {
+		return this.getTypes(props).some(x => EXTERNAL_TOOLS.includes(x));
 	}
 
 
@@ -92,7 +97,7 @@ export default class Icon extends React.Component {
 		const ext = types.reduce((a, x) => a || mime.extension(x), null);
 		const isPlatformType = types.some(x => /nextthought/i.test(x));
 
-		if (!ext && this.isExternal(props) && isPlatformType) {
+		if (!ext && (this.isExternal(props) || this.isExternalTool(props)) && isPlatformType) {
 			return 'www';
 		}
 

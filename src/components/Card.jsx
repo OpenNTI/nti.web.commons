@@ -172,7 +172,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 	getType () {
 		const {item} = this.props;
-		return [item.type, item.targetMimeType]
+		return [item.type || item.MimeType, item.targetMimeType]
 			.filter(x => x)
 			.reduce((a, b) => a.concat(b), []);
 	}
