@@ -97,7 +97,7 @@ export default class TokenEditor extends React.Component {
 			}
 		};
 
-		this.initState();
+		this.initState(props, x => Object.assign(this.state, x));
 	}
 
 	cancelReset () {}
@@ -120,8 +120,8 @@ export default class TokenEditor extends React.Component {
 	}
 
 
-	initState (props = this.props) {
-		this.setState({
+	initState (props = this.props, updater = x => this.setState(x)) {
+		updater({
 			inputValue: '',
 			values: [... new Set(props.value)]//dedupe
 		});
