@@ -16,13 +16,15 @@ export default class extends React.Component {
 		showSelectedOption: PropTypes.bool
 	};
 
-	state = {
-		isOpen: false
-	};
+	constructor (props) {
+		super(props);
 
-	componentDidMount () {
-		let {value, options} = this.props;
-		this.setSelected(value || options[0].value, true);
+		this.state = {
+			isOpen: false
+		};
+
+		const {value, options} = props;
+		this.setSelected(value || options[0].value, true, props, x => Object.assign(this.state, x));
 	}
 
 	componentDidUpdate (prevProps) {
@@ -33,10 +35,10 @@ export default class extends React.Component {
 		}
 	}
 
-	setSelected = (value, silent, props = this.props) => {
+	setSelected = (value, silent, props = this.props, updater = x => this.setState(x)) => {
 		let {options, onChange} = props;
 		let selectedOption = value ? options.find(option => option.value === value) : options[0];
-		this.setState({
+		updater({
 			selectedOption
 		});
 
