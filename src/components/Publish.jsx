@@ -10,7 +10,11 @@ import * as Flyout from '../flyout';
 import DateTime from './DateTime';
 import DayTimePicker from './day-time/DayTimePicker';
 import Radio from './Radio';
-import PublishTrigger from './PublishTrigger';
+import PublishTrigger, {getPublishState} from './PublishTrigger';
+
+export {
+	getPublishState
+};
 
 const logger = Logger.get('common:components:Publish');
 
@@ -50,7 +54,7 @@ const DEFAULT_TEXT = {
 };
 
 const tt = scoped('common.components.publish-controls', DEFAULT_TEXT);
-export const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
+
 const CHANGES = {
 	[PUBLISH_STATES.DRAFT]: true,
 	[PUBLISH_STATES.PUBLISH]: true,

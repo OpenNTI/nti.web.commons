@@ -152,6 +152,7 @@ export default class Chooser extends React.Component {
 		return (
 			<div className="content-resource-chooser">
 				<Browser sourceID={sourceID}
+					Chooser={Chooser}
 					accept={accept}
 					filter={filter}
 					onClose={this.onCancel}

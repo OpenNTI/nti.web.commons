@@ -6,7 +6,6 @@ import isIOS from '@nti/util-ios-version';
 import { declareCustomElement } from '@nti/lib-dom';
 
 import LockScroll from '../../components/LockScroll';
-import Manager from '../ModalManager';
 
 declareCustomElement('dialog');
 
@@ -17,6 +16,7 @@ const stopEvent = e => e.stopPropagation();
 export default class Modal extends React.Component {
 
 	static propTypes = {
+		Manager: PropTypes.object.isRequired,
 		onDismiss: PropTypes.func.isRequired,
 		children: PropTypes.node,
 		className: PropTypes.string,
@@ -46,13 +46,13 @@ export default class Modal extends React.Component {
 
 
 	componentDidMount () {
-		Manager.addUpdateListener(this.onManagerUpdate);
+		this.props.Manager.addUpdateListener(this.onManagerUpdate);
 		this.focus();
 	}
 
 
 	componentWillUnmount () {
-		Manager.removeUpdateListener(this.onManagerUpdate);
+		this.props.Manager.removeUpdateListener(this.onManagerUpdate);
 	}
 
 
@@ -98,7 +98,7 @@ export default class Modal extends React.Component {
 
 
 	render () {
-		const {children, className, tall} = this.props;
+		const {Manager, children, className, tall} = this.props;
 		const {safariFix} = this.state;
 		const hidden = Manager.isHidden(this);
 

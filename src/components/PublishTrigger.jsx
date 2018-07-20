@@ -6,7 +6,6 @@ import {scoped} from '@nti/lib-locale';
 import {PUBLISH_STATES} from '../constants';
 
 import DateTime from './DateTime';
-import {getPublishState} from './Publish';
 
 const DEFAULT_TEXT = {
 	publish: {
@@ -21,6 +20,8 @@ const DEFAULT_TEXT = {
 };
 
 const t = scoped('common.components.publish-controls.trigger', DEFAULT_TEXT);
+
+export const getPublishState = value => PUBLISH_STATES[value] || (value instanceof Date ? PUBLISH_STATES.SCHEDULE : null);
 
 export default class PublishTrigger extends React.PureComponent {
 	static propTypes = {

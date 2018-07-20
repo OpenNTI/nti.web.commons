@@ -128,6 +128,7 @@ export class ModalManager extends EventEmitter {
 	createModal (reference, render, setReference, dismiss, className, tall, closeOnMaskClick, isPortal, content, container) {
 		reference.portalRef = ReactDOM[render]((
 			<Modal
+				Manager={this}
 				ref={setReference}
 				onDismiss={dismiss}
 				className={className}

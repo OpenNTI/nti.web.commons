@@ -21,7 +21,6 @@ import ToolbarButton from '../panels/ToolbarButton';
 import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
 
 import BrowsableView from './BrowsableView';
-import Chooser from './Chooser';
 import ParentFolder from './ParentFolder';
 import FolderName from './FolderName';
 import Inspector from './Inspector';
@@ -68,6 +67,7 @@ const t = scoped('common.components.content-resources.browser', DEFAULT_TEXT);
 
 export default class ContentResourcesBrowser extends BrowsableView {
 	static propTypes = {
+		Chooser: PropTypes.object.isRequired,
 		accept: PropTypes.func,
 		filter: PropTypes.func,
 		sourceID: PropTypes.string,
@@ -163,8 +163,9 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			return;
 		}
 		this.setState({moving: true});
+		const {Chooser, sourceID} = this.props;
 		wait.on(
-			Chooser.show(this.props.sourceID, accept, filter, 'Move', true)
+			Chooser.show(sourceID, accept, filter, 'Move', true)
 				.then(folder => this.moveEntities(selected, folder))
 				.then(this.refresh, this.refresh)
 		)
