@@ -6,8 +6,6 @@ import {getViewportHeight, getScrollParent} from '@nti/lib-dom';
 const BUS = new EventEmitter();
 const GROUP_TO_STORE = {};
 
-const pageScrollingElement = getScrollParent();
-
 const GROUP = Symbol('Group');
 const ORDERED_COMPONENTS = Symbol('Ordered Component');
 const TRACKED_COMPONENTS = Symbol('Tracked Components');
@@ -143,26 +141,30 @@ export default class VisibleComponentTrackerStore {
 
 
 	startListening () {
-		if (!pageScrollingElement) { return; }
+		const scrollingElement = this.scrollingElement = this.scrollingElement || getScrollParent();
+
+		if (!scrollingElement) { return; }
 
 		this.stopListening();
 
 		if (Events.supportsPassive()) {
-			pageScrollingElement.addEventListener('scroll', this.onScroll, {passive: true});
+			scrollingElement.addEventListener('scroll', this.onScroll, {passive: true});
 		} else {
-			pageScrollingElement.addEventListener('scroll', this.onScroll);
+			scrollingElement.addEventListener('scroll', this.onScroll);
 		}
 	}
 
 
 	stopListening () {
-		if (!pageScrollingElement) { return; }
+		const scrollingElement = this.scrollingElement = this.scrollingElement || getScrollParent();
+
+		if (!scrollingElement) { return; }
 
 
 		if (Events.supportsPassive()) {
-			pageScrollingElement.removeEventListener('scroll', this.onScroll, {passive: true});
+			scrollingElement.removeEventListener('scroll', this.onScroll, {passive: true});
 		} else {
-			pageScrollingElement.removeEventListener('scroll', this.onScroll);
+			scrollingElement.removeEventListener('scroll', this.onScroll);
 		}
 	}
 
