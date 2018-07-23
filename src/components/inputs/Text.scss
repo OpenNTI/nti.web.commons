@@ -19,5 +19,6 @@
 	&::placeholder {
 		font-style: italic;
 		color: $tertiary-grey;
+		overflow: visible;
 	}
 }
