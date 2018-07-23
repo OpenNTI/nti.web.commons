@@ -13,6 +13,8 @@ export default class RadioGroup extends React.Component {
 		onChange: PropTypes.func
 	}
 
+	state = {}
+
 	componentDidMount () {
 		this.setup();
 	}
