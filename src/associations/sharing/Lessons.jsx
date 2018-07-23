@@ -46,7 +46,7 @@ export default class Lessons extends React.Component {
 		const associations = createGroupedInterfaceForItem(item, scope);
 
 		openEditorModal(t('modalLabel'), associations, null, t, () => {
-			this.forceUpdate();
+			item.emit('associations-update');
 		});
 	}
 

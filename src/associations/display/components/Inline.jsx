@@ -39,6 +39,10 @@ export default class InlineAssociations extends React.Component {
 	componentDidMount () {
 		const {item, scope} = this.props;
 
+		item.addListener('associations-update', () => {
+			this.loadAssociations(item, scope);
+		});
+
 		this.loadAssociations(item, scope);
 	}
 
