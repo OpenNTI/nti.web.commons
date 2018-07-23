@@ -21,6 +21,11 @@
 		padding: 0 1.428571429em 0 0.714285714em;
 	}
 
+	.placeholder {
+		font-style: italic;
+		color: $tertiary-grey;
+	}
+
 	select.nti-select-native {
 		border: none;
 		cursor: pointer;
