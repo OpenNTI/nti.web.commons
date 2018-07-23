@@ -9,10 +9,11 @@ Select.propTypes = {
 	children: PropTypes.array.isRequired,
 	className: PropTypes.string,
 	empty: PropTypes.bool,
+	domRef: PropTypes.func
 };
 
 export default function Select (props) {
-	const {value, onChange, className, children, empty, ...otherProps} = props;
+	const {value, onChange, className, children, empty, domRef, ...otherProps} = props;
 	const selectClassNames = cx('nti-select-native', className);
 
 	const selected = React.Children.toArray(children)
@@ -31,7 +32,7 @@ export default function Select (props) {
 	}
 
 	return (
-		<div className="nti-select-native-wrapper">
+		<div className="nti-select-native-wrapper" ref={domRef}>
 			<span className="icon-chevron-down small" role="presentation"/>
 			<span className={cx('nti-select-value', {placeholder: !value})} role="presentation">{valueLabel}</span>
 			<select className={selectClassNames} {...otherProps} value={empty && value == null ? 'empty' : value} onChange={onChange}>
@@ -42,3 +43,5 @@ export default function Select (props) {
 	);
 }
 
+
+Select.ForwardRef = React.forwardRef((props, ref) => <Select {...props} domRef={ref}/>);
