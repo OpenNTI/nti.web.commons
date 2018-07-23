@@ -53,8 +53,16 @@ export default class TextInput extends React.Component {
 		const {value, className, ...otherProps} = this.props;
 		const cls = cx('nti-text-input', className);
 
+		if ('onChange' in otherProps) {
+			otherProps.onChange = this.onChange;
+		}
+
+		if ('value' in this.props) {
+			otherProps.value = value || '';
+		}
+
 		return (
-			<input {...otherProps} className={cls} type="text" value={value || ''} onChange={this.onChange} ref={this.attachInputRef} />
+			<input {...otherProps} className={cls} type="text" ref={this.attachInputRef} />
 		);
 	}
 }
