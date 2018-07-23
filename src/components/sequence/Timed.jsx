@@ -21,7 +21,13 @@ export default class TimedSequence extends React.Component {
 
 	constructor (props) {
 		super(props);
-		this.setUpChildren();
+		this.setUpChildren(props, (x, callback) => {
+			Object.assign(this.state, x);
+
+			if(callback) {
+				callback();
+			}
+		});
 	}
 
 
@@ -45,7 +51,7 @@ export default class TimedSequence extends React.Component {
 	}
 
 
-	setUpChildren (props = this.props) {
+	setUpChildren (props = this.props, updater = (x, callback) => this.setState(x, callback)) {
 		const {children:reactChildren, defaultShowFor} = props;
 		const children = React.Children.toArray(reactChildren);
 
@@ -58,7 +64,7 @@ export default class TimedSequence extends React.Component {
 			return acc;
 		}, []);
 
-		this.setState({
+		updater({
 			childrenState,
 			current: -1
 		}, () => {
