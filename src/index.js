@@ -16,8 +16,10 @@ export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';
 export * as Selection from './selection';
 export * as Switch from './switch';
+export * as SyncHeight from './sync-height';
 export * as Updates from './updates';
 export * as User from './user';
+export VisibleComponentTracker from './visible-component-tracker';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
