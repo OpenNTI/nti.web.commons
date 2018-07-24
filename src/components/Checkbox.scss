@@ -1,6 +1,7 @@
 @import '~@nti/style-common';
 
 label.checkbox-component {
+	position: relative;
 	line-height: 1; // fixes a safari issue where clicking the label doesn't affect the checkbox
 	input[type='checkbox'] {
 		opacity: 0;
