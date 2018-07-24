@@ -14,6 +14,8 @@ export default class Label extends React.Component {
 
 	attachInputRef = x => this.input = x;
 
+	state = {}
+
 	get validity () {
 		return this.input && this.input.validity;
 	}
@@ -26,15 +28,33 @@ export default class Label extends React.Component {
 	}
 
 
+	onInputOrFormValidation = () => {
+		this.setState({interacted: true});
+	}
+
+
 	render () {
-		const {className, label, ...otherProps} = this.props;
-		const {validity} = this;
-		const cls = cx('nti-labeled-input', className, {valid: !validity || validity.valid, invalid: validity && !validity.valid});
+		const {
+			validity,
+			props: {
+				className,
+				label,
+				...otherProps
+			},
+			state: {
+				interacted
+			}
+		} = this;
+
+		const cls = cx('nti-labeled-input', className, interacted && {
+			valid: !validity || validity.valid,
+			invalid: validity && !validity.valid
+		});
 
 		delete otherProps.onChange;
 
 		return (
-			<label className={cls} {...otherProps} >
+			<label {...otherProps} className={cls} onInput={this.onInputOrFormValidation} onInvalid={this.onInputOrFormValidation}>
 				<span className="label">{label}</span>
 				{this.renderInput()}
 			</label>
