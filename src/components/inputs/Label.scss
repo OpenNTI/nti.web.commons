@@ -6,5 +6,10 @@
 		font: normal bold 0.625rem/1rem $body-font-family;
 		text-transform: uppercase;
 		color: $secondary-grey;
+		//Override foundation.css' rules for `.label` (only on mobile)
+		background: inherit;
+		padding: inherit;
+		white-space: inherit;
+		text-align: inherit;
 	}
 }
