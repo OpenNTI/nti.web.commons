@@ -19,6 +19,7 @@ export Card from './Card';
 export CalendarCard from './CalendarCard';
 export Checkbox from './Checkbox';
 export CollectionFilter from './CollectionFilter';
+export CompletionCheckmark from './CompletionCheckmark';
 export ControlBar from './control-bar';
 export Currency from './Currency';
 export DarkMode from './DarkMode';
