@@ -17,6 +17,7 @@ export * as RemoteMount from './remote-mount';
 export * as Selection from './selection';
 export * as Switch from './switch';
 export * as SyncHeight from './sync-height';
+export Timer from './timer';
 export * as Updates from './updates';
 export * as User from './user';
 export VisibleComponentTracker from './visible-component-tracker';
