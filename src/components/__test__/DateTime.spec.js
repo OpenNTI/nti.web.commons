@@ -14,6 +14,12 @@ const relativeToWeek3 = new Date('2015-11-12T22:00:00.000Z'); //+21 day
 const relativeToMonth = new Date('2015-11-19T22:00:00.000Z'); //+27 day
 const relativeToMonths = new Date('2015-12-31T22:00:00.000Z'); //+++ days
 
+const getMilliSeconds = n => n;
+const getSeconds = n => n * getMilliSeconds(1000);
+const getMinutes = n => n * getSeconds(60);
+const getHours = n => n * getMinutes(60);
+const getDays = n => n * getHours(24);
+
 //Find a better way... since react frowns on "findDOMNode".
 const getText = cmp => ReactDOM.findDOMNode(cmp).textContent;//eslint-disable-line
 
@@ -212,7 +218,6 @@ describe('DateTime', () => {
 	});
 
 	describe('getNaturalDuration', () => {
-		const getDays = n => n * 24 * 60 * 60 * 1000;
 		const n = (...args) => DateTime.getNaturalDuration(...args);
 
 		test('days', () => {
@@ -222,6 +227,20 @@ describe('DateTime', () => {
 		});
 
 		//TODO: add more tests
+	});
+
+
+	describe('getShortNaturalDuration', () => {
+		const n = (...args) => DateTime.getShortNaturalDuration(...args);
+
+		test('days', () => {
+			expect(n(getDays(1), 1)).toEqual('1d');
+			expect(n(getDays(2), 1)).toEqual('2d');
+		});
+
+		test('hours and minutes', () => {
+			expect(n(getHours(1) + getMinutes(30), 2)).toEqual('1h 30m');
+		});
 	});
 
 });

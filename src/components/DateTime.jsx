@@ -26,6 +26,16 @@ const DEFAULT_TEXT = {
 			seconds: '%(count)s Second',
 			milliseconds: '%(count)s Millisecond'
 		},
+		short: {
+			years: '%(count)sy',
+			months: '%(count)sm',
+			weeks: '%(count)sw',
+			days: '%(count)sd',
+			hours: '%(count)sh',
+			minutes: '%(count)sm',
+			seconds: '%(count)ss',
+			milliseconds: '%(count)smm'
+		},
 		years: {
 			one: '%(count)s Year',
 			other: '%(count)s Years'
@@ -121,9 +131,22 @@ export default class DateTime extends React.Component {
 	}
 
 
-	static getNaturalDuration (duration, accuracy, singular) {
+	static getShortNaturalDuration (duration, accuracy) {
+		return this.getNaturalDuration(duration, accuracy, null, true);
+	}
+
+
+	static getNaturalDuration (duration, accuracy, singular, short) {
+		let baseLocaleKey = 'timeUnits.';
+
+		if (short) {
+			baseLocaleKey += 'short.';
+		} else if (singular) {
+			baseLocaleKey += 'singular.';
+		}
+
 		const d = new moment.duration(duration);
-		const getUnit = (unit, data) => singular ? t(`timeUnits.singular.${unit}`, data) : t(`timeUnits.${unit}`, data);
+		const getUnit = (unit, data) => t(`${baseLocaleKey}${unit}`, data);
 
 		let out = [];
 
@@ -144,6 +167,10 @@ export default class DateTime extends React.Component {
 
 		if (out.length === 0) {
 			out.push(getUnit('seconds', {count: 0}));
+		}
+
+		if (short) {
+			return out.join(' ');
 		}
 
 		return out.join(', ');
