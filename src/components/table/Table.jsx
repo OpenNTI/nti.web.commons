@@ -41,7 +41,7 @@ const EMPTY = () => null;
 
 Table.propTypes = {
 	className: PropTypes.string, // core prop, to allow customizing the table.
-	columns: PropTypes.arrayOf(PropTypes.func).isRequired, //classes return 'function' as a typeof check
+	columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object])).isRequired, //classes return 'function' as a typeof check
 	items: PropTypes.oneOfType([
 		PropTypes.shape({
 			map: PropTypes.func
