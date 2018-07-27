@@ -1,0 +1,35 @@
+@import "~@nti/style-common";
+
+.nti-layouts-carousel {
+	&.has-transition {
+		position: relative;
+	}
+
+	.carousel-transition-rotate-up-enter-active, .carousel-transition-rotate-up-exit-active {
+		transition:
+			opacity 1000ms ease-in-out,
+			top 1000ms ease-in-out,
+			transform 1000ms ease-in-out;
+	}
+
+	.carousel-transition-rotate-up-enter {
+		position: absolute;
+		top: 100%;
+		opacity: 0;
+
+		&.carousel-transition-rotate-up-enter-active {
+			top: 0;
+			opacity: 1;
+		}
+	}
+
+	.carousel-transition-rotate-up-exit {
+		transform: translateY(0);
+		opacity: 1;
+
+		&.carousel-transition-rotate-up-exit-active {
+			transform: translateY(-100%);
+			opacity: 0;
+		}
+	}
+}
