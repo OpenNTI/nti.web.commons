@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Logger from '@nti/util-logger';
 import {addClass} from '@nti/lib-dom';
-import {rawContent} from '@nti/lib-commons';
+import {rawContent, wait} from '@nti/lib-commons';
 
 import Manager from '../ModalManager';
 import DialogButtons from '../../components/DialogButtons';
@@ -12,7 +12,11 @@ const logger = Logger.get('common:prompts:Prompt');
 const emptyFunction = () => {};
 
 const MOUNT_POINT_CLS = 'nti-dialog-mount-point';
+
+
 //XXX: Convert this to be an instance of 'Modal'...and go through the modal manager
+
+
 export default class Prompt extends React.Component {
 
 	static getMountPoint () {
@@ -48,8 +52,8 @@ export default class Prompt extends React.Component {
 		}
 
 		try {
-			this.active = ReactDOM.render(
-				React.createElement(Prompt, props),
+			ReactDOM.render(
+				React.createElement(Prompt, {...props, ref: x => this.active = x}),
 				this.getMountPoint());
 		}
 		catch (e) {
@@ -135,12 +139,13 @@ export default class Prompt extends React.Component {
 	}
 
 
-	confirmClicked = (e) => {
+	confirmClicked = async (e) => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
-		dismiss(this);
+
+		await dismiss(this);
 
 		const {onConfirm} = this.props;
 		if (onConfirm) {
@@ -149,12 +154,13 @@ export default class Prompt extends React.Component {
 	}
 
 
-	dismiss = (e) => {
+	dismiss = async (e) => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
-		dismiss(this);
+
+		await dismiss(this);
 
 		const {onCancel} = this.props;
 		if (onCancel) {
@@ -236,17 +242,14 @@ export default class Prompt extends React.Component {
 
 
 
-function dismiss (dialog) {
+async function dismiss (dialog) {
 	dialog.props.onDismiss.call();
 	dialog.setState({dismissing: true, dismissCalled: true});
 
-	//Wait for animation before we remove it.
-	setTimeout(
-		()=> {
-			if (!Prompt.clear()) {
-				logger.warn('React did not unmount %o', dialog);
-			}
-		},
-		500//animation delay (0.5s)
-	);
+	//Wait for animation before we remove it. -- animation delay (500ms, or 0.5s)
+	await wait(501);
+
+	if (!Prompt.clear()) {
+		logger.warn('React did not unmount %o', dialog);
+	}
 }
