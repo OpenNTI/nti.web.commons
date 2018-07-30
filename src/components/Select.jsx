@@ -5,6 +5,7 @@ import cx from 'classnames';
 
 Select.propTypes = {
 	value: PropTypes.any,
+	placeholder: PropTypes.string,
 	onChange: PropTypes.func.isRequired,
 	children: PropTypes.array.isRequired,
 	className: PropTypes.string,
@@ -13,7 +14,7 @@ Select.propTypes = {
 };
 
 export default function Select (props) {
-	const {value, onChange, className, children, empty, domRef, ...otherProps} = props;
+	const {value, placeholder, onChange, className, children, empty, domRef, ...otherProps} = props;
 	const selectClassNames = cx('nti-select-native', className);
 
 	const selected = React.Children.toArray(children)
@@ -22,7 +23,7 @@ export default function Select (props) {
 			React.Children.count(child.children) > 0 && child.value === value
 		));
 
-	let valueLabel = value;
+	let valueLabel = value || placeholder;
 
 	if (selected) {
 		const labelElements = React.Children.map(selected.props.children, (c) => typeof c !== 'object' ? c : React.cloneElement(c));
