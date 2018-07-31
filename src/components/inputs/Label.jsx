@@ -29,7 +29,11 @@ export default class Label extends React.Component {
 
 
 	onInputOrFormValidation = () => {
-		this.setState({interacted: true});
+		// we specifically can't use state here because it will cause select onChange events to emit stale data due
+		// to the re-render.  Instead, we're just setting interacted as an instance variable, though there is a known
+		// edge case where the label component isn't redrawn due to changes in the input, in which case, this will not
+		// set the valid/invalid classname on the label element.  Locally testing though, this works in the general case
+		this.interacted = true;
 	}
 
 
@@ -41,9 +45,7 @@ export default class Label extends React.Component {
 				label,
 				...otherProps
 			},
-			state: {
-				interacted
-			}
+			interacted
 		} = this;
 
 		const cls = cx('nti-labeled-input', className, interacted && {
