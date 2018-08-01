@@ -47,7 +47,8 @@ export default class Search extends React.Component {
 		onBlur: PropTypes.func,
 		onFocus: PropTypes.func,
 		defaultValue: PropTypes.string,
-		buffered: PropTypes.bool
+		buffered: PropTypes.bool,
+		placeholder: PropTypes.string
 	}
 
 
@@ -94,14 +95,14 @@ export default class Search extends React.Component {
 
 
 	render () {
-		const {props: {disabled, buffered, className, ...props}, state: {focused}} = this;
+		const {props: {disabled, buffered, className, placeholder = 'Search', ...props}, state: {focused}} = this;
 		const Cmp = buffered ? BufferedInput : Input;
 		return (
 			<form onSubmit={stop} className={cx('search-component', className, {focused, disabled})} noValidate>
 				<i className="icon-search"/>
 				<Cmp {...props}
 					type="text"
-					placeholder="Search"
+					placeholder={placeholder}
 					disabled={disabled}
 					onChange={this.onChange}
 					onBlur={this.onBlur}
