@@ -76,7 +76,12 @@ export default createReactClass({
 		 */
 		navigatableContext: PropTypes.shape({
 			makeHref: PropTypes.func
-		})
+		}),
+
+		/**
+		 * Tells if it is a real page number content
+		 */
+		isRealPages: PropTypes.bool
 	},
 
 
@@ -106,7 +111,7 @@ export default createReactClass({
 
 
 	render () {
-		const {context: {isMobile}, props: {pageSource: source, current, root, position, ...props}} = this;
+		const {context: {isMobile}, props: {pageSource: source, current, root, position, isRealPages, ...props}} = this;
 		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile});
 
 		const pages = source && source.getPagesAround(current, root);
@@ -137,12 +142,12 @@ export default createReactClass({
 		return (position === 'bottom') ? (
 			<ul className="bottompager" ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
-				<li className="counts">{total > 1 && this.makeCounts(page, total) }</li>
+				{!isRealPages && <li className="counts">{total > 1 && this.makeCounts(page, total) }</li>}
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
 			</ul>
 		) : (
 			<div className={cls} ref={this.attachDOMRef}>
-				{total > 1 && this.makeCounts(page, total) }
+				{!isRealPages && total > 1 && this.makeCounts(page, total) }
 				<a className="prev" {...prev}/>
 				<a className="next" {...next}/>
 			</div>
