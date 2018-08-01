@@ -593,11 +593,12 @@ export default class Flyout extends React.Component {
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
 		const effectiveZ = getEffectiveZIndex(trigger);
+		const {width} = alignment || {};
 		const flyoutStyle = {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
 			zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
-			...(aligning ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment, arrow, primaryAxis))
+			...(aligning ? {top: 0, left: 0, width} : getOuterStylesForAlignment(alignment, arrow, primaryAxis))
 		};
 
 		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
