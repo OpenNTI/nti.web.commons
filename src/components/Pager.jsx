@@ -81,7 +81,9 @@ export default createReactClass({
 		/**
 		 * Tells if it is a real page number content
 		 */
-		isRealPages: PropTypes.bool
+		isRealPages: PropTypes.bool,
+
+		toc: PropTypes.object
 	},
 
 
@@ -111,12 +113,11 @@ export default createReactClass({
 
 
 	render () {
-		const {context: {isMobile}, props: {pageSource: source, current, root, position, isRealPages, ...props}} = this;
+		const {context: {isMobile}, props: {pageSource: source, current, root, position, isRealPages, toc, ...props}} = this;
 		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile});
+		const { realPageIndex } = toc;
 
 		const pages = source && source.getPagesAround(current, root);
-		const page = pages ? pages.index + 1 : 0;
-		const total = pages ? pages.total : 0;
 
 		if (source) {
 			invariant(
@@ -124,6 +125,18 @@ export default createReactClass({
 				'[Pager] A value was passed for `next` and/or `prev` as well as a `pageSource`. ' +
 				'The prop value will be honored over the state value derived from the pageSource.'
 			);
+		}
+
+		let page;
+		let total;
+
+		if (isRealPages) {
+			const allPages = realPageIndex && realPageIndex.NTIIDs[(root || source.root).getID()];
+			total = allPages[allPages.length - 1];
+			page = realPageIndex.NTIIDs[current][0];
+		} else {
+			page = pages ? pages.index + 1 : 0;
+			total = pages ? pages.total : 0;
 		}
 
 		let {
@@ -135,19 +148,18 @@ export default createReactClass({
 			return null;
 		}
 
-
 		next = getProps(next);
 		prev = getProps(prev);
 
 		return (position === 'bottom') ? (
 			<ul className="bottompager" ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
-				{!isRealPages && <li className="counts">{total > 1 && this.makeCounts(page, total) }</li>}
+				<li className="counts">{total > 1 && this.makeCounts(page, total) }</li>
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
 			</ul>
 		) : (
 			<div className={cls} ref={this.attachDOMRef}>
-				{!isRealPages && total > 1 && this.makeCounts(page, total) }
+				{total > 1 && this.makeCounts(page, total) }
 				<a className="prev" {...prev}/>
 				<a className="next" {...next}/>
 			</div>
