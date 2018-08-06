@@ -9,8 +9,7 @@ import {
 	getElementRect as getRectInViewport,
 	getEffectiveZIndex,
 	getViewportHeight,
-	getViewportWidth,
-	getScrollParent
+	getViewportWidth
 } from '@nti/lib-dom';
 
 import {
@@ -329,22 +328,28 @@ export default class Flyout extends React.Component {
 	}
 
 
-	listenToScroll (scroller) {
-		const {scrollparent: old} = this;
-		if (old === scroller) {
+	listenToScroll () {
+		const {document} = global;
+
+		if(!document) {
 			return;
 		}
 
-		if (old) {
-			old.removeEventListener('scroll', this.realign);
-		}
+		const scrollListener = ({target}) => {
+			if(target.contains(this.trigger)) {
+				this.realign();
+			}
+		};
 
-		delete this.scrollparent;
+		const params = { passive: true, capture: true };
 
-		if (scroller) {
-			scroller.addEventListener('scroll', this.realign);
-			this.scrollparent = scroller;
-		}
+		document.addEventListener('scroll', scrollListener, params);
+
+		this.unlistenToScroll = () => document.removeEventListener('scroll', scrollListener, params);
+	}
+
+	unlistenToScroll () {
+		// will be filled in on listen
 	}
 
 	flyoutClicked = () => {
@@ -356,7 +361,7 @@ export default class Flyout extends React.Component {
 		if (ref && !this.flyout) {
 			window.addEventListener('resize', this.realign);
 			window.document.addEventListener('click', this.maybeDismiss);
-			this.listenToScroll(getScrollParent(ref) || window);
+			this.listenToScroll();
 			ref.addEventListener('click', this.flyoutClicked, true);
 		} else if (!ref) {
 			this.flyout.removeEventListener('click', this.flyoutClicked, true);
@@ -365,7 +370,7 @@ export default class Flyout extends React.Component {
 			delete this.flyoutWasClicked;
 			window.removeEventListener('resize', this.realign);
 			window.document.removeEventListener('click', this.maybeDismiss);
-			this.listenToScroll(null);
+			this.unlistenToScroll();
 		}
 
 		this.flyout = ref;

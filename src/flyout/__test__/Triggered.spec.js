@@ -118,7 +118,7 @@ describe('Triggered Flyout', () => {
 		});
 
 		expect(window.addEventListener).toHaveBeenCalledWith('resize', component.realign);
-		expect(window.addEventListener).toHaveBeenCalledWith('scroll', component.realign);
+		// expect(window.addEventListener).toHaveBeenCalledWith('scroll', component.realign);
 		expect(window.document.addEventListener).toHaveBeenCalledWith('click', component.maybeDismiss);
 	});
 
@@ -146,7 +146,7 @@ describe('Triggered Flyout', () => {
 		});
 
 		expect(window.removeEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
-		expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
+		// expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
 		expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
 	});
 
