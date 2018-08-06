@@ -62,13 +62,17 @@
 		position: relative;
 	}
 
+	&.realPage {
+		& > a {
+			transform: rotate(-90deg);
+		}
+	}
+
 	.counts {
 		text-transform: none;
 		font-style: italic;
 		font-size: 0.5rem;
 		padding-right: 0.2rem;
-
-		max-width: 2.1rem;
 		text-overflow: ellipsis;
 		overflow: hidden;
 
