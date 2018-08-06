@@ -114,8 +114,7 @@ export default createReactClass({
 
 	render () {
 		const {context: {isMobile}, props: {pageSource: source, current, root, position, isRealPages, toc, ...props}} = this;
-		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile});
-		const { realPageIndex } = toc;
+		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile, realPage: isRealPages });
 
 		const pages = source && source.getPagesAround(current, root);
 
@@ -130,10 +129,11 @@ export default createReactClass({
 		let page;
 		let total;
 
-		if (isRealPages) {
+		if (isRealPages && toc) {
+			const { realPageIndex } = toc || {};
 			const allPages = realPageIndex && realPageIndex.NTIIDs[(root || source.root).getID()];
-			total = allPages[allPages.length - 1];
-			page = realPageIndex.NTIIDs[current][0];
+			total = allPages && allPages[allPages.length - 1];
+			page = realPageIndex && realPageIndex.NTIIDs[current][0];
 		} else {
 			page = pages ? pages.index + 1 : 0;
 			total = pages ? pages.total : 0;
@@ -151,8 +151,10 @@ export default createReactClass({
 		next = getProps(next);
 		prev = getProps(prev);
 
+		const bottomClassName = cx('bottompager', { realPage: isRealPages });
+
 		return (position === 'bottom') ? (
-			<ul className="bottompager" ref={this.attachDOMRef}>
+			<ul className={bottomClassName} ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
 				<li className="counts">{total > 1 && this.makeCounts(page, total) }</li>
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
