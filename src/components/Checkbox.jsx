@@ -7,7 +7,10 @@ Checkbox.propTypes = {
 	disabled: PropTypes.bool,
 	children: PropTypes.any,
 	green: PropTypes.bool,
-	label: PropTypes.string,
+	label: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.object // rendered element
+	]),
 	name: PropTypes.string,
 	domRef: PropTypes.func
 };
