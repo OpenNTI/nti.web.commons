@@ -1,0 +1,19 @@
+@import '~@nti/style-common';
+
+th.nti-table-simple-header {
+	div {
+		font-size: 10px;
+		color: $tertiary-grey;
+		font-weight: 600;
+		text-transform: uppercase;
+		text-align: left;
+
+		&.sortable {
+			cursor: pointer;
+
+			i {
+				margin-left: 5px;
+			}
+		}
+	}
+}

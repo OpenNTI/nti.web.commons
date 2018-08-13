@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import SimpleHeader from './SimpleHeader';
+
 const EMPTY = () => null;
 
 /*
@@ -49,20 +51,26 @@ Table.propTypes = {
 		PropTypes.array
 	]).isRequired, //rows
 	store: PropTypes.any, //Optional
-	rowClassName: PropTypes.func
+	rowClassName: PropTypes.func,
+	sortOn: PropTypes.string,
+	sortDirection: PropTypes.string,
+	onSortChange: PropTypes.func
 };
 
-export default function Table ({className, columns, items, store, rowClassName}) {
-	const hasHeader = columns.some(x => x.HeaderComponent);
+export default function Table ({className, columns, items, store, rowClassName, sortOn, sortDirection, onSortChange}) {
+	const hasHeader = columns.some(x => x.HeaderComponent || x.Name);
 	const hasFooter = columns.some(x => x.FooterComponent);
 	return (
 		<table className={cx('nti-generic-table', className)}>
 			{hasHeader && (
 				<thead>
 					<tr>
-						{columns.map(({HeaderComponent = EMPTY, cssClassName},i) => (
-							<th key={i} className={cssClassName}>
-								<HeaderComponent store={store}/>
+						{columns.map(({HeaderComponent = EMPTY, cssClassName, Name, SortKey},i) => (
+							<th key={i} className={cx(cssClassName, Name && 'nti-table-simple-header')}>
+								{HeaderComponent && HeaderComponent !== EMPTY
+									? <HeaderComponent store={store} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
+									: <SimpleHeader sortKey={SortKey} name={Name} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
+								}
 							</th>
 						))}
 					</tr>
