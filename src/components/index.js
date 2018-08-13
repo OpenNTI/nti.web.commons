@@ -6,6 +6,8 @@ export * as Query from './query';
 export * as Sequence from './sequence';
 export * as Table from './table';
 export * as Input from './inputs';
+export * as Stream from './stream';
+
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
 export ActiveStateContainer from './ActiveStateContainer';

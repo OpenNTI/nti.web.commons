@@ -1,0 +1,59 @@
+@import "~@nti/style-common";
+
+.stream-date-range {
+	width: 255px;
+	background-color: white;
+	display: inline-table;
+	overflow: auto;
+
+	.option {
+		height: 40px;
+		padding-left: 20px;
+		font-weight: 300;
+		line-height: 40px;
+		font-size: 14px;
+
+		> span {
+			cursor: pointer;
+			display: inline !important;
+		}
+
+		label {
+			display: inline !important;
+
+			> span {
+				display: inline !important;
+			}
+		}
+
+		&.date-filter {
+			&.selected {
+				background-color: rgba(63, 179, 246, 0.15);
+				box-shadow: inset 3px 0 0 0 $primary-blue;
+				color: $primary-blue;
+			}
+		}
+	}
+
+	&.full-screen {
+		.option.type-filter {
+			border: none;
+		}
+	}
+
+	&.disabled {
+		> * {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+
+	.option-title {
+		font-size: 10px;
+		text-transform: uppercase;
+		color: $tertiary-grey;
+		padding-bottom: 10px;
+		padding-left: 20px;
+		margin-top: 16px;
+	}
+}
