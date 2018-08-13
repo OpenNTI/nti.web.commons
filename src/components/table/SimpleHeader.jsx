@@ -9,7 +9,10 @@ export default class SimpleHeader extends React.Component {
 		sortKey: PropTypes.string,
 		sortOn: PropTypes.string,
 		sortDirection: PropTypes.string,
-		name: PropTypes.string,
+		name: PropTypes.oneOfType([
+			PropTypes.func,
+			PropTypes.string
+		]),
 		onSortChange: PropTypes.func
 	}
 
@@ -38,7 +41,7 @@ export default class SimpleHeader extends React.Component {
 
 		return (
 			<div onClick={this.sort} className={classes}>
-				<span>{name}</span>
+				<span>{typeof name === 'function' ? name() : name}</span>
 				{sortKey && onSortChange && isSorted ? sortDirection === ASCENDING ? <i className="icon-chevron-down"/> : <i className="icon-chevron-up"/> : null}
 			</div>
 		);
