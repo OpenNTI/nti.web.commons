@@ -16,7 +16,7 @@ export const getDate = (date) => {
 	const dates = {
 		[DATE_FILTER_VALUES.PAST_WEEK]: d.setDate(d.getDate() - 7),
 		[DATE_FILTER_VALUES.PAST_MONTH]: d.setMonth(d.getMonth() - 1),
-		[DATE_FILTER_VALUES.PAST_THREE_MONTHS]: d.setMonth(d.setMonth() - 3),
+		[DATE_FILTER_VALUES.PAST_THREE_MONTHS]: d.setMonth(d.getMonth() - 3),
 		[DATE_FILTER_VALUES.PAST_SIX_MONTHS]: d.setMonth(d.getMonth() - 6),
 		[DATE_FILTER_VALUES.PAST_YEAR]: d.setFullYear(d.getFullYear() - 1)
 	};
