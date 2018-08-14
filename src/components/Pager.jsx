@@ -5,6 +5,7 @@ import cx from 'classnames';
 import invariant from 'invariant';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
+import VisibleComponentTracker from '../visible-component-tracker';
 
 function buildHref (page, props, scope) {
 	let ctx = props.navigatableContext;
@@ -86,37 +87,94 @@ export default createReactClass({
 		toc: PropTypes.object
 	},
 
-
 	contextTypes: {
 		isMobile: PropTypes.bool
 	},
 
-
 	getInitialState () {
 		return {
-			next: null, prev: null
+			next: {},
+			prev: {},
+			currentPage: 0
 		};
 	},
 
-
 	attachDOMRef (x) {this.el = x;},
 
+	componentDidMount () {
 
-	componentDidUpdate () {
+		this.setup(this.props);
+
+		if (this.props.isRealPages) {
+			VisibleComponentTracker.addGroupListener('real-page-numbers', this.onVisibleChange);
+		}
+	},
+
+	componentDidUpdate (prevProps) {
 		const {el: dom} = this;
 		if (dom) {
 			for (let a of dom.querySelectorAll('a[href=""]')) {
 				a.removeAttribute('href');
 			}
 		}
+
+		if (prevProps.current !== this.props.current) {
+			this.setup(this.props);
+		}
+	},
+
+	componentWillUnmount () {
+		if (this.props.isRealPages) {
+			VisibleComponentTracker.removeGroupListener('real-page-numbers', this.onVisibleChange);
+		}
+	},
+
+	setup (props) {
+		const { pageSource: source, current, root, isRealPages, toc } = props;
+		const pages = source && source.getPagesAround(current, root);
+
+		let currentPage;
+		let total;
+
+		if (isRealPages && toc) {
+			const { realPageIndex } = toc || {};
+			const allPages = realPageIndex && realPageIndex.NTIIDs[(root || source.root).getID()];
+			total = allPages && allPages[allPages.length - 1];
+			currentPage = realPageIndex && realPageIndex.NTIIDs[current][0];
+		} else {
+			currentPage = pages ? pages.index + 1 : 0;
+			total = pages ? pages.total : 0;
+		}
+
+		let { prev = buildHref(pages.prev, this.props, this) || {}, next = buildHref(pages.next, this.props, this) || {} } = props;
+
+		next = getProps(next);
+		prev = getProps(prev);
+
+		this.setState({
+			currentPage,
+			next,
+			prev,
+			total
+		});
+	},
+
+	onVisibleChange (visible) {
+		const page = visible && visible[0] && visible[0].data.pageNumber;
+
+		if (page) {
+			this.setState({ currentPage: page });
+		}
 	},
 
 
 	render () {
-		const {context: {isMobile}, props: {pageSource: source, current, root, position, isRealPages, toc, ...props}} = this;
-		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile, realPage: isRealPages });
+		const {context: {isMobile}, } = this;
+		const { pageSource: source, position, isRealPages } = this.props;
+		const { prev, next, total, currentPage } = this.state;
 
-		const pages = source && source.getPagesAround(current, root);
+		const cls = cx('pager', {mobile: isMobile, desktop: !isMobile, realPage: isRealPages });
+		const bottomClassName = cx('bottompager', { realPage: isRealPages });
 
 		if (source) {
 			invariant(
@@ -126,44 +184,21 @@ export default createReactClass({
 			);
 		}
 
-		let page;
-		let total;
-
-		if (isRealPages && toc) {
-			const { realPageIndex } = toc || {};
-			const allPages = realPageIndex && realPageIndex.NTIIDs[(root || source.root).getID()];
-			total = allPages && allPages[allPages.length - 1];
-			page = realPageIndex && realPageIndex.NTIIDs[current][0];
-		} else {
-			page = pages ? pages.index + 1 : 0;
-			total = pages ? pages.total : 0;
-		}
-
-		let {
-			prev = buildHref(pages.prev, this.props, this) || {},
-			next = buildHref(pages.next, this.props, this) || {},
-		} = props;
-
 		if (!prev.href && !next.href) {
 			return null;
 		}
-
-		next = getProps(next);
-		prev = getProps(prev);
-
-		const bottomClassName = cx('bottompager', { realPage: isRealPages });
-
+		console.log(currentPage); // eslint-disable-line
 		return (position === 'bottom') ? (
 			<ul className={bottomClassName} ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
-				<li className="counts">{total > 1 && this.makeCounts(page, total) }</li>
+				<li className="counts">{total > 1 && this.makeCounts(currentPage, total)}</li>
 				<li><a {...next} className="button secondary tiny radius">Next</a></li>
 			</ul>
 		) : (
 			<div className={cls} ref={this.attachDOMRef}>
-				{total > 1 && this.makeCounts(page, total) }
-				<a className="prev" {...prev}/>
-				<a className="next" {...next}/>
+				{total > 1 && this.makeCounts(currentPage, total)}
+				<a className="prev" {...prev} />
+				<a className="next" {...next} />
 			</div>
 		);
 	},
