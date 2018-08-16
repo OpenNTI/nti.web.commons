@@ -1,12 +1,12 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import TestRenderer from 'react-test-renderer';
 
 import RadioGroup from '../RadioGroup';
 
 describe('RadioGroup', () => {
 	const testRender = (props) => [
-		shallow(<RadioGroup {...props}/>),
+		TestRenderer.create(<RadioGroup {...props}/>),
 	];
 
 	test('Base Case', async () => {

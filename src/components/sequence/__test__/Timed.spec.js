@@ -1,15 +1,15 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import TestRenderer from 'react-test-renderer';
 
 import Timed from '../Timed';
 
 describe('Timed', () => {
-	const sharedWrapper = shallow(<Timed />);
+	const sharedWrapper = TestRenderer.create(<Timed />);
 
 	const testRender = (props) => [
-		shallow(<Timed {...props}><div/></Timed>),
-		sharedWrapper.setProps({...props})
+		TestRenderer.create(<Timed {...props}><div/></Timed>),
+		sharedWrapper.update(<Timed {...props}><div/></Timed>)
 	];
 
 	test('Base Case', async () => {
