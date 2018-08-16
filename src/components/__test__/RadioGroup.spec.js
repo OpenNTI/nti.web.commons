@@ -4,7 +4,7 @@ import {shallow} from 'enzyme';
 
 import RadioGroup from '../RadioGroup';
 
-describe('TokenEditor', () => {
+describe('RadioGroup', () => {
 	const testRender = (props) => [
 		shallow(<RadioGroup {...props}/>),
 	];

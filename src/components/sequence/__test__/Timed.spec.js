@@ -4,7 +4,7 @@ import {shallow} from 'enzyme';
 
 import Timed from '../Timed';
 
-describe('TokenEditor', () => {
+describe('Timed', () => {
 	const sharedWrapper = shallow(<Timed />);
 
 	const testRender = (props) => [
