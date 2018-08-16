@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'isempty';
+import { isEmpty } from '@nti/lib-commons';
 import moment from 'moment-timezone';
 import invariant from 'invariant';
 import {scoped} from '@nti/lib-locale';

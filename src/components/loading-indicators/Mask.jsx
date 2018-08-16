@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'isempty';
+import { isEmpty } from '@nti/lib-commons';
 
 export default class extends React.Component {
 	static displayName = 'LoadingMask';
