@@ -52,7 +52,6 @@
     "eases": "^1.0.8",
     "filesize": "^3.3.0",
     "invariant": "^2.2.1",
-    "isempty": "0.0.1",
     "jump.js": "^1.0.2",
     "mime-types": "^2.1.11",
     "moment": "^2.17.1",
