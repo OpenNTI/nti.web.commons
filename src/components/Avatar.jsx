@@ -63,9 +63,10 @@ export default class Avatar extends BaseEntity {
 
 
 	setUnknown = () => {
-		if (!this.mounted) {
+		if (this.unmounted) {
 			return;
 		}
+
 		this.setState(this.isGroup() ? DEFAULT_GROUP : DEFAULT);
 	}
 
