@@ -81,7 +81,9 @@ export default function Table ({className, columns, items, store, rowClassName, 
 				{items.map((item, row) => (
 					<tr key={row} className={!rowClassName ? void 0 : rowClassName(item, row, items)}>
 						{columns.map((Cell, cell) => (
-							<td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
+							Cell.rendersContainer
+								? <Cell key={cell} item={item} store={store}/>
+								: <td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
 						))}
 					</tr>
 				))}
