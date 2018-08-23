@@ -4,7 +4,6 @@ import cx from 'classnames';
 import {buffer, equals} from '@nti/lib-commons';
 
 const SCROLL_STOP_TIMEOUT = 500;
-const offsetProp = 'nti-sticky-top-offset';
 
 export default class FixedElement extends React.Component {
 	static propTypes = {
@@ -42,27 +41,17 @@ export default class FixedElement extends React.Component {
 
 	record = () => {
 		const oldValues = this.fixedPosition && {...this.fixedPosition};
-		const width = this.el && this.el.offsetWidth;
+		const rect = this.el ? this.el.getBoundingClientRect() : {top: 0, left: 0, width: 0};
 
-		let top = (window[offsetProp] && window[offsetProp]()) || 0;
-		let left = 0;
+		this.fixedPosition = {
+			top: rect.top,
+			left: rect.left,
+			width: rect.width
+		};
 
-		let el = this.el;
-		do {
-			if (el) {
-				top += el.offsetTop;
-				left += el.offsetLeft;
-				el = el.offsetParent;
-			}
-		}
-		while (el && el.offsetParent);
-
-		const newValues = this.fixedPosition = {top, left, width};
-
-		if (oldValues && !equals(newValues, oldValues)) {
+		if (oldValues && !equals(this.fixedPosition, oldValues)) {
 			this.forceUpdate();
 		}
-		// console.log(this.fixedPosition);
 	}
 
 
