@@ -77,7 +77,7 @@ export default class Asset extends React.Component {
 
 
 	static getAssetRoot (props) {
-		const { contentPackage } = props;
+		const contentPackage = props.contentPackage || props.item;
 
 		if(!contentPackage) { return ''; }
 
@@ -93,7 +93,7 @@ export default class Asset extends React.Component {
 
 
 	static getPresentationResource (props) {
-		const {contentPackage} = props;
+		const contentPackage = props.contentPackage || props.item;
 
 		if (!contentPackage) { return {}; }
 
