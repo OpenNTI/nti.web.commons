@@ -237,8 +237,8 @@ export default class InifiniteLoadList extends React.Component {
 				ref={this.setContainer}
 			>
 				{!pageState && (this.renderLoading())}
-				{pageState && (!totalPages) && (this.renderEmpty())}
-				{pageState && (totalPages) && (this.renderPageState())}
+				{pageState && (totalPages <= 0) && (this.renderEmpty())}
+				{pageState && (totalPages > 0 ) && (this.renderPageState())}
 			</div>
 		);
 	}
