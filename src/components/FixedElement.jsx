@@ -85,7 +85,7 @@ export default class FixedElement extends React.Component {
 
 
 	onScrollStop () {
-		const top = window.scrollY;
+		const top = window.scrollY == null ? window.pageYOffset : window.scrollY;
 
 		delete this.isFixed;
 
