@@ -56,6 +56,7 @@ export NestableLink from './NestableLink';
 export NoMatches from './NoMatches';
 export Notice from './Notice';
 export NumberInput from './NumberInput';
+export NTIContent from './NTIContent';
 export OkCancelButtons from './OkCancelButtons';
 export PanelButton from './PanelButton';
 export Pager from './Pager';
