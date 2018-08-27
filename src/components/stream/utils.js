@@ -12,14 +12,13 @@ export const getDate = (date) => {
 		return null;
 	}
 
-	const d = new Date();
 	const dates = {
-		[DATE_FILTER_VALUES.PAST_WEEK]: d.setDate(d.getDate() - 7),
-		[DATE_FILTER_VALUES.PAST_MONTH]: d.setMonth(d.getMonth() - 1),
-		[DATE_FILTER_VALUES.PAST_THREE_MONTHS]: d.setMonth(d.getMonth() - 3),
-		[DATE_FILTER_VALUES.PAST_SIX_MONTHS]: d.setMonth(d.getMonth() - 6),
-		[DATE_FILTER_VALUES.PAST_YEAR]: d.setFullYear(d.getFullYear() - 1)
+		[DATE_FILTER_VALUES.PAST_WEEK]: (d) => d.setDate(d.getDate() - 7),
+		[DATE_FILTER_VALUES.PAST_MONTH]: (d) => d.setMonth(d.getMonth() - 1),
+		[DATE_FILTER_VALUES.PAST_THREE_MONTHS]: d => d.setMonth(d.getMonth() - 3),
+		[DATE_FILTER_VALUES.PAST_SIX_MONTHS]: d => d.setMonth(d.getMonth() - 6),
+		[DATE_FILTER_VALUES.PAST_YEAR]: d => d.setFullYear(d.getFullYear() - 1)
 	};
 
-	return dates[date];
+	return (dates[date] && Math.floor(dates[date](new Date()) / 1000)) || null;
 };
