@@ -22,10 +22,20 @@ export default class FixedElement extends React.Component {
 
 	componentDidMount () {
 		this.record();
+
+		this.lastKnownHeight = this.getCurrentHeight();
+
 		global.addEventListener('scroll', this.onWindowScroll);
 		global.addEventListener('resize', this.onResize);
 	}
 
+	getCurrentHeight () {
+		const body = document.body,
+			html = document.documentElement;
+
+		return Math.max( body.scrollHeight, body.offsetHeight,
+			html.clientHeight, html.scrollHeight, html.offsetHeight );
+	}
 
 	componentWillUnmount () {
 		global.removeEventListener('scroll', this.onWindowScroll);
@@ -49,6 +59,8 @@ export default class FixedElement extends React.Component {
 			width: rect.width
 		};
 
+		this.rectHeight = rect.height;
+
 		if (oldValues && !equals(this.fixedPosition, oldValues)) {
 			this.forceUpdate();
 		}
@@ -67,9 +79,18 @@ export default class FixedElement extends React.Component {
 	onWindowScroll = () => {
 		const {isFixed} = this;
 
-		this.startScrollStopTimer();
+		const currHeight = this.getCurrentHeight();
 
-		if (this.fixedPosition && !isFixed) {
+		if(currHeight !== this.lastKnownHeight) {
+			this.lastKnownHeight = currHeight;
+
+			this.onScrollStop();
+		}
+		else {
+			this.startScrollStopTimer();
+		}
+
+		if (this.fixedPosition && !isFixed && this.rectHeight !== 0) {
 			this.isFixed = true;
 
 			this.setState({
