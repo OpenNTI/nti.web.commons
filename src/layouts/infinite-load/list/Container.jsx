@@ -50,7 +50,7 @@ export default class InifiniteLoadList extends React.Component {
 			offsetTop: 0,
 			clientHeight: document.documentElement.clientHeight,
 			get scrollTop () {
-				return pageScrollingElement ? pageScrollingElement.scrollTop : 0;
+				return pageScrollingElement ? Math.max(pageScrollingElement.scrollTop, 0) : 0;
 			},
 			set scrollTop (top) {
 				if (pageScrollingElement) {
