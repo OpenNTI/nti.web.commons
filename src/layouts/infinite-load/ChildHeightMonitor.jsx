@@ -111,19 +111,39 @@ export default class ChildHeightMonitor extends React.Component {
 	}
 
 
+	onLoad = () => {
+		this.computeAllChildren();
+	}
+
+
 	startObserver () {
 		this.stopObserver();
 
 		const {node, observer} = this;
 
+		if(this.cleanUpLoadListener) {
+			this.cleanUpLoadListener();
+		}
+
 		if (node && observer) {
 			observer.observe(node, OBSERVER_INIT);
 		}
 
+		if (node) {
+			node.addEventListener('load', this.onLoad, true);
+			this.cleanUpLoadListener = () => {
+				node.removeEventListener('load', this.onLoad, true);
+				this.cleanUpLoadListener = void 0;
+			};
+		}
 	}
 
 
 	stopObserver () {
+		if(this.cleanUpLoadListener) {
+			this.cleanUpLoadListener();
+		}
+
 		if (this.observer) {
 			this.observer.disconnect();
 		}
