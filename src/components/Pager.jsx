@@ -187,7 +187,7 @@ export default createReactClass({
 		if (!prev.href && !next.href) {
 			return null;
 		}
-		console.log(currentPage); // eslint-disable-line
+
 		return (position === 'bottom') ? (
 			<ul className={bottomClassName} ref={this.attachDOMRef}>
 				<li><a {...prev} className="button secondary tiny radius">Back</a></li>
