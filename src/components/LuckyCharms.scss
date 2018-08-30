@@ -1,6 +1,13 @@
+@import '~@nti/style-common';
+
 .charms {
 	z-index: 1;
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	.like {
+		color: $primary-blue;
+		text-decoration: none;
+	}
 }
