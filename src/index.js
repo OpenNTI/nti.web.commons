@@ -11,6 +11,7 @@ export * as HOC from './HighOrderComponents';
 export Iframe from './iframe';
 export * as Layouts from './layouts';
 export * as Mixins from './mixins';
+export Navigation from './navigation';
 export * as Presentation from './presentation-assets';
 export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';

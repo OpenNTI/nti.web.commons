@@ -1,0 +1,31 @@
+@import '~@nti/style-common';
+
+.nti-navigation-list-tab {
+	font: normal 400 1rem/1.5 $body-font-family;
+	padding: 0 0.125rem;
+	text-align: center;
+
+	&::after {
+		content: attr(data-text);
+		display: block;
+		font-weight: 600;
+		height: 1px;
+		color: transparent;
+		overflow: hidden;
+		visibility: hidden;
+	}
+
+	&.active, &:hover {
+		color: $primary-blue;
+		font-weight: 600;
+	}
+
+	&.in-menu {
+		padding: 0.5rem 1rem;
+		text-align: left;
+
+		&.active, &:hover {
+			font-weight: 400;
+		}
+	}
+}
