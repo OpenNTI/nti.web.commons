@@ -111,8 +111,8 @@ function getBodySize () {
 	const getDim = x => Math.max(el[`client${x}`], el[`offset${x}`]);
 	const tl = getBodyDocumentGaps();
 	return {
-		height: getDim('Height') - tl.top,
-		width: getDim('Width') - tl.left,
+		height: getDim('Height'),
+		width: getDim('Width'),
 		...tl
 	};
 }
