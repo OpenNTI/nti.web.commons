@@ -1,0 +1,67 @@
+@import '~@nti/style-common';
+
+.nti-navigation-tabs-list {
+	overflow: hidden;
+	white-space: nowrap;
+	display: flex;
+	position: relative;
+	visibility: hidden;
+
+	&.settled {
+		visibility: visible;
+
+		ul.visible-tabs li {
+			opacity: 1;
+			transform: none;
+		}
+
+		.active-indicator {
+			opacity: 1;
+		}
+	}
+
+	ul.visible-tabs {
+		flex: 0 0 auto;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		li {
+			display: inline-block;
+			margin-right: 1.5rem;
+			opacity: 0;
+			transform: translateX(5px);
+			transition: transform 0.1s, opacity 0.1s;
+		}
+	}
+
+
+	.show-more {
+		flex: 0 0 auto;
+
+		&::before {
+			content: '\b7\b7\b7';
+			line-height: 1.25rem;
+		}
+	}
+
+	.active-indicator {
+		position: absolute;
+		bottom: 0;
+		height: 2px;
+		background-color: $primary-blue;
+		transition: width 0.5s, left 0.5s, opacity 0.5s 0.5s;
+		opacity: 0;
+
+		&.hidden {
+			display: none;
+		}
+	}
+}
+
+.nti-navigation-tabs-menu-tabs {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
