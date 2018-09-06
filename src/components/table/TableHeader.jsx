@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EMPTY = () => null;
+const NONE = () => null;
 
 TableHeader.propTypes = {
 	columns: PropTypes.arrayOf(PropTypes.func).isRequired,
@@ -14,7 +14,7 @@ export default function TableHeader ({columns, component = 'tr', extraProps = {}
 
 	return (
 		<Cmp {...otherProps} >
-			{columns.map(({HeaderComponent = EMPTY, cssClassName}, i) => {
+			{columns.map(({HeaderComponent = NONE, cssClassName}, i) => {
 				return (
 					<InnerCmp key={i} className={cssClassName}>
 						<HeaderComponent {...extraProps} />
