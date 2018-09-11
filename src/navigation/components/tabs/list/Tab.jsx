@@ -10,6 +10,7 @@ export default class NavigationTab extends React.Component {
 			active: PropTypes.bool
 		}),
 		inMenu: PropTypes.bool,
+		renderTab: PropTypes.func,
 		alignIndicatorTo: PropTypes.func,
 		unalignIndicatorTo: PropTypes.func
 	}
@@ -60,9 +61,9 @@ export default class NavigationTab extends React.Component {
 
 
 	render () {
-		const {tab, inMenu} = this.props;
+		const {tab, inMenu, renderTab} = this.props;
 
-		return (
+		const tabCmp = (
 			<div
 				className={cx('nti-navigation-list-tab', {active: tab.active, 'in-menu': inMenu})}
 				ref={this.node}
@@ -71,5 +72,7 @@ export default class NavigationTab extends React.Component {
 				{tab.label}
 			</div>
 		);
+
+		return renderTab ? renderTab(tabCmp, tab) : tabCmp;
 	}
 }
