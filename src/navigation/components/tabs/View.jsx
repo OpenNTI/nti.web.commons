@@ -3,7 +3,7 @@ import React from 'react';
 import {Responsive} from '../../../layouts';
 
 import List from './list';
-import Menu from './Menu';
+import Menu from './menu';
 
 export default class NavigationTabs extends React.Component {
 	renderList = () => {
