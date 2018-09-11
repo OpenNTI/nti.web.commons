@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class NavigationTabConfig extends React.Component {
 	static getConfigFor (props) {
-		const {route, root, label, active, hide} = props;
+		const {route, label, active, hide} = props;
 
 		if (hide || typeof label !== 'string') {
 			return null;
@@ -12,14 +12,12 @@ export default class NavigationTabConfig extends React.Component {
 		return {
 			route,
 			label,
-			active,
-			root
+			active
 		};
 	}
 
 	static propTypes = {
 		route: PropTypes.string.isRequired,
-		root: PropTypes.string.isRequired,
 		label: PropTypes.string.isRequired,
 		active: PropTypes.bool,
 		hide: PropTypes.bool
