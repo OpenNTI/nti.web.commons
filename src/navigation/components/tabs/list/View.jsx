@@ -9,7 +9,7 @@ import Tab from './Tab';
 
 const InitialState = () => ({settled: false, tabsInMenu: {}, activeOffset: null});
 const trigger = React.forwardRef(({className, ...props}, ref) => {
-	return (<div className={cx('show-more', className)} ref={ref} {...props}/>);
+	return (<div className={cx('show-remaining-tabs', className)} ref={ref} {...props}/>);
 });
 
 function getParentFor (tab) {

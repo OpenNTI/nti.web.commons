@@ -2,14 +2,13 @@
 
 .nti-navigation-list-tab {
 	font: normal 400 1rem/1.5 $body-font-family;
-	padding: 0 0.125rem;
 	text-align: center;
 
 	&::after {
 		content: attr(data-text);
 		display: block;
 		font-weight: 600;
-		height: 1px;
+		height: 2px;
 		color: transparent;
 		overflow: hidden;
 		visibility: hidden;
