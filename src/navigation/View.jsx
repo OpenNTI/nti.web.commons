@@ -15,11 +15,11 @@ class NavigationComponent extends React.Component {
 	}
 
 	render () {
-		const {tabs} = this.props;
+		const {tabs, ...otherProps} = this.props;
 
 		return (
 			<div>
-				<Tabs tabs={tabs} />
+				<Tabs tabs={tabs} {...otherProps} />
 			</div>
 		);
 	}

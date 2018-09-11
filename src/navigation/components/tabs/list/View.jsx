@@ -34,7 +34,8 @@ export default class NavigationTabs extends React.Component {
 				label: PropTypes.string,
 				id: PropTypes.string
 			})
-		)
+		),
+		renderTab: PropTypes.func
 	}
 
 	node = React.createRef()
@@ -186,7 +187,7 @@ export default class NavigationTabs extends React.Component {
 
 
 	renderTabs () {
-		const {tabs} = this.props;
+		const {tabs, renderTab} = this.props;
 		const {tabsInMenu} = this.state;
 
 		const visibleTabs = tabs.filter(tab => !tabsInMenu[tab.id]);
@@ -201,7 +202,7 @@ export default class NavigationTabs extends React.Component {
 
 						return (
 							<li key={tab.id} style={style}>
-								<Tab tab={tab} alignIndicatorTo={this.alignIndicatorTo} unalignIndicatorTo={this.unalignIndicatorTo} />
+								<Tab tab={tab} alignIndicatorTo={this.alignIndicatorTo} unalignIndicatorTo={this.unalignIndicatorTo} renderTab={renderTab} />
 							</li>
 						);
 					})
@@ -212,7 +213,7 @@ export default class NavigationTabs extends React.Component {
 
 
 	renderMenu () {
-		const {tabs} = this.props;
+		const {tabs, renderTab} = this.props;
 		const {tabsInMenu} = this.state;
 
 		const menuTabs = tabs.filter(tab => tabsInMenu[tab.id]);
@@ -229,7 +230,7 @@ export default class NavigationTabs extends React.Component {
 						menuTabs.map((tab) => {
 							return (
 								<li key={tab.id}>
-									<Tab tab={tab} inMenu/>
+									<Tab tab={tab} renderTab={renderTab} inMenu/>
 								</li>
 							);
 						})
