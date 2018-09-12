@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-export default class NavigationTab extends React.Component {
+export default class NavigationListTab extends React.Component {
 	static propTypes = {
 		tab: PropTypes.shape({
 			label: PropTypes.string,

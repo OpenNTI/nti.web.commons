@@ -1,0 +1,36 @@
+@import "~@nti/style-common";
+@import "./common";
+
+.nti-navigation-tabs-menu-trigger {
+	text-align: center;
+
+	.label {
+		display: inline-block;
+		vertical-align: middle;
+		font: normal bold 1.125rem/2.5 $header-font-family;
+		color: $primary-grey;
+	    text-rendering: optimizeLegibility;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	}
+
+	.icon-chevron-down {
+		display: inline-block;
+		vertical-align: middle;
+		width: 0.75rem;
+		height: 0.75rem;
+		font-size: 0.75rem;
+		line-height: 1;
+		margin-left: 0.25rem;
+		transform: rotate3d(0);
+		transition: transform $duration $enter-timing;
+		color: $primary-blue;
+	}
+
+	&.open {
+		.icon-chevron-down {
+			transform: rotate3d(0, 0, 1, 180deg);
+		}
+	}
+}

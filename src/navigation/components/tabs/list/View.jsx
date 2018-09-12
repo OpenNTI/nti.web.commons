@@ -26,11 +26,11 @@ function getParentFor (tab) {
 	return null;
 }
 
-export default class NavigationTabs extends React.Component {
+export default class NavigationTabsListView extends React.Component {
 	static propTypes = {
 		tabs: PropTypes.arrayOf(
 			PropTypes.shape({
-				link: PropTypes.string,
+				route: PropTypes.string,
 				label: PropTypes.string,
 				id: PropTypes.string
 			})
@@ -44,7 +44,6 @@ export default class NavigationTabs extends React.Component {
 	state = InitialState()
 
 	componentDidMount () {
-		this.ntiIsMounted = true;
 		this.maybeSettle(this.props);
 
 		global.addEventListener('resize', this.onWindowResize);

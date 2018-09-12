@@ -1,0 +1,74 @@
+@import "~@nti/style-common";
+@import "./common";
+
+.nti-navigation-tabs-menu {
+	.menu, .menu-mask {
+		backface-visibility: hidden;
+		perspective: 1000;
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		z-index: 1000;
+	}
+
+	.menu {
+		background: $panel-background;
+		box-shadow: 0 0 0 1px $border-grey;
+		border-radius: 0 0 3px 3px;
+		padding-bottom: 0.5rem;
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		&.navigation-menu-enter {
+			transition: transform $duration $enter-timing;
+			transition-delay: 0s !important;
+			transform: scale3d(0.95, 0.95, 1) translate3d(0, -150%, 0);
+
+			&.navigation-menu-enter-active {
+				transform: translate3d(0, 0, 0);
+			}
+		}
+
+		&.navigation-menu-exit {
+			transition: transform 0.25s $enter-timing;
+			transition-delay: 0s !important;
+			transform: translate3d(0, 0, 0);
+
+			&.navigation-menu-exit-active {
+				transform: scale3d(0.95, 0.95, 1) translate3d(0, -150%, 0);
+			}
+		}
+	}
+
+	.menu-mask {
+		transform: translate3d(0, 0, 0);
+		background: #000;
+		opacity: 0.7;
+		bottom: 0;
+
+		&.navigation-mask-enter {
+			transition: opacity $duration $enter-timing;
+			transition-delay: 0s !important;
+			opacity: 0;
+
+			&.navigation-mask-enter-active {
+				opacity: 0.7;
+			}
+		}
+
+		&.navigation-mask-exit {
+			transition: opacity 0.25s $exit-timing;
+			transition-delay: 0s !important;
+			opacity: 0.7;
+
+			&.navigation-mask-exit-active {
+				opacity: 0;
+			}
+		}
+	}
+}
