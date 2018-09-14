@@ -8,42 +8,40 @@ const t = scoped('common.navigation.compnents.tabs.menu.Trigger', {
 });
 
 
-export default class NavigationTab extends React.Component {
+export default class NavigationMenuTrigger extends React.Component {
 	static propTypes = {
+		className: PropTypes.string,
 		tab: PropTypes.shape({
 			label: PropTypes.string.isRequired
 		}),
-
-		open: PropTypes.bool,
-		hasMore: PropTypes.bool,
-
-		toggleMenu: PropTypes.func,
-		alignMenuTo: PropTypes.func
+		onClick: PropTypes.func,
+		hasMore: PropTypes.bool
 	}
 
-	attachRef = (node) => {
-		const {alignMenuTo} = this.props;
+	node = React.createRef()
 
-		if (alignMenuTo) {
-			alignMenuTo(node);
-		}
+
+	getDOMNode () {
+		return this.node.current;
 	}
+
 
 	onClick = (e) => {
-		const {toggleMenu, hasMore} = this.props;
+		const {onClick} = this.props;
 
-		if (toggleMenu, hasMore) {
-			toggleMenu(e);
+		if (onClick) {
+			onClick(e);
 		}
 	}
 
+
 	render () {
-		const {tab, open, hasMore} = this.props;
+		const {tab, className, hasMore} = this.props;
 		const label = tab ? tab.label : t('defaultLabel');
 
 		return (
-			<div className={cx('nti-navigation-tabs-menu-trigger', {open})} onClick={this.onClick} ref={this.attachRef}>
-				<span className="label">{label}</span>
+			<div className={cx('nti-navigation-tabs-menu-trigger', className)} onClick={this.onClick} ref={this.node}>
+				<span className="trigger-label">{label}</span>
 				{hasMore && (<i className="icon-chevron-down" />)}
 			</div>
 		);

@@ -1,0 +1,101 @@
+@import "~@nti/style-common";
+@import "./common";
+
+.nti-navigation-tabs-menu {
+	position: relative;
+	width: 100vw;
+
+	.mask {
+		position: absolute;
+		content: '';
+		display: block;
+		top: 0; bottom: 0;
+		left: 0; right: 0;
+		background: #000;
+		opacity: 0.7;
+
+		.navigation-menu.opening & {
+			animation-name: navigation-menu-mask-fade-in;
+			animation-duration: $duration;
+			animation-iteration-count: 1;
+			animation-direction: normal;
+			animation-timing-function: $enter-timing;
+			animation-fill-mode: both;
+		}
+
+		.navigation-menu.closing & {
+			animation-name: navigation-menu-mask-fade-in;
+			animation-duration: 0.25s;
+			animation-iteration-count: 1;
+			animation-direction: reverse;
+			animation-timing-function: $exit-timing;
+			animation-fill-mode: both;
+		}
+	}
+
+	ul {
+		position: absolute;
+		top: 0;
+		left: 0; right: 0;
+		background: white;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		.navigation-menu.opening & {
+			animation-name: navigation-menu-tabs-slide-in;
+			animation-duration: $duration;
+			animation-iteration-count: 1;
+			animation-direction: normal;
+			animation-timing-function: $enter-timing;
+			animation-fill-mode: both;
+		}
+
+		.navigation-menu.closing & {
+			animation-name: navigation-menu-tabs-slide-in;
+			animation-duration: 0.25s;
+			animation-iteration-count: 1;
+			animation-direction: reverse;
+			animation-timing-function: $exit-timing;
+			animation-fill-mode: both;
+		}
+
+		.nti-navigation-menu-tab {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellispsis;
+			white-space: nowrap;
+			color: $secondary-grey;
+			font: normal 400 0.875rem/2.8 $body-font-family;
+			padding: 0 0.35em 0 1.39em;
+			cursor: pointer;
+
+			&.active {
+				background-color: $primary-blue;
+				box-shadow: inset 3px 0 0 0 #107eed;
+				color: white;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+@keyframes navigation-menu-mask-fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.7;
+	}
+}
+
+@keyframes navigation-menu-tabs-slide-in {
+	from {
+		transform: scale3d(0.95, 0.95, 1) translate3d(0, -150%, 0);
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}

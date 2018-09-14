@@ -1,11 +1,18 @@
 @import "~@nti/style-common";
 @import "./common";
 
+.nti-navigation-menu-flyout {
+	.flyout-inner {
+		box-shadow: none;
+		background: none;
+	}
+}
+
 .nti-navigation-tabs-menu {
 	.menu, .menu-mask {
 		backface-visibility: hidden;
 		perspective: 1000;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		right: 0;
 		left: 0;
@@ -22,6 +29,10 @@
 			list-style: none;
 			margin: 0;
 			padding: 0;
+
+			li {
+				text-align: left;
+			}
 		}
 
 		&.navigation-menu-enter {

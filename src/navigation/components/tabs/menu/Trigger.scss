@@ -4,7 +4,7 @@
 .nti-navigation-tabs-menu-trigger {
 	text-align: center;
 
-	.label {
+	.trigger-label {
 		display: inline-block;
 		vertical-align: middle;
 		font: normal bold 1.125rem/2.5 $header-font-family;
@@ -28,7 +28,7 @@
 		color: $primary-blue;
 	}
 
-	&.open {
+	&.flyout-open {
 		.icon-chevron-down {
 			transform: rotate3d(0, 0, 1, 180deg);
 		}
