@@ -157,7 +157,7 @@ describe('Triggered Flyout', () => {
 		for (let c of cmps) {
 			expect(c.state.open).toBeTruthy();
 			expect(c.fly.className).toEqual('fly-wrapper awesome sauce');
-			expect(c.flyout.className).toEqual('flyout awesome sauce bottom center');
+			expect(c.flyout.className).toEqual('flyout awesome sauce bottom center opened');
 			expect(c.flyout.textContent).toEqual('Lala');
 			expect(c.fly.contains(c.flyout)).toBeTruthy();
 		}
