@@ -193,7 +193,12 @@ export default class Flyout extends React.Component {
 			PropTypes.object
 		]),
 
-		open: PropTypes.bool
+		open: PropTypes.bool,
+
+		transition: PropTypes.shape({
+			className: PropTypes.string,
+			timeout: PropTypes.number
+		})
 	}
 
 	static defaultProps = {
@@ -317,14 +322,7 @@ export default class Flyout extends React.Component {
 
 
 	dismiss (cb) {
-		this.setState({
-			open: false,
-			aligning: true
-		}, () => {
-			if (typeof cb === 'function') {
-				cb();
-			}
-		});
+		this.doClose(cb);
 	}
 
 
@@ -459,6 +457,59 @@ export default class Flyout extends React.Component {
 	}
 
 
+	doOpen = (cb) => {
+		const callback = () => typeof cb === 'function' && cb();
+		const {transition} = this.props;
+
+		if (transition && transition.timeout) {
+			this.setState({
+				open: true,
+				aligning: true,
+				opening: true,
+				closing: false
+			}, () => {
+				setTimeout(() => {
+					this.setState({
+						opening: false
+					}, callback);
+				}, transition.timeout);
+			});
+		} else {
+			this.setState({
+				open: true,
+				aligning: true
+			}, callback);
+		}
+	}
+
+
+	doClose = (cb) => {
+		const callback = () => typeof cb === 'function' && cb();
+		const {transition} = this.props;
+
+		if (transition && transition.timeout) {
+			this.setState({
+				closing: true,
+				opening: false
+			}, () => {
+				setTimeout(() => {
+					this.setState({
+						open: false,
+						aligning: true,
+						opening: false,
+						closing: false
+					}, callback);
+				}, transition.timeout);
+			});
+		} else {
+			this.setState({
+				open: false,
+				aligning: true
+			}, callback);
+		}
+	}
+
+
 	onToggle = (e, cb) => {
 		if (e) {
 			if (e.isPropagationStopped()) {
@@ -469,11 +520,11 @@ export default class Flyout extends React.Component {
 			e.stopPropagation();
 		}
 
-		const {open} = this.state;
-
-		this.setState(
-			{ open: !open, aligning: true },
-			typeof cb === 'function' ? cb : void cb);
+		if (this.state.open) {
+			this.doClose(cb);
+		} else {
+			this.doOpen(cb);
+		}
 	}
 
 
@@ -501,10 +552,7 @@ export default class Flyout extends React.Component {
 		clearTimeout(this.hideTimeout);
 
 		this.showTimeout = setTimeout(() => {
-			this.setState({
-				open: true,
-				aligning: true
-			});
+			this.doOpen();
 		}, hoverTimeouts.openTimeout);
 	}
 
@@ -516,10 +564,7 @@ export default class Flyout extends React.Component {
 		clearTimeout(this.hideTimeout);
 
 		this.hideTimeout = setTimeout(() => {
-			this.setState({
-				open: false,
-				aligning: true
-			});
+			this.doClose();
 		}, hoverTimeouts.closeTimeout);
 	}
 
@@ -592,8 +637,8 @@ export default class Flyout extends React.Component {
 
 	renderFlyout () {
 		const {
-			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover},
-			state: {aligning, alignment}
+			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover, transition},
+			state: {aligning, alignment, opening, closing}
 		} = this;
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
@@ -608,7 +653,20 @@ export default class Flyout extends React.Component {
 
 		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
 
-		const css = cx('flyout', className, getAlignmentClass(alignment, verticalAlign, horizontalAlign), {'is-fixed': fixed, arrow, dark, hover});
+		const css = cx(
+			'flyout',
+			className,
+			(transition && transition.className) || '',
+			getAlignmentClass(alignment, verticalAlign, horizontalAlign),
+			{
+				'is-fixed': fixed,
+				arrow,
+				dark,
+				hover,
+				opening,
+				closing,
+				opened: !opening && !closing
+			});
 
 		const listeners = this.isHover() ? {onMouseEnter: this.stopHide, onMouseLeave: this.startHide} : {};
 
