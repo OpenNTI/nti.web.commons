@@ -637,7 +637,7 @@ export default class Flyout extends React.Component {
 
 	renderFlyout () {
 		const {
-			props: {children, className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover, transition},
+			props: {className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover, transition},
 			state: {aligning, alignment, opening, closing}
 		} = this;
 		const {trigger} = this;
@@ -674,11 +674,20 @@ export default class Flyout extends React.Component {
 			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle} {...listeners} >
 				{arrow && <div className="flyout-arrow"/>}
 				<div className="flyout-inner" style={innerStyle}>
-					{children}
+					{this.renderContent()}
 				</div>
 			</div>
 		);
 
 		return ReactDOM.createPortal(flyout, this.fly);
+	}
+
+
+	renderContent () {
+		const {children} = this.props;
+
+		if (React.Children.count(children) !== 1) { return children; }
+
+		return React.cloneElement(React.Children.only(children), {onDismiss: this.doClose});
 	}
 }
