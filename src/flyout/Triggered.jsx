@@ -27,7 +27,10 @@ import {
 	ALIGN_RIGHT,
 	ALIGN_LEFT_OR_RIGHT,
 
-	MATCH_SIDE
+	MATCH_SIDE,
+
+	OPEN,
+	CLOSED
 } from './Constants';
 import {
 	ALIGNMENT_POSITIONS,
@@ -172,6 +175,9 @@ export default class Flyout extends React.Component {
 		MATCH_SIDE
 	}
 
+	static OPEN = OPEN
+	static CLOSED = CLOSED
+
 	static propTypes = {
 		trigger: PropTypes.any,
 		children: PropTypes.any,
@@ -194,6 +200,7 @@ export default class Flyout extends React.Component {
 		]),
 
 		open: PropTypes.bool,
+		defaultState: PropTypes.oneOf([OPEN, CLOSED]),
 
 		transition: PropTypes.shape({
 			className: PropTypes.string,
@@ -202,7 +209,8 @@ export default class Flyout extends React.Component {
 	}
 
 	static defaultProps = {
-		primaryAxis: 'vertical'
+		primaryAxis: 'vertical',
+		defaultState: CLOSED
 	}
 
 
@@ -256,6 +264,10 @@ export default class Flyout extends React.Component {
 	componentDidMount () {
 		this.mounted = true;
 		document.body.appendChild(this.fly);
+
+		if (this.props.defaultState === OPEN) {
+			this.doOpen();
+		}
 	}
 
 

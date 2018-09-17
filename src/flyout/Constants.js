@@ -23,3 +23,6 @@ export const CONSTRAIN_BOTH = 'constrain-both';
 export const ARROW_HEIGHT = 15;
 export const ARROW_OFFSET = 23;
 
+
+export const OPEN = 'open';
+export const CLOSED = 'closed';
