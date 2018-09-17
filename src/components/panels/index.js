@@ -4,3 +4,4 @@ export Header, { TitleBalencer as HeaderSpacer }  from './Header';
 export Toolbar, { Spacer as ToolbarSpacer }  from './Toolbar';
 export ToolbarButton from './ToolbarButton';
 export ToolbarButtonGroup from './ToolbarButtonGroup';
+export ActionHeader from './ActionHeader';
