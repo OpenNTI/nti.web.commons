@@ -6,20 +6,21 @@ import TabsConfig from './configuration/tabs';
 import Store from './Store';
 
 export default
-@Store.connect(['tabs'])
+@Store.connect(['tabs', 'expandTabs'])
 class NavigationComponent extends React.Component {
 	static Tabs = TabsConfig
 
 	static propTypes = {
-		tabs: PropTypes.array
+		tabs: PropTypes.array,
+		expandTabs: PropTypes.bool
 	}
 
 	render () {
-		const {tabs, ...otherProps} = this.props;
+		const {tabs, expandTabs, ...otherProps} = this.props;
 
 		return (
 			<div>
-				<Tabs tabs={tabs} {...otherProps} />
+				<Tabs tabs={tabs} expandTabs={expandTabs} {...otherProps} />
 			</div>
 		);
 	}

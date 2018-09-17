@@ -18,13 +18,13 @@ export default class NavigationTabsMenuView extends React.Component {
 				active: PropTypes.bool
 			})
 		),
-		renderTab: PropTypes.func
+		renderTab: PropTypes.func,
+		expandTabs: PropTypes.bool
 	}
 
 
-
 	render () {
-		const {tabs, renderTab} = this.props;
+		const {tabs, renderTab, expandTabs} = this.props;
 
 		if (!tabs || !tabs.length) { return null; }
 
@@ -36,11 +36,13 @@ export default class NavigationTabsMenuView extends React.Component {
 
 		return (
 			<Triggered
+				ref={this.attachFlyoutRef}
 				trigger={trigger}
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 				horizontalAlign={Triggered.ALIGNMENTS.CENTER}
 				transition={{className: 'navigation-menu', timeout: transitionTimeout}}
 				className="nti-navigation-menu-flyout"
+				defaultState={expandTabs ? Triggered.OPEN : Triggered.CLOSED}
 			>
 				<Menu tabs={tabs} renderTab={renderTab} />
 			</Triggered>

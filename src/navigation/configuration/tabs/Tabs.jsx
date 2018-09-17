@@ -25,16 +25,19 @@ function getTabConfig (tab, index, baseRoute) {
 }
 
 export default
-@Store.connect(['setTabs', 'clearTabs'])
+@Store.connect(['setTabs', 'clearTabs', 'setExpandTabs'])
 class NavigationTabsConfig extends React.Component {
 	static Tab = Tab
 
 	static propTypes = {
 		children: PropTypes.any,
 		baseRoute: PropTypes.string,
+		expandTabs: PropTypes.bool,
 
 		setTabs: PropTypes.func,
-		clearTabs: PropTypes.func
+		clearTabs: PropTypes.func,
+
+		setExpandTabs: PropTypes.func
 	}
 
 
@@ -63,12 +66,15 @@ class NavigationTabsConfig extends React.Component {
 
 
 	setupFor (props) {
-		const {setTabs, children, baseRoute} = props;
+		const {setExpandTabs, expandTabs, setTabs, children, baseRoute} = props;
+
+		setExpandTabs(expandTabs);
 
 		const tabs = React.Children.map(children, (tab, index) => getTabConfig(tab, index, baseRoute)).filter(x => !!x);
 
 		this.tabs = tabs;
 		setTabs(tabs);
+
 	}
 
 

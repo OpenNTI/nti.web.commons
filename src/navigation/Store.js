@@ -10,8 +10,14 @@ export default class NavigationStore extends Stores.SimpleStore {
 		super();
 
 		this.set({
-			tabs: null
+			tabs: null,
+			expandTabs: false
 		});
+	}
+
+
+	setExpandTabs (expand) {
+		this.set('expandTabs', expand);
 	}
 
 
