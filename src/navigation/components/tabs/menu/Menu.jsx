@@ -33,7 +33,7 @@ export default class NavigationMenu extends React.Component {
 	}
 
 
-	onMaskClick = () => {
+	dismissMenu = () => {
 		const {onDismiss} = this.props;
 
 		if (onDismiss) {
@@ -48,11 +48,11 @@ export default class NavigationMenu extends React.Component {
 		return (
 			<FillToBottom className="nti-navigation-tabs-menu">
 				<LockScroll />
-				<div className="mask" onClick={this.onMaskClick}/>
+				<div className="mask" onClick={this.dismissMenu}/>
 				<ul>
 					{tabs.map((tab) => {
 						return (
-							<li key={tab.id}>
+							<li key={tab.id} onClick={this.dismissMenu}>
 								{this.renderTab(tab)}
 							</li>
 						);
