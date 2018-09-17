@@ -18,7 +18,7 @@ function getTabConfig (tab, index, baseRoute) {
 		...otherProps,
 
 		//TODO: figure out if there's a better way to join these paths
-		route: resolve(baseRoute || '/', route),
+		route: baseRoute ? resolve(baseRoute, route) : route,
 		label,
 		id: `${label}-${index}`
 	};
