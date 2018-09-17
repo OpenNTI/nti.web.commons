@@ -1,0 +1,24 @@
+@import '~@nti/style-common';
+
+.save-cancel-dialog {
+	dialog {
+		@include responsive-range(mobile) {
+			height: 100%;
+		}
+
+		.save-cancel-layout {
+			background: white;
+			display: flex;
+			flex-direction: column;
+
+			.save-cancel-content {
+				flex-grow: 1;
+			}
+
+			@include responsive-range(mobile) {
+				height: 100%;
+			}
+		}
+	}
+}
+

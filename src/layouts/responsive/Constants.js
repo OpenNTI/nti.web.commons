@@ -5,6 +5,22 @@ export const isMobile = () => isScreenWidthInRange(0, 480);
 export const isTablet = () => isScreenWidthInRange(481, 1024);
 export const isDesktop = () => isScreenWidthInRange(1025, Infinity);
 
+export const oneOf = (...args) => {
+	return (...queryArgs) => {
+		for (let fn of args) {
+			if (fn(...queryArgs)) { return true; }
+		}
+
+		return false;
+	};
+};
+
+export const not = (query) => {
+	return (...queryArgs) => {
+		return !query(...queryArgs);
+	};
+};
+
 let CONTEXT_FLAG = null;
 const WEBAPP_CONTEXT = 'webapp';
 const MOBILE_CONTEXT = 'mobile';
