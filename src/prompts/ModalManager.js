@@ -157,12 +157,6 @@ export class ModalManager extends EventEmitter {
 
 
 	isHidden (component) {
-		const {content} = component || {};
-
-		if (!content) {
-			return true;
-		}
-
 		//reversed for lookup speed
 		const reversed = this.active.slice().reverse();
 		const lastIndex = 0;
