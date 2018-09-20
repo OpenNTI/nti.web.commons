@@ -41,15 +41,18 @@ export default class Modal extends React.Component {
 		return !this.props.closeOnEscape;
 	}
 
+	constructor (props) {
+		super(props);
 
-	state = {}
-
-
-	componentDidMount () {
 		this.props.Manager.addUpdateListener(this.onManagerUpdate);
-		this.focus();
+		this.state = { staging: true };
 	}
 
+	componentDidMount () {
+		// Staging is here because the ref content isn't set when the modal manager calls isHidden in the render.
+		// We set state for another render to occur and correctly call isHidden with a set ref.
+		this.setState({ staging: false }, () => this.focus());
+	}
 
 	componentWillUnmount () {
 		this.props.Manager.removeUpdateListener(this.onManagerUpdate);
