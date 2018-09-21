@@ -6,10 +6,14 @@ import {Triggered} from '../../../../flyout';
 import {isSameTabConfig} from '../../../utils';
 
 import Tab from './Tab';
+import Menu from './Menu';
 
 const InitialState = () => ({settled: false, tabsInMenu: {}, activeOffset: null});
 const trigger = React.forwardRef(({className, ...props}, ref) => {
 	return (<div className={cx('show-remaining-tabs', className)} ref={ref} {...props}/>);
+});
+const activeTrigger = React.forwardRef(({className, ...props}, ref) => {
+	return (<div className={cx('show-remaining-tabs', 'active', className)} ref={ref} {...props} />);
 });
 
 function getParentFor (tab) {
@@ -219,22 +223,14 @@ export default class NavigationTabsListView extends React.Component {
 
 		if (!menuTabs.length) { return null; }
 
+		const active = menuTabs.some(tab => tab.active);
+
 		return (
 			<Triggered
-				trigger={trigger}
+				trigger={active ? activeTrigger : trigger}
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 			>
-				<ul className="nti-navigation-tabs-menu-tabs">
-					{
-						menuTabs.map((tab) => {
-							return (
-								<li key={tab.id}>
-									<Tab tab={tab} renderTab={renderTab} inMenu/>
-								</li>
-							);
-						})
-					}
-				</ul>
+				<Menu tabs={menuTabs} renderTab={renderTab} />
 			</Triggered>
 		);
 	}

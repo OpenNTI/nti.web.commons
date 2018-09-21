@@ -41,6 +41,10 @@
 	.show-remaining-tabs{
 		flex: 0 0 auto;
 
+		&.active {
+			color: $primary-blue;
+		}
+
 		&::before {
 			content: '\b7\b7\b7';
 			line-height: 1.25rem;
@@ -59,11 +63,5 @@
 			display: none;
 		}
 	}
-}
-
-.nti-navigation-tabs-menu-tabs {
-	list-style: none;
-	padding: 0;
-	margin: 0;
 }
 

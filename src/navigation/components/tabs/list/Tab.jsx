@@ -12,7 +12,8 @@ export default class NavigationListTab extends React.Component {
 		inMenu: PropTypes.bool,
 		renderTab: PropTypes.func,
 		alignIndicatorTo: PropTypes.func,
-		unalignIndicatorTo: PropTypes.func
+		unalignIndicatorTo: PropTypes.func,
+		onDismiss: PropTypes.func
 	}
 
 	node = React.createRef()
@@ -38,6 +39,15 @@ export default class NavigationListTab extends React.Component {
 			this.unfocusTab();
 		} else if (!prevTab.active && tab.active) {
 			this.focusTab();
+		}
+	}
+
+
+	onClick = () => {
+		const {onDismiss} = this.props;
+
+		if (onDismiss) {
+			onDismiss();
 		}
 	}
 
@@ -68,6 +78,7 @@ export default class NavigationListTab extends React.Component {
 				className={cx('nti-navigation-list-tab', {active: tab.active, 'in-menu': inMenu})}
 				ref={this.node}
 				data-text={tab.label}
+				onClick={this.onClick}
 			>
 				{tab.label}
 			</div>
