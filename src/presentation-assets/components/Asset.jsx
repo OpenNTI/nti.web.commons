@@ -109,6 +109,13 @@ export default class Asset extends React.Component {
 	}
 
 
+	static getPresentationAsset (contentPackage, type) {
+		const asset = Asset.getPresentationResource({contentPackage});
+
+		return asset.href + ASSET_MAP[type].path;
+	}
+
+
 	static getDefaultAssetRoot (scope) {
 		if (scope.getDefaultAssetRoot) {
 			return scope.getDefaultAssetRoot();
