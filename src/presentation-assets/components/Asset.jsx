@@ -112,6 +112,10 @@ export default class Asset extends React.Component {
 	static getPresentationAsset (contentPackage, type) {
 		const asset = Asset.getPresentationResource({contentPackage});
 
+		if (!asset || !asset.href) {
+			return type ? Asset.getDefaultURLForType(type) : '';
+		}
+
 		return asset.href + ASSET_MAP[type].path;
 	}
 
