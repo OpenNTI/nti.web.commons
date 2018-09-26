@@ -278,7 +278,7 @@ export default class Flyout extends React.Component {
 
 
 	componentDidUpdate (prevProps, prevState) {
-		const {props: {onDismiss, className, open:controlledOpen}, state: {open}, fly} = this;
+		const {props: {onDismiss, className, open:controlledOpen}, state: {open, aligning}, fly} = this;
 		const {open: wasOpen} = prevState;
 
 		const openInProps = controlledOpen != null;
@@ -297,7 +297,7 @@ export default class Flyout extends React.Component {
 			delete this.warnedTriggerType;
 		}
 
-		if ((open || controlledOpen) && this.flyout) {
+		if ((open || controlledOpen) && !aligning && this.flyout) {
 			const prev = this.flyoutSize;
 			const {offsetWidth: width, offsetHeight: height} = this.flyout;
 			this.flyoutSize = {width, height};
