@@ -1,5 +1,9 @@
 @import "~@nti/style-common";
 
+.modal-content {
+	max-height: 100vh;
+}
+
 .modal-mask {
 	@include touch-scroll;
 	overflow: {
