@@ -19,7 +19,7 @@ $trigger-height: 2.4375rem;
 			color: #3fb3f6;
 		}
 		&:after {
-			background-image: url("../assets/options-menu_hover.png");
+			background-image: url("./assets/options-menu_hover.png");
 		}
 	}
 
@@ -39,7 +39,7 @@ $trigger-height: 2.4375rem;
 		left: auto;
 		right: 14px;
 		margin-top: -8px;
-		background-image: url("../assets/options-menu.png");
+		background-image: url("./assets/options-menu.png");
 		width: 16px;
 		height: 16px;
 		position: absolute;

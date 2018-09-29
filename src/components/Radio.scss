@@ -1,4 +1,5 @@
 @import "~@nti/style-common";
+@import "assets/retina";
 
 label.radio-component {
 	position: relative;
@@ -25,16 +26,16 @@ label.radio-component {
 				height: 1rem;
 				background: transparent center/100% no-repeat;
 
-				@include retina-asset('./assets/radio/base', $xCount: 3);
+				@include retina-asset('radio/base', $xCount: 3);
 			}
 		}
 
 		&:checked + span.label::before {
-			@include retina-asset('./assets/radio/select', $xCount: 3);
+			@include retina-asset('radio/select', $xCount: 3);
 		}
 
 		&:checked + span.label.green::before {
-			@include retina-asset('./assets/radio/select-green', $xCount: 3);
+			@include retina-asset('radio/select-green', $xCount: 3);
 		}
 
 		&:disabled + span.label::before {
@@ -50,11 +51,11 @@ label.radio-component {
 	// html:not(.touch) &:hover {
 	// 	input[type=radio] {
 	// 		& + span.label::before {
-	// 			@include retina-asset('./assets/radio/hover', $xCount: 3);
+	// 			@include retina-asset('radio/hover', $xCount: 3);
 	// 		}
 	//
 	// 		&:checked + span.label::before {
-	// 			@include retina-asset('./assets/radio/hover-select', $xCount: 3);
+	// 			@include retina-asset('radio/hover-select', $xCount: 3);
 	// 		}
 	// 	}
 	// }

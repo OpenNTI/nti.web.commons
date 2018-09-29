@@ -1,4 +1,5 @@
-@import '~@nti/style-common';
+@import "~@nti/style-common";
+@import "assets/retina";
 
 label.checkbox-component {
 	position: relative;
@@ -31,17 +32,17 @@ label.checkbox-component {
 				height: 16px;
 				background: transparent center/100% no-repeat;
 
-				@include retina-asset('./assets/checkbox/base', $xCount: 3);
+				@include retina-asset('checkbox/base', $xCount: 3);
 			}
 		}
 
 		&:checked + span.label::before {
 			background-image: url(./assets/checkbox/select.png);
-			// @include retina-asset('./assets/checkbox/select', $xCount: 3);
+			// @include retina-asset('checkbox/select', $xCount: 3);
 		}
 
 		&:checked + span.label.green::before {
-			@include retina-asset('./assets/checkbox/select-green', $xCount: 3);
+			@include retina-asset('checkbox/select-green', $xCount: 3);
 		}
 
 		&:disabled + span.label {
@@ -69,11 +70,11 @@ label.checkbox-component {
 	// html:not(.touch) &:hover {
 	// 	input[type=checkbox] {
 	// 		& + span.label::before {
-	// 			@include retina-asset('./assets/checkbox/hover', $xCount: 3);
+	// 			@include retina-asset('checkbox/hover', $xCount: 3);
 	// 		}
 	//
 	// 		&:checked + span.label::before {
-	// 			@include retina-asset('./assets/checkbox/hover-select', $xCount: 3);
+	// 			@include retina-asset('checkbox/hover-select', $xCount: 3);
 	// 		}
 	// 	}
 	// }

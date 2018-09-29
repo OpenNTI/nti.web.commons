@@ -1,0 +1,18 @@
+@mixin retina-asset($path, $type: 'png', $xCount: 2) {
+	//$path will be something like ./assets/some-asset
+	//$type will be something like png
+
+	//This mixin will generate the 2x and 3x asset rules.
+
+	background-image: url($path + '.' + $type);
+
+	@media (-webkit-min-device-pixel-ratio: 1.01), (min-resolution: 1.01dppx) {
+		background-image: url($path + '@2x.' + $type);
+	}
+
+	@if ($xCount > 2) {
+		@media (-webkit-min-device-pixel-ratio: 2.2), (min-resolution: 2.2dppx) {
+			background-image: url($path + '@3x.' + $type);
+		}
+	}
+}
