@@ -6,7 +6,8 @@ export default class TextInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		value: PropTypes.string,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		type: PropTypes.string
 	}
 
 	attachInputRef = x => this.input = x;
@@ -50,7 +51,7 @@ export default class TextInput extends React.Component {
 
 
 	render () {
-		const {value, className, ...otherProps} = this.props;
+		const {value, className, type = 'text', ...otherProps} = this.props;
 		const cls = cx('nti-text-input', className);
 
 		if ('onChange' in otherProps) {
@@ -62,7 +63,7 @@ export default class TextInput extends React.Component {
 		}
 
 		return (
-			<input {...otherProps} className={cls} type="text" ref={this.attachInputRef} />
+			<input {...otherProps} className={cls} type={type} ref={this.attachInputRef} />
 		);
 	}
 }

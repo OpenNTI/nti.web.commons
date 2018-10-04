@@ -1,5 +1,6 @@
 export Clearable from './Clearable';
 export Date from './Date';
+export Email from './Email';
 export File from './File';
 export Label from './Label';
 export Number from './Number';
