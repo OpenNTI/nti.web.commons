@@ -2,8 +2,9 @@
 
 .publish-controls.flyout {
 	.flyout-inner {
+		margin-bottom: 3.5rem;
 		border-radius: rem-calc(4px);
-		background-color: #ffffff;
+		background-color: #fff;
 		box-shadow: -1px 0 4px 0 rgba(0, 0, 0, 0.21);
 		padding: rem-calc(16px);
 		width: rem-calc(310px);
@@ -28,7 +29,7 @@
 	}
 
 	.daytime-picker {
-		margin-right: rem-calc(26px)
+		margin-right: rem-calc(26px);
 	}
 
 	.radio-component {
