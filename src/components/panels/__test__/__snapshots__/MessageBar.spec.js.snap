@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Panels: Message Bar Error Snapshot 1`] = `
+<div
+  className="panels-message-bar error"
+>
+  Unable to upload file.
+</div>
+`;
+
+exports[`Panels: Message Bar Generic Snapshot 1`] = `
+<div
+  className="panels-message-bar"
+>
+  hey it's me ya boi
+</div>
+`;

@@ -4,8 +4,9 @@ import cx from 'classnames';
 
 MessageBar.propTypes = {
 	message: PropTypes.string,
-	error: PropTypes.bool//TODO: actually style this case, this is just here as an example
+	error: PropTypes.bool
 };
+
 export default function MessageBar ({message, error}) {
 	const cls = cx('panels-message-bar', {error});
 
