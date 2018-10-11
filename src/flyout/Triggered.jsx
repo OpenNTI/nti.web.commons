@@ -185,7 +185,7 @@ export default class Flyout extends React.Component {
 		//For now this can only be vertical
 		primaryAxis: PropTypes.oneOf([VERTICAL]),
 		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
-		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER]),
+		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_LEFT_OR_RIGHT, ALIGN_CENTER]),
 		//Set the max-(height|width) to keep the flyout within the window
 		constrain: PropTypes.bool,
 		sizing: PropTypes.oneOf([MATCH_SIDE]),
