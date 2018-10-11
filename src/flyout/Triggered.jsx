@@ -700,6 +700,10 @@ export default class Flyout extends React.Component {
 
 		if (React.Children.count(children) !== 1) { return children; }
 
-		return React.cloneElement(React.Children.only(children), {onDismiss: this.doClose});
+		const child = React.Children.only(children);
+
+		return typeof child.type === 'string'
+			? child // dom element
+			: React.cloneElement(child, {onDismiss: this.doClose}); // react component
 	}
 }
