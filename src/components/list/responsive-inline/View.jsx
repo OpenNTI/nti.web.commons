@@ -13,6 +13,10 @@ const defaultTrigger = React.forwardRef(({className, ...props}, ref) => {
 	);
 });
 
+const countChildren = (children) => {
+	return React.Children.toArray(children).length;
+};
+
 export default class ResponsiveInlineList extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -33,7 +37,7 @@ export default class ResponsiveInlineList extends React.Component {
 
 		this.state = {
 			settled: false,
-			boundrary: React.Children.count(props.children)
+			boundrary: countChildren(props.children)
 		};
 	}
 
@@ -56,7 +60,7 @@ export default class ResponsiveInlineList extends React.Component {
 		if (prevItems !== items) {
 			this.setState({
 				settled: false,
-				boundrary: React.Children.count(items)
+				boundrary: countChildren(items)
 			});
 		} else {
 			this.maybeSettle(this.props);
