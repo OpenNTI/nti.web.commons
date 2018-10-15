@@ -169,6 +169,7 @@ export default class ResponsiveInlineList extends React.Component {
 		return (
 			<li className="show-remaining-items-list-item">
 				<Triggered
+					className="nti-responsive-inline-list-flyout"
 					trigger={renderTrigger ? renderTrigger(items) : defaultTrigger}
 					verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 					{...flyoutProps}

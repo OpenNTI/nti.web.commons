@@ -31,3 +31,9 @@
 		}
 	}
 }
+
+.nti-responsive-inline-list-flyout {
+	& > .flyout {
+		z-index: 999;
+	}
+}
