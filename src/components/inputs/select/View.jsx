@@ -346,6 +346,7 @@ export default class SelectInput extends React.Component {
 				role="listbox"
 			>
 				<Triggered
+					constrain
 					trigger={this.renderLabel()}
 					verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 					horizontalAlign={Triggered.ALIGNMENTS.LEFT_OR_RIGHT}
