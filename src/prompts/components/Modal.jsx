@@ -37,10 +37,6 @@ export default class Modal extends React.Component {
 		close: this.close
 	})
 
-	get doNotCloseOnEscape () {
-		return !this.props.closeOnEscape;
-	}
-
 	constructor (props) {
 		super(props);
 
