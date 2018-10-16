@@ -67,14 +67,17 @@ export default class ResponsiveInlineList extends React.Component {
 		}
 	}
 
-	onWindowReszie = () => {
+	onWindowResize = () => {
 		if (this.handleWindowResize) { return; }
 
 		this.handleWindowResize = setTimeout(() => {
 			const node = this.list.current;
 
 			if (node && node.offsetWidth !== this.settledWidth) {
-				this.setState(InitialState);
+				this.setState({
+					settled: false,
+					boundrary: countChildren(this.props.children)
+				});
 			}
 
 			delete this.handleWindowResize;
@@ -131,7 +134,7 @@ export default class ResponsiveInlineList extends React.Component {
 		} else {
 			this.setState({
 				settled: false,
-				boundrary: newBoundrary
+				boundrary: newBoundrary + 1
 			});
 		}
 	}
