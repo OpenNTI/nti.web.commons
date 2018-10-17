@@ -175,6 +175,7 @@ export default class ResponsiveInlineList extends React.Component {
 					className="nti-responsive-inline-list-flyout"
 					trigger={renderTrigger ? renderTrigger(items) : defaultTrigger}
 					verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
+					horizontalAlign={Triggered.ALIGNMENTS.LEFT_OR_RIGHT}
 					{...flyoutProps}
 				>
 					<Menu items={items} />
