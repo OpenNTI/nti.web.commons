@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
+
 import {
 	getRefHandler
 } from '@nti/lib-commons';
@@ -40,6 +41,7 @@ import {
 	getInnerStylesForAlignment,
 	getAlignmentClass
 } from './utils';
+
 
 const OPEN_TIMEOUT = 300;
 const CLOSE_TIMEOUT = 500;
@@ -105,7 +107,7 @@ function getBodyDocumentGaps () {
 	const b = document.body.parentNode.getBoundingClientRect();
 	return {
 		top: a.top - b.top,
-		left: a.left - b .left
+		left: a.left - b.left
 	};
 }
 
@@ -594,6 +596,7 @@ export default class Flyout extends React.Component {
 		const open = stateOpen || controlledOpen;
 
 		delete props.children;
+		delete props.defaultState;
 		delete props.verticalAlign;
 		delete props.horizontalAlign;
 		delete props.primaryAxis;
@@ -627,9 +630,9 @@ export default class Flyout extends React.Component {
 		}
 
 		const {
-			className: parentClassName,
+			props: {className: parentClassName} = {},
 			ref: parentRef
-		} = Trigger.props || {};
+		} = Trigger;
 
 		overrides.className = cx(parentClassName, {'flyout-open': open, 'flyout-closed': !open});
 
