@@ -6,12 +6,15 @@ import {Triggered} from '../../../flyout';
 
 import Menu from './Menu';
 
-const InitialState = () => ({settled: false, boundrary: Infinity});
-const defaultTrigger = React.forwardRef(({className, ...props}, ref) => {
-	return (
-		<div className={cx('show-remaining-items', className)} ref={ref} {...props} />
-	);
-});
+const InitialState = () => ({settled: false, boundrary: Infinity, triggerClasses: []});
+
+const defaultTrigger = (classes) => {
+	return React.forwardRef(({className, ...props}, ref) => {
+		return (
+			<div className={cx('show-remaining-items', className, classes)} ref={ref} {...props} />
+		);
+	});
+};
 
 const countChildren = (children) => {
 	return React.Children.toArray(children).length;
@@ -37,7 +40,8 @@ export default class ResponsiveInlineList extends React.Component {
 
 		this.state = {
 			settled: false,
-			boundrary: countChildren(props.children)
+			boundrary: countChildren(props.children),
+			triggerClasses: []
 		};
 	}
 
@@ -140,6 +144,52 @@ export default class ResponsiveInlineList extends React.Component {
 	}
 
 
+	getTriggerClasses () {
+		return this.pendingTriggerClasses || this.state.triggerClasses;
+	}
+
+
+	setTriggerClasses (classes) {
+		this.pendingTriggerClasses = classes;
+
+		if (this.setTriggerClassesTimeout) { return; }
+
+		this.setTriggerClassesTimeout = setTimeout(() => {
+			this.setState({
+				triggerClasses: this.pendingTriggerClasses
+			});
+
+			delete this.pendingTriggerClasses;
+			delete this.setTriggerClassesTimeout;
+		}, 100);
+	}
+
+
+	addTriggerClass = (classname) => {
+		const classes = this.getTriggerClasses();
+
+		this.setTriggerClasses([...classes, classname]);
+	}
+
+
+	removeTriggerClass = (classname) => {
+		const classes = this.getTriggerClasses();
+
+		let newClasses = [];
+		let removed = false;
+
+		for (let cls of classes) {
+			if (cls === classname && !removed) {
+				removed = true;
+			} else {
+				newClasses.push(cls);
+			}
+		}
+
+		this.setTriggerClasses(newClasses);
+	}
+
+
 
 	render () {
 		const {children, className, getPropsForListItem} = this.props;
@@ -168,12 +218,14 @@ export default class ResponsiveInlineList extends React.Component {
 
 	renderMenuItems (items) {
 		const {renderTrigger, flyoutProps = {}} = this.props;
+		const {triggerClasses} = this.state;
 
 		return (
 			<li className="show-remaining-items-list-item">
+				<Menu hidden items={items} addTriggerClass={this.addTriggerClass} removeTriggerClass={this.removeTriggerClass} />
 				<Triggered
 					className="nti-responsive-inline-list-flyout"
-					trigger={renderTrigger ? renderTrigger(items) : defaultTrigger}
+					trigger={renderTrigger ? renderTrigger(items, triggerClasses) : defaultTrigger(triggerClasses)}
 					verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 					horizontalAlign={Triggered.ALIGNMENTS.LEFT_OR_RIGHT}
 					{...flyoutProps}

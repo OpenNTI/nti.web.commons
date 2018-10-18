@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 export default class ReponsiveInlineListMenu extends React.Component {
 	static propTypes = {
+		hidden: PropTypes.bool,
 		items: PropTypes.array,
-		onDismiss: PropTypes.func
+		onDismiss: PropTypes.func,
+		addTriggerClass: PropTypes.func,
+		removeTriggerClass: PropTypes.func
 	}
 
 
@@ -17,15 +21,19 @@ export default class ReponsiveInlineListMenu extends React.Component {
 	}
 
 	render () {
-		const {items} = this.props;
+		const {items, hidden, addTriggerClass, removeTriggerClass} = this.props;
 
 		return (
-			<ul className="nti-responsive-inline-list-menu">
+			<ul className={cx('nti-responsive-inline-list-menu', {hidden})} aria-hidden={hidden} hidden={hidden}>
 				{items.map((item, index) => {
 
 					return (
 						<li key={index}>
-							{React.cloneElement(item, {onDismiss: this.onDimiss})}
+							{React.cloneElement(item, {
+								onDismiss: this.onDimiss,
+								addTriggerClass: addTriggerClass,
+								removeTriggerClass: removeTriggerClass
+							})}
 						</li>
 					);
 				})}
