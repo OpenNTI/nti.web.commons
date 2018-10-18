@@ -5,12 +5,12 @@ import ReactDOM from 'react-dom';
 import {createDOM, getScrollPosition, getScrollParent, scrollElementTo} from '@nti/lib-dom';
 import {buffer} from '@nti/lib-commons';
 
-import Modal from './components/Modal';
+import Modal from './Modal';
 
 
 const setHidden = (node, hidden) => node.setAttribute('aria-hidden', hidden);
 const focusElement = (node) => node && node.focus();
-const setScroll = ({maybeRestoreScroll, scroller, left, top} = {}) => top > 0
+const setScroll = ({maybeRestoreScroll, scroller, left, top} = {}) => ((top + left) > 0)
 	&& maybeRestoreScroll()
 	&& (setTimeout(() => scrollElementTo(scroller, left, top), 1));
 const YesFn = () => true;
@@ -45,11 +45,11 @@ export class ModalManager extends EventEmitter {
 		if (ref && !ref.isPortal) {
 			ReactDOM.unmountComponentAtNode(node);
 		}
-
+		/* istanbul ignore else */
 		if (node.parentNode) {
 			document.body.removeChild(node);
 		}
-
+		/* istanbul ignore else */
 		if (ref) {
 			this.remove(ref);
 		}
@@ -63,17 +63,21 @@ export class ModalManager extends EventEmitter {
 	 * @param {String} options.className Additional classname to add to the dialog
 	 * @param {Boolean} options.closeOnMaskClick Enables dismissing the dialog when the mask is clicked.
 	 * @param {Function} options.onBeforeDismiss ----
-	 * @param {Boolean} options.tall Indicates that the content will be tall; triggers css changes
+	 * @param {Boolean} options.tall Don't center the dialog. Position it at the top instead.
 	 * @param {Node} options.mountPoint the DOM node that the dialog should mount/re-render to.
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
 	 * @param {Boolean|Function} options.restoreScroll restore scroll position on dismissal
 	 * @param {Boolean} options.forceFront push the mount point to the front of the stack on re-renders
 	 * @param {Boolean} options.usePortal opt into using a portal
 	 * @return {ModalReference} Stuff & Things
+	 * @public
 	 */
 	show (content, options = {}) {
 		//Back-compat... if the second arg is a string, wrap it into an "options" object...otherwise, passthrough.
-		options = (typeof options === 'string') ? {className: options} : options;
+		options = (typeof options === 'string')
+			/* istanbul ignore next */
+			? {className: options}
+			: options;
 
 		const {
 			className,
@@ -116,16 +120,6 @@ export class ModalManager extends EventEmitter {
 		const render = isPortal ? 'createPortal' : 'render';
 		const setReference = x => reference.component = x;
 
-		this.createModal(reference, render, setReference, dismiss, className, tall, closeOnMaskClick, isPortal, content, container);
-
-		this.add(reference);
-
-		return reference;
-
-	}
-
-
-	createModal (reference, render, setReference, dismiss, className, tall, closeOnMaskClick, isPortal, content, container) {
 		reference.portalRef = ReactDOM[render]((
 			<Modal
 				Manager={this}
@@ -135,19 +129,25 @@ export class ModalManager extends EventEmitter {
 				tall={tall}
 				closeOnMaskClick={closeOnMaskClick}
 				isPortal={isPortal}
-			>
-				{content}
-			</Modal>
+				children={content}
+			/>
 		),
 		container
 		);
+
+		this.add(reference);
+
+		return reference;
+
 	}
 
 
 	getContainer (existing, forceFront) {
 		const container = existing || createDOM({class: 'modal'});
+		/* istanbul ignore else */
 		if (forceFront || !existing) {
 			const {body} = document;
+			/* istanbul ignore else */
 			if (body.lastChild !== container) {
 				body.appendChild(container);
 			}
@@ -195,6 +195,7 @@ export class ModalManager extends EventEmitter {
 		const removingTopModal = lastIndex === index;
 		const ref = active[index];
 
+		/* istanbul ignore else */
 		if (index >= 0) {
 			const A = active.slice(0, index);
 			const B = active.slice(index + 1);
@@ -207,6 +208,7 @@ export class ModalManager extends EventEmitter {
 		this.update(); //updating has to come before refocusing.
 
 		//Only refocus if the top modal was removed.
+		/* istanbul ignore else */
 		if (removingTopModal) {
 			focusElement(refocus || (ref && ref.refocus));
 			setScroll(scroll || (ref && ref.scroll));
@@ -231,6 +233,7 @@ export class ModalManager extends EventEmitter {
 		const {active, lastIndex} = this;
 		const mainContent = document.getElementById('content');
 
+		/* istanbul ignore else */
 		if (mainContent) {
 			setHidden(mainContent, lastIndex >= 0);
 		}
@@ -271,6 +274,7 @@ export class ModalManager extends EventEmitter {
 
 	onDocumentFocus = (e) => {
 		const top = this.getTopMost();
+		/* istanbul ignore if */
 		if (!top) {
 			return;
 		}
@@ -279,11 +283,13 @@ export class ModalManager extends EventEmitter {
 
 		const isAfter = (a) => (top.mountPoint.compareDocumentPosition(a) & mask) === mask; //eslint-disable-line
 
+		/* istanbul ignore else */
 		if (!top.mountPoint.contains(e.target) && !isAfter(e.target) && document.contains(e.target)) {
 			e.stopPropagation();
 			try {
 				top.component.focus();
 			} catch (er) {
+				/* istanbul ignore next */
 				console.error('Could not focus top most component: %o', top); //eslint-disable-line no-console
 			}
 		}
@@ -292,6 +298,7 @@ export class ModalManager extends EventEmitter {
 
 	onDocumentKeyDown = (e) => {
 		const top = this.getTopMost();
+		/* istanbul ignore else */
 		if (top && top.closeOnEscape && e.keyCode === 27) {
 			top.dismiss();
 		}

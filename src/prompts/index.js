@@ -1,7 +1,6 @@
-import Prompt from './components/Prompt';
+export Dialog from './Dialog';
+import Prompt from './Prompt';
 import Manager from './ModalManager';
-
-export Dialog from './components/Dialog';
 export * from './layouts';
 
 export function alert (message, title = 'Alert', extra = {}) {

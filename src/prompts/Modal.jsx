@@ -1,28 +1,75 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import isIOS from '@nti/util-ios-version';
 import { declareCustomElement } from '@nti/lib-dom';
 
-import LockScroll from '../../components/LockScroll';
+import LockScroll from '../components/LockScroll';
 
 declareCustomElement('dialog');
 
 
 const needsSafariFix = e => e && (isIOS() && /input|textarea|select/i.test(e.target.tagName));
-const stopEvent = e => e.stopPropagation();
+const stopEvent = e => e && e.stopPropagation();
 
+/**
+ * This is the Modal Shell of a dialog or prompt. Do not use this directly unless
+ * you really want to manage the lower levels.
+ *
+ * If you are looking to lauch a modal, see {@link Dialog}
+ *
+ * @private This class should be considered impementation detail of ModalManager.
+ * @class Modal
+ */
 export default class Modal extends React.Component {
 
 	static propTypes = {
-		Manager: PropTypes.object.isRequired,
-		onDismiss: PropTypes.func.isRequired,
-		children: PropTypes.node,
+		/** @ignore */
+		children: PropTypes.any,
+		/** @ignore */
 		className: PropTypes.string,
+
+		/**
+		 * A ModalManager instance.
+		 * @private
+		 * @ignore
+		 * @type {ModalManager}
+		 */
+		Manager: PropTypes.object.isRequired,
+
+		/**
+		 * Sent by ModalManager
+		 * @ignore
+		 * @type {Boolean}
+		 */
+		isPortal: PropTypes.bool,
+
+		/**
+		 * A callback to call on requesting a dismissal.
+		 *
+		 * @private
+		 * @ignore
+		 * @type {function}
+		 */
+		onDismiss: PropTypes.func.isRequired,
+
+		/**
+		 * Enable the click listener on the mask that will call onDismiss.
+		 *
+		 * @private
+		 * @ignore
+		 * @type {boolean}
+		 */
 		closeOnMaskClick: PropTypes.bool,
-		closeOnEscape: PropTypes.bool,
-		isPortal: PropTypes.bool,//sent by ModalManager
+
+		/**
+		 * Don't center the dialog. Position it at the top instead.
+		 *
+		 * @private
+		 * @ignore
+		 * @type {boolean}
+		 */
 		tall: PropTypes.bool
 	}
 
@@ -33,9 +80,11 @@ export default class Modal extends React.Component {
 
 	attachContentRef = x => this.content = x
 
+
 	getChildContext = () => ({
 		close: this.close
 	})
+
 
 	constructor (props) {
 		super(props);
@@ -58,11 +107,13 @@ export default class Modal extends React.Component {
 	onManagerUpdate = () => !this.props.isPortal && this.forceUpdate()
 
 
+
 	close = (e) => {
 		const {onDismiss} = this.props;
-		if (e) {
-			e.stopPropagation();
-		}
+
+		stopEvent(e);
+
+		/* istanbul ignore else */
 		if (onDismiss) {
 			onDismiss(e);
 		}
@@ -105,11 +156,10 @@ export default class Modal extends React.Component {
 
 		const ios = isIOS();
 		const timeout = 500;
-		//Fragment will be undefined on react 15.
-		const Wrapper = Fragment || 'div';
+
 
 		return (
-			<Wrapper>
+			<>
 				<LockScroll />
 				<TransitionGroup>
 					<CSSTransition
@@ -128,15 +178,16 @@ export default class Modal extends React.Component {
 						>
 							<i className="icon-close" onClick={this.close}/>
 							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent}>
-								{React.cloneElement(
-									React.Children.only(children),
-									{ onDismiss: this.close }
+								{React.Children.map(children, child =>
+									typeof child.type === 'string'
+										? child
+										: React.cloneElement(child, { onDismiss: this.close })
 								)}
 							</dialog>
 						</div>
 					</CSSTransition>
 				</TransitionGroup>
-			</Wrapper>
+			</>
 		);
 	}
 

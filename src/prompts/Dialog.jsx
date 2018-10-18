@@ -4,51 +4,52 @@ import cx from 'classnames';
 import Logger from '@nti/util-logger';
 import uuid from 'uuid/v4';
 
-import Manager from '../ModalManager';
+import Manager from './ModalManager';
 
 const logger = Logger.get('common:prompts:ManagedDialog');
 
-class DialogWrapper extends React.PureComponent {
-	static propTypes = {
-		children: PropTypes.node.isRequired,
-	}
-
-
-	render () {
-		const {children, ...props} = this.props;
-		const child = React.Children.only(children);
-
-		if (child && typeof child.type === 'string') {
-			delete props.onDismiss; //silence prop warnings on dom elements
-		}
-
-		return React.cloneElement(child, props);
-	}
-}
-
-
-export default class ManagedDialog extends React.Component {
+/**
+ * Managed Dialog Component Framework. Any child of this component will
+ * be rendered into a modal portal.
+ *
+ * This sits atop the ModalManager which allows out-of-flow prompts
+ * but this component locks the Modal to the lifecycle of ___this___ component. (By disallowing
+ * dismissals without unmounting this instance)
+ *
+ * @class Dialog
+ * @component
+ */
+export default class Dialog extends React.Component {
 
 	static propTypes = {
+		/** @ignore */
 		children: PropTypes.any,
+		/** @ignore */
 		className: PropTypes.string,
 
-		// Set to false to ignore clicks/touches on the mask.
+		/** Set to false to ignore clicks/touches on the mask. */
 		closeOnMaskClick: PropTypes.bool,
-		// Set to false to ignore the escape key
+
+		/** Set to false to ignore the escape key */
 		closeOnEscape: PropTypes.bool,
 
-		//Use this to update your component's state to unmount the dialog.
+		/** Called to request dismissal of the modal. */
 		onBeforeDismiss: PropTypes.func,
 
+		/** Enables scroll memoization and restoration */
 		restoreScroll: PropTypes.any,
 
+		/**
+		 * By default modals are centered on the screen. This will override that and align
+		 * the modal to the top of the screen
+		 */
 		tall: PropTypes.bool,
 	}
 
 	mounted = true
 
 	componentDidCatch (e) {
+		/* istanbul ignore next */
 		logger.error(e.stack || e.message || e);
 	}
 
@@ -76,6 +77,7 @@ export default class ManagedDialog extends React.Component {
 
 		history.replaceState(state, title);
 
+		/* istanbul ignore else */
 		if (this.m) {
 			this.m.dismiss();
 			delete this.m;
@@ -113,7 +115,8 @@ export default class ManagedDialog extends React.Component {
 		const { [key]: rollbackCount } = state || {};
 
 		logger.debug('Requested to roll-back history by: %o', rollbackCount);
-		//If we have data in the history.state, use it instead...
+		// If we have data in the history.state, use it instead...
+		/* istanbul ignore else */
 		if (rollbackCount > 0) {
 			history.go(-rollbackCount);
 		}
@@ -124,12 +127,11 @@ export default class ManagedDialog extends React.Component {
 		const {onBeforeDismiss} = this.props;
 		if (this.mounted) {
 			logger.debug('Attempting to dismiss.');
+			/* istanbul ignore else */
 			if (onBeforeDismiss) {
 				onBeforeDismiss({
 					rollback: () => this.rollback()
 				});
-			} else {
-				logger.warn('onBeforeDismiss was not provided to the dialog component.');
 			}
 			return false; //don't dismiss unless we unmount
 		}
@@ -149,10 +151,7 @@ export default class ManagedDialog extends React.Component {
 			}
 		} = this;
 
-		this.m = Manager.show(
-			<DialogWrapper {...{
-				children
-			}}/>,
+		this.m = Manager.show(children,
 			{
 				className: cx('managed-modal', className),
 				onBeforeDismiss: this.onBeforeDismiss,
@@ -161,7 +160,7 @@ export default class ManagedDialog extends React.Component {
 				restoreScroll,
 				mountPoint,
 				tall,
-				usePortal: true,
+				usePortal: true
 			}
 		);
 
