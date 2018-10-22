@@ -5,8 +5,9 @@ import Logger from '@nti/util-logger';
 import {addClass} from '@nti/lib-dom';
 import {rawContent, wait} from '@nti/lib-commons';
 
-import Manager from '../ModalManager';
-import DialogButtons from '../../components/DialogButtons';
+import DialogButtons from '../components/DialogButtons';
+
+import Manager from './ModalManager';
 
 const logger = Logger.get('common:prompts:Prompt');
 const emptyFunction = () => {};

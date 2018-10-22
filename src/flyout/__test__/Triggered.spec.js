@@ -218,8 +218,6 @@ describe('Triggered Flyout', () => {
 		inst.doOpen();
 		jest.runAllTimers();
 
-		debugger;
-
 		inst.flyout.dispatchEvent(new MouseEvent('mouseenter'));
 		expect(inst.stopHide).toHaveBeenCalled();
 
@@ -238,7 +236,6 @@ describe('Triggered Flyout', () => {
 		const fn = jest.fn();
 		jest.spyOn(inst, 'dismiss');
 
-		debugger;
 		inst.maybeDismiss(null, fn);
 
 		expect(inst.dismiss).toHaveBeenCalled();

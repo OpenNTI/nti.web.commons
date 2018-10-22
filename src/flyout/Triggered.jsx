@@ -383,7 +383,6 @@ export default class Flyout extends React.Component {
 		}
 
 		const scrollListener = ({target}) => {
-			debugger;
 			if(target.contains(this.trigger)) {
 				this.realign();
 			}
@@ -472,7 +471,7 @@ export default class Flyout extends React.Component {
 			|| ALIGNMENT_POSITIONS[VERTICAL];
 		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis]
 			/* istanbul ignore next */
-			|| ALIGNMENT_SIZINGS[VERTICAL]
+			|| ALIGNMENT_SIZINGS[VERTICAL];
 
 		const layoutArgs = [
 			triggerRect,

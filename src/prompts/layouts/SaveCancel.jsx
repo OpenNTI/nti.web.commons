@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
-import Dialog from '../components/Dialog';
+import Dialog from '../Dialog';
 import { Responsive } from '../../layouts';
 import { DialogButtons, Panels } from '../../components';
 
