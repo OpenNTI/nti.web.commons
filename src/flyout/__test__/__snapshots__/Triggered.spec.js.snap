@@ -1,0 +1,801 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Triggered Flyout [Non-forwarded-refs] Component trigger.getDOMNode() returns node 1`] = `
+<a
+  href="#test"
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout [Non-forwarded-refs] Warns for Component triggers that do not implement getDOMNode() 1`] = `
+<a
+  href="#test"
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout [Non-forwarded-refs] Warns for Component triggers that do not implement getDOMNode() 2`] = `
+<a
+  href="#test"
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout [Non-forwarded-refs] Warns for Stateless component triggers 1`] = `
+<a
+  href="#test"
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout [Non-forwarded-refs] Warns for Stateless component triggers 2`] = `
+<a
+  href="#test"
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout Base Case 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Children recieve onDismiss prop 1`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div />
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Closing the flyout should remove listeners to window, and document 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Controlled 1`] = `
+<button
+  className="flyout-closed"
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Controlled 2`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center arrow opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "15px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-arrow"
+      />
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div>
+          My Flyout Content
+        </div>
+        <div>
+          My New Flyout Content
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Controlled 3`] = `
+<div
+  className="flyout-closed"
+/>
+`;
+
+exports[`Triggered Flyout Flys echo classnames 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Flys echo classnames 2`] = `
+Array [
+  <button
+    className="flyout-open"
+    onClick={[Function]}
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout awesome sauce bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div>
+          Lala
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Opening the flyout should add listeners to window, and document 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Realigns when flyout size changes 1`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center opened"
+      style={
+        Object {
+          "left": "-50px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "height": 100,
+              "width": 100,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Ref is not dropped from custom trigger 1`] = `
+<a
+  className="flyout-closed"
+  href="#test"
+  onClick={[Function]}
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout Specify Element Trigger 1`] = `
+<a
+  className="flyout-closed"
+  href="#test"
+  onClick={[Function]}
+>
+  Test
+</a>
+`;
+
+exports[`Triggered Flyout Specify Trigger 1`] = `
+<input
+  className="flyout-closed"
+  onClick={[Function]}
+  type="button"
+  value="Test"
+/>
+`;
+
+exports[`Triggered Flyout Transition Support 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Transition Support 2`] = `
+Array [
+  <button
+    className="flyout-open"
+    onClick={[Function]}
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout fade bottom center opening"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Transition Support 3`] = `
+Array [
+  <button
+    className="flyout-open"
+    onClick={[Function]}
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout fade bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Transition Support 4`] = `
+Array [
+  <button
+    className="flyout-open"
+    onClick={[Function]}
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout fade bottom center closing"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout Transition Support 5`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout Trigger Click Handlers 1`] = `
+<div
+  className="custom-trigger flyout-closed"
+  onClick={[Function]}
+/>
+`;
+
+exports[`Triggered Flyout alignment shorts if closed 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout clicking the flyout sets flag 1`] = `
+<button
+  className="flyout-closed"
+  onClick={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout constrained alignment does not limit height for non-top-aligned, non-fixed flyouts 1`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": "1024px",
+          }
+        }
+      >
+        <div />
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout defaultState 1`] = `
+Array [
+  <button
+    className="flyout-open"
+    onClick={[Function]}
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div>
+          My Flyout Content
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 1`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "left": 50,
+  "right": 774,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 2`] = `
+Object {
+  "height": 600,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 3`] = `
+Object {
+  "height": 600,
+  "left": 50,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 4`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "right": 774,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 5`] = `
+Object {
+  "height": 600,
+  "left": 50,
+  "right": 774,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 6`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "left": 50,
+  "right": 774,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 7`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "left": 50,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout getViewportRelativeAlignments 8`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "right": 774,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`Triggered Flyout hover over trigger opens flyout 1`] = `
+<button
+  className="flyout-closed"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout hover over trigger opens flyout 2`] = `
+Object {
+  "closeTimeout": 500,
+  "openTimeout": 300,
+}
+`;
+
+exports[`Triggered Flyout hover over trigger opens flyout 3`] = `
+Object {
+  "closeTimeout": 2,
+  "openTimeout": 1,
+}
+`;
+
+exports[`Triggered Flyout maybeDismiss() 1`] = `
+Array [
+  <button
+    className="flyout-open"
+    onClick={[Function]}
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div />
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout mouse out of flyout closes 1`] = `
+<button
+  className="flyout-closed"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  Trigger
+</button>
+`;
+
+exports[`Triggered Flyout position fixed resolition 1`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center is-fixed opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "fixed",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": 11,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": "768px",
+            "maxWidth": "1024px",
+          }
+        }
+      >
+        <div>
+          My Flyout Content
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout scrolling realigns 1`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout top center opened"
+      style={
+        Object {
+          "bottom": "NaNpx",
+          "left": "NaNpx",
+          "position": "absolute",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;
+
+exports[`Triggered Flyout zIndex resolition 1`] = `
+Array [
+  <button
+    className="flyout-open"
+  >
+    Trigger
+  </button>,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout top center opened"
+      style={
+        Object {
+          "bottom": "NaNpx",
+          "left": "NaNpx",
+          "position": "absolute",
+          "visibility": undefined,
+          "zIndex": 11,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": "1024px",
+          }
+        }
+      >
+        <div>
+          My Flyout Content
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

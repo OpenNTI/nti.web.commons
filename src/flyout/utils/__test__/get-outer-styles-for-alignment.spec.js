@@ -1,4 +1,7 @@
 /* eslint-env jest */
+import {
+	VERTICAL,
+} from '../../Constants';
 
 import getOuterStylesForAlignment from '../get-outer-styles-for-alignment';
 
@@ -16,10 +19,29 @@ describe('getOuterStylesForAlignment', () => {
 			maxHeight: 50
 		});
 
-		expect(styles.top).toEqual('50px');
-		expect(styles.bottom).toEqual('50px');
-		expect(styles.left).toEqual('50px');
-		expect(styles.right).toEqual('50px');
-		expect(styles.width).toEqual('50px');
+		expect(styles).toEqual({
+			top:'50px',
+			bottom:'50px',
+			left:'50px',
+			right:'50px',
+			width:'50px',
+		});
+
+		expect(getOuterStylesForAlignment({ bottom: 50, left: 50 }, true, VERTICAL, true)).toEqual({
+			bottom: '65px',
+			left: '27px',
+		});
+
+		expect(getOuterStylesForAlignment({ top: 50, right: 50 }, true, VERTICAL, true)).toEqual({
+			top: '65px',
+			right: '27px',
+		});
+
+		expect(getOuterStylesForAlignment({ top: 50 }, true, VERTICAL, true)).toEqual({
+			top: '65px',
+		});
 	});
+
+
+	test('No Arguments', () => expect(getOuterStylesForAlignment()).toEqual({}));
 });

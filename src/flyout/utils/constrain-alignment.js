@@ -1,4 +1,4 @@
-export default function constrainAlignment (alignment = {}, {height: viewHeight, width: viewWidth}) {
+export default function constrainAlignment (alignment = {}, {height: viewHeight, width: viewWidth} = {}) {
 	const clone = {...alignment};
 
 	if (clone.top != null) {

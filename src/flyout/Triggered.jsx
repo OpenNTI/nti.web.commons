@@ -46,12 +46,15 @@ import {
 const OPEN_TIMEOUT = 300;
 const CLOSE_TIMEOUT = 500;
 
-
-const {createElement: ce} = global.document || {};
-const makeDOM = o => ce && Object.assign(ce.call(document, o.tag || 'div'), o);
-
-
-function getViewportRelativeAlignments (element, alignment, viewport) {
+/**
+ * Exported for tests.
+ *
+ * @param  {DOMNode} element   A dom node to measure
+ * @param  {Object}  alignment The alignment description
+ * @param  {Rect}    viewport  The viewport rect.
+ * @return {Rect} A partial rect.
+ */
+export function getViewportRelativeAlignments (element, alignment, viewport) {
 	//the alignment is relative to the coordinateRoot. We need to constrain to the screen...
 	//so we need to get the current screen coordinates.
 	const rect = getRectInViewport(element);
@@ -59,14 +62,20 @@ function getViewportRelativeAlignments (element, alignment, viewport) {
 	// We now have viewport relative rect, but the alignments omit keys that do not apply...
 	// so we must also omit those keys.
 
+	/* istanbul ignore else */
 	if (alignment.top != null) { delete rect.bottom; }
+	/* istanbul ignore else */
 	if (alignment.left != null) { delete rect.right; }
+	/* istanbul ignore else */
 	if (alignment.bottom != null) { delete rect.top; }
+	/* istanbul ignore else */
 	if (alignment.right != null) { delete rect.left; }
 
 	// ClientRects left & bottom's are distance from 0,0 (top, left), where
 	// "css" bottom & left are the distance from the bottom & left sides..so we have to flip here.
+	/* istanbul ignore else */
 	if (rect.bottom != null) { rect.bottom = viewport.height - rect.bottom; }
+	/* istanbul ignore else */
 	if (rect.right != null) { rect.right = viewport.width - rect.right; }
 
 	return rect;
@@ -76,14 +85,21 @@ function getRectInDocument (el) {
 	const offsetParent = e => e && e.offsetParent;
 	const parentNode = e => e && e.parentNode && e.parentNode.tagName !== 'BODY' && e.parentNode;
 
-	const offsetParents = e => offsetParent(e) ? [e].concat(offsetParents(offsetParent(e))) : [e];
-	const parentNodes = e => parentNode(e) ? [e].concat(parentNodes(parentNode(e))) : [e];
+	const offsetParents = e => offsetParent(e)
+		? [e].concat(offsetParents(offsetParent(e)))
+		: [e];
+	const parentNodes = e => parentNode(e)
+		? [e].concat(parentNodes(parentNode(e)))
+		: [e];
 
-	const scrollSum = (a, e) => (a.top += e.scrollTop, a.left += e.scrollLeft, a);
-	const offsetSum = (a, e) => (a.top += e.offsetTop, a.left += e.offsetLeft, a);
+	const sum = s => (a, e) => {
+		a.top += e[`${s}Top`];
+		a.left += e[`${s}Left`];
+		return a;
+	};
 
-	const offset = offsetParents(el).reduce(offsetSum, {top: 0, left: 0});
-	const scrolls = parentNodes(el).reduce(scrollSum, {top: 0, left: 0});
+	const offset = offsetParents(el).reduce(sum('offset'), {top: 0, left: 0});
+	const scrolls = parentNodes(el).reduce(sum('scroll'), {top: 0, left: 0});
 	const tl = {
 		top: offset.top - scrolls.top,
 		left: offset.left - scrolls.left
@@ -124,7 +140,7 @@ function getBodySize () {
 
 
 function isFixed (el) {
-	const hasFixedPosition = x => x && getComputedStyle(x).position === 'fixed';
+	const hasFixedPosition = x => x && x.getAttribute && getComputedStyle(x).position === 'fixed';
 
 	while(el && !hasFixedPosition(el)) {
 		el = el.offsetParent;
@@ -222,7 +238,8 @@ export default class Flyout extends React.Component {
 	constructor (props) {
 		super(props);
 		this.triggerRef = React.createRef();
-		this.fly = makeDOM({className: cx('fly-wrapper', props.className)});
+		this.fly = document.createElement('div');
+		this.fly.className = cx('fly-wrapper', props.className);
 	}
 
 
@@ -249,10 +266,10 @@ export default class Flyout extends React.Component {
 				this.warnedTriggerType = true;
 				// eslint-disable-next-line no-console
 				console.warn(
-					'A Component ref was returned for the Trigger.\n%s\n%s%o',
+					'A Component ref was returned for the Trigger.\n%s\n%s%s',
 					'Implement getDOMNode() or use a Stateless Component with a forwarded ref.',
 					'Ref received: ',
-					ref
+					ref.constructor.displayName || ref.constructor.name
 				);
 			}
 			// eslint-disable-next-line react/no-find-dom-node
@@ -280,8 +297,21 @@ export default class Flyout extends React.Component {
 
 
 	componentDidUpdate (prevProps, prevState) {
-		const {props: {onDismiss, className, open:controlledOpen}, state: {open, aligning}, fly} = this;
-		const {open: wasOpen} = prevState;
+		const {
+			props: {
+				onDismiss,
+				className,
+				open:controlledOpen
+			},
+			state: {
+				open,
+				aligning
+			},
+			fly
+		} = this;
+
+		const wasOpen = prevProps.open || prevState.open;
+		const isOpen = controlledOpen || open;
 
 		const openInProps = controlledOpen != null;
 		const openInPrev = prevProps.open != null;
@@ -299,7 +329,7 @@ export default class Flyout extends React.Component {
 			delete this.warnedTriggerType;
 		}
 
-		if ((open || controlledOpen) && !aligning && this.flyout) {
+		if (isOpen && !aligning && this.flyout) {
 			const prev = this.flyoutSize;
 			const {offsetWidth: width, offsetHeight: height} = this.flyout;
 			this.flyoutSize = {width, height};
@@ -308,7 +338,7 @@ export default class Flyout extends React.Component {
 			}
 		}
 
-		if (wasOpen && !open && onDismiss) {
+		if (wasOpen && !isOpen && onDismiss) {
 			onDismiss();
 		}
 	}
@@ -316,20 +346,24 @@ export default class Flyout extends React.Component {
 
 	maybeDismiss = (e, cb) => {
 		const {target} = e || {};
-		const {trigger, flyout, state: {open}} = this;
+		const {trigger, flyout} = this;
+		const open = this.props.open || this.state.open;
+		const targetInTrigger = () => trigger && (trigger.contains(target) || target === trigger);
+
 		const finish = () => {
 			delete this.flyoutWasClicked;
 
-			typeof cb === 'function' && cb();
+			if (typeof cb === 'function') {
+				cb();
+			}
 		};
 
-		if (this.flyoutWasClicked || (e && (!trigger || !flyout || !open || target === trigger || trigger.contains(target)))) {
-			return finish();
-		}
+		const preempt = e && (!trigger || !flyout || !open || targetInTrigger());
 
-		if (!e || (!flyout.contains(target) && flyout !== target)) {
+		if ((!this.flyoutWasClicked && !preempt) && (!e || !targetInTrigger())) {
 			this.dismiss(finish);
-		} else {
+		}
+		else {
 			finish();
 		}
 	}
@@ -343,11 +377,13 @@ export default class Flyout extends React.Component {
 	listenToScroll () {
 		const {document} = global;
 
+		/* istanbul ignore if */
 		if(!document) {
 			return;
 		}
 
 		const scrollListener = ({target}) => {
+			debugger;
 			if(target.contains(this.trigger)) {
 				this.realign();
 			}
@@ -360,22 +396,28 @@ export default class Flyout extends React.Component {
 		this.unlistenToScroll = () => document.removeEventListener('scroll', scrollListener, params);
 	}
 
-	unlistenToScroll () {
-		// will be filled in on listen
-	}
+
+	// will be filled in on listen
+	/* istanbul ignore next */
+	unlistenToScroll () {}
+
 
 	flyoutClicked = () => {
 		this.flyoutWasClicked = true;
 	}
 
+
 	attachFlyoutRef = (ref) => {
 
+		/* istanbul ignore else */
 		if (ref && !this.flyout) {
 			window.addEventListener('resize', this.realign);
 			window.document.addEventListener('click', this.maybeDismiss);
 			this.listenToScroll();
 			ref.addEventListener('click', this.flyoutClicked, true);
-		} else if (!ref) {
+		}
+
+		else if (!ref) {
 			this.flyout.removeEventListener('click', this.flyoutClicked, true);
 
 			delete this.flyoutSize;
@@ -425,8 +467,12 @@ export default class Flyout extends React.Component {
 		const viewport = {top: 0, left: 0, width: getViewportWidth(), height: getViewportHeight()};
 		const coordinateRoot = fixed ? viewport : getBodySize();
 
-		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
-		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
+		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis]
+			/* istanbul ignore next */
+			|| ALIGNMENT_POSITIONS[VERTICAL];
+		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis]
+			/* istanbul ignore next */
+			|| ALIGNMENT_SIZINGS[VERTICAL]
 
 		const layoutArgs = [
 			triggerRect,
@@ -525,6 +571,7 @@ export default class Flyout extends React.Component {
 
 
 	onToggle = (e, cb) => {
+		/* istanbul ignore else */
 		if (e) {
 			if (e.isPropagationStopped()) {
 				return;
@@ -559,7 +606,7 @@ export default class Flyout extends React.Component {
 	}
 
 
-	startShow = () => {
+	startShow () {
 		const {hoverTimeouts} = this;
 
 		clearTimeout(this.showTimeout);
@@ -571,7 +618,7 @@ export default class Flyout extends React.Component {
 	}
 
 
-	startHide = () => {
+	startHide () {
 		const {hoverTimeouts} = this;
 
 		clearTimeout(this.showTimeout);
@@ -583,38 +630,44 @@ export default class Flyout extends React.Component {
 	}
 
 
-	stopHide = () => {
+	stopHide () {
 		clearTimeout(this.hideTimeout);
 	}
 
 
 	render () {
 		const hover = this.isHover();
-		const {open:stateOpen} = this.state;
-		let {trigger: Trigger, open:controlledOpen, ...props} = this.props;
-		let overrides = {};
+		const {
+			props: {open:controlledOpen, ...props},
+			state: {open:stateOpen}
+		} = this;
+		const overrides = {};
 		const open = stateOpen || controlledOpen;
 
-		delete props.children;
-		delete props.defaultState;
-		delete props.verticalAlign;
-		delete props.horizontalAlign;
-		delete props.primaryAxis;
-		delete props.constrain;
-		delete props.sizing;
+		let Trigger = props.trigger;
+
 		delete props.afterAlign;
 		delete props.alignment;
-		delete props.className;
-		delete props.onDismiss;
 		delete props.arrow;
+		delete props.children;
+		delete props.className;
+		delete props.constrain;
+		delete props.defaultState;
+		delete props.horizontalAlign;
 		delete props.hover;
+		delete props.onDismiss;
+		delete props.primaryAxis;
+		delete props.sizing;
+		delete props.trigger;
+		delete props.verticalAlign;
 
 		if (controlledOpen == null) {
 			if (hover) {
-				overrides.onMouseEnter = this.startShow;
-				overrides.onMouseLeave = this.startHide;
+				overrides.onMouseEnter = () => this.startShow();
+				overrides.onMouseLeave = () => this.startHide();
 			} else {
 				overrides.onClick = (e) => {
+					/* istanbul ignore else */
 					if (Trigger && Trigger.props && Trigger.props.onClick) {
 						Trigger.props.onClick(e);
 					}
@@ -658,7 +711,7 @@ export default class Flyout extends React.Component {
 		const {trigger} = this;
 		const fixed = isFixed(trigger);
 		const effectiveZ = getEffectiveZIndex(trigger);
-		const {width} = alignment || {};
+		const {width} = alignment;
 		const flyoutStyle = {
 			position: fixed ? 'fixed' : 'absolute',
 			visibility: aligning ? 'hidden' : void 0,
@@ -683,7 +736,10 @@ export default class Flyout extends React.Component {
 				opened: !opening && !closing
 			});
 
-		const listeners = this.isHover() ? {onMouseEnter: this.stopHide, onMouseLeave: this.startHide} : {};
+		const listeners = !this.isHover() ? {} : {
+			onMouseEnter: () => this.stopHide(),
+			onMouseLeave: () => this.startHide(),
+		};
 
 		const flyout = (
 			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle} {...listeners} >

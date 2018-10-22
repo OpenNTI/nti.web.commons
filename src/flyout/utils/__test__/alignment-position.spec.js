@@ -87,17 +87,29 @@ describe('Alignment Positions', () => {
 
 			describe('Left Or Right Alignment', () => {
 				test('More space to the left', () => {
-					const position = ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 850, right: 950}, {width: 100}, viewSize);
+					const position = ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 850, right: 950}, {offsetWidth: 100}, viewSize);
 
 					expect(position.left).toEqual(null);
 					expect(position.right).toEqual(50);
 				});
 
 				test('More space to the right', () => {
-					const position = ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 50, right: 150}, {width: 100}, viewSize);
+					const position = ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 50, right: 150}, {offsetWidth: 100}, viewSize);
 
 					expect(position.left).toEqual(50);
 					expect(position.right).toEqual(null);
+				});
+
+				test('No Information', () => {
+					const positions = [
+						ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 850, right: 950}, {}, viewSize),
+						ALIGNMENTS[ALIGN_LEFT_OR_RIGHT]({left: 50, right: 150}, {}, viewSize)
+					];
+
+					expect(positions[0].left).toEqual(null);
+					expect(positions[0].right).toEqual(50);
+					expect(positions[1].left).toEqual(50);
+					expect(positions[1].right).toEqual(null);
 				});
 			});
 

@@ -26,4 +26,10 @@ describe('getAlignmentClass', () => {
 
 		expect(cls).toEqual('bottom right');
 	});
+
+	test('Bad Inputs', () => {
+		const cls = getAlignmentClass({},'', 'junk');
+
+		expect(cls).toEqual('');
+	});
 });
