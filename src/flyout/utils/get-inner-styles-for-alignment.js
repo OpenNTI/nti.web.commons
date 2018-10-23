@@ -1,6 +1,6 @@
 import {ARROW_HEIGHT, VERTICAL} from '../Constants';
 
-export default function getInnerStylesForAlignment (alignment, arrow, primaryAxis) {
+export function getInnerStylesForAlignment (alignment, arrow, primaryAxis) {
 	let {maxWidth, maxHeight} = alignment;
 
 	if (primaryAxis === VERTICAL && arrow) {

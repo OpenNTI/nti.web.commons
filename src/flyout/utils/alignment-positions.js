@@ -14,7 +14,7 @@ import {
 } from '../Constants';
 
 
-const ALIGNMENT_POSITIONS = {
+export const ALIGNMENT_POSITIONS = {
 	//TODO: add horizontal positioning
 	[VERTICAL]: {
 		/**
@@ -204,5 +204,3 @@ const ALIGNMENT_POSITIONS = {
 		}
 	}
 };
-
-export default ALIGNMENT_POSITIONS;

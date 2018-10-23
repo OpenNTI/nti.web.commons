@@ -6,7 +6,7 @@ import {
 	ALIGN_RIGHT,
 	ALIGN_CENTER
 } from '../../Constants';
-import getAlignmentClass from '../get-alignment-class';
+import { getAlignmentClass } from '../get-alignment-class';
 
 describe('getAlignmentClass', () => {
 	test('Bottom Left', () => {

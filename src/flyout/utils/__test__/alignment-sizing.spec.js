@@ -1,6 +1,6 @@
 /* eslint-env jest */
-import {VERTICAL, MATCH_SIDE} from '../../Constants';
-import ALIGNMENT_SIZINGS from '../alignment-sizing';
+import { VERTICAL, MATCH_SIDE } from '../../Constants';
+import { ALIGNMENT_SIZINGS } from '../alignment-sizing';
 
 describe('Alignment Sizing', () => {
 	describe('Vertical Axis is Primary', () => {

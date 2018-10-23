@@ -6,7 +6,7 @@ import {
 
 const styleProps = ['top', 'bottom', 'left', 'right', 'width'];
 
-export default function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis, alignToArrow) {
+export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis, alignToArrow) {
 	const clone = {...alignment};
 
 	if (primaryAxis === VERTICAL && arrow) {

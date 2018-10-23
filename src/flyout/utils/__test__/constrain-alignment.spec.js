@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import constrainAlignment from '../constrain-alignment';
+import { constrainAlignment } from '../constrain-alignment';
 
 const viewSize = {height: 1000, width: 1000};
 

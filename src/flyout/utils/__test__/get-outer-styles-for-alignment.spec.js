@@ -3,7 +3,7 @@ import {
 	VERTICAL,
 } from '../../Constants';
 
-import getOuterStylesForAlignment from '../get-outer-styles-for-alignment';
+import { getOuterStylesForAlignment } from '../get-outer-styles-for-alignment';
 
 describe('getOuterStylesForAlignment', () => {
 	test('gets proper styles', () => {

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
-import {VERTICAL, ARROW_HEIGHT} from '../../Constants';
-import getInnerStylesForAlignment from '../get-inner-styles-for-alignment';
+import { VERTICAL, ARROW_HEIGHT } from '../../Constants';
+import { getInnerStylesForAlignment } from '../get-inner-styles-for-alignment';
 
 describe('getInnerStylesForAlignment', () => {
 	test('Max Width Only, No Arrow', () => {

@@ -12,7 +12,7 @@ import {
 
 	DEFAULT_VERTICAL
 } from '../../Constants';
-import ALIGNMENT_POSITIONS from '../alignment-positions';
+import { ALIGNMENT_POSITIONS } from '../alignment-positions';
 
 const viewSize = {height: 1000, width: 1000};
 
