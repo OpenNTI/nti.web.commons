@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import cx from 'classnames';
-
+import cx from 'classnames/bind';
 import {
-	getRefHandler
+	getRefHandler,
+	restProps
 } from '@nti/lib-commons';
 import {
 	getElementRect as getRectInViewport,
@@ -41,7 +41,28 @@ import {
 	getInnerStylesForAlignment,
 	getAlignmentClass
 } from './utils';
+const styles = {
+	arrow: 'flyout-arrow',
+	closed: 'flyout-closed',
+	closing: '',
+	dark: '',
+	fixed: 'is-fixed',
+	flyout: '',
+	hover: '',
+	open: 'flyout-open',
+	opened: '',
+	opening: '',
+	trigger: 'flyout-trigger',
+	wrapper: 'fly-wrapper',
+	inner: 'flyout-inner',
+	bottom: '',
+	top: '',
+	center: '',
+	left: '',
+	right: '',
+};
 
+const cxb = cx.bind(styles);
 
 const OPEN_TIMEOUT = 300;
 const CLOSE_TIMEOUT = 500;
@@ -173,7 +194,7 @@ function isFixed (el) {
  *			'top': the top edge of the flyout is aligned to the top edge of the trigger
  *			'bottom': the bottom edge of the flyout is aligned to the bottom edge of the trigger
  */
-export default class Flyout extends React.Component {
+export default class TriggeredFlyout extends React.Component {
 
 	static AXIS = {
 		// HORIZONTAL, // Don't expose horizontal for now
@@ -200,6 +221,27 @@ export default class Flyout extends React.Component {
 		trigger: PropTypes.any,
 		children: PropTypes.any,
 		className: PropTypes.string,
+		classes: PropTypes.shape({
+			arrow: PropTypes.string,
+			closed: PropTypes.string,
+			closing: PropTypes.string,
+			dark: PropTypes.string,
+			fixed: PropTypes.string,
+			flyout: PropTypes.string,
+			hover: PropTypes.string,
+			open: PropTypes.string,
+			opened: PropTypes.string,
+			opening: PropTypes.string,
+			trigger: PropTypes.string,
+			wrapper: PropTypes.string,
+			inner: PropTypes.string,
+			//
+			bottom: PropTypes.string,
+			top: PropTypes.string,
+			center: PropTypes.string,
+			left: PropTypes.string,
+			right: PropTypes.string,
+		}),
 		//For now this can only be vertical
 		primaryAxis: PropTypes.oneOf([VERTICAL]),
 		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
@@ -227,6 +269,26 @@ export default class Flyout extends React.Component {
 	}
 
 	static defaultProps = {
+		classes: {
+			arrow: cxb('arrow'),
+			closed: cxb('closed'),
+			closing: cxb('closing'),
+			dark: cxb('dark'),
+			fixed: cxb('fixed'),
+			flyout: cxb('flyout'),
+			hover: cxb('hover'),
+			open: cxb('open'),
+			opened: cxb('opened'),
+			opening: cxb('opening'),
+			trigger: cxb('trigger'),
+			wrapper: cxb('wrapper'),
+			inner: cxb('inner'),
+			bottom: cxb('bottom'),
+			top: cxb('top'),
+			center: cxb('center'),
+			left: cxb('left'),
+			right: cxb('right'),
+		},
 		primaryAxis: 'vertical',
 		defaultState: CLOSED
 	}
@@ -237,9 +299,10 @@ export default class Flyout extends React.Component {
 
 	constructor (props) {
 		super(props);
+
 		this.triggerRef = React.createRef();
 		this.fly = document.createElement('div');
-		this.fly.className = cx('fly-wrapper', props.className);
+		this.fly.className = cx(props.classes.wrapper, props.className);
 	}
 
 
@@ -300,6 +363,7 @@ export default class Flyout extends React.Component {
 		const {
 			props: {
 				onDismiss,
+				classes,
 				className,
 				open:controlledOpen
 			},
@@ -321,8 +385,8 @@ export default class Flyout extends React.Component {
 			console.warn('Flyout was moved from controlled to uncontrolled or vice versa.');
 		}
 
-		if (prevProps.className !== className) {
-			fly.className = cx('fly-wrapper', className);
+		if (prevProps.className !== className || classes !== prevProps.classes) {
+			fly.className = cx(classes.wrapper, className);
 		}
 
 		if (prevProps.trigger !== this.props.trigger) {
@@ -428,7 +492,13 @@ export default class Flyout extends React.Component {
 
 		this.flyout = ref;
 
-		if (!ref) {return;}
+		if (!ref) { return; }
+
+		//Keep the mount point at the end of the containing node.
+		const container = this.fly.parentNode;
+		if (container) {
+			container.appendChild(this.fly);
+		}
 
 		this.align();
 	}
@@ -637,28 +707,16 @@ export default class Flyout extends React.Component {
 	render () {
 		const hover = this.isHover();
 		const {
-			props: {open:controlledOpen, ...props},
+			props: {open:controlledOpen, classes, className, ...props},
 			state: {open:stateOpen}
 		} = this;
-		const overrides = {};
+		const overrides = {
+			...restProps(TriggeredFlyout, props)
+		};
 		const open = stateOpen || controlledOpen;
 
 		let Trigger = props.trigger;
 
-		delete props.afterAlign;
-		delete props.alignment;
-		delete props.arrow;
-		delete props.children;
-		delete props.className;
-		delete props.constrain;
-		delete props.defaultState;
-		delete props.horizontalAlign;
-		delete props.hover;
-		delete props.onDismiss;
-		delete props.primaryAxis;
-		delete props.sizing;
-		delete props.trigger;
-		delete props.verticalAlign;
 
 		if (controlledOpen == null) {
 			if (hover) {
@@ -677,20 +735,28 @@ export default class Flyout extends React.Component {
 		}
 
 
-		if (!Trigger) {
-			Trigger = ( <button>Trigger</button> );
+		if (!Trigger || typeof Trigger === 'string') {
+			Trigger = ( <button>{Trigger || 'Trigger'}</button> );
 		}
 
 		const {
-			props: {className: parentClassName} = {},
+			props: {className: triggerClassNames} = {},
 			ref: parentRef
 		} = Trigger;
 
-		overrides.className = cx(parentClassName, {'flyout-open': open, 'flyout-closed': !open});
+		overrides.className = cx(
+			classes.trigger,
+			triggerClassNames,
+			className,
+			{
+				[classes.open]: open,
+				[classes.closed]: !open
+			}
+		);
 
 		const trigger = React.isValidElement(Trigger)
 			? React.cloneElement(Trigger, {...overrides, ref: getRefHandler(parentRef, this.triggerRef)})
-			: ( <Trigger ref={this.triggerRef} {...props} {...overrides} /> );
+			: ( <Trigger ref={this.triggerRef} {...overrides} /> );
 
 
 		return (
@@ -704,7 +770,7 @@ export default class Flyout extends React.Component {
 
 	renderFlyout () {
 		const {
-			props: {className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover, transition},
+			props: {classes, className, arrow, primaryAxis, verticalAlign, horizontalAlign, dark, hover, transition},
 			state: {aligning, alignment, opening, closing}
 		} = this;
 		const {trigger} = this;
@@ -721,18 +787,18 @@ export default class Flyout extends React.Component {
 		const innerStyle = getInnerStylesForAlignment(alignment, arrow, primaryAxis);
 
 		const css = cx(
-			'flyout',
+			classes.flyout,
 			className,
 			(transition && transition.className) || '',
-			getAlignmentClass(alignment, verticalAlign, horizontalAlign),
+			getAlignmentClass(alignment, verticalAlign, horizontalAlign, classes),
 			{
-				'is-fixed': fixed,
-				arrow,
-				dark,
-				hover,
-				opening,
-				closing,
-				opened: !opening && !closing
+				[classes.arrow]: arrow,
+				[classes.dark]: dark,
+				[classes.fixed]: fixed,
+				[classes.hover]: hover,
+				[classes.closing]: closing,
+				[classes.opening]: opening,
+				[classes.opened]: !opening && !closing
 			});
 
 		const listeners = !this.isHover() ? {} : {
@@ -742,8 +808,8 @@ export default class Flyout extends React.Component {
 
 		const flyout = (
 			<div className={css} ref={this.attachFlyoutRef} style={flyoutStyle} {...listeners} >
-				{arrow && <div className="flyout-arrow"/>}
-				<div className="flyout-inner" style={innerStyle}>
+				{arrow && <div className={classes.arrow}/>}
+				<div className={classes.inner} style={innerStyle}>
 					{this.renderContent()}
 				</div>
 			</div>

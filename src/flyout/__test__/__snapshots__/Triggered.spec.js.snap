@@ -42,7 +42,7 @@ exports[`Triggered Flyout [Non-forwarded-refs] Warns for Stateless component tri
 
 exports[`Triggered Flyout Base Case 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -52,7 +52,7 @@ exports[`Triggered Flyout Base Case 1`] = `
 exports[`Triggered Flyout Children recieve onDismiss prop 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
@@ -90,7 +90,7 @@ Array [
 
 exports[`Triggered Flyout Closing the flyout should remove listeners to window, and document 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -99,7 +99,7 @@ exports[`Triggered Flyout Closing the flyout should remove listeners to window, 
 
 exports[`Triggered Flyout Controlled 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
 >
   Trigger
 </button>
@@ -108,7 +108,7 @@ exports[`Triggered Flyout Controlled 1`] = `
 exports[`Triggered Flyout Controlled 2`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
@@ -117,7 +117,7 @@ Array [
     data-type="portal"
   >
     <div
-      className="flyout bottom center arrow opened"
+      className="flyout bottom center flyout-arrow opened"
       style={
         Object {
           "left": "0px",
@@ -154,13 +154,13 @@ Array [
 
 exports[`Triggered Flyout Controlled 3`] = `
 <div
-  className="flyout-closed"
+  className="flyout-trigger new flyout-closed"
 />
 `;
 
 exports[`Triggered Flyout Flys echo classnames 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger awesome sauce flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -170,7 +170,7 @@ exports[`Triggered Flyout Flys echo classnames 1`] = `
 exports[`Triggered Flyout Flys echo classnames 2`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger awesome sauce flyout-open"
     onClick={[Function]}
   >
     Trigger
@@ -211,7 +211,7 @@ Array [
 
 exports[`Triggered Flyout Opening the flyout should add listeners to window, and document 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -221,7 +221,7 @@ exports[`Triggered Flyout Opening the flyout should add listeners to window, and
 exports[`Triggered Flyout Realigns when flyout size changes 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
@@ -266,9 +266,10 @@ Array [
 
 exports[`Triggered Flyout Ref is not dropped from custom trigger 1`] = `
 <a
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   href="#test"
   onClick={[Function]}
+  value="Test"
 >
   Test
 </a>
@@ -276,26 +277,29 @@ exports[`Triggered Flyout Ref is not dropped from custom trigger 1`] = `
 
 exports[`Triggered Flyout Specify Element Trigger 1`] = `
 <a
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   href="#test"
   onClick={[Function]}
+  value="Test"
 >
   Test
 </a>
 `;
 
 exports[`Triggered Flyout Specify Trigger 1`] = `
-<input
-  className="flyout-closed"
+<button
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
   type="button"
   value="Test"
-/>
+>
+  input
+</button>
 `;
 
 exports[`Triggered Flyout Transition Support 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -305,7 +309,7 @@ exports[`Triggered Flyout Transition Support 1`] = `
 exports[`Triggered Flyout Transition Support 2`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
     onClick={[Function]}
   >
     Trigger
@@ -343,7 +347,7 @@ Array [
 exports[`Triggered Flyout Transition Support 3`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
     onClick={[Function]}
   >
     Trigger
@@ -381,7 +385,7 @@ Array [
 exports[`Triggered Flyout Transition Support 4`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
     onClick={[Function]}
   >
     Trigger
@@ -418,7 +422,7 @@ Array [
 
 exports[`Triggered Flyout Transition Support 5`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -427,14 +431,14 @@ exports[`Triggered Flyout Transition Support 5`] = `
 
 exports[`Triggered Flyout Trigger Click Handlers 1`] = `
 <div
-  className="custom-trigger flyout-closed"
+  className="flyout-trigger custom-trigger flyout-closed"
   onClick={[Function]}
 />
 `;
 
 exports[`Triggered Flyout alignment shorts if closed 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -443,7 +447,7 @@ exports[`Triggered Flyout alignment shorts if closed 1`] = `
 
 exports[`Triggered Flyout clicking the flyout sets flag 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onClick={[Function]}
 >
   Trigger
@@ -453,7 +457,7 @@ exports[`Triggered Flyout clicking the flyout sets flag 1`] = `
 exports[`Triggered Flyout constrained alignment does not limit height for non-top-aligned, non-fixed flyouts 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
@@ -492,7 +496,7 @@ Array [
 exports[`Triggered Flyout defaultState 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
     onClick={[Function]}
   >
     Trigger
@@ -609,7 +613,7 @@ Object {
 
 exports[`Triggered Flyout hover over trigger opens flyout 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
@@ -634,7 +638,7 @@ Object {
 exports[`Triggered Flyout maybeDismiss() 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
     onClick={[Function]}
   >
     Trigger
@@ -673,7 +677,7 @@ Array [
 
 exports[`Triggered Flyout mouse out of flyout closes 1`] = `
 <button
-  className="flyout-closed"
+  className="flyout-trigger flyout-closed"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
@@ -684,7 +688,7 @@ exports[`Triggered Flyout mouse out of flyout closes 1`] = `
 exports[`Triggered Flyout position fixed resolition 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
@@ -725,7 +729,7 @@ Array [
 exports[`Triggered Flyout scrolling realigns 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
@@ -762,7 +766,7 @@ Array [
 exports[`Triggered Flyout zIndex resolition 1`] = `
 Array [
   <button
-    className="flyout-open"
+    className="flyout-trigger flyout-open"
   >
     Trigger
   </button>,
