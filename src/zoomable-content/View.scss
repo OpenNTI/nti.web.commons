@@ -1,0 +1,9 @@
+.nti-zoomable-content {
+	overflow: hidden;
+	box-shadow: 0 0 0 1px black;
+
+	.inner {
+		display: inline-block;
+		transition: transform 0.1s;
+	}
+}

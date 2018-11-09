@@ -24,6 +24,7 @@ export * as Updates from './updates';
 export * as User from './user';
 export VisibleComponentTracker from './visible-component-tracker';
 export * as Calendar from './calendar';
+export ZoomableContent from './zoomable-content';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
