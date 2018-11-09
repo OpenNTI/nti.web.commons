@@ -61,7 +61,9 @@ describe('Triggered Flyout', () => {
 			</Flyout>,
 			{createNodeMock (ref) {
 				// jsdom doesn't do layout...so fake it
-				const {type, props: {children, ...props}} = ref;
+				const {type, props: {...props}} = ref;
+				delete props.children;
+				delete props.style;
 				const el = Object.assign(document.createElement(type), props);
 
 				function measure (node, dim) {
@@ -69,8 +71,8 @@ describe('Triggered Flyout', () => {
 						return 0;
 					}
 
-					const {style, children: ch} = node.props || {};
-					const c = Array.isArray(ch) ? children : [children];
+					const {style, children} = node.props || {};
+					const c = Array.isArray(children) ? children : [children];
 
 					const value = parseInt((style || {})[dim], 10) || 0;
 
