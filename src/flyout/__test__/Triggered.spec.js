@@ -1,4 +1,5 @@
 /* eslint-env jest */
+/* eslint-disable no-console */
 jest.mock('react-dom', () => require('../../__mocks__/react-dom.disabled'));
 
 import React from 'react';
@@ -60,7 +61,7 @@ describe('Triggered Flyout', () => {
 			</Flyout>,
 			{createNodeMock (ref) {
 				// jsdom doesn't do layout...so fake it
-				const {type, props: {children, style, ...props}} = ref;
+				const {type, props: {children, ...props}} = ref;
 				const el = Object.assign(document.createElement(type), props);
 
 				function measure (node, dim) {
@@ -68,15 +69,15 @@ describe('Triggered Flyout', () => {
 						return 0;
 					}
 
-					const {style, children} = node.props || {};
-					const c = Array.isArray(children) ? children : [children];
+					const {style, children: ch} = node.props || {};
+					const c = Array.isArray(ch) ? children : [children];
 
 					const value = parseInt((style || {})[dim], 10) || 0;
 
 					return c.map(x => measure(x, dim) + value).reduce((x, i) => x + i, 0);
 				}
 
-				function getFLyout () {
+				function getFlyout () {
 					try {
 						return renderer.root.find(({props: {style: x} = {}}) => x && 'width' in x && 'height' in x);
 					} catch {
@@ -87,8 +88,8 @@ describe('Triggered Flyout', () => {
 
 				//jsdom doesn't calculate layout values... so we need to mock it.
 				Object.defineProperties(el, {
-					offsetHeight: { get: () => measure(getFLyout(), 'height') },
-					offsetWidth: { get: () => measure(getFLyout(), 'width') }
+					offsetHeight: { get: () => measure(getFlyout(), 'height') },
+					offsetWidth: { get: () => measure(getFlyout(), 'width') }
 				});
 
 				return el;
