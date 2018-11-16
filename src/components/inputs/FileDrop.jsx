@@ -44,7 +44,10 @@ export default class Upload extends React.Component {
 
 		if (!file) { return; }
 
-		if (allowedTypes && !allowedTypes[file.type]) {
+		// NTI-6986 - IE and Edge don't always provide file.type. If we don't have a type
+		// let it through for now.
+		// TODO: deduce type from file.name
+		if (allowedTypes && (file.type || '').length > 0 && !allowedTypes[file.type]) {
 			onError(this.getString('wrongType'));
 			return;
 		}
