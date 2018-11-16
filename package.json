@@ -36,7 +36,7 @@
     "component"
   ],
   "dependencies": {
-    "@nti/lib-commons": "^2.20.0",
+    "@nti/lib-commons": "^2.26.0",
     "@nti/lib-dom": "^1.6.6",
     "@nti/lib-interfaces": "^1.11.0",
     "@nti/lib-locale": "^1.0.9",
