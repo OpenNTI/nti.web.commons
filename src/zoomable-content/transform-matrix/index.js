@@ -21,7 +21,6 @@ export default function TransformMatrix (input, constraints = {}) {
 
 	const matrix = input ? [...input] : getIdentity();
 
-
 	return {
 		[MATRIX]: matrix,
 

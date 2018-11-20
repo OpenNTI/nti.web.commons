@@ -8,6 +8,8 @@ import TransformMatrix from './transform-matrix';
 import {
 	getLimitingSide,
 	getScaleForMouseWheel,
+	getScaleForPointMoves,
+	getFocusForPoints
 } from './utils';
 
 const stop = (e) => {
@@ -16,7 +18,7 @@ const stop = (e) => {
 };
 
 const pointFromMouse = t => new Point(t.pageX, t.pageY);
-
+const pointFromTouch = t => new Point(t.pageX, t.pageY, t.identifier);
 
 export default class NTIZoomable extends React.Component {
 	static propTypes = {
@@ -73,30 +75,14 @@ export default class NTIZoomable extends React.Component {
 		this.setState({
 			transform: TransformMatrix()
 				.setMinScale(scale)
-				.setMaxScale(this.props.MaxScale)
+				.setMaxScale(this.props.maxScale)
 				.setContentSize(contentSize)
 				.setBoundarySize(frameSize)
 				.scale(scale)
 		});
 	}
 
-
-	getOriginPoint () {
-		if (!this.container) { return Point.ORIGIN; }
-
-		const rect = this.container.getBoundingClientRect();
-
-		return new Point(rect.top, rect.left);
-	}
-
-
-	getPointRelativeToFrame (point) {
-		const origin = this.getOriginPoint();
-
-		return point.minus(origin);
-	}
-
-
+	//Mouse events
 	onMouseDown = (e) => {
 		stop(e);
 		this.mousePressed = true;
@@ -133,6 +119,68 @@ export default class NTIZoomable extends React.Component {
 	}
 
 
+	//Touch Events
+	onTouchStart = (e) => {
+		this.activeTouches = this.activeTouches || {};
+
+		for (let touch of e.changedTouches) {
+			const p = pointFromTouch(touch);
+
+			this.activeTouches[p.id] = p;
+		}
+	}
+
+
+	onTouchMove = (e) => {
+		this.activeTouches = this.activeTouches || {};
+
+		const touches = e.changedTouches;
+
+		if (touches.length > 1) {
+			this.onMultiTouchMove(Array.from(touches).map(t => pointFromTouch(t)));
+		} else {
+			this.onSingleTouchMove(pointFromTouch(touches[0]));
+		}
+
+		for (let touch of touches) {
+			const p = pointFromTouch(touch);
+
+			this.activeTouches[p.id] = p;
+		}
+	}
+
+
+	onSingleTouchMove (point) {
+		this.activeTouches = this.activeTouches || {};
+
+		const originalPoint = this.activeTouches[point.id];
+		const {x, y} = point.minus(originalPoint);
+
+		this.applyTranslation(x, y);
+	}
+
+
+	onMultiTouchMove (points) {
+		this.activeTouches = this.activeTouches || {};
+
+		const originalPoints = points.map(p => this.activeTouches[p.id]);
+
+		const scale = getScaleForPointMoves(points, originalPoints);
+		const around = getFocusForPoints(points);
+
+		this.applyScale(scale, around);
+	}
+
+
+	onTouchEnd = (e) => {
+		this.activeTouches = this.activeTouches || {};
+
+		for (let touch of e.changedTouches) {
+			delete this.activeTouches[touch.identitifier];
+		}
+	}
+
+
 	applyScale (scale, around) {
 		const {transform} = this.state;
 
@@ -166,9 +214,9 @@ export default class NTIZoomable extends React.Component {
 		const listeners = {};
 
 		if (isTouch) {
-			listeners.onTouchStart = () => {};
-			listeners.onTouchMove = () => {};
-			listeners.onTouchEnd = () => {};
+			listeners.onTouchStart = this.onTouchStart;
+			listeners.onTouchMove = this.onTouchMove;
+			listeners.onTouchEnd = this.onTouchEnd;
 		} else {
 			listeners.onMouseDown = this.onMouseDown;
 			listeners.onMouseMove = this.onMouseMove;
