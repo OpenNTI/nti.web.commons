@@ -75,7 +75,7 @@ export default class NTIZoomable extends React.Component {
 				.setMinScale(scale)
 				.setMaxScale(this.props.MaxScale)
 				.setContentSize(contentSize)
-				.setBoundrarySize(frameSize)
+				.setBoundarySize(frameSize)
 				.scale(scale)
 		});
 	}

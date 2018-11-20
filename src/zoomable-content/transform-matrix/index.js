@@ -29,21 +29,16 @@ export default function TransformMatrix (input, constraints = {}) {
 		setMinScale: scale => TransformMatrix(matrix, {...constraints, minScale: scale}),
 
 		setContentSize: size => TransformMatrix(matrix, {...constraints, contentSize: size}),
-
-		setBoundrarySize: size => TransformMatrix(matrix, {...constraints, boundrarySize: size}),
-
+		setBoundarySize: size => TransformMatrix(matrix, {...constraints, boundarySize: size}),
 
 		isEqual: transform => isEqual(matrix, transform[MATRIX] || transform),
-
 
 		scale: (value, around) => TransformMatrix(Scale.apply(matrix, value, around, constraints), constraints),
 		getScaleAsScalar: () => Scale.getAsScalar(matrix),
 		getScale: () => Scale.get(matrix),
 
-
 		translate: (x, y) => TransformMatrix(Translate.apply(matrix, x, y, constraints), constraints),
 		getTranslation: () => Translate.get(matrix),
-
 
 		asCSSTransform: () => Output.asCSSTransform(matrix)
 	};

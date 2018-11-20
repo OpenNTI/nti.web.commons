@@ -1,88 +1,64 @@
-import {getIdentity, multiply, scale, translate} from './utils';
-import Translate from './Translate';
-
-const Scale = {
-	apply (matrix, value, around, constraints) {
-		let newMatrix = getIdentity();
-
-		if (around) {
-			newMatrix = translate(newMatrix, around.x, around.y);
-			newMatrix = scale(newMatrix, value);
-			newMatrix = translate(newMatrix, -around.x, -around.y);
-		} else {
-			newMatrix = scale(newMatrix, value);
-		}
-
-		newMatrix = multiply(newMatrix, matrix);
-
-		if (!Scale.isValid(newMatrix, constraints)) {
-			return Scale.fitToConstraints(matrix, constraints);
-		}
-
-		return Scale.fitToConstraints(newMatrix, constraints);
-	},
+import {
+	getIdentity,
+	multiply,
+	scale,
+	translate
+} from './utils';
 
 
-	getAsScalar (matrix) {
-		const [sx, sy] = Scale.get(matrix);
+function scaleToMinAndCenter (matrix, {minScale, contentSize, boundarySize}) {
+	if (!contentSize || !boundarySize) { return matrix; }
 
-		return (sx + sy) / 2;
-	},
+	const newSize = {
+		width: contentSize.width * minScale,
+		height: contentSize.height * minScale
+	};
+	const newPosition = {
+		x: (boundarySize.width / 2) - (newSize.width / 2),
+		y: (boundarySize.height / 2) - (newSize.height / 2)
 
+	};
 
-	get (matrix) {
-		const [a, b, c, d] = matrix;
+	let newMatrix = getIdentity();
 
-		return [
-			Math.sqrt(a * a + b * b),
-			Math.sqrt(c * c + d * d)
-		];
-	},
+	newMatrix = translate(newMatrix, newPosition.x, newPosition.y);
 
+	newMatrix = scale(newMatrix, minScale);
 
-	isValid (matrix, {minScale, maxScale}) {
-		const scaleValue = Scale.getAsScalar(matrix);
-		let valid = true;
-
-		if (minScale != null && maxScale != null) {
-			valid = scaleValue >= minScale && scaleValue <= maxScale;
-		} else if (minScale != null) {
-			valid = scaleValue >= minScale;
-		} else if (maxScale != null) {
-			valid = scaleValue <= maxScale;
-		}
+	return newMatrix;
+}
 
 
-		return valid;
-	},
+function fitToConstraints (newMatrix, oldMatrix, constraints) {
+	const {minScale, maxScale} = constraints;
+	const scaleValue = scale.getAsScalar(newMatrix);
+
+	if (minScale != null && scaleValue <= minScale) { return scaleToMinAndCenter(newMatrix, constraints); }
+	if (maxScale != null && scaleValue > maxScale) { return oldMatrix; }
+
+	return newMatrix;
+}
 
 
-	fitToConstraints (matrix, {contentSize, boundrarySize, minScale}) {
-		if (!contentSize || !boundrarySize || !minScale) { return matrix; }
+function apply (matrix, value, around, constraints = {}) {
+	let newMatrix = getIdentity();
 
-		const scaleValue = Scale.getAsScalar(matrix);
-
-		if (scaleValue !== minScale) { return matrix; }
-
-		// const [oldX, oldY] = Translate.get(matrix);
-		const newSize = {
-			width: contentSize.width * scaleValue,
-			height: contentSize.height * scaleValue
-		};
-
-		let offsetX = 0;
-		let offsetY = 0;
-
-		if (newSize.width < boundrarySize.width) {
-			offsetX = (boundrarySize.width - newSize.width) / 2;
-		}
-
-		if (newSize.height < boundrarySize.height) {
-			offsetY = (boundrarySize.height - newSize.height) / 2;
-		}
-
-		return offsetX || offsetY ? Translate.apply(matrix, offsetX, offsetY, {}) : matrix;
+	if (around) {
+		newMatrix = translate(newMatrix, around.x, around.y);
+		newMatrix = scale(newMatrix, value);
+		newMatrix = translate(newMatrix, -around.x, -around.y);
+	} else {
+		newMatrix = scale(newMatrix, value);
 	}
-};
 
-export default Scale;
+	newMatrix = multiply(newMatrix, matrix);
+
+	return fitToConstraints(newMatrix, matrix, constraints);
+}
+
+
+export default {
+	apply,
+	getAsScalar: matrix => scale.getAsScalar(matrix),
+	get: matrix => scale.get(matrix)
+};
