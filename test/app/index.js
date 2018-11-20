@@ -12,7 +12,7 @@ class Test extends React.Component {
 		return (
 			<div style={{width: '500px', height: '500px'}}>
 				<ZoomableContent>
-					<img src="https://source.unsplash.com/random" />
+					<img src="https://picsum.photos/2000/3000" />
 				</ZoomableContent>
 			</div>
 		);

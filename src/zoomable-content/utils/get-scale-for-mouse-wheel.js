@@ -1,6 +1,6 @@
 const WHEEL_SCALE_FACOR = 0.1;
 
-export default function getScaleForMouseWheel (e, {aspectRatio}) {
+export default function getScaleForMouseWheel (e) {
 	const rawDelta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
 	const dir = rawDelta < 0 ? 1 : -1;
 

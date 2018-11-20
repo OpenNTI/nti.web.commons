@@ -4,16 +4,10 @@ import cx from 'classnames';
 import isTouch from '@nti/util-detection-touch';
 import {Point} from '@nti/lib-commons';
 
+import TransformMatrix from './transform-matrix';
 import {
-	createTransform,
-	// applyScale,
 	getLimitingSide,
-	getStyleForTransform,
 	getScaleForMouseWheel,
-	isValidTransform,
-	fixTransform,
-	Scale,
-	Translation
 } from './utils';
 
 const stop = (e) => {
@@ -47,13 +41,6 @@ export default class NTIZoomable extends React.Component {
 	}
 
 
-	get scale () {
-		const {transform} = this.state;
-
-		return Scale.getFrom(transform);
-	}
-
-
 	attachFrame = (x) => {
 		this.frame = x;
 		this.computeInitial();
@@ -83,27 +70,13 @@ export default class NTIZoomable extends React.Component {
 
 		const scale = limitingSide ? (frameSize[limitingSide] / contentSize[limitingSide]) : 1;
 
-		const newSize = {
-			width: Math.floor(contentSize.width * scale),
-			height: Math.floor(contentSize.height * scale)
-		};
-
-		const translate = {
-			x: (frameSize.width / 2) - (newSize.width / 2),
-			y: (frameSize.height / 2) - (newSize.height / 2)
-		};
-
 		this.setState({
-			transform: createTransform({
-				scale,
-				translate
-			}),
-			constraints: {
-				initialScale: scale,
-				maxScale: this.props.maxScale,
-				contentSize,
-				frameSize
-			}
+			transform: TransformMatrix()
+				.setMinScale(scale)
+				.setMaxScale(this.props.MaxScale)
+				.setContentSize(contentSize)
+				.setBoundrarySize(frameSize)
+				.scale(scale)
 		});
 	}
 
@@ -154,8 +127,7 @@ export default class NTIZoomable extends React.Component {
 	onWheel = (e) => {
 		stop(e);
 
-		const {constraints} = this.state;
-		const scale = getScaleForMouseWheel(e, constraints);
+		const scale = getScaleForMouseWheel(e);
 
 		this.applyScale(scale, pointFromMouse(e));
 	}
@@ -164,23 +136,23 @@ export default class NTIZoomable extends React.Component {
 	applyScale (scale, around) {
 		const {transform} = this.state;
 
-		this.applyTransform(Scale.setOn(transform, scale, around));
+		this.applyTransform(transform.scale(scale, around));
 	}
 
 
 	applyTranslation (x, y) {
 		const {transform} = this.state;
 
-		this.applyTransform(Translation.setOn(transform, x, y));
+		this.applyTransform(transform.translate(x, y));
 	}
 
 
-	applyTransform (transform) {
-		const {constraints} = this.state;
+	applyTransform (newTransform) {
+		const {transform} = this.state;
 
-		if (isValidTransform(transform, constraints)) {
+		if (!transform.isEqual(newTransform)) {
 			this.setState({
-				transform: fixTransform(transform, constraints)
+				transform: newTransform
 			});
 		}
 	}
@@ -188,8 +160,9 @@ export default class NTIZoomable extends React.Component {
 
 	render () {
 		const {children, className, ...otherProps} = this.props;
+		const {transform} = this.state;
 		const child = React.Children.only(children);
-		const style = getStyleForTransform(this.state.transform);
+		const style = transform ? transform.asCSSTransform() : TransformMatrix().asCSSTransform();
 		const listeners = {};
 
 		if (isTouch) {
