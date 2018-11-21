@@ -1,0 +1,47 @@
+@import "~@nti/style-common/all.scss";
+
+.nti-calendar-date-icon {
+	font-family: "Open Sans", sans-serif;
+	border: 2px solid $secondary-grey;
+	border-radius: 8px;
+	color: white;
+	text-transform: uppercase;
+	text-align: center;
+	width: 44px;
+
+	.month {
+		font-size: 10px;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.5);
+		background-color: $secondary-grey;
+		padding: 4px 0;
+		overflow: hidden;
+	}
+
+	.day {
+		line-height: 1.3;
+		letter-spacing: -0.5px;
+		overflow: hidden;
+	}
+
+	&[data-badge] {
+		position: relative;
+
+		&::after {
+			content: attr(data-badge);
+			position: absolute;
+			top: -0.5em;
+			right: -0.5em;
+			color: white;
+			font-size: 10px;
+			font-weight: 600;
+			border-radius: 50%;
+			background-color: $primary-red;
+			width: 0.875rem;
+			height: 0.875rem;
+			text-align: center;
+			line-height: 1.375;
+			overflow: hidden;
+		}
+	}
+}

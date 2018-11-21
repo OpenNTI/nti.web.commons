@@ -1,0 +1,14 @@
+.test-gutter {
+	position: absolute;
+	top: 140px;
+	bottom: 140px;
+	right: 15px;
+	left: auto;
+	width: 60px;
+	border-radius: 5px;
+	background-color: rgba(35, 35, 35, 0.7);
+
+	.nti-calendar-date-icon {
+		margin: 0.5rem auto;
+	}
+}

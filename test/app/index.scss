@@ -3,7 +3,8 @@
 
 body {
 	margin: 1rem;
-	font-family: 'Open Sans';
+	font-family: 'Open Sans', sans-serif;
+	min-height: calc(100vh - 2rem);
 }
 
 * {
