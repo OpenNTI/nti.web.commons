@@ -82,6 +82,22 @@ export default class NTIZoomable extends React.Component {
 		});
 	}
 
+
+	getOriginPoint () {
+		if (!this.frame) { return Point.ORIGIN; }
+
+		const rect = this.frame.getBoundingClientRect();
+
+		return new Point(rect.top, rect.left);
+	}
+
+
+	getPointRelativeToFrame (point) {
+		const origin = this.getOriginPoint();
+
+		return point.minus(origin);
+	}
+
 	//Mouse events
 	onMouseDown = (e) => {
 		stop(e);
@@ -115,7 +131,7 @@ export default class NTIZoomable extends React.Component {
 
 		const scale = getScaleForMouseWheel(e);
 
-		this.applyScale(scale, pointFromMouse(e));
+		this.applyScale(scale, this.getPointRelativeToFrame(pointFromMouse(e)));
 	}
 
 
@@ -168,7 +184,7 @@ export default class NTIZoomable extends React.Component {
 		const scale = getScaleForPointMoves(points, originalPoints);
 		const around = getFocusForPoints(points);
 
-		this.applyScale(scale, around);
+		this.applyScale(scale, this.getPointRelativeToFrame(around));
 	}
 
 
