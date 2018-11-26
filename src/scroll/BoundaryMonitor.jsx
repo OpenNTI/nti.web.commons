@@ -17,7 +17,7 @@ function getBuffer (buffer, side) {
 }
 
 
-export default class ScrollBoundraryMonitor extends React.Component {
+export default class ScrollBoundaryMonitor extends React.Component {
 	static propTypes = {
 		buffer: PropTypes.oneOfType([
 			PropTypes.number,
@@ -89,7 +89,7 @@ export default class ScrollBoundraryMonitor extends React.Component {
 
 
 	render () {
-		const props = restProps(ScrollBoundraryMonitor, this.props);
+		const props = restProps(ScrollBoundaryMonitor, this.props);
 
 		return (
 			<div {...props} onScroll={this.onScroll} ref={this.attachNode} />

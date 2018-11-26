@@ -1,1 +1,1 @@
-export BoundraryMonitor from './BoundraryMonitor';
+export BoundaryMonitor from './BoundaryMonitor';

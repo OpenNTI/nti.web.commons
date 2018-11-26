@@ -2,49 +2,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Flyout} from '../../src';
-import {DateIcon} from '../../src/calendar';
+import {Scroll} from '../../src';
 
-import Gutter from './Gutter';
+class Test extends React.Component {
+	onTop = (d) => console.log('On Top: ', d)
+	onBottom = (d) => console.log('On Bottom: ', d)
+	onLeft = (d) => console.log('On Left: ', d)
+	onRight = (d) => console.log('On Right: ', d)
 
-// import PropTypes from 'prop-types';
-// import {addFeatureCheckClasses} from '@nti/lib-dom';
 
-// class Button extends React.Component {
-// 	ref = React.createRef()
-//
-// 	getDOMNode () {
-// 		return this.ref.current;
-// 	}
-//
-// 	render () {
-// 		return <button {...this.props} ref={this.ref}>hi</button>;
-// 	}
-// }
-
-// function Test () {
-// 	return (
-// 		<div>
-// 			<Flyout.Triggered trigger={Button}>
-// 				Hi
-// 			</Flyout.Triggered>
-// 		</div>
-// 	);
-// }
-
-function CalendarTest () {
-	const Icon = React.forwardRef((props, ref) => <DateIcon badge={4} {...props} ref={ref} />);
-
-	return (
-		<Gutter>
-			<Flyout.Triggered trigger={Icon} horizontalAlign={Flyout.ALIGNMENTS.LEFT} verticalAlign={Flyout.ALIGNMENTS.TOP}>
-				<div>oh hai.</div>
-			</Flyout.Triggered>
-		</Gutter>
-	);
+	render () {
+		return (
+			<Scroll.BoundaryMonitor
+				style={{width: '500px', height: '500px', overflow: 'auto'}}
+				onTop={this.onTop}
+				onBottom={this.onBottom}
+				onLeft={this.onLeft}
+				onRight={this.onRight}
+			>
+				<div style={{height: '1000px', width: '1000px', background: 'blue'}} />
+			</Scroll.BoundaryMonitor>
+		);
+	}
 }
 
+
 ReactDOM.render(
-	<CalendarTest />,
+	<Test />,
 	document.getElementById('content')
 );
