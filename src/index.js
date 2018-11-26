@@ -15,6 +15,7 @@ export Navigation from './navigation';
 export * as Presentation from './presentation-assets';
 export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';
+export * as Scroll from './scroll';
 export * as Selection from './selection';
 export * as Switch from './switch';
 export * as SyncHeight from './sync-height';
