@@ -23,6 +23,7 @@ export Timer from './timer';
 export * as Updates from './updates';
 export * as User from './user';
 export VisibleComponentTracker from './visible-component-tracker';
+export * as Calendar from './calendar';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
