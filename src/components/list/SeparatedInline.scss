@@ -20,8 +20,7 @@
 			font-size: 1rem; //16px, we want a 14px height... thats a ratio of .875 for line-height.
 			line-height: 0.875;
 			margin-left: 0.3rem;
-			position: relative;
-			top: -1px;//middle is not quite middle...
+			margin-top: -1px; // removed the position: releative; top: -1px; caused z-index issues
 		}
 	}
 }
