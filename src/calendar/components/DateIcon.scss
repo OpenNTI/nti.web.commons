@@ -43,5 +43,9 @@
 			line-height: 1.375;
 			overflow: hidden;
 		}
+
+		&.viewed::after {
+			background-color: $tertiary-grey;
+		}
 	}
 }
