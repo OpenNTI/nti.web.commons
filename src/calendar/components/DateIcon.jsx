@@ -16,7 +16,7 @@ export default class DateIcon extends React.PureComponent {
 	render () {
 		const {date = new Date(), className, badge, viewed, ...others} = this.props;
 
-		const badgeProp = badge == null ? {} : {'data-badge': badge};
+		const badgeProp = badge ? {'data-badge': badge} : {};
 		const props = {...badgeProp, ...others};
 
 		return (
