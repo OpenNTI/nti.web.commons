@@ -46,6 +46,11 @@ export default class ScrollBoundaryMonitor extends React.Component {
 		}
 	}
 
+	getOffsetTop = () => {
+		if (this.node) {
+			return this.node.offsetTop;
+		}
+	}
 
 	setScrollTop = (scrollTop) => {
 		if (this.node) {
