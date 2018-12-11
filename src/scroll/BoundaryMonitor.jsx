@@ -52,6 +52,12 @@ export default class ScrollBoundaryMonitor extends React.Component {
 		}
 	}
 
+	canScroll = () => {
+		if (this.node) {
+			return this.node.scrollHeight > this.node.clientHeight;
+		}
+	}
+
 	setScrollTop = (scrollTop) => {
 		if (this.node) {
 			this.node.scrollTop = scrollTop;
