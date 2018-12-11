@@ -22,6 +22,7 @@ class SaveCancel extends React.Component {
 		onSave: PropTypes.func.isRequired,
 		disableSave: PropTypes.bool,
 		getString: PropTypes.func,
+		nonDialog: PropTypes.bool,
 		className: PropTypes.string
 	}
 
@@ -54,29 +55,46 @@ class SaveCancel extends React.Component {
 		return <DialogButtons buttons={buttons} />;
 	}
 
-	render () {
+	renderContents () {
 		const { className } = this.props;
+
+		return (
+			<div className={cx('save-cancel-layout', className)}>
+				<Responsive.Item
+					render={this.renderTitle}
+					query={Responsive.not(Responsive.isMobile)}
+				/>
+				<Responsive.Item
+					render={this.renderActionHeader}
+					query={Responsive.isMobile}
+				/>
+
+				<div className="save-cancel-content">
+					{this.props.children}
+				</div>
+
+				<Responsive.Item
+					render={this.renderDialogButtons}
+					query={Responsive.not(Responsive.isMobile)}
+				/>
+			</div>
+		);
+	}
+
+	render () {
+		const { nonDialog } = this.props;
+
+		if(nonDialog) {
+			return (
+				<div className="save-cancel-dialog">
+					{this.renderContents()}
+				</div>
+			);
+		}
+
 		return (
 			<Dialog className="save-cancel-dialog">
-				<div className={cx('save-cancel-layout', className)}>
-					<Responsive.Item
-						render={this.renderTitle}
-						query={Responsive.not(Responsive.isMobile)}
-					/>
-					<Responsive.Item
-						render={this.renderActionHeader}
-						query={Responsive.isMobile}
-					/>
-
-					<div className="save-cancel-content">
-						{this.props.children}
-					</div>
-
-					<Responsive.Item
-						render={this.renderDialogButtons}
-						query={Responsive.not(Responsive.isMobile)}
-					/>
-				</div>
+				{this.renderContents()}
 			</Dialog>
 		);
 	}
