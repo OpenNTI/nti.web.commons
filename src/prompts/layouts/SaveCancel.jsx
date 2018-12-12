@@ -82,18 +82,19 @@ class SaveCancel extends React.Component {
 	}
 
 	render () {
-		const { nonDialog } = this.props;
+		const { nonDialog, className } = this.props;
+		const cls = cx('save-cancel-dialog', className && className + '-dialog');
 
 		if(nonDialog) {
 			return (
-				<div className="save-cancel-dialog">
+				<div className={cls}>
 					{this.renderContents()}
 				</div>
 			);
 		}
 
 		return (
-			<Dialog className="save-cancel-dialog">
+			<Dialog className={cls}>
 				{this.renderContents()}
 			</Dialog>
 		);
