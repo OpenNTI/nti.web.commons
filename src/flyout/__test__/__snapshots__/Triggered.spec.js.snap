@@ -158,6 +158,45 @@ exports[`Triggered Flyout Controlled 3`] = `
 />
 `;
 
+exports[`Triggered Flyout Controlled doesn't auto dismiss 1`] = `
+Array [
+  <div
+    className="flyout-trigger flyout-open"
+  />,
+  <div
+    data-target-tag-name="DIV"
+    data-type="portal"
+  >
+    <div
+      className="flyout bottom center opened"
+      style={
+        Object {
+          "left": "0px",
+          "position": "absolute",
+          "top": "0px",
+          "visibility": undefined,
+          "zIndex": undefined,
+        }
+      }
+    >
+      <div
+        className="flyout-inner"
+        style={
+          Object {
+            "maxHeight": null,
+            "maxWidth": null,
+          }
+        }
+      >
+        <div>
+          Flyout Content
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
 exports[`Triggered Flyout Flys echo classnames 1`] = `
 <button
   className="flyout-trigger awesome sauce flyout-closed"

@@ -154,6 +154,23 @@ describe('Triggered Flyout', () => {
 
 	});
 
+	test('Controlled doesn\'t auto dismiss', () => {
+		const renderer = verify(
+			<Flyout open={true} trigger={<div />} >
+				<div>Flyout Content</div>
+			</Flyout>,
+			{createNodeMock}
+		);
+
+		const instance = renderer.getInstance();
+
+		jest.spyOn(instance, 'dismiss');
+
+		instance.maybeDismiss();
+
+		expect(instance.dismiss).not.toHaveBeenCalled();
+	});
+
 
 	test('defaultState', () => {
 		verify(

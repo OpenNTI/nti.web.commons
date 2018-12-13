@@ -414,6 +414,10 @@ export default class TriggeredFlyout extends React.Component {
 		const open = this.props.open || this.state.open;
 		const targetInTrigger = () => trigger && (trigger.contains(target) || target === trigger);
 
+		if (this.props.open != null) {
+			return;
+		}
+
 		const finish = () => {
 			delete this.flyoutWasClicked;
 
