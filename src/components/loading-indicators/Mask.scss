@@ -12,6 +12,9 @@ figure.loading {
 	position: absolute;
 	margin-top: -($size/2);
 	top: 50%; left: 0; right: 0;
+	//FF can't handle rendering the rotation all the time, for some reason fading it in at all
+	//seems to make it work.
+	animation: fadeIn 0.1s;
 
 	& + & {display: none;}
 
