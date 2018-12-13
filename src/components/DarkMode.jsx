@@ -1,15 +1,24 @@
 import React from 'react';
-import {addClass, removeClass} from '@nti/lib-dom';
+import {addClass, hasClass, removeClass} from '@nti/lib-dom';
 
-export default class extends React.Component {
-	static displayName = 'DarkMode';
+const noop = () => {};
+
+function maybeAdd (node, className) {
+	if (hasClass(node, className)) {
+		return noop;
+	}
+	addClass(node, className);
+	return () => removeClass(node, className);
+}
+
+export default class DarkMode extends React.Component {
 
 	componentDidMount () {
-		addClass(document.body, 'darkmode');
+		this.remove = maybeAdd(document.body, 'darkmode');
 	}
 
 	componentWillUnmount () {
-		removeClass(document.body, 'darkmode');
+		(this.remove || noop)();
 	}
 
 	render () {
