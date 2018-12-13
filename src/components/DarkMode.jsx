@@ -1,24 +1,25 @@
 import React from 'react';
-import {addClass, hasClass, removeClass} from '@nti/lib-dom';
+import {addClass, removeClass} from '@nti/lib-dom';
 
-const noop = () => {};
-
-function maybeAdd (node, className) {
-	if (hasClass(node, className)) {
-		return noop;
-	}
+function add (node, className) {
+	add.count = (add.count || 0) + 1;
 	addClass(node, className);
-	return () => removeClass(node, className);
+	return () => {
+		add.count = Math.max(add.count - 1, 0); // ensure we're never negative. shouldn't happen anyway.
+		if (!add.count) {
+			removeClass(node, className);
+		}
+	};
 }
 
 export default class DarkMode extends React.Component {
 
 	componentDidMount () {
-		this.remove = maybeAdd(document.body, 'darkmode');
+		this.remove = add(document.body, 'darkmode');
 	}
 
 	componentWillUnmount () {
-		(this.remove || noop)();
+		this.remove();
 	}
 
 	render () {
