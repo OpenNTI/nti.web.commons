@@ -57,4 +57,70 @@
 			background-color: $tertiary-grey;
 		}
 	}
+
+	&.small {
+		margin: 0 auto;
+		width: 20px;
+		font-size: 10px;
+		border-radius: 3px;
+		text-indent: 0;
+		color: #666;
+		font-weight: bold;
+		position: relative;
+
+		.month {
+			height: 4px;
+			overflow: hidden;
+			padding: 0;
+			color: transparent;
+		}
+
+		.day {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 12px;
+			letter-spacing: 0;
+
+			* > {
+				flex: 1 1 auto;
+			}
+		}
+
+		&[data-badge] {
+			&::after { // override a few badge rules declared above
+				width: 14px;
+				height: 14px;
+				top: -8px;
+				right: -9px;
+				font-weight: bold;
+				box-shadow: 0 0 0 2px white;
+			}
+		}
+
+		&::before { // the little bars at the top representing the rings; rendered via gradient
+			content: '';
+			display: block;
+			height: 4px;
+			position: absolute;
+			top: -4px;
+			left: 0;
+			right: 0;
+			$ringwidth: 2px;
+			$color: $secondary-grey;
+
+			background:
+				linear-gradient(
+					90deg,
+					transparent 10%,
+					$color 10%,
+					$color calc(10% + #{$ringwidth}),
+					transparent calc(10% + #{$ringwidth}),
+					transparent calc(90% - #{$ringwidth}),
+					$color calc(90% - #{$ringwidth}),
+					$color 90%,
+					transparent 90%
+				);
+		}
+	}
 }
