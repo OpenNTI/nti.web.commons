@@ -1,6 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {
+	getEffectiveZIndex
+} from '@nti/lib-dom';
 
 import {
 	DEFAULT_VERTICAL,
@@ -24,41 +28,9 @@ import {
 	ALIGNMENT_SIZINGS,
 	getOuterStylesForAlignment,
 	getInnerStylesForAlignment,
-	getAlignmentClass
+	getAlignmentClass,
+	getAlignmentInfo
 } from './utils';
-
-function getRelativeRect (elementRect, parentRect) {
-	const top = elementRect.top - parentRect.top;
-	const left = elementRect.left - parentRect.left;
-
-	return  {
-		top,
-		left,
-		right: left + elementRect.width,
-		bottom: top + elementRect.height,
-		width: elementRect.width,
-		height: elementRect.height
-	};
-}
-
-
-function getAlignmentInfoForParent (alignTo, parent) {
-	const alignToRect = alignTo.getBoundingClientRect();
-	const parentRect = parent.getBoundingClientRect();
-	const relativeRect = getRelativeRect(alignToRect, parentRect);
-
-	return {
-		alignToRect: relativeRect,
-		viewport: parentRect,
-		coordinateRoot: parentRect
-	};
-}
-
-
-function getAlignmentInfoForViewport () {
-	//TODO: fill this in from Triggered's align once its is set up to use this component
-	return {};
-}
 
 
 /* NOTE: for now the primary axis is always vertical
@@ -120,25 +92,111 @@ export default class AlignedFlyout extends React.Component {
 	}
 
 
+	attachFlyoutRef = (ref) => {
+		const hadFlyout = !!this.flyout;
+
+		this.flyout = ref;
+
+		if (ref && !hadFlyout) {
+			this.setupFlyout();
+		} else if (!ref) {
+			this.teardownFlyout();
+		}
+	}
+
 	state = {alignment: null, visible: false}
 
 
-	componentDidUpdate (oldProps) {
-		const {visible, alignTo:newAlign} = this.props;
-		const {alignTo:oldAlign} = oldProps;
+	constructor (props) {
+		super(props);
 
-		if (visible && newAlign !== oldAlign) {
-			this.align();
+		if (!props.parent) {
+			this.fly = document.createElement('div');
+			this.fly.className = cx(props.className);
 		}
 	}
 
 
-	attachFlyoutRef = (ref) => {
-		this.flyout = ref;
+	componentDidMount () {
+		this.mounted = true;
 
-		if (ref) {
-			this.align();
+		if (this.fly) {
+			document.body.appendChild(this.fly);
 		}
+	}
+
+
+	componentWillUnmount () {
+		this.mounted = false;
+
+		if (this.fly) {
+			document.body.removeChild(this.fly);
+		}
+	}
+
+
+	componentDidUpdate (oldProps) {
+		const {visible, alignTo:newAlign, parent} = this.props;
+		const {alignTo:oldAlign, parent:oldParent} = oldProps;
+
+		if (!parent && oldParent) {
+			this.fly = document.createElement('div');
+			this.fly.className = cx(this.props.className);
+			document.body.appendChild(this.fly);
+		}
+
+
+		if (visible && newAlign !== oldAlign) {
+			this.setState({
+				aligning: true
+			}, () => this.align());
+		}
+	}
+
+
+	listenToScroll () {
+		if (typeof document === 'undefined') { return; }
+
+		const scrollListener = () => this.realign();
+		const params = {passive: true, capture: true};
+
+
+		document.addEventListener('scroll', scrollListener, params);
+		this.unlistenToScroll = () => document.removeEventListener('scroll', scrollListener, params);
+	}
+
+
+	setupFlyout () {
+		window.addEventListener('resize', this.realign);
+		this.listenToScroll();
+
+		const container = this.fly && this.fly.parentNode;
+
+		if (container) {
+			container.appendChild(this.fly);
+		}
+
+		this.align();
+	}
+
+
+	teardownFlyout () {
+		window.removeEventListener('resize', this.realign);
+
+		if (this.unlistenToScroll) {
+			this.unlistenToScroll();
+		}
+	}
+
+
+	realign = () => {
+		if (this.realign.timeout) { return; }
+
+		this.realign.timeout = setTimeout(() => {
+			this.setState({
+				aligning: true
+			}, () => this.align());
+		}, 50);
 	}
 
 
@@ -146,7 +204,7 @@ export default class AlignedFlyout extends React.Component {
 		const {alignment:oldAlignment} = this.state;
 		const finish = (alignment) => {
 			this.setState(
-				{alignment},
+				{alignment, aligning: false},
 				typeof cb === 'function' ? cb : void cb
 			);
 		};
@@ -155,12 +213,14 @@ export default class AlignedFlyout extends React.Component {
 			finish(oldAlignment);
 		}
 
-		const {alignTo, parent, reservedMargin} = this.props;
-		const {alignToRect, coordinateRoot} = parent ? getAlignmentInfoForParent(alignTo, parent) : getAlignmentInfoForViewport(alignTo);
-		const {primaryAxis, verticalAlign, horizontalAlign, constrain, sizing} = this.props;
+		const {
+			alignTo,
+			parent,
+			reservedMargin,
+			primaryAxis, verticalAlign, horizontalAlign, constrain, sizing
+		} = this.props;
 
-		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
-		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
+		const {alignToRect, coordinateRoot, isFixed} = getAlignmentInfo(alignTo, parent);
 
 		const layoutArgs = [
 			alignToRect,
@@ -169,6 +229,9 @@ export default class AlignedFlyout extends React.Component {
 			reservedMargin
 		];
 
+		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
+		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
+
 		const verticalPosition = alignmentPositions[verticalAlign || DEFAULT_VERTICAL](...layoutArgs);
 		const horizontalPosition = alignmentPositions[horizontalAlign || DEFAULT_HORIZONTAL](...layoutArgs);
 		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](...layoutArgs);
@@ -176,7 +239,8 @@ export default class AlignedFlyout extends React.Component {
 		let newAlignment = {
 			...verticalPosition,
 			...horizontalPosition,
-			...flyoutSizing
+			...flyoutSizing,
+			isFixed
 		};
 
 
@@ -189,13 +253,57 @@ export default class AlignedFlyout extends React.Component {
 
 
 	render () {
+		const {
+			alignTo,
+			className,
+			children,
+			visible,
+			arrow,
+			dark,
+			primaryAxis,
+			verticalAlign,
+			horizontalAlign,
+			alignToArrow
+		} = this.props;
+
+		if (!visible) { return null; }
+
+		const {alignment, aligning} = this.state;
+
+		const {isFixed} = alignment || {};
+		const effectiveZ = getEffectiveZIndex(alignTo);
+
+		const outerStyles = {
+			//if the alignment isn't fixed, or we are rendering to a parent keep the position absolute
+			position: isFixed && this.fly ? 'fixed' : 'absolute',
+			visibility: aligning || !alignment ? 'hidden' : void 0,
+			zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
+			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
+		};
+		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
+		const cls = cx('aligned-flyout', className, getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign), {arrow, dark});
+
+		const flyout = (
+			<div className={cls} ref={this.attachFlyoutRef} style={outerStyles}>
+				{arrow && (<div className="flyout-arrow" />)}
+				<div className="flyout-inner" style={innerStyle}>
+					{children}
+				</div>
+			</div>
+		);
+
+		return this.fly ? ReactDOM.createPortal(flyout, this.fly) : flyout;
+	}
+
+
+	xrender () {
 		const {children, visible, className, arrow, dark, primaryAxis, verticalAlign, horizontalAlign, alignToArrow} = this.props;
-		const {alignment} = this.state;
+		const {alignment, aligning} = this.state;
 
 		if (!visible) { return null; }
 
 		const outerStyle = {
-			visibility: alignment ? void 0 : 'hidden',
+			visibility: alignment && !aligning ? void 0 : 'hidden',
 			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
 		};
 		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
