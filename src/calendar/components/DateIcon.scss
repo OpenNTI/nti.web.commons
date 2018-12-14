@@ -1,16 +1,5 @@
 @import "~@nti/style-common/all.scss";
 
-.white-shade-mask {
-	.nti-calendar-date-icon {
-		border: 2px solid $tertiary-grey;
-		color: $tertiary-grey;
-
-		.month {
-			background-color: $tertiary-grey;
-		}
-	}
-}
-
 .nti-calendar-date-icon {
 	font-family: "Open Sans", sans-serif;
 	border: 2px solid $secondary-grey;
@@ -56,6 +45,15 @@
 		}
 
 		&.viewed::after {
+			background-color: $tertiary-grey;
+		}
+	}
+
+	.white-shade-mask & {
+		border: 2px solid $tertiary-grey;
+		color: $tertiary-grey;
+
+		.month {
 			background-color: $tertiary-grey;
 		}
 	}
