@@ -302,28 +302,4 @@ export default class AlignedFlyout extends React.Component {
 
 		return this.fly ? ReactDOM.createPortal(flyout, this.fly) : flyout;
 	}
-
-
-	xrender () {
-		const {children, visible, className, arrow, dark, primaryAxis, verticalAlign, horizontalAlign, alignToArrow} = this.props;
-		const {alignment, aligning} = this.state;
-
-		if (!visible) { return null; }
-
-		const outerStyle = {
-			visibility: alignment && !aligning ? void 0 : 'hidden',
-			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
-		};
-		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
-		const cls = cx('aligned-flyout', className, getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign), {arrow, dark});
-
-		return (
-			<div className={cls} ref={this.attachFlyoutRef} style={outerStyle}>
-				{arrow && <div className="flyout-arrow" />}
-				<div className="flyout-inner" style={innerStyle}>
-					{children}
-				</div>
-			</div>
-		);
-	}
 }
