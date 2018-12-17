@@ -1,7 +1,8 @@
 @import "~@nti/style-common";
 
-.badged-item {
+.badged-item.badged-item {
 	position: relative;
+	float: none !important; // foundation declares .right and .left float !important classes. ><
 
 	&.seen {
 		.badge {
@@ -10,111 +11,56 @@
 	}
 
 	&[data-badge] {
+		$size: 14px;
+		$gap: 3px;
+
 		position: relative;
 
 		&::after {
 			content: attr(data-badge);
 			position: absolute;
+			background: $primary-red;
 			color: white;
 			font-size: 10px;
 			font-weight: 600;
 			border-radius: 50%;
-			background-color: $primary-red;
-			width: 0.875rem;
-			height: 0.875rem;
-			text-align: center;
-			line-height: 1.375;
+			text-indent: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			overflow: hidden;
+			width: $size;
+			height: $size;
+			top: #{-$size / 2};
+			right: #{-$size / 2};
 		}
 
-		&.top-right::after {
-			top: -0.5em;
-			right: -0.5em;
+		&.top::after {
+			top: #{-$size / 2};
+			bottom: auto;
 		}
 
-		&.top-left::after {
-			top: -0.5em;
-			left: -0.5em;
+		&.left::after {
+			left: #{-$size / 2};
+			right: auto;
 		}
 
-		&.bottom-left::after {
-			bottom: -0.5em;
-			left: -0.5em;
+		&.bottom::after {
+			bottom: #{-$size / 2};
+			top: auto;
 		}
 
-		&.bottom-right::after {
-			bottom: -0.5em;
-			right: -0.5em;
+		&.right::after {
+			right: #{-$size / 2};
+			left: auto;
 		}
 
 		&.viewed::after {
 			background-color: $tertiary-grey;
 		}
-	}
 
-	&.small {
-		margin: 0 auto;
-		width: 20px;
-		font-size: 10px;
-		border-radius: 3px;
-		text-indent: 0;
-		color: #666;
-		font-weight: bold;
-		position: relative;
-
-		.month {
-			height: 4px;
-			overflow: hidden;
-			padding: 0;
-			color: transparent;
-		}
-
-		.day {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 12px;
-			letter-spacing: 0;
-
-			* > {
-				flex: 1 1 auto;
-			}
-		}
-
-		&[data-badge] {
-			&::after { // override a few badge rules declared above
-				width: 14px;
-				height: 14px;
-				top: -8px;
-				right: -9px;
-				font-weight: bold;
-				box-shadow: 0 0 0 2px white;
-			}
-		}
-
-		&::before { // the little bars at the top representing the rings; rendered via gradient
-			content: '';
-			display: block;
-			height: 4px;
-			position: absolute;
-			top: -4px;
-			left: 0;
-			right: 0;
-			$ringwidth: 2px;
-			$color: $secondary-grey;
-
-			background:
-				linear-gradient(
-					90deg,
-					transparent 10%,
-					$color 10%,
-					$color calc(10% + #{$ringwidth}),
-					transparent calc(10% + #{$ringwidth}),
-					transparent calc(90% - #{$ringwidth}),
-					$color calc(90% - #{$ringwidth}),
-					$color 90%,
-					transparent 90%
-				);
+		.badged-item-content {
+			mask-image: radial-gradient(circle at top right, transparent 0, transparent #{$size / 2 + $gap}, black #{$size / 2 + $gap + 1px});
 		}
 	}
 }
