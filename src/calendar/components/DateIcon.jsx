@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {DateTime} from '../../';
+import {DateTime, Badge} from '../../';
 
 export default class DateIcon extends React.PureComponent {
 
@@ -10,21 +10,19 @@ export default class DateIcon extends React.PureComponent {
 		className: PropTypes.string,
 		date: PropTypes.object,
 		badge: PropTypes.number,
-		viewed: PropTypes.bool,
-		small: PropTypes.bool
+		viewed: PropTypes.bool
 	}
 
 	render () {
-		const {date = new Date(), className, badge, small, viewed} = this.props;
-
-		const badgeProp = badge > 0 ? {'data-badge': badge > 99 ? '!' : badge} : {};
-		const props = {...badgeProp};
+		const {date = new Date(), className} = this.props;
 
 		return (
-			<div className={cx('nti-calendar-date-icon', className, {viewed, small})} {...props}>
-				<div className="month">{DateTime.format(date, 'MMM')}</div>
-				<div className="day">{DateTime.format(date, 'D')}</div>
-			</div>
+			<Badge position={Badge.POSITIONS.TOP_RIGHT} {...this.props}>
+				<div className={cx('nti-calendar-date-icon', className)}>
+					<div className="month">{DateTime.format(date, 'MMM')}</div>
+					<div className="day">{DateTime.format(date, 'D')}</div>
+				</div>
+			</Badge>
 		);
 	}
 }

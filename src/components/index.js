@@ -14,6 +14,7 @@ export ActiveStateContainer from './ActiveStateContainer';
 export AssetIcon from './AssetIcon';
 export Avatar from './Avatar';
 export Background from './Background';
+export Badge from './Badge';
 export Banner from './Banner';
 export BufferedInput from './BufferedInput';
 export Button from './Button';
