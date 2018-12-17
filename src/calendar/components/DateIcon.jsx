@@ -15,10 +15,10 @@ export default class DateIcon extends React.PureComponent {
 	}
 
 	render () {
-		const {date = new Date(), className, badge, small, viewed, ...others} = this.props;
+		const {date = new Date(), className, badge, small, viewed} = this.props;
 
 		const badgeProp = badge > 0 ? {'data-badge': badge > 99 ? '!' : badge} : {};
-		const props = {...badgeProp, ...others};
+		const props = {...badgeProp};
 
 		return (
 			<div className={cx('nti-calendar-date-icon', className, {viewed, small})} {...props}>
