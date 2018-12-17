@@ -32,6 +32,8 @@ import {
 	getAlignmentInfo
 } from './utils';
 
+//TODO: Change triggered to use this under the hood
+
 
 /* NOTE: for now the primary axis is always vertical
  *
@@ -67,7 +69,9 @@ export default class AlignedFlyout extends React.Component {
 		dark: PropTypes.bool,
 
 		alignTo: PropTypes.shape({
-			getBoundingClientRect: PropTypes.func
+			getBoundingClientRect: PropTypes.func,
+			offsetParent: PropTypes.object,
+			parentNode: PropTypes.object
 		}).isRequired,
 		parent: PropTypes.shape({
 			getBoundingClientRect: PropTypes.func
@@ -123,6 +127,10 @@ export default class AlignedFlyout extends React.Component {
 		if (this.fly) {
 			document.body.appendChild(this.fly);
 		}
+
+		if (this.props.visible) {
+			this.align();
+		}
 	}
 
 
@@ -137,7 +145,7 @@ export default class AlignedFlyout extends React.Component {
 
 	componentDidUpdate (oldProps) {
 		const {visible, alignTo:newAlign, parent} = this.props;
-		const {alignTo:oldAlign, parent:oldParent} = oldProps;
+		const {alignTo:oldAlign, parent:oldParent, visible: oldVisible} = oldProps;
 
 		if (!parent && oldParent) {
 			this.fly = document.createElement('div');
@@ -146,7 +154,7 @@ export default class AlignedFlyout extends React.Component {
 		}
 
 
-		if (visible && newAlign !== oldAlign) {
+		if (visible && (newAlign !== oldAlign || !oldVisible)) {
 			this.setState({
 				aligning: true
 			}, () => this.align());
