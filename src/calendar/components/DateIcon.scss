@@ -1,5 +1,21 @@
 @import "~@nti/style-common/all.scss";
 
+.nti-calendar-date-icon-small-wrapper {
+	/*
+	badge mask workaround:
+	The badge component masks its child element to knock out a transparent ring around the badge.
+	That mask hides anything that falls outside the element's bounds, including our pseudo/before
+	element (below) we're using to draw the little calendar binder rings/bars at the top of the small
+	icon.
+
+	To get around this we're adding top padding to leave room for the bars, then compensating with
+	negative top margin. Finally, the component itself specifies a corresponding badge offset prop
+	so the badge itself lines up as expected.
+	*/
+	padding-top: 4px;
+	margin-top: -4px;
+}
+
 .nti-calendar-date-icon {
 	font-family: "Open Sans", sans-serif;
 	border: 2px solid $secondary-grey;
