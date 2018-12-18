@@ -41,6 +41,21 @@ function getBodyDocumentGaps () {
 }
 
 
+function getBodySize () {
+	if (typeof document === 'undefined') { return {width: 0, height: 0, top: 0, left: 0}; }
+
+	const el = document.body;
+	const getDim = x => Math.max(el[`client${x}`], el[`offset${x}`]);
+	const tl = getBodyDocumentGaps();
+
+	return {
+		height: getDim('Height'),
+		width: getDim('Width'),
+		...tl
+	};
+}
+
+
 function getViewportRect () {
 	const width = getViewportWidth();
 	const height = getViewportHeight();
@@ -83,7 +98,7 @@ function getAlignmentInViewport (alignTo) {
 
 function getRectInDocument (el) {
 	const offsetParent = e => e && e.offsetParent;
-	const parentNode = e => e.parentNode && e.parentNode.tagName !== 'BODY' && e.parentNode;
+	const parentNode = e => e && e.parentNode && e.parentNode.tagName !== 'BODY' && e.parentNode;
 
 	const offsetParents = e => (offsetParent(e) ? [e].concat(offsetParents(offsetParent(e))) : [e]);
 	const parentNodes = e => (parentNode(e) ? [e].concat(parentNodes(parentNode(e))) : [e]);
@@ -106,7 +121,6 @@ function getRectInDocument (el) {
 	const width = el.offsetWidth;
 	const height = el.offsetHeight;
 
-	const parentRect = getViewportRect();
 	const alignToRect = {
 		top,
 		left,
@@ -118,8 +132,8 @@ function getRectInDocument (el) {
 
 	return {
 		alignToRect,
-		viewport: parentRect,
-		coordinateRoot: parentRect
+		viewport: getViewportRect(),
+		coordinateRoot: getBodySize()
 	};
 }
 
