@@ -33,7 +33,7 @@ export default createReactClass({
 
 		return (
 			<div className={cx('content-banner', className)}>
-				<Asset contentPackage={item && item.CatalogEntry} type={preferBackground ? 'background' : 'landing'}>
+				<Asset contentPackage={(item && item.CatalogEntry) || item} type={preferBackground ? 'background' : 'landing'}>
 					<img/>
 				</Asset>
 				<label>
