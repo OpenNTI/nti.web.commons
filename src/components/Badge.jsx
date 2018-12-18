@@ -33,7 +33,7 @@ export default class Badge extends React.Component {
 		};
 
 		const badgeProp = badge > 0 ? {'data-badge': badge > 99 ? '!' : badge} : {};
-		const props = {...badgeProp, 'data-badge': 4, style};
+		const props = {...badgeProp, style};
 
 		return (
 			<div className={cx('badged-item', positionCls, { viewed })} {...props}>
