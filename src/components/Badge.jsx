@@ -27,10 +27,12 @@ export default class Badge extends React.Component {
 		const {props: {viewed, badge, position, children, offset: {x = 0, y = 0} = {}}} = this;
 
 		const positionCls = position || Badge.POSITIONS.TOP_RIGHT;
-		const style = x === 0 && y === 0 ? {} : {
+		const needsStyle = !!badge && (x !== 0 || y !== 0);
+
+		const style = needsStyle ? {
 			...(x !== 0 ? {'--badge-offset-x': `${x}px`} : {}),
 			...(y !== 0 ? {'--badge-offset-y': `${y}px`} : {})
-		};
+		} : {};
 
 		const badgeProp = badge > 0 ? {'data-badge': badge > 99 ? '!' : badge} : {};
 		const props = {...badgeProp, style};
