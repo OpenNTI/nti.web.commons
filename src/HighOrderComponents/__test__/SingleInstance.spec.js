@@ -22,11 +22,7 @@ describe ('Single Instance Decorator', () => {
 
 	@SingleInstance
 	class Single extends React.PureComponent {
-		render () {
-			return (
-				<div className="test-component">Test</div>
-			);
-		}
+		render = () => <div className="test-component">Test</div>
 	}
 
 	test('Renders only one instance', () => {
@@ -61,18 +57,18 @@ describe ('Single Instance Decorator', () => {
 		}
 
 		let length = 3;
-		const instance = renderer.create(<Test key="root" length={length} />);
+		const instance = renderer.create(<Test length={length} />);
 		const components = () => instance.root.findAllByProps({className: 'test-component'});
 
 		expect(instance.root.findAllByType(Single)).toHaveLength(length);
 		expect(components()).toHaveLength(1);
 
 		for(; length > 0; length--) {
-			instance.update(<Test key="root" length={length} />);
+			instance.update(<Test length={length} />);
 			expect(components()).toHaveLength(1);
 		}
 
-		instance.update(<Test key="root" length={length} />);
+		instance.update(<Test length={length} />);
 		expect(components()).toHaveLength(0);
 	});
 });
