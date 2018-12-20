@@ -87,8 +87,6 @@
 		}
 
 		&.center-right {
-			height: 100%;
-
 			&::after { // position the badge
 				top: calc(50% + var(--badge-offset-y, 0px));
 				right: $badge-x;
