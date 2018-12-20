@@ -34,7 +34,7 @@ export default class TextInput extends React.Component {
 		const {onChange} = this.props;
 
 		if (onChange) {
-			onChange(e.target.value);
+			onChange(e.target.value, e);
 		}
 	}
 
