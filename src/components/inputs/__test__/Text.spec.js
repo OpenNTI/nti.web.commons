@@ -33,7 +33,7 @@ describe('Text Input', () => {
 
 			input.simulate('change', {target: {value: 'new'}});
 
-			expect(props.onChange).toHaveBeenCalledWith('new');
+			expect(props.onChange).toHaveBeenCalledWith('new', expect.any(Object));
 		});
 
 		test('Setting new prop updates input', () => {
