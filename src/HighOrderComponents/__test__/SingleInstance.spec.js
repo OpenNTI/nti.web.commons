@@ -44,12 +44,8 @@ describe ('Single Instance Decorator', () => {
 
 	test('One instance remains in DOM until all unmount', () => {
 		class Test extends React.PureComponent {
-			static propTypes = {
-				length: PropTypes.number
-			}
-
 			render () {
-				const {length} = this.props;
+				const {length} = this.props; //eslint-disable-line react/prop-types
 				return (
 					<div>{Array.from({length}, (_, i) => <Single key={i} />)}</div>
 				);
