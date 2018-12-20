@@ -1,27 +1,44 @@
+import EventEmitter from 'events';
+
 import React from 'react';
 
-class ReferenceCounter {
+const ID_CHANGED = 'active-id-changed';
+
+class ReferenceCounter extends EventEmitter {
 
 	static counters = {};
 	static instanceFor (Cmp) {
 		return this.counters[Cmp] = this.counters[Cmp] || new this();
 	}
 
-	instances = []
+	ids = []
+	nextId = 1
 
-	add = instance => {
-		this.instances.push(instance);
+	subscribe = cb => {
+		const unsub = () => this.removeListener(ID_CHANGED, cb);
+		unsub(); // prevent multiple for the same listener. shouldn't be necessary, but safe > sorry.
+		this.addListener(ID_CHANGED, cb);
+		return unsub;
 	}
 
-	remove = instance => {
-		const index = this.instances.indexOf(instance);
+	add = () => {
+		const id = this.newId();
+		this.ids.push(id);
+		const shouldRender = this.ids[0] === id;
+		return {id, shouldRender};
+	}
+
+	remove = id => {
+		const index = this.ids.indexOf(id);
 		if (index > -1) {
-			this.instances.splice(index, 1);
+			this.ids.splice(index, 1);
 		}
-		this.instances.forEach(i => i.forceUpdate());
+		if (index === 0 && this.ids.length > 0) {
+			this.emit(ID_CHANGED, this.ids[0]);
+		}
 	}
 
-	shouldRender = instance => this.instances[0] === instance
+	newId = () => this.nextId++
 }
 
 /**
@@ -35,16 +52,27 @@ export default function SingleInstanceDecorator (Cmp) {
 	return class SingleInstance extends React.Component {
 		constructor (props) {
 			super(props);
-			counter.add(this);
+			this.unsubscribe = counter.subscribe(this.onActiveIdChange);
+			this.state = counter.add();
 		}
 
 		componentWillUnmount () {
-			counter.remove(this);
+			const {id} = this.state;
+
+			if (this.unsubscribe) {
+				this.unsubscribe();
+				delete this.unsubscribe;
+			}
+			counter.remove(id);
 		}
 
+		onActiveIdChange = id => this.setState({shouldRender: id === this.state.id})
+
 		render () {
+			const {shouldRender} = this.state;
+
 			return (
-				counter.shouldRender(this)
+				shouldRender
 					? <Cmp {...this.props} />
 					: null
 			);
