@@ -4,6 +4,7 @@ export Email from './Email';
 export File from './File';
 export Label from './Label';
 export Number from './Number';
+export Percentage from './Percentage';
 export Select from './select';
 export Text from './Text';
 export TextArea from './TextArea';
