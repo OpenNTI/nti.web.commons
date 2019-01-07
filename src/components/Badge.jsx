@@ -16,7 +16,12 @@ export default class Badge extends React.Component {
 	static propTypes = {
 		viewed: PropTypes.bool,
 		badge: PropTypes.number,
-		position: PropTypes.oneOf(Badge.POSITIONS.TOP_LEFT, Badge.POSITIONS.TOP_RIGHT, Badge.POSITIONS.BOTTOM_LEFT, Badge.POSITIONS.BOTTOM_RIGHT),
+		position: PropTypes.oneOf([
+			Badge.POSITIONS.TOP_LEFT,
+			Badge.POSITIONS.TOP_RIGHT,
+			Badge.POSITIONS.BOTTOM_LEFT,
+			Badge.POSITIONS.BOTTOM_RIGHT]
+		),
 		children: PropTypes.any,
 		offset: PropTypes.shape({
 			x: PropTypes.number,
