@@ -38,6 +38,9 @@ export default class BaseEntity extends React.Component {
 		this.setState = () => {};
 	}
 
+	getUsername (usernameSeed) {
+		return 'Anonymous User';	// do we need to show identifying numbers after Anonymous User?
+	}
 
 	async fillIn (props = this.props) {
 		const task = this.task = new Date();
@@ -52,7 +55,15 @@ export default class BaseEntity extends React.Component {
 				set({entity});
 			}
 		} catch (e) {
-			set({error: e});
+			const unresolvedName = this.getUsername(props.entity.username || props.entity);
+
+			set({
+				error: e,
+				entity: {
+					displayName: unresolvedName,
+					username: unresolvedName
+				}
+			});
 		}
 	}
 }
