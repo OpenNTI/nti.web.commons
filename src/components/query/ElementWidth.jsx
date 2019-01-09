@@ -34,6 +34,13 @@ export default class QueryElementWidth extends React.Component {
 	}
 
 
+	componentDidUpdate () {
+		if (this.ref) {
+			this.computeMatches();
+		}
+	}
+
+
 	computeMatches () {
 		const {queries, onChange} = this.props;
 		const {width:lastWidth} = this.state;
