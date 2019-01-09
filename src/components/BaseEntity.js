@@ -61,7 +61,8 @@ export default class BaseEntity extends React.Component {
 				error: e,
 				entity: {
 					displayName: unresolvedName,
-					username: unresolvedName
+					username: unresolvedName,
+					getID: () => { '__unresolvedUser__';}
 				}
 			});
 		}
