@@ -1,5 +1,113 @@
 @import "~@nti/style-common";
 
+@mixin base-badge ($size, $gap, $font-size) {
+	position: relative;
+
+	// the var() calls require the unit, even on zero.
+	// stylelint-disable length-zero-no-unit
+	$badge-x: calc(#{-$size / 2} + var(--badge-offset-x, 0px));
+	$badge-y: calc(#{-$size / 2} + var(--badge-offset-y, 0px));
+	$mask-x: calc(0px - var(--badge-offset-x, 0px));
+	$mask-y: calc(0px - var(--badge-offset-y, 0px));
+
+	&::after {
+		content: attr(data-badge);
+		position: absolute;
+		background: $primary-red;
+		color: white;
+		font-size: $font-size;
+		font-weight: 600;
+		border-radius: 50%;
+		text-indent: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		width: $size;
+		height: $size;
+	}
+
+	.badged-item-content {
+		height: 100%;
+		mask-image: radial-gradient(circle, transparent 0, transparent #{$size / 2 + $gap}, black #{$size / 2 + $gap + 1px});
+		mask-size: 200% 200%; // big enough to cover entire element when positioned at the corner
+		mask-position: left $mask-x bottom $mask-y; // center @ right top (default, same as .top-right)
+	}
+
+	&.top-left {
+		&::after { // position the badge
+			top: $badge-y;
+			right: auto;
+			bottom: auto;
+			left: $badge-x;
+		}
+
+		.badged-item-content { // position the mask
+			mask-position: right $mask-x bottom $mask-y; // center @ left top
+		}
+	}
+
+	&.top-right {
+		&::after { // position the badge
+			top: $badge-y;
+			right: $badge-x;
+			bottom: auto;
+			left: auto;
+		}
+
+		.badged-item-content { // position the mask
+			mask-position: left $mask-x bottom $mask-y; // center @ right top
+		}
+	}
+
+	&.bottom-right {
+		&::after { // position the badge
+			top: auto;
+			right: $badge-x;
+			bottom: $badge-y;
+			left: auto;
+		}
+
+		.badged-item-content { // position the mask
+			mask-position: left $mask-x top $mask-y; // center @ right top
+		}
+	}
+
+	&.center-right {
+		&::after { // position the badge
+			top: calc(50% + var(--badge-offset-y, 0px));
+			right: $badge-x;
+			bottom: auto;
+			left: auto;
+			transform: translateY(-50%);
+		}
+
+		.badged-item-content { // position the mask
+			$mask-y: calc(50% + var(--badge-offset-y, 0px) + #{$gap / 4});
+
+			mask-position: left $mask-x top $mask-y; // center @ right top
+		}
+	}
+
+	&.bottom-left {
+		&::after { // position the badge
+			top: auto;
+			right: auto;
+			bottom: $badge-y;
+			left: $badge-x;
+		}
+
+		.badged-item-content { // position the mask
+			mask-position: right $mask-x top $mask-y; // center @ left bottom
+		}
+	}
+	// stylelint-enable length-zero-no-unit
+
+	&.viewed::after {
+		background-color: $tertiary-grey;
+	}
+}
+
 .badged-item.badged-item {
 	position: relative;
 	float: none !important; // foundation declares .right and .left float !important classes. ><
@@ -11,113 +119,28 @@
 	}
 
 	&[data-badge] {
-		$size: 14px;
-		$gap: 2px;
+		@include base-badge(14px, 2px, 10px);
 
-		position: relative;
-
-		// the var() calls require the unit, even on zero.
-		// stylelint-disable length-zero-no-unit
-		$badge-x: calc(#{-$size / 2} + var(--badge-offset-x, 0px));
-		$badge-y: calc(#{-$size / 2} + var(--badge-offset-y, 0px));
-		$mask-x: calc(0px - var(--badge-offset-x, 0px));
-		$mask-y: calc(0px - var(--badge-offset-y, 0px));
-
-		&::after {
-			content: attr(data-badge);
-			position: absolute;
-			background: $primary-red;
-			color: white;
-			font-size: 10px;
-			font-weight: 600;
-			border-radius: 50%;
-			text-indent: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			overflow: hidden;
-			width: $size;
-			height: $size;
+		&.large {
+			@include base-badge(18px, 2px, 12px);
 		}
 
-		.badged-item-content {
-			height: 100%;
-			mask-image: radial-gradient(circle, transparent 0, transparent #{$size / 2 + $gap}, black #{$size / 2 + $gap + 1px});
-			mask-size: 200% 200%; // big enough to cover entire element when positioned at the corner
-			mask-position: left $mask-x bottom $mask-y; // center @ right top (default, same as .top-right)
-		}
-
-		&.top-left {
-			&::after { // position the badge
-				top: $badge-y;
-				right: auto;
-				bottom: auto;
-				left: $badge-x;
-			}
-
-			.badged-item-content { // position the mask
-				mask-position: right $mask-x bottom $mask-y; // center @ left top
+		&.success {
+			&::after {
+				background: #3fb34f;
 			}
 		}
 
-		&.top-right {
-			&::after { // position the badge
-				top: $badge-y;
-				right: $badge-x;
-				bottom: auto;
-				left: auto;
-			}
-
-			.badged-item-content { // position the mask
-				mask-position: left $mask-x bottom $mask-y; // center @ right top
+		&.alert {
+			&::after {
+				background: $primary-red;
 			}
 		}
 
-		&.bottom-right {
-			&::after { // position the badge
-				top: auto;
-				right: $badge-x;
-				bottom: $badge-y;
-				left: auto;
+		&.inactive {
+			&::after {
+				background: $tertiary-grey;
 			}
-
-			.badged-item-content { // position the mask
-				mask-position: left $mask-x top $mask-y; // center @ right top
-			}
-		}
-
-		&.center-right {
-			&::after { // position the badge
-				top: calc(50% + var(--badge-offset-y, 0px));
-				right: $badge-x;
-				bottom: auto;
-				left: auto;
-				transform: translateY(-50%);
-			}
-
-			.badged-item-content { // position the mask
-				$mask-y: calc(50% + var(--badge-offset-y, 0px) + #{$gap / 4});
-
-				mask-position: left $mask-x top $mask-y; // center @ right top
-			}
-		}
-
-		&.bottom-left {
-			&::after { // position the badge
-				top: auto;
-				right: auto;
-				bottom: $badge-y;
-				left: $badge-x;
-			}
-
-			.badged-item-content { // position the mask
-				mask-position: right $mask-x top $mask-y; // center @ left bottom
-			}
-		}
-		// stylelint-enable length-zero-no-unit
-
-		&.viewed::after {
-			background-color: $tertiary-grey;
 		}
 	}
 }
