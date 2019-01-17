@@ -115,12 +115,16 @@ export default class NumberInput extends React.Component {
 	onValueChange (value) {
 		const {onChange, value:oldValue, min, max, constrain} = this.props;
 
-		if (constrain && !isNaN(max)) {
-			value = Math.min(value, getNumber(max));
-		}
+		if(value != null) {
+			// null value is acceptable, even constrained.  Contraints should only be placed on numerical values
 
-		if (constrain && !isNaN(min)) {
-			value = Math.max(value, getNumber(min));
+			if (constrain && !isNaN(max)) {
+				value = Math.min(value, getNumber(max));
+			}
+
+			if (constrain && !isNaN(min)) {
+				value = Math.max(value, getNumber(min));
+			}
 		}
 
 		if (value !== oldValue && onChange) {
