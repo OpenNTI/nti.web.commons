@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import FilePickerButton from '../FilePickerButton';
 
@@ -80,9 +81,11 @@ export default class File extends React.Component {
 			this.input = x;
 		};
 
+		const {label = 'Choose file', className} = this.props;
+
 		let props = {
 			icon: 'upload',
-			label: this.props.label || 'Choose file',
+			label,
 			available: true,
 			onChange: this.onChange,
 			onDrop: this.onChange,
@@ -94,7 +97,7 @@ export default class File extends React.Component {
 		}
 
 		return (
-			<div className="nti-file-input">
+			<div className={cx('nti-file-input', className)}>
 				<FilePickerButton
 					{...props}
 				/>
