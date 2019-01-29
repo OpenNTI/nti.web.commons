@@ -1,13 +1,12 @@
 /* eslint-env jest */
 jest.mock('react-dom', () => require('../../__mocks__/react-dom.disabled'));
 jest.mock('@nti/util-ios-version', () => () => global.simulateIOS);
-jest.mock('@nti/lib-dom', () => Object.assign(
-	require.requireActual('@nti/lib-dom'), {
-		getScrollPosition: () => ({
-			top: 100,
-			left: 0,
-		})
-	}));
+jest.mock('@nti/lib-dom', () => ({ ...require.requireActual('@nti/lib-dom'),
+	getScrollPosition: () => ({
+		top: 100,
+		left: 0,
+	})
+}));
 
 import React from 'react';
 
