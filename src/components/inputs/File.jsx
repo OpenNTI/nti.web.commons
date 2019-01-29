@@ -34,8 +34,10 @@ export default class File extends React.Component {
 	}
 
 	clearFile = (e) => {
-		e.stopPropagation();
-		e.preventDefault();
+		if (e) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
 
 		this.setState( { file: undefined });
 
