@@ -29,6 +29,8 @@ export default class ScrollBoundaryMonitor extends React.Component {
 			})
 		]),
 
+		window: PropTypes.bool,
+
 		onTop: PropTypes.func,
 		onBottom: PropTypes.func,
 		onLeft: PropTypes.func,
@@ -36,12 +38,34 @@ export default class ScrollBoundaryMonitor extends React.Component {
 
 		onScroll: PropTypes.func
 	}
+	
+	componentDidMount () {
+		const {window: win} = this.props;
 
+		if (win) {
+			const scroller = document.scrollingElement || document.documentElement;
+			this.attachNode(scroller, true);
+			window.addEventListener('scroll', this.onScroll);
+			this.stopListening = () => {
+				window.removeEventListener('scroll', this.onScroll);
+				if (this.node === scroller) {
+					delete this.node;
+				}
+			};
+		}
+	}
 
-	attachNode = (node) => {
+	componentWillUnmount () {
+		if (this.stopListening) {
+			this.stopListening();
+			delete this.stopListening;
+		}
+	}
+
+	attachNode = (node, silent) => {
 		this.node = node;
 
-		if (node) {
+		if (node && !silent) {
 			this.checkBoundraries();
 		}
 	}
@@ -107,9 +131,10 @@ export default class ScrollBoundaryMonitor extends React.Component {
 
 
 	render () {
+		const {window: win, children} = this.props;
 		const props = restProps(ScrollBoundaryMonitor, this.props);
 
-		return (
+		return win ? children : (
 			<div {...props} onScroll={this.onScroll} ref={this.attachNode} />
 		);
 	}
