@@ -66,7 +66,7 @@ export default class ScrollBoundaryMonitor extends React.Component {
 		this.node = node;
 
 		if (node && !silent) {
-			this.checkBoundraries();
+			this.checkBoundaries();
 		}
 	}
 
@@ -92,7 +92,7 @@ export default class ScrollBoundaryMonitor extends React.Component {
 	onScroll = (e) => {
 		const {onScroll} = this.props;
 
-		this.checkBoundraries(e);
+		this.checkBoundaries(e);
 
 		if (onScroll) {
 			onScroll(e);
@@ -100,7 +100,7 @@ export default class ScrollBoundaryMonitor extends React.Component {
 	}
 
 
-	checkBoundraries () {
+	checkBoundaries () {
 		const {onTop, onBottom, onLeft, onRight} = this.props;
 
 		this.maybeCallForSide('top', onTop);
