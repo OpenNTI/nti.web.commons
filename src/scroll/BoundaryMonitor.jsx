@@ -36,6 +36,14 @@ export default class ScrollBoundaryMonitor extends React.Component {
 		onLeft: PropTypes.func,
 		onRight: PropTypes.func,
 
+		/**
+		 * Called by componentDidUpdate with a canScroll parameter.
+		 * This is intended to be combined with the window prop to allow a component to monitor whether the
+		 * window is scrollable after a render. A component using onBottom to load additional data might
+		 * otherwise have no way of triggering the next fetch if the view remains too short to scroll.
+		 */
+		onUpdate: PropTypes.func,
+
 		onScroll: PropTypes.func
 	}
 	
@@ -59,6 +67,15 @@ export default class ScrollBoundaryMonitor extends React.Component {
 		if (this.stopListening) {
 			this.stopListening();
 			delete this.stopListening;
+		}
+	}
+
+
+	componentDidUpdate () {
+		const {onUpdate} = this.props;
+
+		if (onUpdate) {
+			onUpdate(this.canScroll());
 		}
 	}
 
