@@ -56,7 +56,8 @@ export default class Table extends React.Component {
 		rowClassName: PropTypes.func,
 		sortOn: PropTypes.string,
 		sortDirection: PropTypes.string,
-		onSortChange: PropTypes.func
+		onSortChange: PropTypes.func,
+		onRowClick: PropTypes.func
 	}
 
 	render () {
@@ -68,7 +69,8 @@ export default class Table extends React.Component {
 			rowClassName,
 			sortOn,
 			sortDirection,
-			onSortChange
+			onSortChange,
+			onRowClick
 		} = this.props;
 
 		const hasHeader = columns.some(x => x.HeaderComponent || x.Name);
@@ -93,13 +95,13 @@ export default class Table extends React.Component {
 		
 				<tbody>
 					{items.map((item, row) => (
-						<tr key={row} className={!rowClassName ? void 0 : rowClassName(item, row, items)}>
-							{columns.map((Cell, cell) => (
-								Cell.rendersContainer
-									? <Cell key={cell} item={item} store={store}/>
-									: <td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
-							))}
-						</tr>
+						<Row key={row}
+							item={item}
+							columns={columns}
+							className={!rowClassName ? void 0 : rowClassName(item, row, items)}
+							store={store}
+							onClick={onRowClick}
+						/>
 					))}
 				</tbody>
 		
@@ -115,6 +117,39 @@ export default class Table extends React.Component {
 					</tfoot>
 				)}
 			</table>
+		);
+	}
+}
+
+class Row extends React.Component {
+
+	static propTypes = {
+		columns: PropTypes.array,
+		item: PropTypes.any,
+		store: PropTypes.any,
+		onClick: PropTypes.func
+	}
+
+	onClick = e => {
+		const {item, onClick} = this.props;
+
+		if (onClick) {
+			onClick(item, e);
+		}
+	}
+
+	render () {
+		const {columns, item, store, onClick} = this.props;
+		const clickHandler = onClick ? this.onClick : void 0;
+
+		return (
+			<tr onClick={clickHandler}>
+				{columns.map((Cell, cell) => (
+					Cell.rendersContainer
+						? <Cell key={cell} item={item} store={store} />
+						: <td key={cell} className={Cell.cssClassName}><Cell item={item} store={store} /></td>
+				))}
+			</tr>
 		);
 	}
 }
