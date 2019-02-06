@@ -41,65 +41,80 @@ const EMPTY = () => null;
  *   }
  */
 
-Table.propTypes = {
-	className: PropTypes.string, // core prop, to allow customizing the table.
-	columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object])).isRequired, //classes return 'function' as a typeof check
-	items: PropTypes.oneOfType([
-		PropTypes.shape({
-			map: PropTypes.func
-		}),
-		PropTypes.array
-	]).isRequired, //rows
-	store: PropTypes.any, //Optional
-	rowClassName: PropTypes.func,
-	sortOn: PropTypes.string,
-	sortDirection: PropTypes.string,
-	onSortChange: PropTypes.func
-};
+export default class Table extends React.Component {
+	
+	static propTypes = {
+		className: PropTypes.string, // core prop, to allow customizing the table.
+		columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object])).isRequired, //classes return 'function' as a typeof check
+		items: PropTypes.oneOfType([
+			PropTypes.shape({
+				map: PropTypes.func
+			}),
+			PropTypes.array
+		]).isRequired, //rows
+		store: PropTypes.any, //Optional
+		rowClassName: PropTypes.func,
+		sortOn: PropTypes.string,
+		sortDirection: PropTypes.string,
+		onSortChange: PropTypes.func
+	}
 
-export default function Table ({className, columns, items, store, rowClassName, sortOn, sortDirection, onSortChange}) {
-	const hasHeader = columns.some(x => x.HeaderComponent || x.Name);
-	const hasFooter = columns.some(x => x.FooterComponent);
-	return (
-		<table className={cx('nti-generic-table', className)}>
-			{hasHeader && (
-				<thead>
-					<tr>
-						{columns.map(({HeaderComponent = EMPTY, cssClassName, Name, SortKey},i) => (
-							<th key={i} className={cx(cssClassName, Name && 'nti-table-simple-header')}>
-								{HeaderComponent && HeaderComponent !== EMPTY
-									? <HeaderComponent store={store} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
-									: <SimpleHeader sortKey={SortKey} name={Name} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
-								}
-							</th>
-						))}
-					</tr>
-				</thead>
-			)}
+	render () {
+		const {
+			className,
+			columns,
+			items,
+			store,
+			rowClassName,
+			sortOn,
+			sortDirection,
+			onSortChange
+		} = this.props;
 
-			<tbody>
-				{items.map((item, row) => (
-					<tr key={row} className={!rowClassName ? void 0 : rowClassName(item, row, items)}>
-						{columns.map((Cell, cell) => (
-							Cell.rendersContainer
-								? <Cell key={cell} item={item} store={store}/>
-								: <td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
-						))}
-					</tr>
-				))}
-			</tbody>
+		const hasHeader = columns.some(x => x.HeaderComponent || x.Name);
+		const hasFooter = columns.some(x => x.FooterComponent);
 
-			{hasFooter && (
-				<tfoot>
-					<tr>
-						{columns.map(({FooterComponent = EMPTY, cssClassName},i) => (
-							<th key={i} className={cssClassName}>
-								<FooterComponent store={store}/>
-							</th>
-						))}
-					</tr>
-				</tfoot>
-			)}
-		</table>
-	);
+		return (
+			<table className={cx('nti-generic-table', className)}>
+				{hasHeader && (
+					<thead>
+						<tr>
+							{columns.map(({HeaderComponent = EMPTY, cssClassName, Name, SortKey},i) => (
+								<th key={i} className={cx(cssClassName, Name && 'nti-table-simple-header')}>
+									{HeaderComponent && HeaderComponent !== EMPTY
+										? <HeaderComponent store={store} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
+										: <SimpleHeader sortKey={SortKey} name={Name} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
+									}
+								</th>
+							))}
+						</tr>
+					</thead>
+				)}
+		
+				<tbody>
+					{items.map((item, row) => (
+						<tr key={row} className={!rowClassName ? void 0 : rowClassName(item, row, items)}>
+							{columns.map((Cell, cell) => (
+								Cell.rendersContainer
+									? <Cell key={cell} item={item} store={store}/>
+									: <td key={cell} className={Cell.cssClassName}><Cell item={item} store={store}/></td>
+							))}
+						</tr>
+					))}
+				</tbody>
+		
+				{hasFooter && (
+					<tfoot>
+						<tr>
+							{columns.map(({FooterComponent = EMPTY, cssClassName},i) => (
+								<th key={i} className={cssClassName}>
+									<FooterComponent store={store}/>
+								</th>
+							))}
+						</tr>
+					</tfoot>
+				)}
+			</table>
+		);
+	}
 }
