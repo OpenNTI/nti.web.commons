@@ -7,7 +7,7 @@ Radio.propTypes = {
 	checked: PropTypes.bool,
 	children: PropTypes.any,
 	green: PropTypes.bool,
-	label: PropTypes.string,
+	label: PropTypes.node,
 	name: PropTypes.string,
 	disabled: PropTypes.bool,
 };
