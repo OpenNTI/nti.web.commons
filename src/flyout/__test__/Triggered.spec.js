@@ -508,7 +508,7 @@ describe('Triggered Flyout', () => {
 		expect(renderer.getInstance().trigger).toBeFalsy();
 
 		expect(console.error).toHaveBeenCalledWith(
-			expect.stringMatching('Warning: Function components cannot be given refs. Attempts to access this ref will fail.%s%s'),
+			expect.stringContaining('Function components cannot be given refs'),
 			expect.anything(),
 			expect.anything());
 		expect(console.warn).toHaveBeenCalledWith(
@@ -530,7 +530,7 @@ describe('Triggered Flyout', () => {
 		expect(renderer2.getInstance().trigger).toBeFalsy();
 
 		expect(console.error).toHaveBeenCalledWith(
-			expect.stringMatching('Warning: Function components cannot be given refs. Attempts to access this ref will fail.%s%s'),
+			expect.stringContaining('Function components cannot be given refs'),
 			expect.anything(),
 			expect.anything());
 		expect(console.warn).toHaveBeenCalledWith(
