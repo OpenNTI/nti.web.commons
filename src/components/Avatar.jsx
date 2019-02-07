@@ -23,7 +23,10 @@ export default class Avatar extends BaseEntity {
 			PropTypes.string
 		]),
 
-		className: PropTypes.string
+		className: PropTypes.string,
+
+		// fill for non-square avatars; 'none', 'src' or a canvas fillStyle compatible value.
+		letterbox: PropTypes.string 
 	}
 
 
@@ -78,7 +81,7 @@ export default class Avatar extends BaseEntity {
 
 	render () {
 		const {entity} = this.state;
-		const {className, ...props} = this.props;
+		const {className, letterbox = 'black', ...props} = this.props;
 
 		if (!entity) { return null; }
 
@@ -90,6 +93,7 @@ export default class Avatar extends BaseEntity {
 
 		const childProps = {
 			...props,
+			letterbox,
 			'data-for': User.getDebugUsernameString(entity),
 			alt: 'Avatar for ' + displayName,
 			className: cx('avatar', color, className)

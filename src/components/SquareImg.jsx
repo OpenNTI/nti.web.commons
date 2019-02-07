@@ -6,7 +6,35 @@ import {DataURIs} from '../constants';
 const {BLANK_AVATAR} = DataURIs;
 const isSquare = (w, h) => w === h && ![w, h].some(isNaN) && w > 0;
 
-export function getSquareSrc (image) {
+function letterbox (ctx, image, type) {
+	if (!type || type === 'none' || type === 'transparent') {
+		return;
+	}
+
+	const {width: size} = ctx;
+
+	if (type === 'src') {
+		const {naturalWidth: w, naturalHeight: h} = image;
+		const scale = Math.max(size / Math.min(w, h), 3);
+		const sw = w * scale;
+		const sh = h * scale;
+		
+		ctx.save();
+		ctx.translate(size / 2, size / 2);
+		ctx.globalAlpha = 0.5;
+		ctx.drawImage(image, -sw / 2, -sh / 2, sw, sh);
+		ctx.restore();
+		return;
+	}
+
+	// fillStyle
+	ctx.save();
+	ctx.fillStyle = type;
+	ctx.fillRect(0, 0, size, size);
+	ctx.restore();
+}
+
+export function getSquareSrc (image, letterboxType) {
 	const {src, naturalWidth: w, naturalHeight: h} = image || {};
 
 	if (isSquare(w, h)) {
@@ -18,9 +46,11 @@ export function getSquareSrc (image) {
 	const ctx = canvas.getContext('2d');
 	const size = canvas.width = canvas.height = ctx.width = ctx.height = isNaN(w) ? DEFAULT_SIZE : Math.max(w, h);
 
+	letterbox(ctx, image, letterboxType);
+	
 	ctx.translate(size / 2, size / 2);
 	ctx.drawImage(image, -w / 2, -h / 2);
-	
+
 	return canvas.toDataURL();
 }
 
@@ -34,7 +64,8 @@ export default class Square extends React.Component {
 	}
 	
 	static propTypes = {
-		src: PropTypes.string
+		src: PropTypes.string,
+		letterbox: PropTypes.string // 'src' or color
 	};
 	
 	state = {};
@@ -57,7 +88,7 @@ export default class Square extends React.Component {
 
 	onLoad = ({target} = {}) => {
 		this.setState({
-			src: getSquareSrc(target)
+			src: getSquareSrc(target, this.props.letterbox)
 		});
 	};
 
