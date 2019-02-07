@@ -6,12 +6,12 @@ import {User} from '@nti/web-client';
 import {DataURIs} from '../constants';
 
 import BaseEntity from './BaseEntity';
+import Square from './SquareImg';
 
 const {BLANK_AVATAR, BLANK_GROUP_AVATAR} = DataURIs;
 
 const DEFAULT = { entity: {avatarURL: BLANK_AVATAR }};
 const DEFAULT_GROUP = { entity: {avatarURL: BLANK_GROUP_AVATAR }};
-
 
 export default class Avatar extends BaseEntity {
 
@@ -96,13 +96,13 @@ export default class Avatar extends BaseEntity {
 		};
 
 		return avatarURL ? (
-			<img {...childProps} src={avatarURL} onError={this.setUnknown}/>
+			<Square {...childProps} src={avatarURL} onError={this.setUnknown} />
 		) : initials ? (
 			<svg {...childProps} viewBox="0 0 32 32">
 				<text textAnchor="middle" x="16px" y="21px">{initials}</text>
 			</svg>
 		) : (
-			<img {...childProps} src={this.fallback()}/>
+			<Square {...childProps} src={this.fallback()}/>
 		);
 	}
 }
