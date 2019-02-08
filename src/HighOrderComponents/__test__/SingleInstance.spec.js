@@ -1,7 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-console */
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 

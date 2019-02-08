@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
+
 import Modal from '../Modal';
 import ModalManager from '../ModalManager';
 

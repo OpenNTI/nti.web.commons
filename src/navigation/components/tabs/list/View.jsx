@@ -9,12 +9,12 @@ import Tab from './Tab';
 import Menu from './Menu';
 
 const InitialState = () => ({settled: false, tabsInMenu: {}, activeOffset: null});
-const trigger = React.forwardRef(({className, ...props}, ref) => {
-	return (<div className={cx('show-remaining-tabs', className)} ref={ref} {...props}/>);
-});
-const activeTrigger = React.forwardRef(({className, ...props}, ref) => {
-	return (<div className={cx('show-remaining-tabs', 'active', className)} ref={ref} {...props} />);
-});
+
+const TriggerFwdRef = ({className, ...props}, ref) => (<div className={cx('show-remaining-tabs', className)} ref={ref} {...props}/>);
+const trigger = React.forwardRef(TriggerFwdRef);
+
+const ActiveTriggerFwdRef = ({className, ...props}, ref) => (<div className={cx('show-remaining-tabs', 'active', className)} ref={ref} {...props} />);
+const activeTrigger = React.forwardRef(ActiveTriggerFwdRef);
 
 function getParentFor (tab) {
 	let node = tab;

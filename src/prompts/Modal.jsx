@@ -78,6 +78,7 @@ export default class Modal extends React.Component {
 		close: PropTypes.func
 	}
 
+	/* @ignore */
 	attachContentRef = x => this.content = x
 
 
@@ -107,7 +108,10 @@ export default class Modal extends React.Component {
 	onManagerUpdate = () => !this.props.isPortal && this.forceUpdate()
 
 
-
+	/**
+	 * @param {object} e - the event
+	 * @returns {undefined}
+	 */
 	close = (e) => {
 		const {onDismiss} = this.props;
 
@@ -125,6 +129,10 @@ export default class Modal extends React.Component {
 	}
 
 
+	/**
+	 * @param {object} e - the event
+	 * @returns {undefined}
+	 */
 	onMaskClick = (e) => {
 		const {closeOnMaskClick} = this.props;
 		if (closeOnMaskClick) {
@@ -132,14 +140,20 @@ export default class Modal extends React.Component {
 		}
 	}
 
-
+	/**
+	 * @param {object} e - the event
+	 * @returns {undefined}
+	 */
 	onFocus = (e) => {
 		if (needsSafariFix(e)) {
 			this.setState({safariFix: true});
 		}
 	}
 
-
+	/**
+	 * @param {object} e - the event
+	 * @returns {undefined}
+	 */
 	onBlur = (e) => {
 		if (needsSafariFix(e)) {
 			this.setState({safariFix: false});

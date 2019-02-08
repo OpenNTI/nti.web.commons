@@ -9,11 +9,13 @@ import Menu from './Menu';
 const InitialState = () => ({settled: false, boundrary: Infinity, triggerClasses: []});
 
 const defaultTrigger = (classes) => {
-	return React.forwardRef(({className, ...props}, ref) => {
+	const Trigger = ({className, ...props}, ref) => {
 		return (
 			<div className={cx('show-remaining-items', className, classes)} ref={ref} {...props} />
 		);
-	});
+	};
+	
+	return React.forwardRef(Trigger);
 };
 
 const countChildren = (children) => {

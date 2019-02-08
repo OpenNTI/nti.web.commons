@@ -85,7 +85,7 @@ export default class Dialog extends React.Component {
 	}
 
 
-	onHistory = (e) => {
+	onHistory = (/* e */) => {
 		const { rollbackCountStateKey: key } = this;
 		const { history, document: { title } } = global;
 		const {

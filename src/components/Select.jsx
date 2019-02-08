@@ -44,5 +44,8 @@ export default function Select (props) {
 	);
 }
 
+const ForwardedRefSelect = (props, ref) => (
+	<Select {...props} domRef={ref} />
+);
 
-Select.ForwardRef = React.forwardRef((props, ref) => <Select {...props} domRef={ref}/>);
+Select.ForwardRef = React.forwardRef(ForwardedRefSelect);
