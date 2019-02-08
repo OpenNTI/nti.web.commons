@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {DataURIs} from '../constants';
 
-const {BLANK_AVATAR} = DataURIs;
+const {BLANK_IMAGE} = DataURIs;
 const isSquare = (w, h) => w === h && ![w, h].some(isNaN) && w > 0;
 
 function letterbox (ctx, image, type) {
@@ -65,7 +65,9 @@ export default class Square extends React.Component {
 	
 	static propTypes = {
 		src: PropTypes.string,
-		letterbox: PropTypes.string // 'src' or color
+		onLoad: PropTypes.func,
+		onError: PropTypes.func,
+		letterbox: PropTypes.string // 'src', 'none', or a canvas fillStyle
 	};
 	
 	state = {};
@@ -75,27 +77,46 @@ export default class Square extends React.Component {
 			const img = this._img = new Image();
 			img.crossOrigin = 'anonymous';
 			img.addEventListener('load', this.onLoad);
+			img.addEventListener('error', this.props.onError);
 		}
 		return this._img;
 	}
 	
 	componentDidUpdate = ({src: prevSrc}) => {
 		const {src} = this.props;
+
 		if (src !== this.props.src) {
 			this.image.src = src;
 		}
-	};
+	}
 
-	onLoad = ({target} = {}) => {
+	onLoad = e => {
+		const {target} = e || {};
+		const {onLoad} = this.props;
+
 		this.setState({
 			src: getSquareSrc(target, this.props.letterbox)
 		});
-	};
+
+		if (typeof onLoad === 'function') {
+			onLoad(e);
+		}
+	}
+
 
 	render () {
-		const props = {...this.props};
-		const {state: {src = BLANK_AVATAR}} = this;
-		delete props.src;
-		return (<img {...props} src={src} />);
+		const {state: {src = BLANK_IMAGE}} = this;
+		const props = {
+			...this.props,
+			src
+		};
+
+		delete props.onLoad;
+		delete props.onError;
+		delete props.letterbox;
+
+		return (
+			<img {...props} />
+		);
 	}
 }
