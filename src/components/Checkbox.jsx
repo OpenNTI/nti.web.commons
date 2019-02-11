@@ -12,10 +12,11 @@ Checkbox.propTypes = {
 		PropTypes.object // rendered element
 	]),
 	name: PropTypes.string,
+	domRef: PropTypes.object
 };
 
-function Checkbox (props, domRef) {
-	const {checked, disabled, children, green, label, name, ...otherProps} = props;
+function Checkbox (props) {
+	const {checked, disabled, children, green, label, name, domRef, ...otherProps} = props;
 	return (
 		<label className={cx('checkbox-component', {disabled})} name={name} ref={domRef}>
 			<input {...otherProps} name={name} checked={checked}
@@ -31,4 +32,8 @@ function Checkbox (props, domRef) {
 }
 
 
-export default React.forwardRef(Checkbox);
+export default React.forwardRef(
+	function CheckboxFwdRef (props, domRef) {
+		return <Checkbox {...props} domRef={domRef} />;
+	}
+);
