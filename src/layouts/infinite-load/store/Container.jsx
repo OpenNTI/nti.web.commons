@@ -35,6 +35,10 @@ export default class InfiniteStoreLoad extends React.Component {
 		}
 	}
 
+	componentWillUnmount () {
+		this.unmounted = true;
+	}
+
 
 	setupFor (props = this.props) {
 		const {store} = this.props;
@@ -46,11 +50,15 @@ export default class InfiniteStoreLoad extends React.Component {
 			try {
 				const totalPages = await store.getTotalCount();
 
+				if (this.unmounted) { return; }
+
 				this.setState({
 					totalPages,
 					error: null
 				});
 			} catch (e) {
+				if (this.unmounted) { return; }
+
 				this.setState({
 					totalPages: null,
 					error: e
