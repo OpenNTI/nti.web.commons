@@ -90,10 +90,16 @@ export default class Square extends React.Component {
 		}
 	}
 
+	componentWillUnmount = () => this.unmounted = true
+
 	onLoad = e => {
 		const {target} = e || {};
-		const {onLoad} = this.props;
+		const {props: {onLoad}, unmounted} = this;
 
+		if (unmounted) {
+			return;
+		}
+		
 		this.setState({
 			src: getSquareSrc(target, this.props.letterbox)
 		});
