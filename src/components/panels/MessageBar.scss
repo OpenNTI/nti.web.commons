@@ -7,6 +7,11 @@
 	color: $primary-grey;
 	box-shadow: inset 0 -1px 0 0 $border-grey-light, inset 0 1px 0 0 $border-grey-light;
 
+	i {
+		margin-right: 0.5rem;
+		vertical-align: middle;
+	}
+
 	&.error {
 		background: #f35252;
 		color: white;

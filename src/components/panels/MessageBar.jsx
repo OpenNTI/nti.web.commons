@@ -4,14 +4,16 @@ import cx from 'classnames';
 
 MessageBar.propTypes = {
 	message: PropTypes.string,
-	error: PropTypes.bool
+	error: PropTypes.bool,
+	iconCls: PropTypes.string
 };
 
-export default function MessageBar ({message, error}) {
+export default function MessageBar ({message, error, iconCls}) {
 	const cls = cx('panels-message-bar', {error});
 
 	return (
 		<div className={cls}>
+			{iconCls && (<i className={iconCls} />)}
 			{message}
 		</div>
 	);
