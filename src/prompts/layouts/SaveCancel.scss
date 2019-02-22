@@ -11,6 +11,11 @@
 			display: flex;
 			flex-direction: column;
 
+			.panel-title-bar, .action-header {
+				flex: 0 0 auto;
+			}
+
+
 			.save-cancel-content {
 				flex-grow: 1;
 			}
