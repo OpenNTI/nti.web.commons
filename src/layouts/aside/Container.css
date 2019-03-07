@@ -1,0 +1,14 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.body {
+	flex: 1 1 auto;
+}
+
+.aside-placeholder {
+	flex: 0 0 23%;
+	padding-left: 2px;
+}
