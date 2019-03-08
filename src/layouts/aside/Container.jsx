@@ -48,6 +48,6 @@ class AsideContainer extends React.Component {
 	renderAside (aside) {
 		if (!aside) { return null; }
 
-		return (<AsidePlaceholder className={cx('aside-placeholder')} {...aside} />);
+		return (<AsidePlaceholder className={cx('aside-container')} {...aside} />);
 	}
 }

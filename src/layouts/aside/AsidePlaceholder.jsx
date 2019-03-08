@@ -6,7 +6,9 @@ import {StickyElement, FillToBottom} from '../../components';
 
 import Store from './Store';
 
-const placeholderTpl = '<div data-aside-placeholder></div>';
+const DATA_ATTR = 'data-aside-content-container';
+
+const placeholderTpl = `<div ${DATA_ATTR}></div>`;
 
 export default
 @Store.monitor(['setAsidePlaceholder'])
@@ -24,13 +26,12 @@ class AsidePlaceholder extends React.Component {
 
 		if (!this.node && node) {
 			this.node = node;
-			setAsidePlaceholder(node.querySelector('[data-aside-placeholder]'));
+			setAsidePlaceholder(node.querySelector(`[${DATA_ATTR}]`));
 		} else if (this.node && !node) {
 			this.node = null;
 			setAsidePlaceholder(null);
 		}
 	}
-
 
 	render () {
 		const {className, sticky, fill} = this.props;
@@ -48,9 +49,9 @@ class AsidePlaceholder extends React.Component {
 		}
 
 		return (
-			<div className={className}>
+			<aside className={className}>
 				{content}
-			</div>
+			</aside>
 		);
 	}
 }

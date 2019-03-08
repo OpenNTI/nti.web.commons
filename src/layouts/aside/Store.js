@@ -2,7 +2,7 @@ import {Stores} from '@nti/lib-store';
 
 export default class AsideStore extends Stores.SimpleStore {
 	showAside (cmp, {sticky, fill, side}) {
-		this.set({
+		this.setImmediate({
 			aside: {cmp, sticky, fill, side}
 		});
 	}
@@ -12,7 +12,7 @@ export default class AsideStore extends Stores.SimpleStore {
 		const aside = this.get('aside');
 
 		if (aside && aside.cmp === cmp) {
-			this.set({
+			this.setImmediate({
 				aside: null
 			});
 		}
