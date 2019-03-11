@@ -1,0 +1,11 @@
+.note-metadata {
+	font-size: 0.625rem;
+	font-weight: 600;
+	color: var(--tertiary-grey);
+	padding: 0.25em 0;
+}
+
+.note-metadata > *:not(:last-child)::after {
+	content: '·';
+	margin: 0 0.375em;
+}
