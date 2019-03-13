@@ -1,0 +1,10 @@
+.aside-placeholder :global([data-aside-content-container]) {
+	height: 100%;
+}
+
+@supports (display: contents) {
+	.aside-placeholder :global([data-aside-content-container]) {
+		height: initial;
+		display: contents;
+	}
+}

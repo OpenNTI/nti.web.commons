@@ -21,7 +21,6 @@ class AsideContainer extends React.Component {
 
 		store: PropTypes.object,
 		aside: PropTypes.shape({
-			sticky: PropTypes.bool,
 			side: PropTypes.oneOf([LEFT, RIGHT])
 		})
 	}
@@ -30,17 +29,16 @@ class AsideContainer extends React.Component {
 	render () {
 		const {className, children, aside} = this.props;
 		const otherProps = restProps(AsideContainer, this.props);
-		const {side, sticky} = aside || {};
-		const Cmp = sticky ? StickyContainer : 'div';
+		const {side} = aside || {};
 
 		return (
-			<Cmp className={cx('container', className)} {...otherProps}>
+			<div className={cx('container', className)} {...otherProps}>
 				{side === LEFT && this.renderAside(aside)}
 				<div className={cx('body')}>
 					{children}
 				</div>
 				{side === RIGHT && this.renderAside(aside)}
-			</Cmp>
+			</div>
 		);
 	}
 

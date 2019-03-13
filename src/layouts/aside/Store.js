@@ -1,9 +1,9 @@
 import {Stores} from '@nti/lib-store';
 
 export default class AsideStore extends Stores.SimpleStore {
-	showAside (cmp, {sticky, fill, side}) {
+	showAside (cmp, {side}) {
 		this.setImmediate({
-			aside: {cmp, sticky, fill, side}
+			aside: {cmp, side}
 		});
 	}
 

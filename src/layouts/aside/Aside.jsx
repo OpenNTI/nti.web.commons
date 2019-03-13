@@ -15,8 +15,6 @@ class Aside extends React.Component {
 	static propTypes = {
 		component: NTIPropTypes.component,
 		side: PropTypes.oneOf([LEFT, RIGHT]),
-		sticky: PropTypes.bool,
-		fill: PropTypes.bool,
 
 		placeholder: PropTypes.object,
 		showAside: PropTypes.func,
@@ -25,10 +23,10 @@ class Aside extends React.Component {
 
 
 	componentDidMount () {
-		const {showAside, component, sticky, fill, side} = this.props;
+		const {showAside, component, side} = this.props;
 
 		if (showAside) {
-			showAside(component, {sticky, fill, side: side || RIGHT});
+			showAside(component, {side: side || RIGHT});
 		}
 	}
 

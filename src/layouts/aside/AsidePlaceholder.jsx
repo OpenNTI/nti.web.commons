@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import {rawContent} from '@nti/lib-commons';
 
-import {StickyElement, FillToBottom} from '../../components';
+import {FillToBottom} from '../../components';
 
+import Styles from './AsidePlaceholder.css';
 import Store from './Store';
 
-const DATA_ATTR = 'data-aside-content-container';
+const cx = classnames.bind(Styles);
 
+const DATA_ATTR = 'data-aside-content-container';
 const placeholderTpl = `<div ${DATA_ATTR}></div>`;
 
 export default
@@ -15,8 +18,6 @@ export default
 class AsidePlaceholder extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		sticky: PropTypes.bool,
-		fill: PropTypes.bool,
 
 		setAsidePlaceholder: PropTypes.func
 	}
@@ -34,24 +35,14 @@ class AsidePlaceholder extends React.Component {
 	}
 
 	render () {
-		const {className, sticky, fill} = this.props;
-
-		let content = (
-			<div ref={this.attachPlaceholder} {...rawContent(placeholderTpl)} />
-		);
-
-		if (fill) {
-			content = (<FillToBottom limit>{content}</FillToBottom>);
-		}
-
-		if (sticky) {
-			content = (<StickyElement topOffset={20}>{content}</StickyElement>);
-		}
+		const {className} = this.props;
 
 		return (
-			<aside className={className}>
-				{content}
-			</aside>
+			<aside
+				className={cx('aside-placeholder', className)}
+				ref={this.attachPlaceholder}
+				{...rawContent(placeholderTpl)}
+			/>
 		);
 	}
 }
