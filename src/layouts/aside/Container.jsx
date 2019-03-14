@@ -34,9 +34,9 @@ class AsideContainer extends React.Component {
 		return (
 			<div className={cx('container', className)} {...otherProps}>
 				{side === LEFT && this.renderAside(aside)}
-				<div className={cx('body')}>
+				<section className={cx('body')}>
 					{children}
-				</div>
+				</section>
 				{side === RIGHT && this.renderAside(aside)}
 			</div>
 		);
