@@ -6,6 +6,7 @@ import {scoped} from '@nti/lib-locale';
 import {Triggered} from '../../../flyout';
 import Text from '../Text';
 
+import Multiple from './Mutilple';
 import Option from './Option';
 import {
 	keyDownStateModifier,
@@ -23,6 +24,7 @@ const SCROLL_WINDOW_TO_OPTION = Symbol('scroll window to option');
 
 export default class SelectInput extends React.Component {
 	static Option = Option
+	static Multiple = Multiple
 
 	static propTypes = {
 		value: PropTypes.oneOfType([

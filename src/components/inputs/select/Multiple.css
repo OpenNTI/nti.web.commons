@@ -1,0 +1,26 @@
+.nti-multiple-select-input {
+	max-height: 18rem;
+	min-width: 200px;
+	position: relative;
+	display: inline-block;
+	overflow-y: auto;
+	box-shadow: 0 0 0 1px var(--border-grey);
+}
+
+.nti-multiple-select-input.focused {
+	box-shadow: 0 0 1px 0 var(--primary-blue);
+}
+
+.nti-multiple-select-input input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.nti-multiple-select-input-options {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}

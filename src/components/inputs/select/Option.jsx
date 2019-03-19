@@ -19,11 +19,11 @@ export default class SelectInputOption extends React.Component {
 	}
 
 
-	onClick = () => {
+	onClick = (e) => {
 		const {onClick, value, display} = this.props;
 
 		if (onClick && !display) {
-			onClick(value);
+			onClick(value, e);
 		}
 	}
 
