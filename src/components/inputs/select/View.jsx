@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
+import {getScrollParent, canScroll} from '@nti/lib-dom';
 
 import {Triggered} from '../../../flyout';
 import Text from '../Text';
@@ -20,7 +21,6 @@ const t = scoped('common.components.inputs.select.View', {
 
 const SCROLL_TO_OPTION = Symbol('scroll to option');
 const SCROLL_LIST_TO_OPTION = Symbol('scroll list to option');
-const SCROLL_WINDOW_TO_OPTION = Symbol('scroll window to option');
 
 export default class SelectInput extends React.Component {
 	static Option = Option
@@ -143,6 +143,7 @@ export default class SelectInput extends React.Component {
 	}
 
 
+
 	[SCROLL_TO_OPTION] () {
 		const option = this.focusedOption || this.selectedOption;
 		const {optionList} = this;
@@ -150,23 +151,21 @@ export default class SelectInput extends React.Component {
 		if (!option || !optionList) { return null; }
 
 
-		if (optionList.clientHeight < optionList.scrollHeight) {
-			this[SCROLL_LIST_TO_OPTION](optionList, option);
-		} else {
-			this[SCROLL_WINDOW_TO_OPTION](option);
-		}
+		this[SCROLL_LIST_TO_OPTION](optionList, option);
 	}
 
 
 	[SCROLL_LIST_TO_OPTION] (optionList, option) {
-		const listRect = optionList.getBoundingClientRect();
+		const scroller = canScroll(optionList) ? optionList : getScrollParent(optionList);
+
+		const scrollRect = scroller.getBoundingClientRect();
 		const optionRect = option.getBoundingClientRect();
 
-		const listHeight = optionList.clientHeight;
-		const top = optionRect.top - listRect.top;
+		const listHeight = scroller.clientHeight;
+		const top = optionRect.top - scrollRect.top;
 		const bottom = top + optionRect.height;
 
-		let newTop = optionList.scrollTop;
+		let newTop = scroller.scrollTop;
 
 		if (bottom > listHeight) {
 			newTop = bottom - listHeight + newTop;
@@ -174,12 +173,7 @@ export default class SelectInput extends React.Component {
 			newTop = newTop + top;
 		}
 
-		optionList.scrollTop = newTop;
-	}
-
-
-	[SCROLL_WINDOW_TO_OPTION] (option) {
-		//TODO: fill this out
+		scroller.scrollTop = newTop;
 	}
 
 
