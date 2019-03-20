@@ -10,6 +10,7 @@ import Text from '../Text';
 import Multiple from './Mutilple';
 import Option from './Option';
 import {
+	isSameOptions,
 	keyDownStateModifier,
 	getValueForOption,
 	optionMatchesTerm
@@ -100,7 +101,9 @@ export default class SelectInput extends React.Component {
 		const {value: oldValue, children: oldChildren} = prevProps;
 		const {value: newValue, children: newChildren} = this.props;
 
-		if (oldValue !== newValue || oldChildren !== newChildren) {
+		const same = isSameOptions(React.Children.toArray(newChildren), React.Children.toArray(oldChildren));
+
+		if (oldValue !== newValue || !same) {
 			this.setupFor(this.props);
 		}
 	}
