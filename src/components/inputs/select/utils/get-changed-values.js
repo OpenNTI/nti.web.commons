@@ -4,8 +4,8 @@ export default function getChangedValues (values, oldValues) {
 	const newSet = new Set(values);
 	const oldSet = new Set(oldValues);
 
-	const added = values.map(value => !oldSet.has(value));
-	const removed = oldValues.map(value => !newSet.has(value));
+	const added = values.filter(value => !oldSet.has(value));
+	const removed = oldValues.filter(value => !newSet.has(value));
 
 	return new Set([...added, ...removed]);
 }

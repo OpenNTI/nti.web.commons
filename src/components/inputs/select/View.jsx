@@ -50,7 +50,7 @@ export default class SelectInput extends React.Component {
 		onBlur: PropTypes.func
 	}
 
-
+	attachFlyoutRef = x => this.flyout = x
 	attachLabelInputRef = x => this.input = x
 	attachOptionRef = () => {}
 
@@ -145,6 +145,11 @@ export default class SelectInput extends React.Component {
 		}
 	}
 
+	realign () {
+		if (this.flyout) {
+			this.flyout.realign();
+		}
+	}
 
 
 	[SCROLL_TO_OPTION] () {
@@ -360,6 +365,7 @@ export default class SelectInput extends React.Component {
 			>
 				<Triggered
 					constrain
+					ref={this.attachFlyoutRef}
 					trigger={this.renderLabel()}
 					verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 					horizontalAlign={Triggered.ALIGNMENTS.LEFT_OR_RIGHT}
@@ -408,13 +414,13 @@ export default class SelectInput extends React.Component {
 
 	renderLabel () {
 		const {searchable, placeholder} = this.props;
-		const {selectedOption, inputValue, focused} = this.state;
+		const {selectedOption, inputValue, inputBuffer, focused} = this.state;
 
 		return (
 			<div className={cx('select-label', {searchable, 'has-selected': selectedOption, focused})}>
 				<Text
 					ref={this.attachLabelInputRef}
-					value={inputValue}
+					value={searchable ? inputValue : inputBuffer}
 					placeholder={placeholder}
 					onChange={searchable ? this.onSearchableInputChange : this.onInputChange}
 					onFocus={this.onInputFocus}

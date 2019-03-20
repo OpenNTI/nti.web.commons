@@ -38,6 +38,8 @@ export default class NTIMultiSelectInput extends React.Component {
 		onBlur: PropTypes.func
 	}
 
+	attachSelectRef = (node) => this.select = node;
+
 	state = {
 		activeOptions: []
 	}
@@ -84,7 +86,12 @@ export default class NTIMultiSelectInput extends React.Component {
 			selectedValue,
 			selectedOptions,
 			activeOptions
+		}, () => {
+			if (this.select) {
+				this.select.realign();
+			}
 		});
+
 	}
 
 	onChange (values) {
@@ -96,7 +103,10 @@ export default class NTIMultiSelectInput extends React.Component {
 	}
 
 
-	removeSelected = (value) => {
+	removeSelected = (value, e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
 		const {values} = this.props;
 
 		this.onChange(values.filter(v => v !== value));
@@ -165,6 +175,7 @@ export default class NTIMultiSelectInput extends React.Component {
 
 		return (
 			<Select
+				ref={this.attachSelectRef}
 				searchable
 				maintainOnSelect
 				value={null}
