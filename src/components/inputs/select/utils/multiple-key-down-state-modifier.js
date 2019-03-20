@@ -12,7 +12,6 @@ function getMoveDownIndex (options, focusedIndex) {
 }
 
 function moveDown (e, state) {
-	debugger;
 	stop(e);
 
 	const {activeOptions, focusedIndex} = state;
@@ -68,7 +67,6 @@ const HANDLERS = {
 };
 
 export default function multipleKeyDownStateModifier (e, state) {
-	debugger;
 	const keyCode = Events.getKeyCode(e);
 	const handler = HANDLERS[keyCode];
 
