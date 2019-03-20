@@ -15,7 +15,8 @@ export default class SelectInputOption extends React.Component {
 		onClick: PropTypes.func,
 		selected: PropTypes.bool,
 		focused: PropTypes.bool,
-		display: PropTypes.bool
+		display: PropTypes.bool,
+		removable: PropTypes.bool
 	}
 
 
@@ -29,16 +30,21 @@ export default class SelectInputOption extends React.Component {
 
 
 	render () {
-		const {value, selected, focused, display, children} = this.props;
+		const {value, selected, removable, focused, display, children} = this.props;
 
 		return (
 			<div
 				role="option"
-				className={cx('nti-select-input-option', {selected, focused, display})}
+				className={cx('nti-select-input-option', {selected, removable, focused, display})}
 				data-value={value}
 				onClick={this.onClick}
 			>
-				{children}
+				<div className="content">
+					{children}
+				</div>
+				{removable && (
+					<i className="remove icon-light-x" />
+				)}
 			</div>
 		);
 	}

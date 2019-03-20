@@ -40,6 +40,7 @@ export default class SelectInput extends React.Component {
 		disabled: PropTypes.bool,
 
 		searchable: PropTypes.bool,
+		maintainOnSelect: PropTypes.bool,
 		applySearchTerm: PropTypes.func,
 		allowOtherValues: PropTypes.bool,
 
@@ -99,7 +100,7 @@ export default class SelectInput extends React.Component {
 		const {value: oldValue, children: oldChildren} = prevProps;
 		const {value: newValue, children: newChildren} = this.props;
 
-		if (oldValue !== newValue || React.Children.count(oldChildren) !== React.Children.count(newChildren)) {
+		if (oldValue !== newValue || oldChildren !== newChildren) {
 			this.setupFor(this.props);
 		}
 	}
@@ -107,14 +108,17 @@ export default class SelectInput extends React.Component {
 
 	setupFor (props) {
 		const {children, value} = this.props;
-		const {focusedIndex} = this.state;
+		const {focusedIndex, inputValue} = this.state;
 		const options = React.Children.toArray(children);
+		const activeOptions = inputValue ?
+			options.filter((option) => optionMatchesTerm(option, inputValue)) :
+			options;
 
 		let selectedOption = null;
 		let selectedIndex = -1;
 
-		for (let i = 0; i < options.length; i++) {
-			const option = options[i];
+		for (let i = 0; i < activeOptions.length; i++) {
+			const option = activeOptions[i];
 
 			if (getValueForOption(option) === value) {
 				selectedOption = option;
@@ -125,7 +129,7 @@ export default class SelectInput extends React.Component {
 
 		this.setState({
 			options,
-			activeOptions: options,
+			activeOptions,
 			selectedOption,
 			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex
 		});
@@ -207,12 +211,16 @@ export default class SelectInput extends React.Component {
 
 
 	selectOption = (value) => {
-		const {onChange} = this.props;
+		const {onChange, maintainOnSelect} = this.props;
 
 		if (onChange) {
 			onChange(value);
 		}
 
+		if (maintainOnSelect) {
+			this.focus();
+			return;
+		}
 		// this.focus();
 		this.closeMenu();
 
@@ -265,12 +273,18 @@ export default class SelectInput extends React.Component {
 
 
 	onInputKeyDown = (e) => {
+		const {maintainOnSelect} = this.props;
 		const {selectedOption:oldSelected} = this.state;
 		const newState = keyDownStateModifier(e, this.state);
 		const {selectedOption:newSelected} = newState;
 
 		if (oldSelected !== newSelected) {
 			this.selectOption(getValueForOption(newSelected));
+		}
+
+		if (maintainOnSelect) {
+			newState.isOpen = this.state.isOpen;
+			delete newState.selectedOption;
 		}
 
 		this.setState(newState);

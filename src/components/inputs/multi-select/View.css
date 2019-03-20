@@ -1,0 +1,15 @@
+.multi-select {
+	display: inline-block;
+}
+
+.multi-select-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.placeholder {
+	font-style: italic;
+	color: var(--tertiary-grey);
+	overflow: visible;
+}

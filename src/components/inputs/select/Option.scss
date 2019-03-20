@@ -13,12 +13,26 @@
 		white-space: nowrap;
 	}
 
-	&:not(.display):hover, &.focused {
+	&:not(.display):not(.selected):not(.removable):hover, &.focused {
 		background-color: $border-grey-light;
 	}
 
-	&.selected {
+	&.selected,
+	&.removable {
 		color: white;
 		background-color: $primary-blue;
+	}
+
+	&.removable {
+		display: flex;
+		align-items: center;
+
+		.content {
+			flex: 1 1 auto;
+		}
+
+		.remove {
+			flex: 0 0 auto;
+		}
 	}
 }

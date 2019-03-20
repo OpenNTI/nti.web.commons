@@ -3,6 +3,7 @@ export Date from './Date';
 export Email from './Email';
 export File from './File';
 export Label from './Label';
+export MultiSelect from './multi-select';
 export Number from './Number';
 export Percentage from './Percentage';
 export Select from './select';
