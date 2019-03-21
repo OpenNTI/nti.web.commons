@@ -17,15 +17,32 @@
 		background-color: $border-grey-light;
 	}
 
-	&.selected,
-	&.removable {
+	&.selected {
 		color: white;
 		background-color: $primary-blue;
 	}
 
+	&.checkable {
+		padding-left: 0;
+	}
+
 	&.removable {
+		cursor: default;
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-right: 0;
+	}
+
+	&.removable,
+	&.checkable {
 		display: flex;
 		align-items: center;
+
+		.check {
+			flex: 0 0 32px;
+			text-align: center;
+			color: var(--primary-blue);
+		}
 
 		.content {
 			flex: 1 1 auto;
@@ -33,6 +50,15 @@
 
 		.remove {
 			flex: 0 0 auto;
+			cursor: pointer;
+			padding: rem-calc(1px 8px 1px 4px);
+
+			i {
+				color: white;
+				background: var(--tertiary-grey);
+				border-radius: 1rem;
+				padding: 0;
+			}
 		}
 	}
 }

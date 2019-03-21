@@ -16,7 +16,11 @@ export default class SelectInputOption extends React.Component {
 		selected: PropTypes.bool,
 		focused: PropTypes.bool,
 		display: PropTypes.bool,
-		removable: PropTypes.bool
+
+		checkable: PropTypes.bool,
+		checked: PropTypes.bool,
+		removable: PropTypes.bool,
+		onRemove: PropTypes.func
 	}
 
 
@@ -29,21 +33,47 @@ export default class SelectInputOption extends React.Component {
 	}
 
 
+	onRemove = (e) => {
+		const {onRemove, value} = this.props;
+
+		if (onRemove) {
+			onRemove(value, e);
+		}
+	}
+
+
 	render () {
-		const {value, selected, removable, focused, display, children} = this.props;
+		const {
+			value,
+			selected,
+			checked,
+			checkable,
+			removable,
+			focused,
+			display,
+			children
+		} = this.props;
+		const cls = cx('nti-select-input-option', {selected, checkable, removable, focused, display});
 
 		return (
 			<div
 				role="option"
-				className={cx('nti-select-input-option', {selected, removable, focused, display})}
+				className={cls}
 				data-value={value}
 				onClick={this.onClick}
 			>
+				{checkable && (
+					<div className="check">
+						{checked && (<i className="icon-check" />)}
+					</div>
+				)}
 				<div className="content">
 					{children}
 				</div>
 				{removable && (
-					<i className="remove icon-light-x" />
+					<div className="remove" onClick={this.onRemove}>
+						<i className="icon-bold-x" />
+					</div>
 				)}
 			</div>
 		);

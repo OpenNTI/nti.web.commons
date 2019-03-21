@@ -82,6 +82,16 @@ export default class NTIMultiSelectInput extends React.Component {
 			activeOptions.push(option);
 		}
 
+		selectedOptions.sort((a, b) => {
+			const aVal = getValueForOption(a);
+			const bVal = getValueForOption(b);
+
+			const aIndex = values.indexOf(aVal);
+			const bIndex = values.indexOf(bVal);
+
+			return aIndex - bIndex;
+		});
+
 		this.setState({
 			selectedValue,
 			selectedOptions,
@@ -127,10 +137,12 @@ export default class NTIMultiSelectInput extends React.Component {
 	}
 
 	render () {
+		const {className} = this.props;
+
 		return (
-			<div className={cx('multi-select')}>
-				{this.renderActive()}
+			<div className={cx('multi-select', className)}>
 				{this.renderSelected()}
+				{this.renderActive()}
 			</div>
 		);
 	}
@@ -149,11 +161,11 @@ export default class NTIMultiSelectInput extends React.Component {
 		}
 
 		return (
-			<ul className={cx('multi-select-list')}>
+			<ul className={cx('multi-select-selected-list')}>
 				{selectedOptions.map((option, key) => {
 					const cmp = React.cloneElement(option, {
 						index: key,
-						onClick: this.removeSelected,
+						onRemove: this.removeSelected,
 						removable: true
 					});
 
@@ -189,10 +201,10 @@ export default class NTIMultiSelectInput extends React.Component {
 					const isSelected = selectedSet.has(option);
 
 					if (!isSelected) {
-						return React.cloneElement(option, {key});
+						return React.cloneElement(option, {key, checkable: true});
 					}
 
-					return React.cloneElement(option, {key, removable: true});
+					return React.cloneElement(option, {key, checkable: true, checked: true});
 				})}
 			</Select>
 		);

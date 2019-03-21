@@ -239,9 +239,18 @@ export default class SelectInput extends React.Component {
 	}
 
 
-	onDownArrowClick = () => {
-		this.focus();
-		this.openMenu();
+	onDownArrowClick = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		const {isOpen} = this.state;
+
+		if (isOpen) {
+			this.closeMenu();
+		} else {
+			this.focus();
+			this.openMenu();
+		}
 	}
 
 
@@ -433,7 +442,9 @@ export default class SelectInput extends React.Component {
 				<div className="selected-option" onClick={this.onLabelClick}>
 					{selectedOption && React.cloneElement(selectedOption, {display: true})}
 				</div>
-				<i className="icon-chevron-down" onClick={this.onDownArrowClick} />
+				<div className="chevron-indicator">
+					<i className="icon-chevron-down" onClick={this.onDownArrowClick} />
+				</div>
 			</div>
 		);
 	}

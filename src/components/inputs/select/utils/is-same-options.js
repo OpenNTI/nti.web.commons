@@ -5,10 +5,10 @@ export default function isSameOptions (a, b) {
 		const aOption = a[i];
 		const bOption = b[i];
 
-		const {value:aVal, removable:aRemovable} = aOption.props;
-		const {value:bVal, removable:bRemovable} = bOption.props;
+		const {value:aVal, removable:aRemovable, checked:aChecked} = aOption.props;
+		const {value:bVal, removable:bRemovable, checked:bChecked} = bOption.props;
 
-		if (aVal !== bVal || aRemovable !== bRemovable) {
+		if (aVal !== bVal || aRemovable !== bRemovable || aChecked !== bChecked) {
 			return false;
 		}
 	}
