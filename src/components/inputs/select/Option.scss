@@ -6,7 +6,6 @@
 	color: $secondary-grey;
 	font: normal 400 0.875rem/2rem $body-font-family;
 
-
 	&.display {
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -31,6 +30,10 @@
 		padding-top: 0;
 		padding-bottom: 0;
 		padding-right: 0;
+	}
+
+	.content {
+		pointer-events: none; // NTI-7628
 	}
 
 	&.removable,
