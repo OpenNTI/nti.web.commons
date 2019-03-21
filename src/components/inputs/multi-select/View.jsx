@@ -140,7 +140,7 @@ export default class NTIMultiSelectInput extends React.Component {
 		const {className} = this.props;
 
 		return (
-			<div className={cx('multi-select', className)}>
+			<div className={cx('multi-select', 'nti-multi-select-input', className)}>
 				{this.renderSelected()}
 				{this.renderActive()}
 			</div>
