@@ -27,12 +27,13 @@ const DEFAULT_TEXT = {
 	'entity-search': 'No one found',
 	'assignments': 'No assignments currently available.',
 	'search': 'No Results Found.\nTry a different search.',
-	'content-resources': 'Empty Folder.'
+	'content-resources': 'Empty Folder.',
+	'user-generated-data': 'No associated notes.'
 };
 
 const t = scoped('common.components.lists.empty', DEFAULT_TEXT);
 
-export default function EmptyList ({type}) {
+export default function EmptyList ({type, className}) {
 	let heading;
 	let message = t(type || 'default');
 
@@ -45,7 +46,7 @@ export default function EmptyList ({type}) {
 	}
 
 	return (
-		<Notice className={cx('empty-list', type)}>
+		<Notice className={cx('empty-list', type, className)}>
 			{heading && ( <h1>{heading}</h1> )}
 			{message}
 		</Notice>
