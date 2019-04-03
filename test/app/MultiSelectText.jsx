@@ -16,7 +16,7 @@ export default class Test extends React.Component {
 
 		return (
 			<div>
-				<Input.MultiSelect onChange={this.onChange} values={values} placeholder={"None Selected..."}>
+				<Input.MultiSelect onChange={this.onChange} values={values} placeholder={'None Selected...'}>
 					{options.map((option) => <Input.MultiSelect.Option value={option} key={option}>{option}</Input.MultiSelect.Option>)}
 				</Input.MultiSelect>
 			</div>
