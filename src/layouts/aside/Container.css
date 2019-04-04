@@ -11,4 +11,5 @@
 .aside-container {
 	flex: 0 0 23%;
 	padding-left: 2px;
+	overflow: hidden;
 }
