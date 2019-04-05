@@ -1,7 +1,9 @@
 export Dialog from './Dialog';
 import Prompt from './Prompt';
-import Manager from './ModalManager';
+import ManagerImport from './ModalManager';
 export * from './layouts';
+
+export const Manager = ManagerImport;
 
 export function alert (message, title = 'Alert', extra = {}) {
 	return new Promise(acknowledge=> {

@@ -284,7 +284,7 @@ export class ModalManager extends EventEmitter {
 		const isAfter = (a) => (top.mountPoint.compareDocumentPosition(a) & mask) === mask; //eslint-disable-line
 
 		/* istanbul ignore else */
-		if (!top.mountPoint.contains(e.target) && !isAfter(e.target) && document.contains(e.target)) {
+		if (!top.mountPoint.contains(e.target) && !isAfter(e.target) && document.contains(e.target) && !this.allowedExternalFocus(e.target)) {
 			e.stopPropagation();
 			try {
 				top.component.focus();
@@ -302,6 +302,14 @@ export class ModalManager extends EventEmitter {
 		if (top && top.closeOnEscape && e.keyCode === 27) {
 			top.dismiss();
 		}
+	}
+
+	setAllowedExternalFocus (fn) {
+		this.allowedExternalFocusInFn = fn;
+	}
+
+	allowedExternalFocus (target) {
+		return this.allowedExternalFocusInFn && this.allowedExternalFocusInFn(target);
 	}
 }
 
