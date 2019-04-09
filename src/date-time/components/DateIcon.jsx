@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {Badge} from '../../../';
+import Badge from '../../components/Badge';
 import {format} from '../utils';
 
 
