@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {restProps} from '@nti/lib-commons';
 
-import {StickyContainer} from '../../components';
-
 import {LEFT, RIGHT} from './Constants';
 import AsidePlaceholder from './AsidePlaceholder';
 import Store from './Store';

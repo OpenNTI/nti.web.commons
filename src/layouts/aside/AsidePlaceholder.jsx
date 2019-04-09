@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {rawContent} from '@nti/lib-commons';
 
-import {FillToBottom} from '../../components';
-
 import Styles from './AsidePlaceholder.css';
 import Store from './Store';
 
