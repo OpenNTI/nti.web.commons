@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {DateTime, Badge} from '../../';
+import {Badge} from '../../../';
+import {format} from '../utils';
+
 
 // this Small wrapper is part of a workaround for the badge masking the part of the small icon that renders outside the
 // element's actual bounds. see DateIcon.scss for details.
@@ -30,8 +32,8 @@ export default class DateIcon extends React.PureComponent {
 			<Container {...this.props}>
 				<Wrapper>
 					<div className={cx('nti-calendar-date-icon', {small, minimal}, className)}>
-						<div className="month">{DateTime.format(date, 'MMM')}</div>
-						<div className="day">{DateTime.format(date, 'D')}</div>
+						<div className="month">{format(date, 'MMM')}</div>
+						<div className="day">{format(date, 'D')}</div>
 						{children}
 					</div>
 				</Wrapper>

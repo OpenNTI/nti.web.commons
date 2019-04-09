@@ -12,10 +12,9 @@
 
 	.number-input-component {
 		width: 2.125rem;
-		padding: .3125rem 0 .3125rem 0;
+		padding: 0.3125rem 0;
 		text-align: center;
-		font-size: .8125rem;
-		text-align: center;
+		font-size: 0.8125rem;
 		color: $secondary-grey;
 
 		&:invalid {
@@ -30,7 +29,7 @@
 
 		.menu-label {
 			color: $secondary-grey;
-			font-size: .8125rem;
+			font-size: 0.8125rem;
 			padding-right: 1.65rem;
 			line-height: 1.6875rem;
 
@@ -38,20 +37,20 @@
 				background: none;
 			}
 
-			&:after {
-				right: .5rem;
-				font-size: .75rem;
+			&::after {
+				right: 0.5rem;
+				font-size: 0.75rem;
 			}
 		}
 
 		> ul {
-			padding-left: 0px;
+			padding-left: 0;
 			border: 1px solid #dcdcdc;
 			margin-left: -1px;
 
 			li {
 				color: $secondary-grey;
-				font-size: .8125rem;
+				font-size: 0.8125rem;
 				font-weight: 400;
 
 				&:hover {

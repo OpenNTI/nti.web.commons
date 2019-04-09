@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
-import DateTime from '../DateTime';
+import DateTime from '../../';
 
 const date = new Date('2015-10-22T21:00:00.000Z');
 const relativeTo = new Date('2015-10-24T22:01:00.000Z'); //+1 day, and +1 hour
@@ -14,20 +14,13 @@ const relativeToWeek3 = new Date('2015-11-12T22:00:00.000Z'); //+21 day
 const relativeToMonth = new Date('2015-11-19T22:00:00.000Z'); //+27 day
 const relativeToMonths = new Date('2015-12-31T22:00:00.000Z'); //+++ days
 
-const getMilliSeconds = n => n;
-const getSeconds = n => n * getMilliSeconds(1000);
-const getMinutes = n => n * getSeconds(60);
-const getHours = n => n * getMinutes(60);
-const getDays = n => n * getHours(24);
-
-//Find a better way... since react frowns on "findDOMNode".
-const getText = cmp => ReactDOM.findDOMNode(cmp).textContent;//eslint-disable-line
+const getText = cmp => cmp.node.textContent;
 
 const render = (node, cmp, props, ...children) => new Promise(next =>
 	void ReactDOM.render(
 		React.createElement(cmp, {...props, ref (x) {cmp = x; props.ref && props.ref(x);}}, ...children),
 		node,
-		() => next(cmp)
+		() => next({cmp, node})
 	));
 
 
@@ -61,7 +54,7 @@ describe('DateTime', () => {
 
 
 
-	test('Base Cases: date only', (done) => {
+	test('Base Cases: date only', (done) => {		
 		Promise.all(testRender({date}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/October \d\d, 2015/)))
 			.then(done, (e) => done.fail(e));
@@ -191,56 +184,4 @@ describe('DateTime', () => {
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/[A-Z]{2,}/i)))
 			.then(done, (e) => done.fail(e));
 	});
-
-
-	describe('formatDuration tests', () => {
-		const f = (...args) => DateTime.formatDuration(...args);
-
-		test('Only seconds', () => {
-			expect(f(30)).toEqual('0:30');
-			expect(f(0)).toEqual('0:00');
-			expect(f(59)).toEqual('0:59');
-		});
-
-		test('Minutes and Seconds', () => {
-			expect(f(60)).toEqual('1:00');
-			expect(f(65)).toEqual('1:05');
-			expect(f(120)).toEqual('2:00');
-			expect(f(630)).toEqual('10:30');
-		});
-
-		test('Hours, Minutes, and Seconds', () => {
-			expect(f(3600)).toEqual('1:00:00');
-			expect(f(3605)).toEqual('1:00:05');
-			expect(f(3720)).toEqual('1:02:00');
-			expect(f(36000)).toEqual('10:00:00');
-		});
-	});
-
-	describe('getNaturalDuration', () => {
-		const n = (...args) => DateTime.getNaturalDuration(...args);
-
-		test('days', () => {
-			expect(n(getDays(1), 1)).toEqual('1 Day');
-			expect(n(getDays(2), 1)).toEqual('2 Days');
-			expect(n(getDays(2), 1, true)).toEqual('2 Day');
-		});
-
-		//TODO: add more tests
-	});
-
-
-	describe('getShortNaturalDuration', () => {
-		const n = (...args) => DateTime.getShortNaturalDuration(...args);
-
-		test('days', () => {
-			expect(n(getDays(1), 1)).toEqual('1d');
-			expect(n(getDays(2), 1)).toEqual('2d');
-		});
-
-		test('hours and minutes', () => {
-			expect(n(getHours(1) + getMinutes(30), 2)).toEqual('1h 30m');
-		});
-	});
-
 });

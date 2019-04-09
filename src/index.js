@@ -4,6 +4,8 @@ export * from './components';
 import * as ConflictResolution from './conflict-resolution';
 export * as Associations from './associations';
 export * as Constants from './constants';
+export DateTime from './date-time';
+export * from './date-time/components';
 export * as Decorators from './decorators';
 export * as DnD from './drag-and-drop';
 export * as Errors from './errors';
@@ -24,7 +26,6 @@ export Timer from './timer';
 export * as Updates from './updates';
 export * as User from './user';
 export VisibleComponentTracker from './visible-component-tracker';
-export * as Calendar from './calendar';
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;

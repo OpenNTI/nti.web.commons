@@ -10,26 +10,27 @@
 
 	.date-time-wrapper {
 		width: 42%;
-	    display: flex;
-	    flex-wrap: wrap;
-	    margin-right: 10px;
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: 10px;
 	}
 
 	.TimePicker {
 		width: 16%;
-	    justify-content: flex-start;
-	    line-height: 40px;
+		justify-content: flex-start;
+		line-height: 40px;
 		min-width: 150px;
 
 		.meridiem-select-box.select-box {
 			border-radius: 3px;
-		    margin-top: 16px;
-		    background-color: white;
-		    max-height: 41px;
+			margin-top: 16px;
+			background-color: white;
+			max-height: 41px;
 
 			.menu-label {
 				line-height: 39px;
-    			color: #494949;
+				color: #494949;
+
 				&::after {
 					color: #494949;
 				}
@@ -38,10 +39,10 @@
 
 		.number-input-component {
 			border-radius: 3px;
-		    border: 1px solid #dbdbdb;
-		    height: 42px;
-		    margin-top: 16px;
-		    color: #494949;
+			border: 1px solid #dbdbdb;
+			height: 42px;
+			margin-top: 16px;
+			color: #494949;
 		}
 	}
 
@@ -55,24 +56,24 @@
 		margin-right: 10px;
 	}
 
-	.year-wrapper{
+	.year-wrapper {
 		width: 27%;
 		margin-right: 10px;
 	}
 
 	.date-label-wrapper {
-	    width: 100%;
-	    display: flex;
+		width: 100%;
+		display: flex;
 	}
 
 	.date-select-label {
-	    width: 31%;
-	    margin-right: 10px;
-	    text-transform: uppercase;
-	    font-size: 0.625rem;
-	    font-weight: 600;
-	    color: #757474;
-	    margin-bottom: 5px;
+		width: 31%;
+		margin-right: 10px;
+		text-transform: uppercase;
+		font-size: 0.625rem;
+		font-weight: 600;
+		color: #757474;
+		margin-bottom: 5px;
 	}
 
 	.date-select-label:first-child {
@@ -89,20 +90,21 @@
 
 	.date-time-field-error {
 		font-size: 0.875em;
-		color: #F35252;
+		color: #f35252;
 	}
 
 	.set-current-date {
 		width: 22%;
-	    margin-top: 16px;
-	    line-height: 40px;
-	    font-size: 0.75em;
-	    font-weight: 600;
-	    padding-left: 0.5em;
-	    color: #494949;
+		margin-top: 16px;
+		line-height: 40px;
+		font-size: 0.75em;
+		font-weight: 600;
+		padding-left: 0.5em;
+		color: #494949;
+
 		a {
 			color: #3fb3f6;
-		    cursor: pointer;
+			cursor: pointer;
 		}
 	}
 }

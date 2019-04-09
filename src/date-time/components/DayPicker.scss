@@ -11,7 +11,6 @@
 	// width: 268px;
 	border: none;
 	font-family: $body-font-family;
-	position: relative;
 
 	&:focus {
 		outline: none;
@@ -34,12 +33,14 @@
 		outline: none;
 	}
 }
+
 .DayPicker-NavBar {
 	position: absolute;
 	left: 0;
 	right: 0;
 	padding: 0 0.5rem;
 }
+
 .DayPicker-NavButton {
 	position: absolute;
 	width: rem-calc(24px);
@@ -49,18 +50,27 @@
 	background-size: contain;
 	cursor: pointer;
 }
+
 .DayPicker-NavButton--prev {
 	left: rem-calc(6px);
 	opacity: 0.3;
-	background-image: url(./assets/day-picker/date-chevron-left.png);
-	.no-touch &:hover {opacity: 1;}
+	background-image: url(../assets/day-picker/date-chevron-left.png);
+
+	.no-touch &:hover {
+		opacity: 1;
+	}
 }
+
 .DayPicker-NavButton--next {
 	right: rem-calc(6px);
 	opacity: 0.3;
-	background-image: url(./assets/day-picker/date-chevron-right.png);
-	.no-touch &:hover {opacity: 1;}
+	background-image: url(../assets/day-picker/date-chevron-right.png);
+
+	.no-touch &:hover {
+		opacity: 1;
+	}
 }
+
 .DayPicker-Caption {
 	display: table-caption;
 	height: rem-calc(24px);
@@ -68,12 +78,15 @@
 	color: $primary-grey;
 	font-weight: 100;
 }
+
 .DayPicker-Weekdays {
 	display: table-header-group;
 }
+
 .DayPicker-WeekdaysRow {
 	display: table-row;
 }
+
 .DayPicker-Weekday {
 	display: table-cell;
 	padding: rem-calc(20px 0 15px);
@@ -85,12 +98,15 @@
 		text-decoration: none;
 	}
 }
+
 .DayPicker-Body {
 	display: table-row-group;
 }
+
 .DayPicker-Week {
 	display: table-row;
 }
+
 .DayPicker-Day {
 	display: table-cell;
 	padding: 0.5rem 0;
@@ -110,6 +126,7 @@
 		@extend %selected-treatment;
 	}
 }
+
 .DayPicker--interactionDisabled .DayPicker-Day {
 	cursor: default;
 }
@@ -118,6 +135,7 @@
 .DayPicker-Day--today:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected) {
 	color: $primary-blue;
 }
+
 .DayPicker-Day--disabled {
 	// opacity: 0.5;
 	cursor: default;
@@ -129,7 +147,9 @@
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled) {
 	@extend %selected-treatment;
-	color: #ffffff;
+
+	color: #fff;
+
 	&::before {
 		background-color: $primary-blue !important;
 	}
@@ -149,7 +169,6 @@
 		z-index: -1;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%,-50%);
-
+		transform: translate(-50%, -50%);
 	}
 }

@@ -4,8 +4,7 @@ import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
 import {PUBLISH_STATES} from '../constants';
-
-import DateTime from './DateTime';
+import {DateTime} from '../';
 
 const DEFAULT_TEXT = {
 	publish: {

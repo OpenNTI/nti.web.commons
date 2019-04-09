@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
 import BasicEditor from '../components/BasicEditor';
-import DateTime from '../../../components/DateTime';
+import {DateTime} from '../../../';
 import {getDisplay} from '../../../components/DurationPicker';
 
 const DEFAULT_TEXT = {

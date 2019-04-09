@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TimePicker from '../TimePicker';
-
 import DayPicker, {DateUtils} from './DayPicker';
+import TimePicker from './TimePicker';
 
 export default class DayTimePicker extends React.Component {
 	static propTypes = {

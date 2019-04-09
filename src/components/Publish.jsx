@@ -6,9 +6,8 @@ import Logger from '@nti/util-logger';
 
 import {PUBLISH_STATES} from '../constants';
 import * as Flyout from '../flyout';
+import {DateTime, DayTimePicker} from '../';
 
-import DateTime from './DateTime';
-import DayTimePicker from './day-time/DayTimePicker';
 import Radio from './Radio';
 import PublishTrigger, {getPublishState} from './PublishTrigger';
 

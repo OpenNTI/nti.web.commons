@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Select from '../Select';
-import TimePicker from '../TimePicker';
+import Select from '../../components/Select';
+
+import TimePicker from './TimePicker';
 
 const MONTHS = [
 	{longLabel: 'January', shortLabel: 'JAN', value: 0, days: 31},

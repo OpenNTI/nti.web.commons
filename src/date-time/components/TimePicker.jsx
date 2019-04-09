@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Time} from '@nti/lib-commons';
 
-import SelectBox from './SelectBox';
-import {Number as NumberInput} from './inputs';
+import SelectBox from '../../components/SelectBox';
+import {Number as NumberInput} from '../../components/inputs';
 
 const getNumber = n => (n = parseInt(n, 10), isNaN(n) ? null : n);
 const TimeMap = new WeakMap();

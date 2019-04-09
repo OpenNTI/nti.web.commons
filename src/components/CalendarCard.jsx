@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DateTime from './DateTime';
+import DateTime from '../date-time';
 
 
 export default class CalendarCard extends React.Component {

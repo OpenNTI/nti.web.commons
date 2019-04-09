@@ -5,8 +5,8 @@ import {shallow} from 'enzyme';
 import {Date as DateUtils} from '@nti/lib-commons';
 
 import DateTimeField from '../DateTimeField';
-import TimePicker from '../../TimePicker';
-import Select from '../../Select';
+import TimePicker from '../TimePicker';
+import Select from '../../../components/Select';
 
 const {MockDate} = DateUtils;
 

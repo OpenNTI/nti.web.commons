@@ -9,10 +9,10 @@ import RemoveButton from '../components/RemoveButton';
 import Locations from '../components/Locations';
 import ErrorCmp from '../components/Error';
 //
-import DateTime from '../../../components/DateTime';
+import {DateTime} from '../../../';
+import {Loading} from '../../../components';
 import {InlineFlyout} from '../../../flyout';
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
-import {Loading} from '../../../components';
 
 import Groups from './groups';
 

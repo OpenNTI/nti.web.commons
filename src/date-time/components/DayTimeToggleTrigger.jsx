@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import DateTime from '../DateTime';
+import DateTime from './DateTime';
 
 export default class DayTimeToggleTrigger extends React.Component {
 	static propTypes = {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import DateTime from '../DateTime';
+import {format} from '../utils';
 
 export default class Date extends React.Component {
 	static propTypes = {
@@ -48,7 +48,7 @@ export default class Date extends React.Component {
 			<div className={cls} onClick={this.doSelect}>
 				<div className="field-contents">
 					<div className="label">{type}</div>
-					<div className="value">{date ? DateTime.format(date, 'MMM. D') : ''}</div>
+					<div className="value">{date ? format(date, 'MMM. D') : ''}</div>
 				</div>
 				{this.renderRemoveButton(type, date)}
 			</div>
