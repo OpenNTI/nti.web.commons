@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import DateTime from './DateTime';
+import {format} from '../utils';
 
 export default class DayTimeToggleTrigger extends React.Component {
 	static propTypes = {
@@ -26,13 +26,13 @@ export default class DayTimeToggleTrigger extends React.Component {
 		const clearClassNames = cx('clear', {empty: !begin});
 		const mainTextClassNames = cx('text', {hasDate: begin}, {hide: disableText});
 
-		const mainText = !begin && !end ? 'When should students begin this lesson?' : begin && end ? `${DateTime.format(begin, 'MMMM D')} - ${DateTime.format(end, 'MMMM D')}` : `${DateTime.format(begin, 'dddd, MMMM Do, YYYY')}`;
+		const mainText = !begin && !end ? 'When should students begin this lesson?' : begin && end ? `${format(begin, 'MMMM D')} - ${format(end, 'MMMM D')}` : `${format(begin, 'dddd, MMMM Do, YYYY')}`;
 
 		return (
 			<div {...otherProps} className={cx('daytime-toggle-trigger', className)} ref={this.domNode}>
 				<div className={dateClassNames}>
-					<div className="month">{DateTime.format(begin, 'MMM')}</div>
-					<div className="day">{DateTime.format(begin, 'D')}</div>
+					<div className="month">{format(begin, 'MMM')}</div>
+					<div className="day">{format(begin, 'D')}</div>
 				</div>
 				<div className="main">
 					<div className={mainTextClassNames}>
