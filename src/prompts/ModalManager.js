@@ -299,7 +299,7 @@ export class ModalManager extends EventEmitter {
 	onDocumentKeyDown = (e) => {
 		const top = this.getTopMost();
 		/* istanbul ignore else */
-		if (top && top.closeOnEscape && e.keyCode === 27) {
+		if (top && top.closeOnEscape && !this.ignoreEscape && e.keyCode === 27) {
 			top.dismiss();
 		}
 	}
@@ -310,6 +310,16 @@ export class ModalManager extends EventEmitter {
 
 	allowedExternalFocus (target) {
 		return this.allowedExternalFocusInFn && this.allowedExternalFocusInFn(target);
+	}
+
+
+	suspendEscapeListener = () => {
+		this.ignoreEscape = true;
+	}
+
+
+	resumeEscapeListener = () => {
+		this.ignoreEscape = false;
 	}
 }
 
