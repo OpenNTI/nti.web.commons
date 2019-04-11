@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 import {MountToBody} from '../../../remote-mount';
@@ -12,6 +13,7 @@ function getBody () {
 
 export default class ControlBarView extends React.Component {
 	static propTypes = {
+		className: PropTypes.string,
 		visible: PropTypes.bool,
 		children: PropTypes.node
 	}
@@ -84,10 +86,10 @@ export default class ControlBarView extends React.Component {
 
 	render () {
 		const {visible} = this.state;
-		const {children} = this.props;
+		const {children, className} = this.props;
 
 		return (
-			<MountToBody className="nti-control-bar-mount">
+			<MountToBody className={cx('nti-control-bar-mount', className)}>
 				<TransitionGroup>
 					{visible && (
 						<CSSTransition key="control-bar" timeout={500}  classNames="slide-up">
