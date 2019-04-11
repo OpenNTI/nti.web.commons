@@ -10,12 +10,12 @@ import Styles from './Container.css';
 
 const cx = classnames.bind(Styles);
 
-export default
 @Store.connect(['aside'])
 class AsideContainer extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		children: PropTypes.any,
+		forwardedRef: PropTypes.any,
 
 		store: PropTypes.object,
 		aside: PropTypes.shape({
@@ -25,12 +25,12 @@ class AsideContainer extends React.Component {
 
 
 	render () {
-		const {className, children, aside} = this.props;
+		const {className, children, aside, forwardedRef} = this.props;
 		const otherProps = restProps(AsideContainer, this.props);
 		const {side} = aside || {};
 
 		return (
-			<div className={cx('container', className)} {...otherProps}>
+			<div className={cx('container', className)} ref={forwardedRef} {...otherProps}>
 				{side === LEFT && this.renderAside(aside)}
 				<section className={cx('body')}>
 					{children}
@@ -47,3 +47,7 @@ class AsideContainer extends React.Component {
 		return (<AsidePlaceholder className={cx('aside-container')} {...aside} />);
 	}
 }
+
+const AsideContainerFwdRef = (props, ref) => <AsideContainer {...props} forwardedRef={ref} />;
+export default React.forwardRef(AsideContainerFwdRef);
+
