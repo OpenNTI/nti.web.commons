@@ -11,6 +11,7 @@ export * as Stream from './stream';
 export ActiveLink from './ActiveLink';
 export ActiveState from './ActiveState';
 export ActiveStateContainer from './ActiveStateContainer';
+export AddClass from './AddClass';
 export AssetIcon from './AssetIcon';
 export Avatar from './Avatar';
 export Background from './Background';
