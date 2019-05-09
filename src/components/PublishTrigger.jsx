@@ -47,9 +47,12 @@ export default class PublishTrigger extends React.PureComponent {
 
 		return (
 			<div {...props} ref={this.ref} className={classNames}>
-				<span className="publish-trigger-text">
-					{label}
-				</span>
+				<div className="publish-trigger-container">
+					<span className="publish-trigger-text">
+						{label}
+					</span>
+					<span className="publish-trigger-icon" />
+				</div>
 			</div>
 		);
 	}
