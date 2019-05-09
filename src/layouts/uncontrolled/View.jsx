@@ -35,21 +35,26 @@ export default class Uncontrolled extends React.Component {
 		onUnmount: PropTypes.func
 	}
 
+	componentWillUnmount () {
+		const {onUnmount, ...otherProps} = this.props;
+
+		if (onUnmount) {
+			onUnmount(this.placeholder, otherProps);
+		}
+	}
 
 	attachContainer = (node) => {
 		//execute call backs in the next event pump;
 		setTimeout(() => {
-			const {onMount, onUnmount, ...otherProps} = this.props;
+			const {onMount, ...otherProps} = this.props;
 
 			this.placeholder = node ? node.querySelector(`[${DATA_ATTR}]`) : null;
 
 			if (!this.node && node) {
-				this.node = node;
 				if (onMount) { onMount(this.placeholder, otherProps); }
-			} else if (this.node && !node) {
-				this.node = null;
-				if (onUnmount) { onUnmount(this.placeholder, otherProps); }
 			}
+			
+			this.node = node;
 		}, 1);
 	}
 
