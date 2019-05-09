@@ -104,6 +104,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		onClick: PropTypes.func,
 		icon: PropTypes.string,
 		seen: PropTypes.bool,
+		noProgress: PropTypes.bool,
 
 		/**
 		 * Items to render as the labels of the card (i.e Comment count)
@@ -165,7 +166,10 @@ export default class RelatedWorkRefCard extends React.Component {
 
 
 	isSeen () {
-		const {item, seen} = this.props;
+		const {item, seen, noProgress} = this.props;
+
+		if (noProgress) { return false; }
+
 		return seen || item[Seen] || (item.hasCompleted && item.hasCompleted());
 	}
 
