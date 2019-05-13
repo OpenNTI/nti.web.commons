@@ -261,7 +261,7 @@ export default class NumberInput extends React.Component {
 			<input {...otherProps}
 				type="text"
 				className={cls}
-				pattern="[0-9]*"
+				pattern="[0-9]{4}"
 				onKeyPress={this.onKeyPress}
 				onKeyDown={this.onKeyDown}
 				onChange={this.onInputChange}
