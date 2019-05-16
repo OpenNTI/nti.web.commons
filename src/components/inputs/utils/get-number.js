@@ -32,6 +32,8 @@ const clean = (s) => {
 
 
 export default function getNumber (n) {
+	if (typeof n === 'number') { return n; }
+
 	const number = parseFloat(clean(n), 10);
 
 	return isNaN(number) ? null : number;
