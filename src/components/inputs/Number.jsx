@@ -81,6 +81,37 @@ export default class NumberInput extends React.Component {
 		return format ? format(formatted) : formatted;
 	}
 
+	//same as formatted value, but converts int from scientific notation to string
+	get formattedValueWithoutScientificNotation () {
+		const {value, format, pad} = this.props;
+		const num = getNumber(value);
+
+		let formatted;
+
+		if (pad) {
+			formatted = zpad(value, (typeof pad === 'number') ? pad : 2);
+		} else if (num) {
+			formatted = this.noScientificNotation(num);
+		} else {
+			formatted = null;
+		}
+
+		return format ? format(formatted) : formatted;
+	}
+
+	noScientificNotation = x => {
+
+		let e = parseInt(x.toString().split('+')[1], 0);
+
+		if (e > 20) {
+			e -= 20;
+			x /= Math.pow(10,e);
+			x += (new Array(e + 1)).join('0');
+		}
+
+		return x;
+	}
+
 	/**
 	 * Since we are using text input for usability (namely leading zeros, looking at you FF)
 	 * create a number input to check validity, see below for more details:
@@ -204,6 +235,11 @@ export default class NumberInput extends React.Component {
 			46: '.'
 		};
 
+		//prevent turning into scientific notation
+		if(this.props.value.toString().length >= Number.MAX_SAFE_INTEGER.toString().length) {
+			e.preventDefault();
+		}
+
 		//If we aren't a number and we aren't one of allowed characters
 		if ((e.charCode < 48 || e.charCode > 57) && !allowed[e.charCode]) {
 			e.preventDefault();
@@ -248,7 +284,8 @@ export default class NumberInput extends React.Component {
 		const {validity} = this;
 		const cls = cx('number-input-component', 'nti-number-input', className, {valid: validity.valid, invalid: !validity.valid});
 
-		let value = this.formattedValue;
+		//let value = this.formattedValue;
+		let value = this.formattedValueWithoutScientificNotation;
 
 		delete otherProps.constrain;
 		delete otherProps.onIncrement;
