@@ -55,5 +55,6 @@ export default function EmptyList ({type, className}) {
 
 
 EmptyList.propTypes = {
+	className: PropTypes.string,
 	type: PropTypes.string
 };

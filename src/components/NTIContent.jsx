@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { declareCustomElement } from '@nti/lib-dom';
 
 declareCustomElement('nti:content');
@@ -11,5 +12,8 @@ const NTIContent = ({className, ...props}, ref) => (
 		...props
 	})
 );
+NTIContent.propTypes = {
+	className: PropTypes.string
+};
 
 export default React.forwardRef(NTIContent);

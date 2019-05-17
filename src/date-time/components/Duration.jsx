@@ -13,6 +13,7 @@ function getDuration (startTime, endTime) {
 }
 
 Duration.propTypes = {
+	className: PropTypes.string,
 	startTime: PropTypes.object, // Date
 	endTime: PropTypes.object, // Date
 	longAbbreviations: PropTypes.bool
