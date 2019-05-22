@@ -21,6 +21,7 @@
 	margin: 15px 0;
 	padding: 15px;
 	padding-left: $icon-width + $gap;
+	padding-bottom: 5px;
 	min-height: ceil($icon-width * $icon-ratio);
 	//
 	word-wrap: break-word;
@@ -84,10 +85,7 @@
 	.extra-labels {
 		&:empty { display: none; }
 
-		position: absolute;
-		margin: 0;
-		left: $icon-width + $gap;
-		bottom: 5px;
+		margin: 10px 0 0 0;
 		color: $tertiary-grey;
 
 		a, .nti-link-to-path {
