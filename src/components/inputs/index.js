@@ -10,5 +10,6 @@ export Select from './select';
 export Text from './Text';
 export TextArea from './TextArea';
 export Toggle from './Toggle';
+export Tokens from './tokens';
 export URL from './URL';
 export { default as FileDrop } from './FileDrop';
