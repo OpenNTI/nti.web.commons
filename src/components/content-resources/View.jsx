@@ -5,6 +5,8 @@ import {FileAPI, Selection} from '@nti/lib-commons';
 import {addClass, removeClass, getEventTarget} from '@nti/lib-dom';
 import Logger from '@nti/util-logger';
 
+import EmptyList from '../EmptyList';
+
 import Grid from './layout/grid';
 
 const stop = e => e.stopPropagation();
@@ -25,7 +27,9 @@ export default class ContentResourcesView extends React.Component {
 		limited: PropTypes.bool,
 		contents: PropTypes.array,
 		selection: PropTypes.instanceOf(Selection.Model),
-		sort: PropTypes.object
+		sort: PropTypes.object,
+		folderContents: PropTypes.object,
+		searching: PropTypes.any
 	}
 
 	dragover = 0
@@ -145,7 +149,11 @@ export default class ContentResourcesView extends React.Component {
 					onDragLeave={this.onDragLeave}
 					onDrop={this.onDrop}
 				>
-					<Layout contents={contents} selection={selection} sort={sort} onSortChanged={onSortChanged}/>
+					{(this.props.folderContents.length === 0) ? (
+						<EmptyList type={this.props.searching ? 'search' : 'content-resources'}/>
+					) : (
+						<Layout contents={contents} selection={selection} sort={sort} onSortChanged={onSortChanged}/>
+					)}
 				</div>
 				{hasSubView && (
 					<div className="context-view-pane" onClick={stop}>{children}</div>
