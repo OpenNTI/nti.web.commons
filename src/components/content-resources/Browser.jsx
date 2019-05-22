@@ -9,7 +9,6 @@ import {scoped} from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 
 import CError from '../Error';
-import EmptyList from '../EmptyList';
 import {Mask as Loading} from '../loading-indicators';
 import FilePickerButton from '../FilePickerButton';
 import ProgressBar from '../ProgressBar';
@@ -358,8 +357,6 @@ export default class ContentResourcesBrowser extends BrowsableView {
 					<CError error={error}/>
 				) : !folderContents ? (
 					<Loading/>
-				) : (folderContents.length === 0) ? (
-					<EmptyList type={searching ? 'search' : 'content-resources'}/>
 				) : (
 					<View contents={content} sort={sort}
 						layout={LayoutComponent}
@@ -368,6 +365,8 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						onFileDrop={this.onFileDrop}
 						onSortChanged={this.onSortChanged}
 						limited={limited || searching}
+						folderContents={folderContents}
+						searching={searching}
 					>
 						{showInfo && (
 							<Inspector item={inspectItem}/>
