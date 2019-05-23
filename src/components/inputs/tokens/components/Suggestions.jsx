@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {cleanTokens} from './utils';
+import {cleanTokens} from '../utils';
+
+import Suggestion from './Suggestion';
 
 const LOADING = 'loading';
 
@@ -13,7 +15,8 @@ export default class TokenSuggestions extends React.Component {
 		label: PropTypes.string,
 		getSuggestions: PropTypes.func,
 		explicitAdd: PropTypes.bool,
-		addToken: PropTypes.func
+		addToken: PropTypes.func,
+		removeToken: PropTypes.func
 	}
 
 	state = {suggestions: null}
@@ -61,6 +64,25 @@ export default class TokenSuggestions extends React.Component {
 		}
 	}
 
+
+	addSuggestion = (suggestion) => {
+		const {addToken} = this.props;
+
+		if (addToken) {
+			addToken(suggestion);
+		}
+	}
+
+
+	removeSuggestion = (suggestion) => {
+		const {removeToken} = this.props;
+
+		if (removeToken) {
+			removeToken(suggestion);
+		}
+	}
+
+
 	render () {
 		const {explicitAdd} = this.props;
 		const {suggestions} = this.state;
@@ -80,7 +102,7 @@ export default class TokenSuggestions extends React.Component {
 
 
 	renderSuggestions () {
-		const {selected} = this.props;
+		const {selected, match} = this.props;
 		const {suggestions, error} = this.state;
 		const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
 
@@ -93,9 +115,16 @@ export default class TokenSuggestions extends React.Component {
 		return (
 			<ul>
 				{suggestions.map((suggestion, index) => {
+					const isSelected = selectedMap[suggestion.value];
+
 					return (
 						<li key={index}>
-							{suggestion.display}
+							<Suggestion
+								selected={isSelected}
+								match={match}
+								suggestion={suggestion}
+								onClick={isSelected ? this.removeSuggestion : this.addSuggestion}
+							/>
 						</li>
 					);
 				})}
