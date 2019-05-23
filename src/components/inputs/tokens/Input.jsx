@@ -22,9 +22,18 @@ export default class NTITokenInput extends React.Component {
 
 	static propTypes = {
 		className: PropTypes.string,
+		light: PropTypes.bool,
 
 		value: PropTypes.array,
 		onChange: PropTypes.func,
+
+		placeholder: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.shape({
+				empty: PropTypes.string,
+				hasTokens: PropTypes.string
+			})
+		]),
 
 		delimiters: PropTypes.arrayOf(PropTypes.string),
 
@@ -94,6 +103,15 @@ export default class NTITokenInput extends React.Component {
 
 	get selectedTokens () {
 		return this.state.selectedTokens;
+	}
+
+	get placeholder () {
+		const {placeholder} = this.props;
+		const {selectedTokens} = this.state;
+
+		if (!placeholder || typeof placeholder === 'string') { return placeholder; }
+
+		return placeholder[selectedTokens.length > 0 ? 'withTokens' : 'empty'];
 	}
 
 
@@ -177,11 +195,11 @@ export default class NTITokenInput extends React.Component {
 	}
 
 	renderInput () {
-		const {className} = this.props;
+		const {className, light} = this.props;
 		const {inputValue, selectedTokens} = this.state;
 
 		return (
-			<div className={cx('nti-token-input', className)}>
+			<div className={cx('nti-token-input', className, {light})}>
 				<ul className={cx('token-list')}>
 					{selectedTokens.map((token, index) => {
 						return (
@@ -195,6 +213,7 @@ export default class NTITokenInput extends React.Component {
 							className={cx('nti-token-text-input')}
 							ref={this.attachInputRef}
 							value={inputValue}
+							placeholder={this.placeholder}
 							onChange={this.onInputChange}
 							onFocus={this.onInputFocus}
 							onBlur={this.onInputBlur}

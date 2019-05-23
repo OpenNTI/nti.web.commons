@@ -10,9 +10,9 @@ export default class TokenDisplay extends React.Component {
 	}
 
 	render () {
-		const {token} = this.props;
+		const {token, ...otherProps} = this.props;
 		const {display} = token;
 
-		return display;
+		return (<span {...otherProps}>{display}</span>);
 	}
 }

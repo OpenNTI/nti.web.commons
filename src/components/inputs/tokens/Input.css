@@ -3,8 +3,14 @@
 	border-radius: 2px;
 	background-color: var(--panel-background);
 	border: solid 1px var(--border-grey-light);
-	padding: 0 5px;
+	padding: 10px 15px 5px 10px;
 	width: 350px;
+}
+
+.nti-token-input.light {
+	background-color: white;
+
+	--token-background: var(--panel-background);
 }
 
 
@@ -22,13 +28,12 @@
 	padding: 0;
 	display: inline-block;
 	flex: 0 0 auto;
-	margin: 0 5px;
+	margin: 0 0 5px 5px;
 }
 
 .token-list > li:last-of-type {
 	display: inline-block;
 	flex: 1 1 auto;
-	margin: 0;
 }
 
 .nti-token-text-input {
@@ -37,4 +42,5 @@
 	border: none;
 	width: 100%;
 	padding: 0 5px;
+	height: 2rem;
 }

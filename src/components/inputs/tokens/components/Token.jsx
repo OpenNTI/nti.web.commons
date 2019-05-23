@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 
+import Styles from './Token.css';
 import TokenDisplay from './TokenDisplay';
+
+const cx = classnames.bind(Styles);
 
 export default class Token extends React.Component {
 	static propTypes = {
@@ -33,10 +37,10 @@ export default class Token extends React.Component {
 		const {token, onRemove} = this.props;
 
 		return (
-			<div onClick={this.onSelect}>
-				<TokenDisplay token={token} />
+			<div className={cx('token')} onClick={this.onSelect} role="button">
+				<TokenDisplay className={cx('token-display')} token={token} />
 				{!!onRemove && (
-					<div onClick={this.onRemove}>
+					<div className={cx('token-remove')} onClick={this.onRemove} role="button">
 						<i className="icon-remove" />
 					</div>
 				)}
