@@ -11,11 +11,16 @@ const suggestions = [
 	'brown'
 ];
 
-export default class Test extends React.Component {
-	state = {values: []}
+const placeholder = {
+	empty: 'Please add a token',
+	withTokens: 'Add another token'
+};
 
-	onChange = (values) => {
-		this.setState({values});
+export default class Test extends React.Component {
+	state = {value: ['red']}
+
+	onChange = (value) => {
+		this.setState({value});
 	}
 
 
@@ -26,14 +31,15 @@ export default class Test extends React.Component {
 	}
 
 	render () {
-		const {values} = this.state;
+		const {value} = this.state;
 
 		return (
-			<div>
+			<div style={{padding: '1rem', width: '350px'}}>
 				<Input.Tokens
+					light
 					onChange={this.onChange}
-					values={values}
-					placeholder={'None Selected...'}
+					value={value}
+					placeholder={placeholder}
 					getSuggestions={this.getSuggestions}
 				/>
 			</div>
