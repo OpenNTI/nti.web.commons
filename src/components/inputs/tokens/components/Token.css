@@ -7,6 +7,20 @@
 	border-radius: 3px;
 }
 
+.token.selected {
+	border: 1px solid var(--primary-blue);
+	background: var(--primary-blue);
+}
+
+.token.selected .token-display {
+	color: white;
+}
+
+.token.selected .token-remove > i {
+	background: white;
+	color: var(--primary-blue);
+}
+
 .token-display {
 	font: normal 400 0.875rem/2 var(--body-font-family);
 	color: var(--secondary-grey);

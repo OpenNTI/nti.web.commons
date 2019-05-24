@@ -8,6 +8,7 @@ import Text from '../Text';
 import Styles from './Input.css';
 import {createToken, cleanTokens} from './utils';
 import {ALLOW, ALLOW_EXPLICIT, DO_NOT_ALLOW} from './Constants';
+import keyDownStateMod from './input-key-down-state-modifier';
 import Suggestions from './components/Suggestions';
 import Token from './components/Token';
 
@@ -55,7 +56,7 @@ export default class NTITokenInput extends React.Component {
 	attachInputRef = x => this.input = x;
 	attachFlyout = x => this.flyout = x;
 
-	state = {inputValue: '', suggestions: null, selectedIndex: -1}
+	state = {}
 
 	constructor (props) {
 		super(props);
@@ -68,9 +69,8 @@ export default class NTITokenInput extends React.Component {
 
 		this.state = {
 			inputValue: '',
-			suggestions: null,
-			selectedIndex: -1,
-			selectedTokens: props.value ? cleanTokens(props.value) : []
+			selected: null,
+			tokens: props.value ? cleanTokens(props.value) : []
 		};
 	}
 
@@ -81,7 +81,7 @@ export default class NTITokenInput extends React.Component {
 
 		if (value !== oldValue) {
 			this.setState({
-				selectedTokens: value ? cleanTokens(value) : []
+				tokens: value ? cleanTokens(value) : []
 			}, () => this.realign());
 		}
 	}
@@ -101,21 +101,34 @@ export default class NTITokenInput extends React.Component {
 	}
 
 
-	get selectedTokens () {
-		return this.state.selectedTokens;
+	get tokens () {
+		return this.state.tokens;
 	}
 
 	get placeholder () {
 		const {placeholder} = this.props;
-		const {selectedTokens} = this.state;
+		const {tokens} = this.state;
 
 		if (!placeholder || typeof placeholder === 'string') { return placeholder; }
 
-		return placeholder[selectedTokens.length > 0 ? 'withTokens' : 'empty'];
+		return placeholder[tokens.length > 0 ? 'withTokens' : 'empty'];
 	}
 
 
 	onInputChange = value => this.setState({inputValue: value})
+
+	onInputKeyDown = (e) => {
+		const newState = keyDownStateMod(e, this.state);
+
+		if (newState.tokens !== this.state.tokens) {
+			this.onChange(newState.tokens);
+		}
+
+		// delete newState.tokens;
+
+		this.setState(newState);
+	}
+
 	onInputFocus = () => {
 		clearTimeout(this.blurTimeout);
 
@@ -125,6 +138,7 @@ export default class NTITokenInput extends React.Component {
 			this.setState({inputFocused: true});
 		}
 	}
+
 	onInputBlur = () => {
 		if (!this.state.inputFocused) { return; }
 
@@ -150,21 +164,21 @@ export default class NTITokenInput extends React.Component {
 
 
 	addToken = (token, clearInput) => {
-		const {selectedTokens} = this.state;
+		const {tokens} = this.state;
 
-		for (let selected of selectedTokens) {
+		for (let selected of tokens) {
 			if (selected.isSameToken(token)) { return; }
 		}
 
-		this.onChange([...selectedTokens, token], clearInput);
+		this.onChange([...tokens, token], clearInput);
 	}
 
 
 	removeToken = (token, clearInput) => {
-		const {selectedTokens} = this.state;
-		const filtered = selectedTokens.filter((selected) => !selected.isSameToken(token));
+		const {tokens} = this.state;
+		const filtered = tokens.filter((selected) => !selected.isSameToken(token));
 
-		if (filtered.length !== selectedTokens) {
+		if (filtered.length !== tokens) {
 			return this.onChange(filtered, clearInput);
 		}
 	}
@@ -196,15 +210,21 @@ export default class NTITokenInput extends React.Component {
 
 	renderInput () {
 		const {className, light} = this.props;
-		const {inputValue, selectedTokens} = this.state;
+		const {inputValue, tokens, selected} = this.state;
 
 		return (
 			<div className={cx('nti-token-input', className, {light})}>
 				<ul className={cx('token-list')}>
-					{selectedTokens.map((token, index) => {
+					{tokens.map((token, index) => {
+						const isSelected = selected && token.isSameToken(selected);
+
 						return (
 							<li key={index}>
-								<Token token={token} onRemove={this.removeToken} />
+								<Token
+									token={token}
+									selected={isSelected}
+									onRemove={this.removeToken}
+								/>
 							</li>
 						);
 					})}
@@ -217,6 +237,7 @@ export default class NTITokenInput extends React.Component {
 							onChange={this.onInputChange}
 							onFocus={this.onInputFocus}
 							onBlur={this.onInputBlur}
+							onKeyDown={this.onInputKeyDown}
 						/>
 					</li>
 				</ul>
@@ -227,11 +248,11 @@ export default class NTITokenInput extends React.Component {
 
 	renderSuggestions () {
 		const {getSuggestions, allowNewTokens, suggestionsLabel} = this.props;
-		const {inputValue, selectedTokens} = this.state;
+		const {inputValue, tokens} = this.state;
 
 		return (
 			<Suggestions
-				selected={selectedTokens}
+				selected={tokens}
 				match={inputValue}
 				label={suggestionsLabel}
 				getSuggestions={getSuggestions}
