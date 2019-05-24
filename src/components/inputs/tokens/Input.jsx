@@ -55,6 +55,7 @@ export default class NTITokenInput extends React.Component {
 
 	attachInputRef = x => this.input = x;
 	attachFlyout = x => this.flyout = x;
+	attachSuggestions = x => this.suggestions = x;
 
 	state = {}
 
@@ -69,7 +70,7 @@ export default class NTITokenInput extends React.Component {
 
 		this.state = {
 			inputValue: '',
-			selected: null,
+			focused: null,
 			tokens: props.value ? cleanTokens(props.value) : []
 		};
 	}
@@ -124,7 +125,9 @@ export default class NTITokenInput extends React.Component {
 			this.onChange(newState.tokens);
 		}
 
-		// delete newState.tokens;
+		if (this.suggestions) {
+			this.suggestions.onInputKeyDown(e);
+		}
 
 		this.setState(newState);
 	}
@@ -186,7 +189,7 @@ export default class NTITokenInput extends React.Component {
 
 	render () {
 		const {shouldShowSuggestions} = this;
-		const {inputFocused} = this.state;
+		const {inputFocused, selected} = this.state;
 		const input = this.renderInput();
 
 		if (!shouldShowSuggestions) {
@@ -200,7 +203,7 @@ export default class NTITokenInput extends React.Component {
 				constrain
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 				horizontalAlign={Triggered.ALIGNMENTS.LEFT}
-				open={inputFocused}
+				open={inputFocused && !selected}
 			>
 				{this.renderSuggestions()}
 			</Triggered>
@@ -210,19 +213,19 @@ export default class NTITokenInput extends React.Component {
 
 	renderInput () {
 		const {className, light} = this.props;
-		const {inputValue, tokens, selected} = this.state;
+		const {inputValue, tokens, focused} = this.state;
 
 		return (
 			<div className={cx('nti-token-input', className, {light})}>
 				<ul className={cx('token-list')}>
 					{tokens.map((token, index) => {
-						const isSelected = selected && token.isSameToken(selected);
+						const isFocused = focused && token.isSameToken(focused);
 
 						return (
 							<li key={index}>
 								<Token
 									token={token}
-									selected={isSelected}
+									focused={isFocused}
 									onRemove={this.removeToken}
 								/>
 							</li>
@@ -252,6 +255,7 @@ export default class NTITokenInput extends React.Component {
 
 		return (
 			<Suggestions
+				ref={this.attachSuggestions}
 				selected={tokens}
 				match={inputValue}
 				label={suggestionsLabel}

@@ -3,26 +3,16 @@ import {Events} from '@nti/lib-commons';
 const stop = e => { e.preventDefault(); e.stopPropagation(); };
 
 function isFocusAtStart (e) {
-	if (!global.getSelection) { return false; }
-
-	const selection = global.getSelection();
-	const range = selection && selection.getRangeAt(0);
-
-	if (!range) { return false; }
-
-	const {target} = e;
-	const {startContainer, startOffset} = range;
-
-	return startOffset === 0 && (startContainer.contains(target) || startContainer.isSameNode(target));
+	return e.target.selectionStart === 0;
 }
 
 function selectPreviousToken (e, state) {
-	const {selected, tokens} = state;
-
 	stop(e);
+	const {focused, tokens} = state;
 
-	if (!selected) {
-		return {...state, selected: tokens[tokens.length - 1]};
+
+	if (!focused) {
+		return {...state, focused: tokens[tokens.length - 1]};
 	}
 
 	let prev = null;
@@ -30,7 +20,7 @@ function selectPreviousToken (e, state) {
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
 
-		if (token.isSameToken(selected)) {
+		if (token.isSameToken(focused)) {
 			prev = tokens[i - 1];
 			break;
 		}
@@ -38,19 +28,21 @@ function selectPreviousToken (e, state) {
 
 	return {
 		...state,
-		selected: prev || tokens[0]
+		focused: prev || tokens[0]
 	};
 }
 
 function selectNextToken (e, state) {
-	const {selected, tokens} = state;
+	stop(e);
+	const {focused, tokens} = state;
+
 
 	let next = null;
 
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
 
-		if (token.isSameToken(selected)) {
+		if (token.isSameToken(focused)) {
 			next = tokens[i + 1];
 			break;
 		}
@@ -58,14 +50,14 @@ function selectNextToken (e, state) {
 
 	return {
 		...state,
-		selected: next || null
+		focused: next || null
 	};
 }
 
 function deleteSelectedToken (e, state) {
-	const {selected, tokens} = state;
+	const {focused, tokens} = state;
 
-	if (!selected) { return state; }
+	if (!focused) { return state; }
 
 	stop(e);
 
@@ -75,7 +67,7 @@ function deleteSelectedToken (e, state) {
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
 
-		if (token.isSameToken(selected)) {
+		if (token.isSameToken(focused)) {
 			prevToken = tokens[i - 1];
 		} else {
 			newTokens.push(token);
@@ -84,24 +76,24 @@ function deleteSelectedToken (e, state) {
 
 	return {
 		...state,
-		selected: prevToken || newTokens[0],
+		focused: prevToken || newTokens[0],
 		tokens: newTokens
 	};
 }
 
 const HANDLERS = {
 	'nti-backspace': (e, state) => (
-		state.selected ?
+		state.focused ?
 			deleteSelectedToken(e, state) :
-			state.inputValue === '' ? selectPreviousToken(e, state) : state
+			isFocusAtStart(e) ? selectPreviousToken(e, state) : state
 	),
 
 	'nti-arrowleft': (e, state) => (
-		state.selected || isFocusAtStart(e) ? selectPreviousToken(e, state) : state
+		state.focused || isFocusAtStart(e) ? selectPreviousToken(e, state) : state
 	),
 
 	'nti-arrowright': (e, state) => (
-		isFocusAtStart(e) && state.selected ? selectNextToken(e, state) : state
+		isFocusAtStart(e) && state.focused ? selectNextToken(e, state) : state
 	)
 };
 

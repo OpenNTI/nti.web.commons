@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 
 import {cleanTokens} from '../utils';
 
+import Styles from './Suggestions.css';
 import Suggestion from './Suggestion';
+import keyDownStateMod from './suggestions-key-down-state-modifier';
+
+const cx = classnames.bind(Styles);
 
 const LOADING = 'loading';
 
+const SELECT_TRIGGERS = ['Enter'];
+const HIDE_TRIGGERS = ['Escape'];
 
 export default class TokenSuggestions extends React.Component {
 	static propTypes = {
@@ -15,16 +22,16 @@ export default class TokenSuggestions extends React.Component {
 		label: PropTypes.string,
 		getSuggestions: PropTypes.func,
 		explicitAdd: PropTypes.bool,
+		hideSuggestions: PropTypes.func,
 		addToken: PropTypes.func,
 		removeToken: PropTypes.func
 	}
 
-	state = {suggestions: null}
+	state = {suggestions: null, focused: null}
 
 	componentDidMount () {
 		this.setup(this.props);
 	}
-
 
 	componentDidUpdate (prevProps) {
 		const {match} = this.props;
@@ -32,6 +39,27 @@ export default class TokenSuggestions extends React.Component {
 
 		if (match !== oldMatch) {
 			this.setup();
+		}
+	}
+
+	componentWillUnmount () {
+		this.unmounted = true;
+	}
+
+	/**
+	 * This is called by the input component
+	 *
+	 * @param  {Event} e the key down event
+	 * @return {void}
+	 */
+	onInputKeyDown = (e) => {
+		if (this.unmounted) { return; }
+
+		const newState = keyDownStateMod(e, this.state);
+
+		if (newState !== this.state) {
+			this.setState(newState);
+			return;
 		}
 	}
 
@@ -88,7 +116,7 @@ export default class TokenSuggestions extends React.Component {
 		const {suggestions} = this.state;
 
 		return (
-			<div>
+			<div className={cx('suggestions')}>
 				{explicitAdd && suggestions !== LOADING && this.renderCreate()}
 				{this.renderSuggestions()}
 			</div>
@@ -103,7 +131,7 @@ export default class TokenSuggestions extends React.Component {
 
 	renderSuggestions () {
 		const {selected, match} = this.props;
-		const {suggestions, error} = this.state;
+		const {suggestions, error, focused} = this.state;
 		const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
 
 		if (error) {
@@ -113,14 +141,16 @@ export default class TokenSuggestions extends React.Component {
 		if (!suggestions) { return null; }
 
 		return (
-			<ul>
+			<ul className={cx('suggestions-list')}>
 				{suggestions.map((suggestion, index) => {
 					const isSelected = selectedMap[suggestion.value];
+					const isFocused = focused && suggestion.isSameToken(focused);
 
 					return (
 						<li key={index}>
 							<Suggestion
 								selected={isSelected}
+								focused={isFocused}
 								match={match}
 								suggestion={suggestion}
 								onClick={isSelected ? this.removeSuggestion : this.addSuggestion}

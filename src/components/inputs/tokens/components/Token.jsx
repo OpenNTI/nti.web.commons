@@ -10,7 +10,7 @@ const cx = classnames.bind(Styles);
 export default class Token extends React.Component {
 	static propTypes = {
 		token: PropTypes.object,
-		selected: PropTypes.bool,
+		focused: PropTypes.bool,
 		onRemove: PropTypes.func,
 		onSelect: PropTypes.func
 	}
@@ -35,10 +35,10 @@ export default class Token extends React.Component {
 	}
 
 	render () {
-		const {token, onRemove, selected} = this.props;
+		const {token, onRemove, focused} = this.props;
 
 		return (
-			<div className={cx('token', {selected})} onClick={this.onSelect} role="button">
+			<div className={cx('token', {focused})} onClick={this.onSelect} role="button">
 				<TokenDisplay className={cx('token-display')} token={token} />
 				{!!onRemove && (
 					<div className={cx('token-remove')} onClick={this.onRemove} role="button">

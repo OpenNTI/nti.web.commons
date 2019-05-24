@@ -2,8 +2,8 @@
 	display: inline-block;
 	border-radius: 2px;
 	background-color: var(--panel-background);
-	border: solid 1px var(--border-grey-light);
-	padding: 10px 15px 5px 10px;
+	box-shadow: 0 0 0 1px var(--border-grey-light);
+	padding: 9px 15px 4px 10px;
 	width: 350px;
 }
 

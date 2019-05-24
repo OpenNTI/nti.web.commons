@@ -1,0 +1,8 @@
+.suggestion {
+
+}
+
+.suggestion.focused,
+html.no-touch .suggestion:hover {
+	background: var(--border-grey-light);
+}

@@ -7,16 +7,16 @@
 	border-radius: 3px;
 }
 
-.token.selected {
+.token.focused {
 	border: 1px solid var(--primary-blue);
 	background: var(--primary-blue);
 }
 
-.token.selected .token-display {
+.token.focused .token-display {
 	color: white;
 }
 
-.token.selected .token-remove > i {
+.token.focused .token-remove > i {
 	background: white;
 	color: var(--primary-blue);
 }
