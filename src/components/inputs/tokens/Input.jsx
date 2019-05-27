@@ -129,7 +129,9 @@ export default class NTITokenInput extends React.Component {
 			this.suggestions.onInputKeyDown(e);
 		}
 
-		this.setState(newState);
+		if (this.state !== newState) {
+			this.setState(newState);
+		}
 	}
 
 	onInputFocus = () => {
@@ -152,17 +154,21 @@ export default class NTITokenInput extends React.Component {
 
 
 	onChange (tokens, clearInput) {
-		const {onChange} = this.props;
+		const finishChange = () => {
+			const {onChange} = this.props;
 
-		if (onChange) {
-			onChange(tokens.map(t => t.wasRaw ? t.value : t));
-		}
+			if (onChange) {
+				onChange(tokens.map(t => t.wasRaw ? t.value : t));
+			}
+
+			this.focus();
+		};
 
 		if (clearInput) {
-			this.setState({inputValue: ''});
+			this.setState({inputValue: ''}, finishChange);
+		} else {
+			finishChange();
 		}
-
-		this.focus();
 	}
 
 
@@ -189,7 +195,7 @@ export default class NTITokenInput extends React.Component {
 
 	render () {
 		const {shouldShowSuggestions} = this;
-		const {inputFocused, selected} = this.state;
+		const {inputFocused, focused} = this.state;
 		const input = this.renderInput();
 
 		if (!shouldShowSuggestions) {
@@ -203,7 +209,7 @@ export default class NTITokenInput extends React.Component {
 				constrain
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 				horizontalAlign={Triggered.ALIGNMENTS.LEFT}
-				open={inputFocused && !selected}
+				open={inputFocused && !focused}
 			>
 				{this.renderSuggestions()}
 			</Triggered>
