@@ -209,6 +209,7 @@ export default class NTITokenInput extends React.Component {
 				constrain
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 				horizontalAlign={Triggered.ALIGNMENTS.LEFT}
+				sizing={Triggered.SIZES.MATCH_SIDE}
 				open={inputFocused && !focused}
 			>
 				{this.renderSuggestions()}

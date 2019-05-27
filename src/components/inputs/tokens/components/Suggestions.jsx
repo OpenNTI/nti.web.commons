@@ -15,7 +15,6 @@ const cx = classnames.bind(Styles);
 const LOADING = 'loading';
 
 const SELECT_TRIGGERS = ['Enter'];
-const HIDE_TRIGGERS = ['Escape'];
 
 export default class TokenSuggestions extends React.Component {
 	static propTypes = {
@@ -104,7 +103,17 @@ export default class TokenSuggestions extends React.Component {
 		}, 100);
 
 		try {
+			const loaded = new Date();
+
+			this.lastStart = loaded;
+
 			const tokens = await getSuggestions(match);
+			clearTimeout(loadingTimeout);
+
+			if (this.lastStart !== loaded) {
+				return;
+			}
+
 			const suggestions = cleanTokens(tokens);
 			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
 			const hasNewToken = explicitAdd && match && suggestions.every(suggestion => !suggestion.isExactMatch(match));
@@ -115,7 +124,6 @@ export default class TokenSuggestions extends React.Component {
 				suggestions.unshift(newToken);
 			}
 
-			clearTimeout(loadingTimeout);
 
 			this.setState({
 				suggestions,
@@ -152,14 +160,16 @@ export default class TokenSuggestions extends React.Component {
 	render () {
 		const {suggestions, error} = this.state;
 		const loading = suggestions === LOADING;
+		const empty = !this.suggestions || this.suggestions.length === 0;
 
 		return (
 			<div className={cx('suggestions')}>
 				{error && this.renderError()}
 				{!error && loading && this.renderLoading()}
 				{!error && !loading && this.renderNewToken()}
-				{!error && !loading && this.renderLabel()}
-				{!error && !loading && this.renderSuggestions()}
+				{!error && !loading && empty && this.renderEmpty()}
+				{!error && !loading && !empty && this.renderLabel()}
+				{!error && !loading && !empty && this.renderSuggestions()}
 			</div>
 		);
 	}
@@ -170,12 +180,25 @@ export default class TokenSuggestions extends React.Component {
 
 
 	renderLoading () {
+		return (
+			<div className={cx('loading')}>
+				<Spinner />
+			</div>
+		);
+	}
 
+
+	renderEmpty () {
+		return null;
 	}
 
 
 	renderLabel () {
+		const {label} = this.props;
 
+		return label ?
+			(<span className={cx('suggestions-label')}>{label}</span>) :
+			null;
 	}
 
 
@@ -202,7 +225,7 @@ export default class TokenSuggestions extends React.Component {
 		const {match} = this.props;
 		const {focused, selectedMap} = this.state;
 
-		if (!suggestions) { return null; }
+		if (!suggestions || suggestions.length === 0) { return null; }
 
 		return (
 			<ul className={cx('suggestions-list')}>

@@ -35,7 +35,7 @@ export default class TokenSuggestion extends React.Component {
 
 		return (
 			<div className={cx('suggestion', {focused, selected})} onClick={this.onClick}>
-				{selected && (<i className="icon-check" />)}
+				{selected && (<i className={cx('icon-check', 'check-mark')} />)}
 				{isNewToken && this.renderNewToken(suggestion, match)}
 				{!isNewToken && this.renderSuggestion(suggestion, match)}
 			</div>
@@ -45,15 +45,20 @@ export default class TokenSuggestion extends React.Component {
 
 	renderSuggestion (suggestion, match) {
 		return (
-			<TokenDisplay token={suggestion} match={match}/>
+			<TokenDisplay
+				className={cx('suggestion-display')}
+				token={suggestion}
+				match={match}
+			/>
 		);
 	}
 
 
 	renderNewToken (suggestion, match) {
 		return (
-			<div>
-				<span>{t('newToken', {token: match})}</span>
+			<div className={cx('new-token')}>
+				<i className={cx('icon-add')} />
+				<span className={cx('new-token-display')}>{t('newToken', {token: match})}</span>
 			</div>
 		);
 	}

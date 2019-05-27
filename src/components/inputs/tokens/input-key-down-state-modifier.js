@@ -4,7 +4,7 @@ const DEFAULT = 'default';
 const stop = e => { e.preventDefault(); e.stopPropagation(); };
 
 function isFocusAtStart (e) {
-	return e.target.selectionStart === 0;
+	return e.target.selectionStart === 0 && e.target.selectionEnd === 0;
 }
 
 function selectPreviousToken (e, state) {
