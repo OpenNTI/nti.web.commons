@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {Events} from '@nti/lib-commons';
 
-import {cleanTokens} from '../utils';
+import {Spinner} from '../../../loading-indicators';
+import {cleanTokens, createToken} from '../utils';
 
 import Styles from './Suggestions.css';
 import Suggestion from './Suggestion';
@@ -29,15 +31,27 @@ export default class TokenSuggestions extends React.Component {
 
 	state = {suggestions: null, focused: null}
 
+	get newToken () {
+		const {hasNewToken, suggestions} = this.state;
+
+		return hasNewToken && suggestions[0];
+	}
+
+	get suggestions () {
+		const {hasNewToken, suggestions} = this.state;
+
+		return hasNewToken ? suggestions.slice(1) : suggestions;
+	}
+
 	componentDidMount () {
 		this.setup(this.props);
 	}
 
 	componentDidUpdate (prevProps) {
-		const {match} = this.props;
-		const {match:oldMatch} = prevProps;
+		const {match, selected} = this.props;
+		const {match:oldMatch, selected:oldSelected} = prevProps;
 
-		if (match !== oldMatch) {
+		if (match !== oldMatch || selected !== oldSelected) {
 			this.setup();
 		}
 	}
@@ -61,11 +75,24 @@ export default class TokenSuggestions extends React.Component {
 			this.setState(newState);
 			return;
 		}
+
+		const {focused, selectedMap} = this.state;
+		const {key} = e;
+
+		if (SELECT_TRIGGERS.indexOf(key) > -1 && focused) {
+			Events.stop(e);
+
+			if (selectedMap[focused.value]) {
+				this.removeSuggestion(focused);
+			} else {
+				this.addSuggestion(focused);
+			}
+		}
 	}
 
 
 	async setup (props = this.props) {
-		const {match, getSuggestions} = this.props;
+		const {match, selected, getSuggestions, explicitAdd} = this.props;
 
 		if (!getSuggestions) {
 			this.setState({suggestions: null});
@@ -77,12 +104,23 @@ export default class TokenSuggestions extends React.Component {
 		}, 100);
 
 		try {
-			const suggestions = await getSuggestions(match);
+			const tokens = await getSuggestions(match);
+			const suggestions = cleanTokens(tokens);
+			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
+			const hasNewToken = explicitAdd && match && suggestions.every(suggestion => !suggestion.isExactMatch(match));
+
+			if (hasNewToken) {
+				const newToken = createToken(match, null, null, true);
+
+				suggestions.unshift(newToken);
+			}
 
 			clearTimeout(loadingTimeout);
 
 			this.setState({
-				suggestions: cleanTokens(suggestions)
+				suggestions,
+				hasNewToken,
+				selectedMap
 			});
 		} catch (e) {
 			this.setState({
@@ -94,10 +132,11 @@ export default class TokenSuggestions extends React.Component {
 
 
 	addSuggestion = (suggestion) => {
+		const {newToken} = this;
 		const {addToken} = this.props;
 
 		if (addToken) {
-			addToken(suggestion);
+			addToken(suggestion, newToken && newToken.isSameToken(suggestion));
 		}
 	}
 
@@ -110,33 +149,58 @@ export default class TokenSuggestions extends React.Component {
 		}
 	}
 
-
 	render () {
-		const {explicitAdd} = this.props;
-		const {suggestions} = this.state;
+		const {suggestions, error} = this.state;
+		const loading = suggestions === LOADING;
 
 		return (
 			<div className={cx('suggestions')}>
-				{explicitAdd && suggestions !== LOADING && this.renderCreate()}
-				{this.renderSuggestions()}
+				{error && this.renderError()}
+				{!error && loading && this.renderLoading()}
+				{!error && !loading && this.renderNewToken()}
+				{!error && !loading && this.renderLabel()}
+				{!error && !loading && this.renderSuggestions()}
 			</div>
 		);
 	}
 
-
-	renderCreate () {
+	renderError () {
 
 	}
 
 
-	renderSuggestions () {
-		const {selected, match} = this.props;
-		const {suggestions, error, focused} = this.state;
-		const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
+	renderLoading () {
 
-		if (error) {
-			return this.renderError(error);
-		}
+	}
+
+
+	renderLabel () {
+
+	}
+
+
+	renderNewToken () {
+		const {newToken} = this;
+		const {focused} = this.state;
+
+		if (!newToken) { return null; }
+
+		return (
+			<Suggestion
+				isNewToken
+				match={newToken.value}
+				focused={focused === newToken}
+				suggestion={newToken}
+				onClick={this.addSuggestion}
+			/>
+		);
+	}
+
+
+	renderSuggestions () {
+		const {suggestions} = this;
+		const {match} = this.props;
+		const {focused, selectedMap} = this.state;
 
 		if (!suggestions) { return null; }
 

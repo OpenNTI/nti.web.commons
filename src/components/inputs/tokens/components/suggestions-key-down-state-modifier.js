@@ -6,6 +6,8 @@ function moveDown (e, state) {
 
 	if (!suggestions) { return state; }
 
+	Events.stop(e);
+
 	let newFocused = null;
 
 	for (let i = 0; i < suggestions.length; i++) {
@@ -30,6 +32,8 @@ function moveUp (e, state) {
 
 	if (!suggestions) { return state; }
 
+	Events.stop(e);
+
 	let newFocused = null;
 
 	for (let i = 0; i < suggestions.length; i++) {
@@ -49,11 +53,29 @@ function moveUp (e, state) {
 }
 
 function moveToStart (e, state) {
-	debugger;
+	const {suggestions} = state;
+
+	if (!suggestions) { return state; }
+
+	Events.stop(e);
+
+	return {
+		...state,
+		focused: suggestions[0]
+	};
 }
 
 function moveToEnd (e, state) {
-	debugger;
+	const {suggestions} = state;
+
+	if (!suggestions) { return state; }
+
+	Events.stop(e);
+
+	return {
+		...state,
+		focused: suggestions[suggestions.length - 1]
+	};
 }
 
 const HANDLERS = {
