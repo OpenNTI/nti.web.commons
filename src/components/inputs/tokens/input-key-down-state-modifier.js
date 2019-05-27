@@ -1,5 +1,6 @@
 import {Events} from '@nti/lib-commons';
 
+const DEFAULT = 'default';
 const stop = e => { e.preventDefault(); e.stopPropagation(); };
 
 function isFocusAtStart (e) {
@@ -94,12 +95,14 @@ const HANDLERS = {
 
 	'nti-arrowright': (e, state) => (
 		isFocusAtStart(e) && state.focused ? selectNextToken(e, state) : state
-	)
+	),
+
+	[DEFAULT]: (e, state) => ({...state, focused: null})
 };
 
 export default function inputKeyDownStateModifier (e, state) {
 	const keyCode = Events.getKeyCode(e);
-	const handler = HANDLERS[keyCode];
+	const handler = HANDLERS[keyCode] || HANDLERS[DEFAULT];
 
 	return handler ? handler(e, state) : state;
 }
