@@ -93,6 +93,7 @@ export default class TokenSuggestions extends React.Component {
 
 	async setup () {
 		const {match, matchValidity, selected, getSuggestions, explicitAdd} = this.props;
+		const {tokens:oldTokens, focused} = this.state;
 
 		if (!getSuggestions) {
 			this.setState({suggestions: null});
@@ -108,7 +109,7 @@ export default class TokenSuggestions extends React.Component {
 		this.lastStart = loaded;
 
 		try {
-			const tokens = await getSuggestions(match);
+			const tokens = oldTokens && oldTokens.for === match ? oldTokens.value : await getSuggestions(match);
 			clearTimeout(loadingTimeout);
 
 			if (this.lastStart !== loaded) {
@@ -128,11 +129,17 @@ export default class TokenSuggestions extends React.Component {
 				suggestions.unshift(newToken);
 			}
 
+			const newFocused = focused && ((suggestions || []).some(suggestion => suggestion.isSameToken(focused))) ? focused : null;
 
 			this.setState({
 				suggestions,
+				tokens: {
+					value: tokens,
+					for: match
+				},
 				hasNewToken,
-				selectedMap
+				selectedMap,
+				focused: newFocused
 			});
 		} catch (e) {
 			if (this.lastStart !== loaded) {
