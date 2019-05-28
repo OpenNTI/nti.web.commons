@@ -2,13 +2,15 @@ import React from 'react';
 
 import {Input} from '../../src';
 
+
 const suggestions = [
 	'red',
 	'green',
 	'blue',
 	'orange',
 	'yellow',
-	'brown'
+	'brown',
+	'red-orange'
 ];
 
 const placeholder = {
@@ -25,9 +27,14 @@ export default class Test extends React.Component {
 
 
 	getSuggestions = (match) => {
-		if (!match) { return suggestions; }
+		return new Promise((fulfill) => {
+			setTimeout(() => {
+				if (!match) { return fulfill(suggestions); }
 
-		return suggestions.filter(x => x.indexOf(match) !== -1);
+				return fulfill(suggestions.filter(x => x.indexOf(match) !== -1));
+			}, 1000);
+		});
+
 	}
 
 	render () {
@@ -41,6 +48,8 @@ export default class Test extends React.Component {
 					value={value}
 					placeholder={placeholder}
 					getSuggestions={this.getSuggestions}
+					allowNewTokens={Input.Tokens.ALLOW_EXPLICIT}
+					suggestionsLabel="Suggestions"
 				/>
 			</div>
 		);
