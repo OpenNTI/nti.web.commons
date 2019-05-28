@@ -37,6 +37,9 @@ export default class NTITokenInput extends React.Component {
 		]),
 
 		delimiters: PropTypes.arrayOf(PropTypes.string),
+		validator: PropTypes.func,
+		maxTokenLength: PropTypes.number,
+
 
 		getSuggestions: PropTypes.func,
 		suggestionsLabel: PropTypes.string,
@@ -116,7 +119,15 @@ export default class NTITokenInput extends React.Component {
 	}
 
 
-	onInputChange = value => this.setState({inputValue: value})
+	onInputChange = (value) => {
+		const {validator} = this.props;
+		const inputValidity = validator ? validator(value) : null;
+
+		this.setState({
+			inputValue: value,
+			inputValidity
+		});
+	}
 
 	onInputKeyDown = (e) => {
 		const newState = keyDownStateMod(e, this.state);
@@ -219,8 +230,9 @@ export default class NTITokenInput extends React.Component {
 	}
 
 	renderInput () {
-		const {className, light} = this.props;
-		const {inputValue, tokens, focused} = this.state;
+		const {className, light, maxTokenLength} = this.props;
+		const {inputValue, inputValidity, tokens, focused} = this.state;
+		const error = inputValidity && !inputValidity.isValid;
 
 		return (
 			<div className={cx('nti-token-input', className, {light})}>
@@ -240,7 +252,7 @@ export default class NTITokenInput extends React.Component {
 					})}
 					<li>
 						<Text
-							className={cx('nti-token-text-input')}
+							className={cx('nti-token-text-input', {error})}
 							ref={this.attachInputRef}
 							value={inputValue}
 							placeholder={this.placeholder}
@@ -248,6 +260,7 @@ export default class NTITokenInput extends React.Component {
 							onFocus={this.onInputFocus}
 							onBlur={this.onInputBlur}
 							onKeyDown={this.onInputKeyDown}
+							maxLength={maxTokenLength}
 						/>
 					</li>
 				</ul>
@@ -258,13 +271,14 @@ export default class NTITokenInput extends React.Component {
 
 	renderSuggestions () {
 		const {getSuggestions, allowNewTokens, suggestionsLabel} = this.props;
-		const {inputValue, tokens} = this.state;
+		const {inputValue, inputValidity, tokens} = this.state;
 
 		return (
 			<Suggestions
 				ref={this.attachSuggestions}
 				selected={tokens}
 				match={inputValue}
+				matchValidity={inputValidity}
 				label={suggestionsLabel}
 				getSuggestions={getSuggestions}
 				explicitAdd={allowNewTokens === ALLOW_EXPLICIT}

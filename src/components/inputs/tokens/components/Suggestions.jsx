@@ -20,6 +20,7 @@ export default class TokenSuggestions extends React.Component {
 	static propTypes = {
 		selected: PropTypes.array,
 		match: PropTypes.string,
+		matchValidity: PropTypes.object,
 		label: PropTypes.string,
 		getSuggestions: PropTypes.func,
 		explicitAdd: PropTypes.bool,
@@ -91,7 +92,7 @@ export default class TokenSuggestions extends React.Component {
 
 
 	async setup (props = this.props) {
-		const {match, selected, getSuggestions, explicitAdd} = this.props;
+		const {match, matchValidity, selected, getSuggestions, explicitAdd} = this.props;
 
 		if (!getSuggestions) {
 			this.setState({suggestions: null});
@@ -117,6 +118,7 @@ export default class TokenSuggestions extends React.Component {
 			const suggestions = cleanTokens(tokens);
 			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
 			const hasNewToken = explicitAdd && match &&
+				(!matchValidity || matchValidity.isValid) &&
 				suggestions.every(suggestion => !suggestion.isExactMatch(match)) &&
 				(selected || []).every(select => !select.isExactMatch(match));
 
