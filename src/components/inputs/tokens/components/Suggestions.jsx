@@ -44,7 +44,7 @@ export default class TokenSuggestions extends React.Component {
 	}
 
 	componentDidMount () {
-		this.setup(this.props);
+		this.setup();
 	}
 
 	componentDidUpdate (prevProps) {
@@ -91,7 +91,7 @@ export default class TokenSuggestions extends React.Component {
 	}
 
 
-	async setup (props = this.props) {
+	async setup () {
 		const {match, matchValidity, selected, getSuggestions, explicitAdd} = this.props;
 
 		if (!getSuggestions) {
@@ -103,11 +103,11 @@ export default class TokenSuggestions extends React.Component {
 			this.setState({suggestions: LOADING});
 		}, 100);
 
+		const loaded = new Date();
+
+		this.lastStart = loaded;
+
 		try {
-			const loaded = new Date();
-
-			this.lastStart = loaded;
-
 			const tokens = await getSuggestions(match);
 			clearTimeout(loadingTimeout);
 
@@ -135,6 +135,10 @@ export default class TokenSuggestions extends React.Component {
 				selectedMap
 			});
 		} catch (e) {
+			if (this.lastStart !== loaded) {
+				return;
+			}
+
 			this.setState({
 				error: e,
 				suggestions: null
