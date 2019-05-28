@@ -116,7 +116,9 @@ export default class TokenSuggestions extends React.Component {
 
 			const suggestions = cleanTokens(tokens);
 			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
-			const hasNewToken = explicitAdd && match && suggestions.every(suggestion => !suggestion.isExactMatch(match));
+			const hasNewToken = explicitAdd && match &&
+				suggestions.every(suggestion => !suggestion.isExactMatch(match)) &&
+				(selected || []).every(select => !select.isExactMatch(match));
 
 			if (hasNewToken) {
 				const newToken = createToken(match, null, null, true);
