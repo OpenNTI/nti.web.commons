@@ -1,6 +1,6 @@
 .suggestions {
 	 --side-padding: 30px;
-	 max-width: 400px;
+	 width: 400px;
 }
 
 .suggestions-list {
