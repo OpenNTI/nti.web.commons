@@ -48,7 +48,9 @@ export default class NTITokenInput extends React.Component {
 			ALLOW,
 			ALLOW_EXPLICIT,
 			DO_NOT_ALLOW
-		])
+		]),
+
+		inputTransform: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -119,8 +121,9 @@ export default class NTITokenInput extends React.Component {
 	}
 
 
-	onInputChange = (value) => {
-		const {validator} = this.props;
+	onInputChange = (pendingValue) => {
+		const {validator, inputTransform} = this.props;
+		const value = inputTransform ? inputTransform(pendingValue) : pendingValue;
 		const inputValidity = validator ? validator(value) : null;
 
 		this.setState({
@@ -130,18 +133,21 @@ export default class NTITokenInput extends React.Component {
 	}
 
 	onInputKeyDown = (e) => {
-		const newState = keyDownStateMod(e, this.state);
+		const oldState = this.state;
+		const newState = keyDownStateMod(e, oldState);
 
 		if (newState.tokens !== this.state.tokens) {
 			this.onChange(newState.tokens);
 		}
 
+
+		if (oldState !== newState) {
+			console.log('Updating State: ', newState.inputValue);
+			this.setState(newState);
+		}
+		
 		if (this.suggestions) {
 			this.suggestions.onInputKeyDown(e);
-		}
-
-		if (this.state !== newState) {
-			this.setState(newState);
 		}
 	}
 
@@ -176,6 +182,7 @@ export default class NTITokenInput extends React.Component {
 		};
 
 		if (clearInput) {
+			console.log('CLEARING INPUT');
 			this.setState({inputValue: ''}, finishChange);
 		} else {
 			finishChange();

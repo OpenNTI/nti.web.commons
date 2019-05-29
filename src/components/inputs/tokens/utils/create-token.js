@@ -1,8 +1,14 @@
+function defaultMatch (value, display) {
+	return (match) => {
+		return match === value || (display && display === match);
+	};
+}
+
 export default function createToken (value, display, isExactMatch, wasRaw) {
 	return {
 		value,
 		display: display || value,
-		isExactMatch: isExactMatch || ((match) => (match === value || (display && match === display))),
+		isExactMatch: isExactMatch || defaultMatch(value, display),
 		isSameToken: (token) => token.isExactMatch(value),
 		wasRaw
 	};

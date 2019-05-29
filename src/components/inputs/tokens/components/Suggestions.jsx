@@ -118,6 +118,7 @@ export default class TokenSuggestions extends React.Component {
 
 			const suggestions = cleanTokens(tokens);
 			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
+			
 			const hasNewToken = explicitAdd && match &&
 				(!matchValidity || matchValidity.isValid) &&
 				suggestions.every(suggestion => !suggestion.isExactMatch(match)) &&
@@ -139,7 +140,7 @@ export default class TokenSuggestions extends React.Component {
 				},
 				hasNewToken,
 				selectedMap,
-				focused: newFocused
+				focused: newFocused || (match !== '' ? suggestions[0] : null)
 			});
 		} catch (e) {
 			if (this.lastStart !== loaded) {
@@ -155,11 +156,10 @@ export default class TokenSuggestions extends React.Component {
 
 
 	addSuggestion = (suggestion) => {
-		const {newToken} = this;
 		const {addToken} = this.props;
 
 		if (addToken) {
-			addToken(suggestion, newToken && newToken.isSameToken(suggestion));
+			addToken(suggestion, true);
 		}
 	}
 
@@ -168,7 +168,7 @@ export default class TokenSuggestions extends React.Component {
 		const {removeToken} = this.props;
 
 		if (removeToken) {
-			removeToken(suggestion);
+			removeToken(suggestion, true);
 		}
 	}
 

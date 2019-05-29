@@ -18,7 +18,7 @@ export default class TokenSuggestion extends React.Component {
 		suggestion: PropTypes.object,
 		selected: PropTypes.bool,
 		focused: PropTypes.bool,
-		onClick: PropTypes.bool
+		onClick: PropTypes.func
 	}
 
 	onClick = () => {
