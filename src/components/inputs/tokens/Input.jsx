@@ -142,7 +142,6 @@ export default class NTITokenInput extends React.Component {
 
 
 		if (oldState !== newState) {
-			console.log('Updating State: ', newState.inputValue);
 			this.setState(newState);
 		}
 		
@@ -182,7 +181,6 @@ export default class NTITokenInput extends React.Component {
 		};
 
 		if (clearInput) {
-			console.log('CLEARING INPUT');
 			this.setState({inputValue: ''}, finishChange);
 		} else {
 			finishChange();
