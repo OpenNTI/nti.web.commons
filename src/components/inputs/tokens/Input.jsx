@@ -117,7 +117,7 @@ export default class NTITokenInput extends React.Component {
 
 		if (!placeholder || typeof placeholder === 'string') { return placeholder; }
 
-		return placeholder[tokens.length > 0 ? 'withTokens' : 'empty'];
+		return placeholder[tokens.length > 0 ? 'hasTokens' : 'empty'];
 	}
 
 
