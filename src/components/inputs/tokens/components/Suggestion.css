@@ -37,6 +37,7 @@ html.no-touch .suggestion:hover {
 }
 
 .new-token i {
+	display: inline-block;
 	border: 2px solid var(--primary-blue);
 	border-radius: 1rem;
 	font-size: 0.875rem;
