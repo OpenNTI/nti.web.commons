@@ -1,6 +1,8 @@
 .suggestions {
 	 --side-padding: 30px;
 	 width: 400px;
+	 max-height:  300px;
+	 overflow-y: auto;
 }
 
 .suggestions-list {

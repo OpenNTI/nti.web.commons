@@ -31,6 +31,21 @@ export default class TokenSuggestions extends React.Component {
 
 	state = {suggestions: null, focused: null}
 
+	attachContainer = (node) => {
+		this.container = node;
+
+		if (this.focusedNode) {
+			this.scrollToNode(this.focusedNode);
+		}
+	}
+
+	attachFocused = (node) => {
+		if (node && this.focusedNode !== node) {
+			this.focusedNode = node;
+			this.scrollToNode(node);
+		}
+	}
+
 	get newToken () {
 		const {hasNewToken, suggestions} = this.state;
 
@@ -58,6 +73,29 @@ export default class TokenSuggestions extends React.Component {
 
 	componentWillUnmount () {
 		this.unmounted = true;
+	}
+
+
+	scrollToNode (node) {
+		if (!node || !this.container) { return; }
+
+		const {container} = this;
+		const containerRect = container.getBoundingClientRect();
+		const nodeRect = node.getBoundingClientRect();
+
+		const containerHeight = container.clientHeight;
+		const top = nodeRect.top - containerRect.top;
+		const bottom = top + nodeRect.height;
+
+		let newTop = container.scrollTop;
+
+		if (bottom > containerHeight) {
+			newTop = bottom - containerHeight + newTop;
+		} else if (top < 0) {
+			newTop = newTop + top;
+		}
+
+		container.scrollTop = newTop;
 	}
 
 	/**
@@ -178,7 +216,7 @@ export default class TokenSuggestions extends React.Component {
 		const empty = !this.suggestions || this.suggestions.length === 0;
 
 		return (
-			<div className={cx('suggestions')}>
+			<div className={cx('suggestions')} ref={this.attachContainer}>
 				{error && this.renderError()}
 				{!error && loading && this.renderLoading()}
 				{!error && !loading && this.renderNewToken()}
@@ -219,18 +257,22 @@ export default class TokenSuggestions extends React.Component {
 
 	renderNewToken () {
 		const {newToken} = this;
-		const {focused} = this.state;
 
 		if (!newToken) { return null; }
 
+		const {focused} = this.state;
+		const isFocused = focused === newToken;
+
 		return (
-			<Suggestion
-				isNewToken
-				match={newToken.value}
-				focused={focused === newToken}
-				suggestion={newToken}
-				onClick={this.addSuggestion}
-			/>
+			<div ref={isFocused ? this.attachFocused : null}>
+				<Suggestion
+					isNewToken
+					match={newToken.value}
+					focused={isFocused}
+					suggestion={newToken}
+					onClick={this.addSuggestion}
+				/>
+			</div>
 		);
 	}
 
@@ -249,7 +291,7 @@ export default class TokenSuggestions extends React.Component {
 					const isFocused = focused && suggestion.isSameToken(focused);
 
 					return (
-						<li key={index}>
+						<li key={index} ref={isFocused ? this.attachFocused : null}>
 							<Suggestion
 								selected={isSelected}
 								focused={isFocused}
