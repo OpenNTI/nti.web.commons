@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { restProps } from '@nti/lib-commons';
+import { restProps, FileAPI } from '@nti/lib-commons';
 
 const FILE_REGEX = /file/i;
 
@@ -91,8 +91,29 @@ export default class DropZone extends React.Component {
 		return cx(className, 'nti-drop-zone', stateClasses);
 	}
 
-	onDrop = () => {
-		debugger;
+	onDrop = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		this.onDragLeave(e);
+
+		const isValid = this.isValidEvent(e);
+		const {onDrop, onFileDrop} = this.props;
+
+		if (onDrop) {
+			onDrop(e, isValid);
+		}
+
+		if (onFileDrop) {
+			const {files: transferFiles, items} = e.dataTransfer;
+			let files = transferFiles;
+
+			if (items) {
+				files = FileAPI.getFilesFromDataTransferItems(items);
+			}
+
+			onFileDrop(e, files, isValid);
+		}
 	}
 
 	onDragEnter = (e) => {
