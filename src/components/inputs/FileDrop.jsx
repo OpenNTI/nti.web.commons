@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
+import {DropZoneIndicator, DropZone} from '../../drag-and-drop';
+
 const DEFAULT_TEXT = {
 	title: 'Drag an Image to Upload, or',
 	choose: 'Choose a File',
@@ -92,10 +94,17 @@ export default class Upload extends React.Component {
 
 	render () {
 		const {getString} = this;
-		const {error, className, value} = this.props;
+		const {error, className, value, allowedTypes} = this.props;
+		
+		const acceptDrops = allowedTypes ? DropZone.acceptFilesOfType(Object.keys(allowedTypes)) : null;
 
 		return (
-			<div className={cx('nti-web-commons-filedrop', className)}>
+			<DropZoneIndicator
+				className={cx('nti-web-commons-filedrop', className)}
+				accepts={acceptDrops}
+				validDragOverClassName="valid-dragover-filedrop"
+				invalidDragOverClassName="invalid-dragover-filedrop"
+			>
 				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileChange} />
 				<div className="container">
 					<i className="icon-upload" />
@@ -114,7 +123,7 @@ export default class Upload extends React.Component {
 					}
 					<span className="requirements">{getString('requirements')}</span>
 				</div>
-			</div>
+			</DropZoneIndicator>
 		);
 	}
 }

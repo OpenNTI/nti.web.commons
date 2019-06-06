@@ -63,6 +63,12 @@ export default class DropZone extends React.Component {
 
 	dragEnterLock = 0
 
+	get hasDropListener () {
+		const {onDrop, onFileDrop} = this.props;
+
+		return onDrop || onFileDrop;
+	}
+
 	isValidEvent (e) {
 		const {accepts} = this.props;
 
@@ -176,7 +182,7 @@ export default class DropZone extends React.Component {
 			<Tag
 				className={this.getClassName()}
 				ref={this.attachDropZone}
-				onDrop={this.onDrop}
+				onDrop={this.hasDropListener ? this.onDrop : null}
 				onDragEnter={this.onDragEnter}
 				onDragLeave={this.onDragLeave}
 				onDragOver={this.onDragOver}

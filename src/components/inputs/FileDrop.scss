@@ -10,6 +10,12 @@
 
 	position: relative;
 
+	&.valid-dragover-filedrop,
+	&.invalid-dragover-filedrop {
+		border-width: 0;
+		padding: rem-calc(28px);
+	}
+
 	input {
 		cursor: pointer;
 		position: absolute;
