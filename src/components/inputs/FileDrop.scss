@@ -5,15 +5,31 @@
 	background: $panel-background;
 	border: 2px dashed $border-grey;
 	border-radius: 7px;
-	padding: rem-calc(26px);
 	overflow: hidden;
+	padding: 1rem 1rem 2rem;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: center;
 
 	position: relative;
 
 	&.valid-dragover-filedrop,
 	&.invalid-dragover-filedrop {
-		border-width: 0;
-		padding: rem-calc(28px);
+		box-shadow: none;
+	}
+
+	&.valid-dragover-filedrop {
+		border-color: $primary-blue;
+	}
+
+	&.invalid-dragover-filedrop {
+		border-color: $primary-red;
+
+		.requirements {
+			background: $primary-red;
+			color: white;
+		}
 	}
 
 	input {
@@ -32,12 +48,12 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 
 		i {
 			margin-top: 2rem;
 			font-size: 2rem;
 			color: $secondary-grey;
-			flex: 1 1 auto;
 		}
 
 		.title {
@@ -95,10 +111,19 @@
 			}
 		}
 
-		.requirements {
-			flex: 1 1 auto;
-			color: $tertiary-grey;
-			font-size: 0.875rem;
-		}
+	}
+
+	.requirements-container {
+		position: absolute;
+		top: auto; bottom: 2rem;
+		left: 0; right: 0;
+		text-align: center;
+	}
+
+	.requirements {
+		display: inline-block;
+		color: $tertiary-grey;
+		font-size: 0.875rem;
+		padding: 0.875rem 1.75rem;
 	}
 }

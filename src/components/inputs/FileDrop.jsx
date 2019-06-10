@@ -121,6 +121,8 @@ export default class Upload extends React.Component {
 							</div>
 						)
 					}
+				</div>
+				<div className="requirements-container">
 					<span className="requirements">{getString('requirements')}</span>
 				</div>
 			</DropZoneIndicator>
