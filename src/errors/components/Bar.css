@@ -1,0 +1,20 @@
+.nti-error-bar {
+	background: rgba(243, 82, 82, 0.1);
+	padding: 0.625rem 0.875rem;
+}
+
+.nti-error-bar :global(i) {
+	color: var(--primary-red);
+	vertical-align: middle;
+}
+
+.prefix,
+.message {
+	display: inline-block;
+	font: normal 400 0.875rem/1.3 var(--body-font-family);
+	vertical-align: middle;
+}
+
+.prefix {
+	color: var(--primary-red);
+}
