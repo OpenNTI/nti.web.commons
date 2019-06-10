@@ -22,6 +22,7 @@ export * as Scroll from './scroll';
 export * as Selection from './selection';
 export * as Switch from './switch';
 export * as SyncHeight from './sync-height';
+export * as Task from './task';
 export Timer from './timer';
 export * as Updates from './updates';
 export * as User from './user';

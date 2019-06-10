@@ -1,0 +1,32 @@
+.nti-task-panel {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.header {
+	font: normal 300 1.5rem/1.3 var(--body-font-family);
+	color: var(--primary-grey);
+}
+
+.sub-header {
+	font: normal 400 0.875rem/1.3 var(--body-font-family);
+	color: var(--secondary-grey);
+	margin-bottom: 3rem;
+}
+
+.progress {
+	max-width: 570px;
+	margin-bottom: 1rem;
+}
+
+.meta {
+	font: normal 600 0.875rem/1.3 var(--body-font-family);
+	color: var(--tertiary-grey);
+}
+
+.cancel {
+	cursor: pointer;
+}
