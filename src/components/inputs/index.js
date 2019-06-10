@@ -2,6 +2,7 @@ export Clearable from './Clearable';
 export Date from './Date';
 export Email from './Email';
 export File from './File';
+export FileInputWrapper from './FileInputWrapper';
 export Label from './Label';
 export MultiSelect from './multi-select';
 export Number from './Number';
