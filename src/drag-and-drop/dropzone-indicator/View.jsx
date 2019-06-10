@@ -48,7 +48,6 @@ export default class DropZoneIndicator extends React.Component {
 
 				{...otherProps}
 			>
-				<div className={cx('background')} />
 				{children}
 			</DropZone>
 		);
