@@ -1,0 +1,36 @@
+.progress-bar-fallback,
+.nti-progress {
+	appearance: none;
+	border: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	height: 0.3125rem;
+	/*primary-blue*/
+	background-color: rgba(63, 179, 246, 0.2);
+	color: var(--primary-blue);
+	position: relative;
+}
+
+
+.nti-progress::-moz-progress-bar {
+	background: var(--primary-blue);
+	transition: width 1s ease;
+}
+
+.nti-progress::-webkit-progress-value {
+	background: var(--primary-blue);
+	transition: width 1s ease;
+}
+
+.nti-progress::-webkit-progress-bar {
+	/*primary blue*/
+	background-color: rgba(63, 179, 246, 0.2);
+}
+
+
+.progress-bar-fallback > span {
+	display: block;
+	text-indent: -9999px;
+	transition: width 1s ease;
+}
