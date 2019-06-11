@@ -21,7 +21,7 @@ Progress.propTypes = {
 export default function Progress ({className, value, max}) {
 	return (
 		<progress className={cx(className, 'nti-progress')}value={value} max={max}>
-			<div className={cx('progress-bar-fallbak')}>
+			<div className={cx('progress-bar-fallback')}>
 				<span style={{width: `${getPercentage(value, max)}%`}} />
 			</div>
 		</progress>
