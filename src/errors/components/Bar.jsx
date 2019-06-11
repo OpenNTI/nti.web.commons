@@ -25,10 +25,10 @@ export default class ErrorBar extends React.PureComponent {
 	}
 
 	render () {
-		const {className, error, prefix} = this.props;
+		const {className, error, prefix, ...otherProps} = this.props;
 
 		return (
-			<div className={cx('nti-error-bar', className)}>
+			<div className={cx('nti-error-bar', className)} {...otherProps}>
 				<i className="icon-alert" /> <span className={cx('prefix')}>{prefix || (t('prefix'))}</span> <span className={cx('message')}>{getMessage(error)}</span>
 			</div>
 		);
