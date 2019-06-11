@@ -98,7 +98,7 @@ export default class Search extends React.Component {
 		const {props: {disabled, buffered, className, placeholder = 'Search', ...props}, state: {focused}} = this;
 		const Cmp = buffered ? BufferedInput : Input;
 		return (
-			<form onSubmit={stop} className={cx('search-component', className, {focused, disabled})} noValidate>
+			<form onSubmit={stop} className={cx(className, 'search-component', {focused, disabled})} noValidate>
 				<i className="icon-search"/>
 				<Cmp {...props}
 					type="text"
