@@ -5,27 +5,24 @@ import {scoped} from '@nti/lib-locale';
 
 import Store from '../Store';
 import Progress from '../../components/Progress';
-import {SeparatedInline} from '../../components/list';
 
-import Styles from './Panel.css';
+import Styles from './Bar.css';
 
 const cx = classnames.bind(Styles);
-const t = scoped('common.task.progress.Panel', {
+const t = scoped('common.task.progress.Bar', {
 	cancel: 'Cancel'
 });
 
 export default
 @Store.connect({'task': 'monitor'})
-class TaskProgressPanel extends React.Component {
+class TaskProgressBar extends React.Component {
 	static deriveBindingFromProps (props) { return props.task; }
 
 	static propTypes = {
 		className: PropTypes.string,
 		task: PropTypes.object.isRequired,
-		header: PropTypes.string,
-		subHeader: PropTypes.string,
 
-		monitor: PropTypes.object
+		monitor: PropTypes.object	
 	}
 
 
@@ -37,18 +34,15 @@ class TaskProgressPanel extends React.Component {
 		}
 	}
 
-
 	render () {
-		const {monitor, className, header, subHeader} = this.props;
+		const {monitor, className} = this.props;
 
 		if (!monitor) { return null; }
 
 		return (
-			<div className={cx('nti-task-panel', className)}>
-				{header && (<div className={cx('header')}>{header}</div>)}
-				{subHeader && (<div className={cx('sub-header')}>{subHeader}</div>)}
-				{monitor.hasProgress && this.renderProgress(monitor)}
+			<div className={cx('nti-task-progress-bar', className)}>
 				{this.renderMeta(monitor)}
+				{monitor.hasProgress && this.renderProgress(monitor)}
 			</div>
 		);
 	}
@@ -62,12 +56,14 @@ class TaskProgressPanel extends React.Component {
 		);
 	}
 
+
 	renderMeta (task) {
 		return (
-			<SeparatedInline className={cx('meta')}>
-				{task.hasName && (<span>{task.name}</span>)}
+			<div className={cx('meta')}>
+				{task.hasName && (<span className={cx('name')}>{task.name}</span>)}
 				{task.canCancel && (<span className={cx('cancel')} onClick={this.onCancel}>{t('cancel')}</span>)}
-			</SeparatedInline>
+			</div>
 		);
 	}
 }
+

@@ -1,0 +1,28 @@
+.nti-task-progress-bar {
+	padding: 0.625rem 1rem;
+	border-radius: 2px;
+	box-shadow: 0 0 1px 1px rgba(0,0,0,0.1), 0 1px 0 1px rgba(0,0,0,0.1);
+}
+
+.meta {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 0.375rem;
+}
+
+.progress {
+	display: block;
+}
+
+.name {
+	font: normal 600 0.875rem/1.3rem var(--body-font-family);
+	color: var(--secondary-grey);
+	margin-right: 0.625rem;
+}
+
+.cancel {
+	font: normal 600 0.875rem/1.3rem var(--body-font-family);
+	color: var(--primary-blue);
+	cursor: pointer;
+}
