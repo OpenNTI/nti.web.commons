@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {trimText} from '../utils';
+import {trimText, getStyles} from '../utils';
 
-function isOverflown (node) {
+function isOverflown (node, lineHeight) {
 	if (!node) { return false; }
 
 	const nodeHeight = node.clientHeight || node.offsetHeight;
 	const scrollHeight = node.scrollHeight;
+	const buffer = scrollHeight % lineHeight;
 
-	return scrollHeight - nodeHeight >= 3;
+	return scrollHeight - nodeHeight > buffer;
 }
 
 class Overflow extends React.Component {
@@ -51,10 +52,12 @@ class Overflow extends React.Component {
 	setup () {
 		if (!this.textNode) { return; }
 
+		const {lineHeight} = getStyles(this.textNode, ['lineHeight']);
+
 		const trim = () => {
 			const {text} = this.state;
 
-			if (isOverflown(this.textNode) && text) {
+			if (isOverflown(this.textNode, lineHeight) && text) {
 				this.setState({
 					ellipsed: true,
 					text: trimText(text)
