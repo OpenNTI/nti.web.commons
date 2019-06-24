@@ -73,13 +73,14 @@ class Overflow extends React.Component {
 
 
 	render () {
-		const {children, text:fullText, overflow} = this.props;
+		const {children, text:fullText, overflow, ...otherProps} = this.props;
 		const {text, ellipsed} = this.state;
 		const Text = React.Children.only(children);
 
 		return React.cloneElement(
 			Text,
 			{
+				...otherProps,
 				text: ellipsed ? `${text}${overflow}` : text,
 				title: ellipsed ? fullText : null,
 				ref: this.attachText

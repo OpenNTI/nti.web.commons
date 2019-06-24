@@ -66,7 +66,7 @@ class LimitLines extends React.Component {
 
 
 	render () {
-		const {text, children, style:propStyle, className, limitLines} = this.props;
+		const {text, children, style:propStyle, className, limitLines, ...otherProps} = this.props;
 		const {style:stateStyle, settled} = this.state;
 		const styles = {...(propStyle || {}), ...(stateStyle || {})};
 		const Text = React.Children.only(children);
@@ -74,6 +74,7 @@ class LimitLines extends React.Component {
 		return React.cloneElement(
 			Text,
 			{
+				...otherProps,
 				text,
 				className: cx(className, 'nti-limit-lines', {single: limitLines === 1, settled}),
 				style: styles,
