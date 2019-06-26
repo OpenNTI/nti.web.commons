@@ -8,7 +8,7 @@ function isOverflown (node, lineHeight) {
 
 	const nodeHeight = node.clientHeight || node.offsetHeight;
 	const scrollHeight = node.scrollHeight;
-	const buffer = scrollHeight % lineHeight;
+	const buffer = Math.max(scrollHeight % lineHeight, 1);
 
 	return scrollHeight - nodeHeight > buffer;
 }
