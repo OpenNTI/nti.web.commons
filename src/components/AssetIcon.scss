@@ -4,6 +4,7 @@
 %icon-fallback-link {background-image: url(./assets/file-types/view-link-www.png) !important;}
 %icon-fallback-unknown {background-image: url(./assets/file-types/view-link-www.png) !important;}
 %icon-fallback-download {background-image: url(./assets/file-types/blank-download.png) !important;}
+%icon-fallback-scorm {background-image: url(./assets/file-types/scorm-icon.svg) !important;}
 
 .file-type.icon {
 	$grey: $tertiary-grey;
@@ -37,6 +38,11 @@
 		}
 		&.content-link {
 			@extend %icon-fallback-reading;
+			text, label {display: none;}
+		}
+
+		&.scorm-content {
+			@extend %icon-fallback-scorm;
 			text, label {display: none;}
 		}
 

@@ -10,6 +10,8 @@ import {isNTIID} from '@nti/lib-ntiids';
 const CONTENT_TYPE = 'application/vnd.nextthought.content';
 const EXTERNAL_TYPE = 'application/vnd.nextthought.externallink';
 const EXTERNAL_TOOLS = ['application/vnd.nextthought.ltiexternaltoolasset'];
+const SCORM_TYPE = 'application/vnd.nextthought.scormcontentref';
+
 
 export default class Icon extends React.Component {
 
@@ -45,10 +47,12 @@ export default class Icon extends React.Component {
 
 	setup (props = this.props) {
 		const fallback = !this.getBackgroundImage(props);
-		const ext = this.isContent(props) && !this.isExternalTool(props) ? '' : this.getFileExtention(props);
+		const ext = this.isContent(props) && !this.isExternalTool(props) && !this.isScorm(props) ? '' : this.getFileExtention(props);
 		const label = fallback && ext && !/^(www|bin)$/i.test(ext) ? ext : null;
+
 		const cls = fallback && cx('fallback', ext, {
 			'content-link': this.isContent(props),
+			'scorm-content': this.isScorm(props),
 			'unknown': ext === 'bin'
 		});
 
@@ -77,6 +81,10 @@ export default class Icon extends React.Component {
 	isDocument (props = this.props) {
 		return !this.isContent(props)
 			&& !this.isExternal(props);
+	}
+
+	isScorm (props = this.props) {
+		return this.getTypes(props).some(x => x === SCORM_TYPE);
 	}
 
 
