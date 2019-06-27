@@ -22,7 +22,9 @@
 }
 
 .token-display {
-	font: normal 400 0.875rem/2 var(--body-font-family);
+	font-size: 0.875rem;
+	line-height: 2;
+	font-family: var(--body-font-family);
 	color: var(--secondary-grey);
 	display: inline-block;
 	max-width: 200px;
