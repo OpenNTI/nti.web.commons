@@ -1,3 +1,3 @@
 export getStyles from './get-styles';
-export getTextFromChildren from './get-text-from-children';
+export getTextPropsFromChildren from './get-text-props-from-children';
 export trimText from './trim-text';

@@ -1,26 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ForwardRef} from '../../decorators';
 
-NTIBaseText.propTypes = {
-	tag: PropTypes.any,
-	text: PropTypes.string,
-	textRef: PropTypes.func
-};
-function NTIBaseText ({tag, textRef, text, ...otherProps}) {
-	const Cmp = tag || 'span';
+export default
+@ForwardRef('textRef')
+class NTIBaseText extends React.Component {
+	static propTypes = {
+		as: PropTypes.any,
+		children: PropTypes.any,
+		textRef: PropTypes.func
+	}
 
-	return (
-		<Cmp {...otherProps} ref={textRef}>
-			{text}
-		</Cmp>
-	);
+	render () {
+		const {as: Tag, textRef, children, ...otherProps} = this.props;
+		const Cmp = Tag || 'span';
+
+		//TODO: is there a better way?
+		delete otherProps.hasComponents;
+		delete otherProps.hasMarkup;
+
+		return (
+			<Cmp {...otherProps} ref={textRef}>
+				{children}
+			</Cmp>
+		);
+	}
 }
-
-const Text = (props, ref) => {
-	return (
-		<NTIBaseText {...props} textRef={ref} />
-	);
-};
-
-export default React.forwardRef(Text);

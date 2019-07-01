@@ -1,38 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ForwardRef} from '../decorators';
+
 import {Ellipsis} from './Constants';
-import {getTextFromChildren} from './utils';
-import {getRenderer} from './renderers';
+import {getTextPropsFromChildren} from './utils';
 import {getTransforms} from './transforms';
+import Renderer from './Renderer';
 
-function cleanProps (props) {
-	const clean = {...props};
+export default
+@ForwardRef('textRef')
+class NTIText extends React.Component {
+	static Ellipsis = Ellipsis
 
-	delete clean.limitLines;
-	delete clean.overflow;
-
-	return clean;
-}
-
-NTIText.Ellipsis = Ellipsis;
-NTIText.propTypes = {
-	children: PropTypes.any
-};
-export default function NTIText ({children, ...props}) {
-	const text = getTextFromChildren(children);
-	const Renderer = getRenderer(props);
-	const transforms = getTransforms(props).reverse();
-
-	let cmp = (<Renderer {...cleanProps(props)} />);
-
-	for (let Transform of transforms) {
-		cmp = (
-			<Transform {...props} text={text}>
-				{cmp}
-			</Transform>
-		);
+	static propTypes = {
+		children: PropTypes.any,
+		textRef: PropTypes.func
 	}
 
-	return cmp;
+	render () {
+		const {children, textRef, ...props} = this.props;
+
+		const textProps = getTextPropsFromChildren(children);
+		const combinedProps = {...props, ...textProps};
+
+		const transforms = getTransforms(combinedProps);
+
+		let cmp = (<Renderer {...textProps} ref={textRef} />);
+
+		for (let Transform of transforms) {
+			cmp = (
+				<Transform {...combinedProps}>
+					{cmp}
+				</Transform>
+			);
+		}
+
+		return cmp;
+	}
 }

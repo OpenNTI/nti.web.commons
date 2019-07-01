@@ -1,17 +1,12 @@
 import LimitLines from './LimitLines';
 import Overflow from './Overflow';
 
+//NOTE: the order of these transforms matters
+const Transforms = [
+	Overflow,
+	LimitLines
+];
+
 export function getTransforms (props) {
-	const transforms = [];
-
-	if (props.overflow != null) {
-		transforms.push(Overflow);
-	}
-
-	if (props.limitLines != null) {
-		transforms.push(LimitLines);
-	}
-
-
-	return transforms;
+	return Transforms.filter(transform => transform.shouldApply && transform.shouldApply(props));
 }

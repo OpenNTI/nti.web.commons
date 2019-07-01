@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ForwardRef} from '../../decorators';
 import {trimText, getStyles} from '../utils';
 
 function isOverflown (node, lineHeight) {
@@ -13,7 +14,11 @@ function isOverflown (node, lineHeight) {
 	return scrollHeight - nodeHeight > buffer;
 }
 
+export default
+@ForwardRef('textRef')
 class Overflow extends React.Component {
+	static shouldApply ({overflow, hasComponents}) { return overflow != null && !hasComponents; }
+
 	static propTypes = {
 		text: PropTypes.string,
 		overflow: PropTypes.string,
@@ -88,6 +93,3 @@ class Overflow extends React.Component {
 		);
 	}
 }
-
-const Wrapper = (props, ref) => (<Overflow {...props} textRef={ref} />);
-export default React.forwardRef(Wrapper);
