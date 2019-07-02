@@ -14,11 +14,12 @@ const cx = classnames.bind(Styles);
 export default
 @ForwardRef('textRef')
 class LimitLines extends React.Component {
-	static shouldApply ({limitLines}) { return limitLines != null; }
+	static shouldApply ({limitLines, forceLines}) { return limitLines != null || forceLines != null; }
 
 	static propTypes = {
 		className: PropTypes.string,
 		limitLines: PropTypes.number,
+		forceLines: PropTypes.number,
 		style: PropTypes.object,
 		textRef: PropTypes.func,
 		children: PropTypes.any
@@ -50,17 +51,36 @@ class LimitLines extends React.Component {
 	}
 
 
+	getLinesInfo () {
+		const {limitLines, forceLines} = this.props;
+
+		if (limitLines !== null) {
+			return {
+				lines: limitLines,
+				style: 'maxHeight'
+			};
+		}
+
+		if (forceLines !== null) {
+			return {
+				lines: forceLines,
+				style: 'height'
+			};
+		}
+	}
+
+
 	setup () {
 		if (!this.textNode) { return; }
 
-		const {limitLines, textRef} = this.props;
-		const {lineHeight} = getStyles(this.textNode, ['lineHeight']);
-		const max = Math.ceil(lineHeight * (limitLines || 1));
-
+		const {textRef} = this.props;
+		const {lines, style} = this.getLinesInfo();
+		const {lineHeight, paddingTop, paddingBottom} = getStyles(this.textNode, ['lineHeight', 'paddingTop', 'paddingBottom']);
+		const max = Math.ceil(lineHeight * lines) + paddingTop + paddingBottom;
 
 		this.setState({
 			style: {
-				maxHeight: `${max}px`
+				[style]: `${max}px`
 			},
 			settled: true
 		}, () => {
