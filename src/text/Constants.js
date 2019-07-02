@@ -1,4 +1,8 @@
-export const Ellipsis = '...';
+export const Overflow = {
+	Ellipsis: '...',
+	Hidden: '',
+	Visible: null
+};
 
 export const MARKUP_WHITE_LIST = {
 	TAGS: {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {ForwardRef} from '../decorators';
 
-import {Ellipsis} from './Constants';
+import {Overflow} from './Constants';
 import {getTextPropsFromChildren} from './utils';
 import {getTransforms} from './transforms';
 import Renderer from './Renderer';
@@ -11,7 +11,7 @@ import Renderer from './Renderer';
 export default
 @ForwardRef('textRef')
 class NTIText extends React.Component {
-	static Ellipsis = Ellipsis
+	static Overflow = Overflow
 
 	static propTypes = {
 		children: PropTypes.any,
