@@ -54,14 +54,14 @@ class LimitLines extends React.Component {
 	getLinesInfo () {
 		const {limitLines, forceLines} = this.props;
 
-		if (limitLines !== null) {
+		if (limitLines != null) {
 			return {
 				lines: limitLines,
 				style: 'maxHeight'
 			};
 		}
 
-		if (forceLines !== null) {
+		if (forceLines != null) {
 			return {
 				lines: forceLines,
 				style: 'height'
