@@ -6,7 +6,9 @@ export const Overflow = {
 
 export const MARKUP_WHITE_LIST = {
 	TAGS: {
-		'a': true
+		'a': true,
+		'b': true,
+		'i': true
 	},
 	ATTRIBUTES: {
 		'href': true
