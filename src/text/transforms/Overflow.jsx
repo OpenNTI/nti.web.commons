@@ -39,10 +39,10 @@ function hasRectAboveBoundary (node, boundary) {
 	return false;
 }
 
-function hasRectBelowBoundary (node, boundary) {
+function hasRectOutsideBoundary (node, bottom, right) {
 	const rect = node.getBoundingClientRect();
 
-	return rect.bottom < boundary;
+	return rect.bottom > bottom || rect.right > right ;
 }
 
 export default
@@ -88,8 +88,16 @@ class Overflow extends React.Component {
 
 		const {overflow, text} = this.props;
 
-		const cleanupTokens = (pad, lowerBound) => {
+		const needsTruncating = (pad, buffer) => {
+			const height = pad.clientHeight || pad.offsetHeight;
+			const width = pad.clientWidth || pad.offsetWidth;
+			const scrollHeight = pad.scrollHeight;
+			const scrollWidth = pad.scrollWidth;
 
+			return (scrollHeight - height) > buffer || scrollWidth > width;
+		};
+
+		const cleanupTokens = (pad, lowerBound) => {
 			const tokens = Tokens.getTokensFromNode(pad);
 
 			for (let token of tokens) {
@@ -99,7 +107,7 @@ class Overflow extends React.Component {
 			}
 		};
 
-		const addEllipse = (pad, lowerBound) => {
+		const addEllipse = (pad, lowerBound, rightBound) => {
 			const tokens = Tokens.getTokensFromNode(pad);
 			const lastToken = tokens[tokens.length - 1];
 
@@ -107,7 +115,7 @@ class Overflow extends React.Component {
 
 			lastToken.innerHTML = `${lastWord}${overflow}`;
 
-			while (hasRectBelowBoundary(lastToken, lowerBound)) {
+			while (hasRectOutsideBoundary(lastToken, lowerBound, rightBound)) {
 				lastWord = lastWord.slice(0, -1);
 				lastToken.innerHTML = `${lastWord}${overflow}`;
 			}
@@ -132,9 +140,12 @@ class Overflow extends React.Component {
 				const {lineHeight} = getStyles(pad, ['lineHeight']);
 				const buffer = Math.max(pad.scrollHeight % lineHeight, 2);
 				const lowerBound = bounds.bottom + buffer;
+				const rightBound = bounds.right;
+
+				if (!needsTruncating(pad, buffer)) { return; }
 
 				cleanupTokens(pad, lowerBound);
-				addEllipse(pad, lowerBound);
+				addEllipse(pad, lowerBound, rightBound);
 				removeTokens(pad);
 
 				const overflowedText = pad.innerHTML;
@@ -145,55 +156,7 @@ class Overflow extends React.Component {
 						text: pad.innerHTML
 					});
 				}
-
 			});
-
-		// const bounds = this.textNode.getBoundingClientRect();
-		// const {lineHeight} = getStyles(this.textNode, ['lineHeight']);
-		// const buffer = Math.max(this.textNode.scrollHeight % lineHeight, 2);
-		// const lowerBound = bounds.bottom + buffer;
-		// const tokens = Tokens.getTokensFromNode(this.textNode);
-
-		// let overflowStartingIndex = 0;
-
-		// for (; overflowStartingIndex < tokens.length; overflowStartingIndex++) {
-		// 	const token = tokens[overflowStartingIndex];
-		// 	const rect = token.getBoundingClientRect();
-
-
-		// 	if (rect.bottom > lowerBound) {
-		// 		break;
-		// 	}
-		// }
-
-		// const overflowing = overflowStartingIndex < tokens.length;
-
-		// for (let i = overflowStartingIndex; i < tokens.length; i++) {
-
-		// }
-
-
-
-		// if (!this.textNode) { return; }
-
-		// const {hasMarkup} = this.props;
-		// const {lineHeight} = getStyles(this.textNode, ['lineHeight']);
-
-		// const trim = () => {
-		// 	const {text} = this.state;
-
-		// 	if (isOverflown(this.textNode, lineHeight) && text) {
-		// 		this.setState({
-		// 			ellipsed: true,
-		// 			text: hasMarkup ? trimMarkup(text) : trimText(text)
-		// 		}, () => {
-		// 			setImmediate(() => trim());
-		// 		});
-		// 	}
-
-		// };
-
-		// trim();
 	}
 
 
