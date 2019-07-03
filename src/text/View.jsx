@@ -24,7 +24,7 @@ class NTIText extends React.Component {
 		const textProps = getTextPropsFromChildren(children);
 		const combinedProps = {...props, ...textProps};
 
-		const transforms = getTransforms(combinedProps);
+		const transforms = getTransforms(combinedProps).reverse();
 
 		let cmp = (<Renderer {...textProps} ref={textRef} />);
 

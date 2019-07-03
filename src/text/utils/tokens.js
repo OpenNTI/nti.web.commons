@@ -1,3 +1,4 @@
+//https://stackoverflow.com/questions/8609170/how-to-wrap-each-word-of-an-element-in-a-span-tag/50135988#50135988
 const TOKEN_REGEX = /(^|<\/?[^>]+>|\s+)([^\s<]+)/g;
 const TOKEN_ATTRIBUTE = 'nti-word-token';
 

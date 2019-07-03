@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {replaceNode} from '@nti/lib-dom';
+import {replaceNode, removeNode} from '@nti/lib-dom';
 
 import ScratchPad from '../../scratch-pad';
 import {ForwardRef} from '../../decorators';
@@ -100,9 +100,9 @@ class Overflow extends React.Component {
 		const cleanupTokens = (pad, lowerBound) => {
 			const tokens = Tokens.getTokensFromNode(pad);
 
-			for (let token of tokens) {
+			for (let token of tokens.reverse()) {
 				if (!hasRectAboveBoundary(token, lowerBound)) {
-					pad.removeChild(token);
+					removeNode(token);
 				}
 			}
 		};
@@ -135,7 +135,8 @@ class Overflow extends React.Component {
 			.withStyles(getMirrorStyles(this.textNode))
 			.work((pad) => {
 				pad.innerHTML = Tokens.tokenizeText(text);
-				
+
+
 				const bounds = pad.getBoundingClientRect();
 				const {lineHeight} = getStyles(pad, ['lineHeight']);
 				const buffer = Math.max(pad.scrollHeight % lineHeight, 2);
