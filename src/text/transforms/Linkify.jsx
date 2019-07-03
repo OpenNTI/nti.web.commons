@@ -5,6 +5,12 @@ import linkifyIt from 'linkify-it';
 import {ForwardRef} from '../../decorators';
 
 const linkifyUtil = linkifyIt();
+const URL_PUNCUATION_REGEX = /([./])/g;
+
+//https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr#Example
+function insertWBRS (linkText) {
+	return linkText.replace(URL_PUNCUATION_REGEX, '<wbr />$1');
+}
 
 function linkifyText (text) {
 	const links = linkifyUtil.match(text);
@@ -18,9 +24,9 @@ function linkifyText (text) {
 
 	for (let link of links) {
 		const {index, lastIndex, url, text: linkText} = link;
-		const pre = text.substr(pointer, index);
+		const pre = text.substring(pointer, index);
 
-		linkified += `${pre}<a href="${url}">${linkText}</a>`;
+		linkified += `${pre}<a href="${url}" rel="noopener nofollow">${insertWBRS(linkText)}</a>`;
 		pointer = lastIndex;
 	}
 
