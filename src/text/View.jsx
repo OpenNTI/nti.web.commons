@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ForwardRef} from '../decorators';
+import {ForwardRef, WithVariants} from '../decorators';
 
+import variants from './variants';
 import {Overflow} from './Constants';
 import {getTextPropsFromChildren} from './utils';
 import {getTransforms} from './transforms';
 import Renderer from './Renderer';
 
 export default
+@WithVariants(variants)
 @ForwardRef('textRef')
 class NTIText extends React.Component {
 	static Overflow = Overflow

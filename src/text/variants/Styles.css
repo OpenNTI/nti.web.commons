@@ -1,0 +1,8 @@
+.nti-text {
+	font-family: var(--body-font-family);
+}
+
+.nti-text a {
+	text-decoration: none;
+	color: var(--primary-blue);
+}
