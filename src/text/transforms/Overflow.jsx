@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {replaceNode, removeNode} from '@nti/lib-dom';
 
 import ScratchPad from '../../scratch-pad';
-import {ForwardRef} from '../../decorators';
+import {ForwardRef, ScreenSize} from '../../decorators';
 import {Tokens, getStyles} from '../utils';
 
 const MIRROR_STYLES = [
@@ -47,6 +47,7 @@ function hasRectOutsideBoundary (node, bottom, right) {
 
 export default
 @ForwardRef('textRef')
+@ScreenSize()
 class Overflow extends React.Component {
 	static shouldApply ({overflow, hasComponents}) { return overflow != null && !hasComponents; }
 
@@ -75,7 +76,7 @@ class Overflow extends React.Component {
 		const {text} = this.props;
 		const {text:oldText} = prevProps;
 
-		if (text !== oldText) {
+		if (text !== oldText || ScreenSize.didChange(this.props, prevProps)) {
 			this.setState({
 				text: null
 			}, () => setImmediate(() => this.setup()));
