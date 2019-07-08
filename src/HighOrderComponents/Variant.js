@@ -17,7 +17,6 @@ function combineProps (a, b) {
 }
 
 export default function Variant (Component, variantProps, name) {
-	debugger;
 	const VariantWrapper = (props, ref) => {
 		return (<Component {...combineProps(variantProps, props)} ref={ref} />);
 	};
