@@ -167,6 +167,9 @@ class Overflow extends React.Component {
 		const {text, overflowed} = this.state;
 		const Text = React.Children.only(children);
 
+		delete otherProps.screenWidth;
+		delete otherProps.screenHeight;
+
 		return React.cloneElement(
 			Text,
 			{

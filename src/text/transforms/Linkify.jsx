@@ -15,7 +15,7 @@ function insertWBRS (linkText) {
 function linkifyText (text) {
 	const links = linkifyUtil.match(text);
 
-	if (!links.length) {
+	if (!links || !links.length) {
 		return {hasLinks: false, text};
 	}
 
