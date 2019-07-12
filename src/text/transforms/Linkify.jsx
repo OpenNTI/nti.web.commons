@@ -26,7 +26,7 @@ function linkifyText (text) {
 		const {index, lastIndex, url, text: linkText} = link;
 		const pre = text.substring(pointer, index);
 
-		linkified += `${pre}<a href="${url}" rel="noopener nofollow">${insertWBRS(linkText)}</a>`;
+		linkified += `${pre}<a href="${url}" title="${linkText}">${insertWBRS(linkText)}</a>`;
 		pointer = lastIndex;
 	}
 

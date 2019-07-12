@@ -11,6 +11,21 @@ function isMarkup ({text, hasMarkup, hasComponents}) {
 	return typeof text === 'string' && hasMarkup && !hasComponents;
 }
 
+function fixAnchor (anchor) {
+	if (global.location && global.location.host === anchor.host) { return; }
+
+	anchor.setAttribute('target', '_blank');
+	anchor.setAttribute('rel', 'noopener nofollow');
+}
+
+function fixMarkup (node) {
+	const anchors = Array.from(node.querySelectorAll('a[href]'));
+
+	for (let anchor of anchors) {
+		fixAnchor(anchor);
+	}
+}
+
 export default
 @Registry.register(isMarkup)
 @ForwardRef('textRef')
@@ -20,12 +35,24 @@ class NTIMarkupText extends React.Component {
 		textRef: PropTypes.func
 	}
 
+	attachRef = (node) => {
+		const {textRef} = this.props;
+
+		if (textRef) { textRef(node); }
+
+		if (node) {
+			fixMarkup(node);
+		}
+	}
+
 
 	render () {
-		const {text, textRef, ...otherProps} = this.props;
+		const {text, ...otherProps} = this.props;
+
+		delete otherProps.textRef;
 
 		return (
-			<Base {...otherProps} ref={textRef} {...rawContent(text)} />
+			<Base {...otherProps} ref={this.attachRef} {...rawContent(text)} />
 		);
 	}
 }
