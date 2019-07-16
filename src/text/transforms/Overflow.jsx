@@ -138,7 +138,6 @@ class Overflow extends React.Component {
 		ScratchPad
 			.withStyles(getMirrorStyles(this.textNode))
 			.work((pad) => {
-				debugger;
 				pad.innerHTML = Tokens.tokenizeText(text);
 
 				const bounds = pad.getBoundingClientRect();
