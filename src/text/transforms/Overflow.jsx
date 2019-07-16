@@ -118,7 +118,7 @@ class Overflow extends React.Component {
 
 			lastToken.innerHTML = `${lastWord}${overflow}`;
 
-			while (hasRectOutsideBoundary(lastToken, lowerBound, rightBound)) {
+			while (lastWord && hasRectOutsideBoundary(lastToken, lowerBound, rightBound)) {
 				lastWord = lastWord.slice(0, -1);
 				lastToken.innerHTML = `${lastWord}${overflow}`;
 			}
