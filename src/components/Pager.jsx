@@ -22,6 +22,14 @@ function buildHref (page, props, scope) {
 const get = (x, key) => x && x[key] ? {[key]: x[key]} : {};
 const getProps = x => ({ ...get(x, 'href'), ...get(x, 'title')});
 
+const needsUpdate = (props, prevProps) => {
+	const aroundUpdate = (around, prevAround) => {
+		return !!around !== !!prevAround || around.href !== prevAround.href || around.title !== prevAround.title;
+	};
+
+	return props.current !== prevProps.current || aroundUpdate(props.next, prevProps.next) || aroundUpdate(props.prev, prevProps.prev);
+};
+
 export default createReactClass({
 	mixins: [NavigatableMixin],
 	displayName: 'Pager',
@@ -118,7 +126,7 @@ export default createReactClass({
 			}
 		}
 
-		if (prevProps.current !== this.props.current) {
+		if (needsUpdate(this.props, prevProps)) {
 			this.setup(this.props);
 		}
 	},
