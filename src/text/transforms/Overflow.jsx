@@ -4,7 +4,7 @@ import {replaceNode, removeNode} from '@nti/lib-dom';
 
 import ScratchPad from '../../scratch-pad';
 import {ForwardRef, ScreenSize} from '../../decorators';
-import {Tokens, getStyles} from '../utils';
+import {Tokens} from '../utils';
 
 const MIRROR_STYLES = [
 	'box-sizing',
@@ -80,6 +80,7 @@ class Overflow extends React.Component {
 
 		if (text !== oldText || ScreenSize.didChange(this.props, prevProps)) {
 			this.setState({
+				overflowed: false,
 				text: null
 			}, () => setImmediate(() => this.setup()));
 		}
@@ -91,13 +92,13 @@ class Overflow extends React.Component {
 
 		const {overflow, text} = this.props;
 
-		const needsTruncating = (pad, buffer) => {
+		const needsTruncating = (pad) => {
 			const height = pad.clientHeight || pad.offsetHeight;
 			const width = pad.clientWidth || pad.offsetWidth;
 			const scrollHeight = pad.scrollHeight;
 			const scrollWidth = pad.scrollWidth;
 
-			return (scrollHeight - height) > buffer || scrollWidth > width;
+			return (scrollHeight - height) > 0 || scrollWidth > width;
 		};
 
 		const cleanupTokens = (pad, lowerBound) => {
@@ -137,15 +138,14 @@ class Overflow extends React.Component {
 		ScratchPad
 			.withStyles(getMirrorStyles(this.textNode))
 			.work((pad) => {
+				debugger;
 				pad.innerHTML = Tokens.tokenizeText(text);
 
 				const bounds = pad.getBoundingClientRect();
-				const {lineHeight} = getStyles(pad, ['lineHeight']);
-				const buffer = Math.max(pad.scrollHeight % lineHeight, 2);
-				const lowerBound = bounds.bottom + buffer;
+				const lowerBound = bounds.bottom;
 				const rightBound = bounds.right;
 
-				if (!needsTruncating(pad, buffer)) { return; }
+				if (!needsTruncating(pad)) { return; }
 
 				cleanupTokens(pad, lowerBound);
 				addEllipse(pad, lowerBound, rightBound);

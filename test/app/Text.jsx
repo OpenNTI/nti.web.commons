@@ -24,9 +24,9 @@ export default class Test extends React.Component {
 
 	renderTest () {
 		return (
-			<div style={{maxWidth: '500px'}}>
-				<Text limitLines={3} overflow={Text.Overflow.Ellipsis}>
-					Flogging furl overhaul boom lugsail tack Sail ho provost ahoy sloop. Quarter bilge rat chase guns list salmagundi driver interloper jolly boat  black spot spike. <a href="www.google.com">Furl cable case shot hulk</a> driver sheet transom.
+			<div style={{maxWidth: '500px', lineHeight: '1.3'}}>
+				<Text limitLines={3} overflow={Text.Overflow.Ellipsis} linkify>
+					Flogging furl overhaul boom lugsail www.google.com tack Sail ho provost ahoy sloop. Quarter bilge rat chase guns list salmagundi driver interloper jolly boat  black spot spike. driver sheet transom. Flogging furl overhaul boom lugsail www.google.com tack Sail ho provost ahoy sloop. Quarter bilge rat chase guns list salmagundi driver interloper jolly boat  black spot spike. driver sheet transom.
 				</Text>
 			</div>
 		);
