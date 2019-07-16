@@ -24,6 +24,8 @@ const getProps = x => ({ ...get(x, 'href'), ...get(x, 'title')});
 
 const needsUpdate = (props, prevProps) => {
 	const aroundUpdate = (around, prevAround) => {
+		if (!around && !prevAround) { return false; }
+
 		return !!around !== !!prevAround || around.href !== prevAround.href || around.title !== prevAround.title;
 	};
 
