@@ -14,13 +14,15 @@ const MIRROR_STYLES = [
 	'font-weight',
 	'font-family',
 	'font-style',
+	'line-height',
 	'letter-spacing',
 	'text-indent',
 	'white-space',
 	'word-break',
 	'overflow-wrap',
 	'padding-left',
-	'padding-right'
+	'padding-right',
+	'text-transform'
 ];
 
 function getMirrorStyles (node) {
@@ -136,7 +138,6 @@ class Overflow extends React.Component {
 			.withStyles(getMirrorStyles(this.textNode))
 			.work((pad) => {
 				pad.innerHTML = Tokens.tokenizeText(text);
-
 
 				const bounds = pad.getBoundingClientRect();
 				const {lineHeight} = getStyles(pad, ['lineHeight']);
