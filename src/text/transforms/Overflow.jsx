@@ -145,7 +145,7 @@ class Overflow extends React.Component {
 				const lowerBound = bounds.bottom + buffer;
 				const rightBound = bounds.right;
 
-				if (!needsTruncating(pad)) { return; }
+				if (!needsTruncating(pad, buffer)) { return; }
 
 				cleanupTokens(pad, lowerBound);
 				addEllipse(pad, lowerBound, rightBound);
