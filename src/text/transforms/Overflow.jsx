@@ -41,6 +41,16 @@ function hasRectAboveBoundary (node, boundary) {
 	return false;
 }
 
+function hasRectRightOfBoundrary (node, boundary) {
+	const rects = Array.from(node.getClientRects());
+
+	for (let rect of rects) {
+		if (rect.right > boundary) { return true;}
+	}
+
+	return false;
+}
+
 function hasRectOutsideBoundary (node, bottom, right) {
 	const rect = node.getBoundingClientRect();
 
@@ -101,12 +111,16 @@ class Overflow extends React.Component {
 			return (scrollHeight - height) > buffer || scrollWidth > width;
 		};
 
-		const cleanupTokens = (pad, lowerBound) => {
+		const cleanupTokens = (pad, lowerBound, rightBound) => {
 			const tokens = Tokens.getTokensFromNode(pad);
+			let overflown = false;
 
-			for (let token of tokens.reverse()) {
-				if (!hasRectAboveBoundary(token, lowerBound)) {
+			for (let token of tokens) {
+				if (overflown || !hasRectAboveBoundary(token, lowerBound)) {
+					overflown = true;
 					removeNode(token);
+				} else if (hasRectRightOfBoundrary(token, rightBound)) {
+					overflown = true;
 				}
 			}
 		};
@@ -147,7 +161,7 @@ class Overflow extends React.Component {
 
 				if (!needsTruncating(pad, buffer)) { return; }
 
-				cleanupTokens(pad, lowerBound);
+				cleanupTokens(pad, lowerBound, rightBound);
 				addEllipse(pad, lowerBound, rightBound);
 				removeTokens(pad);
 
