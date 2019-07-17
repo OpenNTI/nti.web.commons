@@ -92,13 +92,13 @@ class Overflow extends React.Component {
 
 		const {overflow, text} = this.props;
 
-		const needsTruncating = (pad) => {
+		const needsTruncating = (pad, buffer) => {
 			const height = pad.clientHeight || pad.offsetHeight;
 			const width = pad.clientWidth || pad.offsetWidth;
 			const scrollHeight = pad.scrollHeight;
 			const scrollWidth = pad.scrollWidth;
 
-			return (scrollHeight - height) > 0 || scrollWidth > width;
+			return (scrollHeight - height) > buffer || scrollWidth > width;
 		};
 
 		const cleanupTokens = (pad, lowerBound) => {
@@ -141,7 +141,8 @@ class Overflow extends React.Component {
 				pad.innerHTML = Tokens.tokenizeText(text);
 
 				const bounds = pad.getBoundingClientRect();
-				const lowerBound = bounds.bottom;
+				const buffer = 2;//This was determined experimentally, I'm not really sure why its needed or why 2 seems to work.
+				const lowerBound = bounds.bottom + buffer;
 				const rightBound = bounds.right;
 
 				if (!needsTruncating(pad)) { return; }
