@@ -116,9 +116,10 @@ class Overflow extends React.Component {
 			let overflown = false;
 
 			for (let token of tokens) {
-				if (overflown || !hasRectAboveBoundary(token, lowerBound)) {
-					overflown = true;
+				if (overflown) {
 					removeNode(token);
+				} else if (overflown || !hasRectAboveBoundary(token, lowerBound)) {
+					overflown = true;
 				} else if (hasRectRightOfBoundrary(token, rightBound)) {
 					overflown = true;
 				}
@@ -133,8 +134,14 @@ class Overflow extends React.Component {
 
 			lastToken.innerHTML = `${lastWord}${overflow}`;
 
-			while (lastWord && hasRectOutsideBoundary(lastToken, lowerBound, rightBound)) {
+			while (hasRectOutsideBoundary(lastToken, lowerBound, rightBound)) {
 				lastWord = lastWord.slice(0, -1);
+				
+				if (lastWord === '') {
+					removeNode(lastToken);
+					return addEllipse(pad, lowerBound, rightBound);
+				}
+
 				lastToken.innerHTML = `${lastWord}${overflow}`;
 			}
 		};
