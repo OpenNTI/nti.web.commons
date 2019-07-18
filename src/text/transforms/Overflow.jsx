@@ -124,6 +124,9 @@ class Overflow extends React.Component {
 
 		const addEllipse = (pad, lowerBound, rightBound) => {
 			const tokens = Tokens.getTokensFromNode(pad);
+
+			if (!tokens.length) { return; }
+
 			const lastToken = tokens[tokens.length - 1];
 
 			let lastWord = lastToken.innerHTML;
