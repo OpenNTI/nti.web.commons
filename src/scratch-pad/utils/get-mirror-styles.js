@@ -1,6 +1,6 @@
 const STYLE_GETTERS = {
-	width: (node) => `${node.clientWidth}px`,
-	height: (node) => `${node.clientHeight}px`
+	width: (node) => `${Math.ceil(node.getBoundingClientRect().width)}px`,
+	height: (node) => `${Math.ceil(node.getBoundingClientRect().height)}px`
 };
 
 export default function getMirrorStyles (node, styles) {
