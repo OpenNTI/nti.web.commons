@@ -1,5 +1,7 @@
 import {createDOM} from '@nti/lib-dom';
 
+import {getMirrorStyles} from './utils';
+
 const getBody = () => typeof document !== 'undefined' ? document.body : null;
 
 const containerConfig = {
@@ -17,6 +19,10 @@ const containerConfig = {
 };
 
 export default class ScratchPad {
+	static mirrorStyles (node, styles) {
+		return new ScratchPad({style: getMirrorStyles(node, styles)});
+	}
+
 	static withStyles (style) {
 		return new ScratchPad({style});
 	}

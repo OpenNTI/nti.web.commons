@@ -7,6 +7,7 @@ import {ForwardRef, ScreenSize} from '../../decorators';
 import {Tokens} from '../utils';
 
 const MIRROR_STYLES = [
+	'display',
 	'box-sizing',
 	'width',
 	'height',
@@ -22,14 +23,9 @@ const MIRROR_STYLES = [
 	'overflow-wrap',
 	'padding-left',
 	'padding-right',
-	'text-transform'
+	'text-transform',
+	'hyphens'
 ];
-
-function getMirrorStyles (node) {
-	const styles = global.getComputedStyle ? global.getComputedStyle(node) : {};
-
-	return MIRROR_STYLES.reduce((acc, style) => ({...acc, [style]: styles[style]}), {});
-}
 
 function hasRectAboveBoundary (node, boundary) {
 	const rects = Array.from(node.getClientRects());
@@ -157,7 +153,7 @@ class Overflow extends React.Component {
 		};
 
 		ScratchPad
-			.withStyles(getMirrorStyles(this.textNode))
+			.mirrorStyles(this.textNode, MIRROR_STYLES)
 			.work((pad) => {
 				pad.innerHTML = Tokens.tokenizeText(text);
 
