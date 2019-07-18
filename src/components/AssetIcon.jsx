@@ -39,7 +39,7 @@ export default class Icon extends React.Component {
 	componentDidUpdate (prevProps) {
 		const nextProps = this.props;
 
-		if (nextProps.href !== prevProps.href || nextProps.mimeType !== prevProps.mimeType) {
+		if (nextProps.href !== prevProps.href || nextProps.mimeType !== prevProps.mimeType || nextProps.src !== prevProps.src) {
 			this.setup(nextProps);
 		}
 	}
