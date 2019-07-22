@@ -41,7 +41,7 @@ function linkifyText (text) {
 export default
 @ForwardRef('textRef')
 class Linkify extends React.Component {
-	static shouldApply ({linkify, hasComponents}) { return linkify != null && !hasComponents; }
+	static shouldApply ({linkify, hasComponents}) { return linkify && !hasComponents; }
 
 	static propTypes = {
 		text: PropTypes.string,

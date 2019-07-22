@@ -6,6 +6,22 @@ import {mockComputedStyle} from '../../__test__/utils';
 import LimitLines from '../LimitLines';
 
 describe('LimitLines transform tests', () => {
+	describe('statics', () => {
+		describe('shouldApply', () => {
+			test('true if limitLines prop', () => {
+				expect(LimitLines.shouldApply({limitLines: 2})).toBeTruthy();
+			});
+
+			test('true if forceLines prop', () => {
+				expect(LimitLines.shouldApply({forceLines: 2})).toBeTruthy();
+			});
+
+			test('false if no limitLines or forceLines prop', () => {
+				expect(LimitLines.shouldApply({})).toBeFalsy();
+			});
+		});
+	});
+
 	test('adds nti-limit-lines class', () => {
 		const text = 'Test Text';
 
