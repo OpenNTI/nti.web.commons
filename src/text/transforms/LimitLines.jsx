@@ -76,7 +76,7 @@ class LimitLines extends React.Component {
 		const {textRef} = this.props;
 		const {lines, style} = this.getLinesInfo();
 		const {lineHeight, paddingTop, paddingBottom} = getStyles(this.textNode, ['lineHeight', 'paddingTop', 'paddingBottom']);
-		const max = Math.ceil(lineHeight * lines) + paddingTop + paddingBottom;
+		const max = Math.ceil(lineHeight * lines) + (paddingTop || 0) + (paddingBottom + 0);
 
 		this.setState({
 			style: {
@@ -92,16 +92,19 @@ class LimitLines extends React.Component {
 
 
 	render () {
-		const {children, style:propStyle, className, limitLines, ...otherProps} = this.props;
+		const {children, style:propStyle, className, limitLines, forceLines, ...otherProps} = this.props;
 		const {style:stateStyle, settled} = this.state;
 		const styles = {...(propStyle || {}), ...(stateStyle || {})};
+		const single = limitLines != null ? limitLines === 1 : forceLines === 1;
 		const Text = React.Children.only(children);
+
+		delete otherProps.textRef;
 
 		return React.cloneElement(
 			Text,
 			{
 				...otherProps,
-				className: cx(className, 'nti-limit-lines', {single: limitLines === 1, settled}),
+				className: cx(className, 'nti-limit-lines', {single, settled}),
 				style: styles,
 				ref: this.attachText
 			}
