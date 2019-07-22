@@ -16,7 +16,7 @@ export default
 class NTIPlainText extends React.Component {
 	static propTypes = {
 		text: PropTypes.string,
-		textRef: PropTypes
+		textRef: PropTypes.func
 	}
 
 
