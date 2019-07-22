@@ -28,4 +28,33 @@ describe('Markup text renderer', () => {
 
 		expect(ref).toHaveBeenCalledWith(node);
 	});
+
+	describe('Fixes Markup', () => {
+		test('changes external link target', () => {
+			const href = 'http://www.google.com/';
+			const text = `test <a href="${href}">link</a> markup`;
+
+			const {asFragment} = render(<Markup text={text} />);
+			const fragment = asFragment();
+
+			const anchor = fragment.querySelector('a');
+
+			expect(anchor.href).toEqual(href);
+			expect(anchor.target).toEqual('_blank');
+			expect(anchor.rel).toEqual('noopener nofollow');
+		});
+
+		test('leave internal links alone', () => {
+			const href = 'path/to/something';
+			const text = `test <a href="${href}">link</a> markup`;
+
+			const {asFragment} = render(<Markup text={text} />);
+			const fragment = asFragment();
+
+			const anchor = fragment.querySelector('a');
+
+			expect(anchor.target).toBe('');
+			expect(anchor.rel).toBe('');
+		});
+	});
 });
