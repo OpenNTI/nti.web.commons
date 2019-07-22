@@ -23,7 +23,7 @@ describe('Markup text renderer', () => {
 		const ref = jest.fn();
 		const text = 'test';
 
-		const {getByText} = render(<Markup text={text} />);
+		const {getByText} = render(<Markup text={text} ref={ref}/>);
 		const node = getByText(text);
 
 		expect(ref).toHaveBeenCalledWith(node);
