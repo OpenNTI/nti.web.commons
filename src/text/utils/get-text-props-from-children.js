@@ -10,7 +10,7 @@ function getAttributesFromProps (props) {
 		if (MARKUP_WHITE_LIST.ATTRIBUTES[name]) {
 			const value = props[name];
 
-			attributes += `${name}="${value}" `;
+			attributes += ` ${name}="${value}"`;
 		}
 	}
 
@@ -24,9 +24,12 @@ function getMarkupFromChild (child) {
 	const tag = type;
 	const attributes = getAttributesFromProps(attrProps);
 	const childProps = children ? getTextPropsFromChildren(children) : {};
+
+	if (childProps.hasComponents) { throw new Error('Cannot get markup from components'); }
+
 	const innerHTML = childProps.text ? childProps.text : '';
 
-	return `<${tag} ${attributes}>${innerHTML}</${tag}>`;
+	return `<${tag}${attributes}>${innerHTML}</${tag}>`;
 }
 
 export default function getTextPropsFromChildren (childrenProp) {
@@ -40,8 +43,14 @@ export default function getTextPropsFromChildren (childrenProp) {
 		if (typeof child === 'string') {
 			text += child;
 		} else if (typeof child.type === 'string' && MARKUP_WHITE_LIST.TAGS[child.type]) {
-			hasMarkup = true;
-			text += getMarkupFromChild(child);
+			try {
+				text += getMarkupFromChild(child);
+				hasMarkup = true;
+			} catch (e) {
+				hasComponents = true;
+				text = childrenProp;
+				break;
+			}
 		} else {
 			hasComponents = true;
 			text = childrenProp;
