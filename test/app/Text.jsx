@@ -15,7 +15,7 @@ export default class Test extends React.Component {
 	render () {
 		return (
 			<div>
-				<h1>Text Component Test</h1>
+				<h1 style={{fontFamily: 'Open Sans Condensed'}}>Text Component Test</h1>
 				<button onClick={this.show}>Show</button>
 				{this.state.showing && this.renderTest()}
 			</div>
@@ -24,9 +24,9 @@ export default class Test extends React.Component {
 
 	renderTest () {
 		return (
-			<div style={{maxWidth: '500px', lineHeight: '1.3'}}>
-				<Text limitLines={3} overflow={Text.Overflow.Ellipsis} linkify>
-					Flogging furl overhaul boom lugsail www.google.com tack Sail ho provost ahoy sloop. Quarter bilge rat chase guns list salmagundi driver interloper jolly boat  black spot spike. driver sheet transom. Flogging furl overhaul boom lugsail www.google.com tack Sail ho provost ahoy sloop. Quarter bilge rat chase guns list salmagundi driver interloper jolly boat  black spot spike. driver sheet transom.
+			<div style={{maxWidth: '152px'}}>
+				<Text limitLines={2} overflow={Text.Overflow.Ellipsis} linkify style={{width: '152px', padding: '0 20px', lineHeight: '1.3', fontFamily: 'Open Sans Condensed', fontWeight: 700}}>
+					Understanding and Detecting Deception
 				</Text>
 			</div>
 		);
