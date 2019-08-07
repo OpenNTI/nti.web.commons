@@ -19,22 +19,23 @@ class NTIText extends React.Component {
 
 	static propTypes = {
 		children: PropTypes.any,
-		textRef: PropTypes.func
+		textRef: PropTypes.func,
+		className: PropTypes.string
 	}
 
 	render () {
-		const {children, textRef, ...props} = this.props;
+		const {children, textRef, className, ...props} = this.props;
 
 		const textProps = getTextPropsFromChildren(children);
 		const combinedProps = {...props, ...textProps};
 
 		const transforms = getTransforms(combinedProps).reverse();
 
-		let cmp = (<Renderer {...textProps} ref={textRef} />);
+		let cmp = (<Renderer className={className} {...textProps} ref={textRef} />);
 
 		for (let Transform of transforms) {
 			cmp = (
-				<Transform {...combinedProps}>
+				<Transform {...combinedProps} className={className}>
 					{cmp}
 				</Transform>
 			);
