@@ -2,6 +2,7 @@ export * as ContentResources from './content-resources';
 export * as Panels from './panels';
 export * as Loading from './loading-indicators';
 export * as List from './list';
+export * as Monitor from './monitors';
 export * as Query from './query';
 export * as Sequence from './sequence';
 export * as Table from './table';

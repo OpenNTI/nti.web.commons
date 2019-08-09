@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
 import {matches} from '@nti/lib-dom';
 
+import {ForwardRef} from '../../decorators/';
+
 const logger = Logger.get('common:layout:infinite-scroll:HeightChange');
 
 const KNOWN_HEIGHTS = new WeakMap();
@@ -33,15 +35,26 @@ function getNodeFor (mutation, childSelector) {
 }
 
 
-export default class ChildHeightMonitor extends React.Component {
+export default
+@ForwardRef('monitorRef')
+class ChildHeightMonitor extends React.Component {
 	static propTypes = {
+		as: PropTypes.string,
 		childSelector: PropTypes.string,
 		onHeightChange: PropTypes.func.isRequired,
-		children: PropTypes.any
+		children: PropTypes.any,
+
+		monitorRef: PropTypes.func
 	}
 
 
 	attachRef = (x) => {
+		const {monitorRef} = this.props;
+
+		if (monitorRef) {
+			monitorRef(x);
+		}
+
 		this.node = x;
 
 		if (x) {
@@ -151,15 +164,17 @@ export default class ChildHeightMonitor extends React.Component {
 
 
 	render () {
-		const {children, ...otherProps} = this.props;
+		const {children, as: tag, ...otherProps} = this.props;
+		const Cmp = tag || 'div';
 
+		delete otherProps.monitorRef;
 		delete otherProps.childSelector;
 		delete otherProps.onHeightChange;
 
 		return (
-			<div {...otherProps} ref={this.attachRef}>
+			<Cmp {...otherProps} ref={this.attachRef}>
 				{children}
-			</div>
+			</Cmp>
 		);
 	}
 }

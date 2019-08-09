@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {Events} from '@nti/lib-commons';
 
-import ChildHeightMonitor from '../ChildHeightMonitor';
+import ChildHeightMonitor from '../../../components/monitors/ChildHeight';
 import {initPageState, updatePageState, fixPageState} from '../utils';
 
 const pageScrollingElement = typeof document !== 'undefined' && document ? document.scrollingElement || document.documentElement : null;
