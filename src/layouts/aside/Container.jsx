@@ -16,6 +16,7 @@ class AsideContainer extends React.Component {
 		className: PropTypes.string,
 		children: PropTypes.any,
 		forwardedRef: PropTypes.any,
+		asideClassname: PropTypes.string,
 
 		store: PropTypes.object,
 		aside: PropTypes.shape({
@@ -44,7 +45,9 @@ class AsideContainer extends React.Component {
 	renderAside (aside) {
 		if (!aside) { return null; }
 
-		return (<AsidePlaceholder className={cx('aside-container')} {...aside} />);
+		const {asideClassname} = this.props;
+
+		return (<AsidePlaceholder className={cx(asideClassname, 'aside-container')} {...aside} />);
 	}
 }
 
