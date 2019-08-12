@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ScreenSize} from '../../decorators';
+
 import {mergeProps} from './util';
 
-export default class QueryElementWidth extends React.Component {
+export default
+@ScreenSize()
+class QueryElementWidth extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		tag: PropTypes.string,
