@@ -87,6 +87,8 @@ class QueryElementWidth extends React.Component {
 
 		delete otherProps.queries;
 		delete otherProps.onChange;
+		delete otherProps.screenWidth;
+		delete otherProps.screenHeight;
 
 		return (
 			<Tag ref={this.attachRef} {...otherProps} {...extraProps} />
