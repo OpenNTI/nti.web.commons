@@ -33,7 +33,7 @@ class NTIText extends React.Component {
 
 		const transforms = getTransforms(combinedProps).reverse();
 
-		let cmp = (<Renderer as={tag} className={className} {...textProps} ref={textRef} />);
+		let cmp = (<Renderer as={tag} className={className} {...combinedProps} ref={textRef} />);
 
 		for (let Transform of transforms) {
 			cmp = (
