@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty } from '@nti/lib-commons';
 
 import moment from '../moment';
+import Text from '../../text';
 
 const returnFalse = () => false;
 
@@ -93,6 +94,6 @@ export default class DateTime extends React.Component {
 
 		const props = { ...otherProps, dateTime: moment(date).format()};
 
-		return (<time {...props}>{text}</time>);
+		return (<Text.Base as={"time"} {...props}>{text}</Text.Base>);
 	}
 }
