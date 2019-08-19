@@ -6,3 +6,7 @@
 	text-decoration: none;
 	color: var(--primary-blue);
 }
+
+.nti-text.condensed {
+	font-family: var(--header-font-family);
+}
