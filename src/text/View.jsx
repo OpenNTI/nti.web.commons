@@ -16,22 +16,24 @@ class NTIText extends React.Component {
 	static Overflow = Overflow
 
 	static Base = Variant(this, variants.Base, 'Base')
+	static Condensed = Variant(this, variants.Condensed, 'Condensed')
 
 	static propTypes = {
 		children: PropTypes.any,
 		textRef: PropTypes.func,
+		as: PropTypes.string,
 		className: PropTypes.string
 	}
 
 	render () {
-		const {children, textRef, className, ...props} = this.props;
+		const {children, as: tag, textRef, className, ...props} = this.props;
 
 		const textProps = getTextPropsFromChildren(children);
 		const combinedProps = {...props, ...textProps};
 
 		const transforms = getTransforms(combinedProps).reverse();
 
-		let cmp = (<Renderer className={className} {...textProps} ref={textRef} />);
+		let cmp = (<Renderer as={tag} className={className} {...textProps} ref={textRef} />);
 
 		for (let Transform of transforms) {
 			cmp = (
