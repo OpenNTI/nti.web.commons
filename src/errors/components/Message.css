@@ -1,0 +1,5 @@
+.nti-error-message {
+	color: var(--primary-red);
+	font-size: 0.875rem;
+	line-height: 1.3;
+}
