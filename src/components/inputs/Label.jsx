@@ -67,7 +67,9 @@ export default class Label extends React.Component {
 
 		return (
 			<label {...otherProps} className={cls} onInput={this.onInputOrFormValidation} onInvalid={this.onInputOrFormValidation}>
-				<Text.Base className="label">{label}</Text.Base>
+				{label && (
+					<Text.Base className="label">{label}</Text.Base>
+				)}
 				{this.renderInput()}
 				{error && (
 					<ErrorMessage error={error} className="nti-label-error" />
