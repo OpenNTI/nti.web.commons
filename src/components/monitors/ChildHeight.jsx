@@ -18,7 +18,7 @@ function getMutationObserver () {
 	return window.MutationObserver || window.WebKitMutationObserver;
 }
 
-function getNodeFor (mutation, childSelector) {
+function getUpdatedNodeFor (mutation, childSelector) {
 	const {target} = mutation;
 
 	if (!childSelector) {
@@ -34,6 +34,21 @@ function getNodeFor (mutation, childSelector) {
 	return node;
 }
 
+function getRemovedNodesFor (mutation, childSelector) {
+	const {removedNodes} = mutation;
+	const removed = removedNodes && Array.from(removedNodes);
+
+	if (!removed || !removed.length) { return null; }
+
+	return removed
+		.map((node) => {
+			if (!childSelector) { return node; }
+			if (matches(node, childSelector)) { return node; }
+
+			return node.querySelector(childSelector);
+		})
+		.filter(Boolean);
+}
 
 export default
 @ForwardRef('monitorRef')
@@ -84,15 +99,7 @@ class ChildHeightMonitor extends React.Component {
 
 		const {childSelector, onHeightChange} = this.props;
 
-		for (let mutation of mutations) {
-			if (mutation.target === this.node) {
-				return this.computeAllChildren();
-			}
-
-			const node = getNodeFor(mutation, childSelector);
-
-			if (!node) { continue; }
-
+		const updateNode = (node) => {
 			const newHeight = node.clientHeight;
 			const knownHeight = KNOWN_HEIGHTS.get(node);
 
@@ -100,6 +107,26 @@ class ChildHeightMonitor extends React.Component {
 				KNOWN_HEIGHTS.set(node, newHeight);
 				onHeightChange(node, newHeight);
 			}
+		};
+
+		const removeNodes = (nodes) => {
+			for (let node of nodes) {
+				onHeightChange(node, null);
+			}
+		};
+
+		for (let mutation of mutations) {
+			const removed = getRemovedNodesFor(mutation, childSelector);
+
+			if (removed && removed.length) { removeNodes(removed); }
+
+			if (mutation.target === this.node) {
+				return this.computeAllChildren();
+			}
+
+			const node = getUpdatedNodeFor(mutation, childSelector);
+
+			if (node) { updateNode(node); }
 		}
 	}
 
