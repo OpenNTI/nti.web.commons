@@ -17,6 +17,15 @@
 		weight: 600;
 	}
 
+	&.button {
+		border: none;
+		cursor: pointer;
+		box-sizing: border-box;
+		text-transform: none;
+		vertical-align: middle;
+		display: inline-block;
+	}
+
 	&::after {
 		background-image: url(./assets/like.png);
 		content: '';

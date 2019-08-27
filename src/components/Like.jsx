@@ -10,7 +10,8 @@ export default createReactClass({
 	mixins: [ItemChanges],
 
 	propTypes: {
-		item: PropTypes.object.isRequired
+		item: PropTypes.object.isRequired,
+		asButton: PropTypes.bool
 	},
 
 
@@ -27,17 +28,23 @@ export default createReactClass({
 
 
 	render () {
-		let {item} = this.props;
+		let {item, asButton} = this.props;
 		let {LikeCount} = item;
-
-		let cls = cx('like', {
-			active: item.hasLink('unlike')
-		});
 
 		let count = LikeCount || '';
 
+		let cls = cx('like', {
+			active: item.hasLink('unlike'),
+			button: asButton,
+			count: !!count
+		});
+
+
+		const Tag = asButton ? 'button' : 'a';
+		const extraProps = asButton ? {type: 'button'} : {href: '#'};
+
 		return (
-			<a className={cls} href="#" onClick={this.onClick}>{count}</a>
+			<Tag {...extraProps} className={cls} onClick={this.onClick}>{count}</Tag>
 		);
 	}
 });

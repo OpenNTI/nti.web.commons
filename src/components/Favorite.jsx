@@ -10,7 +10,8 @@ export default createReactClass({
 	mixins: [ItemChanges],
 
 	propTypes: {
-		item: PropTypes.object.isRequired
+		item: PropTypes.object.isRequired,
+		asButton: PropTypes.bool
 	},
 
 
@@ -27,14 +28,18 @@ export default createReactClass({
 
 
 	render () {
-		let {item} = this.props;
+		let {item, asButton} = this.props;
 
 		let cls = cx('favorite', {
-			active: item.hasLink('unfavorite')
+			active: item.hasLink('unfavorite'),
+			button: asButton
 		});
 
+		const Tag = asButton ? 'button' : 'a';
+		const extraProps = asButton ? {type: 'button'} : {href: '#'};
+
 		return (
-			<a className={cls} href="#" onClick={this.onClick}/>
+			<Tag {...extraProps} className={cls} onClick={this.onClick}/>
 		);
 	}
 });
