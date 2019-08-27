@@ -96,6 +96,12 @@
 	}
 }
 
+.is-safari { // safari sucks
+	.modal-mask {
+		transition: none !important;
+	}
+}
+
 .modal-mask-appear,
 .modal-mask-enter {
 	opacity: 0.01;
