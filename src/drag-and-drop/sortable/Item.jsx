@@ -99,6 +99,7 @@ class SortableItem extends React.Component {
 		index: PropTypes.number.isRequired,
 		moveItem: PropTypes.func,
 		className: PropTypes.string,
+		customHandle: PropTypes.bool,
 		isDragging: PropTypes.bool,
 		connectDragSource: PropTypes.func,
 		connectDropTarget: PropTypes.func,
@@ -114,6 +115,7 @@ class SortableItem extends React.Component {
 	render () {
 
 		const {
+			customHandle,
 			className,
 			isDragging,
 			connectDragSource,
@@ -124,11 +126,15 @@ class SortableItem extends React.Component {
 
 		const classes = cx('sortable-item', className, {dragging: isDragging});
 
-		const content = connectDragSource(connectDropTarget(
+		let content = connectDropTarget(
 			<li className={classes}>
-				{children}
+				{React.Children.map(children, (c) => React.cloneElement(c, {connectDragSource}))}
 			</li>
-		));
+		);
+
+		if (!customHandle) {
+			content = connectDragSource(content);
+		}
 
 		return connectDragPreview ? connectDragPreview(content) : content;
 	}
