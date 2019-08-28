@@ -8,15 +8,6 @@
 	cursor: pointer;
 	vertical-align: top;
 
-	&.button {
-		border: none;
-		cursor: pointer;
-		box-sizing: border-box;
-		text-transform: none;
-		vertical-align: middle;
-		display: inline-block;
-	}
-
 	&::after {
 		background-image: url(./assets/favorite.png);
 		content: '';

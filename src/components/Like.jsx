@@ -35,13 +35,13 @@ export default createReactClass({
 
 		let cls = cx('like', {
 			active: item.hasLink('unlike'),
-			button: asButton,
+			'button-like': asButton,
 			count: !!count
 		});
 
 
-		const Tag = asButton ? 'button' : 'a';
-		const extraProps = asButton ? {type: 'button'} : {href: '#'};
+		const Tag = asButton ? 'span' : 'a';
+		const extraProps = asButton ? {role: 'button'} : {href: '#'};
 
 		return (
 			<Tag {...extraProps} className={cls} onClick={this.onClick}>{count}</Tag>
