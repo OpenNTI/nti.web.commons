@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import cx from 'classnames';
-import {DragDropContext} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 import isTouch from '@nti/util-detection-touch';
@@ -53,8 +53,6 @@ class Sortable extends React.Component {
 }
 */
 
-export default
-@DragDropContext(DNDBackend)
 class Container extends React.Component {
 
 	static propTypes = {
@@ -121,3 +119,10 @@ class Container extends React.Component {
 		);
 	}
 }
+
+// eslint-disable-next-line react/display-name
+export default React.forwardRef((props, ref) => (
+	<DndProvider backend={DNDBackend}>
+		<Container ref={ref} {...props}/>
+	</DndProvider>
+));
