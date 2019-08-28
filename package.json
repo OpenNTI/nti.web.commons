@@ -61,6 +61,9 @@
     "moment-timezone": "^0.5.4",
     "prop-types": "^15.5.6",
     "react-day-picker": "^7.1.4",
+    "react-dnd": "^5.0.0",
+    "react-dnd-html5-backend": "^5.0.1",
+    "react-dnd-touch-backend": "0.x.x",
     "react-transition-group": "^4.2.2",
     "uuid": "^3.3.2",
     "zpad": "^0.5.0"
