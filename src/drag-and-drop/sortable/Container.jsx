@@ -10,7 +10,7 @@ import DragLayer from './SortDragLayer';
 
 const isIE = /(Trident|Edge)\//.test((global.navigator || {}).userAgent);
 const polyfillDrag = isTouch && !isIE;
-const DNDBackend = polyfillDrag ? TouchBackend({}) : HTML5Backend;
+const DNDBackend = polyfillDrag ? TouchBackend : HTML5Backend;
 
 const stop = e => e.preventDefault();
 
