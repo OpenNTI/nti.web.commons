@@ -18,6 +18,7 @@ const t = scoped('common.components.associations.inline', DEFAULT_TEXT);
 export default class InlineAssociations extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
+			addListener: PropTypes.func,
 			associationCount: PropTypes.number,
 			getAssociations: PropTypes.func
 		}).isRequired,

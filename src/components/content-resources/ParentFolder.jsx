@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import DrillUp from '../DrillUp';
 
 ParentFolder.propTypes = {
-	folder: PropTypes.shape({getFileName: PropTypes.func}),
+	folder: PropTypes.shape({
+		getFileName: PropTypes.func,
+		getParentFolder: PropTypes.func,
+	}),
 	emptyComponent: PropTypes.func
 };
 

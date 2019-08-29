@@ -94,6 +94,6 @@ export default class DateTime extends React.Component {
 
 		const props = { ...otherProps, dateTime: moment(date).format()};
 
-		return (<Text.Base as={"time"} {...props}>{text}</Text.Base>);
+		return (<Text.Base as={'time'} {...props}>{text}</Text.Base>);
 	}
 }

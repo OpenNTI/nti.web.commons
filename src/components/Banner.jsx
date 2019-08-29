@@ -19,7 +19,9 @@ export default createReactClass({
 		 * @type {object}
 		 */
 		item: PropTypes.shape({
-			getPresentationProperties: PropTypes.func }).isRequired,
+			CatalogEntry: PropTypes.any,
+			getPresentationProperties: PropTypes.func
+		}).isRequired,
 
 		preferBackground: PropTypes.bool
 	},
