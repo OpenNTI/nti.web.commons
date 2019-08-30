@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
-import {matches} from '@nti/lib-dom';
+import {matches, isTextNode} from '@nti/lib-dom';
 
 import {ForwardRef} from '../../decorators/';
 
@@ -42,6 +42,11 @@ function getRemovedNodesFor (mutation, childSelector) {
 
 	return removed
 		.map((node) => {
+			if (isTextNode(node)) {
+				node = node.parentNode;
+			}
+
+			if (!node) { return null;}
 			if (!childSelector) { return node; }
 			if (matches(node, childSelector)) { return node; }
 
