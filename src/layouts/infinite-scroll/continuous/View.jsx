@@ -4,13 +4,21 @@ import cx from 'classnames';
 import {getScrollParent, getScrollPosition, getViewportHeight} from '@nti/lib-dom';
 import {Events} from '@nti/lib-commons';
 
+function isScrollLocked (scroller) {
+	if (scroller.classList) { return scroller.classList.contains('scroll-lock'); }
+	if (typeof document === 'undefined') { return false; } 
+
+	return Boolean(document.querySelector('html.scroll-lock'));
+}
+
 function getScrollInfo (scroller) {
 	const position = getScrollPosition(scroller);
 
 	return {
 		scrollTop: position.top,
 		scrollHeight: position.height,
-		height: scroller.clientHeight || getViewportHeight()
+		height: scroller.clientHeight || getViewportHeight(),
+		locked: isScrollLocked(scroller)
 	};
 }
 
@@ -69,7 +77,10 @@ export default class InfiniteContinousScroll extends React.Component {
 		
 		if (!this.scroller || !loadMore || this.loadingMore) { return; }
 
-		const {scrollTop, scrollHeight, height} = getScrollInfo(this.scroller);
+		const {scrollTop, scrollHeight, height, locked} = getScrollInfo(this.scroller);
+
+		if (locked) { return; }
+
 		const trigger = Math.max(scrollHeight - height - buffer, 0);
 
 		if (scrollHeight === height || scrollTop > trigger) {
