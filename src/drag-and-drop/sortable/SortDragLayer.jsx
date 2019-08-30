@@ -7,7 +7,7 @@ import {MountToBody} from '../../remote-mount/';
 const LAYER_STYLES = {
 	position: 'fixed',
 	pointerEvents: 'none',
-	zIndex: 100,
+	zIndex: Number.MAX_SAFE_INTEGER,
 	left: 0,
 	top: 0,
 	width: '100%',
