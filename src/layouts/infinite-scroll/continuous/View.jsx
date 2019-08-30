@@ -70,7 +70,7 @@ export default class InfiniteContinousScroll extends React.Component {
 		if (!this.scroller || !loadMore || this.loadingMore) { return; }
 
 		const {scrollTop, scrollHeight, height} = getScrollInfo(this.scroller);
-		const trigger = scrollHeight - height - buffer;
+		const trigger = Math.max(scrollHeight - height - buffer, 0);
 
 		if (scrollHeight === height || scrollTop > trigger) {
 			this.loadingMore = true;
