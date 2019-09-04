@@ -17,7 +17,7 @@ class NTITextRenderer extends React.Component {
 		const {textRef, ...otherProps} = this.props;
 		const Renderer = getRenderer(otherProps);
 
-		if (!Renderer) { throw new Error('Unable to render text: ', props.text); }
+		if (!Renderer) { throw new Error('Unable to render text: ', this.props.text); }
 
 		return (<Renderer {...otherProps} ref={textRef} />);
 	}
