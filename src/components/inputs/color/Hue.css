@@ -1,7 +1,7 @@
 .hue-input {
 	height: 14px;
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .hue-input .bar {
@@ -9,13 +9,13 @@
 	border-radius: 5px;
 	position: absolute;
 	top: 3px; bottom: 3px;
-	left: 0; right: 0;
+	left: 0px; right: 0px;
 }
 
 .hue-input .range {
 	position: absolute;
 	top: 0; bottom: 0;
-	left: 0; right: 0;
+	left: 0px; right: 0px;
 	width: 100%;
 	height: 100%;
 	opacity: 0;
@@ -25,4 +25,5 @@
 	position: absolute;
 	top: 1px; bottom: auto;
 	left: 0; right: auto;
+	margin-left: -6px;
 }

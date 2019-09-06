@@ -54,7 +54,7 @@ export default class HueInput extends React.Component {
 				<Thumb
 					className={cx('hue-thumb')}
 					value={value}
-					style={{left: `${left}%`}}
+					style={{left: `${Math.max(0, Math.min(left, 100))}%`}}
 				/>
 				<input
 					{...otherProps}
