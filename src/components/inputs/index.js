@@ -1,4 +1,5 @@
 export Clearable from './Clearable';
+export Color from './color';
 export Date from './Date';
 export Email from './Email';
 export File from './File';
