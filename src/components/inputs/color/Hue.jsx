@@ -8,6 +8,12 @@ import Thumb from './Thumb';
 
 const cx = classnames.bind(Styles);
 
+function getStyle (percent) {
+	return {
+		left: `calc(${percent}% - ${12 * (percent / 100)}px)`
+	};
+}
+
 export default class HueInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -21,11 +27,9 @@ export default class HueInput extends React.Component {
 		onChange: PropTypes.func
 	}
 
-
-
 	onChange = (e) => {
 		const {onChange, value} = this.props;
-		const hue = parseInt(e.target.value, 10);
+		const hue = (parseInt(e.target.value, 10) / 100) * 360;
 		const newValue = value ? value.hsv.setHue(hue) : Color.fromHSL(hue, 1, 0.5);
 
 		if (onChange) {
@@ -33,20 +37,19 @@ export default class HueInput extends React.Component {
 		}
 	}
 
-
 	render () {
 		const {className, value} = this.props;
 		const otherProps = restProps(HueInput, this.props);
+		const hue = value ? (value.hsv.hue % 360) : 0;
+		const percent = Math.round((hue / 360) * 100);
 
 		if ('onChange' in this.props) {
 			otherProps.onChange = this.onChange;
 		}
 
 		if ('value' in this.props) {
-			otherProps.value = value ? (value.hsv.hue % 360) : 0;
+			otherProps.value = percent;
 		}
-
-		const left = Math.round((otherProps.value / 360) * 100);
 
 		return (
 			<div className={cx('nti-hue-input', 'hue-input', className)}>
@@ -54,14 +57,14 @@ export default class HueInput extends React.Component {
 				<Thumb
 					className={cx('hue-thumb')}
 					value={value}
-					style={{left: `${Math.max(0, Math.min(left, 100))}%`}}
+					style={getStyle(percent)}
 				/>
 				<input
 					{...otherProps}
 					type="range"
 					className={cx('range')}
 					min="0"
-					max="360"
+					max="100"
 					step="1"
 				/>
 			</div>
