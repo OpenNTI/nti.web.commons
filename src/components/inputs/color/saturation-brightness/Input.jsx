@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {Color} from '@nti/lib-commons';
 
 import Styles from './Input.css';
 import Controls from './Controls';
@@ -11,14 +12,17 @@ SaturationBrightnessInput.propTypes = {
 	className: PropTypes.string,
 	value: PropTypes.shape({
 		hsl: PropTypes.shape({
-			toString: PropTypes.func
+			hue: PropTypes.number,
+			toString: PropTypes.func,
+			setSaturation: PropTypes.func,
+			setLightness: PropTypes.func
 		})
 	})
 };
 export default function SaturationBrightnessInput (props) {
 	const {className, value} = props;
 	const style = {
-		background: value ? value.hsl.toString() : ''
+		background: value ? Color.fromHSL(value.hsl.hue, 1, 0.5).hsl.toString() : Color.fromHSL(0, 1, 0.5).hsl.toString()
 	};
 
 	return (
