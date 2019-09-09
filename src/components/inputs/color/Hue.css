@@ -9,7 +9,7 @@
 	border-radius: 5px;
 	position: absolute;
 	top: 3px; bottom: 3px;
-	left: 0px; right: 0px;
+	left: 2px; right: 2px;
 }
 
 .hue-input .range {
