@@ -10,7 +10,7 @@ const cx = classnames.bind(Styles);
 
 function getStyle (percent) {
 	return {
-		left: `calc(${percent}% - ${12 * (percent / 100)}px)`
+		left: `calc(${percent}% - ${14 * (percent / 100)}px)`
 	};
 }
 
@@ -27,6 +27,8 @@ export default class HueInput extends React.Component {
 		onChange: PropTypes.func
 	}
 
+	state = {}
+
 	onChange = (e) => {
 		const {onChange, value} = this.props;
 		const hue = (parseInt(e.target.value, 10) / 100) * 360;
@@ -37,8 +39,10 @@ export default class HueInput extends React.Component {
 		}
 	}
 
+
 	render () {
 		const {className, value} = this.props;
+		const {focusVisible} = this.state;
 		const otherProps = restProps(HueInput, this.props);
 		const hue = value ? (value.hsv.hue % 360) : 0;
 		const percent = Math.round((hue / 360) * 100);
@@ -52,7 +56,7 @@ export default class HueInput extends React.Component {
 		}
 
 		return (
-			<div className={cx('nti-hue-input', 'hue-input', className)}>
+			<div className={cx('nti-hue-input', 'hue-input', className, {'focus-visible': focusVisible})}>
 				<div className={cx('bar')} />
 				<Thumb
 					className={cx('hue-thumb')}
