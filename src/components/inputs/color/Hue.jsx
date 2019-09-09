@@ -60,7 +60,7 @@ export default class HueInput extends React.Component {
 				<div className={cx('bar')} />
 				<Thumb
 					className={cx('hue-thumb')}
-					value={value}
+					value={Color.fromHSL(hue, 1, 0.5)}
 					style={getStyle(percent)}
 				/>
 				<input
