@@ -12,6 +12,7 @@ export * as Errors from './errors';
 export * as Flyout from './flyout';
 export * as HOC from './HighOrderComponents';
 export Iframe from './iframe';
+export Image from './image';
 export * as Layouts from './layouts';
 export * as Mixins from './mixins';
 export Navigation from './navigation';

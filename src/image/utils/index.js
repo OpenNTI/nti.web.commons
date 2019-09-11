@@ -1,0 +1,1 @@
+export getFixedImageSrc from './get-fixed-image-src';
