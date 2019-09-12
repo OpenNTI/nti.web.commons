@@ -9,6 +9,7 @@ import {ForwardRef} from '../decorators';
 import {getTransforms} from './transforms';
 import Base from './Base';
 import {AspectRatios} from './Constants';
+import Container from './Container';
 
 const {BLANK_IMAGE} = DataURIs;
 const t = scoped('common.image.View', {
@@ -19,6 +20,7 @@ export default
 @ForwardRef('imageRef')
 class NTIImage extends React.Component {
 	static AspectRatios = AspectRatios
+	static Container = Container
 
 	static propTypes = {
 		src: PropTypes.string.isRequired,
