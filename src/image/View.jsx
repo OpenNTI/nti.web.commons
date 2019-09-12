@@ -75,9 +75,9 @@ class NTIImage extends React.Component {
 	}
 
 	componentDidMount () {
-		const {src} = this.props;
+		const {src, fallback} = this.props;
 
-		this.loader.src = src;
+		this.loader.src = src || fallback;
 	}
 
 	componentWillUnmount () {
