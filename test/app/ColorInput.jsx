@@ -40,7 +40,6 @@ export default class ColorInputTest extends React.Component {
 				<Input.Color.SaturationBrightness value={value} onChange={this.onChange} />
 				<Input.Color.Hue value={value} onChange={this.onChange} />
 				<Input.Color.Text value={value} onChange={this.onChange} />
-				<Input.Text placeholder="hello" />
 				<Input.Color.Presets presets={this.state.presets}  onChange={this.onChange}/>
 			</div>
 		);

@@ -10,15 +10,17 @@ export default class Swatch extends Component {
 			color: PropTypes.string,
 			title: PropTypes.string,
 		}),
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	}
 
 	onChange = (e) => {
 
 		const {onChange} = this.props;
 
+		const value = Color.fromHex(this.props.swatch.color);
+
 		if (onChange) {
-			onChange(Color.fromHex(this.props.swatch.color));
+			onChange(value);
 		}
 	}
 
