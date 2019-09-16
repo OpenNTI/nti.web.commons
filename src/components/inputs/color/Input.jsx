@@ -7,12 +7,14 @@ import Styles from './Input.css';
 import Hue from './Hue';
 import SaturationBrightness from './saturation-brightness';
 import Text from './text';
+import Presets	from './Presets';
 
 const cx = classnames.bind(Styles);
 
 export default class ColorInput extends React.Component {
 	static Hue = Hue
 	static SaturationBrightness = SaturationBrightness
+	static Presets = Presets
 	static Text = Text
 
 	static propTypes = {
