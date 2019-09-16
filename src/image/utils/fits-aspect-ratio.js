@@ -2,7 +2,11 @@
 export default function fitsAspectRatio (image, aspectRatio) {
 	if (!image) { return false; }
 
-	const {naturalWidth: width, natrualHeight: height} = image;
+	const {naturalWidth: width, naturalHeight: height} = image;
+	const actual = width / height;
 
-	return (width / height) === aspectRatio;
+	const fittedHeight = width / aspectRatio;
+	const heightDelta = Math.abs(fittedHeight - height);
+
+	return actual === aspectRatio || heightDelta < 1;
 }

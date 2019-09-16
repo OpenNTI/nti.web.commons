@@ -55,7 +55,7 @@ function applyLetterBox (ctx, image, type) {
 export default function getFixedImageSrc (image, aspectRatio, letterbox) {
 	if (!image) { return null; }
 	if (typeof document === 'undefined') { return image && image.src; }
-	if (fitsAspectRatio(image)) { return image.src; }
+	if (fitsAspectRatio(image, aspectRatio)) { return image.src; }
 
 	const {naturalWidth: imageWidth, naturalHeight: imageHeight} = image;
 
