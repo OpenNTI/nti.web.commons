@@ -1,0 +1,25 @@
+.nti-rgb-input {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.nti-rgb-label {
+	flex: 1 1 auto;
+	margin: 0 0.25rem;
+	max-width: 5rem;
+	position: relative;
+}
+
+.nti-rgb-label :global(.label) {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.nti-rgb-number-input {
+	width: 100%;
+	border-radius: 0;
+	background: white;
+}

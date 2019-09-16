@@ -1,0 +1,24 @@
+.nti-color-text-input {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.nti-color-text-input :global(.nti-select-native-wrapper) {
+	display: inline-block;
+	box-shadow: none;
+}
+
+.nti-color-text-input :global(.nti-select-native-wrapper .nti-select-value) {
+	padding-right: 1.5rem;
+	padding-left: 0;
+}
+
+.nti-color-text-input :global(.nti-select-native-wrapper .icon-chevron-down) {
+	font-size: 0.625rem;
+}
+
+.nti-color-text-input > *:last-child {
+	flex: 1 1 auto;
+}
