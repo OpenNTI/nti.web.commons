@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import classnames from 'classnames/bind';
 import {Color} from '@nti/lib-commons';
+
+import Styles from './Swatch.css';
+
+const cx = classnames.bind(Styles);
 
 export default class Swatch extends Component {
 
+
 	static propTypes = {
 		swatch: PropTypes.shape({
-			color: PropTypes.string,
+			color: PropTypes.instanceOf(Color),
 			title: PropTypes.string,
 		}),
 		onChange: PropTypes.func,
@@ -17,7 +22,8 @@ export default class Swatch extends Component {
 
 		const {onChange} = this.props;
 
-		const value = Color.fromHex(this.props.swatch.color);
+		const value = Color.fromHex(this.props.swatch.hex);
+
 
 		if (onChange) {
 			onChange(value);
@@ -39,25 +45,11 @@ export default class Swatch extends Component {
 		};
 	}
 
-	radio () {
-		return {
-			opacity: '0',
-			width: '0px',
-			height: '0px',
-		};
-	}
-
-	label () {
-		return {
-			width: 'auto',
-		};
-	}
-
 	render () {
 		return (
-			<label style={this.label()}>
-				<input type="radio" style={this.radio()} onClick={this.onChange}/>
-				<span style={this.coloredCircle(this.props.swatch.color)} alt={this.props.swatch.title}></span>
+			<label className={cx('label')}>
+				<input type="radio" className={cx('radio')} onClick={this.onChange}/>
+				<span style={this.coloredCircle(this.props.swatch.hex)} alt={this.props.swatch.title}></span>
 			</label>
 		);
 	}

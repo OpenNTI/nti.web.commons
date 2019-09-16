@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import {Color} from '@nti/lib-commons';
 import Swatch from './Swatch';
 
 export default class Presets extends Component {
@@ -8,7 +8,7 @@ export default class Presets extends Component {
 	static propTypes = {
 		presets: PropTypes.arrayOf(
 			PropTypes.shape({
-				color: PropTypes.string,
+				color: PropTypes.instanceOf(Color),
 				title: PropTypes.string,
 			})),
 		onChange: PropTypes.func,
@@ -38,7 +38,7 @@ export default class Presets extends Component {
 				<h3>Presets</h3>
 				<div style={this.presetDiv()}>
 					{presets && presets.map((swatch, i) => (
-						<Swatch key={i} swatch={swatch}  onChange={this.onChange}/>
+						<Swatch key={i} swatch={swatch} onChange={this.onChange}/>
 					))}
 				</div>
 			</div>
