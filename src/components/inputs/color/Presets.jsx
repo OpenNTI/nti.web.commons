@@ -11,7 +11,7 @@ export default class Presets extends Component {
 				color: PropTypes.string,
 				title: PropTypes.string,
 			})),
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	}
 
 	onChange = (e) => {
@@ -38,7 +38,7 @@ export default class Presets extends Component {
 				<h3>Presets</h3>
 				<div style={this.presetDiv()}>
 					{presets && presets.map((swatch, i) => (
-						<Swatch key={i} swatch={swatch} onChange={this.onChange}/>
+						<Swatch key={i} swatch={swatch}  onChange={this.onChange}/>
 					))}
 				</div>
 			</div>
