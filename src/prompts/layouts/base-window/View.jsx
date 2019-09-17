@@ -14,7 +14,7 @@ BaseWindowLayout.propTypes = {
 };
 export default function BaseWindowLayout ({className, children, ...otherProps}) {
 	return (
-		<div className={cx('base-window-layout')}>
+		<div className={cx('base-window-layout', className)}>
 			<Header {...otherProps} />
 			<div className={cx('window-body')}>
 				{children}
