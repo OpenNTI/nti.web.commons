@@ -96,7 +96,6 @@ export default class NTIHexInput extends React.Component {
 				value={value}
 				onChange={this.onChange}
 				placeholder={t('placeholder')}
-				pattern={ValidHexRegex}
 			/>
 		);
 	}
