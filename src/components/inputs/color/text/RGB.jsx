@@ -11,9 +11,9 @@ import Styles from './RGB.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('common.inputs.color.text.RGB', {
-	red: 'Red',
-	green: 'Green',
-	blue: 'Blue'
+	red: 'R',
+	green: 'G',
+	blue: 'B'
 });
 
 export default class NTIRGBInput extends React.Component {
