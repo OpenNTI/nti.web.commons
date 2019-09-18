@@ -8,6 +8,7 @@ import Hue from './Hue';
 import SaturationBrightness from './saturation-brightness';
 import Text from './text';
 import PresetSwatches from './preset-swatches';
+import Thumb from './Thumb';
 
 const cx = classnames.bind(Styles);
 
@@ -16,6 +17,7 @@ export default class ColorInput extends React.Component {
 	static SaturationBrightness = SaturationBrightness
 	static PresetSwatches = PresetSwatches
 	static Text = Text
+	static Thumb = Thumb
 
 	static propTypes = {
 		className: PropTypes.string,
