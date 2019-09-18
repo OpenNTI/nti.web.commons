@@ -257,6 +257,7 @@ export default class NTITokenInput extends React.Component {
 					<li>
 						<Text
 							className={cx('nti-token-text-input', {error})}
+							autocomplete="token-input"
 							ref={this.attachInputRef}
 							value={inputValue}
 							placeholder={this.placeholder}
