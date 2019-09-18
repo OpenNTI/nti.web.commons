@@ -1,0 +1,36 @@
+.nti-color-preset-swatches {
+	list-style: none;
+	padding: 0;
+	margin: 0 -0.25rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.nti-color-preset-swatches > li {
+	display: inline-block;
+	flex: 0 0 auto;
+	padding: 0;
+	margin: 0 0.25rem 0.5rem;
+}
+
+.nti-color-swatch {
+	display: inline-block;
+	cursor: pointer;
+	width: 38px;
+	height: 38px;
+	border-radius: 38px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.nti-color-swatch:focus {
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3),
+		0 0 3px 1px var(--primary-blue);
+}
+
+.nti-color-swatch.selected {
+	transform: scale(1.2);
+}
+
+
