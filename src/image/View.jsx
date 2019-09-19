@@ -23,7 +23,7 @@ class NTIImage extends React.Component {
 	static Container = Container
 
 	static propTypes = {
-		src: PropTypes.string.isRequired,
+		src: PropTypes.string,
 		alt: PropTypes.string,
 
 		placeholder: PropTypes.string,
