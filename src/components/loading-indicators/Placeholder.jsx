@@ -6,10 +6,16 @@ export default class LoadingPlaceholder extends React.Component {
 		children: PropTypes.any,
 		loading: PropTypes.bool,
 		fallback: PropTypes.node,
-		delay: PropTypes.number
+		delay: PropTypes.number,
+		min: PropTypes.number
 	}
 
-	state = {delaying: true}
+	static defaultProps = {
+		delay: 500,
+		min: 500
+	}
+
+	state = {delaying: true, loading: true}
 
 	componentDidMount () {
 		this.setup();
@@ -27,28 +33,48 @@ export default class LoadingPlaceholder extends React.Component {
 
 
 	setup () {
-		const {loading, delay} = this.props;
+		const {loading, delay, min} = this.props;
+		const {started} = this.state;
+		const now = Date.now();
 
-		if (!loading) {
+		if (!loading && !started) {
+			this.setState({
+				delaying: false,
+				loading: false
+			});
+			return;
+		}
+
+		if (!loading && started) {
 			clearTimeout(this.delayingTimeout);
+			const loadtime = now - started;
+			this.minLoadTimeout = setTimeout(() => {
+				this.setState({
+					delaying: false,
+					loading: false,
+					started: null
+				});
+			}, Math.max(0, min - loadtime));
 			return;
 		}
 
-		if (delay === 0) {
-			this.setState({delaying: false});
-			return;
-		}
-		
-		this.setState({delaying: true});
-
-		this.delayingTimeout = setTimeout(() => {
-			this.setState({delaying: false});
-		}, delay || 500);
+		this.setState({
+			delaying: delay > 0,
+			started: Date.now(),
+			loading: true
+		}, () => {
+			if (this.state.delaying) {
+				this.delayingTimeout = setTimeout(() => {
+					this.setState({delaying: false});
+				}, delay);
+			}
+		});
 	}
 
+
 	render () {
-		const {loading, children, fallback} = this.props;
-		const {delaying} = this.state;
+		const {children, fallback} = this.props;
+		const {delaying, loading} = this.state;
 
 		const showChildren = !loading;
 		const showFallback = loading && !delaying;
