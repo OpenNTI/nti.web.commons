@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+//NOTE: nti-token is a hook to allow other components to
+//adjust the styles DO NOT add it to Token.css
 import Styles from './Token.css';
 import TokenDisplay from './TokenDisplay';
 
@@ -38,7 +40,7 @@ export default class Token extends React.Component {
 		const {token, onRemove, focused} = this.props;
 
 		return (
-			<div className={cx('token', {focused})} onClick={this.onSelect} role="button">
+			<div className={cx('token', 'nti-token', {focused})} onClick={this.onSelect} role="button">
 				<TokenDisplay className={cx('token-display')} token={token} />
 				{!!onRemove && (
 					<div className={cx('token-remove')} onClick={this.onRemove} role="button">
