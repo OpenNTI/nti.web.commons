@@ -34,6 +34,11 @@ export default class LoadingPlaceholder extends React.Component {
 			return;
 		}
 
+		if (delay === 0) {
+			this.setState({delaying: false});
+			return;
+		}
+		
 		this.setState({delaying: true});
 
 		this.delayingTimeout = setTimeout(() => {
