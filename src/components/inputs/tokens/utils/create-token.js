@@ -4,9 +4,10 @@ function defaultMatch (value, display) {
 	};
 }
 
-export default function createToken (value, display, isExactMatch, wasRaw) {
+export default function createToken (value, display, isExactMatch, wasRaw, tokenId) {
 	return {
 		value,
+		tokenId: tokenId || value,
 		display: display || value,
 		isExactMatch: isExactMatch || defaultMatch(value, display),
 		isSameToken: (token) => token.isExactMatch(value),

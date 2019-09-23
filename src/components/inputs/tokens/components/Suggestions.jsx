@@ -147,7 +147,7 @@ export default class TokenSuggestions extends React.Component {
 		this.lastStart = loaded;
 
 		try {
-			const tokens = oldTokens && oldTokens.for === match ? oldTokens.value : await getSuggestions(match);
+			const tokens = oldTokens && oldTokens.for === match ? oldTokens.value : await getSuggestions(match, selected);
 			clearTimeout(loadingTimeout);
 
 			if (this.lastStart !== loaded) {
@@ -155,7 +155,7 @@ export default class TokenSuggestions extends React.Component {
 			}
 
 			const suggestions = cleanTokens(tokens);
-			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.value]: true}), {});
+			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.tokenId || select.value]: true}), {});
 			
 			const hasNewToken = explicitAdd && match &&
 				(!matchValidity || matchValidity.isValid) &&
@@ -287,7 +287,7 @@ export default class TokenSuggestions extends React.Component {
 		return (
 			<ul className={cx('suggestions-list')}>
 				{suggestions.map((suggestion, index) => {
-					const isSelected = selectedMap[suggestion.value];
+					const isSelected = selectedMap[suggestion.tokenId || suggestion.value];
 					const isFocused = focused && suggestion.isSameToken(focused);
 
 					return (
