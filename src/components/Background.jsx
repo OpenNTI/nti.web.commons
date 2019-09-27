@@ -40,6 +40,11 @@ export default class extends React.Component {
 		}
 
 		style.backgroundImage = url ? `url(${url})` : null;
+
+		//BOOO IE
+		if (!url && style.backgroundImage) {
+			style.backgroundImage = '';
+		}
 	};
 
 	componentDidMount () {
