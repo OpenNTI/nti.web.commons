@@ -6,7 +6,7 @@
 	color: $secondary-grey;
 	font: normal 400 0.875rem/2rem $body-font-family;
 
-	&.display {
+	&.display .content {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
