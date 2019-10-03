@@ -25,6 +25,7 @@ export * as Selection from './selection';
 export * as Switch from './switch';
 export * as SyncHeight from './sync-height';
 export * as Task from './task';
+export * as Tabs from './tabs';
 export Text from './text';
 export Timer from './timer';
 export * as Transitions from './transitions';
