@@ -2,6 +2,13 @@ import React from 'react';
 
 import {MARKUP_WHITE_LIST} from '../Constants';
 
+const HasAnchorRegex = /<\/?a [^>]*>/i;
+const HasNonAnchorMarkup = /<\/?[^a]>/i;
+
+function hasAllowedRawMarkup (text) {
+	return HasAnchorRegex.test(text) && !HasNonAnchorMarkup.test(text);
+}
+
 function getAttributesFromProps (props) {
 	const names = Object.keys(props);
 	let attributes = '';
@@ -42,6 +49,7 @@ export default function getTextPropsFromChildren (childrenProp) {
 	for (let child of children) {
 		if (typeof child === 'string') {
 			text += child;
+			hasMarkup = hasAllowedRawMarkup(child);
 		} else if (typeof child.type === 'string' && MARKUP_WHITE_LIST.TAGS[child.type]) {
 			try {
 				text += getMarkupFromChild(child);
