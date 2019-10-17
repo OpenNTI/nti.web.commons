@@ -245,6 +245,7 @@ export default class DateInput extends React.Component {
 				onClick={stop}
 				onFocus={this.onFocus}
 				onBlur={this.onBlur}
+				maxLength={4}
 			/>
 		);
 	}
