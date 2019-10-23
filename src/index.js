@@ -27,6 +27,7 @@ export * as SyncHeight from './sync-height';
 export * as Task from './task';
 export * as Tabs from './tabs';
 export Text from './text';
+export * as Theme from './theme';
 export Timer from './timer';
 export * as Transitions from './transitions';
 export * as Updates from './updates';
