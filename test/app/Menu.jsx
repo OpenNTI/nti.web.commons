@@ -6,18 +6,19 @@ import style from './Menu.css';
 
 const cx = classnames.bind(style);
 
-export default function Menu ({items}) {
-	const [open, setOpen] = React.useState(true);
+export default function Menu ({items, selected}) {
+	const [open, setOpen] = React.useState(!selected);
 
 	return (
 		<ul className={cx('menu', {open})} onClick={() => setOpen(!open)}>
 			{Object.entries(items).map(([name, component]) => (
-				<li key={name}><a href={`#${name}`}>{component.displayName || name}</a></li>
+				<li key={name} className={cx({ active: selected === name})}><a href={`#${name}`}>{component.displayName || name}</a></li>
 			))}
 		</ul>
 	);
 }
 
 Menu.propTypes = {
-	items: PropTypes.object.isRequired
+	items: PropTypes.object.isRequired,
+	selected: PropTypes.string
 };

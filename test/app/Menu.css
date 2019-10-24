@@ -17,17 +17,28 @@
 }
 
 .menu li {
-	padding: 0.5em 1em;
-	border-bottom: 1px solid #eee;
+	background: transparent;
+	transition: background 0.5s;
+}
+
+.menu li:hover {
+	background: rgba(0, 0, 0, 0.05);
+	transition: background 0s; /* immediate on hover; transition on unhover */
+}
+
+.menu li.active {
+	background: rgba(0, 0, 0, 0.1);
 }
 
 .menu a {
 	text-decoration: none;
 	color: inherit;
+	display: block;
+	padding: 0.5em 1em;
 }
 
 .menu::after {
-	content: 'Choose';
+	content: 'Components';
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-size: 0.75rem;

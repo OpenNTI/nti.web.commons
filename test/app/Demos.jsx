@@ -11,10 +11,8 @@ function Choose () {
 	return <div className={cx('choose')}>Choose a component</div>;
 }
 
-function componentFromHash () {
-	const {hash} = global.location;
-	return Items[hash.substring(1)] || Choose;
-}
+const nameFromHash = () => global.location.hash.substr(1);
+const componentFromHash = () =>Items[nameFromHash()] || Choose;
 
 export default function Demos () {
 
@@ -35,7 +33,7 @@ export default function Demos () {
 			<div className={cx('demo-container')}>
 				<Cmp />
 			</div>
-			<Menu items={Items} selected={(Cmp || {}).displayName} />
+			<Menu items={Items} selected={nameFromHash()} />
 		</div>
 	);
 }
