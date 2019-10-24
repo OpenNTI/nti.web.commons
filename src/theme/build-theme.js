@@ -2,7 +2,7 @@ const DefaultsProperties = {
 	library: {
 		background: 'dark',
 		navigation: {
-			backgroundColor: 'rgba(42, 42, 42, 0.97)',
+			backgroundColor: 'red', //'rgba(255, 255, 255, 0.97)',
 			search: (values) => {
 				//TODO: if the navigation background is set, derive light or dark here based off the color
 				return 'dark';
@@ -40,7 +40,7 @@ export default function BuildTheme (properties = DefaultsProperties, initialValu
 
 	const apply = (props, themeScope, valueScope) => {
 		for (let [key, value] of Object.entries(props)) {
-			if (typeof value === 'object') {
+			if (value != null && typeof value === 'object') {
 				Object.defineProperty(themeScope, key, {
 					value: apply(value, {}, [...valueScope, key])
 				});
