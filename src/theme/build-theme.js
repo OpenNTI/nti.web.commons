@@ -1,13 +1,13 @@
 const DefaultsProperties = {
 	library: {
 		background: 'dark',
-		'navigation': {
-			'background-color': '#fff',
-			'search': (values) => {
+		navigation: {
+			backgroundColor: 'rgba(42, 42, 42, 0.97)',
+			search: (values) => {
 				//TODO: if the navigation background is set, derive light or dark here based off the color
 				return 'dark';
 			},
-			'icon': (values) => {
+			icon: (values) => {
 				//TODO: if the navigation background is set, derive light or dark here based off the color
 				return 'dark';
 			}
@@ -32,22 +32,11 @@ export default function BuildTheme (properties = DefaultsProperties, initialValu
 
 		return pointer[key];
 	};
-
-	const setValue = (scopes = [], key, value) => {
-		let pointer = values;
-
-		for (let scope of scopes) {
-			if (!pointer[scope]) { pointer[scope] = {}; }
-
-			pointer = pointer[scope];
-		}
-
-		pointer[key] = value;
-	};
 	
-	theme.clone = () => BuildTheme(properties, values);
-	theme.setOverrides = overrides => values = ({...overrides});
 	theme.getValues = () => values;
+	//TODO: merge overrides onto any existing values...
+	theme.setOverrides = overrides => values = ({...overrides});
+	theme.scope = (scope) => BuildTheme(properties[scope], values[scope]);
 
 	const apply = (props, themeScope, valueScope) => {
 		for (let [key, value] of Object.entries(props)) {
@@ -67,9 +56,6 @@ export default function BuildTheme (properties = DefaultsProperties, initialValu
 						}
 
 						return value;
-					},
-					set: (newValue) => {
-						setValue(valueScope, key, newValue);
 					}
 				});
 			}
