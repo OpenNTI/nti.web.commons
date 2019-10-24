@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DateTime} from '../../src';
+import {DateTime} from '../../../src';
 
 export default class DateTimeTest extends React.Component {
 	render () {

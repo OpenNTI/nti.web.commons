@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddClass from '../../src/components/AddClass';
+import AddClass from '../../../src/components/AddClass';
 
 export default class AddClassTest extends React.Component {
 

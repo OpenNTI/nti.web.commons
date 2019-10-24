@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Image} from '../../src';
+import {Image} from '../../../src';
 
 const SRC = 'https://picsum.photos/200/300';
 const BAD_SRC = 'https://thisdoesntexistimeanhowcoulditijustmadeitup.com/image.png';

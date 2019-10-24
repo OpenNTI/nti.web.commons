@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text} from '../../src';
+import {Text} from '../../../src';
 
 
 export default class Test extends React.Component {

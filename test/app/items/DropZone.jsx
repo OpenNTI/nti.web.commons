@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DnD} from '../../src';
+import {DnD} from '../../../src';
 
 export default class DropZoneTest extends React.Component {
 	render () {

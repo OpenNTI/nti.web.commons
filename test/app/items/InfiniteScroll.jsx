@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Layouts} from '../../src/';
+import {Layouts} from '../../../src';
 
 const TIMEOUTS = [
 	100,

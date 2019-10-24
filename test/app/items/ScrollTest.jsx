@@ -1,7 +1,7 @@
 /*eslint no-console: 0*/
 import React from 'react';
 
-import {Scroll} from '../../src';
+import {Scroll} from '../../../src';
 
 export default class Test extends React.Component {
 	onTop = (d) => console.log('On Top: ', d)

@@ -1,0 +1,18 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.demo-container {
+	margin-left: 3rem;
+	min-height: 100vh;
+	background: white;
+}
+
+.choose {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	opacity: 0.4;
+}

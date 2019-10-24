@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Input} from '../../src';
+import {Input} from '../../../src';
 
 
 const suggestions = [

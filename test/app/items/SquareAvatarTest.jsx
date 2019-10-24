@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames/bind';
 
-import {Avatar} from '../../src';
+import {Avatar} from '../../../src';
 
 import styles from './SquareAvatarTest.css';
 

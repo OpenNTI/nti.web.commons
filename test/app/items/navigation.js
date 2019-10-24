@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 // import PropTypes from 'prop-types';
 // import {addFeatureCheckClasses} from '@nti/lib-dom';
-import {Navigation, Layouts} from '../../src';
+import {Navigation, Layouts} from '../../../src';
 
 Layouts.Responsive.setWebappContext();
 

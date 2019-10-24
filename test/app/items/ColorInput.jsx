@@ -1,7 +1,7 @@
 import React from 'react';
 import {Color} from '@nti/lib-commons';
 
-import {Input} from '../../src';
+import {Input} from '../../../src';
 
 const Presets = [
 	{color: Color.fromHex('#000000'), title: 'Black'},
