@@ -1,6 +1,6 @@
 const DefaultsProperties = {
 	library: {
-		background: 'dark',
+		background: 'light',
 		navigation: {
 			backgroundColor: '#3FB34F', //'rgba(255, 255, 255, 0.97)',
 			search: (values) => {

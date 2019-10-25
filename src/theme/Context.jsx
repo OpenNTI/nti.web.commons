@@ -1,3 +1,5 @@
 import React from 'react';
 
-export default React.createContext('theme');
+import {getGlobalTheme} from './GlobalTheme';
+
+export default React.createContext(getGlobalTheme());
