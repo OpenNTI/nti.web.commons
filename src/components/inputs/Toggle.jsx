@@ -81,7 +81,7 @@ export default class Toggle extends React.Component {
 		const { className } = this.props;
 
 		return (
-			<div className={cx('nti-toggle-inpout', className)}>
+			<div className={cx('nti-toggle-input', className)}>
 				{this.renderToggle()}
 			</div>
 		);
