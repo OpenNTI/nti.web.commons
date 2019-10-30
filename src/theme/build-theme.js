@@ -50,7 +50,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
 	//TODO: merge overrides onto any existing values...
 	theme.setOverrides = overrides => values = ({...overrides});
-	theme.scope = (scope) => BuildTheme(properties[scope], void 0, {[Scope]: [...initialScope, scope], [Parent]: theme});
+	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
 
 	const apply = (props, themeScope, valueScope) => {
 		for (let [key, value] of Object.entries(props)) {
@@ -66,7 +66,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 						if (defined != null) { return defined; }
 
 						if (typeof value === 'function') {
-							return value(themeScope, values);
+							return value(themeScope, theme.getValues());
 						}
 
 						return value;
