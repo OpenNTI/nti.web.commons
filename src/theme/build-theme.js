@@ -18,17 +18,25 @@ const DefaultsProperties = {
 				}
 			}
 		}
-	}
+	},
+	brandName: 'NextThought',
+	brandColor: null,
+	assets: {}
 };
 
+const Scope = Symbol('Scope');
+const Parent = Symbol('Parent');
 
-export default function BuildTheme (properties = DefaultsProperties, initialValues = {}) {
+
+export default function BuildTheme (properties = DefaultsProperties, internalConfig = {}) {
 	const theme = {};
+	const parentTheme = internalConfig[Parent];
+	const initialScope = internalConfig[Scope] || [];
 	
-	let values = {...initialValues};
+	let values = {};
 
 	const getValue = (scopes = [], key) => {
-		let pointer = values;
+		let pointer = theme.getValues();
 
 		for (let scope of scopes) {
 			pointer = pointer[scope];
@@ -39,10 +47,10 @@ export default function BuildTheme (properties = DefaultsProperties, initialValu
 		return pointer[key];
 	};
 	
-	theme.getValues = () => values;
+	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
 	//TODO: merge overrides onto any existing values...
 	theme.setOverrides = overrides => values = ({...overrides});
-	theme.scope = (scope) => BuildTheme(properties[scope], values[scope]);
+	theme.scope = (scope) => BuildTheme(properties[scope], void 0, {[Scope]: [...initialScope, scope], [Parent]: theme});
 
 	const apply = (props, themeScope, valueScope) => {
 		for (let [key, value] of Object.entries(props)) {
@@ -70,5 +78,5 @@ export default function BuildTheme (properties = DefaultsProperties, initialValu
 		return themeScope;
 	};
 
-	return apply(properties, theme, []);
+	return apply(properties, theme, initialScope);
 }
