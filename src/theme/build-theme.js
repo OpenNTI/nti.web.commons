@@ -1,3 +1,5 @@
+import merge from 'merge';
+
 const DefaultsProperties = {
 	library: {
 		background: 'light',
@@ -27,7 +29,6 @@ const DefaultsProperties = {
 const Scope = Symbol('Scope');
 const Parent = Symbol('Parent');
 
-
 export default function BuildTheme (properties = DefaultsProperties, internalConfig = {}) {
 	const theme = {};
 	const parentTheme = internalConfig[Parent];
@@ -48,8 +49,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 	};
 	
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
-	//TODO: merge overrides onto any existing values...
-	theme.setOverrides = overrides => values = ({...overrides});
+	theme.setOverrides = overrides => values = merge.recursive(values, {...overrides});
 	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
 
 	const apply = (props, themeScope, valueScope) => {
