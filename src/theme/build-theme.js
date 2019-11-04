@@ -1,10 +1,13 @@
 import merge from 'merge';
 
+import Fallbacks from './fallback-assets';
+
 const DefaultsProperties = {
 	library: {
 		background: 'light',
 		navigation: {
-			backgroundColor: '#3FB34F', //'rgba(255, 255, 255, 0.97)',
+			//TODO: get this off of the brandColor
+			backgroundColor: (_, globalTheme) => globalTheme.brandColor || 'rgba(255, 255, 255, 0.97)',
 			search: (values) => {
 				//TODO: if the navigation background is set, derive light or dark here based off the color
 				return 'dark';
@@ -22,8 +25,21 @@ const DefaultsProperties = {
 		}
 	},
 	brandName: 'NextThought',
-	brandColor: null,
-	assets: {}
+	brandColor: '#3FB34F',
+	assets: {
+		logo: {
+			alt: 'logo',
+			fallback: Fallbacks.Logo,
+			fill: (_, globalTheme) => globalTheme.brandColor,
+			source: '/site-assets/shared/brand_web.png'
+		},
+		'full_logo': {
+			alt: 'logo',
+			fallback: Fallbacks.FullLogo,
+			fill: (_, globalTheme) => globalTheme.brandColor,
+			source: '/site-assets/shared/brand_web_library.png'
+		}
+	}
 };
 
 const Scope = Symbol('Scope');
@@ -48,6 +64,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 		return pointer[key];
 	};
 	
+	theme.getRoot = () => parentTheme ? parentTheme.getRoot() : theme;
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
 	theme.setOverrides = overrides => values = merge.recursive(values, {...overrides});
 	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
@@ -66,7 +83,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 						if (defined != null) { return defined; }
 
 						if (typeof value === 'function') {
-							return value(themeScope, theme.getValues());
+							return value(themeScope, theme.getRoot());
 						}
 
 						return value;

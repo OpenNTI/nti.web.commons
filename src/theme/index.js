@@ -11,3 +11,4 @@ export const useThemeProperty = Hook.useThemeProperty;
 export Apply from './Apply';
 export Scope from './Scope';
 
+export Asset from './Asset';

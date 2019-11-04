@@ -23,6 +23,6 @@ export const siteBrandToTheme = (siteBrand) => {
 		...(siteBrand.theme || {}),
 		brandName: siteBrand['brand_name'],
 		brandColor: siteBrand['brand_color'],
-		assets: siteBrand.assets
+		assets: siteBrand.assets ? {...siteBrand.assets, 'fullLogo': siteBrand['full_logo']} : siteBrand.assets
 	};
 };
