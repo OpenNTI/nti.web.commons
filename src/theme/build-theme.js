@@ -1,4 +1,5 @@
 import merge from 'merge';
+import {Color} from '@nti/lib-commons';
 
 import Fallbacks from './fallback-assets';
 
@@ -7,25 +8,40 @@ const DefaultsProperties = {
 		background: 'dark',
 		navigation: {
 			branding: (_, globalTheme) => globalTheme.assets.fullLogo,
-			backgroundColor: (_, globalTheme) => globalTheme.brandColor || 'rgba(42, 42, 42, 0.97)',
+			backgroundColor: (_, globalTheme) => globalTheme.brandColor || '#232323',
 			search: (values) => {
-				//TODO: if the navigation background is set, derive light or dark here based off the color
-				return 'dark';
+				try {
+					const {brightness} = Color(values.backgroundColor).hsv;
+
+					return brightness <= 0.2 ? 'dark' : 'light';
+				} catch (e) {
+					return 'light';
+				}
 			},
 			icon: (values) => {
-				//TODO: if the navigation background is set, derive light or dark here based off the color
-				return 'dark';
+				try {
+					const {brightness} = Color(values.backgroundColor).hsv;
+
+					return brightness >= 0.8 ? 'light' : 'dark';
+				} catch (e) {
+					return 'dark';
+				}
 			},
 			identity: {
-				presence: (values) => {
-					//TODO: base this off of the backgroundColor of the navigation
-					return 'dark';
+				presence: (_, globalTheme) => {
+					try {
+						const {saturation, brightness} = Color(globalTheme.library.navigation.backgroundColor).hsv;
+
+						return saturation === 0 && (brightness <= 0.3 || brightness >= 0.9) ? 'dark' : 'light';
+					} catch (e) {
+						return 'light';
+					}
 				}
 			}
 		}
 	},
 	brandName: 'NextThought',
-	brandColor: null,
+	brandColor: null,//'#3FB34F',
 	assets: {
 		logo: {
 			alt: 'logo',
@@ -65,6 +81,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 	};
 	
 	theme.getRoot = () => parentTheme ? parentTheme.getRoot() : theme;
+	theme.getParent = () => parentTheme;
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
 	theme.setOverrides = overrides => values = merge.recursive(values, {...overrides});
 	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
