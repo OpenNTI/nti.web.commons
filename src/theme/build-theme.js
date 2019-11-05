@@ -82,6 +82,7 @@ export default function BuildTheme (properties = DefaultsProperties, internalCon
 	
 	theme.getRoot = () => parentTheme ? parentTheme.getRoot() : theme;
 	theme.getParent = () => parentTheme;
+	theme.getScope = () => initialScope;
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
 	theme.setOverrides = overrides => values = merge.recursive(values, {...overrides});
 	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
