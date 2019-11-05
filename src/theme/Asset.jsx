@@ -14,7 +14,19 @@ export default function ThemeAsset ({name, property, ...otherProps}) {
 
 	if (!asset) { return null; }
 
+	const style = {};
+
+	if (asset.fill) {
+		style.backgroundColor = asset.fill;
+	}
+
 	return (
-		<Image {...otherProps} src={asset.href} alt={asset.alt} fallback={asset.fallback} />
+		<Image
+			{...otherProps}
+			src={asset.href}
+			alt={asset.alt}
+			fallback={asset.fallback}
+			style={style}
+		/>
 	);
 }
