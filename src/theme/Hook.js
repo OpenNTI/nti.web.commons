@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {get} from '@nti/lib-commons';
+import {ObjectUtils} from '@nti/lib-commons';
 
 import ThemeContext from './Context';
 
@@ -12,5 +12,5 @@ export function useTheme () {
 export function useThemeProperty (prop) {
 	const theme = useTheme();
 
-	return theme && get(theme, prop);
+	return theme && ObjectUtils.get(theme, prop);
 }
