@@ -19,10 +19,12 @@ export const setGlobalThemeOverrides = (overrides) => {
 //This should probably live in the apps, but we need it in both web and mobile.
 //This is just a convenient place to stick it for now
 export const siteBrandToTheme = (siteBrand) => {
+	const {assets} = siteBrand || {};
+
 	return {
 		...(siteBrand.theme || {}),
 		brandName: siteBrand['brand_name'],
 		brandColor: siteBrand['brand_color'],
-		assets: siteBrand.assets ? {...siteBrand.assets, 'fullLogo': siteBrand['full_logo']} : siteBrand.assets
+		assets: assets ? {...assets, fullLogo: assets['full_logo']} : null 
 	};
 };
