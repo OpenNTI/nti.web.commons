@@ -4,10 +4,10 @@ import Fallbacks from './fallback-assets';
 
 const DefaultsProperties = {
 	library: {
-		background: 'light',
+		background: 'dark',
 		navigation: {
-			//TODO: get this off of the brandColor
-			backgroundColor: (_, globalTheme) => globalTheme.brandColor || 'rgba(255, 255, 255, 0.97)',
+			branding: (_, globalTheme) => globalTheme.assets.fullLogo,
+			backgroundColor: (_, globalTheme) => globalTheme.brandColor || 'rgba(42, 42, 42, 0.97)',
 			search: (values) => {
 				//TODO: if the navigation background is set, derive light or dark here based off the color
 				return 'dark';
@@ -19,25 +19,25 @@ const DefaultsProperties = {
 			identity: {
 				presence: (values) => {
 					//TODO: base this off of the backgroundColor of the navigation
-					return 'light';
+					return 'dark';
 				}
 			}
 		}
 	},
 	brandName: 'NextThought',
-	brandColor: '#3FB34F',
+	brandColor: null,
 	assets: {
 		logo: {
 			alt: 'logo',
 			fallback: Fallbacks.Logo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
-			source: '/site-assets/shared/brand_web.png'
+			href: '/site-assets/shared/brand_web.png'
 		},
-		'full_logo': {
+		fullLogo: {
 			alt: 'logo',
 			fallback: Fallbacks.FullLogo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
-			source: '/site-assets/shared/brand_web_library.png'
+			href: '/site-assets/shared/brand_web_library.png'
 		}
 	}
 };

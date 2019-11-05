@@ -15,6 +15,6 @@ export default function ThemeAsset ({name, property, ...otherProps}) {
 	if (!asset) { return null; }
 
 	return (
-		<Image {...otherProps} src={asset.source} alt={asset.alt} fallback={asset.fallback} />
+		<Image {...otherProps} src={asset.href} alt={asset.alt} fallback={asset.fallback} />
 	);
 }
