@@ -8,7 +8,7 @@ const DefaultsProperties = {
 		background: 'dark',
 		navigation: {
 			branding: (_, globalTheme) => globalTheme.assets.fullLogo,
-			backgroundColor: (_, globalTheme) => globalTheme.brandColor || '#232323',
+			backgroundColor: (_, globalTheme) => globalTheme.brandColor || '#2A2A2A',
 			search: (values) => {
 				try {
 					const {brightness} = Color(values.backgroundColor).hsv;
