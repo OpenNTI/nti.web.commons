@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import {mount} from 'enzyme';
-import {Time} from '@nti/lib-commons';
+import {Time, Date as DateUtils} from '@nti/lib-commons';
 
 import TimePicker from '../TimePicker';
 
@@ -15,6 +15,14 @@ describe('TimePicker', () => {
 		mount(<TimePicker {...props}>{children}</TimePicker>),
 		// sharedWrapper.setProps({...props, children})
 	];
+
+	beforeEach(() => {
+		DateUtils.MockDate.install();
+	});
+
+	afterEach(() => {
+		DateUtils.MockDate.uninstall();
+	});
 
 	/* INTERNAL STATE TESTS: NO PROPS, NO CHANGE HANDLER */
 	test('Base case: Check if it defaults to now', () => {
