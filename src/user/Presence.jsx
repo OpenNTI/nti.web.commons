@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {getAppUsername} from '@nti/web-client';
 
 import Store from './PresenceStore';
 
@@ -12,7 +13,8 @@ export default class UserPresence extends React.Component {
 		user: PropTypes.object,
 		children: PropTypes.element,
 		border: PropTypes.bool,
-		dark: PropTypes.bool
+		dark: PropTypes.bool,
+		me: PropTypes.bool
 	}
 
 	state = {}
@@ -39,10 +41,10 @@ export default class UserPresence extends React.Component {
 
 
 	setupFor (props) {
-		const {user} = props;
+		const {user, me} = props;
 
 		this.setState({
-			presence: UserPresence.Store.getPresenceFor(user)
+			presence: UserPresence.Store.getPresenceFor(me ? getAppUsername() : user)
 		});
 	}
 
@@ -64,9 +66,11 @@ export default class UserPresence extends React.Component {
 
 
 	onPresenceChanged = (username, presence) => {
-		const {user} = this.props;
+		const {user, me} = this.props;
 
-		if (user.getID() === username) {
+		const current = me ? getAppUsername() : (user && user.getID());
+
+		if (current === username) {
 			this.setState({
 				presence
 			});
