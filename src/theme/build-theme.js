@@ -57,23 +57,27 @@ const DefaultsProperties = {
 	brandColor: null,//'#3FB34F',
 	assets: {
 		logo: {
+			filename: '',
 			alt: 'logo',
 			fallback: Fallbacks.Logo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
 			href: DefaultLogo
 		},
 		fullLogo: {
+			filename: '',
 			alt: 'logo',
 			fallback: Fallbacks.FullLogo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
 			href: makeAssetHREFFallbacks('/site-assets/shared/brand_web_library.png')
 		},
 		email: {
+			filename: '',
 			alt: 'email',
 			fallback: Fallbacks.Email,
 			href: makeAssetHREFFallbacks(Fallbacks.Email)
 		},
 		favicon: {
+			filename: '',
 			alt: 'favicon',
 			fallback: Fallbacks.Favicon,
 			href: makeAssetHREFFallbacks('/favicon.ico')
