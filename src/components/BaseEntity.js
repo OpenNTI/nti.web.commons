@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {User} from '@nti/web-client';
+import {User, getAppUsername} from '@nti/web-client';
 import {PropTypes as MorePropTypes} from '@nti/lib-commons';
 
 
@@ -15,8 +15,9 @@ export default class BaseEntity extends React.Component {
 			PropTypes.object,
 			PropTypes.string
 		]).isRequired,
+		me: PropTypes.bool,
 
-		entityId: MorePropTypes.deprecated
+		entityId: MorePropTypes.deprecated,
 	}
 
 	state = {}
@@ -27,7 +28,7 @@ export default class BaseEntity extends React.Component {
 
 
 	componentDidUpdate (prevProps) {
-		if (this.props.entity !== prevProps.entity) {
+		if (this.props.entity !== prevProps.entity || this.props.me !== prevProps.me) {
 			this.fillIn();
 		}
 	}
@@ -48,9 +49,10 @@ export default class BaseEntity extends React.Component {
 
 		const getID = x => x && x.getID ? x.getID() : x;
 		const current = getID(this.state.entity);
+		const next = props.me ? getAppUsername() : getID(props.entity);
 
 		try {
-			if (current !== getID(props.entity)) {
+			if (current !== next) {
 				const entity = await User.resolve(props);
 				set({entity});
 			}
