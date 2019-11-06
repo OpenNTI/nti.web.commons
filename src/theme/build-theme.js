@@ -3,6 +3,19 @@ import {Color} from '@nti/lib-commons';
 
 import Fallbacks from './fallback-assets';
 
+const DefaultLogo = '/site-assets/shared/brand_web.png';
+const makeAssetHREFFallbacks = (defaultAsset) => {
+	return (_, globalTheme) => {
+		const logoHref = globalTheme.assets.logo.href;
+
+		if (logoHref && logoHref !== DefaultLogo) {
+			return logoHref;
+		}
+
+		return defaultAsset;
+	};
+};
+ 
 const DefaultsProperties = {
 	library: {
 		background: 'dark',
@@ -47,13 +60,23 @@ const DefaultsProperties = {
 			alt: 'logo',
 			fallback: Fallbacks.Logo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
-			href: '/site-assets/shared/brand_web.png'
+			href: DefaultLogo
 		},
 		fullLogo: {
 			alt: 'logo',
 			fallback: Fallbacks.FullLogo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
-			href: '/site-assets/shared/brand_web_library.png'
+			href: makeAssetHREFFallbacks('/site-assets/shared/brand_web_library.png')
+		},
+		email: {
+			alt: 'email',
+			fallback: Fallbacks.Email,
+			href: makeAssetHREFFallbacks(Fallbacks.Email)
+		},
+		favicon: {
+			alt: 'favicon',
+			fallback: Fallbacks.Favicon,
+			href: makeAssetHREFFallbacks('/favicon.ico')
 		}
 	}
 };
