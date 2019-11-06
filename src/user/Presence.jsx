@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {getAppUsername} from '@nti/web-client';
+import Logger from '@nti/util-logger';
+
+const logger = Logger.get('web-commons.user.Presence');	
 
 import Store from './PresenceStore';
 
@@ -42,6 +45,10 @@ export default class UserPresence extends React.Component {
 
 	setupFor (props) {
 		const {user, me} = props;
+
+		if (user && me) {
+			logger.warn('Specify props.user or props.me, not both.');
+		}
 
 		this.setState({
 			presence: UserPresence.Store.getPresenceFor(me ? getAppUsername() : user)
