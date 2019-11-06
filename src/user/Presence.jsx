@@ -99,6 +99,7 @@ export default class UserPresence extends React.Component {
 		const name = presence ? presence.getName() : '';
 
 		delete otherProps.user;
+		delete otherProps.me;
 
 		return (
 			<div
