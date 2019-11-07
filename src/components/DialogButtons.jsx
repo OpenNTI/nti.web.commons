@@ -7,9 +7,9 @@ DialogButtons.propTypes = {
 	buttons: PropTypes.array
 };
 export default function DialogButtons (props) {
-	const {buttons = [], flat} = props;
+	const {buttons = [], flat, className: css} = props;
 
-	const c = cx('dialog-buttons', {flat});
+	const c = cx('dialog-buttons', {flat}, css);
 
 	return (
 		<div className={c}>
