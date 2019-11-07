@@ -26,18 +26,18 @@ const DefaultProperties = {
 				try {
 					const {brightness} = Color(values.backgroundColor).hsv;
 
-					return brightness <= 0.2 ? 'dark' : 'light';
+					return brightness <= 0.2 ? 'light' : 'dark';
 				} catch (e) {
-					return 'light';
+					return 'dark';
 				}
 			},
 			icon: (values) => {
 				try {
 					const {brightness} = Color(values.backgroundColor).hsv;
 
-					return brightness >= 0.8 ? 'light' : 'dark';
+					return brightness >= 0.8 ? 'dark' : 'light';
 				} catch (e) {
-					return 'dark';
+					return 'light';
 				}
 			},
 			identity: {
