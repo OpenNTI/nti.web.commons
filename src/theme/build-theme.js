@@ -16,7 +16,7 @@ const makeAssetHREFFallbacks = (defaultAsset) => {
 	};
 };
  
-const DefaultsProperties = {
+const DefaultProperties = {
 	library: {
 		background: 'dark',
 		navigation: {
@@ -88,7 +88,9 @@ const DefaultsProperties = {
 const Scope = Symbol('Scope');
 const Parent = Symbol('Parent');
 
-export default function BuildTheme (properties = DefaultsProperties, internalConfig = {}) {
+BuildTheme.makeAssetHREFFallbacks = makeAssetHREFFallbacks;
+BuildTheme.DefaultProperties = DefaultProperties;
+export default function BuildTheme (properties = DefaultProperties, internalConfig = {}) {
 	const theme = {};
 	const parentTheme = internalConfig[Parent];
 	const initialScope = internalConfig[Scope] || [];
