@@ -90,6 +90,7 @@ export default class Avatar extends BaseEntity {
 
 		delete props.entity;
 		delete props.entityId;
+		delete props.me;
 
 		const childProps = {
 			...props,
