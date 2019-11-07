@@ -6,6 +6,9 @@ import {restProps} from '@nti/lib-commons';
 import {DataURIs} from '../constants';
 import {ForwardRef} from '../decorators';
 
+
+import {resolveImage} from './utils';
+import * as srcsetUtils from './srcset';
 import {getTransforms} from './transforms';
 import Base from './Base';
 import {AspectRatios} from './Constants';
@@ -19,11 +22,18 @@ const t = scoped('common.image.View', {
 export default
 @ForwardRef('imageRef')
 class NTIImage extends React.Component {
+	static srcset = srcsetUtils
 	static AspectRatios = AspectRatios
 	static Container = Container
 
 	static propTypes = {
 		src: PropTypes.string,
+		srcset: PropTypes.arrayOf(
+			PropTypes.shape({
+				src: PropTypes.string,
+				query: PropTypes.string
+			})
+		),
 		alt: PropTypes.string,
 
 		placeholder: PropTypes.string,
@@ -54,32 +64,8 @@ class NTIImage extends React.Component {
 		return alt || t('alt');
 	}
 
-	get loader () {
-		if (!this.#loader) {
-			const loader = this.#loader = new Image();
-			loader.crossOrigin = 'anonymous';
-			
-			const onLoad = (e) => this.onLoad(e);
-			const onError = (e) => this.onError(e);
-
-			loader.addEventListener('load', onLoad);
-			loader.addEventListener('error', onError);
-
-			this.cleanupLoader = () => {
-				loader.removeEventListener('load', onLoad);
-				loader.removeEventListener('error', onError);
-				this.#loader = null;
-				delete this.cleanupLoader();
-			};
-		}
-
-		return this.#loader;
-	}
-
 	componentDidMount () {
-		const {src, fallback} = this.props;
-
-		this.loader.src = src || fallback;
+		this.setupSource();
 	}
 
 	componentWillUnmount () {
@@ -92,43 +78,34 @@ class NTIImage extends React.Component {
 
 		if (src !== prevSrc) {
 			this.setState({src: null});
-			this.loader.src = src;
+			this.setupSource();
 		}
 	}
 
-	onLoad (e) {
-		const {target} = e || {};
-		const {onLoad} = this.props;
+	async setupSource () {
+		const {src, fallback, srcset, onLoad, onError} = this.props;
 
-		if (this.unmounted) { return; }
+		try {
+			this.#loader = await resolveImage(src, srcset, fallback);
 
-		this.setState({
-			src: target.src
-		});
+			if (this.unmounted) { return; }
 
-		if (onLoad) {
-			onLoad(e);
+			this.setState({
+				src: this.#loader.currentSrc
+			});
+
+			if (onLoad) {
+				onLoad();
+			}
+		} catch (e) {
+			this.setState({
+				src: BLANK_IMAGE
+			});
+
+			if (onError) {
+				onError(e);
+			}
 		}
-	}
-
-	onError (e) {
-		const {target} = e || {};
-		const {onError, fallback} = this.props;
-
-		//If we haven't tried the fallback yet, try it.
-		if (target.src !== fallback && fallback) {
-			this.loader.src = fallback;
-			return;
-		}
-
-		//We already tried to load the fallback and it failed
-		if (onError) {
-			onError(e);
-		}
-
-		this.setState({
-			src: BLANK_IMAGE
-		});
 	}
 
 
@@ -143,7 +120,7 @@ class NTIImage extends React.Component {
 
 		for (let Transform of transforms) {
 			cmp = (
-				<Transform {...this.props} src={currentSrc} _loader={this.loader} >
+				<Transform {...this.props} src={currentSrc} _loader={this.#loader} >
 					{cmp}
 				</Transform>
 			);

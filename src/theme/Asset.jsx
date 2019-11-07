@@ -24,6 +24,7 @@ export default function ThemeAsset ({name, property, ...otherProps}) {
 		<Image
 			{...otherProps}
 			src={asset.href}
+			srcset={Image.srcset.forSingleSourceDPI(asset.href)}
 			alt={asset.alt}
 			fallback={asset.fallback}
 			style={style}
