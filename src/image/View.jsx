@@ -84,9 +84,9 @@ class NTIImage extends React.Component {
 
 	async setupSource () {
 		const {src, fallback, srcset, onLoad, onError} = this.props;
-		const started = Date.now()
+		const started = Date.now();
 
-		this.currentLoadStarted = started;;
+		this.currentLoadStarted = started;
 
 		try {
 			this.#loader = await resolveImage(src, srcset, fallback);
