@@ -91,7 +91,7 @@ class NTIImage extends React.Component {
 			if (this.unmounted) { return; }
 
 			this.setState({
-				src: this.#loader.currentSrc
+				src: this.#loader.currentSrc || this.#loader.src
 			});
 
 			if (onLoad) {
