@@ -40,14 +40,14 @@ const DefaultProperties = {
 					return 'light';
 				}
 			},
-			identity: {
-				presence: (_, globalTheme) => {
+			badges: {
+				knockout: (_, globalTheme) => {
 					try {
 						const {saturation, brightness} = Color(globalTheme.library.navigation.backgroundColor).hsv;
 
-						return saturation === 0 && (brightness <= 0.3 || brightness >= 0.9) ? 'dark' : 'light';
+						return saturation === 0 && (brightness <= 0.3 || brightness >= 0.9) ? true : false;
 					} catch (e) {
-						return 'light';
+						return false;
 					}
 				}
 			}
