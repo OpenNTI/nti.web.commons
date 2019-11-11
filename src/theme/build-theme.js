@@ -15,6 +15,13 @@ const makeAssetHREFFallbacks = (defaultAsset) => {
 		return defaultAsset;
 	};
 };
+
+const getAsset = (asset) => ({
+	filename: '',
+	['Last Modified']: null,
+	cacheBust: (values) => values['Last Modified'],
+	...asset
+});
  
 const DefaultProperties = {
 	library: {
@@ -56,32 +63,28 @@ const DefaultProperties = {
 	brandName: 'NextThought',
 	brandColor: null,//'#3FB34F',
 	assets: {
-		logo: {
-			filename: '',
+		logo: getAsset({
 			alt: 'logo',
 			fallback: Fallbacks.Logo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
 			href: DefaultLogo
-		},
-		fullLogo: {
-			filename: '',
+		}),
+		fullLogo: getAsset({
 			alt: 'logo',
 			fallback: Fallbacks.FullLogo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
 			href: makeAssetHREFFallbacks('/site-assets/shared/brand_web_library.png')
-		},
-		email: {
-			filename: '',
+		}),
+		email: getAsset({
 			alt: 'email',
 			fallback: Fallbacks.Email,
 			href: makeAssetHREFFallbacks(Fallbacks.Email)
-		},
-		favicon: {
-			filename: '',
+		}),
+		favicon: getAsset({
 			alt: 'favicon',
 			fallback: Fallbacks.Favicon,
 			href: makeAssetHREFFallbacks('/favicon.ico')
-		}
+		})
 	}
 };
 
