@@ -33,9 +33,9 @@ const DefaultProperties = {
 				try {
 					const {brightness} = Color(values.backgroundColor).hsv;
 
-					return brightness <= 0.2 ? 'light' : 'dark';
+					return brightness <= 0.2 ? 'dark' : 'light';
 				} catch (e) {
-					return 'dark';
+					return 'light';
 				}
 			},
 			icon: (values) => {
