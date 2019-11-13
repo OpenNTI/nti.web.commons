@@ -2,8 +2,10 @@ import React from 'react';
 
 import Text from './Text';
 
-export default function Email (props) {
+function Email (props, ref) {
 	return (
-		<Text {...props} type="email" />
+		<Text {...props} type="email" ref={ref} />
 	);
 }
+
+export default React.forwardRef(Email);

@@ -10,6 +10,7 @@ export * as Decorators from './decorators';
 export * as DnD from './drag-and-drop';
 export * as Errors from './errors';
 export * as Flyout from './flyout';
+export Form from './form';
 export * as HOC from './HighOrderComponents';
 export Iframe from './iframe';
 export Image from './image';

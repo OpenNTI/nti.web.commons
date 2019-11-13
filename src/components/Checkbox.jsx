@@ -12,7 +12,7 @@ Checkbox.propTypes = {
 		PropTypes.object // rendered element
 	]),
 	name: PropTypes.string,
-	domRef: PropTypes.object
+	domRef: PropTypes.any
 };
 
 function Checkbox (props) {

@@ -1,0 +1,9 @@
+.form-input-label {
+	display: block;
+}
+
+.form-input-label :global(.nti-label-error) {
+	text-align: left;
+	display: block;
+	padding: 0.25rem 0.5rem;
+}

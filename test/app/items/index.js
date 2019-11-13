@@ -2,6 +2,7 @@ export AddClassTest from './AddClassTest';
 export ColorInput from './ColorInput';
 export DateTimeTest from './DateTimeTest';
 export DropZone from './DropZone';
+export Form from './Form';
 export Gutter from './Gutter';
 export Image from './Image';
 export InfiniteScroll from './InfiniteScroll';
