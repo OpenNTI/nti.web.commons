@@ -83,7 +83,7 @@ const DefaultProperties = {
 		favicon: getAsset({
 			alt: 'favicon',
 			fallback: Fallbacks.Favicon,
-			href: makeAssetHREFFallbacks('/favicon.ico')
+			href: '/favicon.ico'
 		})
 	}
 };
