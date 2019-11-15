@@ -5,6 +5,7 @@ import * as Errors from '../errors';
 
 import FormContext from './Context';
 import Input from './Input';
+import SubmitButton from './SubmitButton';
 import * as Validation from './validation';
 import * as Values from './values';
 
@@ -57,6 +58,7 @@ function getSubmitHandler (form, disabled, addErrors, onSubmit) {
 Form.Validation = Validation;
 Form.Values = Values;
 Form.Input = Input;
+Form.SubmitButton = SubmitButton;
 Form.propTypes = {
 	onSubmit: PropTypes.func,
 	onChange: PropTypes.func,
