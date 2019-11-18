@@ -91,6 +91,7 @@ const DefaultProperties = {
 const Scope = Symbol('Scope');
 const Parent = Symbol('Parent');
 
+BuildTheme.getAsset = getAsset;
 BuildTheme.makeAssetHREFFallbacks = makeAssetHREFFallbacks;
 BuildTheme.DefaultProperties = DefaultProperties;
 export default function BuildTheme (properties = DefaultProperties, internalConfig = {}) {
