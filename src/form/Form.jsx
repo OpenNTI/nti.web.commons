@@ -11,15 +11,27 @@ import * as Values from './values';
 
 const GlobalError = Symbol('Global Error');
 
-function getChangeHandler (form, onChange, onValid, onInvalid) {
+function getChangeHandler (form, addErrors, onChange, onValid, onInvalid) {
 	if (!onChange && !onValid && !onInvalid) { return null; }
 
 	let wasValid = Validation.isValid(form.current);
 
+	const callOnChange = async (e) => {
+		if (!onChange) { return; }
+
+		try {
+			await onChange(Values.getValues(form.current), e);
+		} catch (err) {
+			debugger;
+			if (!err.field) { addErrors({[GlobalError]: err}); }
+			else { addErrors({[err.field]: err}); }
+		}
+	};
+
 	return (e) => {
 		const valid = Validation.isValid(form.current);
 
-		if (onChange) {	onChange(e); }
+		callOnChange(e);
 
 		if (valid === wasValid) { return; }
 
@@ -103,7 +115,7 @@ export default function Form (props) {
 				ref={formEl}
 				noValidate={noValidate}
 				onSubmit={getSubmitHandler(formEl, disabled, addErrors, onSubmit)}
-				onChange={getChangeHandler(formEl, onChange, onValid, onInvalid)}
+				onChange={getChangeHandler(formEl, addErrors, onChange, onValid, onInvalid)}
 				{...otherProps}
 			>
 				{errors[GlobalError] && (<Errors.Message error={errors[GlobalError]} />)}
