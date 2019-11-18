@@ -22,7 +22,6 @@ function getChangeHandler (form, addErrors, onChange, onValid, onInvalid) {
 		try {
 			await onChange(Values.getValues(form.current), e);
 		} catch (err) {
-			debugger;
 			if (!err.field) { addErrors({[GlobalError]: err}); }
 			else { addErrors({[err.field]: err}); }
 		}

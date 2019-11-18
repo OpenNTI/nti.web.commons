@@ -9,7 +9,7 @@ import Styles from './Input.css';
 
 const cx = classnames.bind(Styles);
 
-function WrapperFactory (Cmp, clearOn = 'onChange') {
+function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 	FormInput.propTypes = {
 		className: PropTypes.string,
 		name: PropTypes.string.isRequired,
@@ -30,8 +30,8 @@ function WrapperFactory (Cmp, clearOn = 'onChange') {
 		}
 
 		return (
-			<Input.Label className={cx(className, 'form-input-label')} error={errors[name]} label={label}>
-				<Cmp name={name} ref={inputRef} {...otherProps} {...clearProps} />
+			<Input.Label className={cx(className, 'form-input-label')} error={errors[name]} label={labelOnInput ? null : label}>
+				<Cmp name={name} ref={inputRef} label={labelOnInput ? label : null} {...otherProps} {...clearProps} />
 			</Input.Label>
 		);
 	}
@@ -44,7 +44,7 @@ const InputTypes = {
 	wrap: WrapperFactory,
 	Text: WrapperFactory(Input.Text),
 	Email: WrapperFactory(Input.Email),
-	Checkbox: WrapperFactory(Checkbox)
+	Checkbox: WrapperFactory(Checkbox, 'onChange', true)
 };
 
 export default InputTypes;
