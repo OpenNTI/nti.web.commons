@@ -9,3 +9,12 @@ export function getMessage (error) {
 
 	return error.Message || error.message || t('default');
 }
+
+export function mapMessage (error, msg) {
+	const mapped = new Error(msg);
+
+	mapped.cause = error;
+	mapped.field = error.field;
+
+	return mapped; 
+}
