@@ -7,17 +7,18 @@ import {useThemeProperty} from './Hook';
 
 ThemeAsset.propTypes = {
 	property: PropTypes.object,
-	name: PropTypes.string
+	name: PropTypes.string,
+	style: PropTypes.object
 };
-export default function ThemeAsset ({name, property, ...otherProps}) {
+export default function ThemeAsset ({name, property, style, ...otherProps}) {
 	const asset = property ? property : useThemeProperty(name);
 
 	if (!asset) { return null; }
 
-	const style = {};
+	const fillStyle = {...(style || {})};
 
 	if (asset.fill) {
-		style.backgroundColor = asset.fill;
+		fillStyle.backgroundColor = asset.fill;
 	}
 
 	return (
@@ -27,7 +28,7 @@ export default function ThemeAsset ({name, property, ...otherProps}) {
 			srcset={Image.srcset.forSingleSourceDPI(asset.href)}
 			alt={asset.alt}
 			fallback={asset.fallback}
-			style={style}
+			style={fillStyle}
 		/>
 	);
 }
