@@ -98,7 +98,7 @@ class NTIImage extends React.Component {
 			});
 
 			if (onLoad) {
-				onLoad();
+				onLoad(this.#loader);
 			}
 		} catch (e) {
 			this.setState({
