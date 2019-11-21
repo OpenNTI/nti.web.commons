@@ -13,7 +13,7 @@ ThemeAsset.propTypes = {
 export default function ThemeAsset ({name, property, style, ...otherProps}) {
 	const asset = property ? property : useThemeProperty(name);
 
-	if (!asset) { return null; }
+	if (!asset || !asset.href) { return null; }
 
 	const fillStyle = {...(style || {})};
 
