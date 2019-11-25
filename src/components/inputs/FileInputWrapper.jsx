@@ -9,14 +9,15 @@ const cx = classnames.bind(Styles);
 export default class FileInputWrapper extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		children: PropTypes.any
+		children: PropTypes.any,
+		style: PropTypes.any
 	}
 
 	render () {
-		const {className, children, ...otherProps} = this.props;
+		const {className, children, style, ...otherProps} = this.props;
 
 		return (
-			<div className={cx('nti-file-input-wrapper', className)}>
+			<div className={cx('nti-file-input-wrapper', className)} style={style} >
 				<input type="file" {...otherProps} />
 				{children}
 			</div>
