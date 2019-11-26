@@ -20,6 +20,17 @@ const getAsset = (asset) => ({
 	filename: '',
 	['Last Modified']: null,
 	cacheBust: (values) => values['Last Modified'],
+	cacheBustHREF: (values) => {
+		const {cacheBust, href} = values;
+
+		if (!cacheBust) { return href; }
+
+		const url = new URL(href);
+
+		url.searchParams.set('v', cacheBust);
+
+		return url.toString();
+	},
 	...asset
 });
  
@@ -117,7 +128,7 @@ export default function BuildTheme (properties = DefaultProperties, internalConf
 	theme.getParent = () => parentTheme;
 	theme.getScope = () => initialScope;
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
-	theme.setOverrides = overrides => values = merge.recursive(values, {...overrides});
+	theme.setOverrides = (overrides, force) => values = force ? overrides : merge.recursive(values, {...overrides});
 	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
 
 	const apply = (props, themeScope, valueScope) => {

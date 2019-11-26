@@ -13,7 +13,7 @@ export const getGlobalTheme = () => {
 export const setGlobalThemeOverrides = (overrides) => {
 	const theme = getGlobalTheme();
 
-	theme.setOverrides(overrides);
+	theme.setOverrides(overrides, true);
 };
 
 //This should probably live in the apps, but we need it in both web and mobile.
