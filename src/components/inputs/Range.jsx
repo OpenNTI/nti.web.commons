@@ -49,9 +49,9 @@ export default function RangeInput ({className, value, min = 0, max = 100, onCha
 	};
 
 	return (
-		<label className={cx('nti-range-input', className)}>
-			<div className={cx('bar')} style={getBarStyle(value, min, max)} />
-			<span className={cx('thumb')} data-value={value} style={getThumbStyle(value, min, max)} />
+		<label className={cx('nti-range-input', 'range-input', className)}>
+			<div className={cx('nti-range-input-bar', 'bar')} style={getBarStyle(value, min, max)} />
+			<span className={cx('nti-range-input-thumb','thumb')} data-value={value} style={getThumbStyle(value, min, max)} />
 			<input {...otherProps} type="range" onChange={onChange} value={value} min={min} max={max} />
 		</label>
 	);

@@ -1,11 +1,11 @@
-.nti-range-input {
+.range-input {
 	display: block;
 	height: 16px;
 	position: relative;
 	overflow: visible;
 }
 
-.nti-range-input .bar {
+.range-input .bar {
 	border-radius: 5px;
 	position: absolute;
 	top: 6px; bottom: 4px;
@@ -13,7 +13,7 @@
 	box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.63);
 }
 
-.nti-range-input .thumb {
+.range-input .thumb {
 	position: absolute;
 	top: 1px; bottom: auto;
 	left: 0; right: auto;
@@ -25,7 +25,7 @@
 	transition: transform 0.3s;
 }
 
-.nti-range-input input[type="range"] {
+.range-input input[type="range"] {
 	appearance: none;
 	position: absolute;
 	top: 0; bottom: 0;
@@ -36,6 +36,6 @@
 	cursor: pointer;
 }
 
-.nti-range-input:focus-within .thumb {
+.range-input:focus-within .thumb {
 	transform: scale(1.4875);
 }
