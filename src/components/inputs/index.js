@@ -8,6 +8,7 @@ export Label from './Label';
 export MultiSelect from './multi-select';
 export Number from './Number';
 export Percentage from './Percentage';
+export Range from './Range';
 export Select from './select';
 export Text from './Text';
 export TextArea from './TextArea';
