@@ -29,6 +29,13 @@ export default class ColorInputTest extends React.Component {
 		return (
 			<div>
 				<Input.Color value={value} onChange={this.onChange} />
+				<Input.Color.Flyout
+					value={value}
+					onChange={this.onChange}
+					arrow
+					veriticalAlign={Input.Color.Flyout.ALIGNMENTS.BOTTOM}
+					horizontalAlign={Input.Color.Flyout.ALIGNMENTS.LEFT}
+				/>
 				<Input.Color.SaturationBrightness value={value} onChange={this.onChange} />
 				<Input.Color.Hue value={value} onChange={this.onChange} />
 				<Input.Color.Text value={value} onChange={this.onChange} />
