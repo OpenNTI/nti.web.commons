@@ -25,6 +25,7 @@ export const siteBrandToTheme = (siteBrand) => {
 		...(siteBrand.theme || {}),
 		brandName: siteBrand['brand_name'],
 		brandColor: siteBrand['brand_color'],
+		HideNextThoughtBranding: siteBrand.HideNextThoughtBranding,
 		assets: assets ? {...assets, fullLogo: assets['full_logo']} : null 
 	};
 };
