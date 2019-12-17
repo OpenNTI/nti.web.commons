@@ -22,7 +22,7 @@ export const siteBrandToTheme = (siteBrand) => {
 	const {assets} = siteBrand || {};
 
 	return {
-		...(siteBrand.theme || {}),
+		...((siteBrand || {}).theme || {}),
 		brandName: siteBrand['brand_name'],
 		brandColor: siteBrand['brand_color'],
 		HideNextThoughtBranding: siteBrand.HideNextThoughtBranding,
