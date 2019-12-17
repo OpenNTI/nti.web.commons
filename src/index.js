@@ -33,6 +33,7 @@ export Timer from './timer';
 export * as Transitions from './transitions';
 export * as Updates from './updates';
 export * as User from './user';
+export * as Utils from './utils';
 export VisibleComponentTracker from './visible-component-tracker';
 
 //back-compat begin
