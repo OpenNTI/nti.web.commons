@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import isIOS from '@nti/util-ios-version';
-import { declareCustomElement } from '@nti/lib-dom';
+import { declareCustomElement, addClickOutListener } from '@nti/lib-dom';
 
 import LockScroll from '../components/LockScroll';
 
@@ -79,7 +79,23 @@ export default class Modal extends React.Component {
 	}
 
 	/* @ignore */
-	attachContentRef = x => this.content = x
+	attachContentRef = (content) => {
+		if (content && content !== this.content) {
+			this.content = content;
+
+			if (this.cleanupClickOut) { this.cleanupClickOut(); }
+			this.cleanupClickOut = addClickOutListener(content, (e) => {
+				const {closeOnMaskClick} = this.props;
+
+				if (closeOnMaskClick) {
+					this.close(e);
+				}
+			});
+		} else if (!content) {
+			if (this.cleanupClickOut) { this.cleanupClickOut(); }
+		}
+	}
+
 
 
 	getChildContext = () => ({
@@ -126,18 +142,6 @@ export default class Modal extends React.Component {
 
 	focus = () => {
 		this.content.focus();
-	}
-
-
-	/**
-	 * @param {object} e - the event
-	 * @returns {undefined}
-	 */
-	onMaskClick = (e) => {
-		const {closeOnMaskClick} = this.props;
-		if (closeOnMaskClick) {
-			this.close(e);
-		}
 	}
 
 	/**
@@ -188,10 +192,9 @@ export default class Modal extends React.Component {
 							className={classes}
 							onFocus={this.onFocus}
 							onBlur={this.onBlur}
-							onClick={this.onMaskClick}
 						>
 							<i className="icon-close" onClick={this.close}/>
-							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent}>
+							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" >
 								{React.Children.map(children, child =>
 									typeof child.type === 'string'
 										? child
