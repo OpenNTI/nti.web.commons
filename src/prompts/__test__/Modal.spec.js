@@ -61,61 +61,6 @@ describe('Modals', () => {
 		renderer.unmount();
 	});
 
-	test ('Clicks inside modal do not trigger mask clicks', () => {
-		const manager = mockManager();
-		const dismiss = jest.fn();
-		const renderer = verify(<Modal Manager={manager} onDismiss={dismiss}/>, {createNodeMock});
-
-		const cmp = renderer.getInstance();
-
-		const event = {
-			stopPropagation: jest.fn()
-		};
-
-		jest.spyOn(cmp, 'onMaskClick');
-
-		renderer.root.findByType('dialog').props.onClick(event);
-
-		expect(cmp.onMaskClick).not.toHaveBeenCalled();
-		expect(event.stopPropagation).toHaveBeenCalled();
-
-		renderer.unmount();
-	});
-
-	test ('Mask clicks may close', () => {
-		const manager = mockManager();
-		const dismiss = jest.fn();
-		const expression = <Modal Manager={manager} onDismiss={dismiss} />;
-		const renderer = verify(expression, {createNodeMock});
-		const cmp = renderer.getInstance();
-		jest.spyOn(cmp, 'onMaskClick');
-
-		//We need to re-render to get the spyed onMaskClick function
-		renderer.update(React.cloneElement(expression));
-
-
-		const event = {
-			stopPropagation: jest.fn()
-		};
-
-
-		renderer.root.find(x => x.type === 'div' && x.props.onClick && /mask/.test(x.props.className)).props.onClick(event);
-
-		expect(cmp.onMaskClick).toHaveBeenCalled();
-		expect(event.stopPropagation).not.toHaveBeenCalled();
-
-		renderer.update(React.cloneElement(expression, {closeOnMaskClick: true}));
-
-		cmp.onMaskClick.mockClear();
-		event.stopPropagation.mockClear();
-
-		renderer.root.find(x => x.type === 'div' && x.props.onClick && /mask/.test(x.props.className)).props.onClick(event);
-
-		expect(cmp.onMaskClick).toHaveBeenCalled();
-		expect(event.stopPropagation).toHaveBeenCalled();
-
-		renderer.unmount();
-	});
 
 	test ('Safari Hack', () => {
 		const manager = mockManager();

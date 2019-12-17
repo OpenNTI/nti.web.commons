@@ -1,34 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Modals Clicks inside modal do not trigger mask clicks 1`] = `
-<div>
-  <div
-    className="modal-mask"
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-  >
-    <i
-      className="icon-close"
-      onClick={[Function]}
-    />
-    <dialog
-      className="modal-content"
-      onClick={[Function]}
-      open={true}
-      role="dialog"
-      tabIndex="-1"
-    />
-  </div>
-</div>
-`;
-
 exports[`Modals Close Event 1`] = `
 <div>
   <div
     className="modal-mask"
     onBlur={[Function]}
-    onClick={[Function]}
     onFocus={[Function]}
   >
     <i
@@ -37,30 +13,6 @@ exports[`Modals Close Event 1`] = `
     />
     <dialog
       className="modal-content"
-      onClick={[Function]}
-      open={true}
-      role="dialog"
-      tabIndex="-1"
-    />
-  </div>
-</div>
-`;
-
-exports[`Modals Mask clicks may close 1`] = `
-<div>
-  <div
-    className="modal-mask"
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-  >
-    <i
-      className="icon-close"
-      onClick={[Function]}
-    />
-    <dialog
-      className="modal-content"
-      onClick={[Function]}
       open={true}
       role="dialog"
       tabIndex="-1"
@@ -74,7 +26,6 @@ exports[`Modals Safari Hack 1`] = `
   <div
     className="modal-mask"
     onBlur={[Function]}
-    onClick={[Function]}
     onFocus={[Function]}
   >
     <i
@@ -83,7 +34,6 @@ exports[`Modals Safari Hack 1`] = `
     />
     <dialog
       className="modal-content"
-      onClick={[Function]}
       open={true}
       role="dialog"
       tabIndex="-1"
@@ -97,7 +47,6 @@ exports[`Modals Simple Mount & Unmount 1`] = `
   <div
     className="modal-mask"
     onBlur={[Function]}
-    onClick={[Function]}
     onFocus={[Function]}
   >
     <i
@@ -106,7 +55,6 @@ exports[`Modals Simple Mount & Unmount 1`] = `
     />
     <dialog
       className="modal-content"
-      onClick={[Function]}
       open={true}
       role="dialog"
       tabIndex="-1"
