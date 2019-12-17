@@ -369,25 +369,6 @@ describe('Triggered Flyout', () => {
 	});
 
 
-	test('clicking the flyout sets flag', () => {
-		const renderer = verify( <Flyout />, {createNodeMock});
-
-		const inst = renderer.getInstance();
-		jest.spyOn(inst, 'flyoutClicked');
-
-		inst.doOpen();
-
-		document.body.appendChild(inst.flyout);
-
-		inst.flyout.dispatchEvent(new MouseEvent('click', {
-			view: document.defaultView,
-			bubbles: true,
-			cancelable: true
-		}));
-
-		expect(inst.flyoutClicked).toHaveBeenCalled();
-	});
-
 
 	test('constrained alignment does not limit height for non-top-aligned, non-fixed flyouts', () => {
 		jest.useFakeTimers();
@@ -659,7 +640,7 @@ describe('Triggered Flyout', () => {
 
 		expect(window.addEventListener).toHaveBeenCalledWith('resize', component.realign);
 		// expect(window.addEventListener).toHaveBeenCalledWith('scroll', component.realign);
-		expect(window.document.addEventListener).toHaveBeenCalledWith('click', component.maybeDismiss);
+		// expect(window.document.addEventListener).toHaveBeenCalledWith('click', expect.any(Function));
 
 
 		jest.spyOn(component, 'doClose');
@@ -709,7 +690,7 @@ describe('Triggered Flyout', () => {
 
 		expect(window.removeEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
 		// expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
-		expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
+		// expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
 	});
 
 

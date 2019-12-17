@@ -9,7 +9,6 @@ exports[`Dialogs Escape Key Behavior 1`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -18,7 +17,6 @@ exports[`Dialogs Escape Key Behavior 1`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -41,7 +39,6 @@ exports[`Dialogs Escape Key Behavior 2`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -50,7 +47,6 @@ exports[`Dialogs Escape Key Behavior 2`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -73,7 +69,6 @@ exports[`Dialogs Focus Behavior 1`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -82,7 +77,6 @@ exports[`Dialogs Focus Behavior 1`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -105,7 +99,6 @@ exports[`Dialogs Focus Behavior 2`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -114,7 +107,6 @@ exports[`Dialogs Focus Behavior 2`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -137,7 +129,6 @@ exports[`Dialogs RestoreScroll custom fn on Unmount 1`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -146,7 +137,6 @@ exports[`Dialogs RestoreScroll custom fn on Unmount 1`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -169,7 +159,6 @@ exports[`Dialogs RestoreScroll on Unmount 1`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -178,7 +167,6 @@ exports[`Dialogs RestoreScroll on Unmount 1`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -201,7 +189,6 @@ exports[`Dialogs Rollbock History 1`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -210,7 +197,6 @@ exports[`Dialogs Rollbock History 1`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
@@ -233,7 +219,6 @@ exports[`Dialogs Simple Mount & Unmount 1`] = `
     <div
       className="modal-mask managed-modal"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
     >
       <i
@@ -242,7 +227,6 @@ exports[`Dialogs Simple Mount & Unmount 1`] = `
       />
       <dialog
         className="modal-content"
-        onClick={[Function]}
         open={true}
         role="dialog"
         tabIndex="-1"
