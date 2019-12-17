@@ -10,7 +10,8 @@ import {
 	getElementRect as getRectInViewport,
 	getEffectiveZIndex,
 	getViewportHeight,
-	getViewportWidth
+	getViewportWidth,
+	addClickOutListener
 } from '@nti/lib-dom';
 
 import {
@@ -479,18 +480,19 @@ export default class TriggeredFlyout extends React.Component {
 		/* istanbul ignore else */
 		if (ref && !this.flyout) {
 			window.addEventListener('resize', this.realign);
-			window.document.addEventListener('click', this.maybeDismiss);
+
+			if (this.cleanupClickOut) { this.cleanupClickOut(); }
+			this.cleanupClickOut = addClickOutListener(ref, () => this.dismiss());
+
 			this.listenToScroll();
-			ref.addEventListener('click', this.flyoutClicked, true);
 		}
 
 		else if (!ref) {
-			this.flyout.removeEventListener('click', this.flyoutClicked, true);
-
 			delete this.flyoutSize;
-			delete this.flyoutWasClicked;
+			
 			window.removeEventListener('resize', this.realign);
-			window.document.removeEventListener('click', this.maybeDismiss);
+			if (this.cleanupClickOut) { this.cleanupClickOut(); }
+
 			this.unlistenToScroll();
 		}
 
