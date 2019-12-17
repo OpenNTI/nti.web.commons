@@ -484,15 +484,6 @@ exports[`Triggered Flyout alignment shorts if closed 1`] = `
 </button>
 `;
 
-exports[`Triggered Flyout clicking the flyout sets flag 1`] = `
-<button
-  className="flyout-trigger flyout-closed"
-  onClick={[Function]}
->
-  Trigger
-</button>
-`;
-
 exports[`Triggered Flyout constrained alignment does not limit height for non-top-aligned, non-fixed flyouts 1`] = `
 Array [
   <button
