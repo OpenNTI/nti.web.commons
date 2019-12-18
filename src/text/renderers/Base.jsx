@@ -21,6 +21,7 @@ class NTIBaseText extends React.Component {
 		delete otherProps.hasMarkup;
 		delete otherProps.linkify;
 		delete otherProps.overflow;
+		delete otherProps.limitLines;
 
 		return (
 			<Cmp {...otherProps} ref={textRef}>
