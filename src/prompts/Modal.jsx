@@ -195,7 +195,7 @@ export default class Modal extends React.Component {
 							onBlur={this.onBlur}
 						>
 							<i className="icon-close" onClick={this.close}/>
-							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" >
+							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent} >
 								{React.Children.map(children, child =>
 									typeof child.type === 'string'
 										? child
