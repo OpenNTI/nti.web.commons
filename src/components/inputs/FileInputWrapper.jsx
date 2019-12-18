@@ -10,7 +10,18 @@ export default class FileInputWrapper extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		children: PropTypes.any,
-		style: PropTypes.any
+		style: PropTypes.any,
+		onDragOver: PropTypes.func
+	}
+
+	onDragOver = (e) => {
+		const {onDragOver} = this.props;
+
+		e.preventDefault();
+
+		if (onDragOver) {
+			onDragOver(e);
+		}
 	}
 
 	render () {
@@ -18,7 +29,7 @@ export default class FileInputWrapper extends React.Component {
 
 		return (
 			<div className={cx('nti-file-input-wrapper', className)} style={style} >
-				<input type="file" {...otherProps} />
+				<input type="file" {...otherProps} onDragOver={this.onDragOver} />
 				{children}
 			</div>
 		);
