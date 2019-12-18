@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import isIOS from '@nti/util-ios-version';
-import { declareCustomElement, addClickOutListener } from '@nti/lib-dom';
+import { declareCustomElement, addClickOutListener, parent } from '@nti/lib-dom';
 
 import LockScroll from '../components/LockScroll';
 
@@ -90,12 +90,11 @@ export default class Modal extends React.Component {
 				if (closeOnMaskClick) {
 					this.close(e);
 				}
-			});
+			}, parent(content, '.modal-mask'));
 		} else if (!content) {
 			if (this.cleanupClickOut) { this.cleanupClickOut(); }
 		}
 	}
-
 
 
 	getChildContext = () => ({
