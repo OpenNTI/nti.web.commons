@@ -140,7 +140,9 @@ export default class Modal extends React.Component {
 
 
 	focus = () => {
-		this.content.focus();
+		if (this.content && this.content.focus) {
+			this.content.focus();
+		}
 	}
 
 	/**

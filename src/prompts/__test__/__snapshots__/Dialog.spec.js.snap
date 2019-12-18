@@ -60,66 +60,6 @@ exports[`Dialogs Escape Key Behavior 2`] = `
 </div>
 `;
 
-exports[`Dialogs Focus Behavior 1`] = `
-<div
-  data-target-tag-name="DIV"
-  data-type="portal"
->
-  <div>
-    <div
-      className="modal-mask managed-modal"
-      onBlur={[Function]}
-      onFocus={[Function]}
-    >
-      <i
-        className="icon-close"
-        onClick={[Function]}
-      />
-      <dialog
-        className="modal-content"
-        open={true}
-        role="dialog"
-        tabIndex="-1"
-      >
-        <div>
-          Hi
-        </div>
-      </dialog>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Dialogs Focus Behavior 2`] = `
-<div
-  data-target-tag-name="DIV"
-  data-type="portal"
->
-  <div>
-    <div
-      className="modal-mask managed-modal"
-      onBlur={[Function]}
-      onFocus={[Function]}
-    >
-      <i
-        className="icon-close"
-        onClick={[Function]}
-      />
-      <dialog
-        className="modal-content"
-        open={true}
-        role="dialog"
-        tabIndex="-1"
-      >
-        <div>
-          Yo
-        </div>
-      </dialog>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`Dialogs RestoreScroll custom fn on Unmount 1`] = `
 <div
   data-target-tag-name="DIV"

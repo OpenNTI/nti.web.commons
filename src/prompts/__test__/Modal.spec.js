@@ -30,7 +30,7 @@ describe('Modals', () => {
 	test ('Simple Mount & Unmount', () => {
 		const manager = mockManager();
 		const dismiss = jest.fn();
-		verify(<Modal Manager={manager} onDismiss={dismiss}/>, {createNodeMock}).unmount();
+		verify(<Modal Manager={manager} onDismiss={dismiss}/>).unmount();
 
 		expect(dismiss).not.toHaveBeenCalled();
 		expect(manager.isHidden).toHaveBeenCalled();
@@ -45,7 +45,7 @@ describe('Modals', () => {
 	test ('Close Event', () => {
 		const manager = mockManager();
 		const dismiss = jest.fn();
-		const renderer = verify(<Modal Manager={manager} onDismiss={dismiss}/>, {createNodeMock});
+		const renderer = verify(<Modal Manager={manager} onDismiss={dismiss}/>);
 
 		const cmp = renderer.getInstance();
 
@@ -65,7 +65,7 @@ describe('Modals', () => {
 	test ('Safari Hack', () => {
 		const manager = mockManager();
 		const dismiss = jest.fn();
-		const renderer = verify(<Modal Manager={manager} onDismiss={dismiss}/>, {createNodeMock});
+		const renderer = verify(<Modal Manager={manager} onDismiss={dismiss}/>);
 
 		const cmp = renderer.getInstance();
 
