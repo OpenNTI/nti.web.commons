@@ -13,6 +13,7 @@ exports[`Modals Close Event 1`] = `
     />
     <dialog
       className="modal-content"
+      onClick={[Function]}
       open={true}
       role="dialog"
       tabIndex="-1"
@@ -34,6 +35,7 @@ exports[`Modals Safari Hack 1`] = `
     />
     <dialog
       className="modal-content"
+      onClick={[Function]}
       open={true}
       role="dialog"
       tabIndex="-1"
@@ -55,6 +57,7 @@ exports[`Modals Simple Mount & Unmount 1`] = `
     />
     <dialog
       className="modal-content"
+      onClick={[Function]}
       open={true}
       role="dialog"
       tabIndex="-1"
