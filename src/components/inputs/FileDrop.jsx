@@ -15,17 +15,36 @@ const DEFAULT_TEXT = {
 };
 
 const t = scoped('web-commons.inputs.FileDrop', DEFAULT_TEXT);
+const invalidClassName = 'invalid-dragover-filedrop';
 
 export default class Upload extends React.Component {
 	static propTypes = {
 		onChange: PropTypes.func.isRequired,
-		onError: PropTypes.func.isRequired,
+		onError: PropTypes.func,
 		value: PropTypes.object,
 		getString: PropTypes.func,
 		sizeLimit: PropTypes.number,
 		allowedTypes: PropTypes.object,
 		error: PropTypes.string,
 		className: PropTypes.string
+	}
+
+	state = {}
+
+	onError (error, className) {
+		const {onError} = this.props;
+
+		if (onError) {
+			onError(error);
+		} else {
+			this.setState({error, errorClass: className});
+		}
+	}
+
+	clearError () {
+		if (this.state.error) {
+			this.setState({error: null, errorClass: null});
+		}
 	}
 
 
@@ -35,14 +54,8 @@ export default class Upload extends React.Component {
 		return getString ? t.override(getString) : t;
 	}
 
-
-	onFileChange = (e) => {
-		e.preventDefault();
-
-		const {onChange, allowedTypes, sizeLimit, onError} = this.props;
-
-		const files = e.target.files;
-		const file = files && files[0];
+	onFileChange = (file) => {
+		const {onChange, allowedTypes, sizeLimit} = this.props;
 
 		if (!file) { return; }
 
@@ -50,16 +63,34 @@ export default class Upload extends React.Component {
 		// let it through for now.
 		// TODO: deduce type from file.name
 		if (allowedTypes && (file.type || '').length > 0 && !allowedTypes[file.type]) {
-			onError(this.getString('wrongType'));
+			this.onError(this.getString('wrongType'), invalidClassName);
 			return;
 		}
 
 		if (file.size > sizeLimit) {
-			onError(this.getString('tooLarge'));
+			this.onError(this.getString('tooLarge'), invalidClassName);
 			return;
 		}
 
+		this.clearError();
 		onChange(file);
+	}
+
+
+	onDrop = (e) => {
+		const {files} = e.dataTransfer;
+
+		this.onFileChange(files && files[0]);
+	}
+
+
+	onFileInputChange = (e) => {
+		e.preventDefault();
+
+		const files = e.target.files;
+		const file = files && files[0];
+
+		this.onFileChange(file);
 	}
 
 
@@ -94,18 +125,25 @@ export default class Upload extends React.Component {
 
 	render () {
 		const {getString} = this;
-		const {error, className, value, allowedTypes} = this.props;
+		const {error: propError, className, value, allowedTypes} = this.props;
+		const {error: stateError, errorClass} = this.state;
+		const error = propError || stateError;
 		
 		const acceptDrops = allowedTypes ? DropZone.acceptFilesOfType(Object.keys(allowedTypes)) : null;
 
 		return (
 			<DropZoneIndicator
-				className={cx('nti-web-commons-filedrop', className)}
+				className={cx('nti-web-commons-filedrop', className, errorClass)}
 				accepts={acceptDrops}
 				validDragOverClassName="valid-dragover-filedrop"
-				invalidDragOverClassName="invalid-dragover-filedrop"
+				invalidDragOverClassName={invalidClassName}
+				invalidDropClassName={invalidClassName}
+				onDrop={this.onDrop}
+				onDragEnter={this.clearError}
+				onDragOver={this.clearError}
+				preventInvalidDrops
 			>
-				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileChange} />
+				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileInputChange} />
 				<div className="container">
 					<i className="icon-upload" />
 					<span className="title">{getString('title')}</span>

@@ -23,6 +23,12 @@ function acceptFilesOfType (types) {
 	return (e) => {
 		const {items} = e.dataTransfer;
 
+		//Some browsers aren't giving us access to the files
+		//in all the events. So if we don't have any items, cross
+		//our fingers that something else down the line is going to
+		//error.
+		if (!items.length) { return true; }
+
 		for (let item of items) {
 			if (FILE_REGEX.test(item.kind) && typeSet.has(item.type)) {
 				return true;
@@ -51,6 +57,7 @@ export default class DropZone extends React.Component {
 		dragOverClassName: PropTypes.string,
 		validDragOverClassName: PropTypes.string,
 		invalidDragOverClassName: PropTypes.string,
+		invalidDropClassName: PropTypes.string,
 
 		onDragEnter: PropTypes.func,
 		onDragLeave: PropTypes.func,
@@ -77,8 +84,14 @@ export default class DropZone extends React.Component {
 
 
 	getClassName () {
-		const {className, dragOverClassName, validDragOverClassName, invalidDragOverClassName} = this.props;
-		const {dragOver, isValid} = this.state;
+		const {
+			className,
+			dragOverClassName,
+			validDragOverClassName,
+			invalidDragOverClassName,
+			invalidDropClassName
+		} = this.props;
+		const {dragOver, dropped, isValid} = this.state;
 
 		let stateClasses = {};
 
@@ -94,6 +107,10 @@ export default class DropZone extends React.Component {
 			stateClasses[invalidDragOverClassName] = dragOver && !isValid;
 		}
 
+		if (invalidDropClassName) {
+			stateClasses[invalidDropClassName] = dropped && !isValid;
+		}
+
 		return cx(className, 'nti-drop-zone', stateClasses);
 	}
 
@@ -104,7 +121,15 @@ export default class DropZone extends React.Component {
 		this.onDragLeave(e);
 
 		const isValid = this.isValidEvent(e);
-		const {onDrop, onFileDrop} = this.props;
+		const {onDrop, onFileDrop, invalidDropClassName} = this.props;
+
+		if (invalidDropClassName && !isValid) {
+			this.setState({
+				dropped: true,
+				isValid: false
+			});
+			return;
+		}
 
 		if (onDrop) {
 			onDrop(e, isValid);
@@ -131,6 +156,7 @@ export default class DropZone extends React.Component {
 		const isValid = this.isValidEvent(e);
 
 		this.setState({
+			dropped: false,
 			dragOver: true,
 			isValid
 		});
