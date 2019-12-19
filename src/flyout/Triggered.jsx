@@ -482,8 +482,10 @@ export default class TriggeredFlyout extends React.Component {
 			window.addEventListener('resize', this.realign);
 
 			if (this.cleanupClickOut) { this.cleanupClickOut(); }
-			this.cleanupClickOut = addClickOutListener(ref, () => {
+			this.cleanupClickOut = addClickOutListener(ref, (e) => {
 				if (this.props.open == null) {
+					e.preventDefault();
+					e.stopPropagation();
 					this.dismiss();
 				}
 			});
