@@ -39,7 +39,7 @@ export default function ColorFlyout ({className, onChange, value, swatches, ...o
 		>
 			<div className={cx('color-flyout-picker')}>
 				<SaturationBrightness value={value} onChange={onChange} />
-				<Hue value={value} onChange={onChange} />
+				<Hue className={cx('hue')} value={value} onChange={onChange} />
 				<Text value={value} onChange={onChange} />
 				<Preset swatches={swatches} selected={value} onSelect={onChange} />
 			</div>
