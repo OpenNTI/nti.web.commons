@@ -483,10 +483,10 @@ export default class TriggeredFlyout extends React.Component {
 
 			if (this.cleanupClickOut) { this.cleanupClickOut(); }
 			this.cleanupClickOut = addClickOutListener(ref, (e) => {
-				if (this.props.open == null) {
-					e.preventDefault();
-					e.stopPropagation();
-					this.dismiss();
+				if (this.props.open == null && this.trigger) {
+					if (e.target !== this.trigger && !this.trigger.contains(e.target)) {
+						this.dismiss();
+					}
 				}
 			});
 
