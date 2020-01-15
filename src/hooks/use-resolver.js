@@ -3,28 +3,36 @@ import React from 'react';
 useResolver.isPending = (v) => v instanceof Promise;
 useResolver.isErrored = (v) => v instanceof Error;
 useResolver.isResolved = (v) => !useResolver.isPending(v) && !useResolver.isErrored(v);
+
+
 export default function useResolver (resolver, dependencyList) {
-	const [value, setValue] = React.useState(undefined);
+	const [value, setValue] = React.useState(initialState);
 	let unmounted = false;
 
-	const updateValue = (...args) => {
+	const updateValue = (v) => {
 		if (!unmounted) {
-			setValue(...args);
+			setValue(v);
 		}
 	};
 
 	React.useEffect(() => {
 		const doResolve = async () => {
 			try {
-				const resolve = resolver();
-
-				updateValue(resolve);
-
-				const resolved = await resolve;
+				value.resolve(resolver());
+				
+				const resolved = await value;
 
 				updateValue(resolved);
 			} catch (e) {
-				updateValue(e);
+				let error = e;
+				const cause = e;
+
+				if (!(error instanceof Error)) {
+					error = new Error(error);
+					error.cause = cause;
+				}
+
+				updateValue(error);
 			}
 		};
 
@@ -34,4 +42,14 @@ export default function useResolver (resolver, dependencyList) {
 	}, dependencyList);
 
 	return value;
+}
+
+
+function initialState () {
+	let resolve;
+	let reject;
+	const p = new Promise((a,b) => (resolve = a, reject = b));
+
+	Object.assign(p, {resolve, reject});
+	return p;
 }
