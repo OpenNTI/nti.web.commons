@@ -12,6 +12,7 @@ export * as Errors from './errors';
 export * as Flyout from './flyout';
 export Form from './form';
 export * as HOC from './HighOrderComponents';
+export * as Hooks from './hooks';
 export Iframe from './iframe';
 export Image from './image';
 export * as Layouts from './layouts';
