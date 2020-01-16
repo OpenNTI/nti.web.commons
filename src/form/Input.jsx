@@ -23,8 +23,8 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		const clearProps = {};
 
 		if (clearOn) {
-			clearProps[clearOn] = (e) => {
-				if (otherProps[clearOn]) { otherProps[clearOn](e); }
+			clearProps[clearOn] = (...args) => {
+				if (otherProps[clearOn]) { otherProps[clearOn](...args); }
 				if (clearError) { clearError(name); }
 			};
 		}
