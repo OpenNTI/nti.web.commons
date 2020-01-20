@@ -14,9 +14,10 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		className: PropTypes.string,
 		name: PropTypes.string.isRequired,
 		label: PropTypes.string,
-		inputRef: PropTypes.any
+		inputRef: PropTypes.any,
+		placeholder: PropTypes.string
 	};
-	function FormInput ({className, name, label, inputRef, ...otherProps}) {
+	function FormInput ({className, name, label, inputRef, placeholder, ...otherProps}) {
 		const formContext = React.useContext(FormContext);
 		const {errors = {}, clearError} = formContext || {};
 
@@ -31,7 +32,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 
 		return (
 			<Input.Label className={cx(className, 'form-input-label')} error={errors[name]} label={labelOnInput ? null : label}>
-				<Cmp name={name} ref={inputRef} label={labelOnInput ? label : null} {...otherProps} {...clearProps} />
+				<Cmp name={name} ref={inputRef} label={labelOnInput ? label : null} aria-label={label ?? placeholder} placeholder={placeholder} aria-invalid={Boolean(errors[name])} {...otherProps} {...clearProps} />
 			</Input.Label>
 		);
 	}
@@ -48,4 +49,3 @@ const InputTypes = {
 };
 
 export default InputTypes;
-

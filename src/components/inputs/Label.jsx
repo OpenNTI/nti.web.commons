@@ -66,7 +66,7 @@ export default class Label extends React.Component {
 		delete otherProps.onChange;
 
 		return (
-			<label {...otherProps} className={cls} onInput={this.onInputOrFormValidation} onInvalid={this.onInputOrFormValidation}>
+			<label {...otherProps} className={cls} onInput={this.onInputOrFormValidation} onInvalid={this.onInputOrFormValidation} aria-live="polite">
 				{label && (
 					<Text.Base className="label">{label}</Text.Base>
 				)}
