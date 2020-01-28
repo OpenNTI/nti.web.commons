@@ -1,9 +1,10 @@
 import React from 'react';
 
+const Initial = Symbol();
+
 useResolver.isPending = (v) => v instanceof Promise;
 useResolver.isErrored = (v) => v instanceof Error;
 useResolver.isResolved = (v) => !useResolver.isPending(v) && !useResolver.isErrored(v);
-
 
 export default function useResolver (resolver, dependencyList) {
 	const [value, setValue] = React.useState(initialState);
@@ -17,10 +18,17 @@ export default function useResolver (resolver, dependencyList) {
 
 	React.useEffect(() => {
 		const doResolve = async () => {
+			let localValue = value;
+
+			if (!value || !value[Initial]) {
+				localValue = initialState();
+				updateValue(localValue);
+			}
+
 			try {
-				value.resolve(resolver());
+				localValue.resolve(resolver());
 				
-				const resolved = await value;
+				const resolved = await localValue;
 
 				updateValue(resolved);
 			} catch (e) {
@@ -50,6 +58,6 @@ function initialState () {
 	let reject;
 	const p = new Promise((a,b) => (resolve = a, reject = b));
 
-	Object.assign(p, {resolve, reject});
+	Object.assign(p, {resolve, reject, [Initial]: true});
 	return p;
 }
