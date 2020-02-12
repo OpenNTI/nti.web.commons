@@ -2,13 +2,15 @@ import React from 'react';
 
 import {Toast} from '../../../src';
 
+let ids = 0;
 
 export default class Test extends React.Component {
 	state = {toasts: []}
 
 	add = () => {
+		ids += 1;
 		this.setState({
-			toasts: [...this.state.toasts, {name: this.state.toasts.length}]
+			toasts: [...this.state.toasts, {name: ids}]
 		});
 	}
 
@@ -28,7 +30,7 @@ export default class Test extends React.Component {
 					{this.state.toasts.map((toast, key) => {
 						return (
 							<Toast.MessageBar
-								key={key}
+								key={toast.name}
 								title="Toast"
 								message={toast.name}
 								onDismiss={() => this.clearToast(toast.name)}

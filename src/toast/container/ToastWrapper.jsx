@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import {Uncontrolled} from '../../layouts';
+import {Monitor} from '../../components';
 
 import Styles from './Styles.css';
 
@@ -34,11 +35,22 @@ export default function ToastWrapper ({className, toast}) {
 	const onMount = n => setMountPoint(n);
 	const onUnmount = () => setMountPoint(null);
 
+	const onHeightChange = (node, height) => {
+		try {
+			node.style.setProperty('--known-height', `${height}px`);
+		} catch (e) {
+			//swallow
+		}
+	};
+
 	return (
-		<>
+		<Monitor.ChildHeight
+			className={cx('toast-wrapper', className)}
+			as="li"
+			childSelector="[data-toast-id]"
+			onHeightChange={onHeightChange}
+		>
 			<Uncontrolled
-				as="li"
-				className={cx('toast-wrapper', className)}
 				onMount={onMount}
 				onUnmount={onUnmount}
 				data-toast-id={toast.id}
@@ -46,6 +58,6 @@ export default function ToastWrapper ({className, toast}) {
 			{mountPoint && (
 				<MountToast mountPoint={mountPoint} toast={toast} />
 			)}
-		</>
+		</Monitor.ChildHeight>
 	);
 }
