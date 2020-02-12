@@ -20,7 +20,8 @@ ToastContainerRoot.propTypes = {
 export default function ToastContainerRoot ({location, className, children, as:tag, ...otherProps}) {
 	const Cmp = tag || 'div';
 
-	const toastCount = React.useRef(0);
+	const idCount = React.useRef(0);
+	const toastRaw = React.useRef([]);
 	const [toasts, setToasts] = React.useState([]);
 	const hasToasts = toasts.length > 0;
 	const regions = toasts.reduce((acc, toast) => {
@@ -33,18 +34,38 @@ export default function ToastContainerRoot ({location, className, children, as:t
 		return acc;
 	}, {});
 
+	const updateToasts = () => {
+		clearTimeout(updateToasts.timeout);
+
+		updateToasts.timeout = setTimeout(() => {
+			setToasts(toastRaw.current);
+		}, 100);
+	};
+
 	const context = {
 		getNextId () {
-			toastCount.current += 1;
-			return toastCount.current.toString();
+			idCount.current += 1;
+			return idCount.current.toString();
 		},
 
 		addToast (toast) {
-			setToasts([...toasts, toast]);
+			toastRaw.current = [...toastRaw.current, toast];
+			updateToasts();
 		},
 
-		removeToast () {
 
+		updateToast (id, data) {
+			toastRaw.current = toastRaw.current
+				.map(toast => toast.id === id ? ({...toast, ...data}) : toast);
+
+			updateToasts();
+		},
+
+		removeToast (id) {
+			toastRaw.current = toastRaw.current
+				.filter(toast => toast.id !== id);
+
+			updateToasts();
 		}
 	};
 

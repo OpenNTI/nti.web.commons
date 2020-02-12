@@ -30,6 +30,7 @@ const PLACEHOLDER_TPL = (attributes) => {
 export default class Uncontrolled extends React.Component {
 	static propTypes = {
 		attributes: PropTypes.object,
+		as: PropTypes.any,
 
 		onMount: PropTypes.func,
 		onUnmount: PropTypes.func
@@ -60,14 +61,15 @@ export default class Uncontrolled extends React.Component {
 
 
 	render () {
-		const {attributes, ...otherProps} = this.props;
+		const {attributes, as: tag, ...otherProps} = this.props;
 		const tpl = PLACEHOLDER_TPL(attributes);
+		const Cmp = tag || 'div';
 
 		delete otherProps.onMount;
 		delete otherProps.onUnmount;
 
 		return (
-			<div
+			<Cmp
 				{...otherProps}
 				ref={this.attachContainer}
 				{...rawContent(tpl)}
