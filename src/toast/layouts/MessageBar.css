@@ -1,0 +1,30 @@
+.toast-message-bar {
+	border-radius: 3px;
+	background-color: var(--panel-background);
+	box-shadow: 0 0 0 1px var(--border-grey-light);
+	margin: 0 0.5rem;
+	padding: 0.25rem 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.message-container {
+	flex: 1 1 auto;
+	font-size: 0.875rem;
+	color: var(--secondary-grey);
+}
+
+.title {
+	font-weight: 600;
+	margin-right: 0.5rem;
+}
+
+.message {
+	font-weight: 400;
+}
+
+.close-icon {
+	flex: 0 0 auto;
+	color: var(--secondary-grey);
+}

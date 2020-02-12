@@ -17,7 +17,7 @@
 }
 
 .toast-wrapper {
-	transition: transform 0.1s, opacity 0.2s;
+	margin: 0.5rem 0;
 }
 
 .toast-wrapper:global(.top-transition-enter),
@@ -26,7 +26,20 @@
 	opacity: 0;
 }
 
-.toast-wrapper:global(.top-transition-enter-done) {
+.toast-wrapper:global(.top-transition-enter-active),
+.toast-wrapper:global(.top-transition-appear-active) {
 	transform: translateY(0);
 	opacity: 1;
+	transition: transform 0.1s, opacity 0.2s;
+}
+
+.toast-wrapper:global(.top-transition-exit) {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.toast-wrapper:global(.top-transition-exit-active) {
+	transform: translateY(-10px);
+	opacity: 0;
+	transition: transform 0.1s, opacity 0.2s;
 }

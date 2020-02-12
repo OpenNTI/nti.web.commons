@@ -22,8 +22,6 @@ TileContainerRegion.propTypes = {
 	)
 };
 export default function TileContainerRegion ({location, toasts}) {
-	if (!toasts || toasts.length === 0) { return null; }
-
 	return (
 		<TransitionGroup component="ul" className={cx('toast-region', getClassName(location))}>
 			{toasts.map((toast) => (

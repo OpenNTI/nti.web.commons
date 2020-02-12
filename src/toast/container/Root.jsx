@@ -23,7 +23,6 @@ export default function ToastContainerRoot ({location, className, children, as:t
 	const idCount = React.useRef(0);
 	const toastRaw = React.useRef([]);
 	const [toasts, setToasts] = React.useState([]);
-	const hasToasts = toasts.length > 0;
 	const regions = toasts.reduce((acc, toast) => {
 		const toastLocation = location || toast.location;
 
@@ -32,7 +31,7 @@ export default function ToastContainerRoot ({location, className, children, as:t
 		acc[toastLocation].push(toast);
 
 		return acc;
-	}, {});
+	}, {[Locations.Top]: []});
 
 	const updateToasts = () => {
 		clearTimeout(updateToasts.timeout);
@@ -73,17 +72,15 @@ export default function ToastContainerRoot ({location, className, children, as:t
 		<Context.Provider value={context}>
 			<Cmp className={cx('toast-root', className)} {...otherProps}>
 				{children}
-				{!hasToasts ? null : (
-					<div className={cx('toast-container')}>
-						{
-							Object
-								.entries(regions)
-								.map(([name, regionToasts]) => (
-									<Region key={name} location={name} toasts={regionToasts} />
-								))
-						}
-					</div>
-				)}
+				<div className={cx('toast-container')}>
+					{
+						Object
+							.entries(regions)
+							.map(([name, regionToasts]) => (
+								<Region key={name} location={name} toasts={regionToasts} />
+							))
+					}
+				</div>
 			</Cmp>
 		</Context.Provider>
 	);

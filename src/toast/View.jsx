@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import Container from './container';
 import Context from './Context';
-import {Factory, Message} from './layouts';
+import {Factory, MessageBar} from './layouts';
 
-Toast.Message = Factory.Wrap(Toast, Message);
+Toast.MessageBar = Factory.Wrap(Toast, MessageBar);
 Toast.Container = Container;
 Toast.propTypes = {
 	children: PropTypes.node
-
 };
 export default function Toast ({children}) {
 	const container = React.useContext(Context);
