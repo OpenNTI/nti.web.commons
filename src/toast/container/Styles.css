@@ -1,0 +1,32 @@
+.toast-root {
+	position: relative;
+}
+
+.toast-container {
+	position: absolute;
+	top: 0; bottom: 0;
+	right: 0; left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.toast-region {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.toast-wrapper {
+	transition: transform 0.1s, opacity 0.2s;
+}
+
+.toast-wrapper:global(.top-transition-enter),
+.toast-wrapper:global(.top-transition-appear) {
+	transform: translateY(-10px);
+	opacity: 0;
+}
+
+.toast-wrapper:global(.top-transition-enter-done) {
+	transform: translateY(0);
+	opacity: 1;
+}

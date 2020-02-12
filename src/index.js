@@ -31,6 +31,7 @@ export * as Tabs from './tabs';
 export Text from './text';
 export * as Theme from './theme';
 export Timer from './timer';
+export Toast from './toast';
 export * as Transitions from './transitions';
 export * as Updates from './updates';
 export * as User from './user';

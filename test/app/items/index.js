@@ -13,4 +13,5 @@ export SquareAvatarTest from './SquareAvatarTest';
 export Toggle from './toggle';
 export Text from './Text';
 export Theme from './Theme';
+export Toast from './Toast';
 export TokenInput from './TokenInput';
