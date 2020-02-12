@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import Container from './container';
 import Context from './Context';
+import {Locations} from './Constants';
 import {Factory, MessageBar} from './layouts';
 
 Toast.MessageBar = Factory.Wrap(Toast, MessageBar);
 Toast.Container = Container;
+Toast.Locations = Locations;
 Toast.propTypes = {
 	children: PropTypes.node
 };
