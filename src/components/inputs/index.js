@@ -5,6 +5,7 @@ export Email from './Email';
 export File from './File';
 export FileInputWrapper from './FileInputWrapper';
 export Label from './Label';
+export LabelPlaceholder from './LabelPlaceholder';
 export MultiSelect from './multi-select';
 export Number from './Number';
 export Percentage from './Percentage';

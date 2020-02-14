@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Form} from '../../../src';
+import {Form, Input} from '../../../src';
 
 
 export default class FormTest extends React.Component {
@@ -13,10 +13,27 @@ export default class FormTest extends React.Component {
 
 	render () {
 		return (
-			<Form onSubmit={this.onSubmit}>
-				<Form.Input.Email name="test" />
-				<button role="submit">Submit</button>
-			</Form>
+			<div style={{padding: '2rem'}}>
+				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
+					<Input.Text />
+				</Input.LabelPlaceholder>
+				<br />
+				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
+					<Input.Text />
+				</Input.LabelPlaceholder>
+				<br />
+				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
+					<Input.Text />
+				</Input.LabelPlaceholder>
+				<br />
+				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
+					<Input.Text />
+				</Input.LabelPlaceholder>
+				<Form onSubmit={this.onSubmit}>
+					<Form.Input.Email name="test" />
+					<button role="submit">Submit</button>
+				</Form>
+			</div>
 		);
 	}
 }

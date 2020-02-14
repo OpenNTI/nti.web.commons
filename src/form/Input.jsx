@@ -32,7 +32,16 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 
 		return (
 			<Input.Label className={cx(className, 'form-input-label')} error={errors[name]} label={labelOnInput ? null : label}>
-				<Cmp name={name} ref={inputRef} label={labelOnInput ? label : null} aria-label={label ?? placeholder} placeholder={placeholder} aria-invalid={Boolean(errors[name])} {...otherProps} {...clearProps} />
+				<Cmp
+					name={name}
+					ref={inputRef}
+					label={labelOnInput ? label : null}
+					aria-label={label ?? placeholder}
+					placeholder={placeholder}
+					aria-invalid={Boolean(errors[name])}
+					{...otherProps}
+					{...clearProps}
+				/>
 			</Input.Label>
 		);
 	}
