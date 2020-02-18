@@ -1,11 +1,15 @@
 .nti-label-placeholder {
 	position: relative;
 	display: inline-block;
+	pointer-events: none;
+}
+
+.nti-label-placeholder * {
+	pointer-events: auto;
 }
 
 .label-placeholder {
 	position: absolute;
-	pointer-events: none;
 }
 
 /*Clear the base input styles, since we need to define them on the container*/
