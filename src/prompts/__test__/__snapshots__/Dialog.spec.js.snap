@@ -16,6 +16,7 @@ exports[`Dialogs Escape Key Behavior 1`] = `
         onClick={[Function]}
       />
       <dialog
+        aria-modal="true"
         className="modal-content"
         onClick={[Function]}
         open={true}
@@ -47,6 +48,7 @@ exports[`Dialogs Escape Key Behavior 2`] = `
         onClick={[Function]}
       />
       <dialog
+        aria-modal="true"
         className="modal-content"
         onClick={[Function]}
         open={true}
@@ -78,6 +80,7 @@ exports[`Dialogs RestoreScroll custom fn on Unmount 1`] = `
         onClick={[Function]}
       />
       <dialog
+        aria-modal="true"
         className="modal-content"
         onClick={[Function]}
         open={true}
@@ -109,6 +112,7 @@ exports[`Dialogs RestoreScroll on Unmount 1`] = `
         onClick={[Function]}
       />
       <dialog
+        aria-modal="true"
         className="modal-content"
         onClick={[Function]}
         open={true}
@@ -140,6 +144,7 @@ exports[`Dialogs Rollbock History 1`] = `
         onClick={[Function]}
       />
       <dialog
+        aria-modal="true"
         className="modal-content"
         onClick={[Function]}
         open={true}
@@ -171,6 +176,7 @@ exports[`Dialogs Simple Mount & Unmount 1`] = `
         onClick={[Function]}
       />
       <dialog
+        aria-modal="true"
         className="modal-content"
         onClick={[Function]}
         open={true}
