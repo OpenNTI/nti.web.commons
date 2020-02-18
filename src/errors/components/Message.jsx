@@ -16,7 +16,7 @@ ErrorMessage.propTypes = {
 export default function ErrorMessage ({className, error, ...otherProps}) {
 	return (
 		<Text.Base className={cx('nti-error-message', className)} {...otherProps}>
-			{getMessage(error)}
+			{error && getMessage(error)}
 		</Text.Base>
 	);
 }

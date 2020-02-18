@@ -17,20 +17,22 @@ export default class FormTest extends React.Component {
 				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
 					<Input.Text />
 				</Input.LabelPlaceholder>
-				<br />
+
 				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
 					<Input.Text />
 				</Input.LabelPlaceholder>
-				<br />
+
 				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
 					<Input.Text />
 				</Input.LabelPlaceholder>
-				<br />
+
 				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
 					<Input.Text />
 				</Input.LabelPlaceholder>
+
 				<Form onSubmit={this.onSubmit}>
-					<Form.Input.Email name="test" />
+					<Form.Input.Email name="test" label="Email" />
+					<br />
 					<button role="submit">Submit</button>
 				</Form>
 			</div>

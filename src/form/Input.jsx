@@ -15,7 +15,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		name: PropTypes.string.isRequired,
 		label: PropTypes.string,
 		inputRef: PropTypes.any,
-		placeholder: PropTypes.string
+		placeholder: PropTypes.string,
 	};
 	function FormInput ({className, name, label, inputRef, placeholder, ...otherProps}) {
 		const formContext = React.useContext(FormContext);
@@ -31,7 +31,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		}
 
 		return (
-			<Input.Label className={cx(className, 'form-input-label')} error={errors[name]} label={labelOnInput ? null : label}>
+			<Input.LabelPlaceholder error={errors[name]} label={labelOnInput ? null : label}>
 				<Cmp
 					name={name}
 					ref={inputRef}
@@ -42,7 +42,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 					{...otherProps}
 					{...clearProps}
 				/>
-			</Input.Label>
+			</Input.LabelPlaceholder>
 		);
 	}
 
