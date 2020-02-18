@@ -12,6 +12,7 @@ exports[`Modals Close Event 1`] = `
       onClick={[Function]}
     />
     <dialog
+      aria-modal="true"
       className="modal-content"
       onClick={[Function]}
       open={true}
@@ -34,6 +35,7 @@ exports[`Modals Safari Hack 1`] = `
       onClick={[Function]}
     />
     <dialog
+      aria-modal="true"
       className="modal-content"
       onClick={[Function]}
       open={true}
@@ -56,6 +58,7 @@ exports[`Modals Simple Mount & Unmount 1`] = `
       onClick={[Function]}
     />
     <dialog
+      aria-modal="true"
       className="modal-content"
       onClick={[Function]}
       open={true}
