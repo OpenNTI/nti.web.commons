@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Form, Input} from '../../../src';
+import {Form} from '../../../src';
 
 
 export default class FormTest extends React.Component {
@@ -14,25 +14,9 @@ export default class FormTest extends React.Component {
 	render () {
 		return (
 			<div style={{padding: '2rem'}}>
-				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
-					<Input.Text />
-				</Input.LabelPlaceholder>
-
-				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
-					<Input.Text />
-				</Input.LabelPlaceholder>
-
-				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
-					<Input.Text />
-				</Input.LabelPlaceholder>
-
-				<Input.LabelPlaceholder style={Input.LabelPlaceholder.Underlined} label="Test">
-					<Input.Text />
-				</Input.LabelPlaceholder>
-
 				<Form onSubmit={this.onSubmit}>
-					<Form.Input.Email name="test" label="Email" />
-					<br />
+					<Form.Input.Email name="test" label="Email" underlined/>
+					<Form.Input.Checkbox name="accept" label="Accept Terms" underlined />
 					<button role="submit">Submit</button>
 				</Form>
 			</div>
