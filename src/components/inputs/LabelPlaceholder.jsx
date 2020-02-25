@@ -47,7 +47,7 @@ export default function LabelPlaceholder ({className, style = Box, as:tag, label
 			{label && (
 				<Text.Base as="label" className={cx('label-placeholder')} htmlFor={id}>{label}</Text.Base>
 			)}
-			<ErrorMessage error={error} className={cx('error-message')} id={errorId} role="alert" />
+			{error && (<ErrorMessage error={error} className={cx('error-message')} id={errorId} role="alert" />)}
 		</Cmp>
 	);
 }
