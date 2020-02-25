@@ -14,8 +14,10 @@ ErrorMessage.propTypes = {
 	error: PropTypes.any
 };
 export default function ErrorMessage ({className, error, ...otherProps}) {
+	const empty = !error;
+
 	return (
-		<Text.Base className={cx('nti-error-message', className)} {...otherProps}>
+		<Text.Base className={cx('nti-error-message', className, {empty})} aria-hidden={empty ? 'true' : 'false'} {...otherProps}>
 			{error && getMessage(error)}
 		</Text.Base>
 	);
