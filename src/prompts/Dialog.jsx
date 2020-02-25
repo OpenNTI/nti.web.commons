@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Logger from '@nti/util-logger';
-import uuid from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 import Manager from './ModalManager';
 
@@ -55,7 +55,7 @@ export default class Dialog extends React.Component {
 
 
 	componentDidMount () {
-		this.uuid = uuid.v4();
+		this.uuid = uuid();
 		this.rollbackCountStateKey = this.uuid + '-rollbackCount';
 
 		global.addEventListener('popstate', this.onHistory);
