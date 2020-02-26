@@ -1,0 +1,1 @@
+export getErrorFromLocation from './get-error-from-location';
