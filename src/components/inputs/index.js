@@ -4,6 +4,7 @@ export Date from './Date';
 export Email from './Email';
 export File from './File';
 export FileInputWrapper from './FileInputWrapper';
+export Hidden from './Hidden';
 export Label from './Label';
 export LabelPlaceholder from './LabelPlaceholder';
 export MultiSelect from './multi-select';

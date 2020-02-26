@@ -59,7 +59,8 @@ const InputTypes = {
 	wrap: WrapperFactory,
 	Text: WrapperFactory(Input.Text),
 	Email: WrapperFactory(Input.Email),
-	Checkbox: WrapperFactory(Checkbox, 'onChange', true)
+	Checkbox: WrapperFactory(Checkbox, 'onChange', true),
+	Hidden: Input.Hidden
 };
 
 export default InputTypes;
