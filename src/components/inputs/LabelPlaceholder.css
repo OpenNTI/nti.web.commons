@@ -27,32 +27,47 @@
 }
 
 .nti-label-placeholder.box {
-	&.locked {
-		& :global(input:not([type=checkbox])) {
-			border: none;
-		}
-
-		& .fieldset {
-			border: 1px solid var(--border-grey-light);
-		}
-
-		& .legend {
-			font-size: 0.75em;
-			padding: 0 0.625rem;
-		}
-	}
+	margin-top: 0.4375rem;
 
 	&.center {
 		& .legend {
-			margin: 0 auto;
+			margin-left: auto;
+			margin-right: auto;
 		}
+	}
+
+	& .legend {
+		transform: translateY(calc(50% + 0.625rem));
 	}
 
 	& :global(input:not([type=checkbox])) {
 		width: 100%;
 		border-radius: 2px;
-		border: 1px solid var(--border-grey-light);
 		padding: 0.625rem;
+
+
+		&:focus ~ .fieldset {
+			border-color: var(--secondary-green);
+			& .legend {
+				color: var(--secondary-green);
+
+			}
+		}
+
+		&:placeholder-shown:not(:focus) {
+			border: 1px solid var(--border-grey-light);
+			& ~ .fieldset {
+				border: none;
+			}
+		}
+
+		&:focus ~ .fieldset .legend,
+		&:not(:placeholder-shown) ~ .fieldset .legend,
+		&:-webkit-autofill ~ .fieldset .legend {
+			top: -0.7rem;
+			font-size: 0.875rem;
+			transform: translateY(0);
+		}
 	}
 
 	& .label-placeholder {
@@ -61,16 +76,19 @@
 
 	& .fieldset {
 		position: absolute;
-		top: -0.7em; bottom: 0;
+		top: -0.625rem; bottom: 0;
 		left: 0; right: 0;
-		border: none;
+		padding: 0;
+		border: 1px solid var(--border-grey-light);
 		margin: 0;
 		border-radius: 2px;
 		pointer-events: none;
-	}
 
-	& .legend {
-		font-size: 1em;
+		& .legend {
+			padding: 0 0.625rem;
+			color: var(--tertiary-grey);
+			transition: font-size 0.2s, transform 0.2s;
+		}
 	}
 }
 
@@ -118,12 +136,7 @@
 		}
 
 		&:focus + .label-placeholder,
-		&:not(:placeholder-shown) + .label-placeholder {
-			top: 0.25rem;
-			font-size: 0.875rem;
-			transform: none;
-		}
-
+		&:not(:placeholder-shown) + .label-placeholder,
 		&:-webkit-autofill + .label-placeholder {
 			top: 0.25rem;
 			font-size: 0.875rem;
