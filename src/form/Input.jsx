@@ -15,9 +15,10 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		underlined: PropTypes.bool,
 		locked: PropTypes.bool,
 		center: PropTypes.bool,
+		noError: PropTypes.bool,
 		error: PropTypes.any
 	};
-	function FormInput ({className, name, label, inputRef, placeholder, underlined, locked, center, error:errorProp, ...otherProps}) {
+	function FormInput ({className, name, label, inputRef, placeholder, underlined, locked, center, error:errorProp, noError, ...otherProps}) {
 		const formContext = React.useContext(FormContext);
 		const {errors = {}, clearError} = formContext || {};
 
@@ -38,6 +39,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 				label={labelOnInput ? null : label}
 				locked={locked}
 				center={center}
+				noError={noError}
 			>
 				<Cmp
 					name={name}

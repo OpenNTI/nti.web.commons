@@ -29,6 +29,7 @@ LabelPlaceholder.propTypes = {
 
 	locked: PropTypes.bool,
 	center: PropTypes.bool,
+	noError: PropTypes.bool,
 
 	style: PropTypes.oneOf([Box, Underlined]),
 	as: PropTypes.string,
@@ -36,7 +37,7 @@ LabelPlaceholder.propTypes = {
 	children: PropTypes.element
 };
 
-export default function LabelPlaceholder ({className, style = Box, as:tag, label, error, locked, center, children, ...otherProps}) {
+export default function LabelPlaceholder ({className, style = Box, as:tag, label, error, locked, center, noError, children, ...otherProps}) {
 	const [id] = React.useState(() => getId());
 	const errorId = `${id}-error`;
 	const input = React.Children.only(children);
@@ -56,7 +57,7 @@ export default function LabelPlaceholder ({className, style = Box, as:tag, label
 					</fieldset>
 				)}
 			</div>
-			<ErrorMessage error={error} className={cx('error-message')} id={errorId} role="alert" />
+			{!noError && (<ErrorMessage error={error} className={cx('error-message')} id={errorId} role="alert" />)}
 		</Cmp>
 	);
 }
