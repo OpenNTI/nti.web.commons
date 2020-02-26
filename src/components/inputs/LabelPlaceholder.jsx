@@ -30,6 +30,7 @@ LabelPlaceholder.propTypes = {
 	locked: PropTypes.bool,
 	center: PropTypes.bool,
 	noError: PropTypes.bool,
+	fill: PropTypes.bool,
 
 	style: PropTypes.oneOf([Box, Underlined]),
 	as: PropTypes.string,
@@ -37,14 +38,14 @@ LabelPlaceholder.propTypes = {
 	children: PropTypes.element
 };
 
-export default function LabelPlaceholder ({className, style = Box, as:tag, label, error, locked, center, noError, children, ...otherProps}) {
+export default function LabelPlaceholder ({className, style = Box, as:tag, label, error, locked, center, noError, fill, children, ...otherProps}) {
 	const [id] = React.useState(() => getId());
 	const errorId = `${id}-error`;
 	const input = React.Children.only(children);
 	const Cmp = tag || 'div';
 
 	return (
-		<Cmp className={cx('nti-label-placeholder', className, style, {error, locked, center})} data-input-id={id} {...otherProps} >
+		<Cmp className={cx('nti-label-placeholder', className, style, {error, locked, center, fill})} data-input-id={id} {...otherProps} >
 			<div className={cx('input-wrapper')}>
 				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId})}
 				{/* TODO: test read twice (due to being after input or Chrome/VO being dumb) */}
