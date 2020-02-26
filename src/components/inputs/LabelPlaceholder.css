@@ -1,10 +1,11 @@
 .nti-label-placeholder {
-	position: relative;
 	display: block;
+	font-family: var(--body-font-family);
+	line-height: 1.375;
 }
 
-.label-placeholder {
-	position: absolute;
+.input-wrapper {
+	position: relative;
 }
 
 /*Clear the base input styles, since we need to define them on the container*/
@@ -15,77 +16,122 @@
 	color: inherit;
 	font: inherit;
 	padding: 0;
+	height: auto;
 }
 
 .nti-label-placeholder .error-message {
 	display: block;
-}
-
-/* Start Underlined Styles */
-.nti-label-placeholder.underlined {
-	font: normal 400 1rem/1.375 var(--body-font-family);
-}
-
-
-.nti-label-placeholder.underlined .error-message {
-	margin-top: 0.125rem;
+	margin: 0.125rem 0 0.625rem;
 	padding: 0 0.625rem;
 	font-size: 0.75rem;
 }
 
-.nti-label-placeholder.underlined :global(input:not([type=checkbox])) {
-	width: 100%;
-	height: 57px;
-	box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
-	padding: 1.5625rem 0.625rem 0.625rem;
+.nti-label-placeholder.box {
+	&.locked {
+		& :global(input:not([type=checkbox])) {
+			border: none;
+		}
+
+		& .fieldset {
+			border: 1px solid var(--border-grey-light);
+		}
+
+		& .legend {
+			font-size: 0.75em;
+			padding: 0 0.625rem;
+		}
+	}
+
+	&.center {
+		& .legend {
+			margin: 0 auto;
+		}
+	}
+
+	& :global(input:not([type=checkbox])) {
+		width: 100%;
+		border-radius: 2px;
+		border: 1px solid var(--border-grey-light);
+		padding: 0.625rem;
+	}
+
+	& .label-placeholder {
+		display: none;
+	}
+
+	& .fieldset {
+		position: absolute;
+		top: -0.7em; bottom: 0;
+		left: 0; right: 0;
+		border: none;
+		margin: 0;
+		border-radius: 2px;
+		pointer-events: none;
+	}
+
+	& .legend {
+		font-size: 1em;
+	}
 }
 
-.nti-label-placeholder.underlined .label-placeholder {
-	top: 1rem;
-	left: 0.625rem;
-	font-size: 1rem;
-	color: var(--tertiary-grey);
-	transition: top 0.2s, font-size 0.2s;
-	pointer-events: none;
-}
+.nti-label-placeholder.underlined {
+	& .label-placeholder {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 0.625rem;
+		font-size: 1em;
+		color: var(--tertiary-grey);
+		transition: top 0.2s, font-size 0.2s, transform 0.2s;
+		pointer-events: none;
+	}
 
-/*If there's an error make sure the input has a red box-shadow*/
-.nti-label-placeholder.underlined.error :global(input:not([type=checkbox])),
-.nti-label-placeholder.underlined.error :global(input:focus:not([type=checkbox])) {
-	box-shadow: inset 0 -1px 0 0 var(--primary-red);
-}
+	& :global(input:not([type=checkbox])) {
+		width: 100%;
+		box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
+		padding: 1.5625em 0.625rem 0.625rem;
+		background: #f7f7f7;
+		border-radius: 5px 5px 0 0;
 
-/*On focus make sure the input has a green box-shadow */
-.nti-label-placeholder.underlined :global(input:focus:not([type=checkbox])) {
-	box-shadow: inset 0 -1px 0 0 var(--secondary-green);
-}
+		&:focus {
+			box-shadow: inset 0 -1px 0 0 var(--secondary-green);
+		}
 
-/*Change the placeholders color when the input is focused */
-.nti-label-placeholder.underlined input:focus + .label-placeholder {
-	color: var(--secondary-green);
-}
+		&:focus + .label-placeholder {
+			color: var(--secondary-green);
+		}
 
-/*If the input has text make the placeholder text darker*/
-.nti-label-placeholder.underlined input:not(:placeholder-shown):not(:focus) + .label-placeholder {
-	color: var(--secondary-grey);
-}
+		&:not(:placeholder-shown):not(:focus) + .label-placeholder {
+			color: var(--secondary-grey);
+		}
 
-/*If there's an error make the placeholder text red*/
-.nti-label-placeholder.underlined.error input:focus + .label-placeholder,
-.nti-label-placeholder.underlined.error input:not(:placeholder-shown):not(:focus) + .label-placeholder {
-	color: var(--primary-red);
-}
+		&:focus + .label-placeholder,
+		&:not(:placeholder-shown) + .label-placeholder {
+			top: 0.25rem;
+			font-size: 0.875rem;
+			transform: none;
+		}
 
-/*If the input is focused or has text move the placeholder up*/
-.nti-label-placeholder.underlined input:focus + .label-placeholder,
-.nti-label-placeholder.underlined input:not(:placeholder-shown) + .label-placeholder {
-	top: 5px;
-	font-size: 0.875rem;
-}
+		&:-webkit-autofill + .label-placeholder {
+			top: 0.25rem;
+			font-size: 0.875rem;
+			transform: none;
+		}
 
-.nti-label-placeholder.underlined input:-webkit-autofill + .label-placeholder {
-	top: 5px;
-	font-size: 0.875rem;
-}
+	}
 
-/*End Underlined Styles*/
+	&.error {
+		& :global(input:not([type=checkbox])) {
+			/*If there's an error make sure the input has a red box-shadow*/
+			&,
+			&:focus {
+				box-shadow: inset 0 -1px 0 0 var(--primary-red);
+			}
+
+			&:focus + .label-placeholder,
+			&:not(:placeholder-shown):not(:focus) + .label-placeholder {
+				color: var(--primary-red);
+			}
+		}
+	}
+}

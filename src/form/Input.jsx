@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 
 import {Input, Checkbox} from '../components';
 
 import FormContext from './Context';
-import Styles from './Input.css';
-
-const cx = classnames.bind(Styles);
 
 function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 	FormInput.propTypes = {
@@ -16,9 +12,12 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		label: PropTypes.string,
 		inputRef: PropTypes.any,
 		placeholder: PropTypes.string,
-		underlined: PropTypes.bool
+		underlined: PropTypes.bool,
+		locked: PropTypes.bool,
+		center: PropTypes.bool,
+		error: PropTypes.any
 	};
-	function FormInput ({className, name, label, inputRef, placeholder, underlined, ...otherProps}) {
+	function FormInput ({className, name, label, inputRef, placeholder, underlined, locked, center, error:errorProp, ...otherProps}) {
 		const formContext = React.useContext(FormContext);
 		const {errors = {}, clearError} = formContext || {};
 
@@ -33,9 +32,12 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 
 		return (
 			<Input.LabelPlaceholder
-				error={errors[name]}
+				className={className}
+				error={errorProp || errors[name]}
 				style={underlined ? Input.LabelPlaceholder.Underlined : Input.LabelPlaceholder.Box}
 				label={labelOnInput ? null : label}
+				locked={locked}
+				center={center}
 			>
 				<Cmp
 					name={name}
