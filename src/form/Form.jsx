@@ -66,6 +66,10 @@ function getSubmitHandler (form, disabled, addErrors, onSubmit) {
 	};
 }
 
+function getInitialErrorState (initialError) {
+	return initialError ? {[initialError.field || GlobalError]: initialError} : {};
+}
+
 Form.Validation = Validation;
 Form.Values = Values;
 Form.Input = Input;
@@ -79,6 +83,8 @@ Form.propTypes = {
 	disabled: PropTypes.bool,
 	noValidate: PropTypes.bool,
 
+	initialError: PropTypes.any,
+
 	children: PropTypes.any
 };
 export default function Form (props) {
@@ -91,13 +97,15 @@ export default function Form (props) {
 		disabled,
 		noValidate = true,
 
+		initialError,
+
 		children,
 
 		...otherProps
 	} = props;
 
 	const formEl = React.useRef(null);
-	const [errors, setErrors] = React.useState({});
+	const [errors, setErrors] = React.useState(getInitialErrorState(initialError));
 
 	const addErrors = (toAdd) => setErrors({...errors, ...toAdd});
 	const clearError = (name) => {
