@@ -26,7 +26,7 @@ label.checkbox-component {
 			&::before {
 				content: '';
 				position: absolute;
-				top: rem-calc(1px);
+				top: rem-calc(2px);
 				left: rem-calc(-26px);
 				width: 16px;
 				height: 16px;
@@ -52,6 +52,11 @@ label.checkbox-component {
 			&::before {
 				opacity: 0.5;
 			}
+		}
+
+		&:focus + span.label::before {
+			box-shadow: 0 0 1px 1px var(--primary-blue);
+    		border-radius: 4px;
 		}
 	}
 
