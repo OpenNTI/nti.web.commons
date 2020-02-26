@@ -32,27 +32,26 @@ LabelPlaceholder.propTypes = {
 	noError: PropTypes.bool,
 	fill: PropTypes.bool,
 
-	style: PropTypes.oneOf([Box, Underlined]),
+	variant: PropTypes.oneOf([Box, Underlined]),
 	as: PropTypes.string,
 
 	children: PropTypes.element
 };
 
-export default function LabelPlaceholder ({className, style = Box, as:tag, label, error, locked, center, noError, fill, children, ...otherProps}) {
+export default function LabelPlaceholder ({className, variant = Box, as:tag, label, error, locked, center, noError, fill, children, ...otherProps}) {
 	const [id] = React.useState(() => getId());
 	const errorId = `${id}-error`;
 	const input = React.Children.only(children);
 	const Cmp = tag || 'div';
 
 	return (
-		<Cmp className={cx('nti-label-placeholder', className, style, {error, locked, center, fill})} data-input-id={id} {...otherProps} >
+		<Cmp className={cx('nti-label-placeholder', className, variant, {error, locked, center, fill})} data-input-id={id} {...otherProps} >
 			<div className={cx('input-wrapper')}>
 				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId})}
-				{/* TODO: test read twice (due to being after input or Chrome/VO being dumb) */}
 				{label && (
 					<Text.Base as="label" className={cx('label-placeholder')} htmlFor={id}>{label}</Text.Base>
 				)}
-				{style === Box && label && (
+				{variant === Box && label && (
 					<fieldset className={cx('fieldset')}>
 						<legend className={cx('legend')}>{label}</legend>
 					</fieldset>
