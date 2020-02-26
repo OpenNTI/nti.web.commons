@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {ObjectUtils} from '@nti/lib-commons';
 
 import {Input, Checkbox} from '../components';
 
 import FormContext from './Context';
+
+const ForceInputPropSet = new Set(['children']);
 
 function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 	FormInput.propTypes = {
@@ -13,12 +16,26 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 		inputRef: PropTypes.any,
 		placeholder: PropTypes.string,
 		underlined: PropTypes.bool,
-		locked: PropTypes.bool,
-		center: PropTypes.bool,
-		noError: PropTypes.bool,
 		error: PropTypes.any
 	};
-	function FormInput ({className, name, label, inputRef, placeholder, underlined, locked, center, error:errorProp, noError, ...otherProps}) {
+	function FormInput ({className, name, label, inputRef, placeholder, underlined, error:errorProp, ...otherProps}) {
+		/*
+			We need to be able to split out the props that go to the label placeholder and the ones that go to the input
+			rather than duplicating the label placeholder's prop types we're checking the prop types to send the props
+			it wants to the placeholder and the rest of them to the input.
+		 */
+		const {inputProps, labelProps} = Object
+			.entries(otherProps)
+			.reduce((acc, [key, value]) => {
+				if (ObjectUtils.has(Input.LabelPlaceholder.propTypes, key) && !ForceInputPropSet.has(key)) {
+					acc.labelProps[key] = value;
+				} else {
+					acc.inputProps[key] = value;
+				}
+
+				return acc;
+			}, {inputProps: {}, labelProps: {}});
+
 		const formContext = React.useContext(FormContext);
 		const {errors = {}, clearError} = formContext || {};
 
@@ -37,9 +54,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 				error={errorProp || errors[name]}
 				style={underlined ? Input.LabelPlaceholder.Underlined : Input.LabelPlaceholder.Box}
 				label={labelOnInput ? null : label}
-				locked={locked}
-				center={center}
-				noError={noError}
+				{...labelProps}
 			>
 				<Cmp
 					name={name}
@@ -48,7 +63,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 					aria-label={label ?? placeholder}
 					placeholder={placeholder}
 					aria-invalid={Boolean(errors[name])}
-					{...otherProps}
+					{...inputProps}
 					{...clearProps}
 				/>
 			</Input.LabelPlaceholder>
