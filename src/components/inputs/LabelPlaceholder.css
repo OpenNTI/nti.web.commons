@@ -1,4 +1,9 @@
 .nti-label-placeholder {
+	--text-smaller: 0.875rem;
+	--padding-horizontal: 0.625rem;
+	--border: 1px solid;
+	--transition-time: 0.2s;
+
 	display: block;
 	font-family: var(--body-font-family);
 	line-height: 1.375;
@@ -12,7 +17,7 @@
 .nti-label-placeholder :global(input:not([type=checkbox])) {
 	border-radius: 0;
 	background: none;
-	border: 1px solid transparent;
+	border: var(--border) transparent;
 	color: inherit;
 	font: inherit;
 	padding: 0;
@@ -25,13 +30,13 @@
 
 .nti-label-placeholder .error-message {
 	display: block;
-	margin: 0.125rem 0 0.625rem;
-	padding: 0 0.625rem;
+	margin: 0.125rem 0 var(--padding-horizontal);
+	padding: 0 var(--padding-horizontal);
 	font-size: 0.75rem;
 }
 
 .nti-label-placeholder.box {
-	margin-top: 0.4375rem;
+	margin-top: calc(var(--text-smaller) / 2);
 
 	&.center .fieldset .legend {
 		margin-left: auto;
@@ -41,11 +46,13 @@
 	& :global(input:not([type=checkbox])) {
 		width: 100%;
 		border-radius: 2px;
-		border-color: var(--border-grey-light);
-		padding: 0.625rem;
+		padding: var(--padding-horizontal);
+
+		&:placeholder-shown:not(:focus) {
+			border-color: var(--border-grey-light);
+		}
 
 		&:focus {
-			border-color: transparent;
 			& ~ .fieldset {
 				border-color: var(--secondary-green);
 				& .legend {
@@ -55,7 +62,6 @@
 		}
 
 		&:not(:placeholder-shown):not(:focus) {
-			border-color: transparent;
 			& ~ .fieldset {
 				border-color: var(--border-grey-light);
 			}
@@ -65,8 +71,8 @@
 		&:not(:placeholder-shown) ~ .fieldset .legend,
 		&:-webkit-autofill ~ .fieldset .legend {
 			top: -0.7rem;
-			font-size: 0.875rem;
-			transform: translateY(0);
+			font-size: var(--text-smaller);
+			transform: none;
 		}
 	}
 
@@ -76,21 +82,21 @@
 
 	& .fieldset {
 		position: absolute;
-		top: -0.625rem; bottom: 0;
+		top: calc(var(--padding-horizontal) * -1); bottom: 0;
 		left: 0; right: 0;
 		padding: 0;
-		border: 1px solid;
-		border-color: transparent;
+		border: var(--border) transparent;
 		margin: 0;
 		border-radius: 2px;
 		pointer-events: none;
 
 		& .legend {
-			padding: 0 0.25rem;
+			/* Using margin prevents the fieldset top-left corner being cut off */
+			padding: 0 calc(var(--padding-horizontal) - 0.375rem);
 			margin-left: 0.375rem;
 			color: var(--tertiary-grey);
-			transform: translateY(calc(50% + 0.625rem));
-			transition: font-size 0.2s, transform 0.2s;
+			transform: translateY(calc(50% + var(--padding-horizontal)));
+			transition: font-size var(--transition-time), transform var(--transition-time);
 		}
 	}
 
@@ -124,8 +130,8 @@
 	&.fill {
 		& :global(input:not([type=checkbox])) {
 			background: #f7f7f7;
-			padding-left: 0.625rem;
-			padding-right: 0.625rem;
+			padding-left: var(--padding-horizontal);
+			padding-right: var(--padding-horizontal);
 			border-radius: 5px 5px 0 0;
 		}
 	}
@@ -133,18 +139,18 @@
 	& .label-placeholder {
 		position: absolute;
 		top: 50%;
-		left: 0.625rem;
+		left: var(--padding-horizontal);
 		transform: translateY(-50%);
 		font-size: 1em;
 		color: var(--tertiary-grey);
-		transition: top 0.2s, font-size 0.2s, transform 0.2s;
+		transition: top var(--transition-time), font-size var(--transition-time), transform var(--transition-time);
 		pointer-events: none;
 	}
 
 	& :global(input:not([type=checkbox])) {
 		width: 100%;
 		box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
-		padding: 1.5625em 0 0.625rem;
+		padding: 1.5625em 0 var(--padding-horizontal);
 		background: none;
 
 		&:focus {
@@ -163,7 +169,7 @@
 		&:not(:placeholder-shown) + .label-placeholder,
 		&:-webkit-autofill + .label-placeholder {
 			top: 0.25rem;
-			font-size: 0.875rem;
+			font-size: var(--text-smaller);
 			transform: none;
 		}
 
