@@ -12,11 +12,15 @@
 .nti-label-placeholder :global(input:not([type=checkbox])) {
 	border-radius: 0;
 	background: none;
-	border: none;
+	border: 1px solid transparent;
 	color: inherit;
 	font: inherit;
 	padding: 0;
 	height: auto;
+}
+
+.nti-label-placeholder.center :global(input:not([type=checkbox])) {
+	text-align: center;
 }
 
 .nti-label-placeholder .error-message {
@@ -29,35 +33,31 @@
 .nti-label-placeholder.box {
 	margin-top: 0.4375rem;
 
-	&.center {
-		& .legend {
-			margin-left: auto;
-			margin-right: auto;
-		}
-	}
-
-	& .legend {
-		transform: translateY(calc(50% + 0.625rem));
+	&.center .fieldset .legend {
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	& :global(input:not([type=checkbox])) {
 		width: 100%;
 		border-radius: 2px;
+		border-color: var(--border-grey-light);
 		padding: 0.625rem;
 
-
-		&:focus ~ .fieldset {
-			border-color: var(--secondary-green);
-			& .legend {
-				color: var(--secondary-green);
-
+		&:focus {
+			border-color: transparent;
+			& ~ .fieldset {
+				border-color: var(--secondary-green);
+				& .legend {
+					color: var(--secondary-green);
+				}
 			}
 		}
 
-		&:placeholder-shown:not(:focus) {
-			border: 1px solid var(--border-grey-light);
+		&:not(:placeholder-shown):not(:focus) {
+			border-color: transparent;
 			& ~ .fieldset {
-				border: none;
+				border-color: var(--border-grey-light);
 			}
 		}
 
@@ -79,25 +79,49 @@
 		top: -0.625rem; bottom: 0;
 		left: 0; right: 0;
 		padding: 0;
-		border: 1px solid var(--border-grey-light);
+		border: 1px solid;
+		border-color: transparent;
 		margin: 0;
 		border-radius: 2px;
 		pointer-events: none;
 
 		& .legend {
-			padding: 0 0.625rem;
+			padding: 0 0.25rem;
+			margin-left: 0.375rem;
 			color: var(--tertiary-grey);
+			transform: translateY(calc(50% + 0.625rem));
 			transition: font-size 0.2s, transform 0.2s;
+		}
+	}
+
+	&.error {
+		& :global(input:not([type=checkbox])) {
+			border-color: var(--primary-red);
+
+			&:focus,
+			&:not(:placeholder-shown):not(:focus) {
+				border-color: transparent;
+				& ~ .fieldset {
+					border-color: var(--primary-red);
+					& .legend {
+						color: var(--primary-red);
+					}
+				}
+			}
 		}
 	}
 }
 
 .nti-label-placeholder.underlined {
-	&.fill {
+	&.center {
 		& .label-placeholder {
-			left: 0.625rem;
+			left: 0;
+			right: 0;
+			text-align: center;
 		}
+	}
 
+	&.fill {
 		& :global(input:not([type=checkbox])) {
 			background: #f7f7f7;
 			padding-left: 0.625rem;
@@ -109,7 +133,7 @@
 	& .label-placeholder {
 		position: absolute;
 		top: 50%;
-		left: 0;
+		left: 0.625rem;
 		transform: translateY(-50%);
 		font-size: 1em;
 		color: var(--tertiary-grey);
