@@ -44,10 +44,26 @@ export default function LabelPlaceholder ({className, variant = Box, as:tag, lab
 	const input = React.Children.only(children);
 	const Cmp = tag || 'div';
 
+	const [empty, setEmpty] = React.useState();
+	const inputRef = React.useRef(null);
+	const inputListener = e => {
+		setEmpty(!e.target.value);
+	};
+	const clonedInputRef = component => {
+		const node = component?.input ?? component;
+		if(node && node instanceof HTMLInputElement && node !== inputRef.current) {
+			inputRef.current = node;
+			node.addEventListener('change', inputListener);
+			setEmpty(!node.value);
+		} else if(node == null && inputRef.current != null) {
+			inputRef.current.removeEventListener('change', inputListener);
+		}
+	};
+
 	return (
-		<Cmp className={cx('nti-label-placeholder', className, variant, {error, locked, center, fill})} data-input-id={id} {...otherProps} >
+		<Cmp className={cx('nti-label-placeholder', className, variant, {error, locked, center, fill, empty})} data-input-id={id} {...otherProps} >
 			<div className={cx('input-wrapper')}>
-				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId})}
+				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId, ref: clonedInputRef})}
 				{label && (
 					<Text.Base as="label" className={cx('label-placeholder')} htmlFor={id}>{label}</Text.Base>
 				)}
