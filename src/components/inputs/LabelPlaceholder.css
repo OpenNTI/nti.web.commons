@@ -14,7 +14,7 @@
 }
 
 /*Clear the base input styles, since we need to define them on the container*/
-.nti-label-placeholder :global(input:not([type=checkbox])) {
+.nti-label-placeholder :global(input:not([type="checkbox"])) {
 	border-radius: 0;
 	background: none;
 	border: var(--border) transparent;
@@ -24,7 +24,7 @@
 	height: auto;
 }
 
-.nti-label-placeholder.center :global(input:not([type=checkbox])) {
+.nti-label-placeholder.center :global(input:not([type="checkbox"])) {
 	text-align: center;
 }
 
@@ -38,15 +38,17 @@
 .nti-label-placeholder.box {
 	margin-top: calc(var(--text-smaller) / 2);
 
-	& :global(input:not([type=checkbox])) {
+	& :global(input:not([type="checkbox"])) {
 		width: 100%;
 		border-radius: 2px;
 		padding: var(--padding-horizontal);
 
 		& ~ .fieldset {
 			position: absolute;
-			top: calc(var(--padding-horizontal) * -1); bottom: 0;
-			left: 0; right: 0;
+			top: calc(var(--padding-horizontal) * -1);
+			bottom: 0;
+			left: 0;
+			right: 0;
 			padding: 0;
 			border: var(--border) transparent;
 			margin: 0;
@@ -59,24 +61,28 @@
 				margin-left: 0.375rem;
 				font-size: 1em;
 				color: var(--tertiary-grey);
-				transition: font-size var(--transition-time), transform var(--transition-time);
+				transition: font-size var(--transition-time),
+					transform var(--transition-time);
 				pointer-events: none;
 			}
 		}
 	}
 
-	&:not(.locked) :global(input:not([type=checkbox])):placeholder-shown:not(:focus) {
-		border-color: var(--border-grey-light);
+	&:not(.locked).empty {
+		& :global(input:not([type="checkbox"])):not(:focus) {
+			border-color: var(--border-grey-light);
 
-		& ~ fieldset .legend {
-			transform: translateY(calc(50% + var(--padding-horizontal)));
+			& ~ fieldset .legend {
+				transform: translateY(calc(50% + var(--padding-horizontal)));
+			}
 		}
 	}
 
-	&.locked :global(input:not([type=checkbox])),
-	& :global(input:not([type=checkbox])):not(:placeholder-shown),
-	& :global(input:not([type=checkbox])):focus {
-		& ~ .fieldset{
+	/* TODO: cleanup */
+	&.locked :global(input:not([type="checkbox"])),
+	&:not(.empty) :global(input:not([type="checkbox"])),
+	& :global(input:not([type="checkbox"])):focus {
+		& ~ .fieldset {
 			border-color: var(--border-grey-light);
 			& .legend {
 				top: -0.7rem;
@@ -95,8 +101,8 @@
 		}
 	}
 
-	& :global(input:not([type=checkbox])):-webkit-autofill {
-		& ~ .fieldset{
+	& :global(input:not([type="checkbox"])):-webkit-autofill {
+		& ~ .fieldset {
 			border-color: var(--border-grey-light);
 			& .legend {
 				top: -0.7rem;
@@ -106,19 +112,22 @@
 		}
 	}
 
-	&.center :global(input:not([type=checkbox])) ~ .fieldset .legend {
+	&.center :global(input:not([type="checkbox"])) ~ .fieldset .legend {
 		margin-left: auto;
 		margin-right: auto;
 	}
 
 	&.error {
-		&:not(.locked) :global(input:not([type=checkbox])):placeholder-shown:not(:focus) {
-			border-color: var(--primary-red);
+		&:not(.locked).empty {
+			& :global(input:not([type="checkbox"])):not(:focus) {
+				border-color: var(--primary-red);
+			}
 		}
 
-		&.locked :global(input:not([type=checkbox])),,
-		& :global(input:not([type=checkbox])):not(:placeholder-shown),
-		& :global(input:not([type=checkbox])):focus {
+		/* TODO: cleanup */
+		&.locked :global(input:not([type="checkbox"])),
+		&:not(.empty) :global(input:not([type="checkbox"])),
+		& :global(input:not([type="checkbox"])):focus {
 			& ~ fieldset {
 				border-color: var(--primary-red);
 				& .legend {
@@ -127,7 +136,7 @@
 			}
 		}
 
-		& :global(input:not([type=checkbox])):-webkit-autofill {
+		& :global(input:not([type="checkbox"])):-webkit-autofill {
 			& ~ fieldset {
 				border-color: var(--primary-red);
 				& .legend {
@@ -143,7 +152,7 @@
 }
 
 .nti-label-placeholder.underlined {
-	& :global(input:not([type=checkbox])) {
+	& :global(input:not([type="checkbox"])) {
 		width: 100%;
 		box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
 		padding: 1.5625em var(--padding-horizontal) 0;
@@ -154,21 +163,26 @@
 			left: var(--padding-horizontal);
 			font-size: 1em;
 			color: var(--tertiary-grey);
-			transition: top var(--transition-time), font-size var(--transition-time), transform var(--transition-time);
+			transition: top var(--transition-time),
+				font-size var(--transition-time),
+				transform var(--transition-time);
 			pointer-events: none;
 		}
 	}
 
-	&:not(.locked) :global(input:not([type=checkbox])):placeholder-shown:not(:focus) {
-		& + .label-placeholder {
-			top: 50%;
-			transform: translateY(-50%);
+	&:not(.locked).empty {
+		& :global(input:not([type="checkbox"])):not(:focus) {
+			& + .label-placeholder {
+				top: 50%;
+				transform: translateY(-50%);
+			}
 		}
 	}
 
-	&.locked :global(input:not([type=checkbox])),
-	& :global(input:not([type=checkbox])):not(:placeholder-shown),
-	& :global(input:not([type=checkbox])):focus {
+	/* TODO: cleanup */
+	&.locked :global(input:not([type="checkbox"])),
+	&:not(.empty) :global(input:not([type="checkbox"])),
+	& :global(input:not([type="checkbox"])):focus {
 		& + .label-placeholder {
 			top: 0.25rem;
 			font-size: var(--text-smaller);
@@ -183,7 +197,7 @@
 		}
 	}
 
-	& :global(input:not([type=checkbox])):-webkit-autofill + .label-placeholder {
+	& :global(input:not([type="checkbox"])):-webkit-autofill + .label-placeholder {
 		top: 0.25rem;
 		font-size: var(--text-smaller);
 		transform: none;
@@ -198,27 +212,29 @@
 	}
 
 	&.fill {
-		& :global(input:not([type=checkbox])) {
+		& :global(input:not([type="checkbox"])) {
 			background: #f7f7f7;
 			border-radius: 5px 5px 0 0;
 		}
 	}
 
 	&.error {
-		&:not(.locked) :global(input:not([type=checkbox])):placeholder-shown:not(:focus) {
-			box-shadow: inset 0 -1px 0 0 var(--primary-red);
+		&:not(.locked).empty {
+			& :global(input:not([type="checkbox"])):not(:focus) {
+				box-shadow: inset 0 -1px 0 0 var(--primary-red);
+			}
 		}
 
-		/* TODO: -webkit-autofill */
-		&.locked :global(input:not([type=checkbox])),
-		& :global(input:not([type=checkbox])):not(:placeholder-shown),
-		& :global(input:not([type=checkbox])):focus {
+		/* TODO: cleanup */
+		&.locked :global(input:not([type="checkbox"])),
+		&:not(.empty) :global(input:not([type="checkbox"])),
+		& :global(input:not([type="checkbox"])):focus {
 			& + .label-placeholder {
 				color: var(--primary-red);
 			}
 		}
 
-		& :global(input:not([type=checkbox])):-webkit-autofill + .label-placeholder {
+		& :global(input:not([type="checkbox"])):-webkit-autofill + .label-placeholder {
 			color: var(--primary-red);
 		}
 	}
