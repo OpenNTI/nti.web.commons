@@ -35,5 +35,6 @@ export const SIZES = {
 
 export InlineFlyout from './Inline';
 export Triggered from './Triggered';
+export OldTriggered from './Triggered.old.jsx';
 export Aligned from './Aligned';
 

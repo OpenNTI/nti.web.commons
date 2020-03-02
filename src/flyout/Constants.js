@@ -26,3 +26,10 @@ export const ARROW_OFFSET = 23;
 
 export const OPEN = 'open';
 export const CLOSED = 'closed';
+
+export const ClassHooks = {
+	hover: 'flyout-trigger-hover',
+	trigger: 'flyout-trigger',
+	open: 'flyout-open',
+	closed: 'flyout-closed'
+};

@@ -88,7 +88,9 @@ export default class AlignedFlyout extends React.Component {
 
 		reservedMargin: PropTypes.object,
 
-		afterAlign: PropTypes.func
+		afterAlign: PropTypes.func,
+		onFlyoutSetup: PropTypes.func,
+		onFlyoutTearDown: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -97,14 +99,15 @@ export default class AlignedFlyout extends React.Component {
 
 
 	attachFlyoutRef = (ref) => {
+		const oldFlyout = this.flyout;
 		const hadFlyout = !!this.flyout;
 
 		this.flyout = ref;
 
 		if (ref && !hadFlyout) {
-			this.setupFlyout();
+			this.setupFlyout(ref);
 		} else if (!ref) {
-			this.teardownFlyout();
+			this.teardownFlyout(oldFlyout);
 		}
 	}
 
@@ -138,7 +141,7 @@ export default class AlignedFlyout extends React.Component {
 		this.mounted = false;
 
 		if (this.fly) {
-			document.body.removeChild(this.fly);
+			// document.body.removeChild(this.fly);
 		}
 	}
 
@@ -174,10 +177,11 @@ export default class AlignedFlyout extends React.Component {
 	}
 
 
-	setupFlyout () {
+	setupFlyout (ref) {
 		window.addEventListener('resize', this.realign);
 		this.listenToScroll();
 
+		const {onFlyoutSetup} = this.props;
 		const container = this.fly && this.fly.parentNode;
 
 		if (container) {
@@ -185,14 +189,24 @@ export default class AlignedFlyout extends React.Component {
 		}
 
 		this.align();
+
+		if (onFlyoutSetup) {
+			onFlyoutSetup(ref);
+		}
 	}
 
 
-	teardownFlyout () {
+	teardownFlyout (ref) {
+		const {onFlyoutTearDown} = this.props;
+
 		window.removeEventListener('resize', this.realign);
 
 		if (this.unlistenToScroll) {
 			this.unlistenToScroll();
+		}
+
+		if (onFlyoutTearDown) {
+			onFlyoutTearDown(ref);
 		}
 	}
 
