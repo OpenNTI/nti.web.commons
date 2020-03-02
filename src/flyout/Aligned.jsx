@@ -427,6 +427,7 @@ export default class AlignedFlyout extends React.Component {
 			className,
 			(transition && transition.className) || '',
 			getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign, classes),
+			classes.flyout,
 			{
 				arrow,
 				dark,

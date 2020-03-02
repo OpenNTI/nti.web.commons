@@ -35,7 +35,7 @@ export const ClassHooks = {
 	arrow: 'flyout-arrow',
 	dark: 'flyout-dark',
 	fixed: 'is-fixed',
-	flyout: '',
+	flyout: 'flyout',
 	open: 'flyout-open',
 	opened: '',
 	opening: 'flyout-opening',

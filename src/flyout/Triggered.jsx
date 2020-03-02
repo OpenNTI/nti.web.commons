@@ -155,7 +155,8 @@ export default class TriggeredFlyout extends React.Component {
 				);
 			}
 
-			ref = ReactDOM.findDomNode(ref);
+			// eslint-disable-next-line react/no-find-dom-node
+			ref = ReactDOM.findDOMNode(ref);
 		}
 
 		return ref;
@@ -310,7 +311,7 @@ export default class TriggeredFlyout extends React.Component {
 		const {open:controlledOpen, trigger: triggerProp, classes, className, ...otherProps} = this.props;
 		const {open: stateOpen} = this.state;
 		const triggerProps = {};
-		const flyoutProps = {...restProps(TriggeredFlyout, otherProps)};
+		const flyoutProps = {...restProps(TriggeredFlyout, otherProps), className};
 
 		const open = stateOpen || controlledOpen;
 
