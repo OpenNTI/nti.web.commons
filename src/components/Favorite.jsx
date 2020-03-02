@@ -36,7 +36,7 @@ export default createReactClass({
 		});
 
 		const Tag = asButton ? 'span' : 'a';
-		const extraProps = asButton ? {role: 'button'} : {href: '#'};
+		const extraProps = asButton ? {role: 'button', tabIndex: '0'} : {href: '#'};
 
 		return (
 			<Tag {...extraProps} className={cls} onClick={this.onClick}/>
