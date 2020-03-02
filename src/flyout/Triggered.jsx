@@ -83,10 +83,24 @@ export default class TriggeredFlyout extends React.Component {
 
 	static defaultProps = {
 		classes: {
-			open: classHooks('open'),
+			arrow: classHooks('arrow'),
 			closed: classHooks('closed'),
+			closing: classHooks('closing'),
+			dark: classHooks('dark'),
+			fixed: classHooks('fixed'),
+			flyout: classHooks('flyout'),
 			hover: classHooks('hover'),
-			trigger: classHooks('trigger')
+			open: classHooks('open'),
+			opened: classHooks('opened'),
+			opening: classHooks('opening'),
+			trigger: classHooks('trigger'),
+			wrapper: classHooks('wrapper'),
+			inner: classHooks('inner'),
+			bottom: classHooks('bottom'),
+			top: classHooks('top'),
+			center: classHooks('center'),
+			left: classHooks('left'),
+			right: classHooks('right'),
 		},
 		defaultState: CLOSED
 	};
@@ -226,7 +240,7 @@ export default class TriggeredFlyout extends React.Component {
 		}
 	}
 
-	onMouseEnter () {
+	onMouseEnter = () => {
 		if (!this.isHover()) { return; }
 
 		const {hoverTimeouts} = this;
@@ -239,7 +253,7 @@ export default class TriggeredFlyout extends React.Component {
 		}, hoverTimeouts.openTimeout);
 	}
 
-	onMouseLeave () {
+	onMouseLeave = () => {
 		if (!this.isHover()) { return; }
 
 		const {hoverTimeouts} = this;
@@ -295,7 +309,7 @@ export default class TriggeredFlyout extends React.Component {
 	render () {
 		const {open:controlledOpen, trigger: triggerProp, classes, className, ...otherProps} = this.props;
 		const {open: stateOpen} = this.state;
-		const triggerProps = {...restProps(TriggeredFlyout, otherProps)};
+		const triggerProps = {};
 		const flyoutProps = {...restProps(TriggeredFlyout, otherProps)};
 
 		const open = stateOpen || controlledOpen;
@@ -332,7 +346,7 @@ export default class TriggeredFlyout extends React.Component {
 		);
 
 		//accessible props
-		triggerProps.tabindex = 0;
+		triggerProps.tabIndex = 0;
 		triggerProps['aria-haspopup'] = this.props.menu ? 'menu' : 'dialog';
 
 		const triggerCmp = React.isValidElement(Trigger) ?
@@ -348,8 +362,11 @@ export default class TriggeredFlyout extends React.Component {
 						ref={this.flyoutRef}
 						alignTo={this.trigger}
 						visible={open}
+						classes={classes}
 						onFlyoutSetup={this.onFlyoutSetup}
 						onFlyoutTearDown={this.onFlyoutTearDown}
+						onMouseLeave={this.onMouseLeave}
+						onMouseEnter={this.onMouseEnter}
 					>
 						{this.renderContent()}
 					</Aligned>

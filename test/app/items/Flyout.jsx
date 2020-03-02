@@ -7,14 +7,14 @@ export default function FlyoutTest () {
 		<div style={{padding: '2rem'}}>
 			<input />
 			<br /><br />
-			<Flyout.Triggered trigger={(<span>trigger</span>)}>
-				<div>
+			<Flyout.Triggered trigger={(<span>trigger</span>)} constrain arrow sizing={Flyout.SIZES.MATCH_SIDE}>
+				<div style={{padding: '2rem'}}>
 					Flyout Contents
 				</div>
 			</Flyout.Triggered>
 			<br /><br />
-			<Flyout.OldTriggered trigger={(<span>trigger</span>)}>
-				<div>
+			<Flyout.OldTriggered trigger={(<span>trigger</span>)} sizing={Flyout.SIZES.MATCH_SIDE}>
+				<div style={{padding: '2rem'}}>
 					Old Flyout Contents
 				</div>
 			</Flyout.OldTriggered>

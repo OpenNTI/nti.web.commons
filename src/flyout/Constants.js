@@ -28,8 +28,22 @@ export const OPEN = 'open';
 export const CLOSED = 'closed';
 
 export const ClassHooks = {
-	hover: 'flyout-trigger-hover',
+	hover: '',
 	trigger: 'flyout-trigger',
+	closed: 'flyout-closed',
+	closing: 'flyout-closing',
+	arrow: 'flyout-arrow',
+	dark: 'flyout-dark',
+	fixed: 'is-fixed',
+	flyout: '',
 	open: 'flyout-open',
-	closed: 'flyout-closed'
+	opened: '',
+	opening: 'flyout-opening',
+	wrapper: 'fly-wrapper',
+	inner: 'flyout-inner',
+	bottom: '',
+	top: '',
+	center: '',
+	left: '',
+	right: '',
 };
