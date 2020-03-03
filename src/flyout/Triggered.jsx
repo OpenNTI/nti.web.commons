@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames/bind';
 import {restProps} from '@nti/lib-commons';
-import {addClickOutListener} from '@nti/lib-dom';
+import {addClickOutListener, addKeyboardBlurListener} from '@nti/lib-dom';
 
 import Styles from './Triggered.css';
 import Aligned from './Aligned';
@@ -290,6 +290,7 @@ export default class TriggeredFlyout extends React.Component {
 
 	onFlyoutSetup = (flyout) => {
 		if (this.cleanupClickOut) { this.cleanupClickOut(); }
+		if (this.cleanupKeyboardBlur) { this.cleanupKeyboardBlur(); }
 
 		this.cleanupClickOut = addClickOutListener(flyout, (e) => {
 			const {trigger} = this;
@@ -300,10 +301,25 @@ export default class TriggeredFlyout extends React.Component {
 				}
 			}
 		});
+
+		this.cleanupKeyboardBlur = addKeyboardBlurListener(flyout, (e) => {
+			const {trigger} = this;
+
+			this.doClose();
+			trigger.focus();
+		});
 	}
 
 	onFlyoutTearDown = () => {
 		if (this.cleanupClickOut) { this.cleanupClickOut(); }
+		if (this.cleanupKeyboardBlur) { this.cleanupKeyboardBlur(); }
+	}
+
+
+	onFocusOutCatch = () => {
+		const {trigger} = this;
+
+		trigger.focus();
 	}
 
 
@@ -347,7 +363,7 @@ export default class TriggeredFlyout extends React.Component {
 		);
 
 		//accessible props
-		triggerProps.tabIndex = 0;
+		triggerProps.tabIndex = open ? 100 : 0;
 		triggerProps['aria-haspopup'] = this.props.menu ? 'menu' : 'dialog';
 
 		const triggerCmp = React.isValidElement(Trigger) ?
@@ -370,6 +386,7 @@ export default class TriggeredFlyout extends React.Component {
 						onMouseEnter={this.onMouseEnter}
 					>
 						{this.renderContent()}
+						<div className={cx('focus-out-catch')} tabIndex={0} aria-hidden="true" onFocus={this.onFocusOutCatch} />
 					</Aligned>
 				)}
 			</>

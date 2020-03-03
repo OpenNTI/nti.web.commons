@@ -1,4 +1,5 @@
 export * as ContentResources from './content-resources';
+export * as Focus from './focus';
 export * as Panels from './panels';
 export * as Loading from './loading-indicators';
 export * as List from './list';

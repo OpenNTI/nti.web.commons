@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames/bind';
-import {getEffectiveZIndex} from '@nti/lib-dom';
+import {getEffectiveZIndex, focusDescendantOrElement} from '@nti/lib-dom';
 import {restProps} from '@nti/lib-commons';
+
+
+import {Focus} from '../components';
 
 import {
 	DEFAULT_VERTICAL,
@@ -242,7 +245,9 @@ export default class AlignedFlyout extends React.Component {
 			container.appendChild(this.fly);
 		}
 
-		this.align();
+		this.align(() => {
+			focusDescendantOrElement(ref);
+		});
 
 		if (onFlyoutSetup) {
 			onFlyoutSetup(ref);
@@ -450,6 +455,7 @@ export default class AlignedFlyout extends React.Component {
 				className={cls}
 				ref={this.attachFlyoutRef}
 				style={outerStyles}
+				tabIndex={0}
 			>
 				{arrow && (<div className="flyout-arrow" />)}
 				<div className="flyout-inner" style={innerStyle}>
