@@ -57,6 +57,7 @@ export default function LabelPlaceholder ({className, variant = Box, as:tag, lab
 			setEmpty(!node.value);
 		} else if(node == null && inputRef.current != null) {
 			inputRef.current.removeEventListener('change', inputListener);
+			inputRef.current = null;
 		}
 	};
 
