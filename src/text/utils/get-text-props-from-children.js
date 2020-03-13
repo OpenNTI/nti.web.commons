@@ -39,17 +39,17 @@ function getMarkupFromChild (child) {
 	return `<${tag}${attributes}>${innerHTML}</${tag}>`;
 }
 
-export default function getTextPropsFromChildren (childrenProp) {
+export default function getTextPropsFromChildren (childrenProp, allowAllMarkup) {
 	const children = React.Children.toArray(childrenProp);
 
 	let text = '';
-	let hasMarkup = false;
+	let hasMarkup = allowAllMarkup;
 	let hasComponents = false;
 
 	for (let child of children) {
 		if (typeof child === 'string') {
 			text += child;
-			hasMarkup = hasAllowedRawMarkup(child);
+			hasMarkup = hasMarkup || hasAllowedRawMarkup(child);
 		} else if (typeof child.type === 'string' && MARKUP_WHITE_LIST.TAGS[child.type]) {
 			try {
 				text += getMarkupFromChild(child);
@@ -61,6 +61,7 @@ export default function getTextPropsFromChildren (childrenProp) {
 			}
 		} else {
 			hasComponents = true;
+			hasMarkup = false;
 			text = childrenProp;
 			break;
 		}

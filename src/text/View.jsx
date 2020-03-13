@@ -22,13 +22,14 @@ class NTIText extends React.Component {
 		children: PropTypes.any,
 		textRef: PropTypes.func,
 		as: PropTypes.string,
-		className: PropTypes.string
+		className: PropTypes.string,
+		localized: PropTypes.bool
 	}
 
 	render () {
-		const {children, as: tag, textRef, className, ...props} = this.props;
+		const {children, as: tag, textRef, className, localized, ...props} = this.props;
 
-		const textProps = getTextPropsFromChildren(children);
+		const textProps = getTextPropsFromChildren(children, localized);
 		const combinedProps = {...props, ...textProps};
 
 		const transforms = getTransforms(combinedProps).reverse();
