@@ -10,9 +10,7 @@ export default function FlyoutTest () {
 			<Flyout.Triggered trigger={(<span>trigger</span>)} constrain arrow>
 				<div style={{padding: '2rem'}}>
 					Flyout Contents
-					<br />
-					<input />
-					<br />
+					<br/>
 					<input />
 				</div>
 			</Flyout.Triggered>

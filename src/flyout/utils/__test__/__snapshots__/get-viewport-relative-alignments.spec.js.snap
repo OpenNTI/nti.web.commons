@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 1`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "left": 50,
+  "right": 774,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 2`] = `
+Object {
+  "height": 600,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 3`] = `
+Object {
+  "height": 600,
+  "left": 50,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 4`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "right": 774,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 5`] = `
+Object {
+  "height": 600,
+  "left": 50,
+  "right": 774,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 6`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "left": 50,
+  "right": 774,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 7`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "left": 50,
+  "top": 100,
+  "width": 200,
+}
+`;
+
+exports[`getViewportRelativeAlignemnts getViewportRelativeAlignments 8`] = `
+Object {
+  "bottom": 68,
+  "height": 600,
+  "right": 774,
+  "top": 100,
+  "width": 200,
+}
+`;

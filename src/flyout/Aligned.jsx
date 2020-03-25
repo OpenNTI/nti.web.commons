@@ -37,8 +37,6 @@ import {
 
 const classHooks = cx.bind(ClassHooks);
 
-//TODO: Change triggered to use this under the hood
-
 
 /* NOTE: for now the primary axis is always vertical
  *
@@ -96,11 +94,13 @@ export default class AlignedFlyout extends React.Component {
 		dark: PropTypes.bool,
 		menu: PropTypes.bool,
 
+		focusOnOpen: PropTypes.bool,
+
 		alignTo: PropTypes.shape({
 			getBoundingClientRect: PropTypes.func,
 			offsetParent: PropTypes.object,
 			parentNode: PropTypes.object
-		}).isRequired,
+		}),
 		parent: PropTypes.shape({
 			getBoundingClientRect: PropTypes.func
 		}),
@@ -127,6 +127,7 @@ export default class AlignedFlyout extends React.Component {
 	}
 
 	static defaultProps = {
+		focusOnOpen: true,
 		classes: {
 			arrow: classHooks('arrow'),
 			closed: classHooks('closed'),
@@ -235,7 +236,7 @@ export default class AlignedFlyout extends React.Component {
 		window.addEventListener('resize', this.realign);
 		this.listenToScroll();
 
-		const {onFlyoutSetup} = this.props;
+		const {onFlyoutSetup, focusOnOpen} = this.props;
 		const container = this.fly && this.fly.parentNode;
 
 		if (container) {
@@ -243,7 +244,9 @@ export default class AlignedFlyout extends React.Component {
 		}
 
 		this.align(() => {
-			focusDescendantOrElement(ref);
+			if (focusOnOpen) {
+				focusDescendantOrElement(ref);
+			}
 		});
 
 		if (onFlyoutSetup) {
@@ -338,7 +341,7 @@ export default class AlignedFlyout extends React.Component {
 		};
 
 		if (!this.flyout) {
-			finish(oldAlignment);
+			return finish(oldAlignment);
 		}
 
 		const {
@@ -347,6 +350,10 @@ export default class AlignedFlyout extends React.Component {
 			reservedMargin,
 			primaryAxis, verticalAlign, horizontalAlign, constrain, sizing
 		} = this.props;
+
+		if (!alignTo) {
+			return finish(oldAlignment);
+		}
 
 		const {alignToRect, coordinateRoot, isFixed} = getAlignmentInfo(alignTo, parent);
 
@@ -411,7 +418,7 @@ export default class AlignedFlyout extends React.Component {
 		const flyoutProps = {...restProps(AlignedFlyout, otherProps) };
 		const {alignment, aligning, open, opening, closing} = this.state;
 
-		if (!open) { return null; }
+		if (!open || !alignTo) { return null; }
 
 		const {isFixed} = alignment || {};
 		const effectiveZ = getEffectiveZIndex(alignTo);
@@ -426,6 +433,7 @@ export default class AlignedFlyout extends React.Component {
 		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
 		const cls = cx(
 			'aligned-flyout',
+			'open',
 			className,
 			(transition && transition.className) || '',
 			getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign, classes),

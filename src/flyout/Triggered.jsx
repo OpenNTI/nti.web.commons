@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames/bind';
-import {restProps} from '@nti/lib-commons';
+import {restProps, getRefHandler} from '@nti/lib-commons';
 import {addClickOutListener, addKeyboardBlurListener} from '@nti/lib-dom';
 
 import Styles from './Triggered.css';
@@ -119,6 +119,28 @@ export default class TriggeredFlyout extends React.Component {
 		}
 	}
 
+	componentDidUpdate (prevProps, prevState) {
+		const {onDismiss, open:controlledOpen} = this.props;
+		const {open:stateOpen} = this.state;
+		const isOpen = stateOpen || controlledOpen;
+
+		const {open: wasControlledOpen} = prevProps;
+		const {open: wasStateOpen} = prevState;
+		const wasOpen = wasStateOpen || wasControlledOpen;
+
+		if (onDismiss && !isOpen && wasOpen) {
+			onDismiss();
+		}
+
+		const isControlled = controlledOpen != null;
+		const wasControlled = wasControlledOpen != null;
+
+		if (isControlled !== wasControlled) {
+			// eslint-disable-next-line no-console
+			console.warn('Flyout was moved from controlled to uncontrolled or vice versa.');
+		}
+	}
+
 	componentWillUnmount () {
 		this.mounted = false;
 	}
@@ -140,7 +162,7 @@ export default class TriggeredFlyout extends React.Component {
 		}
 
 		if (ref instanceof React.Component) {
-			if (ref.getDomNode) {
+			if (ref.getDOMNode) {
 				return ref.getDOMNode();
 			}
 
@@ -199,6 +221,7 @@ export default class TriggeredFlyout extends React.Component {
 		}
 	}
 
+	maybeDismiss () { if (!this.isControlled()) { this.dismiss(); }}
 	dismiss (cb) { return this.doClose(cb); }
 	doClose (cb) {
 		if (this.isControlled()) { return; }
@@ -230,7 +253,13 @@ export default class TriggeredFlyout extends React.Component {
 		clearTimeout(this.blurTimeout);
 
 		this.blurTimeout = setTimeout(() => {
+			const wasFocused = this.focused;
+
 			this.focused = false;
+
+			if (wasFocused && this.isHover() && this.state.open) {
+				this.doClose();
+			}
 		}, 100);
 	}
 
@@ -241,7 +270,7 @@ export default class TriggeredFlyout extends React.Component {
 		}
 	}
 
-	onMouseEnter = () => {
+	startShow = () => {
 		if (!this.isHover()) { return; }
 
 		const {hoverTimeouts} = this;
@@ -254,7 +283,7 @@ export default class TriggeredFlyout extends React.Component {
 		}, hoverTimeouts.openTimeout);
 	}
 
-	onMouseLeave = () => {
+	startHide = () => {
 		if (!this.isHover()) { return; }
 
 		const {hoverTimeouts} = this;
@@ -265,6 +294,10 @@ export default class TriggeredFlyout extends React.Component {
 		this.hideTimeout = setTimeout(() => {
 			this.doClose();
 		}, hoverTimeouts.closeTimeout);
+	}
+
+	stopHide = () => {
+		clearTimeout(this.hideTimeout);
 	}
 
 	onClick (e) {
@@ -326,7 +359,7 @@ export default class TriggeredFlyout extends React.Component {
 	render () {
 		const {open:controlledOpen, trigger: triggerProp, classes, className, ...otherProps} = this.props;
 		const {open: stateOpen} = this.state;
-		const triggerProps = {};
+		const triggerProps = {...restProps(Aligned, restProps(TriggeredFlyout, otherProps))};
 		const flyoutProps = {...restProps(TriggeredFlyout, otherProps), className};
 
 		const open = stateOpen || controlledOpen;
@@ -339,11 +372,16 @@ export default class TriggeredFlyout extends React.Component {
 			triggerProps.onKeyPress = (e) => this.onKeyPress(e);
 
 			if (this.isHover()) {
-				triggerProps.onMouseEnter = (e) => this.onMouseEnter(e);
-				triggerProps.onMouseLeave = (e) => this.onMouseLeave(e);
+				triggerProps.onMouseEnter = (e) => this.startShow(e);
+				triggerProps.onMouseLeave = (e) => this.startHide(e);
 			} else {
 				triggerProps.onClick = (e) => this.onClick(e);
 			}
+		}
+
+		if (this.isHover) {
+			flyoutProps.onMouseLeave = () => this.startHide();
+			flyoutProps.onMouseEnter = () => this.stopHide();
 		}
 
 		if (!Trigger || typeof Trigger === 'string') {
@@ -363,32 +401,29 @@ export default class TriggeredFlyout extends React.Component {
 		);
 
 		//accessible props
-		triggerProps.tabIndex = open ? 100 : 0;
+		triggerProps.tabIndex = 0;
 		triggerProps['aria-haspopup'] = this.props.menu ? 'menu' : 'dialog';
 
 		const triggerCmp = React.isValidElement(Trigger) ?
-			React.cloneElement(Trigger, {...triggerProps, ref: this.triggerRef}) :
+			React.cloneElement(Trigger, {...triggerProps, ref: getRefHandler(Trigger.ref, this.triggerRef)}) :
 			(<Trigger ref={this.triggerRef} {...triggerProps} />);
 
 		return (
 			<>
 				{triggerCmp}
-				{this.trigger && (
-					<Aligned
-						{...flyoutProps}
-						ref={this.flyoutRef}
-						alignTo={this.trigger}
-						visible={open}
-						classes={classes}
-						onFlyoutSetup={this.onFlyoutSetup}
-						onFlyoutTearDown={this.onFlyoutTearDown}
-						onMouseLeave={this.onMouseLeave}
-						onMouseEnter={this.onMouseEnter}
-					>
-						{this.renderContent()}
-						<div className={cx('focus-out-catch')} tabIndex={0} aria-hidden="true" onFocus={this.onFocusOutCatch} />
-					</Aligned>
-				)}
+				<Aligned
+					{...flyoutProps}
+					ref={this.flyoutRef}
+					alignTo={this.trigger}
+					visible={open}
+					classes={classes}
+					onFlyoutSetup={this.onFlyoutSetup}
+					onFlyoutTearDown={this.onFlyoutTearDown}
+					focusOnOpen={!this.isHover()}
+				>
+					{this.renderContent()}
+					<div className={cx('focus-out-catch')} tabIndex={0} aria-hidden="true" onFocus={this.onFocusOutCatch} />
+				</Aligned>
 			</>
 		);
 	}
