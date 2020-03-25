@@ -17,17 +17,6 @@ export default function FlyoutTest () {
 				</div>
 			</Flyout.Triggered>
 			<br /><br />
-			<Flyout.OldTriggered trigger={(<span>trigger</span>)} sizing={Flyout.SIZES.MATCH_SIDE}>
-				<div style={{padding: '2rem'}}>
-					Old Flyout Contents
-				</div>
-			</Flyout.OldTriggered>
-			<br /><br />
-			<Flyout.OldTriggered trigger={(<span>trigger</span>)}>
-				<div>
-					Old Flyout Contents
-				</div>
-			</Flyout.OldTriggered>
 			<input />
 		</div>
 	);

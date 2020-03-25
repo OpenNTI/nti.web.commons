@@ -5,9 +5,6 @@ import cx from 'classnames/bind';
 import {getEffectiveZIndex, focusDescendantOrElement} from '@nti/lib-dom';
 import {restProps} from '@nti/lib-commons';
 
-
-import {Focus} from '../components';
-
 import {
 	DEFAULT_VERTICAL,
 	DEFAULT_HORIZONTAL,

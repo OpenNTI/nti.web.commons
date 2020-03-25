@@ -79,6 +79,17 @@
 		}
 	}
 
+	&:focus,
+	&:focus-within {
+		.flyout-arrow::after {
+			box-shadow: 0 0 4px 0 $primary-blue;
+		}
+
+		.flyout-inner {
+			box-shadow: 0 0 4px 0 $primary-blue;
+		}
+	}
+
 	.flyout-inner {
 		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
 		background: white;
