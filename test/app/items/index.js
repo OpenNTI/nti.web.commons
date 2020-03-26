@@ -8,6 +8,7 @@ export Gutter from './Gutter';
 export Image from './Image';
 export InfiniteScroll from './InfiniteScroll';
 export MultiSelectText from './MultiSelectText';
+export Navigation from './Navigation';
 export Range from './RangeInput';
 export ScrollTest from './ScrollTest';
 export SquareAvatarTest from './SquareAvatarTest';

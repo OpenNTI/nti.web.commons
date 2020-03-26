@@ -1,14 +1,13 @@
 /*eslint no-console: 0*/
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // import PropTypes from 'prop-types';
 // import {addFeatureCheckClasses} from '@nti/lib-dom';
 import {Navigation, Layouts} from '../../../src';
 
-Layouts.Responsive.setWebappContext();
+Layouts.Responsive.setMobileContext();
 
-class Test extends React.Component {
+export default class Test extends React.Component {
 	state = {active: 3}
 
 	render () {
@@ -56,8 +55,3 @@ class Test extends React.Component {
 		);
 	}
 }
-
-ReactDOM.render(
-	<Test />,
-	document.getElementById('content')
-);
