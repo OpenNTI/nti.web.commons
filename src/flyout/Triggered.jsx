@@ -229,7 +229,7 @@ export default class TriggeredFlyout extends React.Component {
 
 	maybeDismiss () { if (!this.isControlled()) { this.dismiss(); }}
 	dismiss (cb) { return this.doClose(cb); }
-	doClose (cb) {
+	doClose = (cb) => {
 		if (this.isControlled()) { return; }
 
 		if (this.state.open) {
