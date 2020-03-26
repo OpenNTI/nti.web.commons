@@ -206,6 +206,12 @@ export default class TriggeredFlyout extends React.Component {
 		return open != null;
 	}
 
+	realign (...args) {
+		if (this.flyoutRef.current) {
+			this.flyoutRef.current.realign(...args);
+		}
+	}
+
 	doOpen (cb) {
 		//If the flyout is being controlled by a prop do nothing
 		if (this.isControlled()) { return; }
