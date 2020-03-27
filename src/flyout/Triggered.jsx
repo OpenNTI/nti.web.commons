@@ -328,6 +328,9 @@ export default class TriggeredFlyout extends React.Component {
 	}
 
 	onFlyoutSetup = (flyout) => {
+		//If we are controlled from a prop, we don't need to listen for click out or keyboard blur
+		if (this.isControlled()) { return; }
+
 		if (this.cleanupClickOut) { this.cleanupClickOut(); }
 		if (this.cleanupKeyboardBlur) { this.cleanupKeyboardBlur(); }
 
