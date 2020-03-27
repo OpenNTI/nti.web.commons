@@ -226,6 +226,7 @@ export default class NTITokenInput extends React.Component {
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 				horizontalAlign={Triggered.ALIGNMENTS.LEFT}
 				open={inputFocused && !focused}
+				focusOnOpen={false}
 			>
 				{this.renderSuggestions()}
 			</Triggered>
