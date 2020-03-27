@@ -380,6 +380,7 @@ export default class SelectInput extends React.Component {
 					horizontalAlign={Triggered.ALIGNMENTS.LEFT_OR_RIGHT}
 					sizing={Triggered.SIZES.MATCH_SIDE}
 					open={isOpen}
+					focusOnOpen={false}
 				>
 					<ul className={cx('nti-select-input-options', optionsClassName)} ref={this.attachOptionListRef}>
 						{activeOptions && activeOptions.map((option, index) => {

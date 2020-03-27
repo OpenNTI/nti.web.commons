@@ -77,6 +77,7 @@ export default class TriggeredFlyout extends React.Component {
 
 		open: PropTypes.bool,
 		defaultState: PropTypes.oneOf([OPEN, CLOSED]),
+		focusOnOpen: PropTypes.bool,
 
 		menu: PropTypes.bool
 	};
@@ -366,7 +367,7 @@ export default class TriggeredFlyout extends React.Component {
 
 
 	render () {
-		const {open:controlledOpen, trigger: triggerProp, classes, className, ...otherProps} = this.props;
+		const {open:controlledOpen, trigger: triggerProp, classes, className, focusOnOpen, ...otherProps} = this.props;
 		const {open: stateOpen} = this.state;
 		const triggerProps = {...restProps(Aligned, restProps(TriggeredFlyout, otherProps))};
 		const flyoutProps = {...restProps(TriggeredFlyout, otherProps), className};
@@ -428,7 +429,7 @@ export default class TriggeredFlyout extends React.Component {
 					classes={classes}
 					onFlyoutSetup={this.onFlyoutSetup}
 					onFlyoutTearDown={this.onFlyoutTearDown}
-					focusOnOpen={!this.isHover()}
+					focusOnOpen={this.isHover() ? false : (focusOnOpen ?? true)}
 				>
 					{this.renderContent()}
 					<div className={cx('focus-out-catch')} tabIndex={0} aria-hidden="true" onFocus={this.onFocusOutCatch} />
