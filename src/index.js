@@ -19,6 +19,7 @@ export * as Layouts from './layouts';
 export * as Mixins from './mixins';
 export Navigation from './navigation';
 export * as NotFound from './not-found';
+export * as Offline from './offline';
 export * as Presentation from './presentation-assets';
 export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';

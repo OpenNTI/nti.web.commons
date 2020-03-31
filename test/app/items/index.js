@@ -9,6 +9,7 @@ export Image from './Image';
 export InfiniteScroll from './InfiniteScroll';
 export MultiSelectText from './MultiSelectText';
 export Navigation from './Navigation';
+export Offline from './Offline';
 export Range from './RangeInput';
 export ScrollTest from './ScrollTest';
 export SquareAvatarTest from './SquareAvatarTest';
