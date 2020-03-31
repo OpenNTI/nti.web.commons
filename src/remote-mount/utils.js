@@ -16,10 +16,10 @@ function makeMountPoint (cls) {
 
 
 class MountPoint {
-	constructor (parent, className) {
+	constructor (parent, className, noPortal) {
 		this.className = className;
 		this.parent = parent;
-		this.isPortal = Boolean(ReactDOM.createPortal);
+		this.isPortal = !noPortal && Boolean(ReactDOM.createPortal);
 		this.renderer = this.isPortal ? 'createPortal' : 'render';
 	}
 
@@ -66,6 +66,6 @@ class MountPoint {
 
 //A utility to create a div and append it the dom to create
 //a place to mount new react components
-export function createMountPoint (appendTo, cls) {
-	return new MountPoint(appendTo, cls);
+export function createMountPoint (appendTo, cls, noPortal) {
+	return new MountPoint(appendTo, cls, noPortal);
 }

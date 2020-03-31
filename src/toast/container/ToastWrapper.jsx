@@ -13,12 +13,16 @@ const cx = classnames.bind(Styles);
 MountToast.propTypes = {
 	mountPoint: PropTypes.any,
 	toast: PropTypes.shape({
-		contents: PropTypes.any
+		contents: PropTypes.any,
+		layout: PropTypes.any,
+		style: PropTypes.any
 	})
 };
 function MountToast ({mountPoint, toast}) {
+	const {contents, ...props} = toast;
+
 	return ReactDOM.createPortal(
-		React.cloneElement(toast.contents),
+		React.cloneElement(contents, props),
 		mountPoint
 	);
 }

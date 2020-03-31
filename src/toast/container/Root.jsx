@@ -6,7 +6,7 @@ import {Locations} from '../Constants';
 import Context from '../Context';
 
 import Styles from './Styles.css';
-import Region from './Region';
+import Container from './Container';
 
 
 const cx = classnames.bind(Styles);
@@ -23,15 +23,6 @@ export default function ToastContainerRoot ({location, className, children, as:t
 	const idCount = React.useRef(0);
 	const toastRaw = React.useRef([]);
 	const [toasts, setToasts] = React.useState([]);
-	const regions = toasts.reduce((acc, toast) => {
-		const toastLocation = location || toast.location;
-
-		if (!acc[toastLocation]) { acc[toastLocation] = []; }
-
-		acc[toastLocation].push(toast);
-
-		return acc;
-	}, {[Locations.Top]: []});
 
 	const updateToasts = () => {
 		clearTimeout(updateToasts.timeout);
@@ -44,7 +35,7 @@ export default function ToastContainerRoot ({location, className, children, as:t
 	const context = {
 		getNextId () {
 			idCount.current += 1;
-			return idCount.current.toString();
+			return `toast-${idCount.current}`;
 		},
 
 		addToast (toast) {
@@ -72,15 +63,7 @@ export default function ToastContainerRoot ({location, className, children, as:t
 		<Context.Provider value={context}>
 			<Cmp className={cx('toast-root', className)} {...otherProps}>
 				{children}
-				<div className={cx('toast-container')}>
-					{
-						Object
-							.entries(regions)
-							.map(([name, regionToasts]) => (
-								<Region key={name} location={name} toasts={regionToasts} />
-							))
-					}
-				</div>
+				<Container toasts={toasts} location={location} />
 			</Cmp>
 		</Context.Provider>
 	);

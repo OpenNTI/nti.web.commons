@@ -2,7 +2,6 @@
 	border-radius: 3px;
 	background-color: var(--panel-background);
 	box-shadow: 0 0 0 1px var(--border-grey-light);
-	margin: 0 0.5rem;
 	padding: 0.25rem 0.5rem;
 	display: flex;
 	flex-direction: row;

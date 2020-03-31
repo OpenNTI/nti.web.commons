@@ -26,18 +26,18 @@ export default class Test extends React.Component {
 		return (
 			<div>
 				<button onClick={this.add}>Add Toast</button>
-				<Toast.Container location="Top">
-					{this.state.toasts.map((toast, key) => {
-						return (
-							<Toast.MessageBar
-								key={toast.name}
-								title="Toast"
-								message={toast.name}
-								onDismiss={() => this.clearToast(toast.name)}
-							/>
-						);
-					})}
-				</Toast.Container>
+				{this.state.toasts.map((toast, key) => {
+					return (
+						<Toast.MessageCard
+							key={toast.name}
+							location={Toast.Locations.TopRight}
+							icon={(<i className="icon-alert" />)}
+							title="No Network Connection"
+							message="Please check your network connection."
+							onDismiss={() => this.clearToast(toast.name)}
+						/>
+					);
+				})}
 			</div>
 		);
 	}
