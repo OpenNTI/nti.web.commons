@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
+import {ForwardRef} from '../../decorators';
+
 import {getParts, RENDERERS} from './InlineUtils';
 
 const DEFAULT_TEXT = {
@@ -28,9 +30,10 @@ InlineList.propTypes = {
 	children: PropTypes.node,
 	limit: PropTypes.number,
 	getString: PropTypes.func,
-	renderOverrides: PropTypes.object
+	renderOverrides: PropTypes.object,
+	listRef: PropTypes.any
 };
-export default function InlineList ({children, limit = 1, getString, renderOverrides = {}, ...otherProps}) {
+function InlineList ({children, limit = 1, getString, renderOverrides = {}, listRef, ...otherProps}) {
 	const renderableChildren = React.Children.toArray(children)
 		.filter(x => x !== false && x != null);
 
@@ -69,8 +72,10 @@ export default function InlineList ({children, limit = 1, getString, renderOverr
 	}, []);
 
 	return (
-		<div className="inline-list" {...otherProps} >
+		<div className="inline-list" {...otherProps} ref={listRef} >
 			{renders}
 		</div>
 	);
 }
+
+export default ForwardRef('listRef')(InlineList);
