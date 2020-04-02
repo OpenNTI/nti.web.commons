@@ -412,6 +412,7 @@ export default class AlignedFlyout extends React.Component {
 			alignToArrow,
 			classes,
 			transition,
+			focusOnOpen,
 			...otherProps
 		} = this.props;
 
@@ -453,6 +454,10 @@ export default class AlignedFlyout extends React.Component {
 			flyoutProps['aria-role'] = 'dialog';
 		}
 
+		if (focusOnOpen) {
+			flyoutProps['tabIndex'] = 0;
+		}
+
 		const flyout = (
 			<div
 				{...flyoutProps}
@@ -460,7 +465,6 @@ export default class AlignedFlyout extends React.Component {
 				className={cls}
 				ref={this.attachFlyoutRef}
 				style={outerStyles}
-				tabIndex={0}
 			>
 				{arrow && (<div className="flyout-arrow" />)}
 				<div className="flyout-inner" style={innerStyle}>
