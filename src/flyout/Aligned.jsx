@@ -217,6 +217,17 @@ export default class AlignedFlyout extends React.Component {
 		} else if (newAlign !== oldAlign) {
 			this.realign();
 		}
+
+		if (visible && !this.state.aligning && this.flyout) {
+			const prev = this.flyoutSize;
+
+			const {offsetWidth: width, offsetHeight: height} = this.flyout;
+			this.flyoutSize = {width, height};
+
+			if (prev && (prev.width !== this.flyoutSize.width || prev.height !== this.flyoutSize.height)) {
+				this.realign();
+			}
+		}
 	}
 
 
