@@ -43,6 +43,7 @@ export default class NavigationTabsMenuView extends React.Component {
 				transition={{className: 'navigation-menu', timeout: transitionTimeout}}
 				className="nti-navigation-menu-flyout"
 				defaultState={expandTabs ? Triggered.OPEN : Triggered.CLOSED}
+				focusOnOpen={false}
 			>
 				<Menu tabs={tabs} renderTab={renderTab} />
 			</Triggered>
