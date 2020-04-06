@@ -17,6 +17,27 @@ function getSelectableItemIds (list) {
 		.map(item => item.getAttribute(SelectableItemProp));
 }
 
+function getArrayNextItem (items, focused, direction) {
+	const up = direction < 0;
+	const down = direction > 0;
+
+	const first = items[0];
+	const last = items[items.length - 1];
+
+	const index = items.indexOf(focused);
+
+	if (up && index <= 0) { return last; }
+	if (down && index < 0) { return first; }
+	if (down && index >= items.length - 1) { return first; }
+
+	return items[index + direction];
+}
+
+function stop (e) {
+	e.stopPropagation();
+	e.preventDefault();
+}
+
 SelectableList.Item = Item;
 SelectableList.propTypes = {
 	as: PropTypes.any,
@@ -33,7 +54,7 @@ export default function SelectableList ({as: tag, useGlobalListeners, ...otherPr
 
 	const context = {
 		getItemId: () => getNextId(),
-		isFocused: (id) => id && focused === id
+		focused
 	};
 
 	const focusNextItem = () => {
@@ -41,41 +62,40 @@ export default function SelectableList ({as: tag, useGlobalListeners, ...otherPr
 
 		const items = getSelectableItemIds(cmpRef.current);
 
-		if (!focused) { setFocused(0); return; }
-
-		debugger;
+		setFocused(getArrayNextItem(items, focused, 1));
 	};
 
 	const focusPreviousItem = () => {
+		if (!cmpRef.current) { return; }
 
+		const items = getSelectableItemIds(cmpRef.current);
+
+		setFocused(getArrayNextItem(items, focused, -1));
 	};
 
 	const onKeyDown = (e) => {
 		if (e.key === 'ArrowDown') {
+			stop(e);
 			focusNextItem();
+		} else if (e.key === 'ArrowUp') {
+			stop(e);
+			focusPreviousItem();
 		}
-	};
-
-	const onKeyUp = () => {
-		debugger;
 	};
 
 	React.useEffect(() => {
 		if (!useGlobalListeners) { return () => {}; }
 
 		global.document?.addEventListener('keydown', onKeyDown);
-		global.document?.addEventListener('keyup', onKeyUp);
 
 		return () => {
 			global.document?.removeEventListener('keydown', onKeyDown);
-			global.document?.removeEventListener('keyup', onKeyUp);
 		};
-	}, [useGlobalListeners]);
+	});
 
 	if (!useGlobalListeners) {
 		cmpProps.tabIndex = 0;
 		cmpProps.onKeyDown = onKeyDown;
-		cmpProps.onKeyUp = onKeyUp;
 	}
 
 	return (
