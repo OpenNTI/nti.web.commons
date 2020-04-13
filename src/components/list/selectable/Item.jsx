@@ -10,11 +10,13 @@ const cx = classnames.bind(Styles);
 
 SelectableItem.propTypes = {
 	as: PropTypes.any,
-	value: PropTypes.any,
+	value: PropTypes.any.isRequired,
+
 	className: PropTypes.string,
-	focusedClassName: PropTypes.string
+	focusedClassName: PropTypes.string,
+	selectedClassName: PropTypes.string
 };
-export default function SelectableItem ({as: tag, value, className, focusedClassName, ...otherProps}) {
+export default function SelectableItem ({as: tag, value, className, focusedClassName, selectedClassName, ...otherProps}) {
 	const Cmp = tag || 'li';
 
 	const [id, setId] = React.useState(null);
@@ -25,11 +27,27 @@ export default function SelectableItem ({as: tag, value, className, focusedClass
 	React.useEffect(() => {
 		const itemId = SelectableContext.getItemId();
 
+		SelectableContext.addItem(itemId, value);
 		setId(itemId);
-	}, []);
 
-	const focused = id === SelectableContext.focused;
-	const itemProps = {};
+		return () => {
+			SelectableContext.removeItem(itemId);
+		};
+	}, [value]);
+
+	const focused = SelectableContext.isFocused(id);
+	const selected = SelectableContext.isSelected(id);
+
+	const itemProps = {
+		className: cx(
+			className,
+			'selectable-item',
+			{
+				[focusedClassName || 'focused-item']: focused,
+				[selectedClassName || 'selected-item']: selected
+			}
+		)
+	};
 
 	if (id) {
 		itemProps[SelectableItemProp] = id;
@@ -39,7 +57,7 @@ export default function SelectableItem ({as: tag, value, className, focusedClass
 		<Cmp
 			{...otherProps}
 			{...itemProps}
-			className={cx(className, cx('selectable-item'), {[focusedClassName || cx('focused-item')]: focused})}
+			role="listitem"
 		/>
 	);
 }

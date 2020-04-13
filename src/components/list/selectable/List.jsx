@@ -1,106 +1,104 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 
-import {SelectableItemProp} from './Constants';
+import Variant from '../../../HighOrderComponents/Variant';
+
+import Styles from './Styles.css';
+import {getKeyDownHandler, getItemId} from './utils';
 import Context from './Context';
 import Item from './Item';
 
-function getNextId () {
-	getNextId.seenCount = (getNextId.seenCount || 0) + 1;
+const cx = classnames.bind(Styles);
 
-	return `selectable-item-${getNextId.seenCount}`;
-}
-
-function getSelectableItemIds (list) {
-	return Array
-		.from(list.querySelectorAll(`[${SelectableItemProp}]`))
-		.map(item => item.getAttribute(SelectableItemProp));
-}
-
-function getArrayNextItem (items, focused, direction) {
-	const up = direction < 0;
-	const down = direction > 0;
-
-	const first = items[0];
-	const last = items[items.length - 1];
-
-	const index = items.indexOf(focused);
-
-	if (up && index <= 0) { return last; }
-	if (down && index < 0) { return first; }
-	if (down && index >= items.length - 1) { return first; }
-
-	return items[index + direction];
-}
-
-function stop (e) {
-	e.stopPropagation();
-	e.preventDefault();
-}
-
+SelectableList.Unstyled = Variant(SelectableList, {className: cx('unstyled-list')}, 'Unstyled');
 SelectableList.Item = Item;
 SelectableList.propTypes = {
 	as: PropTypes.any,
-	useGlobalListeners: PropTypes.bool
+	controlledBy: PropTypes.any,
+	selected: PropTypes.any,
+
+	onSelectedChange: PropTypes.func,
+	onFocusedChange: PropTypes.func
 };
-export default function SelectableList ({as: tag, useGlobalListeners, ...otherProps}) {
+export default function SelectableList ({as: tag, controlledBy, selected, onSelectedChange, onFocusedChange, ...otherProps}) {
 	const Cmp = tag || 'ul';
 	const cmpRef = React.useRef();
 	const cmpProps = {
-		ref: cmpRef
+		role: 'listbox'
 	};
 
+	const idsToValue = React.useRef({});
 	const [focused, setFocused] = React.useState(null);
 
 	const context = {
-		getItemId: () => getNextId(),
-		focused
-	};
+		getItemId: () => getItemId(),
 
-	const focusNextItem = () => {
-		if (!cmpRef.current) { return; }
+		addItem: (id, value) => {
+			idsToValue.current[id] = value;
+		},
 
-		const items = getSelectableItemIds(cmpRef.current);
+		removeItem: (id) => {
+			delete idsToValue.current[id];
+		},
+		
+		isFocused: (id) => id && id === focused,
+		isSelected: (id) => {
+			if (!selected) { return false; }
 
-		setFocused(getArrayNextItem(items, focused, 1));
-	};
+			const value = idsToValue.current[id];
 
-	const focusPreviousItem = () => {
-		if (!cmpRef.current) { return; }
+			if (!Array.isArray(selected)) { return selected === value; }
 
-		const items = getSelectableItemIds(cmpRef.current);
+			const selectedSet = new Set(selected);
 
-		setFocused(getArrayNextItem(items, focused, -1));
-	};
-
-	const onKeyDown = (e) => {
-		if (e.key === 'ArrowDown') {
-			stop(e);
-			focusNextItem();
-		} else if (e.key === 'ArrowUp') {
-			stop(e);
-			focusPreviousItem();
+			return selectedSet.has(value);
 		}
 	};
 
-	React.useEffect(() => {
-		if (!useGlobalListeners) { return () => {}; }
+	const onKeyDown = getKeyDownHandler(
+		cmpRef,
+		{
+			focused,
+			setFocused: (newFocused) => {
+				setFocused(newFocused);
 
-		global.document?.addEventListener('keydown', onKeyDown);
+				const value = idsToValue.current[newFocused];
+
+				if (onFocusedChange) { onFocusedChange(value); }
+			},
+
+			selected,
+			setSelected: (newSelected) => {
+				const value = idsToValue.current[newSelected];
+			
+				if (onSelectedChange) {
+					onSelectedChange(value);
+				}
+			}
+		}
+	);
+
+	React.useEffect(() => {
+		if (!controlledBy) { return; }
+
+		const controller = controlledBy === global ? global.document : controlledBy;
+
+		controller?.addEventListener('keydown', onKeyDown);
 
 		return () => {
-			global.document?.removeEventListener('keydown', onKeyDown);
+			controller?.removeEventListener('keydown', onKeyDown);
 		};
 	});
 
-	if (!useGlobalListeners) {
+	if (!controlledBy) {
 		cmpProps.tabIndex = 0;
 		cmpProps.onKeyDown = onKeyDown;
 	}
 
 	return (
 		<Context.Provider value={context}>
-			<Cmp {...otherProps} ref={cmpRef} {...cmpProps} />
+			<Cmp {...otherProps} {...cmpProps} ref={cmpRef} />
 		</Context.Provider>
 	);
 }
