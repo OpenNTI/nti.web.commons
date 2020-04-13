@@ -11,6 +11,8 @@ import Item from './Item';
 
 const cx = classnames.bind(Styles);
 
+//TODO: Use this components in the select/token inputs
+
 SelectableList.Unstyled = Variant(SelectableList, {className: cx('unstyled-list')}, 'Unstyled');
 SelectableList.Item = Item;
 SelectableList.propTypes = {
