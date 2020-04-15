@@ -7,6 +7,7 @@ export Form from './Form';
 export Gutter from './Gutter';
 export Image from './Image';
 export InfiniteScroll from './InfiniteScroll';
+export Inputs from './Inputs';
 export MultiSelectText from './MultiSelectText';
 export Navigation from './Navigation';
 export Offline from './Offline';
