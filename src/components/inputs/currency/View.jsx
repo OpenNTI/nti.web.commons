@@ -70,16 +70,25 @@ export default function CurrencyInput ({amount, currency = 'USD', locale = 'en-U
 
 	return (
 		<div className={cx('nti-currency-input')}>
+			<TextInput
+				className={cx('nti-currency-mask')}
+				value={`${display}${mask}`}
+				readOnly
+				autoComplete="off"
+				aria-hidden="true"
+			/>
+			<TextInput
+				className={cx('nti-currency-input')}
+				value={display}
+				onChange={onChange}
+				onBlur={onBlur}
+				{...otherProps}
+			/>
 			{intlInfo && (
 				<div className={cx('nti-currency-symbol')} aria-hidden="true">
 					{intlInfo.currencySymbol}
 				</div>
 			)}
-			<TextInput value={display} onChange={onChange} onBlur={onBlur} {...otherProps} />
-			<div className={cx('nti-currency-mask')} aria-hidden="true">
-				<span className={cx('display')}>{display}</span>
-				<span className={cx('mask')}>{mask}</span>
-			</div>
 		</div>
 	);
 }
