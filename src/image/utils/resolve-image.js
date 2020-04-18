@@ -1,6 +1,11 @@
 import * as srcsetUtils from '../srcset';
 
 function getAttempt (src, srcset, fallback) {
+	if (Array.isArray(src) && !srcset) {
+		srcset = src;
+		src = null;
+	}
+
 	if (!src && !srcset && !fallback) { return null; }
 	if (!src && !srcset) { return {src: fallback, getNextAttempt: () => getAttempt()}; }
 	if (!srcset) { return {src, getNextAttempt: () => getAttempt(null, null, fallback)}; }
