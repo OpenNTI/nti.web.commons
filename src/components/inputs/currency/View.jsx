@@ -28,7 +28,7 @@ CurrencyInput.propTypes = {
 
 	onChange: PropTypes.func
 };
-export default function CurrencyInput ({amount, currency = 'USD', locale = 'en-US', omitFractional, onChange:onChangeProp, ...otherProps}) {
+export default function CurrencyInput ({className, amount, currency = 'USD', locale = 'en-US', omitFractional, onChange:onChangeProp, ...otherProps}) {
 	const intlInfo = React.useMemo(() => getIntlFormatInfo(currency, locale, omitFractional), [currency, locale, omitFractional]);
 
 	const value = React.useRef(null);
@@ -70,7 +70,7 @@ export default function CurrencyInput ({amount, currency = 'USD', locale = 'en-U
 	};
 
 	return (
-		<div className={cx('nti-currency-input')}>
+		<div className={cx('nti-currency-input', className)}>
 			<TextInput
 				className={cx('nti-currency-mask')}
 				value={`${display}${mask}`}
