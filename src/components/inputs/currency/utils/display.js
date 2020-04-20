@@ -6,7 +6,7 @@ const getRegExp = (x, flags) => new RegExp(escapeRegExp(x), flags);
 export function getDisplayFromAmount (amount, intlInfo) {
 	if (amount == null) { return ''; }
 
-	return intlInfo.format(amount / 100).replace(intlInfo.currencySymbol, '');
+	return intlInfo.format(amount).replace(intlInfo.currencySymbol, '');
 }
 
 export function getAmountFromDisplay (display, intlInfo) {
