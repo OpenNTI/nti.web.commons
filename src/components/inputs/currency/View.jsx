@@ -73,7 +73,7 @@ export default function CurrencyInput ({className, amount, currency = 'USD', loc
 		<div className={cx('nti-currency-input', className)}>
 			<TextInput
 				className={cx('nti-currency-mask')}
-				value={`${display}${mask}`}
+				value={`${display || ''}${mask}`}
 				readOnly
 				autoComplete="off"
 				aria-hidden="true"
