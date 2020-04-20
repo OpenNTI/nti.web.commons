@@ -31,10 +31,14 @@ function getParts (format) {
 		}, {});
 }
 
-export default function getIntlFormatInfo (currency, locale) {
-	const format = new Intl.NumberFormat(locale, {style: 'currency', currency});
+export default function getIntlFormatInfo (currency, locale, omitFractional) {
+	const fullFormat = new Intl.NumberFormat(locale, {style: 'currency', currency});
+	const format = omitFractional ?
+		new Intl.NumberFormat(locale, {style: 'currency', currency, maximumFractionDigits: 0, minimumFractionDigits: 0}) :
+		fullFormat;
+
+	const parts = getParts(fullFormat);//Use the full format to make sure we get the decimal symbol
 	const options = format.resolvedOptions();
-	const parts = getParts(format);
 
 	return {
 		format: x => format.format(x),

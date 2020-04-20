@@ -24,11 +24,12 @@ CurrencyInput.propTypes = {
 	amount: PropTypes.number,
 	currency: PropTypes.string,
 	locale: PropTypes.string,
+	omitFractional: PropTypes.bool,
 
 	onChange: PropTypes.func
 };
-export default function CurrencyInput ({amount, currency = 'USD', locale = 'en-US', onChange:onChangeProp, ...otherProps}) {
-	const intlInfo = React.useMemo(() => getIntlFormatInfo(currency, locale), [currency]);
+export default function CurrencyInput ({amount, currency = 'USD', locale = 'en-US', omitFractional, onChange:onChangeProp, ...otherProps}) {
+	const intlInfo = React.useMemo(() => getIntlFormatInfo(currency, locale, omitFractional), [currency, locale, omitFractional]);
 
 	const value = React.useRef(null);
 	const [display, setDisplay] = React.useState(null);

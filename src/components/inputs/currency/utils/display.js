@@ -6,7 +6,7 @@ const getRegExp = (x, flags) => new RegExp(escapeRegExp(x), flags);
 export function getDisplayFromAmount (amount, intlInfo) {
 	if (amount == null) { return ''; }
 
-	return intlInfo.format(amount / 100);
+	return intlInfo.format(amount / 100).replace(intlInfo.currencySymbol, '');
 }
 
 export function getAmountFromDisplay (display, intlInfo) {
@@ -35,9 +35,12 @@ export function getMaskFromDisplay (display, intlInfo) {
 	}
 
 	const minFraction = intlInfo.minimumFractionDigits;
+	const maxFraction = intlInfo.maximumFractionDigits;
+
+	if (maxFraction === 0) { return mask; }
 
 	if (fraction == null) {
-		mask += `.${('0').repeat(minFraction)}`;
+		mask += `${intlInfo.decimal}${('0').repeat(minFraction)}`;
 	} else if (fraction.length < minFraction) {
 		mask += ('0').repeat(minFraction - fraction.length);
 	}
@@ -51,6 +54,7 @@ export function isValidIntermeddiateDisplay (display, intlInfo) {
 	const [integer, fraction, extra] = display.split(intlInfo.decimal);
 
 	if (extra != null) { return false; }
+	if (fraction != null && intlInfo.maximumFractionDigits === 0) { return false; }
 	if (fraction && fraction.length > intlInfo.maximumFractionDigits) { return false; }
 	if (fraction && fraction.indexOf(intlInfo.group) >= 0) { return false; }
 	if (fraction && !OnlyDigits.test(fraction)) { return false; }
