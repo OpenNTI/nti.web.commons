@@ -6,16 +6,20 @@ const getRegExp = (x, flags) => new RegExp(escapeRegExp(x), flags);
 export function getDisplayFromAmount (amount, intlInfo) {
 	if (amount == null) { return ''; }
 
-	return intlInfo.format(amount).replace(intlInfo.currencySymbol, '');
+	return intlInfo.format(amount / 100).replace(intlInfo.currencySymbol, '');
 }
 
 export function getAmountFromDisplay (display, intlInfo) {
 	if (!display) { return null; }
 
 	const mask = getMaskFromDisplay(display, intlInfo);
-	const clean = (`${display}${mask}`)
+	let clean = (`${display}${mask}`)
 		.replace(getRegExp(intlInfo.group, 'g'), '')
 		.replace(getRegExp(intlInfo.decimal), '');
+
+	if (intlInfo.maximumFractionDigits === 0) {
+		clean = `${clean}00`;
+	}
 
 	return parseInt(clean, 10);
 }
