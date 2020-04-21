@@ -25,10 +25,11 @@ CurrencyInput.propTypes = {
 	currency: PropTypes.string,
 	locale: PropTypes.string,
 	omitFractional: PropTypes.bool,
+	max: PropTypes.number,
 
 	onChange: PropTypes.func
 };
-export default function CurrencyInput ({className, amount, currency = 'USD', locale = 'en-US', omitFractional, onChange:onChangeProp, ...otherProps}) {
+export default function CurrencyInput ({className, amount, currency = 'USD', locale = 'en-US', max = Infinity, omitFractional, onChange:onChangeProp, ...otherProps}) {
 	const intlInfo = React.useMemo(() => getIntlFormatInfo(currency, locale, omitFractional), [currency, locale, omitFractional]);
 
 	const value = React.useRef(null);
@@ -46,6 +47,9 @@ export default function CurrencyInput ({className, amount, currency = 'USD', loc
 		if (!isValidIntermeddiateDisplay(nextDisplay, intlInfo)) { return; }
 
 		const nextValue = getAmountFromDisplay(nextDisplay, intlInfo);
+
+		if (nextValue > max) { return; }
+
 		const changed = value.current !== nextValue;
 		const backspaced = nextDisplay < display;
 
@@ -88,6 +92,11 @@ export default function CurrencyInput ({className, amount, currency = 'USD', loc
 			{intlInfo && (
 				<div className={cx('nti-currency-symbol')} aria-hidden="true">
 					{intlInfo.currencySymbol}
+				</div>
+			)}
+			{intlInfo && (
+				<div className={cx('nti-currency')} aria-hidden="true">
+					{intlInfo.currency}
 				</div>
 			)}
 		</div>
