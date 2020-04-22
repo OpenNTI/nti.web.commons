@@ -43,6 +43,7 @@
 
 	& .nti-currency-mask {
 		color: var(--tertiary-grey);
+		margin: 0;
 	}
 
 	& .nti-currency-input {
