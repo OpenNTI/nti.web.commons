@@ -43,22 +43,19 @@ export default function CurrencyInput ({className, amount, currency = 'USD', loc
 		}
 	}, [amount]);
 
-	const onChange = (nextDisplay, e) => {
-		if (!isValidIntermeddiateDisplay(nextDisplay, intlInfo)) { return; }
+	const onChange = (inputValue, e) => {
+		if (!isValidIntermeddiateDisplay(inputValue, intlInfo)) { return; }
 
+		const backspaced = inputValue < display;
+		const nextDisplay = e.target.selectionEnd === inputValue.length ? insertGroupSeparators(inputValue, intlInfo, backspaced) : inputValue;
 		const nextValue = getAmountFromDisplay(nextDisplay, intlInfo);
 
 		if (nextValue > max) { return; }
 
 		const changed = value.current !== nextValue;
-		const backspaced = nextDisplay < display;
 
 		value.current = nextValue;
-		setDisplay(
-			e.target.selectionEnd === nextDisplay.length ?
-				insertGroupSeparators(nextDisplay, intlInfo, backspaced) :
-				nextDisplay
-		);
+		setDisplay(nextDisplay);
 
 		if (onChangeProp && changed) {
 			onChangeProp(nextValue, currency);
