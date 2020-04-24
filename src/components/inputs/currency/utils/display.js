@@ -6,7 +6,17 @@ const getRegExp = (x, flags) => new RegExp(escapeRegExp(x), flags);
 export function getDisplayFromAmount (amount, intlInfo) {
 	if (amount == null) { return ''; }
 
-	return intlInfo.format(amount / 100).replace(intlInfo.currencySymbol, '');
+	let formatted = intlInfo.format(amount / 100).replace(intlInfo.currencySymbol, '');
+
+	//On edge, the format is ignoring the maximumFractionDigits
+	//so we need to make sure its honored.
+	if (intlInfo.maximumFractionDigits === 0) {
+		const parts = formatted.split(intlInfo.decimal);
+
+		formatted = parts[0];
+	}
+
+	return formatted;
 }
 
 export function getAmountFromDisplay (display, intlInfo) {
