@@ -71,8 +71,18 @@ const DefaultProperties = {
 			}
 		}
 	},
+	certificates: {
+		sidebar: {
+			logo: (_, globalTheme) => globalTheme.assets.certificate_logo,
+			backgroundColor: (_, globalTheme) => globalTheme.certificateColor,
+			image: (_, globalTheme) => globalTheme.assets.certificate_sidebar_image
+		},
+		label: (_, globalTheme) => globalTheme.certificateCompletionLabel
+	},
 	brandName: 'NextThought',
 	brandColor: null,//'#3FB34F',
+	certificateCompletionLabel: 'Certification of Completion',
+	certificateColor: '#3FB34F',
 	assets: {
 		logo: getAsset({
 			alt: 'logo',
@@ -95,7 +105,13 @@ const DefaultProperties = {
 			alt: 'favicon',
 			fallback: Fallbacks.Favicon,
 			href: '/favicon.ico'
-		})
+		}),
+		'certificate_logo': getAsset({
+			alt: 'logo',
+			fallback: Fallbacks.Logo,
+			href: makeAssetHREFFallbacks(DefaultLogo)
+		}),
+		'certificate_sidebar_image': getAsset({})
 	}
 };
 
