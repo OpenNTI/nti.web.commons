@@ -111,7 +111,10 @@ const DefaultProperties = {
 			fallback: Fallbacks.Logo,
 			href: makeAssetHREFFallbacks(DefaultLogo)
 		}),
-		'certificate_sidebar_image': getAsset({})
+		'certificate_sidebar_image': getAsset({
+			alt: '',
+			href: ''
+		})
 	}
 };
 
