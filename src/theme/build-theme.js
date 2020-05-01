@@ -74,7 +74,7 @@ const DefaultProperties = {
 	certificates: {
 		sidebar: {
 			logo: (_, globalTheme) => globalTheme.assets.certificate_logo,
-			backgroundColor: (_, globalTheme) => globalTheme.certificateColor,
+			backgroundColor: (_, globalTheme) => globalTheme.certificateBrandColor,
 			image: (_, globalTheme) => globalTheme.assets.certificate_sidebar_image
 		},
 		label: (_, globalTheme) => globalTheme.certificateCompletionLabel
@@ -82,7 +82,7 @@ const DefaultProperties = {
 	brandName: 'NextThought',
 	brandColor: null,//'#3FB34F',
 	certificateCompletionLabel: 'Certification of Completion',
-	certificateColor: '#3FB34F',
+	certificateBrandColor: '#3FB34F',
 	assets: {
 		logo: getAsset({
 			alt: 'logo',
