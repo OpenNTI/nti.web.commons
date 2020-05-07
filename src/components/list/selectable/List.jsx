@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 import Variant from '../../../HighOrderComponents/Variant';
 
 import Styles from './Styles.css';
-import {getKeyDownHandler, getItemId} from './utils';
+import {getKeyDownHandler, getItemId, getSelectableItemIds} from './utils';
 import Context from './Context';
 import Item from './Item';
 
@@ -21,9 +21,11 @@ SelectableList.propTypes = {
 	selected: PropTypes.any,
 
 	onSelectedChange: PropTypes.func,
-	onFocusedChange: PropTypes.func
+	onFocusedChange: PropTypes.func,
+
+	autoFocus: PropTypes.bool
 };
-export default function SelectableList ({as: tag, controlledBy, selected, onSelectedChange, onFocusedChange, ...otherProps}) {
+export default function SelectableList ({as: tag, controlledBy, selected, onSelectedChange, onFocusedChange, autoFocus, ...otherProps}) {
 	const Cmp = tag || 'ul';
 	const cmpRef = React.useRef();
 	const cmpProps = {
@@ -86,12 +88,24 @@ export default function SelectableList ({as: tag, controlledBy, selected, onSele
 
 		const controller = controlledBy === global ? global.document : controlledBy;
 
-		controller?.addEventListener('keydown', onKeyDown);
+		controller?.addEventListener('keydown', onKeyDown, true);
 
 		return () => {
-			controller?.removeEventListener('keydown', onKeyDown);
+			controller?.removeEventListener('keydown', onKeyDown, true);
 		};
 	});
+
+	React.useEffect(() => {
+		if (!autoFocus) { return; }
+
+		setTimeout(() => {
+			const ids = getSelectableItemIds(cmpRef);
+
+			if (!focused && ids.length) {
+				setFocused(ids[0]);
+			}
+		}, 0);
+	}, []);
 
 	if (!controlledBy) {
 		cmpProps.tabIndex = 0;
