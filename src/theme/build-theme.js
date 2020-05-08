@@ -73,8 +73,8 @@ const DefaultProperties = {
 	},
 	certificates: {
 		sidebar: {
-			logo: (_, globalTheme) => globalTheme.assets.certificate_logo,
-			backgroundColor: (_, globalTheme) => globalTheme.certificateBrandColor,
+			logo: (_, globalTheme) => globalTheme.assets.certificate_logo || globalTheme.assets.logo,
+			backgroundColor: (_, globalTheme) => globalTheme.certificateBrandColor || globalTheme.brandColor,
 			image: (_, globalTheme) => globalTheme.assets.certificate_sidebar_image
 		},
 		label: (_, globalTheme) => globalTheme.certificateCompletionLabel
@@ -82,7 +82,7 @@ const DefaultProperties = {
 	brandName: 'NextThought',
 	brandColor: null,//'#3FB34F',
 	certificateCompletionLabel: 'Certification of Completion',
-	certificateBrandColor: '#3FB34F',
+	certificateBrandColor: null,
 	assets: {
 		logo: getAsset({
 			alt: 'logo',
@@ -107,12 +107,12 @@ const DefaultProperties = {
 			href: '/favicon.ico'
 		}),
 		'certificate_logo': getAsset({
-			alt: 'logo',
-			fallback: Fallbacks.Logo,
-			href: makeAssetHREFFallbacks(DefaultLogo)
+			alt: '',
+			href: ''
 		}),
 		'certificate_sidebar_image': getAsset({
 			alt: '',
+			fallback: Fallbacks.CertificateSidebar,
 			href: ''
 		})
 	}
