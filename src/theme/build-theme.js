@@ -74,7 +74,7 @@ const DefaultProperties = {
 	certificates: {
 		sidebar: {
 			logo: (_, globalTheme) => globalTheme.assets.certificate_logo || globalTheme.assets.logo,
-			backgroundColor: (_, globalTheme) => globalTheme.certificateBrandColor || globalTheme.brandColor,
+			backgroundColor: (_, globalTheme) => globalTheme.certificateBrandColor || globalTheme.brandColor || '#3FB34F',
 			image: (_, globalTheme) => globalTheme.assets.certificate_sidebar_image
 		},
 		label: (_, globalTheme) => globalTheme.certificateCompletionLabel
@@ -83,6 +83,7 @@ const DefaultProperties = {
 	brandColor: null,//'#3FB34F',
 	certificateCompletionLabel: 'Certification of Completion',
 	certificateBrandColor: null,
+	surpressCertificateLogo: false,
 	assets: {
 		logo: getAsset({
 			alt: 'logo',
@@ -108,11 +109,10 @@ const DefaultProperties = {
 		}),
 		'certificate_logo': getAsset({
 			alt: '',
-			href: ''
+			href: makeAssetHREFFallbacks(Fallbacks.CertificateLogo)
 		}),
 		'certificate_sidebar_image': getAsset({
 			alt: '',
-			fallback: Fallbacks.CertificateSidebar,
 			href: ''
 		})
 	}
