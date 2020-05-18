@@ -1,0 +1,35 @@
+.nt-page {
+	max-width: 1024px;
+	margin: 0 auto;
+
+	--page-gap: 5px;
+	--side-padding: 2rem;
+
+	&.navigation-content,
+	&.content-navigation {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		& .nt-page-navigation {
+			flex: 0 0 auto;
+			width: 255px;
+		}
+
+		& .nt-page-content {
+			flex: 1 1 auto;
+		}
+	}
+
+	&.navigation-content {
+		& .nt-page-navigation {
+			margin-right: var(--page-gap);
+		}
+	}
+
+	&.content-navigation {
+		& .nt-page-navigation {
+			margin-left: var(--page-gap);
+		}
+	}
+}

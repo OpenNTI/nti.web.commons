@@ -11,6 +11,7 @@ export Inputs from './Inputs';
 export MultiSelectText from './MultiSelectText';
 export Navigation from './Navigation';
 export Offline from './Offline';
+export Page from './Page';
 export Range from './RangeInput';
 export ScrollTest from './ScrollTest';
 export SquareAvatarTest from './SquareAvatarTest';
