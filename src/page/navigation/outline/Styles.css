@@ -1,7 +1,4 @@
-.navigation-outline {
-	position: sticky;
-	top: calc(var(--page-margin-top, 0px) + var(--nt-app-top-offset, 0px));
-	
+.navigation-outline {	
 	--small-padding: 13px;
 	--large-padding: 1rem;
 }
