@@ -3,17 +3,20 @@
 	box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15);
 	position: sticky;
 	top: calc(var(--page-margin-top, 0px) + var(--nt-app-top-offset, 0px));
+	
+	--small-padding: 13px;
+	--large-padding: 1rem;
 }
 
 .outline-text-header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 0.875rem 0.875rem 0.875rem 1rem;
+	padding: var(--small-padding) var(--small-padding) var(--small-padding) var(--large-padding);
 	border-bottom: 1px solid var(--border-grey-light);
 
 	& img {
-		width: 20px;
+		width: 24px;
 		margin-right: 0.5rem;
 	}
 
@@ -27,7 +30,7 @@
 
 .outline-item {
 	display: block;
-	padding: 0.625rem 0.875rem 0.625rem 1rem;
+	padding: 0.625rem var(--small-padding) 0.625rem var(--large-padding);
 	font-size: 0.875rem;
 	font-weight: 400;
 	line-height: 1.45;
