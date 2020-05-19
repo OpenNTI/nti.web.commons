@@ -15,6 +15,11 @@ export default
 class NTIText extends React.Component {
 	static Overflow = Overflow
 
+	static Classes = {
+		Base: variants.Base.className,
+		Condensed: variants.Condensed.className
+	}
+
 	static Base = Variant(this, variants.Base, 'Base')
 	static Condensed = Variant(this, variants.Condensed, 'Condensed')
 
