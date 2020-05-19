@@ -13,13 +13,14 @@ PageNavigation.isNavigation = child => child.type === PageNavigation;
 PageNavigation.propTypes = {
 	className: PropTypes.string,
 	as: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
+	card: PropTypes.bool
 };
-export default function PageNavigation ({className, as: tag, children}) {
+export default function PageNavigation ({className, as: tag, children, card = true}) {
 	const Cmp = tag || 'nav';
 
 	return (
-		<Cmp className={cx('nt-page-navigation', className)} >
+		<Cmp className={cx('nt-page-navigation', className, {card})} >
 			{children}
 		</Cmp>
 	);
