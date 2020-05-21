@@ -1,6 +1,8 @@
 .navigation-outline {	
 	--small-padding: 13px;
 	--large-padding: 1rem;
+
+	color: var(--secondary-grey);
 }
 
 .outline-text-header {
