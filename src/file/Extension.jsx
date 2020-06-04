@@ -10,7 +10,7 @@ function getExtension (file, mimeType) {
 	const type = mimeType ?? file?.contentType;
 	const extForType = type && mime.extension(type);
 
-	return extForType ?? Name.getParts(file)?.ext ?? 'File';
+	return extForType || Name.getParts(file)?.ext || 'File';
 }
 
 FileExtension.propTypes = {
