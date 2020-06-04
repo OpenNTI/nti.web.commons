@@ -8,10 +8,9 @@ const cx = classnames.bind(Styles);
 
 SVGIcon.propTypes = {
 	className: PropTypes.string,
-	viewBox: PropTypes.string,
-	children: PropTypes.any
+	viewBox: PropTypes.string
 };
-export default function SVGIcon ({className, viewBox = '0 0 16 16', children}) {
+export default function SVGIcon ({className, viewBox = '0 0 16 16', ...otherProps}) {
 	return (
 		<svg
 			className={cx('svg-icon', className)}
@@ -19,8 +18,7 @@ export default function SVGIcon ({className, viewBox = '0 0 16 16', children}) {
 			width="100%"
 			height="100%"
 			viewBox={viewBox}
-		>
-			{children}
-		</svg>
+			{...otherProps}
+		/>
 	);
 }
