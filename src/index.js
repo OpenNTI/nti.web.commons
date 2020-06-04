@@ -14,6 +14,7 @@ export * as Flyout from './flyout';
 export Form from './form';
 export * as HOC from './HighOrderComponents';
 export * as Hooks from './hooks';
+export * as Icons from './icons';
 export Iframe from './iframe';
 export Image from './image';
 export * as Layouts from './layouts';
