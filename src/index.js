@@ -9,6 +9,7 @@ export * from './date-time/components';
 export * as Decorators from './decorators';
 export * as DnD from './drag-and-drop';
 export * as Errors from './errors';
+export * as File from './file';
 export * as Flyout from './flyout';
 export Form from './form';
 export * as HOC from './HighOrderComponents';
