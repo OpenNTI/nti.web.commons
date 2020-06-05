@@ -4,7 +4,7 @@ import SVGIcon from './SVG-Icon';
 
 export default function ImageIcon (props) {
 	return (
-		<SVGIcon>
+		<SVGIcon viewBox="0 0 16 12">
 			<path
 				stroke="none"
 				strokeWidth="1"
