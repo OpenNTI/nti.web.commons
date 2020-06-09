@@ -9,8 +9,11 @@ useResolver.isPending = (v) => v instanceof Promise;
 useResolver.isErrored = (v) => v instanceof Error;
 useResolver.isResolved = (v) => !useResolver.isPending(v) && !useResolver.isErrored(v);
 
-export default function useResolver (resolver, dependencyList) {
+export default function useResolver (resolver, dependencyList, config = {}) {
+	const {buffer} = config;
+
 	const prevDependencies = React.useRef();
+	const bufferTimeout = React.useRef();
 	const value = React.useRef(initialState());
 	let unmounted = false;
 
@@ -25,6 +28,7 @@ export default function useResolver (resolver, dependencyList) {
 	//If the dependency list changed immediately move to a pending state.
 	if (prevDependencies.current && !equals(prevDependencies.current, dependencyList)) {
 		value.current = initialState();
+		clearTimeout(bufferTimeout.current);
 	}
 
 	prevDependencies.current = dependencyList;
@@ -54,7 +58,12 @@ export default function useResolver (resolver, dependencyList) {
 			}
 		};
 
-		doResolve();
+		if (buffer != null) {
+			bufferTimeout.current = setTimeout(doResolve, buffer);
+		} else {
+			doResolve();
+		}
+
 		return () => unmounted = true;
 	}, dependencyList);
 
