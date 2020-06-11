@@ -10,13 +10,15 @@ const cx = classnames.bind(Styles);
 
 SelectableItem.propTypes = {
 	as: PropTypes.any,
+
+	id: PropTypes.string,
 	value: PropTypes.any.isRequired,
 
 	className: PropTypes.string,
 	focusedClassName: PropTypes.string,
 	selectedClassName: PropTypes.string
 };
-export default function SelectableItem ({as: tag, value, className, focusedClassName, selectedClassName, ...otherProps}) {
+export default function SelectableItem ({as: tag, id: idProp, value, className, focusedClassName, selectedClassName, ...otherProps}) {
 	const Cmp = tag || 'li';
 
 	const [id, setId] = React.useState(null);
@@ -25,7 +27,7 @@ export default function SelectableItem ({as: tag, value, className, focusedClass
 	if (!SelectableContext) { throw new Error('Cannot use Selectable Item outside of a Selectable List.'); }
 
 	React.useEffect(() => {
-		const itemId = SelectableContext.getItemId();
+		const itemId = idProp || SelectableContext.getItemId();
 
 		SelectableContext.addItem(itemId, value);
 		setId(itemId);
@@ -33,7 +35,7 @@ export default function SelectableItem ({as: tag, value, className, focusedClass
 		return () => {
 			SelectableContext.removeItem(itemId);
 		};
-	}, [value]);
+	}, [idProp, value]);
 
 	const focused = SelectableContext.isFocused(id);
 	const selected = SelectableContext.isSelected(id);
