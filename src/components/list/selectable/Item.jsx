@@ -53,6 +53,12 @@ export default function SelectableItem ({as: tag, id: idProp, value, className, 
 
 	if (id) {
 		itemProps[SelectableItemProp] = id;
+		itemProps.onMouseDown = (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+
+			SelectableContext?.setSelected(id);
+		};
 	}
 
 	return (

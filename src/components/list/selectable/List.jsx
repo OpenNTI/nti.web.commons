@@ -57,6 +57,12 @@ export default function SelectableList ({as: tag, controlledBy, selected, onSele
 			const selectedSet = new Set(selected);
 
 			return selectedSet.has(value);
+		},
+
+		setSelected: (id) => {
+			const value = idsToValue.current[id];
+
+			onSelectedChange?.(value);
 		}
 	};
 
@@ -75,10 +81,8 @@ export default function SelectableList ({as: tag, controlledBy, selected, onSele
 			selected,
 			setSelected: (newSelected) => {
 				const value = idsToValue.current[newSelected];
-			
-				if (onSelectedChange) {
-					onSelectedChange(value);
-				}
+				
+				onSelectedChange?.(value);
 			}
 		}
 	);
