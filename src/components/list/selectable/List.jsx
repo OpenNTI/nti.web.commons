@@ -5,7 +5,12 @@ import classnames from 'classnames/bind';
 import Variant from '../../../HighOrderComponents/Variant';
 
 import Styles from './Styles.css';
-import {getKeyDownHandler, getItemId, getSelectableItemIds} from './utils';
+import {
+	getKeyDownHandler,
+	getItemId,
+	getSelectableItemIds,
+	scrollFocusedIntoView
+} from './utils';
 import Context from './Context';
 import Item from './Item';
 
@@ -72,7 +77,8 @@ export default function SelectableList ({as: tag, controlledBy, selected, onSele
 			focused,
 			setFocused: (newFocused) => {
 				setFocused(newFocused);
-
+				scrollFocusedIntoView(cmpRef, newFocused);
+				
 				const value = idsToValue.current[newFocused];
 
 				if (onFocusedChange) { onFocusedChange(value); }

@@ -15,3 +15,9 @@ export function getSelectableItemIds (listRef) {
  
 	return items.map(item => item.getAttribute(SelectableItemProp));
 }
+
+export function getSelectableItemForId (listRef, id) {
+	const query = `[${SelectableItemProp}="${id}"]`;
+
+	return listRef?.current?.querySelector(query);
+}
