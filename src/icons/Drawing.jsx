@@ -4,7 +4,7 @@ import SVGIcon from './SVG-Icon';
 
 export default function DrawingIcon (props) {
 	return (
-		<SVGIcon {...props} viewBox="0 0 24 24">
+		<SVGIcon {...props} viewBox="0 0 24 24" width="1.5em">
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
 				<path
 					fill="currentColor"
