@@ -21,11 +21,11 @@ function useResizeObserver (onChange) {
 	return observerRef.current;
 }
 
-ElementSizeMonitor.propTypes = {
+ElementSizeMonitorResize.propTypes = {
 	as: PropTypes.any,
 	onChange: PropTypes.func
 };
-export default function ElementSizeMonitor ({as:tag, onChange = () => {}, ...otherProps}) {
+function ElementSizeMonitorResize ({as:tag, onChange = () => {}, ...otherProps}) {
 	const Cmp = tag || 'div';
 
 	const observer = useResizeObserver(onChange);
@@ -46,3 +46,38 @@ export default function ElementSizeMonitor ({as:tag, onChange = () => {}, ...oth
 		<Cmp ref={elementRef} {...otherProps} />
 	);
 }
+
+ElementSizeMonitorFallback.propTypes = {
+	as: PropTypes.any,
+	onChange: PropTypes.func
+};
+function ElementSizeMonitorFallback ({as: tag, onChange, ...otherProps}) {
+	const Cmp = tag || 'div';
+
+	const sizeRef = React.useRef();
+
+	const attachCmp = (cmp) => {
+		if (cmp) {
+			const rect = cmp.getBoundingClientRect();
+
+			if (!sizeRef.current || sizeRef.current.width !== rect.width || sizeRef.current.height !== rect.height) {
+				onChange?.(rect);
+			}
+
+			sizeRef.current = rect;
+		}
+	};
+
+	return (
+		<Cmp ref={attachCmp} {...otherProps} />
+	);
+}
+
+
+function ElementSizeMonitor (props, ref) {
+	return typeof ResizeObserver !== 'undefined' ?
+		(<ElementSizeMonitorResize {...props} ref={ref} />) :
+		(<ElementSizeMonitorFallback {...props} ref={ref} />);
+}
+
+export default React.forwardRef(ElementSizeMonitor);
