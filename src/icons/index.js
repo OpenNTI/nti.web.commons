@@ -2,6 +2,7 @@
 export Chevron from './Chevron';
 export Download from './Download';
 export Drawing from './Drawing';
+export Eye from './Eye';
 export FileUpload from './FileUpload';
 export FontType from './FontType';
 export Image from './Image';
