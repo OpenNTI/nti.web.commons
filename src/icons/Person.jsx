@@ -2,12 +2,25 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-//https://icons.getbootstrap.com/icons/person/
-
 export default function PersonIcon (props) {
 	return (
-		<SVGIcon {...props}>
-			<path fillRule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+		<SVGIcon
+			{...props}
+			width="0.875rem"
+			height="1em"
+			viewBox="0 0 14 16"
+			stroke="currentColor"
+		>
+			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
+				<g transform="translate(-120.000000, -268.000000)" stroke="currentColor" strokeWdth="2">
+					<g transform="translate(112.000000, 261.000000)">
+						<g transform="translate(9.000000, 8.000000)">
+							<path d="M12,14 L12,12.3333333 C12,10.4923842 10.6568542,9 9,9 L3,9 C1.34314575,9 0,10.4923842 0,12.3333333 L0,14"></path>
+							<circle cx="6" cy="3" r="3"></circle>
+						</g>
+					</g>
+				</g>
+			</g>
 		</SVGIcon>
 	);
 }
