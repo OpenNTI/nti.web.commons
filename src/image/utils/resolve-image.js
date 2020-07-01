@@ -17,11 +17,20 @@ function getAttempt (src, srcset, fallback) {
 	};
 }
 
+function isCrossOrigin (attempt) {
+	if (!attempt.src) { return false; }
+	if (attempt.src.startsWith('http') || attempt.src.startsWith('data:image')) { return true;}
+
+	return false;
+}
+
 function tryAttempt (attempt) {
 	return new Promise ((fulfill, reject) => {
 		const loader = new Image();
 
-		loader.crossOrigin = 'anonymous';
+		if (isCrossOrigin(attempt)) {
+			loader.crossOrigin = 'anonymous';
+		}
 
 		const onLoad = (e) => (cleanupListeners(), fulfill(loader));
 		const onError = (e) => (cleanupListeners(), reject(e));
