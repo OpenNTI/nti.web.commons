@@ -4,9 +4,18 @@ import SVGIcon from './SVG-Icon';
 
 export default function FileUploadIcon (props) {
 	return (
-		<SVGIcon {...props} viewBox="0 0 24 24" width="1.5em">
-			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-				<path d="M8.5,16 L8.5,20 L6.5,20 L6.5,16 L5,16 L7.5,12.5 L10,16 L8.5,16 Z M10.5,19 L10.5,17 L16.5,17 L16.5,9 L13.5,9 L13.5,6 L8.5,6 L8.5,12 L6.5,12 L6.5,4 L13.5,4 L15.5,6 L16,6.5 L16.5,7 L18.5,9 L18.5,19 L10.5,19 Z" fill="currentColor"></path>
+		<SVGIcon {...props} viewBox="0 0 18 22" width="1.125em">
+			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
+				<g transform="translate(-493.000000, -421.000000)" stroke="currentColor" strokeWidth="2">
+					<g transform="translate(396.000000, 421.000000)">
+						<g transform="translate(98.000000, 1.000000)">
+							<path d="M10,0 L2,0 C0.8954305,0 0,0.8954305 0,2 L0,18 C0,19.1045695 0.8954305,20 2,20 L14,20 C15.1045695,20 16,19.1045695 16,18 L16,6 L10,0 Z" fill="#FFFFFF"></path>
+							<polyline points="10 0 10 6 16 6"></polyline>
+							<path d="M8,16 L8,10"></path>
+							<path d="M5,13 L11,13"></path>
+						</g>
+					</g>
+				</g>
 			</g>
 		</SVGIcon>
 	);
