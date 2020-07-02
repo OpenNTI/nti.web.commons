@@ -1,6 +1,7 @@
 .nt-title-bar {
 	--close-button-size: 30px;
 
+	background: white;
 	border-bottom: 1px solid var(--border-grey-light);
 	position: relative;
 	display: flex;

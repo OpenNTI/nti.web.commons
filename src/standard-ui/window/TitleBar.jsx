@@ -9,6 +9,7 @@ import Styles from './TitleBar.css';
 const cx = classnames.bind(Styles);
 
 TitleBar.propTypes = {
+	className: PropTypes.string,
 	closeLink: PropTypes.any,
 	onClose: PropTypes.func,
 	title: PropTypes.oneOfType([
@@ -16,11 +17,11 @@ TitleBar.propTypes = {
 		PropTypes.node
 	])
 };
-export default function TitleBar ({closeLink, onClose, title}) {
+export default function TitleBar ({className, closeLink, onClose, title}) {
 	const closeIcon = (<Icons.X className={cx('close-icon')} onClick={onClose} />);
 
 	return (
-		<div className={cx('nt-title-bar')}>
+		<div className={cx('nt-title-bar', className)}>
 			{
 				closeLink ?
 					React.cloneElement(closeLink, {}, closeIcon) :
