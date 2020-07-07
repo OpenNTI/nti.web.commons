@@ -1,5 +1,8 @@
 # Commons
 
+![Build Status](https://github.com/NextThought/nti.web.commons/workflows/Project%20Health/badge.svg)
+
+
 ##### File naming conventions:
 - Mixins/Partials and utility files: `lower-case-hyphenated.js` (in a sub-directory grouping related ones together)
 - Classes and Components files: `PascalNameCase.js(x)`
