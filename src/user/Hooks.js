@@ -11,6 +11,16 @@ const t = scoped('web-commons.user.Hooks', {
 const getId = x => x?.getID?.() ?? x;
 const getUnresolved = () => t('anonymous'); // do we need to show identifying number
 
+useUser.getAnonymous = (id) => {
+	const unresolved = getUnresolved(id);
+
+	return {
+		displayName: unresolved,
+		username: unresolved,
+		getID: () => id || '__unresolvedUser__',
+		anonymous: true
+	};
+};
 export function useUser (user) {
 	const resolver = useResolver(async () => {
 		try {
