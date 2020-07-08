@@ -54,7 +54,7 @@ export default class InifiniteLoadList extends React.Component {
 			},
 			set scrollTop (top) {
 				if (pageScrollingElement) {
-					return pageScrollingElement.scrollTop = top;
+					pageScrollingElement.scrollTop = top;
 				}
 			}
 		};

@@ -71,8 +71,6 @@ export default class AssociationItem extends EventEmitter {
 		this[GROUP] = group;
 
 		this.emit('change');
-
-		return group;
 	}
 
 
