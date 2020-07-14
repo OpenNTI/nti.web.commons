@@ -1,4 +1,5 @@
 export Dialog from './Dialog';
+export Triggered from './Triggered';
 import Prompt from './Prompt';
 import ManagerImport from './ModalManager';
 export * from './layouts';
