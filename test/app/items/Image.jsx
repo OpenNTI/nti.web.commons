@@ -18,8 +18,16 @@ function getBackground (src) {
 
 export default function ImageTest () {
 	return (
-		<Image src={SRC} fallback={BAD_SRC} alt="Test Image" aspectRatio={Image.AspectRatios.Square} letterbox="black" childProps={getBackground}>
-			<div className="test-background-image" />
-		</Image>
+		<div>
+			<input />
+			<Image src={SRC} fallback={BAD_SRC} alt="Test Image" aspectRatio={Image.AspectRatios.Square} letterbox="black" childProps={getBackground}>
+				<div className="test-background-image" />
+			</Image>
+			<br />
+			<h2>Light Box:</h2>
+			<Image.Lightbox trigger={(<Image src={SRC} />)}>
+				<Image src={SRC} />
+			</Image.Lightbox>
+		</div>
 	);
 }

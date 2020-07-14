@@ -13,6 +13,7 @@ import {getTransforms} from './transforms';
 import Base from './Base';
 import {AspectRatios} from './Constants';
 import Container from './Container';
+import Lightbox from './lightbox';
 
 const {BLANK_IMAGE} = DataURIs;
 const t = scoped('common.image.View', {
@@ -25,6 +26,7 @@ class NTIImage extends React.Component {
 	static srcset = srcsetUtils
 	static AspectRatios = AspectRatios
 	static Container = Container
+	static Lightbox = Lightbox
 
 	static propTypes = {
 		src: PropTypes.string,
