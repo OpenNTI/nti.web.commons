@@ -1,3 +1,7 @@
+:global(.modal) .lightbox-dialog :global(dialog.modal-content) {
+	width: auto;
+}
+
 .lightbox-content {
 	& > img {
 		display: block;
