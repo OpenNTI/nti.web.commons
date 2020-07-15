@@ -1,5 +1,9 @@
-:global(.modal) .lightbox-dialog :global(dialog.modal-content) {
-	width: auto;
+:global(.modal) .lightbox-dialog {
+	display: flex !important;
+
+	& :global(dialog.modal-content) {
+		width: auto;
+	}
 }
 
 .lightbox-content {
