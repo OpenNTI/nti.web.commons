@@ -1,4 +1,4 @@
-//TODO: export the icon font icons from here too
+export Arrow from './Arrow';
 export Chevron from './Chevron';
 export Download from './Download';
 export Drawing from './Drawing';
@@ -9,7 +9,9 @@ export Globe from './Globe';
 export Image from './Image';
 export Lock from './Lock';
 export PaperClip from './PaperClip';
+export Pencil from './Pencil';
 export Person from './Person';
 export Share from './Share';
+export TrashCan from './TrashCan';
 export Video from './Video';
 export X from './X';
