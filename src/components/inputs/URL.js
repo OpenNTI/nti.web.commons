@@ -24,6 +24,12 @@ function getFullHref (href) {
 
 
 export default class URLInput extends React.Component {
+	static isValidURL (url) {
+		const input = Object.assign(document.createElement('input'), {type: 'url', value: getFullHref(url)});
+
+		return input.validity.valid;
+	}
+
 	static propTypes = {
 		value: PropTypes.string,
 		onChange: PropTypes.func
