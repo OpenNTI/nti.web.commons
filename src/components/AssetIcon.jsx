@@ -7,13 +7,36 @@ import cx from 'classnames';
 import mime from 'mime-types';
 import {isNTIID} from '@nti/lib-ntiids';
 
+import GoogleAppDocs from './assets/file-types/google-app-docs.svg';
+import GoogleAppForm from './assets/file-types/google-app-form.svg';
+import GoogleAppSheets from './assets/file-types/google-app-sheets.svg';
+import GoogleAppSlides from './assets/file-types/google-app-slides.svg';
+
 const CONTENT_TYPE = 'application/vnd.nextthought.content';
 const EXTERNAL_TYPE = 'application/vnd.nextthought.externallink';
 const EXTERNAL_TOOLS = ['application/vnd.nextthought.ltiexternaltoolasset'];
 const SCORM_TYPE = 'application/vnd.nextthought.scormcontentref';
 
 
+const GoogleAppAssets = {
+	'application/vnd.google-apps.document': GoogleAppDocs,
+	'application/vnd.google-apps.form': GoogleAppForm,
+	'application/vnd.google-apps.spreadsheet': GoogleAppSheets,
+	'application/vnd.google-apps.presentation': GoogleAppSlides
+};
+
+const CustomTypeClasses = {
+	'application/vnd.google-apps.document': 'google-app-docs',
+	'application/vnd.google-apps.form': 'google-app-form',
+	'application/vnd.google-apps.spreadsheet': 'google-app-sheets',
+	'application/vnd.google-apps.presentation': 'google-app-slides'
+};
+
 export default class Icon extends React.Component {
+	static getGoogleAppAsset (mimeType) {
+		return GoogleAppAssets[mimeType];
+	}
+
 
 	static propTypes = {
 		children: PropTypes.any,
@@ -50,11 +73,15 @@ export default class Icon extends React.Component {
 		const ext = this.isContent(props) && !this.isExternalTool(props) && !this.isScorm(props) ? '' : this.getFileExtention(props);
 		const label = fallback && ext && !/^(www|bin)$/i.test(ext) ? ext : null;
 
-		const cls = fallback && cx('fallback', ext, {
-			'content-link': this.isContent(props),
-			'scorm-content': this.isScorm(props),
-			'unknown': ext === 'bin'
-		});
+		const cls = fallback && cx(
+			'fallback',
+			this.getTypeClass(props) || ext,
+			{
+				'content-link': this.isContent(props),
+				'scorm-content': this.isScorm(props),
+				'unknown': ext === 'bin'
+			}
+		);
 
 		//eslint-disable-next-line react/no-direct-mutation-state
 		const setState = o => this.state ? this.setState(o) : (this.state = o);
@@ -91,6 +118,18 @@ export default class Icon extends React.Component {
 	isEmbeddableDocument (props = this.props) {
 		return !this.isDocument(props)
 			&& this.getTypes(props).some(x => mime.extension(x) === 'pdf');
+	}
+
+	getTypeClass (props) {
+		const types = this.getTypes(props);
+
+		for (let t of types) {
+			const cls = CustomTypeClasses[t];
+
+			if (cls) {
+				return cls;
+			}
+		}
 	}
 
 

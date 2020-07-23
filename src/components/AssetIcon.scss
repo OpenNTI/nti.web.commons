@@ -6,6 +6,11 @@
 %icon-fallback-download {background-image: url(./assets/file-types/blank-download.png) !important;}
 %icon-fallback-scorm {background-image: url(./assets/file-types/scorm-icon.svg) !important;}
 
+%icon-google-app-docs {background-image: url(./assets/file-types/google-app-docs.svg) !important;}
+%icon-google-app-form {background-image: url(./assets/file-types/google-app-form.svg) !important;}
+%icon-google-app-sheets {background-image: url(./assets/file-types/google-app-sheets.svg) !important;}
+%icon-google-app-slides {background-image: url(./assets/file-types/google-app-slides.svg) !important;}
+
 .file-type.icon {
 	$grey: $tertiary-grey;
 	$blue: #15a2e0;
@@ -43,6 +48,26 @@
 
 		&.scorm-content {
 			@extend %icon-fallback-scorm;
+			text, label {display: none;}
+		}
+
+		&.google-app-docs {
+			@extend %icon-google-app-docs;
+			text, label {display: none;}
+		}
+		
+		&.google-app-form {
+			@extend %icon-google-app-form;
+			text, label {display: none;}
+		}
+
+		&.google-app-sheets {
+			@extend %icon-google-app-sheets;
+			text, label {display: none;}
+		}
+
+		&.google-app-slides {
+			@extend %icon-google-app-slides;
 			text, label {display: none;}
 		}
 
