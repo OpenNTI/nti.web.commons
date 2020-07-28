@@ -75,6 +75,8 @@ Form.Values = Values;
 Form.Input = Input;
 Form.SubmitButton = SubmitButton;
 Form.propTypes = {
+	formRef: PropTypes.any,
+
 	onSubmit: PropTypes.func,
 	onChange: PropTypes.func,
 	onValid: PropTypes.func,
@@ -87,8 +89,10 @@ Form.propTypes = {
 
 	children: PropTypes.any
 };
-export default function Form (props) {
+function Form (props) {
 	const {
+		formRef,
+
 		onSubmit,
 		onChange,
 		onValid,
@@ -106,6 +110,8 @@ export default function Form (props) {
 
 	const formEl = React.useRef(null);
 	const [errors, setErrors] = React.useState(getInitialErrorState(initialError));
+
+	React.useImperativeHandle(formRef, () => formEl.current);
 
 	const addErrors = (toAdd) => setErrors({...errors, ...toAdd});
 	const clearError = (name) => {
@@ -131,3 +137,13 @@ export default function Form (props) {
 		</FormContext.Provider>
 	);
 }
+
+const ForwardWrapper = (props, ref) => (<Form {...props} formRef={ref} />); 
+const ForwardRef = React.forwardRef(ForwardWrapper);
+
+ForwardRef.Validation = Validation;
+ForwardRef.Values = Values;
+ForwardRef.Input = Input;
+ForwardRef.SubmitButton = SubmitButton;
+
+export default ForwardRef;
