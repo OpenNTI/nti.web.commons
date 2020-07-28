@@ -198,8 +198,6 @@ export default class RelatedWorkRefCard extends React.Component {
 		const external = this.isExternal();
 		const seen = this.isSeen();
 
-		const iconSrc = (seen && !icon) ? BLANK_IMAGE : icon;
-
 		const {label, title, desc, description, byline, creator} = item;
 
 		const by = 'byline' in item ? byline : creator;
@@ -220,7 +218,7 @@ export default class RelatedWorkRefCard extends React.Component {
 		return (
 			<div {...props}>
 
-				<AssetIcon src={iconSrc} mimeType={this.getType()} href={href}>
+				<AssetIcon src={icon} mimeType={this.getType()} href={href}>
 					{external && <div className="external"/>}
 				</AssetIcon>
 
