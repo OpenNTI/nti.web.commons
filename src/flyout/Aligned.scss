@@ -107,6 +107,11 @@
 	}
 }
 
+//when there is a control bar open, add some margin so you can scroll to the full flyout
+body.control-bar-open .aligned-flyout {
+	margin-bottom: 60px;
+}
+
 @keyframes error-flyout-fullwidth-btn {
 	from, to {
 		transform: translate3d(0, 0, 0);
