@@ -1,0 +1,1 @@
+export TextStrategy from './text-strategy';

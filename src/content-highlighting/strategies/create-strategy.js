@@ -1,15 +1,20 @@
 import React from 'react';
 
+export default function createStrategy (config) {
+	const findRanges = (...args) => ((container) => config.findRanges(container, ...args));
+	const isActive = (...args) => config.isActive ? config.isActive(...args) : true;
 
-export default function createStrategy (findRanges) {
-	const strategy = (...args) => ((container) => findRanges(container, ...args));
-
-	strategy.useStrategy = (...args) => (
-		React.useCallback(
-			() => strategy(...args),
+	findRanges.isActive = isActive;
+	findRanges.useStrategy = (...args) => {
+		const callback = React.useCallback(
+			findRanges(...args),
 			args
 		);
-	);
 
-	return strategy;
+		callback.isActive = () => isActive(...args);
+
+		return callback;
+	};
+
+	return findRanges;
 }

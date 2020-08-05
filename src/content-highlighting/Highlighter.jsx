@@ -5,42 +5,46 @@ import classnames from 'classnames/bind';
 import {useMutationObserver} from '../hooks';
 
 import Styles from './Highlighter.css';
+import * as Strategies from './strategies';
 
 const cx = classnames.bind(Styles);
 
 const MutationObserverInit = {
-	subtree: true
+	subtree: true,
+	childList: true
 };
 
+ContentHighlighter.Strategies = Strategies;
 ContentHighlighter.propTypes = {
 	children: PropTypes.any,
 
 	as: PropTypes.any,
 	className: PropTypes.string,
 
-	strategy: PropTypes.func
+	strategy: PropTypes.func.isRequired
 };
 export default function ContentHighlighter ({children, as:tag, className, strategy, ...otherProps}) {
-	const [highlights, setHighlights] = React.useState([]);
+	const [ranges, setRanges] = React.useState([]);
 
 	const Cmp = tag ?? 'div';
 	const cmpRef = React.useRef();
 
 	useMutationObserver(
-		strategy ? cmpRef : null,
-		() => {
-			debugger;
-		},
+		strategy.isActive() ? cmpRef : null,
+		() => setRanges(strategy(cmpRef.current)),//todo figure out if we can/need to optimize this based off of what entities changes
 		MutationObserverInit
 	);
 
 	React.useEffect(() => {
-
-
+		if (cmpRef.current && strategy.isActive()) {
+			setRanges(strategy(cmpRef.current));
+		} else {
+			setRanges([]);
+		}
 	}, [strategy]);
 
 	return (
-		<Cmp className={cx('content-highlighter')} {...otherProps} >
+		<Cmp className={cx('content-highlighter', className)} ref={cmpRef} >
 			{children}
 			<div className={cx('content-highlights-container')} data-highlights-container="true">
 				highlights
