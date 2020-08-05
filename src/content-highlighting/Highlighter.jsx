@@ -6,6 +6,7 @@ import {useMutationObserver} from '../hooks';
 
 import Styles from './Highlighter.css';
 import * as Strategies from './strategies';
+import Ranges from './components/Ranges';
 
 const cx = classnames.bind(Styles);
 
@@ -46,9 +47,7 @@ export default function ContentHighlighter ({children, as:tag, className, strate
 	return (
 		<Cmp className={cx('content-highlighter', className)} ref={cmpRef} >
 			{children}
-			<div className={cx('content-highlights-container')} data-highlights-container="true">
-				highlights
-			</div>
+			<Ranges ranges={ranges} containerRef={cmpRef} />
 		</Cmp>
 	);
 }

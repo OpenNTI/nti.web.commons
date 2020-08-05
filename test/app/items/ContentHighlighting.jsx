@@ -31,6 +31,9 @@ export default function ContentHighlightingTest () {
 						{t}
 					</p>
 				))}
+				<p>
+					Test paragraph to find <span>bologny</span>
+				</p>
 			</ContentHighlighting>
 		</div>
 	);
