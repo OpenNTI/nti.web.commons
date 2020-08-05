@@ -4,6 +4,7 @@ export * from './components';
 import * as ConflictResolution from './conflict-resolution';
 export * as Associations from './associations';
 export * as Constants from './constants';
+export ContentHighlighting from './content-highlighting';
 export DateTime from './date-time';
 export * from './date-time/components';
 export * as Decorators from './decorators';

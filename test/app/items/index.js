@@ -1,5 +1,6 @@
 export AddClassTest from './AddClassTest';
 export ColorInput from './ColorInput';
+export ContentHighlighting from './ContentHighlighting';
 export DateTimeTest from './DateTimeTest';
 export DropZone from './DropZone';
 export Flyout from './Flyout';
