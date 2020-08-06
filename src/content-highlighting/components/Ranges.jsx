@@ -19,7 +19,7 @@ function getStylesForRect (rect, containerRect) {
 
 Ranges.propTypes = {
 	ranges: PropTypes.array,
-	contanerRef: PropTypes.shape({
+	containerRef: PropTypes.shape({
 		current: PropTypes.shape({
 			getBoundingClientRect: PropTypes.func
 		})
