@@ -23,7 +23,7 @@ export default function ContentHighlightingTest () {
 
 	return (
 		<div>
-			<input value={search} onChange={(e) => setSearch(e.target.value)} />
+			<input value={search ?? ''} onChange={(e) => setSearch(e.target.value)} />
 			<button onClick={addText}>Add Paragraph</button>
 			<ContentHighlighting strategy={strategy}>
 				{text.map((t, key) => (
