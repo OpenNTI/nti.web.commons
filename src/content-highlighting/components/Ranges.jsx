@@ -6,14 +6,16 @@ import Styles from './Ranges.css';
 
 const cx = classnames.bind(Styles);
 
-function getStylesForRect (rect, containerRect) {
-	const top = rect.top - containerRect.top;
+function getStylesForRect (rect, parentRect, rangesRect) {
+	const top = rect.top - parentRect.top;
+	const topGap = (rangesRect?.top - parentRect.bottom) || 0;
+	const leftGap = (rangesRect?.left - parentRect.left) || 0;
 
 	return {
 		width: `${rect.width}px`,
 		height: `${rect.height}px`,
-		left: `${rect.left - containerRect.left}px`,
-		top: `${top - containerRect.height - rect.height}px`
+		left: `${rect.left - parentRect.left - leftGap}px`,
+		top: `${top - parentRect.height - topGap}px`
 	};
 }
 
@@ -25,18 +27,20 @@ Ranges.propTypes = {
 		})
 	})
 };
-export default function Ranges ({ranges, containerRef}) {
-	if (!containerRef?.current || !ranges?.length) { return null; }
+export default function Ranges ({ranges, containerRef: parentRef}) {
+	const [rootEl, setRootEl] = React.useState();
+	const getRekt = React.useCallback(el => (rootEl !== el) && setRootEl(el), [rootEl, setRootEl]);
 
-	const rects = ranges.reduce((acc, range) => ([...acc, ...Array.from(range.getClientRects())]), []);
-	const containerRect = containerRef.current.getBoundingClientRect();
+	const rects = ranges?.reduce?.((acc, range) => ([...acc, ...Array.from(range.getClientRects())]), []);
+	const parentRect = parentRef?.current?.getBoundingClientRect();
+	const rangesRect = rootEl?.getBoundingClientRect();
 
-	return (
-		<div className={cx('ranges')}>
+	return (!parentRef?.current || !ranges?.length) ? null : (
+		<div className={cx('ranges')} ref={getRekt}>
 			{(rects ?? []).map((rect, key) => (
 				<span
 					key={key}
-					style={getStylesForRect(rect, containerRect)}
+					style={getStylesForRect(rect, parentRect, rangesRect)}
 					className={cx('highlight')}
 				/>
 			))}
