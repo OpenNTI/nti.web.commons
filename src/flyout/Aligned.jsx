@@ -173,7 +173,7 @@ export default class AlignedFlyout extends React.Component {
 
 		if (!props.parent) {
 			this.fly = document.createElement('div');
-			this.fly.className = cx(props.className);
+			this.fly.className = cx(props.classes.wrapper, props.className);
 		}
 	}
 
