@@ -18,7 +18,7 @@ export default function ImageLightbox ({trigger, children, ...otherProps}) {
 	const Cmp = React.Children.count(children) > 1 ? Multiple : Single;
 
 	return (
-		<Triggered trigger={trigger} className={cx('lightbox-dialog')}>
+		<Triggered trigger={trigger} className={cx('lightbox-dialog', 'nti-lightbox-dialog')}>
 			<Cmp {...otherProps}>
 				{children}
 			</Cmp>
