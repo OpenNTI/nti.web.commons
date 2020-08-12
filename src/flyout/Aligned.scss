@@ -108,7 +108,7 @@
 }
 
 //when there is a control bar open, add some margin so you can scroll to the full flyout
-body.control-bar-open .aligned-flyout {
+body.control-bar-open .aligned-flyout.bottom {
 	&:after {
 		content: '';
 		display: block;
