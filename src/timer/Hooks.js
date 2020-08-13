@@ -38,3 +38,20 @@ export function useTicks (interval) {
 
 	return ticks;
 }
+
+
+export function useWait (fn, interval) {
+	React.useEffect(() => {
+		const started = new Date();
+		const onTick = (tick) => {
+			if (tick.current - started >= interval) {
+				fn();
+				Clock.removeListener(onTick);
+			}
+		};
+
+		Clock.addListener(onTick);
+
+		return () => Clock.removeListener(onTick);
+	}, [interval]);
+}

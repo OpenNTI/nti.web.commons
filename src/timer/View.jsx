@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Clock from './Clock';
 import {SECOND, MINUTE} from './Constants';
-import {useClock, useTicks} from './Hooks';
+import {useClock, useTicks, useWait} from './Hooks';
 
 
 export default class Timer extends React.Component {
@@ -14,6 +14,7 @@ export default class Timer extends React.Component {
 
 	static useClock = useClock;
 	static useTicks = useTicks;
+	static useWait = useWait;
 
 	static propTypes = {
 		interval: PropTypes.number.isRequired,
