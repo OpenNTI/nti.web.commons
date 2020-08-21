@@ -6,6 +6,7 @@ export Eye from './Eye';
 export FileUpload from './FileUpload';
 export FontType from './FontType';
 export Globe from './Globe';
+export Gripper from './Gripper';
 export Image from './Image';
 export Lock from './Lock';
 export PaperClip from './PaperClip';
