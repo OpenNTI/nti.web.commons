@@ -1,3 +1,4 @@
+import './SortDragLayer.scss';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DragLayer} from 'react-dnd';

@@ -1,3 +1,4 @@
+import './Scroller.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ease from 'eases/cubic-out';

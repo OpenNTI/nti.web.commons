@@ -1,3 +1,4 @@
+import './LockScroll.scss';
 import React from 'react';
 import {addClass, removeClass} from '@nti/lib-dom';
 

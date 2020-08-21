@@ -1,3 +1,4 @@
+import './Asset.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {URL} from '@nti/lib-commons';

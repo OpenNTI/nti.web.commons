@@ -1,3 +1,4 @@
+import './File.scss';
 import {extname} from 'path';
 
 import React from 'react';

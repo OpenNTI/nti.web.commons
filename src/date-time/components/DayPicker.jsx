@@ -1,3 +1,4 @@
+import './DayPicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Picker, { DateUtils, WeekdayPropTypes } from 'react-day-picker';

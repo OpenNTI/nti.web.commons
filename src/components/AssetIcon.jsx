@@ -1,3 +1,4 @@
+import './AssetIcon.scss';
 import {extname} from 'path';
 import {parse as parseUrl} from 'url';
 

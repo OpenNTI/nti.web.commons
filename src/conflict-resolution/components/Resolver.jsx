@@ -1,3 +1,4 @@
+import './Resolver.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {getServer} from '@nti/web-client';

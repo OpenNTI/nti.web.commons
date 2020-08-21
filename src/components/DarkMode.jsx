@@ -1,3 +1,4 @@
+import './DarkMode.scss';
 import React from 'react';
 
 import AddClass from './AddClass';

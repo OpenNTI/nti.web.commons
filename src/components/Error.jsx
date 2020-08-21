@@ -1,3 +1,4 @@
+import './Error.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';

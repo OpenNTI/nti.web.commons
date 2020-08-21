@@ -1,3 +1,4 @@
+import './DayPickerRange.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DateUtils } from 'react-day-picker';

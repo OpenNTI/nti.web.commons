@@ -1,3 +1,4 @@
+import './Entity.scss';
 import path from 'path';
 
 import React from 'react';

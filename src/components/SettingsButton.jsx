@@ -1,3 +1,4 @@
+import './SettingsButton.scss';
 import React from 'react';
 
 export default function SettingsButton (props) {

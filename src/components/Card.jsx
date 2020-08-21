@@ -1,3 +1,4 @@
+import './Card.scss';
 import Url from 'url';
 
 import React from 'react';
