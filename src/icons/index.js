@@ -5,6 +5,7 @@ export Drawing from './Drawing';
 export Eye from './Eye';
 export FileUpload from './FileUpload';
 export FontType from './FontType';
+export Gear from './Gear';
 export Globe from './Globe';
 export Gripper from './Gripper';
 export Image from './Image';

@@ -9,12 +9,13 @@ import Styles from './DragHandler.css';
 const cx = classnames.bind(Styles);
 
 DragHandle.propTypes = {
+	className: PropTypes.string,
 	connect: PropTypes.func,
 	disabled: PropTypes.bool
 };
-export default function DragHandle ({connect, disabled}) {
-	return (
-		<div className={cx('drag-handle', {disabled})}>
+export default function DragHandle ({className, connect = x => x, disabled}) {
+	return connect(
+		<div className={cx('drag-handle', className, {disabled})}>
 			<Gripper className={cx('drag-icon')} />
 		</div>
 	);
