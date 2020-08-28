@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {restProps} from '@nti/lib-commons';
 
+import {ClassList} from '../responsive';
+
 import {LEFT, RIGHT} from './Constants';
 import AsidePlaceholder from './AsidePlaceholder';
 import Store from './Store';
 import Styles from './Container.css';
 
 const cx = classnames.bind(Styles);
+
+const classList = [
+	{query: size => size.width >= 1024, className: cx('large')}
+];
 
 @Store.connect(['aside'])
 class AsideContainer extends React.Component {
@@ -31,13 +37,18 @@ class AsideContainer extends React.Component {
 		const {side} = aside || {};
 
 		return (
-			<div className={cx('container', className)} ref={forwardedRef} {...otherProps}>
+			<ClassList
+				className={cx('container', className)}
+				classList={classList}
+				ref={forwardedRef}
+				{...otherProps}
+			>
 				{side === LEFT && this.renderAside(aside)}
 				<section className={cx('body')}>
 					{children}
 				</section>
 				{side === RIGHT && this.renderAside(aside)}
-			</div>
+			</ClassList>
 		);
 	}
 

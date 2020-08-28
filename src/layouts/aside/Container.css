@@ -14,3 +14,15 @@
 	width: 230px;
 	padding-left: 2px;
 }
+
+.container.large {
+	& .body {
+		width: 768px;
+	}
+
+	& .aside-container {
+		flex-basis: auto;
+		width: 250px;
+		margin-left: 5px;
+	}
+}
