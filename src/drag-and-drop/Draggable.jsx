@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
 
 import DataTransfer from './utils/DataTransfer';
+import Context from './Context';
 
 const log = Logger.get('common:draganddrop:Draggable');
 
@@ -129,7 +130,27 @@ export default class Draggable extends React.Component {
 	}
 
 
+	hasDragHandle () {
+		return this.dragHandleCount && this.dragHandleCount > 0;
+	}
+
+
+	addDragHandle () {
+		let removed = false;
+
+		this.dragHandleCount = (this.dragHandleCount || 0) + 1;
+
+		return () => {
+			if (removed) { return; }
+			removed = true;
+			this.dragHandleCount = (this.dragHandleCount || 0) - 1;
+		};
+	}
+
+
 	onMouseDown = (e) => {
+		if (this.hasDragHandle()) { return; }
+
 		const {childProp} = this;
 
 		e.stopPropagation();
@@ -149,6 +170,8 @@ export default class Draggable extends React.Component {
 
 
 	onMouseUp = (e) => {
+		if (this.hasDragHandle()) { return; }
+
 		const {onMouseUp} = this.props;
 		const {childProp} = this;
 
@@ -177,7 +200,15 @@ export default class Draggable extends React.Component {
 
 		//TODO: don't hijack the ref
 		return (
-			React.cloneElement(child, {...props, ref: this.attachChildRef})
+			<Context.Provider
+				value={{
+					addDragHandle: () => this.addDragHandle(),
+					enableDrag: () => this.setDraggable(true),
+					disableDrag: () => this.setDraggable(false)
+				}}
+			>
+				{React.cloneElement(child, {...props, ref: this.attachChildRef})}
+			</Context.Provider>
 		);
 	}
 }
