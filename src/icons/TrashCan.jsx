@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FontIcon from './Font-Icon';
 
-export default function PencilIcon (props) {
+TrashIcon.propTypes = {
+	fill: PropTypes.bool
+};
+export default function TrashIcon ({fill, ...props}) {
+	const icon = fill ? 'icon-delete' : 'icon-trash';
+
 	return (
-		<FontIcon icon="icon-trash" {...props} />
+		<FontIcon icon={icon} {...props} />
 	);
 }

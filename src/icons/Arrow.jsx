@@ -5,11 +5,11 @@ import {Variant} from '../HighOrderComponents';
 
 import FontIcon from './Font-Icon';
 
-// const Up = 'up';
+const Up = 'up';
 const UpRight = 'up-right';
 // const Right = 'right';
 // const DownRight = 'down-right';
-// const Down = 'down';
+const Down = 'down';
 // const DownLeft= 'down-left';
 // const Left = 'left';
 // const UpLeft = 'up-left';
@@ -18,12 +18,20 @@ const classes = {
 	[UpRight]: 'icon-launch'
 };
 
-ArrowIcon.UpRight = Variant(ArrowIcon, {direction: UpRight});
-ArrowIcon.propTypes = {
-	direction: PropTypes.string
+const fillClasses = {
+	[Up]: 'icon-moveup',
+	[Down]: 'icon-movedown'
 };
-export default function ArrowIcon ({direction = UpRight, ...otherProps}) {
-	const icon = classes[direction];
+
+ArrowIcon.Up = Variant(ArrowIcon, {direction: Up});
+ArrowIcon.UpRight = Variant(ArrowIcon, {direction: UpRight});
+ArrowIcon.Down = Variant(ArrowIcon, {direction: Down});
+ArrowIcon.propTypes = {
+	direction: PropTypes.string,
+	fill: PropTypes.bool
+};
+export default function ArrowIcon ({direction = UpRight, fill, ...otherProps}) {
+	const icon = fill ? fillClasses[direction] : classes[direction];
 
 	if (!icon) { throw new Error('Arrow Icon Direction not implemented'); }
 
