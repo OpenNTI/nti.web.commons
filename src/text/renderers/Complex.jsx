@@ -15,7 +15,7 @@ export default
 @ForwardRef('textRef')
 class NTIComplexText extends React.Component {
 	static propTypes = {
-		text: PropTypes.node,
+		text: PropTypes.any,
 		textRef: PropTypes.func
 	}
 

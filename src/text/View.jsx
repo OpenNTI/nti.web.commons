@@ -13,15 +13,24 @@ import Renderer from './Renderer';
 export default
 @ForwardRef('textRef')
 class NTIText extends React.Component {
-	static Overflow = Overflow
+	static Overflow = Overflow;
+
+	static Translator = (getString) => {
+		const Translate = Variant(NTIText, {getString}, 'translator');
+
+		Translate.Base = Variant(Translate, variants.Base, 'Base');
+		Translate.Condensed = Variant(Translate, variants.Condensed, 'Condensed');
+
+		return Translate;
+	};
 
 	static Classes = {
 		Base: variants.Base.className,
 		Condensed: variants.Condensed.className
-	}
+	};
 
-	static Base = Variant(this, variants.Base, 'Base')
-	static Condensed = Variant(this, variants.Condensed, 'Condensed')
+	static Base = Variant(this, variants.Base, 'Base');
+	static Condensed = Variant(this, variants.Condensed, 'Condensed');
 
 	static propTypes = {
 		children: PropTypes.any,
