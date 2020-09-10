@@ -1,3 +1,4 @@
+export Alert from './Alert';
 export Arrow from './Arrow';
 export Chevron from './Chevron';
 export Download from './Download';
