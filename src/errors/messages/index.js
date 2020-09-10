@@ -16,5 +16,20 @@ export function mapMessage (error, msg) {
 	mapped.cause = error;
 	mapped.field = error.field;
 
-	return mapped; 
+	return mapped;
+}
+
+export function isWarning (error) {
+	return error.isWarning;
+}
+
+export function makeWarning (error) {
+	const message = getMessage(error);
+	const warning = new Error(message);
+
+	warning.isWarning = true;
+	warning.cause = error;
+	warning.field = error.field;
+
+	return warning;
 }
