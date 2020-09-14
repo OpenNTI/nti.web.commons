@@ -20,7 +20,7 @@ export function mapMessage (error, msg) {
 }
 
 export function isWarning (error) {
-	return error.isWarning;
+	return error?.isWarning;
 }
 
 export function makeWarning (error) {
