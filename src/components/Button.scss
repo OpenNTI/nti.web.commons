@@ -21,6 +21,11 @@
 		color: white;
 	}
 
+	&.destructive {
+		background-color: $primary-red;
+		color: white;
+	}
+
 
 	&.secondary {
 		background-color: $border-grey-light;

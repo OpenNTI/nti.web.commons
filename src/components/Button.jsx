@@ -12,7 +12,8 @@ export default class Button extends React.Component {
 
 		rounded: PropTypes.bool,
 		disabled: PropTypes.bool,
-		secondary: PropTypes.bool
+		secondary: PropTypes.bool,
+		destructive: PropTypes.bool
 	}
 
 
@@ -42,10 +43,21 @@ export default class Button extends React.Component {
 			rounded,
 			disabled,
 			secondary,
+			destructive,
 			...otherProps
 		} = this.props;
 		const Component = component;
-		const cls = cx('nti-button', className, {primary: !secondary, secondary, disabled, rounded});
+		const cls = cx(
+			'nti-button',
+			className,
+			{
+				primary: !secondary && !destructive,
+				secondary,
+				destructive,
+				disabled,
+				rounded
+			}
+		);
 
 		delete otherProps.onClick;
 
