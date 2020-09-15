@@ -13,7 +13,8 @@ export default class Button extends React.Component {
 		rounded: PropTypes.bool,
 		disabled: PropTypes.bool,
 		secondary: PropTypes.bool,
-		destructive: PropTypes.bool
+		destructive: PropTypes.bool,
+		plain: PropTypes.bool,
 	}
 
 
@@ -44,6 +45,7 @@ export default class Button extends React.Component {
 			disabled,
 			secondary,
 			destructive,
+			plain,
 			...otherProps
 		} = this.props;
 		const Component = component;
@@ -51,11 +53,12 @@ export default class Button extends React.Component {
 			'nti-button',
 			className,
 			{
-				primary: !secondary && !destructive,
+				primary: !secondary && !destructive && !plain,
 				secondary,
 				destructive,
 				disabled,
-				rounded
+				rounded,
+				plain
 			}
 		);
 

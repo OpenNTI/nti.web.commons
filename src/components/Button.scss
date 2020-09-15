@@ -1,6 +1,6 @@
 @import "~@nti/style-common";
 
-.nti-button {
+.nti-button:not(.plain) {
 	font: normal 600 0.875rem/1rem $body-font-family;
 	text-decoration: none;
 	display: inline-block;
