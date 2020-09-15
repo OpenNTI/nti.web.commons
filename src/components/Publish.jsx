@@ -50,6 +50,22 @@ const DEFAULT_TEXT = {
 			label: 'Schedule',
 			timePickerHeader: 'YOUR LOCAL TIME'
 		}
+	},
+	survey: {
+		publish: {
+			text: 'Survey contents are visible to students.',
+			label: 'Publish'
+		},
+		draft: {
+			text: 'Currently not visible to any students',
+			label: 'Draft'
+		},
+		schedule: {
+			text: 'When do you want students to have access to this survey?',
+			selectedText: 'Survey contents will be visible to students on %(date)s at %(time)s.',
+			label: 'Schedule',
+			timePickerHeader: 'YOUR LOCAL TIME'
+		}
 	}
 };
 
@@ -108,7 +124,8 @@ export default class Publish extends React.Component {
 		disableSave: PropTypes.bool,
 		localeContext: PropTypes.oneOf([
 			'lesson',
-			'assignment'
+			'assignment',
+			'survey'
 		])
 	}
 
