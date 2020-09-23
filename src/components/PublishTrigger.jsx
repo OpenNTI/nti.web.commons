@@ -16,6 +16,17 @@ const DEFAULT_TEXT = {
 	},
 	schedule: {
 		buttonLabel: 'Schedule for %(date)s'
+	},
+	hasChanges: {
+		publish: {
+			buttonLabel: 'Publish Changes'
+		},
+		draft: {
+			buttonLabel: 'Publish Changes'
+		},
+		schedule: {
+			buttonLabel: 'Publish Changes'
+		}
 	}
 };
 
@@ -29,7 +40,8 @@ export default class PublishTrigger extends React.PureComponent {
 			PropTypes.instanceOf(Date),
 			PropTypes.oneOf(Object.keys(PUBLISH_STATES))
 		]),
-		label: PropTypes.string
+		label: PropTypes.string,
+		hasChanges: PropTypes.bool
 	}
 
 	ref = React.createRef()
@@ -39,12 +51,13 @@ export default class PublishTrigger extends React.PureComponent {
 	}
 
 	render () {
-		const {value, label:labelOverride, ...props} = this.props;
+		const {value, hasChanges, label:labelOverride, ...props} = this.props;
 		const selected = getPublishState(value || PUBLISH_STATES.DRAFT);
 		const date = selected === PUBLISH_STATES.SCHEDULE ? value : null;
 		const classNames = cx('publish-trigger', selected.toLowerCase());
 
-		const label = labelOverride || t(`${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,'MMM D')});
+		const label = labelOverride ||
+			t(`${hasChanges ? 'hasChanges.' : ''}${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,'MMM D')});
 
 		return (
 			<div {...props} ref={this.ref} className={classNames}>

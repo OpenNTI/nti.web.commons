@@ -66,7 +66,9 @@ const DEFAULT_TEXT = {
 			label: 'Schedule',
 			timePickerHeader: 'YOUR LOCAL TIME'
 		}
-	}
+	},
+	save: 'Save',
+	saveChanges: 'Save Changes'
 };
 
 const tt = scoped('common.components.publish-controls', DEFAULT_TEXT);
@@ -120,6 +122,7 @@ export default class Publish extends React.Component {
 		horizontalAlignment: PropTypes.string,
 		error: PropTypes.string,
 		children: PropTypes.any,
+		hasChanges: PropTypes.bool,
 		disableDraft: PropTypes.bool,
 		disableSave: PropTypes.bool,
 		localeContext: PropTypes.oneOf([
@@ -194,8 +197,8 @@ export default class Publish extends React.Component {
 
 
 	onSave = () => {
-		const {props: {onChange}, state: {changed}} = this;
-		if (onChange && changed) {
+		const {props: {onChange, hasChanges}, state: {changed}} = this;
+		if (onChange && (changed || hasChanges)) {
 			this.setState({changed: false});
 			const p = onChange(this.getValue());
 
@@ -230,11 +233,28 @@ export default class Publish extends React.Component {
 
 	render () {
 		const {selected, date, changed, dayClicked} = this.state;
-		const {verticalAlignment:vAlign, horizontalAlignment:hAlign, children, value, error, localeContext, disableDraft, disableSave} = this.props;
+		const {
+			verticalAlignment:vAlign,
+			horizontalAlignment:hAlign,
+			children,
+			value,
+			error,
+			localeContext,
+			hasChanges,
+			disableDraft,
+			disableSave
+		} = this.props;
 
-		const saveClassNames = cx('flyout-fullwidth-btn', {'changed': changed, error, 'disabled': disableSave});
+		const saveClassNames = cx(
+			'flyout-fullwidth-btn',
+			{
+				'changed': changed || hasChanges,
+				error,
+				'disabled': disableSave
+			}
+		);
 
-		const trigger = <PublishTrigger value={value}/>;
+		const trigger = <PublishTrigger value={value} hasChanges={hasChanges} />;
 
 		const t = (key,...args) => tt(`${localeContext}.${key}`,...args);
 
@@ -278,7 +298,9 @@ export default class Publish extends React.Component {
 				{error && (
 					<div className="error-message">{error}</div>
 				)}
-				<div className={saveClassNames} onClick={this.onSave}>Save</div>
+				<div className={saveClassNames} onClick={this.onSave}>
+					{hasChanges ? tt('saveChanges') : tt('save')}
+				</div>
 			</Flyout.Triggered>
 		);
 	}
