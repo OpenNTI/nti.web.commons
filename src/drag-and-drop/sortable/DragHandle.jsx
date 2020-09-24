@@ -19,30 +19,37 @@ DragHandle.propTypes = {
 };
 export default function DragHandle ({
 	className,
-	connect = x => x,
+	connect,
 	disabled,
 	onMouseDown,
 	onMouseUp
 }) {
 	const Draggable = React.useContext(Context);
+	const connector = connect ?? (x => x);
 
-	React.useEffect(() => Draggable?.addDragHandle?.(), []);
+	React.useEffect(() => {
+		if (!connect) {
+			Draggable?.addDragHandle?.();
+		}
+	}, []);
 
-	const innerMouseDown = (e) => (
-		!disabled && Draggable?.enableDrag?.(),
-		onMouseDown?.(e)
-	);
+	const listeners = connect ?
+		{} :
+		{
+			onMouseDown: (e) => (
+				!disabled && Draggable?.enableDrag?.(),
+				onMouseDown?.(e)
+			),
+			onMouseUp: (e) => (
+				Draggable?.disableDrag?.(),
+				onMouseUp?.(e)
+			)
+		};
 
-	const innerMouseUp = (e) => (
-		Draggable?.disableDrag?.(),
-		onMouseUp?.(e)
-	);
-
-	return connect(
+	return connector(
 		<div
 			className={cx('drag-handle', className, {disabled})}
-			onMouseDown={innerMouseDown}
-			onMouseUp={innerMouseUp}
+			{...listeners}
 		>
 			<Gripper className={cx('drag-icon')} />
 		</div>
