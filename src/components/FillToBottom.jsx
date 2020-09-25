@@ -1,32 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class FillToBottom extends React.Component {
-	static propTypes = {
-		padding: PropTypes.number,
-		limit: PropTypes.bool
-	}
+const Property = '--fill-to-bottom-height';
 
+FillToBottom.propTypes = {
+	padding: PropTypes.number,
+	limit: PropTypes.bool,
+	style: PropTypes.object,
 
-	static defaultProps = {
-		padding: 20
-	}
+	as: PropTypes.any
+};
+export default function FillToBottom ({padding = 20, limit, as:tag, style:styleProp, ...otherProps}) {
+	const Cmp = tag || 'div';
+	const style = {...styleProp};
+	const property = limit ? 'height' : 'minHeight';
 
-	attachRef = x => {
-		this.ref = x;
-		this.forceUpdate();
-	}
+	style[property] = `var(${Property})`;
 
-	render () {
-		const {padding, limit, ...otherProps} = this.props;
-		const style = {};
-		const property = limit ? 'height' : 'minHeight';
-		const top = this.ref ? this.ref.getBoundingClientRect().top : 0;
+	const attachRef = (node) => {
+		if (node) {
+			const {top} = node?.getBoundingClientRect() ?? {};
 
-		style[property] = `calc(100vh - ${padding}px - ${top}px)`;
+			node.style.setProperty(Property, `calc(100vh - ${padding ?? 0}px - ${top ?? 0}px`);
+		}
+	};
 
-		return (
-			<div ref={this.attachRef} style={style} {...otherProps} />
-		);
-	}
+	return (
+		<Cmp ref={attachRef} style={style} {...otherProps} />
+	);
 }
