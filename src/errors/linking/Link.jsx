@@ -26,7 +26,7 @@ export default function ErrorLink ({error, className, ...otherProps}) {
 
 			href={`#${target?.name ?? ''}`}
 
-			label={target.label}
+			label={target?.label}
 
 			{...otherProps}
 		/>
