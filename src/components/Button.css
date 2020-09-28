@@ -1,0 +1,37 @@
+.button {
+	font: normal 600 0.875rem/1rem var(--body-font-family);
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.75rem 1.25rem;
+	cursor: pointer;
+
+	/*
+	 * We are using the global scope for backwards compatibility.
+	 * Older Sass styles will likely be targeting these state classes,
+	 * so by marking them 'global' the css module loader will not
+	 * mangle them to be unique.
+	 */
+	&:global(.rounded) {
+		border-radius: 4px;
+	}
+
+	&:global(.disabled) {
+		opacity: 0.7;
+		pointer-events: none;
+	}
+
+	&:global(.primary) {
+		background-color: var(--primary-blue);
+		color: white;
+	}
+
+	&:global(.destructive) {
+		background-color: var(--primary-red);
+		color: white;
+	}
+
+	&:global(.secondary) {
+		background-color: var(--border-grey-light);
+		color: var(--secondary-grey);
+	}
+}

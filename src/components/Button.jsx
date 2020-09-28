@@ -1,8 +1,11 @@
-import './Button.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+import classnames from 'classnames/bind';
 import {Events} from '@nti/lib-commons';
+
+import styles from './Button.css';
+
+const cx = classnames.bind(styles);
 
 export default class Button extends React.Component {
 	static propTypes = {
@@ -53,12 +56,13 @@ export default class Button extends React.Component {
 			'nti-button',
 			className,
 			{
+				button: !plain,
 				primary: !secondary && !destructive && !plain,
 				secondary,
 				destructive,
 				disabled,
 				rounded,
-				plain
+				plain,
 			}
 		);
 
