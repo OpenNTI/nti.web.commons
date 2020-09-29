@@ -1,5 +1,6 @@
 export Alert from './Alert';
 export Arrow from './Arrow';
+export CheckMark from './CheckMark';
 export Chevron from './Chevron';
 export Download from './Download';
 export Drawing from './Drawing';
