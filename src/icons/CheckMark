@@ -1,0 +1,7 @@
+import React from 'react';
+
+export default function CheckMarkIcon (props) {
+	return (
+		<span {...props} >&#10003;</span>
+	);
+}
