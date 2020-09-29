@@ -12,7 +12,7 @@ export default class extends React.Component {
 	static displayName = 'Error';
 
 	static propTypes = {
-		error: PropTypes.any
+		error: PropTypes.any.isRequired
 	};
 
 	componentDidMount () {
@@ -27,15 +27,16 @@ export default class extends React.Component {
 
 	log = (props = this.props) => {
 		let {error} = props;
-		logger.error(error.stack
-					|| error.message
-					|| error.responseText
-					|| error);
+		logger.error(error?.stack
+					|| error?.message
+					|| error?.responseText
+					|| error
+					|| props);
 	};
 
 	isAccessError = (props = this.props) => {
 		let {error} = props;
-		if (error.statusCode != null) {
+		if (error?.statusCode != null) {
 			let code = parseInt(error.statusCode, 10);//just a precaution, should already be an int.
 			return (code > 400 && code < 404);
 		}
@@ -45,7 +46,7 @@ export default class extends React.Component {
 
 	isNotFound = (props = this.props) => {
 		let {error} = props;
-		if (error.statusCode != null) {
+		if (error?.statusCode != null) {
 			let code = parseInt(error.statusCode, 10);//just a precaution, should already be an int.
 			return (code === 404);
 		}
@@ -56,7 +57,7 @@ export default class extends React.Component {
 	render () {
 		let {error} = this.props;
 		let label = 'Error';
-		let message = error.stack || error.message || error.responseText || error || '';
+		let message = error?.stack || error?.message || error?.responseText || error || '';
 
 		if (isHTML.test(message)) {
 			message = (
