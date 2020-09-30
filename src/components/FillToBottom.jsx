@@ -7,13 +7,14 @@ FillToBottom.propTypes = {
 	padding: PropTypes.number,
 	limit: PropTypes.bool,
 	style: PropTypes.object,
+	property: PropTypes.string,
 
 	as: PropTypes.any
 };
-export default function FillToBottom ({padding = 20, limit, as:tag, style:styleProp, ...otherProps}) {
+export default function FillToBottom ({padding = 20, limit, property: propertyProp, as:tag, style:styleProp, ...otherProps}) {
 	const Cmp = tag || 'div';
 	const style = {...styleProp};
-	const property = limit ? 'height' : 'minHeight';
+	const property = propertyProp ?? (limit ? 'height' : 'minHeight');
 
 	style[property] = `var(${Property})`;
 
