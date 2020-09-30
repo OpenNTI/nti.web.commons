@@ -33,6 +33,7 @@ import {
 	getInnerStylesForAlignment,
 	getAlignmentClass,
 	getAlignmentInfo,
+	getPseudoElementSpace,
 	getViewportRelativeAlignments,
 } from './utils';
 
@@ -223,7 +224,8 @@ export default class AlignedFlyout extends React.Component {
 			const prev = this.flyoutSize;
 
 			const {offsetWidth: width, offsetHeight: height} = this.flyout;
-			this.flyoutSize = {width, height};
+
+			this.flyoutSize = {width, height: height - getPseudoElementSpace(this.flyout)};
 
 			if (prev && (prev.width !== this.flyoutSize.width || prev.height !== this.flyoutSize.height)) {
 				this.realign();
@@ -332,13 +334,13 @@ export default class AlignedFlyout extends React.Component {
 	}
 
 
-	realign = () => {
-		clearTimeout(this.realign.timeout);
-		this.realign.timeout = setTimeout(() => {
+	realign = (reason) => {
+		cancelAnimationFrame(this.realign.timeout);
+		this.realign.timeout = requestAnimationFrame(() => {
 			this.setState({
 				aligning: true
 			}, () => this.align());
-		}, 50);
+		});
 	}
 
 

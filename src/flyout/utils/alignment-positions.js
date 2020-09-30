@@ -13,6 +13,7 @@ import {
 	ALIGN_LEFT_OR_RIGHT
 } from '../Constants';
 
+import getPseudoElementSpace from './get-pseudo-element-space';
 
 export const ALIGNMENT_POSITIONS = {
 	//TODO: add horizontal positioning
@@ -75,7 +76,8 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} reservedMargin the space to reserve between the edge of the screen
 		 * @return {Object} the vertical positioning
 		 */
-		[DEFAULT_VERTICAL] ({top, bottom}, {offsetHeight: flyoutHeight}, {height: viewHeight}, reservedMargin) {
+		[DEFAULT_VERTICAL] ({top, bottom}, flyout, {height: viewHeight}, reservedMargin) {
+			const flyoutHeight = flyout.offsetHeight - getPseudoElementSpace(flyout);
 			const {top: reservedTop, bottom: reservedBottom} = reservedMargin || {};
 
 			const topSpace = top - (reservedTop || 0);
