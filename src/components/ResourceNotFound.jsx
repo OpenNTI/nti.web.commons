@@ -26,7 +26,7 @@ export default function ResourceNotFound ({actions = [], getString}) {
 			<figcaption>
 				<h3>{stringFn('header')}</h3>
 				<p>{stringFn('message')}</p>
-				{actions.length && (
+				{actions.length > 0 && (
 					<ul>
 						{actions.map((x, i) => {
 							return (

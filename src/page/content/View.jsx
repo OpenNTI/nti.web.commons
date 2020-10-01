@@ -6,11 +6,13 @@ import Styles from '../Styles.css';
 
 import Loading from './common/Loading';
 import ErrorCmp from './common/Error';
+import NotFound from './common/NotFound';
 
 const cx = classnames.bind(Styles);
 
 PageContent.Error = ErrorCmp;
 PageContent.Loading = Loading;
+PageContent.NotFound = NotFound;
 PageContent.isContent = child => child.type === PageContent;
 PageContent.propTypes = {
 	className: PropTypes.string,
