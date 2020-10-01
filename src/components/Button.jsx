@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Events} from '@nti/lib-commons';
+import {Events, PropTypes as NtiPropTypes } from '@nti/lib-commons';
 
 import styles from './Button.css';
 
@@ -9,7 +9,8 @@ const cx = classnames.bind(styles);
 
 export default class Button extends React.Component {
 	static propTypes = {
-		component: PropTypes.any,
+		as: PropTypes.any,
+		component: NtiPropTypes.deprecated,
 		className: PropTypes.string,
 		onClick: PropTypes.func,
 
@@ -42,7 +43,7 @@ export default class Button extends React.Component {
 
 	render () {
 		const {
-			component = 'a',
+			as = this.props.component || 'a',
 			className,
 			rounded,
 			disabled,
@@ -51,7 +52,7 @@ export default class Button extends React.Component {
 			plain,
 			...otherProps
 		} = this.props;
-		const Component = component;
+		const Component = as;
 		const cls = cx(
 			'nti-button',
 			className,
