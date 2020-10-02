@@ -5,11 +5,16 @@ import {scoped} from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
 	header: 'Sorry, this page doesn\'t exist...',
-	message: 'Your link may contain errors or the page may no longer exist.'
+	message: 'Your link may contain errors or the page may no longer exist.',
+	back: 'Back'
 };
 
 const t = scoped('common.components.resource-not-found', DEFAULT_TEXT);
 
+ResourceNotFound.getBackAction = (history) => ({
+	label: t('back'),
+	handler: () => history?.goBack?.()
+});
 ResourceNotFound.propTypes = {
 	actions: PropTypes.arrayOf(PropTypes.shape({
 		label: PropTypes.string,

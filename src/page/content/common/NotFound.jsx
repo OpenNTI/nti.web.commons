@@ -8,6 +8,7 @@ import Styles from './NotFound.css';
 
 const cx = classnames.bind(Styles);
 
+NotFoundPage.getBackAction = (...args) => ResourceNotFound.getBackAction(...args);
 NotFoundPage.propTypes = {
 	className: PropTypes.string,
 	fill: PropTypes.bool
