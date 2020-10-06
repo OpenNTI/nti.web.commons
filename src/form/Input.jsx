@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {ObjectUtils} from '@nti/lib-commons';
 
-import {Input, Checkbox} from '../components';
+import {Input, Checkbox, Radio} from '../components';
 
 import FormContext from './Context';
 
@@ -79,6 +79,7 @@ const InputTypes = {
 	Text: WrapperFactory(Input.Text),
 	Email: WrapperFactory(Input.Email),
 	Checkbox: WrapperFactory(Checkbox, 'onChange', true),
+	Radio: WrapperFactory(Radio, 'onChange', true),
 	Hidden: Input.Hidden
 };
 
