@@ -2,6 +2,7 @@ import './LabeledValue.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {v4 as uuid} from 'uuid';
 
 export default class LabeledValue extends React.PureComponent {
 	static propTypes = {
@@ -13,6 +14,12 @@ export default class LabeledValue extends React.PureComponent {
 	};
 
 	domNode = React.createRef();
+
+	constructor (props) {
+		super(props);
+
+		this.id = uuid();
+	}
 
 	getDOMNode () {
 		return this.domNode.current;
@@ -27,8 +34,8 @@ export default class LabeledValue extends React.PureComponent {
 
 		return (
 			<div {...otherProps} className={classes} ref={this.domNode}>
-				<label>{label}</label>
-				<div className="value">
+				<label id={this.id}>{label}</label>
+				<div className="value" aria-labelledby={this.id}>
 					{children}
 				</div>
 			</div>
