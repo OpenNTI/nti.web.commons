@@ -1,0 +1,17 @@
+.task-button {
+	position: relative;
+
+	&.running {
+		& .label {
+			opacity: 0;
+		}
+
+		& .spinner {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -12px;
+			margin-left: -12px;
+		}
+	}
+}
