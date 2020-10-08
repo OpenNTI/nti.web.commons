@@ -65,7 +65,7 @@
 			overflow: hidden;
 			text-overflow: ellispsis;
 			white-space: nowrap;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			font: normal 400 0.875rem/2.8 $body-font-family;
 			padding: 0 0.35em 0 1.39em;
 			cursor: pointer;

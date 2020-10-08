@@ -18,7 +18,7 @@
 
 .nti-calendar-date-icon {
 	font-family: "Open Sans", sans-serif;
-	border: 2px solid $secondary-grey;
+	border: 2px solid var(--secondary-grey);
 	border-radius: 8px;
 	color: white;
 	text-transform: uppercase;
@@ -29,7 +29,7 @@
 		font-size: 0.625em;
 		font-weight: 600;
 		color: rgba(255, 255, 255, 0.5);
-		background-color: $secondary-grey;
+		background-color: var(--secondary-grey);
 		padding: 4px 0;
 		overflow: hidden;
 	}
@@ -102,7 +102,7 @@
 			left: 0;
 			right: 0;
 			$ringwidth: 2px;
-			$color: $secondary-grey;
+			$color: var(--secondary-grey);
 
 			background:
 				linear-gradient(

@@ -53,12 +53,12 @@
 		i {
 			margin-top: 2rem;
 			font-size: 2rem;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 		}
 
 		.title {
 			font-size: 1.125rem;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			flex: 0 0 auto;
 			margin: 1rem 0;
 		}
@@ -66,7 +66,7 @@
 		.file-name {
 			display: flex;
 			font-size: 14px;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 
 			.remove-file {
 				font-size: 10px;
@@ -93,7 +93,7 @@
 				border-radius: 4px;
 				line-height: 2.5rem;
 				font-size: 0.875rem;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 			}
 		}
 

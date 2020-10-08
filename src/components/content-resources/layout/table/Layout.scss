@@ -63,7 +63,7 @@
 		line-height: (40/13);
 		font-size: rem-calc(13px);
 		white-space: nowrap;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		&.unselectable {
 			pointer-events: none;
@@ -80,7 +80,7 @@
 					display: none;
 				}
 				input {
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 					line-height: 1.2;
 					position: absolute;
 					height: auto;
@@ -124,7 +124,7 @@
 			&:hover.selected {
 				background: none;
 				&, .filename {
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 				}
 			}
 		}

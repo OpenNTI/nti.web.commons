@@ -7,7 +7,7 @@
 	margin: rem-calc(3px);
 	padding: rem-calc(3px 8px 5px 12px);
 	line-height: 1.3;
-	color: $secondary-grey;
+	color: var(--secondary-grey);
 	font-size: 1em;
 	.value {
 		margin-right: rem-calc(6px);
@@ -17,7 +17,7 @@
 		color: $tertiary-grey;
 		cursor: pointer;
 		.no-touch &:hover {
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 		}
 	}
 }

@@ -15,7 +15,7 @@
 		padding: 0.3125rem 0;
 		text-align: center;
 		font-size: 0.8125rem;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		&:invalid {
 			border: 1px solid $border-red;
@@ -28,7 +28,7 @@
 		border: 1px solid $border-grey-alt;
 
 		.menu-label {
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			font-size: 0.8125rem;
 			padding-right: 1.65rem;
 			line-height: 1.6875rem;
@@ -49,7 +49,7 @@
 			margin-left: -1px;
 
 			li {
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				font-size: 0.8125rem;
 				font-weight: 400;
 

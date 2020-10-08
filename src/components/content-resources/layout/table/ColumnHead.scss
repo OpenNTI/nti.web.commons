@@ -4,7 +4,7 @@
 	text-transform: uppercase;
 
 	&.sorted {
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		.arrow {
 			display: inline-block;
@@ -16,7 +16,7 @@
 				content: '';
 				width: 5px;
 				height: 5px;
-				background: $secondary-grey;
+				background: var(--secondary-grey);
 				transform: translateY(-50%) rotate(45deg);
 				display: block;
 			}

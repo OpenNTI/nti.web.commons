@@ -9,13 +9,13 @@
 		font-size: 12px;
 
 		.nofile {
-			color: #787878;
+			color: var(--secondary-grey-alt);
 			font-style: italic;
 		}
 	}
 
 	.file-select-reset {
-		color: #787878;
+		color: var(--secondary-grey-alt);
 		margin-left: 10px;
 		cursor: pointer;
 	}

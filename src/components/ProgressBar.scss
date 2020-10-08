@@ -12,7 +12,7 @@
 	padding: rem-calc(11px 15px 10px);
 	font-size: rem-calc(13px);
 	font-weight: 600;
-	color: $secondary-grey;
+	color: var(--secondary-grey);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	min-height: rem-calc(50px);
