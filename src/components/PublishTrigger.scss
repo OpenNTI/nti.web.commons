@@ -14,7 +14,7 @@ $trigger-height: 2.4375rem;
 	&.publish,
 	&.schedule {
 		background: #f8f8f8;
-		border: 1px solid #d1d1d1;
+		border: 1px solid var(--tertiary-grey-alt);
 		.publish-trigger-text {
 			color: #3fb3f6;
 		}

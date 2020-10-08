@@ -31,7 +31,7 @@
 		}
 
 		a, a:link, a:visited, a:hover {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			text-decoration: none;
 			position: absolute;
 			right: rem-calc(15px);
@@ -69,7 +69,7 @@
 		}
 
 		.time-left {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			float: right;//eew...
 		}
 	}

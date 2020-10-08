@@ -51,11 +51,11 @@
 
 	.main {
 		display: block;
-		color: #b8b8b8;
+		color: var(--tertiary-grey);
 
 		.text {
 			display: inline-block;
-			border: 1px solid #d1d1d1;
+			border: 1px solid var(--tertiary-grey-alt);
 			padding: 0 0.625rem;
 			cursor: pointer;
 			font: italic 500 12px/32px "Open Sans", sans-serif;
@@ -65,7 +65,7 @@
 				display: block;
 				float: right;
 				padding-left: 0.625rem;
-				color: #b8b8b8;
+				color: var(--tertiary-grey);
 				text-transform: uppercase;
 				font: normal 700 10px/34px "Open Sans", sans-serif;
 				cursor: pointer;

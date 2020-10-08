@@ -15,7 +15,7 @@ form.search-component {
 		transform: translateY(-50%);
 		left: rem-calc(7px);
 		font-size: rem-calc(22px);
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 	}
 
 	input[type=text] {
@@ -42,7 +42,7 @@ form.search-component {
 
 		&::placeholder {
 			font-style: italic;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-weight: 300;
 		}
 

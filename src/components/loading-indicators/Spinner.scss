@@ -60,7 +60,7 @@
 
 	&.grey {
 		.path {
-			stroke: $tertiary-grey;
+			stroke: var(--tertiary-grey);
 		}
 	}
 }

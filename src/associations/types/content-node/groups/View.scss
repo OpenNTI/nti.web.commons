@@ -10,7 +10,7 @@
 	h6 {
 		font: normal 600 0.625rem/0.875rem $body-font-family;
 		margin: 0 0 10px 0;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		text-transform: uppercase;
 
 		&.error {

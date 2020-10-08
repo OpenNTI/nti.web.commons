@@ -41,11 +41,11 @@
 	}
 
 	.white-shade-mask & {
-		border: 2px solid $tertiary-grey;
-		color: $tertiary-grey;
+		border: 2px solid var(--tertiary-grey);
+		color: var(--tertiary-grey);
 
 		.month {
-			background-color: $tertiary-grey;
+			background-color: var(--tertiary-grey);
 		}
 	}
 

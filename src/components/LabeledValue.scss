@@ -16,7 +16,7 @@
 		color: var(--primary-grey);
 		.placeholder {
 			font-style: italic;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 
@@ -28,7 +28,7 @@
 			width: 0;
 			height: 0;
 			border: $size solid transparent;
-			border-top-color: $tertiary-grey;
+			border-top-color: var(--tertiary-grey);
 			position: absolute;
 			right: .5rem;
 			top: 50%;

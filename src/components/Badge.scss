@@ -104,7 +104,7 @@
 	// stylelint-enable length-zero-no-unit
 
 	&.viewed::after {
-		background-color: $tertiary-grey;
+		background-color: var(--tertiary-grey);
 	}
 }
 
@@ -114,7 +114,7 @@
 
 	&.seen {
 		.badge {
-			background-color: $tertiary-grey;
+			background-color: var(--tertiary-grey);
 		}
 	}
 
@@ -139,7 +139,7 @@
 
 		&.inactive {
 			&::after {
-				background: $tertiary-grey;
+				background: var(--tertiary-grey);
 			}
 		}
 	}

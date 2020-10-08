@@ -14,7 +14,7 @@
 	}
 
 	i {
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		cursor: pointer;
 		.no-touch &:hover {
 			color: var(--secondary-grey);

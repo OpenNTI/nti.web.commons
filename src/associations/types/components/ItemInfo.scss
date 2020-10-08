@@ -12,7 +12,7 @@
 		span {
 			display: inline;
 			font: normal 600 0.625rem/0.875rem $body-font-family;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			vertical-align: middle;
 
