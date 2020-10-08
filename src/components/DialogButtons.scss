@@ -46,7 +46,7 @@
 
 		&.link,
 		&.cancel {
-			color: $primary-grey;
+			color: var(--primary-grey);
 			text-decoration: underline;
 			background: rgba(0,0,0,0) !important;
 			font-weight: 300;
@@ -89,7 +89,7 @@
 
 		&.secondary {
 			font-weight: 300;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			background: rgba(0,0,0,0);
 
 			&.decline,

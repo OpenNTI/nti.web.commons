@@ -21,7 +21,7 @@
 
 	a {
 		font-weight: inherit;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		text-decoration: underline;
 		cursor: pointer;
 	}

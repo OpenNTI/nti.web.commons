@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .toolbar-button {
-	color: $primary-grey;
+	color: var(--primary-grey);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: rem-calc(13px);
@@ -14,7 +14,7 @@
 
 	&:hover {
 		color: #333333;
-		i { color: $primary-grey; }
+		i { color: var(--primary-grey); }
 	}
 
 	&:not(.disabled):focus,

@@ -7,7 +7,7 @@
 	}
 
 	.filename {
-		color: $primary-grey;
+		color: var(--primary-grey);
 	}
 
 	.filename span:hover {

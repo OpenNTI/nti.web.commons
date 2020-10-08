@@ -44,7 +44,7 @@ body > .folder-asset.ghost,
 		font-size: rem-calc($size);
 		box-sizing: content-box;
 		font-weight: 600;
-		color: $primary-grey;
+		color: var(--primary-grey);
 
 		white-space: nowrap;;
 		overflow: hidden;

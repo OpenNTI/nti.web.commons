@@ -75,7 +75,7 @@
 	display: table-caption;
 	height: rem-calc(24px);
 	text-align: center;
-	color: $primary-grey;
+	color: var(--primary-grey);
 	font-weight: 100;
 }
 
@@ -115,7 +115,7 @@
 	vertical-align: middle;
 	font-size: 12px;
 	line-height: 14px;
-	color: $primary-grey;
+	color: var(--primary-grey);
 	font-family: $body-font-family;
 
 	&:focus {

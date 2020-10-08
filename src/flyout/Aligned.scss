@@ -98,11 +98,11 @@
 
 	&.dark {
 		.flyout-arrow::after {
-			background: $primary-grey;
+			background: var(--primary-grey);
 		}
 
 		.flyout-inner {
-			background: $primary-grey;
+			background: var(--primary-grey);
 		}
 	}
 }

@@ -8,7 +8,7 @@
 		display: inline-block;
 		vertical-align: middle;
 		font: normal bold 1.125rem/2.5 $header-font-family;
-		color: $primary-grey;
+		color: var(--primary-grey);
 	    text-rendering: optimizeLegibility;
 	    overflow: hidden;
 	    text-overflow: ellipsis;

@@ -13,7 +13,7 @@
 	.value {
 		font-size: rem-calc(13px);
 		line-height: (18/13);
-		color: $primary-grey;
+		color: var(--primary-grey);
 		.placeholder {
 			font-style: italic;
 			color: $tertiary-grey;

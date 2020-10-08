@@ -21,7 +21,7 @@ form.search-component {
 	input[type=text] {
 		background: transparent;
 		border: 0;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		margin: 0;
 		padding: rem-calc(0 32px);
 		width: 100%;

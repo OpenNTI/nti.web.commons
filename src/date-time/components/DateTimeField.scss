@@ -29,10 +29,10 @@
 
 			.menu-label {
 				line-height: 39px;
-				color: #494949;
+				color: var(--primary-grey);
 
 				&::after {
-					color: #494949;
+					color: var(--primary-grey);
 				}
 			}
 		}
@@ -42,7 +42,7 @@
 			border: 1px solid #dbdbdb;
 			height: 42px;
 			margin-top: 16px;
-			color: #494949;
+			color: var(--primary-grey);
 		}
 	}
 
@@ -100,7 +100,7 @@
 		font-size: 0.75em;
 		font-weight: 600;
 		padding-left: 0.5em;
-		color: #494949;
+		color: var(--primary-grey);
 
 		a {
 			color: #3fb3f6;

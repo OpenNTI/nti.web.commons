@@ -2,7 +2,7 @@
 
 .nti-select-native-wrapper {
 	position: relative;
-	color: #494949;
+	color: var(--primary-grey);
 	box-shadow: 0 0 0 1px #dbdbdb;
 	background-color: white;
 	border-radius: 3px;
@@ -42,6 +42,6 @@
 		margin: 0;
 		opacity: 0;
 		background-color: white;
-		color: #494949;
+		color: var(--primary-grey);
 	}
 }
