@@ -36,7 +36,7 @@
 		width: 100%;
 		padding-top: rem-calc(10px);
 		padding-bottom: rem-calc(10px);
-		border-bottom: 1px solid #f8f8f8;
+		border-bottom: 1px solid var(--quad-grey);
 
 		&:first-of-type {
 			padding-top: 0;
