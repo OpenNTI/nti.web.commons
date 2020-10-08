@@ -2,7 +2,7 @@
 
 .panel-header-component {
 	@include clearfix;;
-	background: $panel-background;
+	background: var(--panel-background);
 	position: relative;
 	user-select: none;
 	cursor: default;

@@ -2,7 +2,7 @@
 
 .nti-web-commons-filedrop {
 	width: 100%;
-	background: $panel-background;
+	background: var(--panel-background);
 	border: 2px dashed var(--border-grey);
 	border-radius: 7px;
 	overflow: hidden;

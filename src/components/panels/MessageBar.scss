@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .panels-message-bar {
-	background: $panel-background-yellow;
+	background: var(--panel-background)-yellow;
 	padding: rem-calc(8px 30px);
 	font: normal 400 0.875rem/1.25rem $body-font-family;
 	color: var(--primary-grey);

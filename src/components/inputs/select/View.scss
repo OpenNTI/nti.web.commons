@@ -18,7 +18,7 @@
 
 	.select-label {
 		border-radius: 2px;
-		background-color: $panel-background;
+		background-color: var(--panel-background);
 		//since these are box-sizing: border-box the borders are eating into the
 		//height. We want the input themselves to be 32px tall. So we need to add
 		//2px to account for the borders

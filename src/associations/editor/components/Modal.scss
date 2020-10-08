@@ -15,7 +15,7 @@
 
 	.content {
 		height: calc(80vh - 20px);
-		background: $panel-background;
+		background: var(--panel-background);
 		overflow: auto;
 		padding: 1.25rem;
 

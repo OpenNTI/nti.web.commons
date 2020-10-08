@@ -4,7 +4,7 @@
 	/*text-align: center;*/
 	margin: 1rem;
 	padding: 2rem 1rem;
-	background: $panel-background;
+	background: var(--panel-background);
 	color: var(--secondary-grey);
 	border: 1px solid var(--border-grey);
 	border-radius: 2px;
