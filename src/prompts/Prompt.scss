@@ -35,8 +35,8 @@
 	}
 
 	.dialog-buttons .primary {
-		background-color: $primary-blue;
-		box-shadow: inset 1px 0 0 0 $primary-blue;
+		background-color: var(--primary-blue);
+		box-shadow: inset 1px 0 0 0 var(--primary-blue);
 	}
 }
 

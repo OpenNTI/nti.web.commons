@@ -19,8 +19,8 @@
 		padding-right: rem-calc($sideMargin - 5px);
 
 		&.entity-drag-over {
-			box-shadow: inset 0 0 0 5px $primary-blue;
-			background-color: rgba($primary-blue, 0.1);
+			box-shadow: inset 0 0 0 5px var(--primary-blue);
+			background-color: rgba(var(--primary-blue), 0.1);
 
 			.content-resource-view-layout.table thead,
 			.content-resource-view-layout.table {

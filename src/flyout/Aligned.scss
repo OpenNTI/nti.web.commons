@@ -67,7 +67,7 @@
 		background-color: var(--tertiary-grey-alt);
 
 		&.changed {
-			background-color: $primary-blue;
+			background-color: var(--primary-blue);
 		}
 
 		&.error {
@@ -82,11 +82,11 @@
 	&:focus,
 	&:focus-within {
 		.flyout-arrow::after {
-			box-shadow: 0 0 4px 0 $primary-blue;
+			box-shadow: 0 0 4px 0 var(--primary-blue);
 		}
 
 		.flyout-inner {
-			box-shadow: 0 0 4px 0 $primary-blue;
+			box-shadow: 0 0 4px 0 var(--primary-blue);
 		}
 	}
 

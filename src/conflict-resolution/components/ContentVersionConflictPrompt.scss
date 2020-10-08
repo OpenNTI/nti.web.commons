@@ -39,7 +39,7 @@
 
 			li {
 				font: normal 300 0.875rem/1.5 $body-font-family;
-				color: $primary-blue;
+				color: var(--primary-blue);
 				cursor: pointer;
 
 				&.selected {

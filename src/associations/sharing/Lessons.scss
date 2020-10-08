@@ -8,7 +8,7 @@
   margin-bottom: rem-calc(5px);
 
   &.single, &.none {
-    color: $primary-blue;
+    color: var(--primary-blue);
   }
 
   i {

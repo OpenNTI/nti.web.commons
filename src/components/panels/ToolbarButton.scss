@@ -22,7 +22,7 @@
 	.no-touch &:not(.disabled):hover {
 		opacity: 1;
 		outline: none;
-		// color: $primary-blue;
+		// color: var(--primary-blue);
 	}
 
 	i + span:not(:empty) {

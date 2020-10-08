@@ -39,7 +39,7 @@
 				display: inline-block;
 				vertical-align: middle;
 				font: normal 400 0.875rem/1 $body-font-family;
-				color: $primary-blue;
+				color: var(--primary-blue);
 				cursor: pointer;
 
 				&:not(:first-of-type)::before {

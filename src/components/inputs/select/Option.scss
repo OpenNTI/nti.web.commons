@@ -18,7 +18,7 @@
 
 	&.selected {
 		color: white;
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 	}
 
 	&.checkable {

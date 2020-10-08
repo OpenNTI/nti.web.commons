@@ -6,7 +6,7 @@
 
 	&.focused {
 		.select-label .nti-text-input {
-			border-color: $primary-blue;
+			border-color: var(--primary-blue);
 		}
 	}
 

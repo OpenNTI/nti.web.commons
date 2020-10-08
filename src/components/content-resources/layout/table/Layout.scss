@@ -90,10 +90,10 @@
 					right: 0;
 					transform: translateY(-50%);
 					text-decoration: none !important;
-					border: 1px solid $primary-blue;
+					border: 1px solid var(--primary-blue);
 					padding: rem-calc(3px);
 					&::selection {
-						background: rgba($primary-blue, 0.15);
+						background: rgba(var(--primary-blue), 0.15);
 					}
 				}
 			}
@@ -109,7 +109,7 @@
 		&.entity-drag-over,
 		&.selected,
 		&:hover.selected {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			&, .filename {
 				color: #fff;
 			}

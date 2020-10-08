@@ -23,7 +23,7 @@
 			opacity: 0.65;
 
 			&::before {
-				color: $primary-blue;
+				color: var(--primary-blue);
 			}
 
 			.no-touch &:hover {

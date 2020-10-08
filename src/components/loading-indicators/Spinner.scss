@@ -48,7 +48,7 @@
 
 	&.blue {
 		.path {
-			stroke: $primary-blue;
+			stroke: var(--primary-blue);
 		}
 	}
 

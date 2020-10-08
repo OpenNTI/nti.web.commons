@@ -59,7 +59,7 @@
 		line-height: 1.15;
 
 		a, a:link, a:visited {
-			color: $primary-blue;
+			color: var(--primary-blue);
 			text-decoration: none;
 			margin-left: rem-calc(15px);
 
@@ -82,24 +82,24 @@
 		margin: 0;
 		padding: 0;
 		height: rem-calc(5px);
-		background-color: rgba($primary-blue, 0.2);
-		color: $primary-blue;
+		background-color: rgba(var(--primary-blue), 0.2);
+		color: var(--primary-blue);
 		position: relative;
 	}
 
 	progress[value] {
 		&::-moz-progress-bar {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			transition: width 1s ease;
 		}
 
 		&::-webkit-progress-value {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			transition: width 1s ease;
 		}
 
 		&::-webkit-progress-bar {
-			background-color: rgba($primary-blue, 0.2);
+			background-color: rgba(var(--primary-blue), 0.2);
 		}
 	}
 

@@ -20,7 +20,7 @@
 	}
 
 	&.valid-dragover-filedrop {
-		border-color: $primary-blue;
+		border-color: var(--primary-blue);
 	}
 
 	&.invalid-dragover-filedrop {

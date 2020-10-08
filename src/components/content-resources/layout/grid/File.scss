@@ -24,7 +24,7 @@ body > .file-asset.ghost,
 
 	&.selected .select,
 	&:hover.selected .select {
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 		div.filename,
 		div.filename span {
 			color: #fff;

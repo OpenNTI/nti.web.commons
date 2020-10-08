@@ -69,7 +69,7 @@
 		margin: 0;
 		padding: 0;
 		background: none;
-		color: $primary-blue;
+		color: var(--primary-blue);
 		margin-bottom: 0.25em;
 		font-size: rem-calc(10px);
 	}
@@ -89,7 +89,7 @@
 		color: var(--tertiary-grey);
 
 		a, .nti-link-to-path {
-			color: $primary-blue;
+			color: var(--primary-blue);
 		}
 	}
 

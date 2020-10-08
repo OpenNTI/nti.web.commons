@@ -24,7 +24,7 @@ body > .folder-asset.ghost,
 	&:hover.entity-drag-over,
 	&:hover.selected,
 	&.selected {
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 		color: #fff;
 
 		span.filename,
