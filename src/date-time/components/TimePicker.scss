@@ -18,7 +18,7 @@
 		color: var(--secondary-grey);
 
 		&:invalid {
-			border: 1px solid $border-red;
+			border: 1px solid var(--border-red);
 		}
 	}
 
