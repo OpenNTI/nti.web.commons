@@ -94,7 +94,7 @@
 
 			&.decline,
 			&.caution {
-				color: $secondary-red;
+				color: var(--secondary-red);
 				background: var(--primary-red);
 				html:not(.touch) &:hover {
 					box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.5);
