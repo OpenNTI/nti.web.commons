@@ -14,7 +14,7 @@
 		text-transform: uppercase;
 
 		&.error {
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 	}
 

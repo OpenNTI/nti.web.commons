@@ -82,7 +82,7 @@
 
 			&.decline,
 			&.caution {
-				background: $primary-red;
+				background: var(--primary-red);
 				box-shadow: inset 1px 0 0 0 #dd4845;
 			}
 		}
@@ -95,7 +95,7 @@
 			&.decline,
 			&.caution {
 				color: $secondary-red;
-				background: $primary-red;
+				background: var(--primary-red);
 				html:not(.touch) &:hover {
 					box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.5);
 				}

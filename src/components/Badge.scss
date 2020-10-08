@@ -13,7 +13,7 @@
 	&::after {
 		content: attr(data-badge);
 		position: absolute;
-		background: $primary-red;
+		background: var(--primary-red);
 		color: white;
 		font-size: $font-size;
 		font-weight: 600;
@@ -133,7 +133,7 @@
 
 		&.alert {
 			&::after {
-				background: $primary-red;
+				background: var(--primary-red);
 			}
 		}
 

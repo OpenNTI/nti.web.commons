@@ -12,7 +12,7 @@
 	&.error {
 		background: none;
 		padding: 0;
-		color: $primary-red;
+		color: var(--primary-red);
 		text-decoration: underline;
 	}
 

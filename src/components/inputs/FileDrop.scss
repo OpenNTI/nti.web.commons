@@ -24,10 +24,10 @@
 	}
 
 	&.invalid-dragover-filedrop {
-		border-color: $primary-red;
+		border-color: var(--primary-red);
 
 		.requirements {
-			background: $primary-red;
+			background: var(--primary-red);
 			color: white;
 		}
 	}
@@ -107,7 +107,7 @@
 			}
 
 			.error {
-				color: $primary-red;
+				color: var(--primary-red);
 			}
 		}
 

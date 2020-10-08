@@ -18,14 +18,14 @@
 		&.error:not(.focused) {
 			.month-input {
 				.select-label .nti-text-input {
-					border-left-color: $primary-red;
-					border-top-color: $primary-red;
-					border-bottom-color: $primary-red;
+					border-left-color: var(--primary-red);
+					border-top-color: var(--primary-red);
+					border-bottom-color: var(--primary-red);
 				}
 			}
 
 			.year-input {
-				border-color: $primary-red;
+				border-color: var(--primary-red);
 			}
 		}
 	}
