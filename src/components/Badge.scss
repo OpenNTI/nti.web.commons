@@ -127,7 +127,7 @@
 
 		&.success {
 			&::after {
-				background: #3fb34f;
+				background: var(--secondary-green);
 			}
 		}
 

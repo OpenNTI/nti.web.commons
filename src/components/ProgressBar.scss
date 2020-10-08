@@ -23,7 +23,7 @@
 	&.complete {
 		min-height: rem-calc(40px);
 		background-color: #ebf7ed;
-		color: $secondary-green;
+		color: var(--secondary-green);
 		line-height: 1.5;
 
 		i.icon-check {
