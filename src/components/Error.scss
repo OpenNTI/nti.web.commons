@@ -92,6 +92,6 @@ widget error {
 
 	&.unsupported-content {
 		background: $panel-background;
-		border-color: $border-grey;
+		border-color: var(--border-grey);
 	}
 }

@@ -4,8 +4,8 @@
 	position: relative;
 	padding: 0;
 	background: $panel-background;
-	box-shadow: inset 0 -1px 0 0 $border-grey-light,
-				inset 0 1px 0 0 $border-grey-light;
+	box-shadow: inset 0 -1px 0 0 var(--border-grey)-light,
+				inset 0 1px 0 0 var(--border-grey)-light;
 
 	display: flex;
 
@@ -27,6 +27,6 @@
 		left: 50%;
 		right: 50%;
 		width: rem-calc(1px);
-		background: $border-grey-light;
+		background: var(--border-grey)-light;
 	}
 }

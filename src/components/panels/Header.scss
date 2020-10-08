@@ -6,7 +6,7 @@
 	position: relative;
 	user-select: none;
 	cursor: default;
-	border-bottom: 1px solid $border-grey-light;
+	border-bottom: 1px solid var(--border-grey)-light;
 
 	i.icon-light-x,
 	i.icon-remove {

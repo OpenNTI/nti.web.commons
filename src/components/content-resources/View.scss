@@ -55,7 +55,7 @@
 		min-width: 350px;
 
 		margin-right: rem-calc(-$sideMargin);
-		border: 0 solid $border-grey-light;
+		border: 0 solid var(--border-grey)-light;
 		border-width: 0 0 0 1px;
 		background: #fff;
 	}

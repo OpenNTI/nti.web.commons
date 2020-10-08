@@ -3,7 +3,7 @@
 .nti-number-input {
 	border-radius: 2px;
 	background-color: $panel-background;
-	border: solid 1px $border-grey-light;
+	border: solid 1px var(--border-grey)-light;
 	color: var(--secondary-grey);
 	font: normal 400 0.875rem/2rem $body-font-family;
 	//since these are box-sizing: border-box the borders are eating into the

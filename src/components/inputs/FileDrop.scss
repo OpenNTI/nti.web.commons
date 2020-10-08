@@ -3,7 +3,7 @@
 .nti-web-commons-filedrop {
 	width: 100%;
 	background: $panel-background;
-	border: 2px dashed $border-grey;
+	border: 2px dashed var(--border-grey);
 	border-radius: 7px;
 	overflow: hidden;
 	padding: 1rem 1rem 2rem;
@@ -89,7 +89,7 @@
 				display: block;
 				padding: 0 1.25rem;
 				background: white;
-				border: 1px solid $border-grey-light;
+				border: 1px solid var(--border-grey)-light;
 				border-radius: 4px;
 				line-height: 2.5rem;
 				font-size: 0.875rem;

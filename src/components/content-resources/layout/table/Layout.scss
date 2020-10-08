@@ -47,7 +47,7 @@
 	thead {
 		transition: background-color 0.3s ease, border-bottom-color 0.3s;
 		background-color: $panel-background;
-		border-bottom: 1px solid $border-grey-light;
+		border-bottom: 1px solid var(--border-grey)-light;
 		font-size: rem-calc(10px);
 		font-weight: bold;
 		text-align: left;

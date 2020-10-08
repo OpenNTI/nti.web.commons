@@ -13,7 +13,7 @@
 	}
 
 	&:not(.display):not(.selected):not(.removable):hover, &.focused {
-		background-color: $border-grey-light;
+		background-color: var(--border-grey)-light;
 	}
 
 	&.selected {

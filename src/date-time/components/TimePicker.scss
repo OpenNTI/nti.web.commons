@@ -25,7 +25,7 @@
 	.meridiem-select-box.select-box {
 		flex: 0 0 auto;
 		margin-left: 15px;
-		border: 1px solid $border-grey-alt;
+		border: 1px solid var(--border-grey)-alt;
 
 		.menu-label {
 			color: var(--secondary-grey);

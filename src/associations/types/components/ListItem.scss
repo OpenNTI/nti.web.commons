@@ -3,7 +3,7 @@
 .associations-list-item {
 	min-height: 50px;
 	background-color: white;
-	border: 1px solid $border-grey-light;
+	border: 1px solid var(--border-grey)-light;
 	border-radius: 4px;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	display: flex;

@@ -10,7 +10,7 @@
 	background: white;
 
 	.panel-title-bar {
-		box-shadow: inset 0 -1px 0 0 $border-grey-light;
+		box-shadow: inset 0 -1px 0 0 var(--border-grey)-light;
 	}
 
 	.content {
@@ -24,7 +24,7 @@
 
 	.dialog-buttons {
 		background: white;
-		box-shadow: inset 0 1px 0 0 $border-grey-light;
+		box-shadow: inset 0 1px 0 0 var(--border-grey)-light;
 
 		&::before {
 			display: none;
