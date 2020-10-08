@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 $offline: #747474;
-$online: #8eb737;
+$online: var(--primary-green);
 $away: #ebcd25;
 $dnd: var(--primary-red);
 
