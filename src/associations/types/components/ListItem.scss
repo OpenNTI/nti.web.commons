@@ -10,7 +10,7 @@
 	align-items: center;
 
 	&.active {
-		background-color: $primary-purple;
+		background-color: var(--primary-purple);
 	}
 
 	.association-item-info {

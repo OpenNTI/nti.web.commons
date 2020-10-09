@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .item-sharing {
-  color: $primary-purple;
+  color: var(--primary-purple);
   padding: rem-calc(0 10px);
   display: inline-block;
   cursor: pointer;

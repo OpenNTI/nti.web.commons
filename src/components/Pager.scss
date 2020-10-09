@@ -38,7 +38,7 @@
 			line-height: 2;
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
-			color: $disabled-button-border;
+			color: var(--disabled-button-border);
 
 		}
 	}
