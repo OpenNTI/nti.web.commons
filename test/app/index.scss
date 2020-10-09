@@ -3,7 +3,7 @@
 
 body {
 	margin: 1rem;
-	font-family: 'Open Sans', sans-serif;
+	font-family: var(--body-font-family);
 	min-height: calc(100vh - 2rem);
 }
 

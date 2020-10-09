@@ -10,7 +10,7 @@
 	user-select: none;
 	// width: 268px;
 	border: none;
-	font-family: $body-font-family;
+	font-family: var(--body-font-family);
 
 	&:focus {
 		outline: none;
@@ -116,7 +116,7 @@
 	font-size: 12px;
 	line-height: 14px;
 	color: var(--primary-grey);
-	font-family: $body-font-family;
+	font-family: var(--body-font-family);
 
 	&:focus {
 		outline: none;

@@ -7,7 +7,7 @@
 
 	h1 {
 		margin: 0;
-		font: normal 300 1.5rem/2rem $body-font-family;
+		font: normal 300 1.5rem/2rem var(--body-font-family);
 		flex: 1 1 auto;
 		color: var(--primary-grey);
 	}

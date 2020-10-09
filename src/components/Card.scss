@@ -11,7 +11,7 @@
 
 	color: var(--primary-grey);
 	text-decoration: inherit;
-	font-family: $body-font-family;
+	font-family: var(--body-font-family);
 	//
 	position: relative;
 	overflow: hidden;
@@ -76,7 +76,7 @@
 
 	.label, .extra-labels {
 		text-transform: uppercase;
-		font-family: $body-font-family;
+		font-family: var(--body-font-family);
 		font-weight: 600;
 		font-size: rem-calc(10px);
 		line-height: 1.4;

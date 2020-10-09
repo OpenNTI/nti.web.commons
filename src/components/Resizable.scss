@@ -30,7 +30,7 @@
 		padding-left: 1rem;
 		box-sizing: border-box;
 		color: var(--primary-grey);
-		font: normal 400 1.5em/1.5 "Open Sans", sans-serif;
+		font: normal 400 1.5em/1.5 var(--body-font-family);
 		line-height: 50px;
 		-webkit-font-smoothing: antialiased;
 	}

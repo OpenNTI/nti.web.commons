@@ -22,7 +22,7 @@
 	}
 
 	span.try-again {
-		font: normal 400 0.875rem/2rem $body-font-family;
+		font: normal 400 0.875rem/2rem var(--body-font-family);
 		text-decoration: underline;
 	}
 }

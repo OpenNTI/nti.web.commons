@@ -62,7 +62,7 @@
 		line-height: 2rem;
 		font-weight: 100;
 		font-size: 0.875rem;
-		font-family: $body-font-family;
+		font-family: var(--body-font-family);
 		cursor: pointer;
 		background-color: var(--tertiary-grey-alt);
 

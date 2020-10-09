@@ -19,7 +19,7 @@
 	.textarea-text {
 		line-height: 2.375rem;
 		color: var(--secondary-grey);
-		font: normal 400 0.875rem/2rem $body-font-family;
+		font: normal 400 0.875rem/2rem var(--body-font-family);
 		padding: rem-calc(0 10px);
 		min-height: 8em;
 	}

@@ -3,7 +3,7 @@
 .nti-labeled-input {
 	.label {
 		display: block;
-		font: normal bold 0.625rem/1rem $body-font-family;
+		font: normal bold 0.625rem/1rem var(--body-font-family);
 		text-transform: uppercase;
 		color: var(--secondary-grey);
 		//Override foundation.css' rules for `.label` (only on mobile)

@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 .nti-navigation-list-tab {
-	font: normal 400 1rem/1.5 $body-font-family;
+	font: normal 400 1rem/1.5 var(--body-font-family);
 	text-align: center;
 
 	&::after {

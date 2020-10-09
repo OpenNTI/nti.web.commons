@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .association-locations {
-	font: normal 700 0.625rem/1.25rem $body-font-family;
+	font: normal 700 0.625rem/1.25rem var(--body-font-family);
 	text-transform: uppercase;
 	text-align: center;
 	color: $primary-purple;

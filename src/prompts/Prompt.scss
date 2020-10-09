@@ -116,11 +116,11 @@
 			style: normal;
 			weight: 300;
 			size: 1rem;
-			family: $body-font-family;
+			family: var(--body-font-family);
 		}
 
 		h1 {
-			font-family: $body-font-family;
+			font-family: var(--body-font-family);
 			font-size: 1.3em;
 			font-weight: 300;
 			margin-top: 0;

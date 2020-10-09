@@ -17,7 +17,7 @@
 }
 
 .nti-calendar-date-icon {
-	font-family: "Open Sans", sans-serif;
+	font-family: var(--body-font-family);
 	border: 2px solid var(--secondary-grey);
 	border-radius: 8px;
 	color: white;

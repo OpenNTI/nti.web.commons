@@ -16,13 +16,13 @@
 			background: #afafaf;
 			color: white;
 			border-radius: 0;
-			font: normal 700 10px/14px "Open Sans", sans-serif;
+			font: normal 700 10px/14px var(--body-font-family);
 			padding: 1px 2px;
 		}
 
 		.day {
 			color: #afafaf;
-			font: normal 600 12px/15px "Open Sans", sans-serif;
+			font: normal 600 12px/15px var(--body-font-family);
 			border-radius: 0;
 		}
 
@@ -58,7 +58,7 @@
 			border: 1px solid var(--tertiary-grey-alt);
 			padding: 0 0.625rem;
 			cursor: pointer;
-			font: italic 500 12px/32px "Open Sans", sans-serif;
+			font: italic 500 12px/32px var(--body-font-family);
 			position: relative;
 
 			.clear {
@@ -67,7 +67,7 @@
 				padding-left: 0.625rem;
 				color: var(--tertiary-grey);
 				text-transform: uppercase;
-				font: normal 700 10px/34px "Open Sans", sans-serif;
+				font: normal 700 10px/34px var(--body-font-family);
 				cursor: pointer;
 
 				&.empty {
