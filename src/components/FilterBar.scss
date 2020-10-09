@@ -16,7 +16,7 @@
 		box-shadow: 1px 0 0 0 #e3e3e3;
 
 		&.active {
-			background: $primary-blue;
+			background: var(--primary-blue);
 
 			a {
 				color: white;
@@ -24,7 +24,7 @@
 		}
 
 		a {
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 		}
 
 		.count {

@@ -48,7 +48,7 @@
 
 	&.blue {
 		.path {
-			stroke: $primary-blue;
+			stroke: var(--primary-blue);
 		}
 	}
 
@@ -60,7 +60,7 @@
 
 	&.grey {
 		.path {
-			stroke: $tertiary-grey;
+			stroke: var(--tertiary-grey);
 		}
 	}
 }

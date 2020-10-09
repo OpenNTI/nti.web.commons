@@ -9,9 +9,9 @@
 	$icon-width: 100px;
 	$icon-ratio: 1.25;
 
-	color: $primary-grey;
+	color: var(--primary-grey);
 	text-decoration: inherit;
-	font-family: $body-font-family;
+	font-family: var(--body-font-family);
 	//
 	position: relative;
 	overflow: hidden;
@@ -69,14 +69,14 @@
 		margin: 0;
 		padding: 0;
 		background: none;
-		color: $primary-blue;
+		color: var(--primary-blue);
 		margin-bottom: 0.25em;
 		font-size: rem-calc(10px);
 	}
 
 	.label, .extra-labels {
 		text-transform: uppercase;
-		font-family: $body-font-family;
+		font-family: var(--body-font-family);
 		font-weight: 600;
 		font-size: rem-calc(10px);
 		line-height: 1.4;
@@ -86,10 +86,10 @@
 		&:empty { display: none; }
 
 		margin: 10px 0 0 0;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 
 		a, .nti-link-to-path {
-			color: $primary-blue;
+			color: var(--primary-blue);
 		}
 	}
 

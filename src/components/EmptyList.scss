@@ -2,7 +2,7 @@
 
 figure.empty-list {
 	text-align: center;
-	color: $tertiary-grey;
+	color: var(--tertiary-grey);
 	font-size: rem-calc(14px);
 	h1 {
 		font-size: rem-calc(28px);

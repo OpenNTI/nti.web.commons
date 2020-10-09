@@ -4,7 +4,7 @@
 	label {
 		font-size: rem-calc(10px);
 		text-transform: uppercase;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		font-weight: bold;
 		line-height: 1.4;
 		display: block;
@@ -13,10 +13,10 @@
 	.value {
 		font-size: rem-calc(13px);
 		line-height: (18/13);
-		color: $primary-grey;
+		color: var(--primary-grey);
 		.placeholder {
 			font-style: italic;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 
@@ -28,7 +28,7 @@
 			width: 0;
 			height: 0;
 			border: $size solid transparent;
-			border-top-color: $tertiary-grey;
+			border-top-color: var(--tertiary-grey);
 			position: absolute;
 			right: .5rem;
 			top: 50%;

@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .application-update-notification {
-	color: $secondary-grey;
+	color: var(--secondary-grey);
 	background-color: #fffbe3;
 	border-width: 0;
 	border-bottom: 3px solid #f5e28a;
@@ -21,7 +21,7 @@
 
 	a {
 		font-weight: inherit;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		text-decoration: underline;
 		cursor: pointer;
 	}

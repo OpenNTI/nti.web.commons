@@ -1,11 +1,11 @@
 @import "~@nti/style-common";
 
 .panels-message-bar {
-	background: $panel-background-yellow;
+	background: var(--panel-background-yellow);
 	padding: rem-calc(8px 30px);
-	font: normal 400 0.875rem/1.25rem $body-font-family;
-	color: $primary-grey;
-	box-shadow: inset 0 -1px 0 0 $border-grey-light, inset 0 1px 0 0 $border-grey-light;
+	font: normal 400 0.875rem/1.25rem var(--body-font-family);
+	color: var(--primary-grey);
+	box-shadow: inset 0 -1px 0 0 var(--border-grey-light), inset 0 1px 0 0 var(--border-grey-light);
 
 	i {
 		margin-right: 0.5rem;
@@ -13,7 +13,7 @@
 	}
 
 	&.error {
-		background: #f35252;
+		background: var(--primary-red);
 		color: white;
 	}
 }

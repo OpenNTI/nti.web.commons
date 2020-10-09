@@ -29,8 +29,8 @@
 		border-bottom: 1px solid #dddddd;
 		padding-left: 1rem;
 		box-sizing: border-box;
-		color: #494949;
-		font: normal 400 1.5em/1.5 "Open Sans", sans-serif;
+		color: var(--primary-grey);
+		font: normal 400 1.5em/1.5 var(--body-font-family);
 		line-height: 50px;
 		-webkit-font-smoothing: antialiased;
 	}

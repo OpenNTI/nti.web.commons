@@ -65,13 +65,13 @@
 			overflow: hidden;
 			text-overflow: ellispsis;
 			white-space: nowrap;
-			color: $secondary-grey;
-			font: normal 400 0.875rem/2.8 $body-font-family;
+			color: var(--secondary-grey);
+			font: normal 400 0.875rem/2.8 var(--body-font-family);
 			padding: 0 0.35em 0 1.39em;
 			cursor: pointer;
 
 			&.active {
-				background-color: $primary-blue;
+				background-color: var(--primary-blue);
 				box-shadow: inset 3px 0 0 0 #107eed;
 				color: white;
 				font-weight: 600;

@@ -14,10 +14,10 @@
 	.action-title {
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		font-size: 1.125rem;
 		font-weight: bold;
-		font-family: "Open Sans Condensed";
+		font-family: var(--header-font-family);
 		border: none;
 		flex-grow: 1;
 		text-align: center;
@@ -26,6 +26,6 @@
 	}
 
 	.action-save {
-		color: $primary-blue;
+		color: var(--primary-blue);
 	}
 }

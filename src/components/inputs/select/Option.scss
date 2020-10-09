@@ -3,8 +3,8 @@
 .nti-select-input-option {
 	padding: rem-calc(1px 8px);
 	cursor: pointer;
-	color: $secondary-grey;
-	font: normal 400 0.875rem/2rem $body-font-family;
+	color: var(--secondary-grey);
+	font: normal 400 0.875rem/2rem var(--body-font-family);
 
 	&.display .content {
 		overflow: hidden;
@@ -13,12 +13,12 @@
 	}
 
 	&:not(.display):not(.selected):not(.removable):hover, &.focused {
-		background-color: $border-grey-light;
+		background-color: var(--border-grey-light);
 	}
 
 	&.selected {
 		color: white;
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 	}
 
 	&.checkable {

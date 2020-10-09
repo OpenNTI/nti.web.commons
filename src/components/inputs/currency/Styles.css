@@ -23,7 +23,7 @@
 		font-size: 1.3em;
 		left: 0; right: auto;
 		padding-left: var(--input-padding-left, 10px);
-		color: var(--input-color, --secondary-grey, #757474);
+		color: var(--input-color, --secondary-grey);
 		font-weight: var(--input-font-weight, 400);
 		line-height: var(--input-line-height, 2rem);
 		padding-top: var(--input-padding-top, 0);

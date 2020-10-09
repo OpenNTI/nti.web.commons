@@ -4,9 +4,9 @@
 	/*text-align: center;*/
 	margin: 1rem;
 	padding: 2rem 1rem;
-	background: $panel-background;
-	color: $secondary-grey;
-	border: 1px solid $border-grey;
+	background: var(--panel-background);
+	color: var(--secondary-grey);
+	border: 1px solid var(--border-grey);
 	border-radius: 2px;
 	word-break: break-word;
 	word-wrap: break-word;

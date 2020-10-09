@@ -17,7 +17,7 @@ $avatarcolors:
 ;
 
 svg.avatar {
-	background: $tertiary-grey;
+	background: var(--tertiary-grey);
 	// border-radius: 5px;
 	text {
 		fill: white;

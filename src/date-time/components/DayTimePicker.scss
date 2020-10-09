@@ -7,11 +7,11 @@
 	}
 
 	.TimePicker-Header-Text {
-		font-family: $body-font-family;
+		font-family: var(--body-font-family);
 		font-size: rem-calc(10px);
 		margin: rem-calc(10px);
 		line-height: 1.6;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		text-align: center;
 	}
 

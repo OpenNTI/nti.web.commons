@@ -10,7 +10,7 @@
 	user-select: none;
 	// width: 268px;
 	border: none;
-	font-family: $body-font-family;
+	font-family: var(--body-font-family);
 
 	&:focus {
 		outline: none;
@@ -75,7 +75,7 @@
 	display: table-caption;
 	height: rem-calc(24px);
 	text-align: center;
-	color: $primary-grey;
+	color: var(--primary-grey);
 	font-weight: 100;
 }
 
@@ -92,7 +92,7 @@
 	padding: rem-calc(20px 0 15px);
 	text-align: center;
 	font-size: 12px;
-	color: $tertiary-grey;
+	color: var(--tertiary-grey);
 
 	abbr[title] {
 		text-decoration: none;
@@ -115,8 +115,8 @@
 	vertical-align: middle;
 	font-size: 12px;
 	line-height: 14px;
-	color: $primary-grey;
-	font-family: $body-font-family;
+	color: var(--primary-grey);
+	font-family: var(--body-font-family);
 
 	&:focus {
 		outline: none;
@@ -133,13 +133,13 @@
 
 /* Default modifiers */
 .DayPicker-Day--today:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected) {
-	color: $primary-blue;
+	color: var(--primary-blue);
 }
 
 .DayPicker-Day--disabled {
 	// opacity: 0.5;
 	cursor: default;
-	color: $tertiary-grey;
+	color: var(--tertiary-grey);
 }
 
 .DayPicker-Day--outside {
@@ -151,7 +151,7 @@
 	color: #fff;
 
 	&::before {
-		background-color: $primary-blue !important;
+		background-color: var(--primary-blue) !important;
 	}
 }
 

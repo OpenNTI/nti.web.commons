@@ -2,9 +2,9 @@
 
 .nti-error {
 	font-size: 0.875rem;
-	color: $primary-red;
+	color: var(--primary-red);
 
 	&.warning {
-		color: $primary-orange;
+		color: var(--primary-orange);
 	}
 }

@@ -2,8 +2,8 @@
 
 .nti-web-commons-filedrop {
 	width: 100%;
-	background: $panel-background;
-	border: 2px dashed $border-grey;
+	background: var(--panel-background);
+	border: 2px dashed var(--border-grey);
 	border-radius: 7px;
 	overflow: hidden;
 	padding: 1rem 1rem 2rem;
@@ -20,14 +20,14 @@
 	}
 
 	&.valid-dragover-filedrop {
-		border-color: $primary-blue;
+		border-color: var(--primary-blue);
 	}
 
 	&.invalid-dragover-filedrop {
-		border-color: $primary-red;
+		border-color: var(--primary-red);
 
 		.requirements {
-			background: $primary-red;
+			background: var(--primary-red);
 			color: white;
 		}
 	}
@@ -53,12 +53,12 @@
 		i {
 			margin-top: 2rem;
 			font-size: 2rem;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 		}
 
 		.title {
 			font-size: 1.125rem;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			flex: 0 0 auto;
 			margin: 1rem 0;
 		}
@@ -66,7 +66,7 @@
 		.file-name {
 			display: flex;
 			font-size: 14px;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 
 			.remove-file {
 				font-size: 10px;
@@ -89,11 +89,11 @@
 				display: block;
 				padding: 0 1.25rem;
 				background: white;
-				border: 1px solid $border-grey-light;
+				border: 1px solid var(--border-grey-light);
 				border-radius: 4px;
 				line-height: 2.5rem;
 				font-size: 0.875rem;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 			}
 		}
 
@@ -107,7 +107,7 @@
 			}
 
 			.error {
-				color: $primary-red;
+				color: var(--primary-red);
 			}
 		}
 
@@ -122,7 +122,7 @@
 
 	.requirements {
 		display: inline-block;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		font-size: 0.875rem;
 		padding: 0.875rem 1.75rem;
 	}

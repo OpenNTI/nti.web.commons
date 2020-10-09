@@ -24,7 +24,7 @@ body > .folder-asset.ghost,
 	&:hover.entity-drag-over,
 	&:hover.selected,
 	&.selected {
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 		color: #fff;
 
 		span.filename,
@@ -34,7 +34,7 @@ body > .folder-asset.ghost,
 	}
 
 	i.icon-folder {
-		color: #787878;
+		color: var(--secondary-grey-alt);
 		margin-right: rem-calc(10px);
 	}
 
@@ -44,7 +44,7 @@ body > .folder-asset.ghost,
 		font-size: rem-calc($size);
 		box-sizing: content-box;
 		font-weight: 600;
-		color: $primary-grey;
+		color: var(--primary-grey);
 
 		white-space: nowrap;;
 		overflow: hidden;

@@ -9,11 +9,11 @@
 	}
 
 	.empty {
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 	}
 
 	error {
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 
 	stack {

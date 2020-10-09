@@ -2,8 +2,8 @@
 
 .association-item-info {
 	.label {
-		font: normal 400 0.875rem/1.25rem $body-font-family;
-		color: $primary-grey;
+		font: normal 400 0.875rem/1.25rem var(--body-font-family);
+		color: var(--primary-grey);
 	}
 
 	.sub-labels {
@@ -11,8 +11,8 @@
 
 		span {
 			display: inline;
-			font: normal 600 0.625rem/0.875rem $body-font-family;
-			color: $tertiary-grey;
+			font: normal 600 0.625rem/0.875rem var(--body-font-family);
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			vertical-align: middle;
 

@@ -12,7 +12,7 @@
 	padding: rem-calc(11px 15px 10px);
 	font-size: rem-calc(13px);
 	font-weight: 600;
-	color: $secondary-grey;
+	color: var(--secondary-grey);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	min-height: rem-calc(50px);
@@ -23,7 +23,7 @@
 	&.complete {
 		min-height: rem-calc(40px);
 		background-color: #ebf7ed;
-		color: $secondary-green;
+		color: var(--secondary-green);
 		line-height: 1.5;
 
 		i.icon-check {
@@ -31,7 +31,7 @@
 		}
 
 		a, a:link, a:visited, a:hover {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			text-decoration: none;
 			position: absolute;
 			right: rem-calc(15px);
@@ -59,7 +59,7 @@
 		line-height: 1.15;
 
 		a, a:link, a:visited {
-			color: $primary-blue;
+			color: var(--primary-blue);
 			text-decoration: none;
 			margin-left: rem-calc(15px);
 
@@ -69,7 +69,7 @@
 		}
 
 		.time-left {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			float: right;//eew...
 		}
 	}
@@ -82,24 +82,24 @@
 		margin: 0;
 		padding: 0;
 		height: rem-calc(5px);
-		background-color: rgba($primary-blue, 0.2);
-		color: $primary-blue;
+		background-color: rgba(var(--primary-blue), 0.2);
+		color: var(--primary-blue);
 		position: relative;
 	}
 
 	progress[value] {
 		&::-moz-progress-bar {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			transition: width 1s ease;
 		}
 
 		&::-webkit-progress-value {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			transition: width 1s ease;
 		}
 
 		&::-webkit-progress-bar {
-			background-color: rgba($primary-blue, 0.2);
+			background-color: rgba(var(--primary-blue), 0.2);
 		}
 	}
 

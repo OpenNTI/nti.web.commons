@@ -9,8 +9,8 @@
 		margin: rem-calc(10px 0 10px);
 		padding: rem-calc(10px);
 		border-radius: 2px;
-		background-color: $panel-background;
-		border: solid 1px $border-grey-light;
+		background-color: var(--panel-background);
+		border: solid 1px var(--border-grey-light);
 		width: 100%;
 		// max-width: 100%;
 		// min-width: 100%;
@@ -20,7 +20,7 @@
 
 		&::placeholder {
 			font-style: italic;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			opacity: 1;
 		}
 	}

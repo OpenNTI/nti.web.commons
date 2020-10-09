@@ -12,7 +12,7 @@
 %icon-google-app-slides {background-image: url(./assets/file-types/google-app-slides.svg) !important;}
 
 .file-type.icon {
-	$grey: $tertiary-grey;
+	$grey: var(--tertiary-grey);
 	$blue: #15a2e0;
 	$green: #4aaf37;
 	$orange: #f65b24;
@@ -73,7 +73,7 @@
 
 		text, label {
 			text-transform: uppercase;
-			font-family: $header-font-family;
+			font-family: var(--header-font-family);
 			font-weight: bold;
 			font-size: 1.3125rem;
 			text-overflow: ellipsis;

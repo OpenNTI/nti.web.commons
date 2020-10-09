@@ -2,11 +2,11 @@
 
 .panel-header-component {
 	@include clearfix;;
-	background: $panel-background;
+	background: var(--panel-background);
 	position: relative;
 	user-select: none;
 	cursor: default;
-	border-bottom: 1px solid $border-grey-light;
+	border-bottom: 1px solid var(--border-grey-light);
 
 	i.icon-light-x,
 	i.icon-remove {
@@ -15,7 +15,7 @@
 		top: rem-calc(15px);
 		right: rem-calc(15px);
 		font-size: 1.5rem;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 
 		min-width: 20px;
 		min-height: 20px;

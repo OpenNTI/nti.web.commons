@@ -10,8 +10,8 @@
 	.loading-text {
 		display: inline-block;
 		vertical-align: middle;
-		font: normal 400 0.875rem/1.25rem $body-font-family;
-		color: $tertiary-grey;
+		font: normal 400 0.875rem/1.25rem var(--body-font-family);
+		color: var(--tertiary-grey);
 	}
 }
 

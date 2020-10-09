@@ -12,7 +12,7 @@
 }
 
 .toggle-label.on {
-	color: var(--primary-blue, #3fb3f6);
+	color: var(--primary-blue);
 }
 
 .toggle-label.off {
@@ -50,7 +50,7 @@
 }
 
 .toggler.on {
-	background-color: var(--primary-blue, #3fb3f6);
+	background-color: var(--primary-blue);
 	border: solid 1px #2fa3e6;
 }
 

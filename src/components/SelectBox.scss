@@ -29,7 +29,7 @@
 		}
 
 		.selected {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			color: white;
 
 			&::after {
@@ -44,7 +44,7 @@
 		position: absolute;
 		min-width: 100%;
 		font-weight: 600;
-		background: #fbfbfb;
+		background: var(--panel-background);
 		white-space: nowrap;
 		z-index: 999;
 
@@ -69,7 +69,7 @@
 			right: 0.5em;
 			font-size: 1em;
 			transform: translate3d(0, -50%, 0);
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 }

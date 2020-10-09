@@ -4,22 +4,22 @@
 .textarea-container {
 	position: relative;
 	box-shadow: 0 0 0 0.0625rem #eaeaea;
-	background-color: $panel-background;
-	border: solid 1px $border-grey-light;
+	background-color: var(--panel-background);
+	border: solid 1px var(--border-grey-light);
 	border-radius: 2px;
 
 	// Shared placeholder css 
 	.placeholder {
 		font-style: italic;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		font-weight: 300;
 	}
 
 	// Shared css styles between the sizer and textarea.
 	.textarea-text {
 		line-height: 2.375rem;
-		color: $secondary-grey;
-		font: normal 400 0.875rem/2rem $body-font-family;
+		color: var(--secondary-grey);
+		font: normal 400 0.875rem/2rem var(--body-font-family);
 		padding: rem-calc(0 10px);
 		min-height: 8em;
 	}

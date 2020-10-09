@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .association-pill {
-	background: $primary-purple;
+	background: var(--primary-purple);
 	color: white;
 	padding: rem-calc(0 8px);
 	border-radius: 2px;
@@ -18,7 +18,7 @@
 	}
 
 	span {
-		font: normal 600 0.625rem/1.25rem $body-font-family;
+		font: normal 600 0.625rem/1.25rem var(--body-font-family);
 		text-transform: uppercase;
 		display: inline;
 		vertical-align: middle;

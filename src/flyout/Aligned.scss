@@ -62,12 +62,12 @@
 		line-height: 2rem;
 		font-weight: 100;
 		font-size: 0.875rem;
-		font-family: $body-font-family;
+		font-family: var(--body-font-family);
 		cursor: pointer;
-		background-color: #d1d1d1;
+		background-color: var(--tertiary-grey-alt);
 
 		&.changed {
-			background-color: $primary-blue;
+			background-color: var(--primary-blue);
 		}
 
 		&.error {
@@ -75,18 +75,18 @@
 			animation-duration: 1s;
 			animation-fill-mode: both;
 			color: white;
-			background-color: $primary-red;
+			background-color: var(--primary-red);
 		}
 	}
 
 	&:focus,
 	&:focus-within {
 		.flyout-arrow::after {
-			box-shadow: 0 0 4px 0 $primary-blue;
+			box-shadow: 0 0 4px 0 var(--primary-blue);
 		}
 
 		.flyout-inner {
-			box-shadow: 0 0 4px 0 $primary-blue;
+			box-shadow: 0 0 4px 0 var(--primary-blue);
 		}
 	}
 
@@ -98,11 +98,11 @@
 
 	&.dark {
 		.flyout-arrow::after {
-			background: $primary-grey;
+			background: var(--primary-grey);
 		}
 
 		.flyout-inner {
-			background: $primary-grey;
+			background: var(--primary-grey);
 		}
 	}
 }

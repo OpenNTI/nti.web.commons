@@ -2,12 +2,12 @@
 
 .nti-select-native-wrapper {
 	position: relative;
-	color: #494949;
-	box-shadow: 0 0 0 1px #dbdbdb;
+	color: var(--primary-grey);
+	box-shadow: 0 0 0 1px var(--border-grey);
 	background-color: white;
 	border-radius: 3px;
 	cursor: pointer;
-	font: normal 400 14px/40px "Open Sans", sans-serif;
+	font: normal 400 14px/40px var(--body-font-family);
 
 	.icon-chevron-down {
 		top: 50%;
@@ -27,7 +27,7 @@
 
 	.placeholder {
 		font-style: italic;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 	}
 
 	select.nti-select-native {
@@ -42,6 +42,6 @@
 		margin: 0;
 		opacity: 0;
 		background-color: white;
-		color: #494949;
+		color: var(--primary-grey);
 	}
 }

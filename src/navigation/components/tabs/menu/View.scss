@@ -20,8 +20,8 @@
 	}
 
 	.menu {
-		background: $panel-background;
-		box-shadow: 0 0 0 1px $border-grey;
+		background: var(--panel-background);
+		box-shadow: 0 0 0 1px var(--border-grey);
 		border-radius: 0 0 3px 3px;
 		padding-bottom: 0.5rem;
 

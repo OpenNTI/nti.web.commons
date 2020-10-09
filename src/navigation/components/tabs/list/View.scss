@@ -42,7 +42,7 @@
 		flex: 0 0 auto;
 
 		&.active {
-			color: $primary-blue;
+			color: var(--primary-blue);
 		}
 
 		&::before {
@@ -55,7 +55,7 @@
 		position: absolute;
 		bottom: 0;
 		height: 2px;
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 		transition: width 0.5s, left 0.5s, opacity 0.5s 0.5s;
 		opacity: 0;
 

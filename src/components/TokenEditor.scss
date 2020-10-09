@@ -7,7 +7,7 @@
 
 	position: relative;
 	padding: rem-calc(6px);
-	border: 1px solid $border-grey-light;
+	border: 1px solid var(--border-grey-light);
 	background: white;
 	min-height: 5rem;
 
@@ -36,7 +36,7 @@
 	.placeholder {
 		position: absolute;
 		font-style: italic;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		top: rem-calc(14px);
 		left: rem-calc(24px);
 	}

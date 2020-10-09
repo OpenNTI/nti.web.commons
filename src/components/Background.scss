@@ -3,7 +3,7 @@
 .background-cmp {
 	&.no-image {
 		min-height: calc(100vh - 2.8125rem);
-		background: $secondary-grey;
+		background: var(--secondary-grey);
 	}
 }
 

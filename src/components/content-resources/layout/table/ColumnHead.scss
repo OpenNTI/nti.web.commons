@@ -1,10 +1,10 @@
 @import "~@nti/style-common";
 .content-resource-view-layout.table .column-head {
-	color: $tertiary-grey;
+	color: var(--tertiary-grey);
 	text-transform: uppercase;
 
 	&.sorted {
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		.arrow {
 			display: inline-block;
@@ -16,7 +16,7 @@
 				content: '';
 				width: 5px;
 				height: 5px;
-				background: $secondary-grey;
+				background: var(--secondary-grey);
 				transform: translateY(-50%) rotate(45deg);
 				display: block;
 			}

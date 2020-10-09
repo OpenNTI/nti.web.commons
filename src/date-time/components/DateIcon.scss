@@ -17,8 +17,8 @@
 }
 
 .nti-calendar-date-icon {
-	font-family: "Open Sans", sans-serif;
-	border: 2px solid $secondary-grey;
+	font-family: var(--body-font-family);
+	border: 2px solid var(--secondary-grey);
 	border-radius: 8px;
 	color: white;
 	text-transform: uppercase;
@@ -29,7 +29,7 @@
 		font-size: 0.625em;
 		font-weight: 600;
 		color: rgba(255, 255, 255, 0.5);
-		background-color: $secondary-grey;
+		background-color: var(--secondary-grey);
 		padding: 4px 0;
 		overflow: hidden;
 	}
@@ -41,11 +41,11 @@
 	}
 
 	.white-shade-mask & {
-		border: 2px solid $tertiary-grey;
-		color: $tertiary-grey;
+		border: 2px solid var(--tertiary-grey);
+		color: var(--tertiary-grey);
 
 		.month {
-			background-color: $tertiary-grey;
+			background-color: var(--tertiary-grey);
 		}
 	}
 
@@ -58,7 +58,7 @@
 		.month {
 			background: none;
 			font-weight: bold;
-			color: $primary-red;
+			color: var(--primary-red);
 			line-height: 1.4;
 			padding: 0;
 		}
@@ -102,7 +102,7 @@
 			left: 0;
 			right: 0;
 			$ringwidth: 2px;
-			$color: $secondary-grey;
+			$color: var(--secondary-grey);
 
 			background:
 				linear-gradient(

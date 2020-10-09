@@ -7,16 +7,16 @@ $trigger-height: 2.4375rem;
 	height: $trigger-height;
 	line-height: $trigger-height;
 	border-radius: 0.25rem;
-	background-color: $primary-blue;
+	background-color: var(--primary-blue);
 	cursor: pointer;
 	position: relative;
 
 	&.publish,
 	&.schedule {
-		background: #f8f8f8;
-		border: 1px solid #d1d1d1;
+		background: var(--quad-grey);
+		border: 1px solid var(--tertiary-grey-alt);
 		.publish-trigger-text {
-			color: #3fb3f6;
+			color: var(--primary-blue);
 		}
 
 		.publish-trigger-icon {
@@ -35,7 +35,7 @@ $trigger-height: 2.4375rem;
 		font-size: 0.875rem;
 		color: #ffffff;
 		font-weight: 400;
-		font-family: $body-font-family;
+		font-family: var(--body-font-family);
 		margin-right: 1rem;
 		flex: 1 1 auto;
 	}

@@ -29,20 +29,20 @@
 
 			.menu-label {
 				line-height: 39px;
-				color: #494949;
+				color: var(--primary-grey);
 
 				&::after {
-					color: #494949;
+					color: var(--primary-grey);
 				}
 			}
 		}
 
 		.number-input-component {
 			border-radius: 3px;
-			border: 1px solid #dbdbdb;
+			border: 1px solid var(--border-grey);
 			height: 42px;
 			margin-top: 16px;
-			color: #494949;
+			color: var(--primary-grey);
 		}
 	}
 
@@ -72,7 +72,7 @@
 		text-transform: uppercase;
 		font-size: 0.625rem;
 		font-weight: 600;
-		color: #757474;
+		color: var(--secondary-grey);
 		margin-bottom: 5px;
 	}
 
@@ -90,7 +90,7 @@
 
 	.date-time-field-error {
 		font-size: 0.875em;
-		color: #f35252;
+		color: var(--primary-red);
 	}
 
 	.set-current-date {
@@ -100,10 +100,10 @@
 		font-size: 0.75em;
 		font-weight: 600;
 		padding-left: 0.5em;
-		color: #494949;
+		color: var(--primary-grey);
 
 		a {
-			color: #3fb3f6;
+			color: var(--primary-blue);
 			cursor: pointer;
 		}
 	}

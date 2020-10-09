@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .toolbar-button {
-	color: $primary-grey;
+	color: var(--primary-grey);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: rem-calc(13px);
@@ -9,12 +9,12 @@
 	cursor: pointer;
 
 	i {
-		color: #787878;
+		color: var(--secondary-grey-alt);
 	}
 
 	&:hover {
 		color: #333333;
-		i { color: $primary-grey; }
+		i { color: var(--primary-grey); }
 	}
 
 	&:not(.disabled):focus,
@@ -22,7 +22,7 @@
 	.no-touch &:not(.disabled):hover {
 		opacity: 1;
 		outline: none;
-		// color: $primary-blue;
+		// color: var(--primary-blue);
 	}
 
 	i + span:not(:empty) {

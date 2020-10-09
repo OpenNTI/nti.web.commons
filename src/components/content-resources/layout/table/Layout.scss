@@ -46,8 +46,8 @@
 
 	thead {
 		transition: background-color 0.3s ease, border-bottom-color 0.3s;
-		background-color: $panel-background;
-		border-bottom: 1px solid $border-grey-light;
+		background-color: var(--panel-background);
+		border-bottom: 1px solid var(--border-grey-light);
 		font-size: rem-calc(10px);
 		font-weight: bold;
 		text-align: left;
@@ -63,7 +63,7 @@
 		line-height: (40/13);
 		font-size: rem-calc(13px);
 		white-space: nowrap;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		&.unselectable {
 			pointer-events: none;
@@ -80,7 +80,7 @@
 					display: none;
 				}
 				input {
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 					line-height: 1.2;
 					position: absolute;
 					height: auto;
@@ -90,10 +90,10 @@
 					right: 0;
 					transform: translateY(-50%);
 					text-decoration: none !important;
-					border: 1px solid $primary-blue;
+					border: 1px solid var(--primary-blue);
 					padding: rem-calc(3px);
 					&::selection {
-						background: rgba($primary-blue, 0.15);
+						background: rgba(var(--primary-blue), 0.15);
 					}
 				}
 			}
@@ -109,7 +109,7 @@
 		&.entity-drag-over,
 		&.selected,
 		&:hover.selected {
-			background: $primary-blue;
+			background: var(--primary-blue);
 			&, .filename {
 				color: #fff;
 			}
@@ -124,7 +124,7 @@
 			&:hover.selected {
 				background: none;
 				&, .filename {
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 				}
 			}
 		}

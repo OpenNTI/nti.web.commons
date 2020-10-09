@@ -59,8 +59,8 @@ widget error {
 	min-width: 80vw;
 	text-align: left;
 	line-height: 1.5;
-	background: $primary-red;
-	border: 2px solid $secondary-red;
+	background: var(--primary-red);
+	border: 2px solid var(--secondary-red);
 	border-radius: 3px;
 	animation: fadeIn 0.5s ease-in 1s 1 normal both;
 
@@ -91,7 +91,7 @@ widget error {
 	}
 
 	&.unsupported-content {
-		background: $panel-background;
-		border-color: $border-grey;
+		background: var(--panel-background);
+		border-color: var(--border-grey);
 	}
 }
