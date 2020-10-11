@@ -1,7 +1,7 @@
 import './DayPicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Picker, { DateUtils, WeekdayPropTypes } from 'react-day-picker';
+import Picker, { DateUtils } from 'react-day-picker';
 
 export {DateUtils};
 
@@ -14,7 +14,7 @@ function Weekday ({ weekday, className, localeUtils, locale }) {
 	);
 }
 
-Weekday.propTypes = WeekdayPropTypes;
+// Weekday.propTypes = WeekdayPropTypes;
 
 export default class DayPicker extends React.Component {
 	static propTypes = {
