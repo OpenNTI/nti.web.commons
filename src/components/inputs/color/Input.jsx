@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {Color, restProps} from '@nti/lib-commons';
 
-import Styles from './Input.css';
 import Hue from './Hue';
 import SaturationBrightness from './saturation-brightness';
 import Text from './text';
 import PresetSwatches from './preset-swatches';
 import Thumb from './Thumb';
 import Flyout from './Flyout';
-
-const cx = classnames.bind(Styles);
 
 export default class ColorInput extends React.Component {
 	static Hue = Hue;

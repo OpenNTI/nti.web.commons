@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import {useMutationObserver} from '../hooks';
 
-import Styles from './Highlighter.css';
 import * as Strategies from './strategies';
 import Ranges from './components/Ranges';
-
-const cx = classnames.bind(Styles);
 
 const MutationObserverInit = {
 	subtree: true,
