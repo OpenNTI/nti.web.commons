@@ -18,10 +18,10 @@ const classes = {
 		[Up]: 'icon-chevron-up'
 	},
 	default: {
-		[Down]: 'icon-chevrondown-10',
-		[Left]: 'icon-chevronleft-10',
-		[Right]: 'icon-chevronright-10',
-		[Up]: 'icon-chevronup-10'
+		[Down]: 'icon-chevron-down-10',
+		[Left]: 'icon-chevron-left-10',
+		[Right]: 'icon-chevron-right-10',
+		[Up]: 'icon-chevron-up-10'
 	}
 };
 
