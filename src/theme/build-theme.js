@@ -25,7 +25,7 @@ const getAsset = (asset) => ({
 
 		if (!cacheBust) { return href; }
 
-		const url = new URL(href);
+		const url = new URL(href, global.location.origin);
 
 		url.searchParams.set('v', cacheBust);
 
@@ -33,7 +33,7 @@ const getAsset = (asset) => ({
 	},
 	...asset
 });
- 
+
 const DefaultProperties = {
 	library: {
 		background: 'dark',
@@ -128,7 +128,7 @@ export default function BuildTheme (properties = DefaultProperties, internalConf
 	const theme = {};
 	const parentTheme = internalConfig[Parent];
 	const initialScope = internalConfig[Scope] || [];
-	
+
 	let values = {};
 
 	const getValue = (scopes = [], key) => {
@@ -142,7 +142,7 @@ export default function BuildTheme (properties = DefaultProperties, internalConf
 
 		return pointer[key];
 	};
-	
+
 	theme.getRoot = () => parentTheme ? parentTheme.getRoot() : theme;
 	theme.getParent = () => parentTheme;
 	theme.getScope = () => initialScope;

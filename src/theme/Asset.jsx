@@ -8,14 +8,18 @@ import {useThemeProperty} from './Hook';
 ThemeAsset.propTypes = {
 	property: PropTypes.object,
 	name: PropTypes.string,
-	style: PropTypes.object
+	style: PropTypes.object,
+	cacheBust: PropTypes.bool
 };
-export default function ThemeAsset ({name, property, style, ...otherProps}) {
+export default function ThemeAsset ({name, property, style, cacheBust, ...otherProps}) {
 	const asset = property ? property : useThemeProperty(name);
 
 	if (!asset || !asset.href) { return null; }
 
 	const fillStyle = {...(style || {})};
+	const {href, cacheBustHREF: cbHref} = asset;
+
+	const src = cacheBust && cbHref ? cbHref : href;
 
 	if (asset.fill) {
 		fillStyle.backgroundColor = asset.fill;
@@ -24,8 +28,8 @@ export default function ThemeAsset ({name, property, style, ...otherProps}) {
 	return (
 		<Image
 			{...otherProps}
-			src={asset.href}
-			srcset={Image.srcset.forSingleSourceDPI(asset.href)}
+			src={src}
+			srcset={Image.srcset.forSingleSourceDPI(src)}
 			alt={asset.alt}
 			fallback={asset.fallback}
 			style={fillStyle}
