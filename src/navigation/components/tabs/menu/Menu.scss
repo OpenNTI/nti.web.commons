@@ -9,8 +9,10 @@
 		position: absolute;
 		content: '';
 		display: block;
-		top: 0; bottom: 0;
-		left: 0; right: 0;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
 		background: #000;
 		opacity: 0.7;
 
@@ -36,7 +38,8 @@
 	ul {
 		position: absolute;
 		top: 0;
-		left: 0; right: 0;
+		left: 0;
+		right: 0;
 		background: white;
 		list-style: none;
 		padding: 0;
@@ -72,7 +75,7 @@
 
 			&.active {
 				background-color: var(--primary-blue);
-				box-shadow: inset 3px 0 0 0 #107eed;
+				box-shadow: inset 3px 0 0 0 rgba(var(--accent-color-overlay), 0.2);
 				color: white;
 				font-weight: 600;
 			}

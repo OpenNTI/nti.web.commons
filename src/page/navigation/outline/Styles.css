@@ -1,4 +1,4 @@
-.navigation-outline {	
+.navigation-outline {
 	--small-padding: 13px;
 	--large-padding: 1rem;
 
@@ -39,14 +39,14 @@
 		font-weight: 600;
 		color: white;
 		background: var(--primary-blue);
-		box-shadow: inset 3px 0 0 0 #107eed;
+		box-shadow: inset 3px 0 0 0 rgba(var(--accent-color-overlay), 0.2);
 	}
 
 	&:focus {
 		text-decoration: underline;
 	}
 
-	&:not(.active-outline-item){
+	&:not(.active-outline-item) {
 		&:hover,
 		&:focus {
 			background: #f0f0f0;
