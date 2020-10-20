@@ -126,8 +126,7 @@ export default class Asset extends React.Component {
 			return scope.getDefaultAssetRoot();
 		}
 
-		//eslint-disable-next-line no-console
-		console.warn('Missing implementation of "getDefaultAssetRoot" in', scope);
+		logger.debug('Missing implementation of "getDefaultAssetRoot" in', scope);
 		return '';
 	}
 
