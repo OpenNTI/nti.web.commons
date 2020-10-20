@@ -115,8 +115,8 @@ export const child = {
 		])
 	},
 
-
-	componentWillMount () {
+	// eslint-disable-next-line camelcase
+	UNSAFE_componentWillMount () {
 		const reg = this.context[register];
 		if (reg) {
 			reg(this);

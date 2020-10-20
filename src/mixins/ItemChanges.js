@@ -12,13 +12,6 @@ export default {
 	},
 
 
-	componentWillReceiveProps (...next) {
-		let prev = [this.props, this.state, this.context];
-		this.stopListening(getItem(this, ...prev));
-		this.listen(getItem(this, ...next));
-	},
-
-
 	componentDidUpdate (...prev) {
 		let next = [this.props, this.state, this.context];
 		this.stopListening(getItem(this, ...prev));
