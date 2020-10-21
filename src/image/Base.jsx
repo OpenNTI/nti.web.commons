@@ -17,6 +17,7 @@ export default function BaseImage ({src, alt, children, childProp = 'src', child
 		return (React.cloneElement(child, {...props, ref: imageRef}));
 	}
 
+	delete otherProps.aspectRatio;
 	return (
 		<img src={src} alt={alt} ref={imageRef} {...otherProps} />
 	);

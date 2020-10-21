@@ -5,13 +5,7 @@ import Image from '../image';
 
 import {useThemeProperty} from './Hook';
 
-ThemeAsset.propTypes = {
-	property: PropTypes.object,
-	name: PropTypes.string,
-	style: PropTypes.object,
-	cacheBust: PropTypes.bool
-};
-export default function ThemeAsset ({name, property, style, cacheBust, ...otherProps}) {
+const ThemeAsset = React.forwardRef(({name, property, style, cacheBust, ...otherProps}, ref) => {
 	const asset = property ? property : useThemeProperty(name);
 
 	if (!asset || !asset.href) { return null; }
@@ -28,6 +22,7 @@ export default function ThemeAsset ({name, property, style, cacheBust, ...otherP
 	return (
 		<Image
 			{...otherProps}
+			ref={ref}
 			src={src}
 			srcset={Image.srcset.forSingleSourceDPI(src)}
 			alt={asset.alt}
@@ -35,4 +30,15 @@ export default function ThemeAsset ({name, property, style, cacheBust, ...otherP
 			style={fillStyle}
 		/>
 	);
-}
+});
+
+ThemeAsset.displayName = 'ThemeAsset';
+
+ThemeAsset.propTypes = {
+	property: PropTypes.object,
+	name: PropTypes.string,
+	style: PropTypes.object,
+	cacheBust: PropTypes.bool
+};
+
+export default ThemeAsset;
