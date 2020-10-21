@@ -37,7 +37,7 @@ export default class TriggeredFlyout extends React.Component {
 		// HORIZONTAL, //Don't expost horizontal for now
 		VERTICAL
 	};
-	
+
 	static ALIGNMENTS = {
 		TOP: ALIGN_TOP,
 		BOTTOM: ALIGN_BOTTOM,
@@ -66,6 +66,7 @@ export default class TriggeredFlyout extends React.Component {
 		}),
 
 		onDismiss: PropTypes.func,
+		beforeDismiss: PropTypes.func,
 
 		hover: PropTypes.oneOfType([
 			PropTypes.bool,
@@ -234,13 +235,18 @@ export default class TriggeredFlyout extends React.Component {
 		if (this.isControlled()) { return; }
 
 		if (this.state.open) {
-			this.setState({
-				open: false
-			}, () => {
-				if (typeof cb === 'function') {
-					cb();
-				}
-			});
+			const {beforeDismiss} = this.props;
+
+			if (!beforeDismiss || (beforeDismiss() !== false)) {
+				this.setState({
+					open: false
+				}, () => {
+					if (typeof cb === 'function') {
+						cb();
+					}
+				});
+			}
+
 		}
 	}
 
