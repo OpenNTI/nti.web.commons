@@ -331,7 +331,7 @@ describe('Triggered Flyout', () => {
 		const ref = React.createRef();
 		const renderer = verify(<Flyout trigger={<a href="#test" ref={ref}>Test</a>} value="Test"/>, {createNodeMock});
 
-		console.log("Hello There", renderer.toJSON(), renderer.getInstance().triggerRef, ref);
+		console.log('Hello There', renderer.toJSON(), renderer.getInstance().triggerRef, ref);
 		jest.runAllTimers();
 
 		expect(ref.current).toBeDefined();

@@ -43,13 +43,11 @@
 			}
 		}
 
-
 		&.searchable.focused {
 			.selected-option {
 				display: none;
 			}
 		}
-
 
 		.nti-text-input {
 			background-color: white;
@@ -60,17 +58,17 @@
 
 		.selected-option, .placeholder {
 			position: absolute;
-			top: 0; bottom: 0;
-			left: 0; right: 0;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
 		}
-
 
 		.placeholder {
 			font: italic 400 0.875rem/2rem var(--body-font-family);
 			color: var(--tertiary-grey);
 			padding: 0 2rem 0 0.625rem;
 		}
-
 
 		.selected-option {
 			.nti-select-input-option {
@@ -83,8 +81,10 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			top: 0; bottom: 0;
-			left: auto; right: 0;
+			top: 0;
+			bottom: 0;
+			left: auto;
+			right: 0;
 			padding: 0 0.625rem;
 			color: var(--tertiary-grey);
 			transition: transform 0.2s ease-out;
@@ -97,7 +97,6 @@
 
 	.nti-clearable-input & {
 		.select-label {
-
 			.nti-text-input {
 				padding: 0 3rem 0 0.625rem;
 			}

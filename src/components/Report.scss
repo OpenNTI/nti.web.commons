@@ -1,7 +1,6 @@
 @import "~@nti/style-common";
 
 .report-link {
-
 	&.flagged {
 		color: var(--primary-red);
 	}
@@ -13,6 +12,7 @@
 		display: inline-block;
 		text-align: center;
 		vertical-align: middle;
+
 		/* border: 1px solid rgba(0,0,0,0.5); */
 	}
 }

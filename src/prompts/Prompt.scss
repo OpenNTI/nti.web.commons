@@ -1,11 +1,11 @@
 @import "~@nti/style-common/variables.scss";
 @import "~@nti/style-common/placeholders.scss";
 
-%x-close {background-image: url(./assets/close.png);}
-%icon-modal-red-sign {background-image: url(./assets/modal-red-sign.png);}
-%icon-modal-yellow-sign {background-image: url(./assets/modal-yellow-sign.png);}
+%x-close { background-image: url(./assets/close.png); }
+%icon-modal-red-sign { background-image: url(./assets/modal-red-sign.png); }
+%icon-modal-yellow-sign { background-image: url(./assets/modal-yellow-sign.png); }
 
-.nti-dialog-mount-point > *  {
+.nti-dialog-mount-point > * {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -15,12 +15,12 @@
 }
 
 .nti-dialog-mount-point .modal-mask {
-	background-color: rgba(0,0,0,0);
-	transition: background-color .35s ease-in;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.35s ease-in;
 
 	&.showing {
-		background-color: rgb(100,100,100);
-		background-color: rgba(0,0,0,0.6);
+		background-color: rgb(100, 100, 100);
+		background-color: rgba(0, 0, 0, 0.6);
 	}
 }
 
@@ -40,21 +40,22 @@
 	}
 }
 
-
 .nti-dialog-mount-point .dialog.window {
 	padding-top: 30px;
 	width: 400px; //preferred width
 	max-width: 95vw;
+
 	@media screen and (min-width: 400px) {
 		max-width: 70vw;
 	}
+
 	overflow: hidden;
 	position: absolute;
 	top: 30%;
 	left: 50%;
-	transform: translate3d(-50%,0,0);
+	transform: translate3d(-50%, 0, 0);
 	background: white;
-	box-shadow: 0 0 3px 1px rgba(0,0,0,0.1);
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
 
 	.close {
 		position: absolute !important;
@@ -74,14 +75,17 @@
 
 		&::after {
 			@extend %x-close;
+
 			content: '';
 			display: block;
 			position: absolute;
-			top: 0; left: 0; right: 0; bottom: 0;
-			background: { position: center center; repeat: no-repeat;}
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: { position: center center; repeat: no-repeat; }
 		}
 	}
-
 
 	.icon {
 		@extend %icon-modal-yellow-sign;
@@ -100,17 +104,13 @@
 			position: center center;
 			repeat: no-repeat;
 		}
-
 	}
-
 
 	.content-area {
 		min-height: 47px;
 		padding: 0 0.625rem 0 80px;
 		margin: 0 10px 30px 10px;
-
 		color: var(--primary-grey);
-
 		line-height: 1.3;
 		font: {
 			style: normal;

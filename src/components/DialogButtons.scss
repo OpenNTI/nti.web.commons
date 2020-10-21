@@ -13,13 +13,14 @@
 		left: 0;
 		right: 0;
 		background-color: #f0f0f0;
-		box-shadow: 0 0 5px 0 rgba(0,0,0,0.35);
+		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.35);
 		clip: rect(300px, auto, 310px, auto);
 		border-radius: 350em / 4em;
 	}
 
 	&.flat {
-		border-top:1px solid var(--border-grey-light);
+		border-top: 1px solid var(--border-grey-light);
+
 		&::before {
 			content: none;
 		}
@@ -48,23 +49,24 @@
 		&.cancel {
 			color: var(--primary-grey);
 			text-decoration: underline;
-			background: rgba(0,0,0,0) !important;
+			background: rgba(0, 0, 0, 0) !important;
 			font-weight: 300;
 		}
 
 		&.disabled {
 			opacity: 0.3;
 		}
+
 		&:not(.faded).disabled {
 			opacity: 1;
 			background: var(--disabled-button-background);
 			border-color: var(--disabled-button-border);
 			color: var(--disabled-button-color);
+
 			&.primary {
 				box-shadow: inset 1px 0 0 0 var(--disabled-button-border);
 			}
 		}
-
 
 		&.primary {
 			background: var(--primary-blue);
@@ -77,7 +79,7 @@
 
 			&.accept {
 				background: var(--secondary-green);
-				box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.5);
+				box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.5);
 			}
 
 			&.decline,
@@ -90,14 +92,15 @@
 		&.secondary {
 			font-weight: 300;
 			color: var(--primary-grey);
-			background: rgba(0,0,0,0);
+			background: rgba(0, 0, 0, 0);
 
 			&.decline,
 			&.caution {
 				color: var(--secondary-red);
 				background: var(--primary-red);
+
 				html:not(.touch) &:hover {
-					box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.5);
+					box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.5);
 				}
 			}
 		}

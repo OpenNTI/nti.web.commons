@@ -4,8 +4,10 @@
 
 .toast-container {
 	position: absolute;
-	top: 0; bottom: 0;
-	right: 0; left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
@@ -29,8 +31,10 @@
 
 .toast-region.top-right {
 	position: absolute;
-	top: 0; bottom: auto;
-	left: auto; right: 0;
+	top: 0;
+	bottom: auto;
+	left: auto;
+	right: 0;
 	padding: 1rem;
 	width: 50%;
 	display: flex;
@@ -44,7 +48,6 @@
 		max-width: 275px;
 	}
 }
-
 
 .toast-wrapper:global(.top-transition-enter) [data-toast-id],
 .toast-wrapper:global(.top-transition-appear) [data-toast-id] {

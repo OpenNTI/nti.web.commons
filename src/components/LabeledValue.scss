@@ -10,10 +10,12 @@
 		display: block;
 		margin-bottom: rem-calc(1px);
 	}
+
 	.value {
 		font-size: rem-calc(13px);
 		line-height: (18/13);
 		color: var(--primary-grey);
+
 		.placeholder {
 			font-style: italic;
 			color: var(--tertiary-grey);
@@ -22,15 +24,17 @@
 
 	&.arrow-down {
 		position: relative;
+
 		&::after {
-			$size: .3rem;
+			$size: 0.3rem;
+
 			content: '';
 			width: 0;
 			height: 0;
 			border: $size solid transparent;
 			border-top-color: var(--tertiary-grey);
 			position: absolute;
-			right: .5rem;
+			right: 0.5rem;
 			top: 50%;
 			transform: translateY(-$size/2);
 		}

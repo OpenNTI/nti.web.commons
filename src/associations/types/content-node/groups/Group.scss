@@ -18,6 +18,7 @@
 		vertical-align: middle;
 		font: normal 400 0.875rem/1.25rem var(--body-font-family);
 		color: var(--primary-grey);
+
 		@include limit-lines($lines: 2, $line-height: 1.4);
 	}
 }

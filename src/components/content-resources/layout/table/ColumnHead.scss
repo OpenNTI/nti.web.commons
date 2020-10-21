@@ -1,4 +1,5 @@
 @import "~@nti/style-common";
+
 .content-resource-view-layout.table .column-head {
 	color: var(--tertiary-grey);
 	text-transform: uppercase;
@@ -9,7 +10,7 @@
 		.arrow {
 			display: inline-block;
 			overflow: hidden;
-			padding: 0 .4em;
+			padding: 0 0.4em;
 			margin: 0;
 
 			&::after {

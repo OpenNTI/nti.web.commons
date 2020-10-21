@@ -1,12 +1,13 @@
 .nti-dropzone-indicator-valid-drag-over {
 	box-shadow: inset 0 0 0 5px var(--primary-blue);
-	/*RGB of primary-blue*/
+
+	/* RGB of primary-blue */
 	background: rgba(63, 179, 246, 0.1);
 }
 
-
 .nti-dropzone-indicator-invalid-drag-over {
 	box-shadow: inset 0 0 0 5px var(--primary-red);
-	/*RGB of primary-red*/
+
+	/* RGB of primary-red */
 	background: rgba(243, 82, 82, 0.1);
 }

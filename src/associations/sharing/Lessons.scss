@@ -1,26 +1,26 @@
 @import "~@nti/style-common";
 
 .item-sharing {
-  color: var(--primary-purple);
-  padding: rem-calc(0 10px);
-  display: inline-block;
-  cursor: pointer;
-  margin-bottom: rem-calc(5px);
+	color: var(--primary-purple);
+	padding: rem-calc(0 10px);
+	display: inline-block;
+	cursor: pointer;
+	margin-bottom: rem-calc(5px);
 
-  &.single, &.none {
-    color: var(--primary-blue);
-  }
+	&.single, &.none {
+		color: var(--primary-blue);
+	}
 
-  i {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-  }
+	i {
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 0.5rem;
+	}
 
-  .inline-association {
-    display: inline-block;
-    vertical-align: middle;
-    max-width: rem-calc(445px);
-    font-size: 0.875rem;
-  }
+	.inline-association {
+		display: inline-block;
+		vertical-align: middle;
+		max-width: rem-calc(445px);
+		font-size: 0.875rem;
+	}
 }

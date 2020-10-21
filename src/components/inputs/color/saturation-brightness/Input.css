@@ -6,16 +6,20 @@
 
 .controls {
 	position: absolute;
-	top: 0px; bottom: 0px;
-	left: 0px; right: 0px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .background,
 .saturation-layer,
 .brightness-layer {
 	position: absolute;
-	top: 2px; bottom: 2px;
-	left: 2px; right: 2px;
+	top: 2px;
+	bottom: 2px;
+	left: 2px;
+	right: 2px;
 }
 
 .saturation-layer {

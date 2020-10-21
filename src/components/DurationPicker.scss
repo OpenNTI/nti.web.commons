@@ -12,10 +12,11 @@
 
 		.label {
 			position: absolute;
-			font-size: .5rem;
+			font-size: 0.5rem;
 			text-transform: uppercase;
 			top: rem-calc(10px);
 			left: 1em;
+
 			/* font-weight: 600; */
 			color: var(--tertiary-grey);
 		}
@@ -23,10 +24,10 @@
 		input {
 			width: 100%;
 			margin: 0.25rem 0;
-			font-size: .875rem;
-			line-height: .875rem;
+			font-size: 0.875rem;
+			line-height: 0.875rem;
 			height: 2.75rem;
-			padding: 1rem .5rem .25rem;
+			padding: 1rem 0.5rem 0.25rem;
 			border: 1px solid var(--border-grey-light);
 			border-width: 1px 1px 1px 0;
 		}

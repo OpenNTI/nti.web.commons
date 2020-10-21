@@ -30,9 +30,11 @@
 			text-decoration-color: red;
 		}
 	}
+
 	&.disabled {
-		opacity: .5;
+		opacity: 0.5;
 	}
+
 	.placeholder {
 		position: absolute;
 		font-style: italic;

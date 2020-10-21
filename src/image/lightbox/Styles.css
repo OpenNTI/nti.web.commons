@@ -19,7 +19,6 @@
 	align-items: stretch;
 	justify-content: center;
 
-
 	& header {
 		width: calc(100% + 2rem);
 		margin-left: -1rem;

@@ -2,11 +2,10 @@
 	--page-margin-top: 20px;
 	--page-gap: 5px;
 	--side-padding: 2rem;
-	
+
 	max-width: 1024px;
 	margin: 0 auto;
 	padding-top: var(--page-margin-top);
-
 
 	&.navigation-content,
 	&.content-navigation {
@@ -40,7 +39,7 @@
 
 .nt-page-navigation.sticky {
 	position: sticky;
-	top: calc(var(--page-margin-top, 0px) + var(--nt-app-top-offset, 0px));
+	top: calc(var(--page-margin-top, 0) + var(--nt-app-top-offset, 0));
 }
 
 .card {

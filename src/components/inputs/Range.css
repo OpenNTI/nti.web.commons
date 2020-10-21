@@ -8,15 +8,19 @@
 .range-input .bar {
 	border-radius: 5px;
 	position: absolute;
-	top: 6px; bottom: 4px;
-	left: 2px; right: 2px;
+	top: 6px;
+	bottom: 4px;
+	left: 2px;
+	right: 2px;
 	box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.63);
 }
 
 .range-input .thumb {
 	position: absolute;
-	top: 1px; bottom: auto;
-	left: 0; right: auto;
+	top: 1px;
+	bottom: auto;
+	left: 0;
+	right: auto;
 	width: 16px;
 	height: 16px;
 	background: white;
@@ -28,8 +32,10 @@
 .range-input input[type="range"] {
 	appearance: none;
 	position: absolute;
-	top: 0; bottom: 0;
-	left: 0; right: 0;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	width: 100%;
 	height: 100%;
 	opacity: 0;

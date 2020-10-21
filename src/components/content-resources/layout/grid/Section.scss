@@ -16,12 +16,14 @@
 
 	& > .entity {
 		$percent: (25% - ($gap * 2));
+
 		margin: rem-calc(15px) round($gap) 0;
 		flex: 0 1 $percent;
 		max-width: $percent;//FireFox can't even.
 
 		.content-resource-view.split & {
 			$percent: (33% - ($gap * 2));
+
 			flex: 0 1 $percent;
 			max-width: $percent;
 		}

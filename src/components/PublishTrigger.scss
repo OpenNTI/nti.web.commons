@@ -1,4 +1,5 @@
 $trigger-height: 2.4375rem;
+
 @import "~@nti/style-common";
 
 .publish-trigger {
@@ -15,6 +16,7 @@ $trigger-height: 2.4375rem;
 	&.schedule {
 		background: var(--quad-grey);
 		border: 1px solid var(--tertiary-grey-alt);
+
 		.publish-trigger-text {
 			color: var(--primary-blue);
 		}
@@ -33,7 +35,7 @@ $trigger-height: 2.4375rem;
 
 	.publish-trigger-text {
 		font-size: 0.875rem;
-		color: #ffffff;
+		color: #fff;
 		font-weight: 400;
 		font-family: var(--body-font-family);
 		margin-right: 1rem;

@@ -11,7 +11,6 @@
 	flex-direction: row;
 	align-items: stretch;
 	justify-content: center;
-
 	position: relative;
 
 	&.valid-dragover-filedrop,
@@ -110,13 +109,14 @@
 				color: var(--primary-red);
 			}
 		}
-
 	}
 
 	.requirements-container {
 		position: absolute;
-		top: auto; bottom: 2rem;
-		left: 0; right: 0;
+		top: auto;
+		bottom: 2rem;
+		left: 0;
+		right: 0;
 		text-align: center;
 	}
 

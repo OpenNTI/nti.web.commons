@@ -30,7 +30,6 @@ html.no-touch .suggestion:hover {
 	background: var(--border-grey-light);
 }
 
-
 .new-token {
 	color: var(--primary-blue);
 	display: flex;

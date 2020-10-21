@@ -3,7 +3,7 @@
 	background: rgba(255, 255, 255, 0.95);
 	border-top: 4px solid white;
 	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
-	
+
 	&.info {
 		border-top-color: #78caf9;
 	}
@@ -12,8 +12,10 @@
 		padding: 0;
 		text-align: right;
 		position: absolute;
-		top: 0; bottom: auto;
-		left: 0; right: 0;
+		top: 0;
+		bottom: auto;
+		left: 0;
+		right: 0;
 		width: 100%;
 
 		& i {
@@ -22,7 +24,7 @@
 			cursor: pointer;
 			color: var(--tertiary-grey);
 		}
-	
+
 		& + .contents {
 			padding: 1.25rem 0.625rem 0.625rem;
 		}
@@ -31,5 +33,4 @@
 	& .contents {
 		padding: 0.625rem;
 	}
-
 }

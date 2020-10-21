@@ -46,7 +46,7 @@ form.search-component {
 			font-weight: 300;
 		}
 
-		&::-ms-clear { display:none; }
+		&::-ms-clear { display: none; }
 	}
 
 	input[type=reset] {
@@ -79,5 +79,4 @@ form.search-component {
 			outline: none;
 		}
 	}
-
 }

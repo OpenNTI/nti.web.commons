@@ -1,7 +1,9 @@
 @import "~@nti/style-common";
 
 .panel-header-component {
-	@include clearfix;;
+	@include clearfix;
+
+
 	background: var(--panel-background);
 	position: relative;
 	user-select: none;
@@ -16,7 +18,6 @@
 		right: rem-calc(15px);
 		font-size: 1.5rem;
 		color: var(--tertiary-grey);
-
 		min-width: 20px;
 		min-height: 20px;
 	}

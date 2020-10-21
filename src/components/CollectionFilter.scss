@@ -1,54 +1,60 @@
 @import "~@nti/style-common";
 
 .filters {
-	text-align:center;
+	text-align: center;
 	list-style: none;
-	margin: .75rem 0 0 0;
-	font-size: .6875rem;
+	margin: 0.75rem 0 0 0;
+	font-size: 0.6875rem;
+
 	li {
 		float: none;
 		display: inline-block;
 	}
+
 	a {
 		background-color: white;
 		color: var(--primary-blue);
-		padding-right:.5rem;
-		padding-left:.5rem;
-		padding-bottom: .75rem;
+		padding-right: 0.5rem;
+		padding-left: 0.5rem;
+		padding-bottom: 0.75rem;
 		margin-bottom: 1rem;
 		display: block;
+
 		.count {
 			@include count-badge();
 		}
 	}
+
 	.active {
-		position:relative;
-		$opacity: .1;
+		position: relative;
+		$opacity: 0.1;
 		$color: black;
-		&:before { //underline
+
+		&::before { //underline
 			content: '';
 			border-bottom: 1px solid $color;
 			position: absolute;
 			width: 80%;
-			margin-left:10%;
+			margin-left: 10%;
 			bottom: 3px;
 			opacity: $opacity;
 			left: 0;
 		}
-		&:after { //arrow
+
+		&::after { //arrow
 			$arrowsize:1em;
-			content:'';
-			border:($arrowsize/2) solid transparent;
-			position:absolute;
-			bottom:4px;
-			left:50%;
-			margin-left:-($arrowsize/2);
-			border-bottom-color:$color;
+
+			content: '';
+			border: ($arrowsize/2) solid transparent;
+			position: absolute;
+			bottom: 4px;
+			left: 50%;
+			margin-left: -($arrowsize/2);
+			border-bottom-color: $color;
 			opacity: $opacity;
 		}
 	}
 }
-
 
 @media (max-width: 365px) {
 	.button-group.filters {

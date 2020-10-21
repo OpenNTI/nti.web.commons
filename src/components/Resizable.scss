@@ -8,14 +8,14 @@
 	background: white;
 
 	.resize-control {
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			width: 0;
-			height: 0;
-			border-bottom: 20px solid grey;
-			border-left: 20px solid transparent;
-			touch-action: none;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 0;
+		height: 0;
+		border-bottom: 20px solid grey;
+		border-left: 20px solid transparent;
+		touch-action: none;
 	}
 
 	.resize-content {
@@ -26,7 +26,7 @@
 
 	.resize-header {
 		height: 50px;
-		border-bottom: 1px solid #dddddd;
+		border-bottom: 1px solid #ddd;
 		padding-left: 1rem;
 		box-sizing: border-box;
 		color: var(--primary-grey);

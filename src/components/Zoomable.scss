@@ -1,8 +1,8 @@
 @import "~@nti/style-common";
 
 .zoomable {
-	position:fixed !important;
-	background: rgba(255,255,255,.95);
+	position: fixed !important;
+	background: rgba(255, 255, 255, 0.95);
 	z-index: 9999;
 	top: 0;
 	left: 0;
@@ -25,13 +25,13 @@
 	.zoomable-close {
 		background-image: url(./assets/close.png);
 		position: absolute;
-		top: .5rem;
-		right: .5rem;
+		top: 0.5rem;
+		right: 0.5rem;
 		padding: 0;
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
-		box-shadow: 0px 3px 5px rgba(128,128,128,0.4);
+		box-shadow: 0 3px 5px rgba(128, 128, 128, 0.4);
 		background: {
 			repeat: no-repeat;
 			position: center;

@@ -6,12 +6,12 @@
 	margin: 0;
 	padding: 0;
 	height: 0.3125rem;
-	/*primary-blue*/
+
+	/* primary-blue */
 	background-color: rgba(63, 179, 246, 0.2);
 	color: var(--primary-blue);
 	position: relative;
 }
-
 
 .nti-progress::-moz-progress-bar {
 	background: var(--primary-blue);
@@ -24,10 +24,9 @@
 }
 
 .nti-progress::-webkit-progress-bar {
-	/*primary blue*/
+	/* primary blue */
 	background-color: rgba(63, 179, 246, 0.2);
 }
-
 
 .progress-bar-fallback > span {
 	display: block;
