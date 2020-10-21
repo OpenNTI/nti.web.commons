@@ -40,6 +40,6 @@ export default class Header extends React.Component {
 }
 
 
-export function TitleBalencer () {
-	return <span className="balencer"/>;
+export function TitleBalancer () {
+	return <span className="balancer"/>;
 }

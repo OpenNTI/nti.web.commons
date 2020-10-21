@@ -23,6 +23,7 @@
 	button.replace {
 		appearance: none;
 		display: block;
+		display: none;
 		border-radius: 2px;
 		background-color: #924aff;
 		border: none;
@@ -34,6 +35,5 @@
 		padding: rem-calc(8px 0 12px);
 		margin: rem-calc(34px 0 27px);
 		cursor: pointer;
-		display: none;
 	}
 }

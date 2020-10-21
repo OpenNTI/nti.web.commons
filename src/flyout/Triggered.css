@@ -2,4 +2,6 @@
 	box-shadow: 0 0 3px 1px var(--primary-blue);
 }
 
-.triggered-flyout {}
+.triggered-flyout {
+	--placeholder: 'ignore-me';
+}

@@ -11,8 +11,7 @@ body > .folder-asset.ghost,
 	position: relative;
 	overflow: hidden;
 
-	&.unselectable {
-	}
+	// &.unselectable {}
 
 	&:focus,
 	.no-touch &:hover {

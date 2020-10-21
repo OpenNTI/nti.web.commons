@@ -142,8 +142,7 @@
 	color: var(--tertiary-grey);
 }
 
-.DayPicker-Day--outside {
-}
+// .DayPicker-Day--outside {}
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled) {
 	@extend %selected-treatment;

@@ -14,7 +14,13 @@ function Weekday ({ weekday, className, localeUtils, locale }) {
 	);
 }
 
-// Weekday.propTypes = WeekdayPropTypes;
+Weekday.propTypes = {
+	weekday: PropTypes.any,
+	locale: PropTypes.any,
+	localeUtils: PropTypes.shape({
+		formatWeekdayLong: PropTypes.func
+	})
+};
 
 export default class DayPicker extends React.Component {
 	static propTypes = {

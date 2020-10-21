@@ -13,7 +13,7 @@ import React from 'react';
 import {verify} from '../../__test__/utils';
 import Modal from '../Modal';
 
-const createNodeMock = ({type}) => document.createElement(type);
+// const createNodeMock = ({type}) => document.createElement(type);
 
 
 describe('Modals', () => {

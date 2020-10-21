@@ -153,7 +153,7 @@ export function mapMatchToTextRange (match, whichGroup, textIndex, doc) {
 }
 
 
-const normalizeNode = (node) => node;
+// const normalizeNode = (node) => node;
 const normalizeDoc = (node, doc) => doc ?? node.ownerDocument;
 //normalize search arguments, here is what is accepted:
 // - single string
@@ -192,7 +192,7 @@ const normalizeTextIndex = (node, doc, searchFor, which, textIndex) => textIndex
 * @return {Range[]} a list of range objects that represent the portion of text to highlight
 **/
 export function findTextRanges (...args) {
-	const node = normalizeNode(...args);
+	// const node = normalizeNode(...args);
 	const doc = normalizeDoc(...args);
 	const searchFor = normalizeSearchFor(...args);
 	const which = normalizeWhich(...args);

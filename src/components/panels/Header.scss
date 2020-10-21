@@ -3,7 +3,6 @@
 .panel-header-component {
 	@include clearfix;
 
-
 	background: var(--panel-background);
 	position: relative;
 	user-select: none;
@@ -22,7 +21,7 @@
 		min-height: 20px;
 	}
 
-	.balencer {
+	.balancer {
 		&::after, &::before {
 			content: "\200B";
 		}

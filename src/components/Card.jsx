@@ -8,12 +8,8 @@ import {rawContent} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {isNTIID} from '@nti/lib-ntiids';
 
-import {DataURIs} from '../constants';
-
 import {SeparatedInline} from './list';
 import AssetIcon from './AssetIcon';
-
-const {BLANK_IMAGE} = DataURIs;
 
 
 const t = scoped('common.units', {

@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
-
-import styles from './Tab.css';
-
-const cx = classnames.bind(styles);
+import cx from 'classnames';
 
 export default function TabContent ({children, active}) {
 	return !active ? null : (

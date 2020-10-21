@@ -15,7 +15,7 @@ import FilePickerButton from '../FilePickerButton';
 import ProgressBar from '../ProgressBar';
 import Search from '../Search';
 //
-import Header, {TitleBalencer} from '../panels/Header';
+import Header, {TitleBalancer} from '../panels/Header';
 import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
 import ToolbarButton from '../panels/ToolbarButton';
 import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
@@ -287,9 +287,9 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			<div className="content-resource-browser">
 				<Header onClose={this.props.onClose}>
 					<div className="title-row">
-						<ParentFolder folder={folder} onClick={this.gotoParent} emptyComponent={TitleBalencer}/>
+						<ParentFolder folder={folder} onClick={this.gotoParent} emptyComponent={TitleBalancer}/>
 						<FolderName folder={folder} />
-						<TitleBalencer/>
+						<TitleBalancer/>
 					</div>
 					<Toolbar>
 						<FilePickerButton

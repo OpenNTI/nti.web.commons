@@ -8,7 +8,8 @@ const cx = classnames.bind(Styles);
 
 SVGIcon.propTypes = {
 	className: PropTypes.string,
-	viewBox: PropTypes.string
+	viewBox: PropTypes.string,
+	width: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
 };
 export default function SVGIcon ({className, viewBox = '0 0 16 16', width = '1em', ...otherProps}) {
 	return (
