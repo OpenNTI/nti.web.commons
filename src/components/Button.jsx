@@ -21,6 +21,11 @@ export default class Button extends React.Component {
 		plain: PropTypes.bool,
 	}
 
+	ref = React.createRef()
+
+	getDOMNode () {
+		return this.ref.current;
+	}
 
 	handleTrigger = (e) => {
 		const {disabled, onClick} = this.props;
@@ -71,6 +76,7 @@ export default class Button extends React.Component {
 
 		return (
 			<Component
+				ref={this.ref}
 				role="button"
 				tabIndex="0"
 				className={cls}
