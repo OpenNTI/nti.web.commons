@@ -70,7 +70,7 @@
     "react-dnd-html5-backend": "^10.0.2",
     "react-dnd-touch-backend": "10.0.2",
     "react-transition-group": "^4.2.2",
-    "uuid": "^7.0.1",
+    "uuid": "^8.3.0",
     "xregexp": "^4.3.0",
     "zpad": "^0.5.0"
   },
