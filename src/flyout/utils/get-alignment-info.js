@@ -9,6 +9,10 @@ function hasFixedPosition (el) {
 	return el && el.getAttribute && getComputedStyle(el).position === 'fixed';
 }
 
+function hasRelativePosition (el) {
+	return el?.getAttribute && getComputedStyle(el).position === 'relative';
+}
+
 function isFixed (el) {
 	while (el && !hasFixedPosition(el)) {
 		el = el.offsetParent;
@@ -133,7 +137,7 @@ function getRectInDocument (el) {
 	return {
 		alignToRect,
 		viewport: getViewportRect(),
-		coordinateRoot: getBodySize()
+		coordinateRoot: hasFixedPosition(document.body) || hasRelativePosition(document.body) ? getBodySize() : getViewportRect()
 	};
 }
 
