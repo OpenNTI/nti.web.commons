@@ -53,5 +53,5 @@ export function useWait (fn, interval) {
 		Clock.addListener(onTick);
 
 		return () => Clock.removeListener(onTick);
-	}, [interval]);
+	}, [fn, interval]);
 }
