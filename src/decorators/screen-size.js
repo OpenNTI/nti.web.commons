@@ -34,7 +34,9 @@ class ScreenSizeMonitor extends React.Component {
 
 		this.cleanupListener = () => {
 			global.removeEventListener('resize', handler);
+			clearTimeout(this.updateTimeout);
 			delete this.cleanupListener;
+			delete this.updateTimeout;
 		};
 	}
 
@@ -49,7 +51,7 @@ class ScreenSizeMonitor extends React.Component {
 
 		this.updateTimeout = setTimeout(() => {
 			delete this.updateTimeout;
-			
+
 			const {width, height} = this.state;
 			const newWidth = getViewportWidth();
 			const newHeight = getViewportHeight();
