@@ -13,8 +13,9 @@ const t = scoped('common.inputs.color.text.Hex', {
 	placeholder: '#RRGGBB'
 });
 
-const ValidHexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-const ValidInput = /^#?[A-Fa-f0-9]{0,6}$/;
+const ValidHexRegex = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i;
+const ValidInput = /^#?[a-f0-9]{0,6}$/i;
+const PASTE_FILTER = /(#[a-f0-9]{0,6})/im;
 
 function fix (value) {
 	if (value.charAt(0) !== '#') { return `#${value}`; }
@@ -86,6 +87,16 @@ export default class NTIHexInput extends React.Component {
 	}
 
 
+	onPaste = (event) => {
+		event.preventDefault();
+
+		const {clipboardData} = event;
+		const data = clipboardData?.getData('text/plain') || '';
+		const [match] = PASTE_FILTER.exec(data);
+
+		this.onChange(match);
+	}
+
 	render () {
 		const {className} = this.props;
 		const {value} = this.state;
@@ -93,9 +104,10 @@ export default class NTIHexInput extends React.Component {
 		return (
 			<Text
 				className={cx('nti-color-hex-input', className)}
-				value={value}
-				onChange={this.onChange}
 				placeholder={t('placeholder')}
+				value={value}
+				onPaste={this.onPaste}
+				onChange={this.onChange}
 			/>
 		);
 	}
