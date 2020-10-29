@@ -106,7 +106,7 @@ export default class UpdateMonitor extends React.Component {
 
 		if (!r.ok) {
 			this.setState({version: 'unknown'});
-			return logger.warn('%s %s: %s', r.status, r.statusText, r.url);
+			return logger.debug('%s %s: %s', r.status, r.statusText, r.url);
 		}
 
 		const txt = await r.text();
