@@ -22,6 +22,12 @@ export default class LoadingPlaceholder extends React.Component {
 	}
 
 
+	componentWillUnmount () {
+		clearTimeout(this.delayingTimeout);
+		clearTimeout(this.minLoadTimeout);
+	}
+
+
 	componentDidUpdate (prevProps) {
 		const {loading} = this.props;
 		const {loading:wasLoading} = prevProps;
