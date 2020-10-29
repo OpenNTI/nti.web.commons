@@ -72,6 +72,7 @@ export default class Button extends React.Component {
 			}
 		);
 
+		delete otherProps.component;
 		delete otherProps.onClick;
 
 		return (
