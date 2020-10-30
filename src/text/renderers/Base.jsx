@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {ForwardRef} from '../../decorators';
+import {filterProps} from '../../utils';
 
-export default
-@ForwardRef('textRef')
 class NTIBaseText extends React.Component {
 	static propTypes = {
 		as: PropTypes.any,
@@ -16,17 +15,12 @@ class NTIBaseText extends React.Component {
 		const {as: Tag, textRef, children, ...otherProps} = this.props;
 		const Cmp = Tag || 'span';
 
-		//TODO: is there a better way?
-		delete otherProps.hasComponents;
-		delete otherProps.hasMarkup;
-		delete otherProps.linkify;
-		delete otherProps.overflow;
-		delete otherProps.limitLines;
-
 		return (
-			<Cmp {...otherProps} ref={textRef}>
+			<Cmp {...filterProps(otherProps, Cmp)} ref={textRef}>
 				{children}
 			</Cmp>
 		);
 	}
 }
+
+export default ForwardRef('textRef')(NTIBaseText);
