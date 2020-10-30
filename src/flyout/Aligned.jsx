@@ -464,7 +464,7 @@ export default class AlignedFlyout extends React.Component {
 		);
 
 		if (!menu) {
-			flyoutProps['aria-role'] = 'dialog';
+			flyoutProps['role'] = 'dialog';
 		}
 
 		if (focusOnOpen) {
