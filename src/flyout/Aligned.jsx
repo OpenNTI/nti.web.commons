@@ -195,6 +195,8 @@ export default class AlignedFlyout extends React.Component {
 
 	componentWillUnmount () {
 		this.mounted = false;
+		this.clearTimeouts();
+		cancelAnimationFrame(this.realign?.timeout);
 
 		if (this.fly) {
 			// document.body.removeChild(this.fly);
@@ -283,6 +285,11 @@ export default class AlignedFlyout extends React.Component {
 		}
 	}
 
+	clearTimeouts () {
+		clearTimeout(this.showTimeout);
+		clearTimeout(this.hideTimeout);
+	}
+
 	doShow () {
 		const {transition} = this.props;
 
@@ -293,7 +300,8 @@ export default class AlignedFlyout extends React.Component {
 				opening: true,
 				closing: false
 			}, () => {
-				setTimeout(() => {
+				this.clearTimeouts();
+				this.showTimeout = setTimeout(() => {
 					this.setState({
 						opening: false
 					});
@@ -316,7 +324,8 @@ export default class AlignedFlyout extends React.Component {
 				closing: true,
 				opening: false
 			}, () => {
-				setTimeout(() => {
+				this.clearTimeouts();
+				this.hideTimeout = setTimeout(() => {
 					this.setState({
 						open: false,
 						aligning: true,

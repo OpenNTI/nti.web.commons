@@ -145,6 +145,9 @@ export default class TriggeredFlyout extends React.Component {
 
 	componentWillUnmount () {
 		this.mounted = false;
+		clearTimeout(this.blurTimeout);
+		clearTimeout(this.hideTimeout);
+		clearTimeout(this.showTimeout);
 	}
 
 	get trigger () {
