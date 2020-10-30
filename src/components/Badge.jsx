@@ -64,6 +64,12 @@ export default class Badge extends React.Component {
 		position: Badge.POSITIONS.TOP_RIGHT
 	}
 
+	ref = React.createRef()
+
+	getDOMNode () {
+		return this.ref.current;
+	}
+
 	render () {
 		const {props: {badge, position, theme, size, viewed, children, offset: {x = 0, y = 0} = {}}} = this;
 
@@ -86,7 +92,7 @@ export default class Badge extends React.Component {
 		const props = {...badgeProp, style};
 
 		return (
-			<div className={cx('badged-item', viewed ? Badge.THEMES.INACTIVE : theme, size, 'success', positionCls)} {...props}>
+			<div ref={this.ref} className={cx('badged-item', viewed ? Badge.THEMES.INACTIVE : theme, size, 'success', positionCls)} {...props}>
 				<div className="badged-item-content">
 					{children}
 				</div>
