@@ -21,7 +21,7 @@ function getContents (title, children) {
 			</div>
 		);
 	}
-} 
+}
 
 NavigationOutlineHeader.propTypes = {
 	className: PropTypes.string,
@@ -30,11 +30,11 @@ NavigationOutlineHeader.propTypes = {
 	as: PropTypes.any,
 	children: PropTypes.any
 };
-export default function NavigationOutlineHeader ({className, title, as: tag, children}) {
+export default function NavigationOutlineHeader ({className, title, as: tag, children, ...otherProps}) {
 	const Cmp = tag || 'div';
 
 	return (
-		<Cmp className={cx('outline-header', className)}>
+		<Cmp className={cx('outline-header', className)} {...otherProps}>
 			{getContents(title, children)}
 		</Cmp>
 	);
