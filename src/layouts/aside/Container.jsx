@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {restProps} from '@nti/lib-commons';
 
 import {ClassList} from '../responsive';
@@ -8,9 +8,7 @@ import {ClassList} from '../responsive';
 import {LEFT, RIGHT} from './Constants';
 import AsidePlaceholder from './AsidePlaceholder';
 import Store from './Store';
-import Styles from './Container.css';
-
-const cx = classnames.bind(Styles);
+import styles from './Container.css';
 
 const classList = [
 	{query: size => size.width >= 1024, className: cx('large')}
@@ -22,7 +20,7 @@ class AsideContainer extends React.Component {
 		className: PropTypes.string,
 		children: PropTypes.any,
 		forwardedRef: PropTypes.any,
-		asideClassname: PropTypes.string,
+		asideClassName: PropTypes.string,
 
 		store: PropTypes.object,
 		aside: PropTypes.shape({
@@ -38,13 +36,12 @@ class AsideContainer extends React.Component {
 
 		return (
 			<ClassList
-				className={cx('container', className)}
+				className={cx(styles.container, className)}
 				classList={classList}
-				ref={forwardedRef}
 				{...otherProps}
 			>
 				{side === LEFT && this.renderAside(aside)}
-				<section className={cx('body')}>
+				<section className={styles.body} ref={forwardedRef}>
 					{children}
 				</section>
 				{side === RIGHT && this.renderAside(aside)}
@@ -56,9 +53,9 @@ class AsideContainer extends React.Component {
 	renderAside (aside) {
 		if (!aside) { return null; }
 
-		const {asideClassname} = this.props;
+		const {asideClassName} = this.props;
 
-		return (<AsidePlaceholder className={cx(asideClassname, 'aside-container')} {...aside} />);
+		return (<AsidePlaceholder className={cx(asideClassName, styles.asideContainer)} {...aside} />);
 	}
 }
 

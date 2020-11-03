@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {rawContent} from '@nti/lib-commons';
 
-import Styles from './AsidePlaceholder.css';
 import Store from './Store';
-
-const cx = classnames.bind(Styles);
+import styles from './AsidePlaceholder.css';
 
 const DATA_ATTR = 'data-aside-content-container';
 const placeholderTpl = `<div ${DATA_ATTR}></div>`;
@@ -37,7 +35,7 @@ class AsidePlaceholder extends React.Component {
 
 		return (
 			<aside
-				className={cx('aside-placeholder', className)}
+				className={cx(styles.asidePlaceholder, className)}
 				ref={this.attachPlaceholder}
 				{...rawContent(placeholderTpl)}
 			/>
