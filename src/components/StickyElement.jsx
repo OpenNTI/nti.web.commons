@@ -42,7 +42,7 @@ export default class Sticky extends React.Component {
 						style.top += offset;
 					}
 
-					return (<div className="sticky" style={style}>{React.cloneElement(child)}</div>);
+					return (<div className="sticky" style={style}>{child}</div>);
 				}}
 			</ReactSticky>
 		);
