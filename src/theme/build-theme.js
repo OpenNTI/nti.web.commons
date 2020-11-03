@@ -1,5 +1,5 @@
 import merge from 'merge';
-import {Color} from '@nti/lib-commons';
+import {Color, ObjectUtils} from '@nti/lib-commons';
 
 import Fallbacks from './fallback-assets';
 
@@ -148,7 +148,7 @@ export default function BuildTheme (properties = DefaultProperties, internalConf
 	theme.getScope = () => initialScope;
 	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
 	theme.setOverrides = (overrides, force) => values = force ? overrides : merge.recursive(values, {...overrides});
-	theme.scope = (scope) => BuildTheme(properties[scope], {[Scope]: [...initialScope, scope], [Parent]: theme});
+	theme.scope = (scope) => BuildTheme(ObjectUtils.get(properties, scope), {[Scope]: [...initialScope, scope], [Parent]: theme});
 
 	const apply = (props, themeScope, valueScope) => {
 		for (let [key, value] of Object.entries(props)) {
