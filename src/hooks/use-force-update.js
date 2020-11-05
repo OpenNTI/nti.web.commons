@@ -1,7 +1,8 @@
 import React from 'react';
 
-export default function useForceUpdate () {
-	const[, setLastUpdate] = React.useState();
+const ALWAYS_NEW_VALUE = () => Date.now();
 
-	return () => setLastUpdate(Date.now());
+export default function useForceUpdate () {
+	const [, update] = React.useReducer(ALWAYS_NEW_VALUE);
+	return update;
 }
