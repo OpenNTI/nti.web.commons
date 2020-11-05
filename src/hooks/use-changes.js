@@ -23,5 +23,5 @@ export default function useChanges (item, callback, eventName = ChangeEvent) {
 		return  item.subscribeToChange ?
 			item.subscribeToChange(handler) :
 			addListener(item, eventName);
-	}, [item, callback]);
+	}, [item, callback, eventName]);
 }
