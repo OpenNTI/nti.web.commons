@@ -1,6 +1,19 @@
-// import React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Progress () {
-	//TODO: fill this out
-	return null;
+import Styles from './Styles.css';
+
+const getProgressWidth = p => `${Math.floor((p ?? 0) * 100)}%`;
+
+Progress.propTypes = {
+	progress: PropTypes.number
+};
+export default function Progress ({progress}) {
+	if (progress == null) {
+		return null;
+	}
+
+	return (
+		<div className={Styles.progressBar} style={{width: getProgressWidth(progress)}} />
+	);
 }

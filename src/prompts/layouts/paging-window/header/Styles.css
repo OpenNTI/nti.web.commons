@@ -56,3 +56,20 @@
 	line-height: 1.35;
 	color: var(--primary-grey);
 }
+
+.sub-title {
+	flex: 0 0 auto;
+	font-size: 0.625rem;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--tertiary-grey);
+	text-transform: uppercase;
+}
+
+.progress-bar {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	height: 2px;
+	background: var(--secondary-green);
+}
