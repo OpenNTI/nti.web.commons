@@ -73,3 +73,31 @@
 	height: 2px;
 	background: var(--secondary-green);
 }
+
+@media (max-width: 480px) {
+	.dismiss {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		padding: 0.375rem;
+		font-size: 1.5rem;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.dismiss::after {
+		display: none;
+	}
+
+	.title-container {
+		padding: 10px 0 9px;
+		text-align: center;
+	}
+
+	.title {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+}
