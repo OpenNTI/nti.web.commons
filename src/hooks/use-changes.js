@@ -20,8 +20,8 @@ export default function useChanges (item, callback, eventName = ChangeEvent) {
 			else { forceUpdate(); }
 		};
 
-		return  item.subscribeToChange ?
-			item.subscribeToChange(handler) :
-			addListener(item, eventName);
+		if (item) {
+			return  item.subscribeToChange?.(handler) ?? addListener(item, eventName);
+		}
 	}, [item, callback, eventName]);
 }
