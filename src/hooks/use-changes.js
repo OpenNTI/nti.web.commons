@@ -21,7 +21,7 @@ export default function useChanges (item, callback, eventName = ChangeEvent) {
 		};
 
 		if (item) {
-			return  item.subscribeToChange?.(handler) ?? addListener(item, eventName);
+			return  item.subscribeToChange?.(handler) ?? addListener(item, eventName, handler);
 		}
 	}, [item, callback, eventName]);
 }
