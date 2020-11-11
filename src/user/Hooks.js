@@ -15,6 +15,7 @@ useUser.getAnonymous = (id) => {
 	const unresolved = getUnresolved(id);
 
 	return {
+		isUser: true,
 		displayName: unresolved,
 		username: unresolved,
 		getID: () => id || '__unresolvedUser__',
@@ -40,5 +41,5 @@ export function useUser (user) {
 		}
 	}, [user]);
 
-	return isResolved(resolver) ? resolver : null; 
+	return isResolved(resolver) ? resolver : null;
 }
