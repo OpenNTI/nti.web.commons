@@ -51,8 +51,13 @@ export default function usePersistentState (key, configArg) {
 		);
 	}, [key]);
 
+	const setState = React.useCallback(
+		(newValue) => setValue(key, newValue, config),
+		[key, config.initial, config.expireIn]
+	);
+
 	return [
 		value,
-		(newValue) => setValue(key, newValue, config)
+		setState
 	];
 }
