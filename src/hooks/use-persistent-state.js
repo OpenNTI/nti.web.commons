@@ -2,7 +2,15 @@ import React from 'react';
 import Storage from '@nti/web-storage';
 
 const normalizeConfig = (config) => {
-	const initial = config?.initial ?? config;
+	const hasConfig = config && (config.initial || config.expireIn);
+
+	if (!hasConfig) {
+		return {
+			initial: config
+		};
+	}
+
+	const initial = config?.initial ?? null;
 	const expireIn = config?.expireIn ?? Infinity;
 
 	return {
@@ -40,7 +48,7 @@ export default function usePersistentState (key, configArg) {
 	React.useEffect(() => {
 		const handler = (e) => {
 			if (e.key === key) {
-				setStateValue(getValue(key, configArg));
+				setStateValue(getValue(key, config));
 			}
 		};
 
