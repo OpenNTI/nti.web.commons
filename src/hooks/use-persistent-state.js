@@ -59,6 +59,20 @@ export default function usePersistentState (key, configArg) {
 		);
 	}, [key]);
 
+	React.useEffect(() => {
+		//If there's an expireIn check the value every render to see if
+		//its expired and needs to update
+		//
+		//TODO: actually wait for the expireIn and trigger a rerender instead of waiting on one
+		if (config.expireIn) {
+			const currentValue = getValue(key, config);
+
+			if (currentValue !== value) {
+				setStateValue(currentValue);
+			}
+		}
+	});
+
 	const setState = React.useCallback(
 		(newValue) => setValue(key, newValue, config),
 		[key, config.initial, config.expireIn]
