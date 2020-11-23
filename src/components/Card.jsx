@@ -219,9 +219,9 @@ export default class RelatedWorkRefCard extends React.Component {
 					{external && <div className="external"/>}
 				</AssetIcon>
 
-				<h5 {...rawContent(label || title)}/>
+				<h5>{(label || title)}</h5>
 				{by && by.trim().length > 0 && (
-					<div className="label" {...rawContent(t('by', {by: by}))}/>
+					<div className="label">{t('by', {by: by})}</div>
 				)}
 				<div className="description" {...rawContent(description || desc)}/>
 				{labels && (
