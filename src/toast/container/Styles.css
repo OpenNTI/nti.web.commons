@@ -45,7 +45,9 @@
 	& .toast-wrapper {
 		margin: 0.5rem;
 		width: 100%;
-		max-width: 275px;
+		max-width: 360px;
+	}
+}
 	}
 }
 
