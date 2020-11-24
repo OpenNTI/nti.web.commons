@@ -4,7 +4,6 @@ import Url from 'url';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {rawContent} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {isNTIID} from '@nti/lib-ntiids';
 
@@ -223,7 +222,7 @@ export default class RelatedWorkRefCard extends React.Component {
 				{by && by.trim().length > 0 && (
 					<div className="label">{t('by', {by: by})}</div>
 				)}
-				<div className="description" {...rawContent(description || desc)}/>
+				<div className="description">{(description || desc)}</div>
 				{labels && (
 					<SeparatedInline className="extra-labels">
 						{labels}
