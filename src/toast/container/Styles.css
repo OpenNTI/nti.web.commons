@@ -44,10 +44,18 @@
 
 	& .toast-wrapper {
 		margin: 0.5rem;
-		width: 100%;
+		width: auto;
 		max-width: 360px;
 	}
 }
+
+@media only screen and (max-width: 420px) {
+	.toast-region.top-right {
+		width: auto;
+
+		.toast-wrapper {
+			max-width: 100vw;
+		}
 	}
 }
 
