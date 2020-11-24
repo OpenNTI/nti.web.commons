@@ -5,7 +5,6 @@
 	position: relative;
 	position: sticky;
 	border-bottom: 1px solid var(--border-grey-light);
-	background: white;
 
 	/* fight z-index in web app */
 	z-index: 20;
@@ -74,6 +73,37 @@
 	background: var(--secondary-green);
 }
 
+.paging-window-header.flat {
+	& .dismiss {
+		position: absolute;
+		padding: 1px 0 0 1px;
+		top: 7px;
+		left: 24px;
+		width: 30px;
+		height: 30px;
+		border-radius: 30px;
+		background: var(--border-grey-light);
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.5rem;
+
+		&::after {
+			display: none;
+		}
+	}
+
+	& .title-container {
+		text-align: center;
+		padding: 0.625rem 3.75rem;
+	}
+
+	& .title {
+		font-size: 1.125rem;
+		font-weight: bold;
+	}
+}
+
 @media (max-width: 480px) {
 	.dismiss {
 		position: absolute;
@@ -99,5 +129,13 @@
 	.title {
 		font-size: 1rem;
 		font-weight: 600;
+	}
+
+	.paging-window-header.flat {
+		& .dismiss {
+			top: 10px;
+			width: 25px;
+			height: 25px;
+		}
 	}
 }

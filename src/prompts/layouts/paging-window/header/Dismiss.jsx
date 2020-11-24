@@ -8,14 +8,17 @@ const cx = classnames.bind(Styles);
 
 
 Dismiss.propTypes = {
-	onDismiss: PropTypes.func
+	onDismiss: PropTypes.func,
+	flat: PropTypes.bool
 };
-export default function Dismiss ({onDismiss}) {
+export default function Dismiss ({onDismiss, flat}) {
 	if (!onDismiss) { return null;}
+
+	const icon = flat ? 'icon-bold-x' : 'icon-light-x';
 
 	return (
 		<a href="#" className={cx('dismiss')} onClick={onDismiss}>
-			<i className="icon-light-x" />
+			<i className={icon} />
 		</a>
 	);
 }

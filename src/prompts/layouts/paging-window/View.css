@@ -3,3 +3,7 @@
 	max-width: 780px;
 	width: 100vw;
 }
+
+.paging-window.rounded {
+	border-radius: 4px;
+}

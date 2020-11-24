@@ -18,6 +18,8 @@ PagingHeader.propTypes = {
 
 	progress: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 
+	flat: PropTypes.bool,
+
 	pager: PropTypes.shape({
 		total: PropTypes.number,
 		current: PropTypes.number,
@@ -26,8 +28,10 @@ PagingHeader.propTypes = {
 	})
 };
 export default function PagingHeader (props) {
+	const {flat} = props;
+
 	return (
-		<div className={cx('paging-window-header')}>
+		<div className={cx('paging-window-header', {flat})}>
 			<Dismiss {...props} />
 			<Title {...props} />
 			<Pager {...props} />
