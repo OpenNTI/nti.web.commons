@@ -94,9 +94,6 @@ export default class IframeViewer extends React.Component {
 							frameBorder="0"
 							marginWidth="0"
 							marginHeight="0"
-							seamless="true"
-							transparent="true"
-							allowTransparency="true"
 						/>
 					)}
 				</div>
