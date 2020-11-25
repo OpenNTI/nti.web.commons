@@ -1,19 +1,12 @@
-:global(.modal) .lightbox-dialog {
-	display: flex !important;
 
-	& :global(dialog.modal-content) {
-		width: auto;
-	}
-}
-
-.lightbox-content {
+.light-box-content {
 	& > img {
 		display: block;
 		max-width: 90vw;
 	}
 }
 
-.single-image-lightbox {
+.single-image-light-box {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;

@@ -1,29 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import * as Icons from '../../icons';
 import {Card} from '../../standard-ui';
 
-import Styles from './Styles.css';
+import styles from './Single.css';
 
-const cx = classnames.bind(Styles);
-
-SingleImageLightbox.propTypes = {
+SingleImageLightBox.propTypes = {
 	className: PropTypes.string,
 	onDismiss: PropTypes.func,
 	children: PropTypes.any
 };
-export default function SingleImageLightbox ({className, onDismiss, children}) {
+export default function SingleImageLightBox ({className, onDismiss, children}) {
 	return (
-		<article className={cx('single-image-lightbox', className)}>
+		<article className={cx(styles.singleImageLightBox, className)}>
 			<header>
-				<a className={cx('close')} onClick={onDismiss} role="button">
+				<a className={styles.close} onClick={onDismiss} role="button">
 					<Icons.X />
 				</a>
 			</header>
 			<section>
-				<Card className={cx('lightbox-content')}>
+				<Card className={styles.lightBoxContent}>
 					{children}
 				</Card>
 			</section>
