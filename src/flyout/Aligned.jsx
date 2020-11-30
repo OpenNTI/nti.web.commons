@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames/bind';
-import {getEffectiveZIndex, focusDescendantOrElement} from '@nti/lib-dom';
+import {focusDescendantOrElement} from '@nti/lib-dom';
 import {restProps} from '@nti/lib-commons';
 
 import {
@@ -36,6 +36,7 @@ import {
 	getPseudoElementSpace,
 	getViewportRelativeAlignments,
 } from './utils';
+import ZBooster from './ZBooster';
 
 const classHooks = cx.bind(ClassHooks);
 
@@ -444,13 +445,11 @@ export default class AlignedFlyout extends React.Component {
 		if (!open || !alignTo) { return null; }
 
 		const {isFixed} = alignment || {};
-		const effectiveZ = getEffectiveZIndex(alignTo);
 
 		const outerStyles = {
 			//if the alignment isn't fixed, or we are rendering to a parent keep the position absolute
 			position: isFixed && this.fly ? 'fixed' : 'absolute',
 			visibility: aligning || !alignment ? 'hidden' : void 0,
-			zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
 			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
 		};
 		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
@@ -481,18 +480,19 @@ export default class AlignedFlyout extends React.Component {
 		}
 
 		const flyout = (
-			<div
+			<ZBooster
 				{...flyoutProps}
 				aria-expanded="true"
 				className={cls}
 				ref={this.attachFlyoutRef}
 				style={outerStyles}
+				targetEl={alignTo}
 			>
 				{arrow && (<div className="flyout-arrow" />)}
 				<div className="flyout-inner" style={innerStyle}>
 					{children}
 				</div>
-			</div>
+			</ZBooster>
 		);
 
 		return this.fly ? ReactDOM.createPortal(flyout, this.fly) : flyout;
