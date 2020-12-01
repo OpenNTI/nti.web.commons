@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ForwardRef} from '../decorators';
-
 import {getRenderer} from './renderers';
 
-export default
-@ForwardRef('textRef')
-class NTITextRenderer extends React.Component {
-	static propTypes = {
-		text: PropTypes.node,
-		textRef: PropTypes.func
-	}
+const NTITextRenderer = React.forwardRef((props, ref) => {
+	const Renderer = getRenderer(props);
 
-	render (props) {
-		const {textRef, ...otherProps} = this.props;
-		const Renderer = getRenderer(otherProps);
+	if (!Renderer) { throw new Error('Unable to render text: ', props.text); }
 
-		if (!Renderer) { throw new Error('Unable to render text: ', this.props.text); }
+	return (<Renderer {...props} ref={ref} />);
+});
 
-		return (<Renderer {...otherProps} ref={textRef} />);
-	}
-}
+NTITextRenderer.displayName = 'NTITextRenderer';
+NTITextRenderer.propTypes = {
+	text: PropTypes.node
+};
+
+export default NTITextRenderer;

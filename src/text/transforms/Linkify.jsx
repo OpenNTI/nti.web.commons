@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import linkifyIt from 'linkify-it';
 
-import {ForwardRef} from '../../decorators';
-
 const linkifyUtil = linkifyIt();
-const URL_PUNCUATION_REGEX = /([./])/g;
+const URL_PUNCTUATION_REGEX = /([./])/g;
 
 //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr#Example
-function insertWBRS (linkText) {
-	return linkText.replace(URL_PUNCUATION_REGEX, '<wbr />$1');
-}
+const insertWBR = (linkText) => linkText.replace(URL_PUNCTUATION_REGEX, '<wbr />$1');
 
 function linkifyText (text) {
 	const links = linkifyUtil.match(text);
@@ -19,72 +15,50 @@ function linkifyText (text) {
 		return {hasLinks: false, text};
 	}
 
-	let linkified = '';
+	let processed = '';
 	let pointer = 0;
 
 	for (let link of links) {
 		const {index, lastIndex, url, text: linkText} = link;
 		const pre = text.substring(pointer, index);
 
-		linkified += `${pre}<a href="${url}" title="${linkText}">${insertWBRS(linkText)}</a>`;
+		processed += `${pre}<a href="${url}" title="${linkText}">${insertWBR(linkText)}</a>`;
 		pointer = lastIndex;
 	}
 
-	linkified += text.substring(pointer, text.length);
+	processed += text.substring(pointer, text.length);
 
 	return {
 		hasLinks: true,
-		text: linkified
+		text: processed
 	};
 }
 
-export default
-@ForwardRef('textRef')
-class Linkify extends React.Component {
-	static shouldApply ({linkify, hasComponents}) { return linkify && !hasComponents; }
+const Linkify = React.forwardRef(({hasMarkup, children, ...props}, ref) => {
+	const [{text, hasLinks}, setState] = useState(linkifyText(props.text));
 
-	static propTypes = {
-		text: PropTypes.string,
-		textRef: PropTypes.func,
-		children: PropTypes.any,
-		hasMarkup: PropTypes.bool
-	}
+	useEffect(() => {
+		setState(linkifyText(props.text));
+	}, [props.text]);
 
-	constructor (props) {
-		super(props);
-
-		this.state = {
-			...linkifyText(props.text)
-		};
-	}
-
-	componentDidUpdate (prevProps) {
-		const {text} = this.props;
-		const {text:oldText} = prevProps;
-
-		if (text !== oldText) {
-			this.setState({
-				...linkifyText(text)
-			});
+	const Text = React.Children.only(children);
+	return React.cloneElement(
+		Text,
+		{
+			...props,
+			text,
+			hasMarkup: hasLinks || hasMarkup,
+			ref
 		}
-	}
+	);
+});
 
+Linkify.displayName = 'Linkify';
+Linkify.shouldApply = ({linkify, hasComponents}) => linkify && !hasComponents;
+Linkify.propTypes = {
+	text: PropTypes.string,
+	children: PropTypes.any,
+	hasMarkup: PropTypes.bool
+};
 
-	render () {
-		const {textRef, hasMarkup, children, ...otherProps} = this.props;
-		const {text, hasLinks} = this.state;
-		const Text = React.Children.only(children);
-
-		delete otherProps.linkify;
-
-		return React.cloneElement(
-			Text,
-			{
-				...otherProps,
-				text,
-				hasMarkup: hasLinks || hasMarkup,
-				ref: textRef
-			}
-		);
-	}
-}
+export default Linkify;

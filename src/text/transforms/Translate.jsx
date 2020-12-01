@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ForwardRef} from '../../decorators';
-
-const PrimativesTypes = {
+const PrimitivesTypes = {
 	'string': true,
 	'number': true
 };
@@ -14,7 +12,7 @@ function getTranslatedContent (localeKey, getString, data) {
 			const [key, value] = entry;
 			const type = typeof value;
 
-			if (PrimativesTypes[type]) {
+			if (PrimitivesTypes[type]) {
 				acc.translateData[key] = value;
 			} else {
 				acc.translateData[key] = `***${key}***`;
@@ -35,15 +33,7 @@ function getTranslatedContent (localeKey, getString, data) {
 	};
 }
 
-Translate.shouldApply = ({getString, localeKey}) => (getString != null && localeKey != null);
-Translate.propTypes = {
-	localeKey: PropTypes.string,
-	getString: PropTypes.func,
-	with: PropTypes.object,
-	textRef: PropTypes.any,
-	children: PropTypes.any
-};
-function Translate ({localeKey, getString, with:data, textRef, children, ...otherProps}) {
+const Translate = React.forwardRef(({localeKey, getString, with:data, children, ...otherProps}, ref) => {
 	const Text = React.Children.only(children);
 	const content = getTranslatedContent(localeKey, getString, data);
 
@@ -52,9 +42,19 @@ function Translate ({localeKey, getString, with:data, textRef, children, ...othe
 		{
 			...otherProps,
 			...content,
-			ref: textRef
+			ref
 		}
 	);
-}
+});
 
-export default ForwardRef('textRef')(Translate);
+Translate.displayName = 'Translate';
+Translate.shouldApply = ({getString, localeKey}) => (getString != null && localeKey != null);
+Translate.propTypes = {
+	localeKey: PropTypes.string,
+	getString: PropTypes.func,
+	with: PropTypes.object,
+	textRef: PropTypes.any,
+	children: PropTypes.any
+};
+
+export default Translate;

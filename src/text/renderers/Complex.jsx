@@ -1,29 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ForwardRef} from '../../decorators';
-
 import Base from './Base';
 import Registry from './Registry';
 
-function isComplexText ({hasComponents}) {
-	return hasComponents;
-}
+const isComplexText = ({hasComponents}) => hasComponents;
 
-export default
-@Registry.register(isComplexText)
-@ForwardRef('textRef')
-class NTIComplexText extends React.Component {
-	static propTypes = {
-		text: PropTypes.any,
-		textRef: PropTypes.func
-	}
+const NTIComplexText = React.forwardRef(({text, ...otherProps}, ref) => (
+	<Base {...otherProps} ref={ref} >{text}</Base>
+));
 
-	render () {
-		const {text, textRef, ...otherProps} = this.props;
+NTIComplexText.displayName = 'NTIComplexText';
+NTIComplexText.propTypes = {
+	text: PropTypes.any
+};
 
-		return (
-			<Base {...otherProps} ref={textRef} >{text}</Base>
-		);
-	}
-}
+Registry.register(isComplexText)(NTIComplexText);
+export default NTIComplexText;

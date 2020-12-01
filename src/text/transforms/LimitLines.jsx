@@ -1,113 +1,90 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
-import {ForwardRef} from '../../decorators';
-import {getStyles} from '../utils';
+import {getStyles, updateRef} from '../utils';
 
-import Styles from './LimitLines.css';
+const styles = css`
+	.limit-lines {
+		display: inline-block;
+		overflow: hidden;
+	}
+`;
 
-const cx = classnames.bind(Styles);
+function getLinesInfo (limitLines, forceLines) {
+
+	if (limitLines != null) {
+		return {
+			lines: limitLines,
+			style: 'maxHeight'
+		};
+	}
+
+	if (forceLines != null) {
+		return {
+			lines: forceLines,
+			style: 'height'
+		};
+	}
+}
 
 //TODO: recompute ellipse after a resize or size change
 
-export default
-@ForwardRef('textRef')
-class LimitLines extends React.Component {
-	static shouldApply ({limitLines, forceLines}) { return limitLines != null || forceLines != null; }
+const LimitLines = React.forwardRef(({children, style:propStyle, className, limitLines, forceLines, ...otherProps}, ref) => {
+	const single = limitLines != null ? limitLines === 1 : forceLines === 1;
+	const textNode = useRef();
+	const [{style:stateStyle, settled}, setState] = useState({style: {}, settled: false});
 
-	static propTypes = {
-		className: PropTypes.string,
-		limitLines: PropTypes.number,
-		forceLines: PropTypes.number,
-		style: PropTypes.object,
-		textRef: PropTypes.func,
-		children: PropTypes.any
-	}
-
-	attachText = (node) => {
-		const {textRef} = this.props;
-
-		this.textNode = node;
+	const processRef = useCallback((node) => {
+		textNode.current = node;
 
 		//NOTE: We are waiting to call the textRef back until after we've set and rendered the maxHeight,
 		//but we don't need to wait when we are unmounting.
-		if (!node && textRef) {
-			textRef(node);
-		} 
+		updateRef(ref, node);
+	}, [ref]);
 
-		this.setup();
-	}
+	useEffect(() => {
+		const {current: node} = textNode;
+		if (!node) { return; }
 
-	state = {style: {}, settled: false}
-
-	componentDidUpdate (prevProps) {
-		const {limitLines} = this.props;
-		const {limitLines:oldLines} = prevProps;
-
-		if (limitLines !== oldLines) {
-			this.setup();
-		}
-	}
-
-
-	getLinesInfo () {
-		const {limitLines, forceLines} = this.props;
-
-		if (limitLines != null) {
-			return {
-				lines: limitLines,
-				style: 'maxHeight'
-			};
-		}
-
-		if (forceLines != null) {
-			return {
-				lines: forceLines,
-				style: 'height'
-			};
-		}
-	}
-
-
-	setup () {
-		if (!this.textNode) { return; }
-
-		const {textRef} = this.props;
-		const {lines, style} = this.getLinesInfo();
-		const {lineHeight, paddingTop, paddingBottom} = getStyles(this.textNode, ['lineHeight', 'paddingTop', 'paddingBottom']);
+		const {lines, style} = getLinesInfo(limitLines, forceLines);
+		const {lineHeight, paddingTop, paddingBottom} = getStyles(node, ['lineHeight', 'paddingTop', 'paddingBottom']);
 		const max = Math.ceil(lineHeight * lines) + (paddingTop || 0) + (paddingBottom + 0);
 
-		this.setState({
+		setState({
 			style: {
 				[style]: `${max}px`
 			},
 			settled: true
-		}, () => {
-			if (textRef) {
-				textRef(this.textNode);
-			}
 		});
-	}
+	}, [limitLines, forceLines, textNode.current]);
 
+	useEffect(() => {
+		updateRef(ref, textNode.current);
+	}, [textNode.current, stateStyle, settled]);
 
-	render () {
-		const {children, style:propStyle, className, limitLines, forceLines, ...otherProps} = this.props;
-		const {style:stateStyle, settled} = this.state;
-		const styles = {...(propStyle || {}), ...(stateStyle || {})};
-		const single = limitLines != null ? limitLines === 1 : forceLines === 1;
-		const Text = React.Children.only(children);
+	const Text = React.Children.only(children);
 
-		delete otherProps.textRef;
+	return React.cloneElement(
+		Text,
+		{
+			...otherProps,
+			className: cx(className, styles.limitLines, {single, settled}),
+			style: {...(propStyle || {}), ...(stateStyle || {})},
+			ref: processRef
+		}
+	);
+});
 
-		return React.cloneElement(
-			Text,
-			{
-				...otherProps,
-				className: cx(className, 'nti-limit-lines', {single, settled}),
-				style: styles,
-				ref: this.attachText
-			}
-		);
-	}
-}
+LimitLines.displayName = 'LimitLines';
+LimitLines.shouldApply = ({limitLines, forceLines}) => limitLines != null || forceLines != null;
+
+LimitLines.propTypes = {
+	className: PropTypes.string,
+	limitLines: PropTypes.number,
+	forceLines: PropTypes.number,
+	style: PropTypes.object,
+	children: PropTypes.any
+};
+
+export default LimitLines;
