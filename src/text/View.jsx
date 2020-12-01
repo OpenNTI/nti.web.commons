@@ -2,62 +2,58 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Variant} from '../HighOrderComponents';
-import {ForwardRef} from '../decorators';
 
 import variants from './variants';
-import {Overflow} from './Constants';
+import {Overflow} from './constants';
 import {getTextPropsFromChildren} from './utils';
 import {getTransforms} from './transforms';
 import Renderer from './Renderer';
 
-export default
-@ForwardRef('textRef')
-class NTIText extends React.Component {
-	static Overflow = Overflow;
+const NTIText = React.forwardRef(({children, as: tag, className, localized, ...props}, ref) => {
 
-	static Translator = (getString) => {
-		const Translate = Variant(NTIText, {getString}, 'translator');
+	const textProps = getTextPropsFromChildren(children, localized);
+	const combinedProps = {...props, ...textProps};
 
-		Translate.Base = Variant(Translate, variants.Base, 'Base');
-		Translate.Condensed = Variant(Translate, variants.Condensed, 'Condensed');
+	const transforms = getTransforms(combinedProps).reverse();
 
-		return Translate;
-	};
+	let cmp = (<Renderer as={tag} className={className} {...combinedProps} ref={ref} />);
 
-	static Classes = {
-		Base: variants.Base.className,
-		Condensed: variants.Condensed.className
-	};
-
-	static Base = Variant(this, variants.Base, 'Base');
-	static Condensed = Variant(this, variants.Condensed, 'Condensed');
-
-	static propTypes = {
-		children: PropTypes.any,
-		textRef: PropTypes.func,
-		as: PropTypes.string,
-		className: PropTypes.string,
-		localized: PropTypes.bool
+	for (let Transform of transforms) {
+		cmp = (
+			<Transform {...combinedProps} className={className}>
+				{cmp}
+			</Transform>
+		);
 	}
 
-	render () {
-		const {children, as: tag, textRef, className, localized, ...props} = this.props;
+	return cmp;
+});
 
-		const textProps = getTextPropsFromChildren(children, localized);
-		const combinedProps = {...props, ...textProps};
+NTIText.displayName = 'NTIText';
+NTIText.Overflow = Overflow;
 
-		const transforms = getTransforms(combinedProps).reverse();
+NTIText.Translator = (getString) => {
+	const Translate = Variant(NTIText, {getString}, 'translator');
 
-		let cmp = (<Renderer as={tag} className={className} {...combinedProps} ref={textRef} />);
+	Translate.Base = Variant(Translate, variants.Base, 'Base');
+	Translate.Condensed = Variant(Translate, variants.Condensed, 'Condensed');
 
-		for (let Transform of transforms) {
-			cmp = (
-				<Transform {...combinedProps} className={className}>
-					{cmp}
-				</Transform>
-			);
-		}
+	return Translate;
+};
 
-		return cmp;
-	}
-}
+NTIText.Classes = {
+	Base: variants.Base.className,
+	Condensed: variants.Condensed.className
+};
+
+NTIText.Base = Variant(NTIText, variants.Base, 'Base');
+NTIText.Condensed = Variant(NTIText, variants.Condensed, 'Condensed');
+
+NTIText.propTypes = {
+	children: PropTypes.any,
+	as: PropTypes.string,
+	className: PropTypes.string,
+	localized: PropTypes.bool
+};
+
+export default NTIText;

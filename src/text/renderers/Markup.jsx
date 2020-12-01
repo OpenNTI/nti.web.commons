@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {rawContent} from '@nti/lib-commons';
 
-import {ForwardRef} from '../../decorators';
+import { updateRef } from '../utils';
 
 import Base from './Base';
 import Registry from './Registry';
 
-function isMarkup ({text, hasMarkup, hasComponents}) {
-	return typeof text === 'string' && hasMarkup && !hasComponents;
-}
+const isMarkup = ({text, hasMarkup, hasComponents}) => typeof text === 'string' && hasMarkup && !hasComponents;
 
 function fixAnchor (anchor) {
 	if (global.location && global.location.host === anchor.host) { return; }
@@ -19,40 +17,31 @@ function fixAnchor (anchor) {
 }
 
 function fixMarkup (node) {
-	const anchors = Array.from(node.querySelectorAll('a[href]'));
+	const anchors = node.querySelectorAll('a[href]') || [];
 
 	for (let anchor of anchors) {
 		fixAnchor(anchor);
 	}
 }
 
-export default
-@Registry.register(isMarkup)
-@ForwardRef('textRef')
-class NTIMarkupText extends React.Component {
-	static propTypes = {
-		text: PropTypes.string,
-		textRef: PropTypes.func
-	}
-
-	attachRef = (node) => {
-		const {textRef} = this.props;
-
-		if (textRef) { textRef(node); }
+const NTIMarkupText = React.forwardRef(({text, ...otherProps}, ref) => {
+	const processRef = React.useCallback((node) => {
+		updateRef(ref, node);
 
 		if (node) {
 			fixMarkup(node);
 		}
-	}
+	}, [ref]);
 
+	return (
+		<Base {...otherProps} ref={processRef} {...rawContent(text)} />
+	);
+});
 
-	render () {
-		const {text, ...otherProps} = this.props;
+NTIMarkupText.displayName = 'NTIMarkupText';
+NTIMarkupText.propTypes = {
+	text: PropTypes.string,
+};
 
-		delete otherProps.textRef;
-
-		return (
-			<Base {...otherProps} ref={this.attachRef} {...rawContent(text)} />
-		);
-	}
-}
+Registry.register(isMarkup)(NTIMarkupText);
+export default NTIMarkupText;

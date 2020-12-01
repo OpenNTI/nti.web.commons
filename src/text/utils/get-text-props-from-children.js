@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {MARKUP_WHITE_LIST} from '../Constants';
+import {MARKUP_WHITE_LIST} from '../constants';
 
 const HasAnchorRegex = /<\/?a [^>]*>/i;
 const HasNonAnchorMarkup = /<\/?[^a]>/i;

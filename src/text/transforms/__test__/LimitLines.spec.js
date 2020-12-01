@@ -28,7 +28,7 @@ describe('LimitLines transform tests', () => {
 		const {getByText} = render(<LimitLines limitLines={2}><span>{text}</span></LimitLines>);
 		const node = getByText(text);
 
-		expect(node.classList.contains('nti-limit-lines')).toBeTruthy();
+		expect(node.classList.contains('limitLines')).toBeTruthy();
 	});
 
 	test('forwards ref', () => {
