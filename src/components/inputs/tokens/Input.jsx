@@ -144,7 +144,7 @@ export default class NTITokenInput extends React.Component {
 		if (oldState !== newState) {
 			this.setState(newState);
 		}
-		
+
 		if (this.suggestions) {
 			this.suggestions.onInputKeyDown(e);
 		}
@@ -258,7 +258,7 @@ export default class NTITokenInput extends React.Component {
 					<li>
 						<Text
 							className={cx('nti-token-text-input', {error})}
-							autocomplete="token-input"
+							autoComplete="token-input"
 							ref={this.attachInputRef}
 							value={inputValue}
 							placeholder={this.placeholder}
