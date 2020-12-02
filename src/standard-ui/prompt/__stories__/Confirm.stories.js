@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Confirm from '../Confirm';
 
 export default {
-	title: 'StandardUI/Prompt/Confirm',
+	title: 'Confirms',
 	component: Confirm
 };
 
@@ -27,7 +27,7 @@ Playground.argTypes = {
 	onCancel: {action: 'canceled'},
 	title: {control: {type: 'text'}},
 	body: {control: {type: 'text'}},
-	desctructive: {control: {type: 'boolean'}},
+	destructive: {control: {type: 'boolean'}},
 	allowCancel: {control: {type: 'boolean'}},
 	allowConfirm: {control: {type: 'boolean'}}
 };
