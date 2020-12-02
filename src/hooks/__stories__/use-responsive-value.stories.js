@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import useResponsiveValue from '../use-responsive-value';
+import {useResponsiveValue} from '../use-responsive-value';
 
 export default {
 	title: 'Hooks/useResponsiveValue',
