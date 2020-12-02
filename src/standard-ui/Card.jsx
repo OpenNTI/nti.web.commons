@@ -7,12 +7,16 @@ import Component from './Component';
 
 const cx = classnames.bind(Styles);
 
+const NTCard = React.forwardRef(({className, rounded, ...otherProps}, ref) => {
+	return (
+		<Component {...otherProps} className={cx('nt-card', className, {rounded})} ref={ref} />
+	);
+});
+
+NTCard.displayName = 'NTCard';
 NTCard.propTypes = {
 	className: PropTypes.string,
 	rounded: PropTypes.bool
 };
-export default function NTCard ({className, rounded, ...otherProps}) {
-	return (
-		<Component {...otherProps} className={cx('nt-card', className, {rounded})} />
-	);
-}
+
+export default NTCard;
