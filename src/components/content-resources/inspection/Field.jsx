@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-import {DateTime} from '../../../';
+import DateTime from '../../../date-time';
 import LabeledValue from '../../LabeledValue';
 
 const DEFAULT_TEXT = {

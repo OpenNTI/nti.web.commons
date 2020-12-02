@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {ObjectUtils} from '@nti/lib-commons';
 
-import {Input, Checkbox, Radio} from '../components';
+import * as Input from '../components/inputs';
+import Checkbox from '../components/Checkbox';
+import Radio from '../components/Radio';
 
 import FormContext from './Context';
 

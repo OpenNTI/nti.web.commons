@@ -6,7 +6,7 @@ import cx from 'classnames';
 import mime from 'mime-types';
 
 import {ItemChanges} from '../../../../HighOrderComponents';
-import {DateTime} from '../../../../';
+import DateTime from '../../../../date-time';
 import AssetIcon from '../../../AssetIcon';
 import Entity from '../../Entity';
 

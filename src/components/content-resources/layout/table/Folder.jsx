@@ -3,7 +3,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import {ItemChanges} from '../../../../HighOrderComponents';
-import {DateTime} from '../../../../';
+import DateTime from '../../../../date-time';
 import Entity from '../../Entity';
 
 
