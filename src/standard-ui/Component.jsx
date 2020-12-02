@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-StandardComponent.propTypes = {
-	as: PropTypes.any
-};
-export default function StandardComponent ({as:tag, ...otherProps}) {
+const StandardComponent = React.forwardRef(({as:tag, ...otherProps}, ref) => {
 	const Cmp = tag || 'div';
 
 	return (
-		<Cmp {...otherProps} />
+		<Cmp {...otherProps} ref={ref} />
 	);
-}
+});
+
+StandardComponent.displayName = 'StandardComponent';
+StandardComponent.propTypes = {
+	as: PropTypes.any
+};
+
+export default StandardComponent;
