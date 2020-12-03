@@ -6,6 +6,7 @@ const styles = css`
 	.global-root {}
 	.global-container {
 		position: fixed;
+		top: var(--nt-app-top-offset, 0);
 	}
 `;
 
