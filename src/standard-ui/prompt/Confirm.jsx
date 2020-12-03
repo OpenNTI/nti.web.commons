@@ -11,7 +11,7 @@ import * as Responsive from '../../layouts/responsive';
 import {Dialog} from '../../prompts';
 import Text from '../../text';
 
-import Styles from './Confirm.css';
+import styles from './Confirm.css';
 
 const ConfirmCard = Variant(Card, {as: 'section', rounded: true});
 
@@ -22,8 +22,8 @@ const t = scoped('web-commons.standard-ui.prompt.Confirm', {
 
 const SmallSizeCutOff = 350;
 const ClassList = [
-	{query: s => s.width < SmallSizeCutOff, className: Styles.small},
-	{query: s => s.width >= SmallSizeCutOff, className: Styles.large}
+	{query: s => s.width < SmallSizeCutOff, className: styles.small},
+	{query: s => s.width >= SmallSizeCutOff, className: styles.large}
 ];
 
 ConfirmPrompt.propTypes = {
@@ -64,21 +64,21 @@ export default function ConfirmPrompt ({
 			<Responsive.ClassList
 				classList={ClassList}
 				as={ConfirmCard}
-				className={cx(className, Styles.confirmPrompt, {[Styles.destructive]: destructive})}
+				className={cx(className, styles.confirmPrompt, {[styles.destructive]: destructive})}
 			>
-				<div className={Styles.icon}>
-					<Alert.Round className={Styles.icon} />
+				<div className={styles.icon}>
+					<Alert.Round className={styles.icon} />
 				</div>
-				<Text.Base as="h1" className={Styles.title}>{title}</Text.Base>
-				<div className={Styles.body}>
+				<Text.Base as="h1" className={styles.title}>{title}</Text.Base>
+				<div className={styles.body}>
 					{typeof body === 'string' ? (<Text.Base>{body}</Text.Base>) : body}
 				</div>
-				<div className={Styles.buttons}>
+				<div className={styles.buttons}>
 					{onCancel && (
 						<Button
 							rounded
 							secondary
-							className={Styles.cancel}
+							className={styles.cancel}
 							onClick={onCancel}
 						>
 							{cancelLabel ?? t('cancel')}
@@ -88,7 +88,7 @@ export default function ConfirmPrompt ({
 						<Button
 							destructive={destructive}
 							rounded
-							className={Styles.confirm}
+							className={styles.confirm}
 							onClick={onConfirm}
 						>
 							{confirmLabel ?? t('confirm')}
