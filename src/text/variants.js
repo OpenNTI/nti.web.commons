@@ -12,10 +12,17 @@ const styles = css`
 		&.condensed {
 			font-family: var(--header-font-family);
 		}
+
+		&.label {
+			font-size: 0.625rem;
+			font-weight: 600;
+			text-transform: uppercase;
+		}
 	}
 `;
 
 export default {
 	Base: {className: styles.ntiText},
-	Condensed: {className: cx(styles.ntiText, styles.condensed)}
+	Condensed: {className: cx(styles.ntiText, styles.condensed)},
+	Label: {className: cx(styles.ntiText, styles.label)}
 };

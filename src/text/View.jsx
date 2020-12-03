@@ -48,6 +48,7 @@ NTIText.Classes = {
 
 NTIText.Base = Variant(NTIText, variants.Base, 'Base');
 NTIText.Condensed = Variant(NTIText, variants.Condensed, 'Condensed');
+NTIText.Label = Variant(NTIText, variants.Label, 'Label');
 
 NTIText.propTypes = {
 	children: PropTypes.any,
