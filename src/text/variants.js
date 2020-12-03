@@ -15,7 +15,7 @@ const styles = css`
 
 		&.label {
 			font-size: 0.625rem;
-			font-weight: 600;
+			font-weight: bold;
 			text-transform: uppercase;
 		}
 
