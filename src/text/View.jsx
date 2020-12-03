@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Variant} from '../HighOrderComponents';
 
-import variants from './variants';
+import variants, {Colors} from './variants';
 import {Overflow} from './constants';
 import {getTextPropsFromChildren} from './utils';
 import {getTransforms} from './transforms';
@@ -49,6 +49,7 @@ NTIText.Classes = {
 NTIText.Base = Variant(NTIText, variants.Base, 'Base');
 NTIText.Condensed = Variant(NTIText, variants.Condensed, 'Condensed');
 NTIText.Label = Variant(NTIText, variants.Label, 'Label');
+NTIText.Colors = Colors;
 
 NTIText.propTypes = {
 	children: PropTypes.any,

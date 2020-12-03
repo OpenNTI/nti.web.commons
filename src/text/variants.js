@@ -18,11 +18,44 @@ const styles = css`
 			font-weight: 600;
 			text-transform: uppercase;
 		}
+
+		&.primary-grey {
+			color: var(--primary-grey);
+		}
+
+		&.secondary-grey {
+			color: var(--secondary-grey);
+		}
+
+		&.tertiary-grey {
+			color: var(--tertiary-grey);
+		}
 	}
 `;
 
+function makeClassVariant (className) {
+	return (props) => {
+		const {
+			className:incomingClassName,
+			color,
+			...otherIncoming
+		} = props;
+
+		return {
+			className: cx(incomingClassName, className, color),
+			...otherIncoming
+		};
+	};
+}
+
+export const Colors = {
+	primaryGrey: styles.primaryGrey,
+	secondaryGrey: styles.secondaryGrey,
+	tertiaryGrey: styles.tertiaryGrey
+};
+
 export default {
-	Base: {className: styles.ntiText},
-	Condensed: {className: cx(styles.ntiText, styles.condensed)},
-	Label: {className: cx(styles.ntiText, styles.label)}
+	Base: makeClassVariant(styles.ntiText),
+	Condensed: makeClassVariant(cx(styles.ntiText, styles.condensed)),
+	Label: makeClassVariant(cx(styles.ntiText, styles.label))
 };
