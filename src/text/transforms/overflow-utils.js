@@ -26,7 +26,7 @@ function hasRectAboveBoundary (node, boundary) {
 	return false;
 }
 
-function hasRectRightOfBoundrary (node, boundary) {
+function hasRectRightOfBoundary (node, boundary) {
 	const rects = Array.from(node.getClientRects());
 
 	for (let rect of rects) {
@@ -75,7 +75,7 @@ export function cleanupTokens (pad, lowerBound, rightBound) {
 			removeNode(token);
 		} else if (overflown || !hasRectAboveBoundary(token, lowerBound)) {
 			overflown = true;
-		} else if (hasRectRightOfBoundrary(token, rightBound)) {
+		} else if (hasRectRightOfBoundary(token, rightBound)) {
 			overflown = true;
 		}
 	}
@@ -94,7 +94,7 @@ export function addEllipse (ellipse, pad, lowerBound, rightBound) {
 
 	while (hasRectOutsideBoundary(lastToken, lowerBound, rightBound)) {
 		lastWord = lastWord.slice(0, -1);
-		
+
 		if (lastWord === '') {
 			removeNode(lastToken);
 			return addEllipse(ellipse, pad, lowerBound, rightBound);
