@@ -18,7 +18,9 @@ function combineProps (a, b) {
 
 export default function Variant (Component, variantProps, name) {
 	const VariantWrapper = (props, ref) => {
-		return (<Component {...combineProps(variantProps, props)} ref={ref} />);
+		const combinedProps = typeof variantProps === 'function' ? variantProps(props) : combineProps(variantProps, props);
+
+		return (<Component {...combinedProps} ref={ref} />);
 	};
 	const cmp = React.forwardRef(VariantWrapper);
 
