@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import {Uncontrolled} from '../../layouts';
 import {Monitor} from '../../components';
 
-import Styles from './Styles.css';
-
-const cx = classnames.bind(Styles);
+import styles from './ToastWrapper.css';
 
 MountToast.propTypes = {
 	mountPoint: PropTypes.any,
@@ -49,7 +47,7 @@ export default function ToastWrapper ({className, toast}) {
 
 	return (
 		<Monitor.ChildHeight
-			className={cx('toast-wrapper', className)}
+			className={cx(styles.wrapper, className)}
 			as="li"
 			childSelector="[data-toast-id]"
 			onHeightChange={onHeightChange}

@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import {Locations} from '../Constants';
 import Context from '../Context';
 
-import Styles from './Styles.css';
 import Container from './Container';
 
-
-const cx = classnames.bind(Styles);
+const styles = css`
+	.root {
+		position: relative;
+	}
+`;
 
 ToastContainerRoot.propTypes = {
 	className: PropTypes.string,
@@ -61,7 +63,7 @@ export default function ToastContainerRoot ({location, className, children, as:t
 
 	return (
 		<Context.Provider value={context}>
-			<Cmp className={cx('toast-root', className)} {...otherProps}>
+			<Cmp className={cx(styles.root, className)} {...otherProps}>
 				{children}
 				<Container toasts={toasts} location={location} />
 			</Cmp>

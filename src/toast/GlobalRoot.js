@@ -1,11 +1,13 @@
-import classnames from 'classnames/bind';
-
 import {createMountPoint} from '../remote-mount';
 
-import Styles from './GlobalRoot.css';
 import Container from './container/Container';
 
-const cx = classnames.bind(Styles);
+const styles = css`
+	.global-root {}
+	.global-container {
+		position: fixed;
+	}
+`;
 
 let idCount = 0;
 let toasts = [];
@@ -15,7 +17,7 @@ const getMountPoint = () => {
 	if (!mountPoint) {
 		const appendTo = global.document?.body;
 
-		mountPoint = createMountPoint(appendTo, cx('global-toast-root'), true);
+		mountPoint = createMountPoint(appendTo, styles.globalRoot, true);
 	}
 
 	return mountPoint;
@@ -32,7 +34,7 @@ const updateToasts = () => {
 	if (!toasts.length) {
 		cleanUpMountPoint();
 	} else {
-		getMountPoint()?.render(Container, {toasts, className: cx('global-toast-container')});
+		getMountPoint()?.render(Container, {toasts, className: styles.globalContainer});
 	}
 };
 
@@ -51,7 +53,7 @@ const GlobalToastRoots = {
 	updateToast (id, data) {
 		toasts = toasts
 			.map(toast => toast.id === id ? ({...toast, ...data}) : toast);
-		
+
 		updateToasts();
 	},
 

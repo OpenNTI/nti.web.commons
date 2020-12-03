@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 import {Locations} from '../Constants';
 
-import Styles from './Styles.css';
+import styles from './Region.css';
 import ToastWrapper from './ToastWrapper';
-
-const cx = classnames.bind(Styles);
 
 const transitionMap = {
 	[Locations.TopRight]: Locations.Top
@@ -27,8 +25,9 @@ TileContainerRegion.propTypes = {
 	)
 };
 export default function TileContainerRegion ({location, toasts}) {
+	const regionName = getClassName(location);
 	return (
-		<TransitionGroup component="ul" className={cx('toast-region', getClassName(location))}>
+		<TransitionGroup component="ul" className={cx(styles.region, styles[regionName] || regionName)}>
 			{toasts.map((toast) => (
 				<CSSTransition key={toast.id} classNames={getTransitionName(location)} timeout={200} appear>
 					<ToastWrapper toast={toast} location={location} timeout={200} />

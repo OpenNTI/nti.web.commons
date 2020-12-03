@@ -1,0 +1,30 @@
+
+.wrapper {
+	pointer-events: all;
+}
+
+.wrapper:global(.top-transition-enter) [data-toast-id],
+.wrapper:global(.top-transition-appear) [data-toast-id] {
+	transform: translateY(-10px);
+	opacity: 0;
+}
+
+.wrapper:global(.top-transition-enter-active) [data-toast-id],
+.wrapper:global(.top-transition-appear-active) [data-toast-id] {
+	transform: translateY(0);
+	opacity: 1;
+	transition: transform 0.1s, opacity 0.2s;
+}
+
+.wrapper:global(.top-transition-exit) [data-toast-id] {
+	max-height: var(--known-height, 100px);
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.wrapper:global(.top-transition-exit-active) [data-toast-id] {
+	max-height: 0;
+	transform: translateY(-10px);
+	opacity: 0;
+	transition: transform 0.1s, opacity 0.2s, max-height 0.2s;
+}

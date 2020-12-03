@@ -1,0 +1,41 @@
+.region {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.region.top {
+	& > * {
+		margin: 0.5rem;
+	}
+}
+
+.region.top-right {
+	position: absolute;
+	top: 0;
+	bottom: auto;
+	left: auto;
+	right: 0;
+	padding: 1rem;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-start;
+
+	& > * {
+		margin: 0.5rem;
+		width: auto;
+		max-width: 360px;
+	}
+}
+
+@media only screen and (max-width: 420px) {
+	.region.top-right {
+		width: auto;
+
+		& > * {
+			max-width: 100vw;
+		}
+	}
+}
