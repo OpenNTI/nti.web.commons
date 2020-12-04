@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import t from '@nti/lib-locale';
+import t, {scoped} from '@nti/lib-locale';
 import {getAppUsername, User} from '@nti/web-client';
 
 import BaseEntity from './BaseEntity';
+
+const strings = scoped('web-commons.components.DisplayName', {
+	deactivated: '%(name)s(Inactive)'
+});
 
 /**
  * This DisplayName component can use the full Entity instance if you have it.
@@ -81,6 +85,10 @@ export default class DisplayName extends BaseEntity {
 			: entity.displayName;
 
 		let name = (useGeneralName && generalName) || displayName;
+
+		if (entity.Deactivated) {
+			name = strings('deactivated', {name});
+		}
 
 		const props = {
 			...otherProps,
