@@ -200,7 +200,7 @@ export default class AlignedFlyout extends React.Component {
 		cancelAnimationFrame(this.realign?.timeout);
 
 		if (this.fly) {
-			// document.body.removeChild(this.fly);
+			document.body.removeChild(this.fly);
 		}
 	}
 
