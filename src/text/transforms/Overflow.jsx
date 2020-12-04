@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ScratchPad from '../../scratch-pad';
@@ -38,23 +38,29 @@ const MIRROR_STYLES = [
 
 const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHeight, screenWidth, ...props}, ref) => {
 	const textNode = useRef();
-	const [{text, overflowed}, setState] = useState({text: fullText});
+	const fullTextNode = useRef();
+	const [{text, overflowed}, setState] = useState({});
 
 	const processText = (node) => {
 		textNode.current = node;
 		updateRef(ref, node);
-		// setImmediate(() => setState(RESET_STATE));
 	};
+
+	useLayoutEffect(() => {
+		setState({});
+		fullTextNode.current = textNode.current?.innerHTML;
+	}, [fullText]);
 
 	useEffect(() => {
 		const {current: node} = textNode;
-		if (!node) { return null; }
+		const {current: scratch} = fullTextNode;
+		if (!node || !scratch) { return; }
 
 		let cancel = false;
 		ScratchPad
 			.mirrorStyles(node, MIRROR_STYLES)
 			.work((pad) => {
-				addTokens(pad, fullText);
+				addTokens(pad, scratch);
 
 				const bounds = pad.getBoundingClientRect();
 				const buffer = 2;//This was determined experimentally, I'm not really sure why its needed or why 2 seems to work.
@@ -69,7 +75,7 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 
 				const overflowedText = pad.innerHTML;
 
-				if (overflowedText !== fullText && !cancel) {
+				if (overflowedText !== scratch && !cancel) {
 					setState({
 						overflowed: true,
 						text: pad.innerHTML
@@ -80,7 +86,7 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 		return () => {
 			cancel = true;
 		};
-	}, [text == null, fullText, textNode.current, screenWidth, screenHeight]);
+	}, [text == null, screenWidth, screenHeight]);
 
 
 	const Text = React.Children.only(children);
@@ -91,7 +97,6 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 			...props,
 			text: text || fullText,
 			title: overflowed ? fullText : null,
-			hasMarkup: true,
 			ref: processText
 		}
 	);
