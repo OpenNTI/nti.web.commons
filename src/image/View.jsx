@@ -29,7 +29,10 @@ class NTIImage extends React.Component {
 	static Lightbox = Lightbox
 
 	static propTypes = {
-		src: PropTypes.string,
+		src: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.array,
+		]),
 		srcset: PropTypes.arrayOf(
 			PropTypes.shape({
 				src: PropTypes.string,
