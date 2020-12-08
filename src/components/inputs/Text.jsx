@@ -5,13 +5,21 @@ import cx from 'classnames';
 
 export default class TextInput extends React.Component {
 	static propTypes = {
+		autoFocus: PropTypes.bool,
 		className: PropTypes.string,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		type: PropTypes.string
 	}
 
-	attachInputRef = x => this.input = x;
+	attachInputRef = x => {
+		this.input = x;
+		if (this.props.autoFocus && x && !this.autoFocused) {
+			// Auto focus will not fire after first mount
+			this.autoFocused = true;
+			setTimeout(() => x.focus(), 10);
+		}
+	};
 
 	/**
 	 * Return the validity of the input see below for more details:
