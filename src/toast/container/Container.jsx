@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {Locations} from '../Constants';
+import ZStack from '../../flyout/ZBooster';
 
 import Region from './Region';
 
@@ -46,7 +47,7 @@ export default function ToastContainer ({location, className, toasts, ...otherPr
 	}, {});
 
 	return (
-		<div className={cx(styles.container, className)} {...otherProps}>
+		<ZStack data-toast-container="yes" className={cx(styles.container, className)} {...otherProps}>
 			{
 				RegionOrder
 					.map((name) => {
@@ -56,6 +57,6 @@ export default function ToastContainer ({location, className, toasts, ...otherPr
 					})
 					.filter(Boolean)
 			}
-		</div>
+		</ZStack>
 	);
 }
