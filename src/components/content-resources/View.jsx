@@ -29,7 +29,7 @@ export default class ContentResourcesView extends React.Component {
 		contents: PropTypes.array,
 		selection: PropTypes.instanceOf(Selection.Model),
 		sort: PropTypes.object,
-		folderContents: PropTypes.object,
+		folderContents: PropTypes.array,
 		searching: PropTypes.any
 	}
 

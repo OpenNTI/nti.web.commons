@@ -67,7 +67,7 @@ const t = scoped('common.components.content-resources.browser', DEFAULT_TEXT);
 
 export default class ContentResourcesBrowser extends BrowsableView {
 	static propTypes = {
-		Chooser: PropTypes.object.isRequired,
+		Chooser: PropTypes.func.isRequired,
 		accept: PropTypes.func,
 		filter: PropTypes.func,
 		sourceID: PropTypes.string,
