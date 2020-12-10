@@ -452,6 +452,11 @@ export default class AlignedFlyout extends React.Component {
 			visibility: aligning || !alignment ? 'hidden' : void 0,
 			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
 		};
+
+		if (outerStyles.top) {
+			outerStyles['--flyout-top'] = outerStyles.top;
+		}
+
 		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
 		const cls = cx(
 			'aligned-flyout',
