@@ -95,6 +95,7 @@ Array [
       role="dialog"
       style={
         Object {
+          "--flyout-top": "15px",
           "left": "0px",
           "position": "absolute",
           "top": "15px",
@@ -235,6 +236,7 @@ Array [
       role="dialog"
       style={
         Object {
+          "--flyout-top": "0px",
           "left": "0px",
           "position": "absolute",
           "top": "0px",
