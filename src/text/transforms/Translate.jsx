@@ -52,7 +52,10 @@ Translate.shouldApply = ({getString, localeKey}) => (getString != null && locale
 Translate.propTypes = {
 	localeKey: PropTypes.string,
 	getString: PropTypes.func,
-	with: PropTypes.object,
+	with: PropTypes.oneOfType([
+		PropTypes.oneOf([false]),
+		PropTypes.object,
+	]),
 	textRef: PropTypes.any,
 	children: PropTypes.any
 };
