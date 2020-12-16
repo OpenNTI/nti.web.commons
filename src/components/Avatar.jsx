@@ -101,7 +101,7 @@ export default class Avatar extends BaseEntity {
 			className: cx('avatar', color, className)
 		};
 
-		const imgSrc = (entity.Deactivated) ? DEFAULT : entity.avatarURL;
+		const imgSrc = ((entity.Deactivated) ? DEFAULT.entity : entity).avatarURL;
 
 		return imgSrc ? (
 			<Square {...childProps} src={imgSrc} onError={this.setUnknown} />
