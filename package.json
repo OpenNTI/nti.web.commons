@@ -52,7 +52,6 @@
     "@nti/util-logger": "NextThought/nti.util.logger",
     "@nti/web-client": "NextThought/nti.web.client",
     "@nti/web-storage": "NextThought/nti.web.storage",
-    "classnames": "^2.0.0",
     "create-react-class": "^15.5.2",
     "eases": "^1.0.8",
     "filesize": "^6.0.1",
@@ -64,7 +63,6 @@
     "mime-types": "^2.1.11",
     "moment": "2.24.0",
     "moment-timezone": "^0.5.4",
-    "prop-types": "^15.5.6",
     "react-day-picker": "^7.1.4",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
@@ -81,8 +79,12 @@
     "@testing-library/react-hooks": "^3.4.2",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0"
+  },
+  "peerDependencies": {
+    "classnames": "*",
+    "react": "*",
+    "react-dom": "*",
+    "prop-types": "*"
   }
 }
