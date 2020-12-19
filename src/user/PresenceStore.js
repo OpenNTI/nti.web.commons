@@ -17,6 +17,7 @@ function isSamePresence (a, b) {
 export default class PresenceStore extends EventEmitter {
 	constructor () {
 		super();
+		this.setMaxListeners(0);
 
 		this[PRESENCE_MAP] = {};
 	}
