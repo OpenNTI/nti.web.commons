@@ -83,7 +83,7 @@ const DefaultProperties = {
 	brandColor: null,//'#3FB34F',
 	certificateCompletionLabel: 'Certification of Completion',
 	certificateBrandColor: null,
-	surpressCertificateLogo: false,
+	suppressCertificateLogo: false,
 	assets: {
 		logo: getAsset({
 			alt: 'logo',

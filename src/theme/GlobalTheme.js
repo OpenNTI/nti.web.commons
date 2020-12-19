@@ -27,8 +27,8 @@ export const siteBrandToTheme = (siteBrand) => {
 		brandColor: siteBrand['brand_color'],
 		certificateCompletionLabel: siteBrand['certificate_label'],
 		certificateBrandColor: siteBrand['certificate_brand_color'],
-		surpressCertificateLogo: siteBrand['suppress_certificate_logo'],
+		suppressCertificateLogo: siteBrand['suppress_certificate_logo'],
 		HideNextThoughtBranding: siteBrand.HideNextThoughtBranding,
-		assets: assets ? {...assets, fullLogo: assets['full_logo']} : null 
+		assets: assets ? {...assets, fullLogo: assets['full_logo']} : null
 	};
 };
