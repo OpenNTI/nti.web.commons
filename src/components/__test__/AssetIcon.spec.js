@@ -1,13 +1,13 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render } from '@testing-library/react';
 
 import AssetIcon from '../AssetIcon';
 
 describe('AssetIcon', () => {
 	test('should render a \'jpeg\' label', () => {
-		const wrapper = shallow(<AssetIcon mimeType="image/jpeg" />);
-		expect(wrapper.find('.file-type label').length === 1);
-		expect(wrapper.find('label').text()).toEqual('jpeg');
+		const {container} = render(<AssetIcon mimeType="image/jpeg" />);
+		expect(container.querySelectorAll('.file-type label').length === 1);
+		expect(container.querySelector('label').textContent).toEqual('jpeg');
 	});
 });

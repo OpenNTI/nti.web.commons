@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
-import {mount} from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import DayPickerRange from '../DayPickerRange';
 
@@ -8,60 +8,59 @@ describe('DayPickerRange', () => {
 	const testStartDate = new Date(2017, 8, 22);
 	const testEndDate = new Date(2017, 11, 24);
 
-	const cmp = mount(
-		<DayPickerRange
-			startDate={testStartDate}
-			endDate={testEndDate}
-		/>
-	);
-
 	test('Test no dates provided', () => {
-		const noDates = mount(<DayPickerRange />);
+		const {container} = render(<DayPickerRange />);
 
-		const startDate = noDates.find('.date').first();
-		const endDate = noDates.find('.date').last();
+		const [startDate, endDate] = container.querySelectorAll('.date');
 
-		expect(startDate.find('.value').first().text()).toEqual('');
-		expect(endDate.find('.value').first().text()).toEqual('');
+		expect(startDate.querySelector('.value').textContent).toEqual('');
+		expect(endDate.querySelector('.value').textContent).toEqual('');
 
-		expect(startDate.find('.remove-date').exists()).toBe(false);
-		expect(endDate.find('.remove-date').exists()).toBe(false);
+		expect(startDate.querySelector('.remove-date')).toBeFalsy();
+		expect(endDate.querySelector('.remove-date')).toBeFalsy();
 	});
 
 	test('Test initial dates', () => {
-		const startDate = cmp.find('.date').first();
-		const endDate = cmp.find('.date').last();
+		const {container} = render(
+			<DayPickerRange
+				startDate={testStartDate}
+				endDate={testEndDate}
+			/>
+		);
+		const [startDate, endDate] = container.querySelectorAll('.date');
 
-		expect(startDate.find('.value').first().text()).toEqual('Sep. 22');
-		expect(endDate.find('.value').first().text()).toEqual('Dec. 24');
+		expect(startDate.querySelector('.value').textContent).toEqual('Sep. 22');
+		expect(endDate.querySelector('.value').textContent).toEqual('Dec. 24');
 
-		expect(startDate.find('.remove-date').exists()).toBe(true);
-		expect(endDate.find('.remove-date').exists()).toBe(true);
+		expect(startDate.querySelector('.remove-date')).toBeTruthy();
+		expect(endDate.querySelector('.remove-date')).toBeTruthy();
 	});
 
 	test('Test date selection', () => {
-		let startDate = cmp.find('.date').first();
-		let endDate = cmp.find('.date').last();
+		const {container} = render(
+			<DayPickerRange
+				startDate={testStartDate}
+				endDate={testEndDate}
+			/>
+		);
+		const [startDate, endDate] = container.querySelectorAll('.date');
 
-		expect(startDate.prop('className')).toMatch(/selected/);
-		expect(endDate.prop('className')).not.toMatch(/selected/);
-		expect(cmp.find('.DayPicker-Caption').first().text()).toEqual('September 2017');
+		expect(startDate.getAttribute('class')).toMatch(/selected/);
+		expect(endDate.getAttribute('class')).not.toMatch(/selected/);
+		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('September 2017');
 
-		endDate.simulate('click');
+		fireEvent.click(endDate);
 
-		startDate = cmp.find('.date').first();
-		endDate = cmp.find('.date').last();
-
-		expect(startDate.prop('className')).not.toMatch(/selected/);
-		expect(endDate.prop('className')).toMatch(/selected/);
-		expect(cmp.find('.DayPicker-Caption').first().text()).toEqual('December 2017');
+		expect(startDate.getAttribute('class')).not.toMatch(/selected/);
+		expect(endDate.getAttribute('class')).toMatch(/selected/);
+		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('December 2017');
 	});
 
-	test('Test start date removal', (done) => {
+	test('Test start date removal', async () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const cmpForStartDate = mount(
+		const {container} = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -70,27 +69,23 @@ describe('DayPickerRange', () => {
 			/>
 		);
 
-		const startDate = cmpForStartDate.find('.date').first();
+		const startDate = container.querySelector('.date');
 
-		startDate.find('.remove-date').simulate('click');
+		fireEvent.click(startDate.querySelector('.remove-date'));
 
-		const verifyUpdateCalled = () => {
+		return waitFor(() => {
 			// update called with no params is expected, basically providing
 			// a null value as the new value to indicate removal
 			expect(updateStartDate).toHaveBeenCalledWith();
 			expect(updateEndDate).not.toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyUpdateCalled, 300);
+		});
 	});
 
-	test('Test end date removal', (done) => {
+	test('Test end date removal', async () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const cmpForEndDate = mount(
+		const {container} = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -99,25 +94,21 @@ describe('DayPickerRange', () => {
 			/>
 		);
 
-		const endDate = cmpForEndDate.find('.date').last();
+		const endDate = Array.from(container.querySelectorAll('.date')).pop();
 
-		endDate.find('.remove-date').simulate('click');
+		fireEvent.click(endDate.querySelector('.remove-date'));
 
-		const verifyUpdateCalled = () => {
+		return waitFor(() => {
 			expect(updateEndDate).toHaveBeenCalledWith();
 			expect(updateStartDate).not.toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyUpdateCalled, 300);
+		});
 	});
 
-	test('Test select start date', (done) => {
+	test('Test select start date', async () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const cmpForStartDate = mount(
+		const {container} = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -126,33 +117,30 @@ describe('DayPickerRange', () => {
 			/>
 		);
 
-		expect(cmpForStartDate.find('.DayPicker-Caption').first().text()).toEqual('September 2017');
+		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('September 2017');
 
-		cmpForStartDate.find('.DayPicker-NavButton--next').first().simulate('click');
+		fireEvent.click(container.querySelector('.DayPicker-NavButton--next'));
 
-		expect(cmpForStartDate.find('.DayPicker-Caption').first().text()).toEqual('October 2017');
+		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('October 2017');
 
-		const dayToClick = cmpForStartDate.find('.DayPicker-Day').at(30);
+		const dayToClick = container.querySelectorAll('.DayPicker-Day')[30];
 
-		dayToClick.simulate('click');
+		fireEvent.click(dayToClick);
 
-		const verifyUpdateCalled = () => {
+		return waitFor(() => {
 			const newDate = new Date(2017, 9, 31);
 
 			expect(updateStartDate).toHaveBeenCalledWith(newDate);
 			expect(updateEndDate).not.toHaveBeenCalled();
 
-			done();
-		};
-
-		setTimeout(verifyUpdateCalled, 300);
+		});
 	});
 
-	test('Test select end date', (done) => {
+	test('Test select end date', async () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const cmpForEndDate = mount(
+		const {container} = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -161,30 +149,27 @@ describe('DayPickerRange', () => {
 			/>
 		);
 
-		const endDate = cmpForEndDate.find('.date').last();
+		const endDate = Array.from(container.querySelectorAll('.date')).pop();
 
-		endDate.simulate('click');
+		fireEvent.click(endDate);
 
-		expect(cmpForEndDate.find('.DayPicker-Caption').first().text()).toEqual('December 2017');
+		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('December 2017');
 
-		cmpForEndDate.find('.DayPicker-NavButton--prev').first().simulate('click');
-		cmpForEndDate.find('.DayPicker-NavButton--prev').first().simulate('click');
+		fireEvent.click(container.querySelector('.DayPicker-NavButton--prev'));
+		fireEvent.click(container.querySelector('.DayPicker-NavButton--prev'));
 
-		expect(cmpForEndDate.find('.DayPicker-Caption').first().text()).toEqual('October 2017');
+		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('October 2017');
 
-		const dayToClick = cmpForEndDate.find('.DayPicker-Day').at(30);
+		const dayToClick = container.querySelectorAll('.DayPicker-Day')[30];
 
-		dayToClick.simulate('click');
+		fireEvent.click(dayToClick);
 
-		const verifyUpdateCalled = () => {
+		return waitFor(() => {
 			const newDate = new Date(2017, 9, 31);
 
 			expect(updateEndDate).toHaveBeenCalledWith(newDate);
 			expect(updateStartDate).not.toHaveBeenCalled();
 
-			done();
-		};
-
-		setTimeout(verifyUpdateCalled, 300);
+		});
 	});
 });

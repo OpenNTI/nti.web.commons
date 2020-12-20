@@ -1,22 +1,25 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render } from '@testing-library/react';
 
 import DayPicker from '../DayPicker';
 
 describe('DayPicker', () => {
-	const sharedWrapper = shallow(<DayPicker />);
-
-	const testRender = (props, ...children) => [
-		shallow(<DayPicker {...props}>{children}</DayPicker>),
-		sharedWrapper.setProps({...props, children})
-	];
+	const sharedRef = React.createRef();
+	const sharedWrapper = render(<DayPicker ref={sharedRef}/>);
+	const testRender = (props, ...children) => {
+		const ref = React.createRef();
+		return [
+			{ref, ...render(<DayPicker ref={ref} {...props}>{children}</DayPicker>)},
+			{ref: sharedRef, ...(sharedWrapper.rerender(<DayPicker ref={sharedRef} {...props}>{children}</DayPicker>),sharedWrapper)}
+		];
+	};
 
 	test('Base case: Day Prop passed is Day State', () => {
 		const now = new Date();
 
 		testRender({value: now})
-			.map(x => x.state('value'))
+			.map(x => x.ref.current.state.value)
 			.forEach(value => {
 				expect(value.getHours()).toEqual(now.getHours());
 				expect(value.getMinutes()).toEqual(now.getMinutes());

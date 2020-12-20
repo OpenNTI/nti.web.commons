@@ -1,7 +1,7 @@
 /* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
-import {mount} from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 
 import Clearable from '../Clearable';
 import Text from '../Text';
@@ -20,10 +20,10 @@ describe('Clearable Inputs', () => {
 		const inputProps = buildProps({});
 		const clearProps = buildProps({});
 
-		const wrapper = mount(<Clearable {...clearProps} ><Text {...inputProps} /></Clearable>);
-		const clearButton = wrapper.find('.reset');
+		const {container} = render(<Clearable {...clearProps} ><Text {...inputProps} /></Clearable>);
+		const clearButton = container.querySelector('.reset');
 
-		clearButton.simulate('click');
+		fireEvent.click(clearButton);
 
 		expect(inputProps.onChange).toHaveBeenCalledWith(null);
 	});
@@ -34,10 +34,10 @@ describe('Clearable Inputs', () => {
 
 		spyOn(clearProps, 'onClear');
 
-		const wrapper = mount(<Clearable {...clearProps} ><Text {...inputProps} /></Clearable>);
-		const clearButton = wrapper.find('.reset');
+		const {container} = render(<Clearable {...clearProps} ><Text {...inputProps} /></Clearable>);
+		const clearButton = container.querySelector('.reset');
 
-		clearButton.simulate('click');
+		fireEvent.click(clearButton);
 
 		expect(clearProps.onClear).toHaveBeenCalled();
 		expect(inputProps.onChange).not.toHaveBeenCalled();

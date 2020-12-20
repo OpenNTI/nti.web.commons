@@ -1,15 +1,18 @@
 /* eslint-env jest */
 import React from 'react';
-import {mount} from 'enzyme';
+import { render, waitFor } from '@testing-library/react';
 
 import URL from '../URL';
-import Text from '../Text';
 
 describe('URL Input', () => {
-	test('attaches ref', () => {
-		const wrapper = mount(<URL />);
-		const text = wrapper.find(Text);
+	test('attaches ref', async () => {
+		let instance = null;
+		render(<URL ref={x => instance = x} />);
 
-		expect(wrapper.instance().input).toEqual(text.instance());
+		return waitFor(() => {
+			expect(instance.input).toBeTruthy();
+			expect(instance).toHaveProperty('focus');
+			expect(instance).toHaveProperty('validity');
+		});
 	});
 });

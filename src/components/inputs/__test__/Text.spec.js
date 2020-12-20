@@ -1,20 +1,21 @@
 /* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
-import {mount} from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 
 import Text from '../Text';
 
 describe('Text Input', () => {
 	test('attaches ref', () => {
-		const wrapper = mount(<Text />);
-		const input = wrapper.find('input');
+		let instance;
+		const {container} = render(<Text ref={x => instance = x} />);
+		const input = container.querySelector('input');
 
-		expect(wrapper.instance().input).toEqual(input.instance());
+		expect(instance.input).toEqual(input);
 	});
 
 	describe('onChange', () => {
-		let wrapper;
+		let result;
 		let props;
 
 		beforeEach(() => {
@@ -25,25 +26,25 @@ describe('Text Input', () => {
 
 			spyOn(props, 'onChange');
 
-			wrapper = mount(<Text {...props} />);
+			result = render(<Text {...props} />);
 		});
 
 		test('Change to the input triggers the on change callback', () => {
-			const input = wrapper.find('input');
+			const input = result.container.querySelector('input');
 
-			input.simulate('change', {target: {value: 'new'}});
+			fireEvent.change(input, {target: {value: 'new'}});
 
 			expect(props.onChange).toHaveBeenCalledWith('new', expect.any(Object));
 		});
 
 		test('Setting new prop updates input', () => {
-			let input = wrapper.find('input');
+			let input = result.container.querySelector('input');
 
-			expect(input.prop('value')).toEqual('test');
+			expect(input.value).toEqual('test');
 
-			wrapper.setProps({value: 'new'});
-			input = wrapper.find('input');
-			expect(input.prop('value')).toEqual('new');
+			result.rerender(<Text {...props} value="new"/>);
+			input = result.container.querySelector('input');
+			expect(input.value).toEqual('new');
 		});
 	});
 
@@ -52,36 +53,36 @@ describe('Text Input', () => {
 	// 		const props = {onChange: () => {}};
 	// 		spyOn(props, 'onChange');
 
-	// 		const wrapper = mount(<Text {...props} />);
+	// 		const result = render(<Text {...props} />);
 
-	// 		const clear = wrapper.find('.reset');
+	// 		const clear = result.container.querySelector('.reset');
 
-	// 		clear.simulate('click');
+	// 		fireEvent.click(clear);
 
 	// 		expect(props.onChange).toHaveBeenCalledWith('');
 	// 	});
 
 	// 	it('Disable Clear doesn\'t render the button', () => {
-	// 		const wrapper = mount(<Text disableClear />);
-	// 		const clear = wrapper.find('.reset');
+	// 		const result = render(<Text disableClear />);
+	// 		const clear = result.container.querySelectorAll('.reset');
 
-	// 		expect(clear.instances().length).toEqual(0);
+	// 		expect(clear.length).toEqual(0);
 	// 	});
 	// });
 
 	// describe('label', () => {
 	// 	it('Renders label', () => {
-	// 		const wrapper = mount(<Text label="label" />);
-	// 		const label = wrapper.find('.label');
+	// 		const result = render(<Text label="label" />);
+	// 		const label = result.container.querySelector('.label');
 
-	// 		expect(label.text()).toEqual('label');
+	// 		expect(label.textContent).toEqual('label');
 	// 	});
 
 	// 	it('Doesn\'t render label', () => {
-	// 		const wrapper = mount(<Text />);
-	// 		const label = wrapper.find('.label');
+	// 		const result = render(<Text />);
+	// 		const label = result.container.querySelectorAll('.label');
 
-	// 		expect(label.instances().length).toEqual(0);
+	// 		expect(label.length).toEqual(0);
 	// 	});
 	// });
 });

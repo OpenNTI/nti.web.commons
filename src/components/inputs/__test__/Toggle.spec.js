@@ -1,79 +1,68 @@
 /* eslint-env jest */
 import React from 'react';
-import {mount} from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Toggle from '../Toggle';
 
 describe('Toggle Input', () => {
-	test('Test default state', (done) => {
+	test('Test default state', async () => {
 		const onChange = jest.fn();
 
-		const cmp = mount(<Toggle onChange={onChange}/>);
+		const {container} = render(<Toggle onChange={onChange}/>);
 
-		let toggleLabel = cmp.find('.toggle-label').first();
-		let toggler = cmp.find('.toggler').first();
-		let toggleButton = cmp.find('.toggle-button').first();
+		const toggleLabel = container.querySelector('.toggle-label');
+		const toggler = container.querySelector('.toggler');
+		const toggleButton = container.querySelector('.toggle-button');
 
-		expect(toggleLabel.prop('className')).not.toMatch(/ on/);
-		expect(toggler.prop('className')).not.toMatch(/ on/);
-		expect(toggleButton.prop('className')).not.toMatch(/ on/);
+		expect(toggleLabel.getAttribute('class')).not.toMatch(/ on/);
+		expect(toggler.getAttribute('class')).not.toMatch(/ on/);
+		expect(toggleButton.getAttribute('class')).not.toMatch(/ on/);
 
-		expect(toggleLabel.prop('className')).toMatch(/ off/);
-		expect(toggler.prop('className')).toMatch(/ off/);
-		expect(toggleButton.prop('className')).toMatch(/ off/);
+		expect(toggleLabel.getAttribute('class')).toMatch(/ off/);
+		expect(toggler.getAttribute('class')).toMatch(/ off/);
+		expect(toggleButton.getAttribute('class')).toMatch(/ off/);
 
-		expect(toggleLabel.text()).toEqual('Off');
+		expect(toggleLabel.textContent).toEqual('Off');
 
 		// simulate toggling ON
-		toggler.find('input').simulate('change', { target: { checked: true } });
+		fireEvent.click(toggler.querySelector('input'));
 
-		const verifyCalled = () => {
+		return waitFor(() => {
 			expect(onChange).toHaveBeenCalledWith(true);
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+		});
 	});
 
-	test('Test provided value', (done) => {
+	test('Test provided value', async () => {
 		const onChange = jest.fn();
+		const {container} = render(<Toggle className="test-name" value onChange={onChange}/>);
 
-		const cmp = mount(<Toggle className="test-name" value onChange={onChange}/>);
+		let toggleLabel = container.querySelector('.toggle-label');
+		let toggler = container.querySelector('.toggler');
+		let toggleButton = container.querySelector('.toggle-button');
 
-		let toggleLabel = cmp.find('.toggle-label').first();
-		let toggler = cmp.find('.toggler').first();
-		let toggleButton = cmp.find('.toggle-button').first();
+		expect(toggleLabel.getAttribute('class')).toMatch(/ on/);
+		expect(toggler.getAttribute('class')).toMatch(/ on/);
+		expect(toggleButton.getAttribute('class')).toMatch(/ on/);
 
-		expect(cmp.prop('className')).toMatch(/test-name/);
+		expect(toggleLabel.getAttribute('class')).not.toMatch(/ off/);
+		expect(toggler.getAttribute('class')).not.toMatch(/ off/);
+		expect(toggleButton.getAttribute('class')).not.toMatch(/ off/);
 
-		expect(toggleLabel.prop('className')).toMatch(/ on/);
-		expect(toggler.prop('className')).toMatch(/ on/);
-		expect(toggleButton.prop('className')).toMatch(/ on/);
-
-		expect(toggleLabel.prop('className')).not.toMatch(/ off/);
-		expect(toggler.prop('className')).not.toMatch(/ off/);
-		expect(toggleButton.prop('className')).not.toMatch(/ off/);
-
-		expect(toggleLabel.text()).toEqual('On');
+		expect(toggleLabel.textContent).toEqual('On');
 
 		// simulate toggling OFF
-		toggler.find('input').simulate('change', { target: { checked: false } });
+		fireEvent.click(toggler.querySelector('input'));
 
-		const verifyCalled = () => {
+		return waitFor(() => {
 			expect(onChange).toHaveBeenCalledWith(false);
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+		});
 	});
 
 	test('Test hide label', () => {
-		const cmp = mount(<Toggle hideLabel/>);
+		const {container} = render(<Toggle hideLabel/>);
 
 		// label should not appear, but toggler should still be there
-		expect(cmp.find('.toggle-label').exists()).toBeFalsy();
-		expect(cmp.find('.toggler').exists()).toBeTruthy();
+		expect(container.querySelector('.toggle-label')).toBeFalsy();
+		expect(container.querySelector('.toggler')).toBeTruthy();
 	});
 });

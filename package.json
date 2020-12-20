@@ -76,9 +76,7 @@
     "@nti/cmp-scripts": "^2.15.5",
     "@nti/style-common": "NextThought/nti.style.common",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/react-hooks": "^3.4.2",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.1"
+    "@testing-library/react-hooks": "^3.4.2"
   },
   "peerDependencies": {
     "classnames": "*",

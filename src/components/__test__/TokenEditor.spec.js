@@ -1,15 +1,15 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render } from '@testing-library/react';
 
 import TokenEditor from '../TokenEditor';
 
 describe('TokenEditor', () => {
-	const sharedWrapper = shallow(<TokenEditor />);
+	const shared = render(<TokenEditor />);
 
-	const testRender = (props) => [
-		shallow(<TokenEditor {...props}/>),
-		sharedWrapper.setProps({...props})
+	const testRender = (props, ...children) => [
+		render(React.createElement(TokenEditor, props, ...children)),
+		(shared.rerender(React.createElement(TokenEditor, props, ...children)),shared)
 	];
 
 	test('Base Case', async () => {

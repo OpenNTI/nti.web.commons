@@ -1,33 +1,38 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Item from '../Item';
 
 function TestCmp () {
 	return (
-		<div>Test Cmp</div>
+		<div data-test-item>Test Cmp</div>
 	);
 }
 
 describe('Switch Item', () => {
 	test('Does not render the component if not active', () => {
-		const item = shallow((<Item name="inactive" active="active" component={TestCmp} />));
+		const item = render((<Item name="inactive" active="active" component={TestCmp} />));
 
-		expect(item.find(TestCmp).exists()).toBeFalsy();
+		expect(item.container.querySelector('[data-test-item]')).toBeFalsy();
 	});
 
 	test('Does render the component if active', () => {
-		const item = shallow((<Item name="active" active="active" component={TestCmp} />));
+		const item = render((<Item name="active" active="active" component={TestCmp} />));
 
-		expect(item.find(TestCmp).exists()).toBeTruthy();
+		expect(item.container.querySelector('[data-test-item]')).toBeTruthy();
 	});
 
 	test('Passes props to the component', () => {
+		let passedProps;
 		const otherProps = {foo: 'bar', bar: 'foo'};
-		const item = shallow((<Item name="active" active="active" component={TestCmp} {...otherProps} />));
-		const cmp = item.find(TestCmp);
+		const Cmp = (props) => {
+			passedProps = props;
+			return null;
+		};
 
-		expect(cmp.props()).toEqual(otherProps);
+		render((<Item name="active" active="active" component={Cmp} {...otherProps} />));
+
+		expect(passedProps).toEqual(otherProps);
 	});
 });

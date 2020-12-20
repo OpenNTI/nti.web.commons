@@ -54,7 +54,7 @@ describe('DateTime', () => {
 
 
 
-	test('Base Cases: date only', (done) => {		
+	test('Base Cases: date only', (done) => {
 		Promise.all(testRender({date}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/October \d\d, 2015/)))
 			.then(done, (e) => done.fail(e));

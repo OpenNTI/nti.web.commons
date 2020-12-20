@@ -1,20 +1,20 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Radio from '../Radio';
 
 describe('Radio', () => {
-	const sharedWrapper = shallow(<Radio />);
+	const shared = render(<Radio />);
 
 	const testRender = (props, ...children) => [
-		shallow(<Radio {...props}>{children}</Radio>),
-		sharedWrapper.setProps({...props, children})
+		render(React.createElement(Radio, props, ...children)),
+		(shared.rerender(React.createElement(Radio, props, ...children)),shared)
 	];
 
 	test('Base Case', () => {
 		testRender({label: 'test'})
-			.map(x => x.find('.label').text())
+			.map(x => x.container.querySelector('.label').textContent)
 			.forEach(x => expect(x).toEqual('test'));
 	});
 

@@ -1,51 +1,56 @@
 /* eslint-env jest */
 import React from 'react';
-import {mount} from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import File from '../File';
 
-const onFileChange = jest.fn();
-
 describe('File Input', () => {
-	test('clears file', () => {
-		const cmp = mount(<File label="testLabel"/>);
+	test('clears file', async () => {
+		let cmp = null;
+		const {container} = render(<File ref={x => cmp = x} label="testLabel"/>);
 
 		cmp.setState({ file : { name: 'testFile' }});
 
-		expect(cmp.state().file).toBeDefined();
+		expect(cmp.state.file).toBeDefined();
 
-		const clearButton = cmp.find('.file-select-reset');
+		const clearButton = container.querySelector('.file-select-reset');
 
-		clearButton.simulate('click');
+		fireEvent.click(clearButton);
 
-		cmp.update();
-
-		expect(cmp.state().file).toBeUndefined();
+		return waitFor(() =>
+			expect(cmp.state.file).toBeUndefined());
 	});
 
-	test('has correct contents', () => {
-		const cmp = mount(<File label="choose a file" defaultText="this is the default"/>);
+	test('has correct contents', async () => {
+		let cmp = null;
+		const {container} = render(<File ref={x => cmp = x} label="choose a file" defaultText="this is the default"/>);
 
-		expect(cmp.text()).toMatch(/this is the default/);
-		expect(cmp.find('.file-select-reset').length).toBe(0);
+		expect(container.textContent).toMatch(/this is the default/);
+		expect(container.querySelectorAll('.file-select-reset').length).toBe(0);
 
 		cmp.setState({ file : { name: 'testFile' }});
 
-		expect(cmp.text()).toMatch(/choose a file/);
-		expect(cmp.find('.file-select-reset').length).toBe(1);
+		return waitFor(() => {
+			expect(container.textContent).toMatch(/choose a file/);
+			expect(container.querySelectorAll('.file-select-reset').length).toBe(1);
+		});
 	});
 
-	test('calls on change', () => {
-		const cmp = mount(<File label="choose a file" defaultText="this is the default" onFileChange={onFileChange}/>);
+	test('calls on change', async () => {
+		const onFileChange = jest.fn();
+		const {container} = render(<File label="choose a file" defaultText="this is the default" onFileChange={onFileChange}/>);
 
-		const fileInput = cmp.find('input[type="file"]');
+		const fileInput = container.querySelectorAll('input[type="file"]');
 
 		expect(fileInput.length).toBe(1);
 
-		fileInput.first().simulate('change');
+		fireEvent.change(fileInput[0],{
+			target: {
+				files: [new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })],
+			},
+		});
 
-		setTimeout(function () {
-			expect(onFileChange).toHaveBeenCalled();
-		},500);
+		return waitFor(() =>
+			expect(onFileChange).toHaveBeenCalled());
 	});
 });

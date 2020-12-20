@@ -1,24 +1,28 @@
 /* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import {Date as DateUtils} from '@nti/lib-commons';
 
 import DateTimeField from '../DateTimeField';
-import TimePicker from '../TimePicker';
-import Select from '../../../components/Select';
 
 const {MockDate} = DateUtils;
 
 const emptyOnChange = jest.fn();
 
 describe('DateTimeField', () => {
-	const sharedWrapper = shallow(<DateTimeField onChange={emptyOnChange} />);
+	const shared = render(<DateTimeField onChange={emptyOnChange} />);
 
-	const testRender = (props, ...children) => [
-		shallow(<DateTimeField {...props}>{children}</DateTimeField>),
-		sharedWrapper.setProps({...props, children})
-	];
+	const testRender = (props, ...children) => {
+		const refs = [
+			React.createRef(),
+			React.createRef(),
+		];
+		return [
+			{ref: refs[0], ...render(React.createElement(DateTimeField, {ref: refs[0], ...props}, ...children))},
+			{ref: refs[1], ...(shared.rerender(React.createElement(DateTimeField, {ref: refs[1],...props}, ...children)), shared)}
+		];
+	};
 
 	afterEach(() => {
 		MockDate.uninstall();
@@ -27,56 +31,46 @@ describe('DateTimeField', () => {
 	test('Base case: Nothing Passed - Value to be undefined', () => {
 		testRender({ onChange: () => {} })
 			.forEach(x => {
-				const dateSelects = x.find(Select);
-				const time = x.find(TimePicker);
-				dateSelects.forEach(select => expect(select.props().value).toBeUndefined());
-				expect(time.props().value).toBeUndefined();
+				expect([...x.container.querySelectorAll('select')].map(_ => _.value)).toEqual(['empty', 'empty', 'empty']);
 			});
 	});
 
 	test('on date change is called with clicked month', () => {
-		testRender({ onChange: value => value })
-			.forEach(x => {
-				const cmp = x.instance();
-				spyOn(cmp,'onDateChange');
+		const [x] = testRender({ onChange: value => value });
+		const cmp = x.ref.current;
+		spyOn(cmp,'onDateChange');
 
-				const monthSelect = x.find('.month-wrapper Select');
-				const event = { target: {value: '9'}};
-				monthSelect.simulate('change', event);
+		const monthSelect = x.container.querySelector('.month-wrapper Select');
+		const event = { target: {value: '9'}};
+		fireEvent.change(monthSelect, event);
 
-				expect(cmp.onDateChange).toHaveBeenCalled();
-				expect(cmp.onDateChange).toHaveBeenCalledWith('9', 'setMonth');
-			});
+		expect(cmp.onDateChange).toHaveBeenCalledWith(event.target.value, 'setMonth');
 	});
 
 	test('on date change is called with clicked date', () => {
-		testRender({ onChange: value => value })
-			.forEach(x => {
-				const cmp = x.instance();
-				spyOn(cmp,'onDateChange');
+		const [x] = testRender({ onChange: value => value });
 
-				const dateSelect = x.find('.date-wrapper Select');
-				const event = { target: {value: '20'}};
-				dateSelect.simulate('change', event);
+		const cmp = x.ref.current;
+		spyOn(cmp,'onDateChange');
 
-				expect(cmp.onDateChange).toHaveBeenCalled();
-				expect(cmp.onDateChange).toHaveBeenCalledWith('20', 'setDate');
-			});
+		const dateSelect = x.container.querySelector('.date-wrapper Select');
+		const event = {target: {value: '20'}};
+		fireEvent.change(dateSelect, event);
+
+		expect(cmp.onDateChange).toHaveBeenCalledWith(event.target.value, 'setDate');
 	});
 
 	test('on date change is called with clicked year', () => {
-		testRender({ onChange: value => value })
-			.forEach(x => {
-				const cmp = x.instance();
-				spyOn(cmp,'onDateChange');
+		const [x] = testRender({ onChange: value => value });
 
-				const yearSelect = x.find('.year-wrapper Select');
-				const event = { target: {value: '2018'}};
-				yearSelect.simulate('change', event);
+		const cmp = x.ref.current;
+		spyOn(cmp,'onDateChange');
 
-				expect(cmp.onDateChange).toHaveBeenCalled();
-				expect(cmp.onDateChange).toHaveBeenCalledWith('2018', 'setYear');
-			});
+		const yearSelect = x.container.querySelector('.year-wrapper Select');
+		const event = {target: {value: String(new Date().getFullYear())}};
+		fireEvent.change(yearSelect, event);
+
+		expect(cmp.onDateChange).toHaveBeenCalledWith(event.target.value, 'setYear');
 	});
 
 	test('clicking current date calls onchange with current date', () => {
@@ -86,8 +80,8 @@ describe('DateTimeField', () => {
 
 		testRender({ onChange: onChangeSpy, currentDate: true })
 			.forEach(x => {
-				const currentDate = x.find('.set-current-date a');
-				currentDate.simulate('click');
+				const currentDate = x.container.querySelector('.set-current-date a');
+				fireEvent.click(currentDate);
 				expect(onChangeSpy).toHaveBeenCalledWith(now);
 			});
 	});
@@ -106,9 +100,9 @@ describe('DateTimeField', () => {
 
 		testRender({ onChange: onChangeSpy})
 			.forEach(x => {
-				const monthSelect = x.find('.month-wrapper Select');
+				const monthSelect = x.container.querySelector('.month-wrapper Select');
 				const event = { target: {value: '7'}};
-				monthSelect.simulate('change', event);
+				fireEvent.change(monthSelect, event);
 
 				expect(onChangeSpy).toHaveBeenCalledWith(value);
 			});
@@ -130,9 +124,9 @@ describe('DateTimeField', () => {
 
 		testRender({ onChange: onChangeSpy, value })
 			.forEach(x => {
-				const monthSelect = x.find('.month-wrapper Select');
+				const monthSelect = x.container.querySelector('.month-wrapper Select');
 				const event = { target: {value: '7'}};
-				monthSelect.simulate('change', event);
+				fireEvent.change(monthSelect, event);
 
 				expect(onChangeSpy).toHaveBeenCalledWith(expectedValue);
 			});
@@ -150,11 +144,9 @@ describe('DateTimeField', () => {
 
 		testRender({ onChange: onChangeSpy })
 			.forEach(x => {
-				const timePicker = x.find(TimePicker) && x.find(TimePicker).shallow();
-				const time = timePicker.childAt(0);
-				const minute = time.childAt(2);
-				const minuteInput = minute.shallow().find('input');
-				minuteInput.simulate('change', { target: { value: 8 }, stopPropagation: () => {}, preventDefault: () => {} });
+				const minuteInput = x.container.querySelector('input[name=minutes]');
+
+				fireEvent.change(minuteInput, { target: { value: 8 }, stopPropagation: () => {}, preventDefault: () => {} });
 
 				expect(onChangeSpy).toHaveBeenCalledWith(value);
 			});
@@ -165,12 +157,12 @@ describe('DateTimeField', () => {
 
 		testRender({value, onChange: () => {}})
 			.forEach(x => {
-				const daySelect = x.find('.date-wrapper Select');
-				expect(daySelect.find('option[value=1]').exists()).toBeTruthy();
-				expect(daySelect.find('option[value=28]').exists()).toBeTruthy();
+				const daySelect = x.container.querySelector('.date-wrapper Select');
+				expect(daySelect.querySelector('option[value="1"]')).toBeTruthy();
+				expect(daySelect.querySelector('option[value="28"]')).toBeTruthy();
 
-				expect(daySelect.find('option[value=0]').exists()).toBeFalsy();
-				expect(daySelect.find('option[value=29]').exists()).toBeFalsy();
+				expect(daySelect.querySelector('option[value="0"]')).toBeFalsy();
+				expect(daySelect.querySelector('option[value="29"]')).toBeFalsy();
 			});
 	});
 
@@ -184,16 +176,16 @@ describe('DateTimeField', () => {
 
 		testRender({ value: null, onChange: () => {} })
 			.forEach(x => {
-				const yearSelect = x.find('.year-wrapper Select');
+				const yearSelect = x.container.querySelector('.year-wrapper Select');
 
 				// all the correct years
-				Array.from({length: numYears}).forEach((_, i) => expect(yearSelect.find(`option[value=${currentYear + i}]`).exists()).toBeTruthy());
+				Array.from({length: numYears}).forEach((_, i) => expect(yearSelect.querySelector(`option[value="${currentYear + i}"]`)).toBeTruthy());
 
 				// not earlier
-				expect(yearSelect.find(`option[value=${currentYear - 1}]`).exists()).toBeFalsy();
+				expect(yearSelect.querySelector(`option[value="${currentYear - 1}"]`)).toBeFalsy();
 
 				// not later
-				expect(yearSelect.find(`option[value=${currentYear + numYears}]`).exists()).toBeFalsy();
+				expect(yearSelect.querySelector(`option[value="${currentYear + numYears}"]`)).toBeFalsy();
 			});
 	});
 
@@ -205,16 +197,16 @@ describe('DateTimeField', () => {
 
 		testRender({ startYear: startYear, numYears: numYears, onChange: () => {} })
 			.forEach(x => {
-				const yearSelect = x.find('.year-wrapper Select');
+				const yearSelect = x.container.querySelector('.year-wrapper Select');
 
 				// all the correct years
-				Array.from({length: numYears}).forEach((_, i) => expect(yearSelect.find(`option[value=${startYear + i}]`).exists()).toBeTruthy());
+				Array.from({length: numYears}).forEach((_, i) => expect(yearSelect.querySelector(`option[value="${startYear + i}"]`)).toBeTruthy());
 
 				// not earlier
-				expect(yearSelect.find(`option[value=${startYear - 1}]`).exists()).toBeFalsy();
+				expect(yearSelect.querySelector(`option[value="${startYear - 1}"]`)).toBeFalsy();
 
 				// not later
-				expect(yearSelect.find(`option[value=${startYear + numYears}]`).exists()).toBeFalsy();
+				expect(yearSelect.querySelector(`option[value="${startYear + numYears}"]`)).toBeFalsy();
 
 				// why doesn't this work?
 				// expect(yearSelect.containsAllMatchingElements([
@@ -232,29 +224,29 @@ describe('DateTimeField', () => {
 		const errorMessage = 'Can\'t set due date before end date.';
 		testRender({ onChange: () => {}, error: errorMessage})
 			.forEach(x => {
-				const error = x.find('.date-time-field-error');
-				expect(error.text()).toBe(errorMessage);
+				const error = x.container.querySelector('.date-time-field-error');
+				expect(error.textContent).toBe(errorMessage);
 			});
 	});
 
 
-	test('inclue an option for the specified value\'s year when it\'s outside regular option bounds', () => {
+	test('include an option for the specified value\'s year when it\'s outside regular option bounds', () => {
 		const value = new Date();
 
 		// the past
 		value.setYear(1980);
 		testRender({value, onChange: () => {}})
 			.forEach(x => {
-				const yearSelect = x.find('.year-wrapper Select');
-				expect(yearSelect.find('option[value=1980]').exists()).toBeTruthy();
+				const yearSelect = x.container.querySelector('.year-wrapper Select');
+				expect(yearSelect.querySelector('option[value="1980"]')).toBeTruthy();
 			});
 
 		// the future
 		value.setYear(2038);
 		testRender({value, onChange: () => {}})
 			.forEach(x => {
-				const yearSelect = x.find('.year-wrapper Select');
-				expect(yearSelect.find('option[value=2038]').exists()).toBeTruthy();
+				const yearSelect = x.container.querySelector('.year-wrapper Select');
+				expect(yearSelect.querySelector('option[value="2038"]')).toBeTruthy();
 			});
 	});
 });

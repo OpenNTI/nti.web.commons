@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
-import {shallow} from 'enzyme';
+import { render as _render, fireEvent } from '@testing-library/react';
 
 import Trigger from '../Trigger';
 
@@ -23,40 +23,62 @@ function buildContext (activeItem = '', availableItems = {}) {
 	return context;
 }
 
+class Context extends React.Component {
+
+	static childContextTypes = {
+		switchContext: () => {},
+	}
+
+	getChildContext () {
+		// eslint-disable-next-line react/prop-types
+		return this.props.value;
+	}
+
+	render () {
+		return this.props.children;
+	}
+}
+
 function render (props, context) {
-	return shallow((
-		<Trigger {...props}>
-			<TriggerCmp />
-		</Trigger>
-	), {context});
+	const Wrapper = context ? Context : React.Fragment;
+	return _render(
+		<Wrapper value={context}>
+			<Trigger {...props}>
+				<TriggerCmp />
+			</Trigger>
+		</Wrapper>
+	);
 }
 
 describe('Switch Trigger', () => {
 	describe('disabled class', () => {
 		test('Adds class if item is not in the available', () => {
-			const item = render({item: 'unavailable'}, buildContext());
+			const {container} = render({item: 'unavailable'}, buildContext());
+			const item = container.querySelector('[data-trigger-element]');
 
-			expect(item.hasClass('disabled')).toBeTruthy();
+			expect(item.classList.contains('disabled')).toBeTruthy();
 		});
 
 		test('Does not add class if the item is available', () => {
-			const item = render({item: 'available'}, buildContext('', {'available': true}));
+			const {container} = render({item: 'available'}, buildContext('', {'available': true}));
+			const item = container.querySelector('[data-trigger-element]');
 
-			expect(item.hasClass('disabled')).toBeFalsy();
+			expect(item.classList.contains('disabled')).toBeFalsy();
 		});
 	});
 
 	describe('active', () => {
 		test('Adds class if item is active', () => {
-			const item = render({item: 'active'}, buildContext('active', {active: true}));
+			const {container} = render({item: 'active'}, buildContext('active', {active: true}));
+			const item = container.querySelector('[data-trigger-element]');
 
-			expect(item.hasClass('active')).toBeTruthy();
+			expect(item.classList.contains('active')).toBeTruthy();
 		});
 
 		test('Does not add class if the item is not active', () => {
-			const item = render({item: 'not-active'}, buildContext('active', {'not-active': true}));
-
-			expect(item.hasClass('active')).toBeFalsy();
+			const {container} = render({item: 'not-active'}, buildContext('active', {'not-active': true}));
+			const item = container.querySelector('[data-trigger-element]');
+			expect(item.classList.contains('active')).toBeFalsy();
 		});
 	});
 
@@ -64,18 +86,18 @@ describe('Switch Trigger', () => {
 		describe('No Action prop', () => {
 			test('Calls setActiveItem in context', () => {
 				const context = buildContext('', {active: true});
-				const item = render({item: 'active'}, context);
-
-				item.simulate('click');
+				const {container} = render({item: 'active'}, context);
+				const item = container.querySelector('[data-trigger-element]');
+				fireEvent.click(item);
 
 				expect(context.switchContext.setActiveItem).toHaveBeenCalledWith('active');
 			});
 
 			test('Calls onClick', () => {
 				const onClick = jest.fn();
-				const item = render({item: 'active', onClick}, buildContext('', {active: true}));
-
-				item.simulate('click');
+				const {container} = render({item: 'active', onClick}, buildContext('', {active: true}));
+				const item = container.querySelector('[data-trigger-element]');
+				fireEvent.click(item);
 
 				expect(onClick).toHaveBeenCalled();
 			});
