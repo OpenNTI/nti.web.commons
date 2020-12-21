@@ -29,7 +29,7 @@ export default function TileContainerRegion ({location, toasts}) {
 	return (
 		<TransitionGroup component="ul" className={cx(styles.region, styles[regionName] || regionName)}>
 			{toasts.map((toast) => (
-				<CSSTransition key={toast.id} classNames={getTransitionName(location)} timeout={200} appear>
+				<CSSTransition key={toast.id} classNames={getTransitionName(location)} timeout={1000} appear>
 					<ToastWrapper toast={toast} location={location} timeout={200} />
 				</CSSTransition>
 			))}
