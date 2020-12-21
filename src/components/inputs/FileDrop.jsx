@@ -129,7 +129,7 @@ export default class Upload extends React.Component {
 		const {error: propError, className, value, allowedTypes} = this.props;
 		const {error: stateError, errorClass} = this.state;
 		const error = propError || stateError;
-		
+
 		const acceptDrops = allowedTypes ? DropZone.acceptFilesOfType(Object.keys(allowedTypes)) : null;
 
 		return (
@@ -142,7 +142,6 @@ export default class Upload extends React.Component {
 				onDrop={this.onDrop}
 				onDragEnter={this.clearError}
 				onDragOver={this.clearError}
-				preventInvalidDrops
 			>
 				<input type="file" ref={this.attachRef} className="asset-file" onChange={this.onFileInputChange} />
 				<div className="container">
