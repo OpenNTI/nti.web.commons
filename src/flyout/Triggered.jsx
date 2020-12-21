@@ -133,14 +133,6 @@ export default class TriggeredFlyout extends React.Component {
 		if (onDismiss && !isOpen && wasOpen) {
 			onDismiss();
 		}
-
-		const isControlled = controlledOpen != null;
-		const wasControlled = wasControlledOpen != null;
-
-		if (isControlled !== wasControlled) {
-			// eslint-disable-next-line no-console
-			console.warn('Flyout was moved from controlled to uncontrolled or vice versa.');
-		}
 	}
 
 	componentWillUnmount () {
