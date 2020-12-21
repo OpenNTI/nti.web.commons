@@ -25,8 +25,8 @@ useUser.getAnonymous = (id) => {
 export function useUser (user) {
 	const resolver = useResolver(async () => {
 		try {
-			const id = !user || user === 'me' ? getAppUsername() : getId(user);
-			const entity = await User.resolve({entity: id});
+			const id = user && (user === 'me' ? getAppUsername() : getId(user));
+			const entity = id && await User.resolve({entity: id});
 
 			return entity;
 		} catch (e) {
