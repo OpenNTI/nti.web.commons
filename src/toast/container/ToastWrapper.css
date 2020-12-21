@@ -8,7 +8,7 @@
 	animation: animation-in 1000ms linear both;
 }
 
-@keyframes animation-out {
+/* @keyframes animation-out {
 	0% { transform: matrix3d(5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	1.4% { transform: matrix3d(3.304, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 225.231, 0, 0, 1); }
 	2.8% { transform: matrix3d(2.095, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 423.925, 0, 0, 1); }
@@ -31,7 +31,7 @@
 	60.56% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1000.025, 0, 0, 1); }
 	82.78% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 999.999, 0, 0, 1); }
 	100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1000, 0, 0, 1); }
-}
+} */
 
 @keyframes animation-in {
 	0% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1000, 0, 0, 1); }
