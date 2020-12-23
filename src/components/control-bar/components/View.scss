@@ -8,6 +8,13 @@
 	background: white;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 
+	/*
+	We want the order of layers to be determined by their position in the dom -- not by
+	arbitrary z-index values. However if we leave this unset, any content below us in
+	dom order, with z will still pop over. So, setting a constant 1 should make this cover that case.
+	*/
+	z-index: 1;
+
 	.nti-control-bar {
 		position: relative;
 		width: 94%;
