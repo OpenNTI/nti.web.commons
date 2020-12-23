@@ -18,7 +18,7 @@ export default function Demos () {
 
 	// functions are expected to return state, not be state,
 	const [Cmp, setCmp] = React.useState(componentFromHash);
-	
+
 	const onHashChange = () => {
 		setCmp(componentFromHash);
 	};
@@ -31,6 +31,7 @@ export default function Demos () {
 	return (
 		<div className={cx('demos')}>
 			<div className={cx('demo-container')}>
+				<p>These need to be converted to use storybook stories.</p>
 				<Cmp />
 			</div>
 			<Menu items={Items} selected={nameFromHash()} />
