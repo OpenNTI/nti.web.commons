@@ -72,16 +72,6 @@
     "zpad": "^0.5.0"
   },
   "devDependencies": {
-    "@nti/cmp-scripts": "^2.15.5",
-    "@nti/style-common": "NextThought/nti.style.common",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/react-hooks": "^3.4.2"
-  },
-  "peerDependencies": {
-    "classnames": "*",
-    "react": "*",
-    "react-dom": "*",
-    "react-test-renderer": "*",
-    "prop-types": "*"
+    "@nti/cmp-scripts": "^2.31.8"
   }
 }
