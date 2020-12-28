@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import moment from 'moment';
+import {subDays} from 'date-fns';
 
 import DateTime from '../../';
 
@@ -18,9 +18,9 @@ const getText = cmp => cmp.node.textContent;
 
 const render = (node, cmp, props, ...children) => new Promise(next =>
 	void ReactDOM.render(
-		React.createElement(cmp, {...props, ref (x) {cmp = x; props.ref && props.ref(x);}}, ...children),
+		React.createElement(cmp, props, ...children),
 		node,
-		() => next({cmp, node})
+		() => next({node})
 	));
 
 
@@ -62,7 +62,7 @@ describe('DateTime', () => {
 
 
 	test('Base Cases: date, relative to now', (done) => {
-		const yesterday = moment().subtract(1, 'days');
+		const yesterday = subDays(new Date(), 1);
 
 		Promise.all(testRender({date: yesterday, relative: true}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('a day ago')))
@@ -119,7 +119,7 @@ describe('DateTime', () => {
 
 
 	test('Base Cases: date, alternate format', (done) => {
-		const format = '[year:] YYYY';
+		const format = '\'year:\' yyyy';
 
 		Promise.all(testRender({date, format}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/year: \d{4}/)))
@@ -127,7 +127,7 @@ describe('DateTime', () => {
 	});
 
 	test('Base Cases: relative date, no suffix', (done) => {
-		const yesterday = moment().subtract(1, 'days');
+		const yesterday = subDays(new Date(), 1);
 
 		Promise.all(testRender({date: yesterday, relative: true, suffix: false}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('a day')))
@@ -135,7 +135,7 @@ describe('DateTime', () => {
 	});
 
 	test('Base Cases: relative date, custom suffix', (done) => {
-		const yesterday = moment().subtract(1, 'days');
+		const yesterday = subDays(new Date(), 1);
 
 		Promise.all(testRender({date: yesterday, relative: true, suffix: ' bananas'}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toEqual('a day bananas')))
@@ -143,7 +143,7 @@ describe('DateTime', () => {
 	});
 
 	test('Base Cases: date, prefix', (done) => {
-		const yesterday = moment(date).subtract(1, 'days');
+		const yesterday = subDays(date, 1);
 
 		Promise.all(testRender({date: yesterday, prefix: 'toast '}))
 			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/toast October \d+, 2015/)))

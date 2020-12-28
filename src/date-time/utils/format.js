@@ -1,19 +1,20 @@
-import moment from '../moment';
+import {intervalToDuration, isSameDay} from 'date-fns';
+import {format as formatter} from 'date-fns-tz';
 
+import {fromNow} from './from-now';
 import t from './strings';
 
-export function format (date, pattern = 'LL') {
-	const tz = moment.tz.guess();
-	return date && moment(new Date(date)).tz(tz).format(pattern);
-}
+export {fromNow};
 
-export function fromNow (date) {
-	const tz = moment.tz.guess();
-	return date && moment(new Date(date)).tz(tz).fromNow();
+const timeZone = global.Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone ?? undefined;
+
+
+export function format (date, pattern = 'LL') {
+	return date && formatter(date, pattern, { timeZone });
 }
 
 export function isToday (date) {
-	return moment(date).isSame(new Date(), 'day');
+	return isSameDay(date, new Date());
 }
 
 /**
@@ -37,10 +38,24 @@ export function formatDuration (duration) {
 	].filter(a => a).join(':');
 }
 
+/**
+ *
+ * @param {number} duration - The duration in milliseconds?
+ * @param {number} accuracy - accuracy cutoff
+ * @returns {string} - a human friendly description of the duration
+ */
 export function getShortNaturalDuration (duration, accuracy) {
-	return this.getNaturalDuration(duration, accuracy, null, true);
+	return getNaturalDuration(duration, accuracy, null, true);
 }
 
+/**
+ *
+ * @param {number} duration - The duration in milliseconds?
+ * @param {number} accuracy - accuracy cutoff
+ * @param {boolean} singular - use singular form
+ * @param {boolean} short - use short form
+ * @returns {string} - a human friendly description of the duration
+ */
 export function getNaturalDuration (duration, accuracy, singular, short) {
 	let baseLocaleKey = 'timeUnits.';
 
@@ -50,13 +65,18 @@ export function getNaturalDuration (duration, accuracy, singular, short) {
 		baseLocaleKey += 'singular.';
 	}
 
-	const d = new moment.duration(duration);
+	const reference = new Date();
+	const d = intervalToDuration({
+		start: reference,
+		end: new Date(reference.getTime() + duration)
+	});
+
 	const getUnit = (unit, data) => t(`${baseLocaleKey}${unit}`, data);
 
 	let out = [];
 
 	function maybeAdd (unit) {
-		let u = d.get(unit);
+		let u = d[unit];
 		if (u > 0 && (!accuracy || out.length < accuracy)) {
 			out.push(getUnit(unit, {count: u}));
 		}
