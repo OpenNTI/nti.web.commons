@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from '@nti/lib-commons';
-import { formatDistanceStrict } from 'date-fns';
 
-import {format, fromNow, isToday} from '../utils';
+import {format, fromNow, fromWhen, isToday} from '../utils';
 import Text from '../../text';
 
 const DateTime = React.forwardRef(DateTimeImpl);
@@ -47,19 +46,19 @@ function DateTimeImpl ({
 	todayText,
 	...otherProps
 }, ref) {
-	React.useImperativeHandle(ref, () => ({}));
+
 	if (date == null) {
 		return null;
 	}
 
 	const suffixExplicitlySuppressed = suffix === false;
 	const hasCustomSuffix = !isEmpty(suffix);
-	const omitSuffix = suffixExplicitlySuppressed || hasCustomSuffix;
+	const addSuffix = !suffixExplicitlySuppressed && !hasCustomSuffix;
 
-	let text = relative
-		? fromNow(date, omitSuffix)
-		: relativeTo
-			? formatDistanceStrict(date, relativeTo, {addSuffix: true})
+	let text = relativeTo
+		? fromWhen(date, relativeTo)
+		: relative
+			? fromNow(date, {addSuffix})
 			: format(date, pattern);
 
 	if ((showToday || !isEmpty(todayText)) && isToday(date)) {

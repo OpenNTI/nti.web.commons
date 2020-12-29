@@ -1,2 +1,2 @@
 export * from './format';
-export * from './from-now';
+export * from './from-when';

@@ -89,7 +89,7 @@ describe('DateTime', () => {
 
 	test('relativeTo: Weeks 1', (done) => {
 		Promise.all(testRender({date, relativeTo: relativeToWeek1}))
-			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/1 week ago/)))
+			.then(cmp => cmp.forEach(c => expect(getText(c)).toMatch(/a week ago/)))
 			.then(done, (e) => done.fail(e));
 	});
 

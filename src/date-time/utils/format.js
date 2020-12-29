@@ -1,10 +1,10 @@
 import {intervalToDuration, isSameDay} from 'date-fns';
 import {format as formatter} from 'date-fns-tz';
 
-import {fromNow} from './from-now';
+import {fromNow, fromWhen} from './from-when';
 import t from './strings';
 
-export {fromNow};
+export {fromNow, fromWhen};
 
 const timeZone = global.Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone ?? undefined;
 
