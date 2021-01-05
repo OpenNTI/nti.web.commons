@@ -57,7 +57,7 @@ export default class PublishTrigger extends React.PureComponent {
 		const classNames = cx('publish-trigger', selected.toLowerCase());
 
 		const label = labelOverride ||
-			t(`${hasChanges ? 'hasChanges.' : ''}${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,'MMM D')});
+			t(`${hasChanges ? 'hasChanges.' : ''}${selected.toLowerCase()}.buttonLabel`, {date: date && DateTime.format(date,DateTime.MONTH_ABBR_DAY)});
 
 		return (
 			<div {...props} ref={this.ref} className={classNames}>

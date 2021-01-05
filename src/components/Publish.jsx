@@ -273,7 +273,13 @@ export default class Publish extends React.Component {
 					{t('publish.text')}
 				</Radio>
 				<Radio name="publish-radio" value={PUBLISH_STATES.SCHEDULE} label={t('schedule.label')} checked={PUBLISH_STATES.SCHEDULE === selected} onChange={this.onChange}>
-					{dayClicked ? t('schedule.selectedText', {date: date && DateTime.format(date, 'MMMM D'), time: DateTime.format(date, 'LT')}) : t('schedule.text')}
+					{dayClicked
+						? t('schedule.selectedText', {
+							date: date && DateTime.format(date, DateTime.MONTH_NAME_DAY),
+							time: DateTime.format(date, DateTime.TIME)
+						})
+						: t('schedule.text')
+					}
 					<DayTimePicker
 						value={date}
 						onChange={this.onDateChange}

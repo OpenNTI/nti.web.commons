@@ -1,7 +1,8 @@
-import {intervalToDuration, isSameDay} from 'date-fns';
-import {format as formatter} from 'date-fns-tz';
+import { intervalToDuration, isSameDay } from 'date-fns';
+import { format as formatter } from 'date-fns-tz';
 
-import {fromNow, fromWhen} from './from-when';
+import { DEFAULT } from './formats';
+import { fromNow, fromWhen } from './from-when';
 import t from './strings';
 
 export {fromNow, fromWhen};
@@ -9,8 +10,15 @@ export {fromNow, fromWhen};
 const timeZone = global.Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone ?? undefined;
 
 
-export function format (date, pattern = 'LL') {
-	return date && formatter(date, pattern, { timeZone });
+export function format (date, pattern = DEFAULT) {
+	if (!date) {
+		return;
+	}
+
+	const f = x => formatter(date, x, { timeZone });
+	return (typeof pattern === 'function')
+		? pattern(f)
+		: f(pattern);
 }
 
 export function isToday (date) {

@@ -16,8 +16,8 @@ export default class CalendarCard extends React.Component {
 
 		return date && (
 			<div className="calendar-card">
-				<DateTime date={date} className="month" format="MMM"/>
-				<DateTime date={date} className="day" format="DD"/>
+				<DateTime date={date} className="month" format={DateTime.MONTH_ABBR}/>
+				<DateTime date={date} className="day" format={DateTime.DAY_OF_THE_MONTH_PADDED}/>
 			</div>
 		);
 	}

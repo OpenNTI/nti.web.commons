@@ -30,7 +30,7 @@ function getSubLabels (item) {
 		labels.push(t('published'));
 	} else if (assignment.getAvailableForSubmissionBeginning()) {
 		labels.push(t('schedule', {
-			date: DateTime.format(assignment.getAvailableForSubmissionBeginning(), 'll')
+			date: DateTime.format(assignment.getAvailableForSubmissionBeginning(), DateTime.MONTH_ABBR_DAY_YEAR)
 		}));
 	} else {
 		labels.push(t('draft'));
@@ -38,7 +38,7 @@ function getSubLabels (item) {
 
 	if (assignment.getDueDate()) {
 		labels.push(t('dueDate', {
-			date: DateTime.format(assignment.getDueDate(), 'll')
+			date: DateTime.format(assignment.getDueDate(), DateTime.MONTH_ABBR_DAY_YEAR)
 		}));
 	} else {
 		labels.push(t('noDueDate'));

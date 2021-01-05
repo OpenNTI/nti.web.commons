@@ -29,8 +29,8 @@ describe('DayPickerRange', () => {
 		);
 		const [startDate, endDate] = container.querySelectorAll('.date');
 
-		expect(startDate.querySelector('.value').textContent).toEqual('Sep. 22');
-		expect(endDate.querySelector('.value').textContent).toEqual('Dec. 24');
+		expect(startDate.querySelector('.value').textContent).toEqual('Sep 22');
+		expect(endDate.querySelector('.value').textContent).toEqual('Dec 24');
 
 		expect(startDate.querySelector('.remove-date')).toBeTruthy();
 		expect(endDate.querySelector('.remove-date')).toBeTruthy();

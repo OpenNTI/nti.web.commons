@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from '@nti/lib-commons';
 
-import {format, fromNow, fromWhen, isToday} from '../utils';
+import {DEFAULT, format, fromNow, fromWhen, isToday} from '../utils';
 import Text from '../../text';
 
 const DateTime = React.forwardRef(DateTimeImpl);
@@ -27,7 +27,7 @@ DateTimeImpl.defaultProps =
 DateTime.defaultProps = {
 	date: new Date(),
 	relativeTo: undefined,
-	format: 'LLLL d, yyyy',
+	format: DEFAULT,
 	relative: false,
 	prefix: undefined,
 	suffix: undefined,
