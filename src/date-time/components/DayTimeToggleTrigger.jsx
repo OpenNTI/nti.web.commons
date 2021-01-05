@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {format} from '../utils';
+import {DAY_OF_THE_MONTH, format, MONTH_ABBR} from '../utils';
 
 export default class DayTimeToggleTrigger extends React.Component {
 	static propTypes = {
@@ -32,8 +32,8 @@ export default class DayTimeToggleTrigger extends React.Component {
 		return (
 			<div {...otherProps} className={cx('daytime-toggle-trigger', className)} ref={this.domNode}>
 				<div className={dateClassNames}>
-					<div className="month">{format(begin, 'MMM')}</div>
-					<div className="day">{format(begin, 'D')}</div>
+					<div className="month">{format(begin, MONTH_ABBR)}</div>
+					<div className="day">{format(begin, DAY_OF_THE_MONTH)}</div>
 				</div>
 				<div className="main">
 					<div className={mainTextClassNames}>

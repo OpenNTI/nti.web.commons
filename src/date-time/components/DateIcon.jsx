@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import Badge from '../../components/Badge';
-import {format} from '../utils';
+import {DAY_OF_THE_MONTH, format, MONTH_ABBR} from '../utils';
 
 
 // this Small wrapper is part of a workaround for the badge masking the part of the small icon that renders outside the
@@ -33,8 +33,8 @@ export default class DateIcon extends React.PureComponent {
 			<Container {...this.props}>
 				<Wrapper>
 					<div className={cx('nti-calendar-date-icon', {small, minimal}, className)}>
-						<div className="month">{format(date, 'MMM')}</div>
-						<div className="day">{format(date, 'D')}</div>
+						<div className="month">{format(date, MONTH_ABBR)}</div>
+						<div className="day">{format(date, DAY_OF_THE_MONTH)}</div>
 						{children}
 					</div>
 				</Wrapper>
