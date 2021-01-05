@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from '@nti/lib-commons';
+import {formatISO} from 'date-fns';
 
 import {DEFAULT, format, fromNow, fromWhen, isToday} from '../utils';
 import Text from '../../text';
@@ -65,7 +66,7 @@ function DateTimeImpl ({
 		text = (todayText || 'Today').replace('{time}', text);
 	}
 
-	const props = { ...otherProps, dateTime: format(date)};
+	const props = { ...otherProps, dateTime: formatISO(date,)};
 
 	return (
 		<Text.Base ref={ref} as="time" {...props}>
