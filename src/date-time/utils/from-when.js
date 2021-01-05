@@ -26,8 +26,8 @@ const locale = {
 	ww: '{{count}} weeks',
 	M: 'a month',
 	MM: '{{count}} months',
-	Y: 'a year',
-	YY: '{{count}} years'
+	y: 'a year',
+	yy: '{{count}} years'
 };
 
 const ranges = {
@@ -69,7 +69,11 @@ function formatDistance (token, count, options) {
 	const norm = normal[token](count);
 	const [key, count2] = find(norm);
 
-	let result = locale[key].replace('{{count}}', count2);
+	let result = locale[key]?.replace('{{count}}', count2);
+	if (!result) {
+		// eslint-disable-next-line no-console
+		console.warn('Missing locale string for key: %s', key);
+	}
 
 	if (options.addSuffix) {
 		if (options.comparison > 0) {
