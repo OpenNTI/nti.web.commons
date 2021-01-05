@@ -1,12 +1,20 @@
 import React from 'react';
 import {addClass, removeClass} from '@nti/lib-dom';
 
+const NODES = new WeakMap();
+
+const getBin = k => NODES.get(k) || {};
+const setCount = (k, n, c) => (NODES.set(k, {...getBin(k), [n]: c}), c);
+const getCount = (k, n) => getBin(k)[n] ?? setCount(k, n, 0);
+
+const increment = (k, n) => setCount(k, n, getCount(k, n) + 1);
+const decrement = (k, n) => setCount(k, n, Math.max(0, getCount(k, n) - 1));
+
 function add (node, className) {
-	add.count = (add.count || 0) + 1;
+	increment(node, className);
 	addClass(node, className);
 	return () => {
-		add.count = Math.max(add.count - 1, 0); // ensure we're never negative. shouldn't happen anyway.
-		if (!add.count) {
+		if (decrement(node, className) <= 0) {
 			removeClass(node, className);
 		}
 	};
