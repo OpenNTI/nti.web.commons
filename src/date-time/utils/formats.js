@@ -1,7 +1,7 @@
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('common.date-time', {
-	at: '%(prefix) at %(time)'
+	at: '%(prefix)s at %(time)s'
 });
 
 export const DATE = 'M/dd/yyyy';

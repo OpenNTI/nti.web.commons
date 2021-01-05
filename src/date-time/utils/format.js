@@ -1,4 +1,4 @@
-import { intervalToDuration, isSameDay } from 'date-fns';
+import { intervalToDuration, isSameDay, parseJSON } from 'date-fns';
 import { format as formatter } from 'date-fns-tz';
 
 import { DEFAULT } from './formats';
@@ -13,6 +13,10 @@ const timeZone = global.Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone ??
 export function format (date, pattern = DEFAULT) {
 	if (!date) {
 		return;
+	}
+
+	if (!(date instanceof Date)) {
+		date = parseJSON(date);
 	}
 
 	const f = x => formatter(date, x, { timeZone });
