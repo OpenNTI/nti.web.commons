@@ -1,6 +1,6 @@
 import {scoped} from '@nti/lib-locale';
 
-const t = scoped('date-time', {
+const t = scoped('common.date-time', {
 	at: '%(prefix) at %(time)'
 });
 
