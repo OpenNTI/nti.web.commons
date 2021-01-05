@@ -11,8 +11,8 @@ export default DateTime;
 
 DateTimeImpl.propTypes =
 DateTime.propTypes = {
-	date: PropTypes.any,//Date
-	relativeTo: PropTypes.any,//Date
+	date: PropTypes.instanceOf(Date),
+	relativeTo: PropTypes.instanceOf(Date),
 	format: PropTypes.string,
 	relative: PropTypes.bool,
 	prefix: PropTypes.string,
