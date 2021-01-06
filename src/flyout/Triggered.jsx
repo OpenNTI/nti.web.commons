@@ -55,6 +55,7 @@ export default class TriggeredFlyout extends React.Component {
 	static CLOSED = CLOSED;
 
 	static propTypes = {
+		autoDismissOnAction: PropTypes.bool,
 		trigger: PropTypes.any,
 		children: PropTypes.any,
 		className: PropTypes.string,
@@ -225,8 +226,8 @@ export default class TriggeredFlyout extends React.Component {
 	}
 
 	maybeDismiss () { if (!this.isControlled()) { this.dismiss(); }}
-	dismiss (cb) { return this.doClose(cb); }
-	doClose = (cb) => {
+	dismiss = (cb) => this.doClose(cb);
+	doClose (cb) {
 		if (this.isControlled()) { return; }
 
 		if (this.state.open) {
@@ -368,7 +369,7 @@ export default class TriggeredFlyout extends React.Component {
 
 
 	render () {
-		const {open:controlledOpen, trigger: triggerProp, classes, className, focusOnOpen, ...otherProps} = this.props;
+		const {open:controlledOpen, trigger: triggerProp, autoDismissOnAction = false, classes, className, focusOnOpen, ...otherProps} = this.props;
 		const {open: stateOpen} = this.state;
 		const triggerProps = {...restProps(Aligned, restProps(TriggeredFlyout, otherProps))};
 		const flyoutProps = {...restProps(TriggeredFlyout, otherProps), className};
@@ -428,6 +429,7 @@ export default class TriggeredFlyout extends React.Component {
 					alignTo={this.trigger}
 					visible={open}
 					classes={classes}
+					onClick={autoDismissOnAction ? this.dismiss : undefined}
 					onFlyoutSetup={this.onFlyoutSetup}
 					onFlyoutTearDown={this.onFlyoutTearDown}
 					focusOnOpen={this.isHover() ? false : (focusOnOpen ?? true)}
@@ -448,6 +450,15 @@ export default class TriggeredFlyout extends React.Component {
 
 		return typeof child.type === 'string'
 			? child // dom element
-			: React.cloneElement(child, {onDismiss: this.doClose}); // react component
+			: React.cloneElement(child, { // react component
+				dismissFlyout: this.dismiss,
+				onDismiss: this.dismissDeprecatedWrongName
+			});
+	}
+
+	dismissDeprecatedWrongName = (...args) => {
+		// eslint-disable-next-line no-console
+		console.warn('Use dismissFlyout() instead of onDismiss()');
+		return this.dismiss(...args);
 	}
 }
