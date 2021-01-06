@@ -45,6 +45,7 @@ export const WEEKDAY_MONTH_NAME_DAY_YEAR = 'eeee, MMMM d, yyyy';
 export const WEEKDAY_MONTH_NAME_DAY_YEAR_TIME = 'eeee, MMMM d, yyyy h:mm a';
 export const WEEKDAY_MONTH_NAME_DAY_YEAR_TIME_WITH_ZONE = 'eeee, MMMM d, yyyy h:mm a z';
 export const WEEKDAY_MONTH_NAME_ORDINAL_DAY = 'eeee, MMMM do';
+export const WEEKDAY_MONTH_NAME_ORDINAL_DAY_YEAR = 'eeee, MMMM do, yyyy';
 
 
 export const DEFAULT = MONTH_NAME_DAY_YEAR;

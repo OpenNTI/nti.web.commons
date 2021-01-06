@@ -3,7 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {DAY_OF_THE_MONTH, format, MONTH_ABBR} from '../utils';
+import {
+	format,
+	DAY_OF_THE_MONTH,
+	MONTH_ABBR,
+	MONTH_NAME_DAY,
+	WEEKDAY_MONTH_NAME_ORDINAL_DAY_YEAR
+} from '../utils';
 
 export default class DayTimeToggleTrigger extends React.Component {
 	static propTypes = {
@@ -27,7 +33,11 @@ export default class DayTimeToggleTrigger extends React.Component {
 		const clearClassNames = cx('clear', {empty: !begin});
 		const mainTextClassNames = cx('text', {hasDate: begin}, {hide: disableText});
 
-		const mainText = !begin && !end ? 'When should students begin this lesson?' : begin && end ? `${format(begin, 'MMMM D')} - ${format(end, 'MMMM D')}` : `${format(begin, 'dddd, MMMM Do, YYYY')}`;
+		const mainText = !begin && !end
+			? 'When should students begin this lesson?'
+			: begin && end
+				? `${format(begin, MONTH_NAME_DAY)} - ${format(end, MONTH_NAME_DAY)}`
+				: `${format(begin, WEEKDAY_MONTH_NAME_ORDINAL_DAY_YEAR)}`;
 
 		return (
 			<div {...otherProps} className={cx('daytime-toggle-trigger', className)} ref={this.domNode}>
