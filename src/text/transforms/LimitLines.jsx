@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import {getStyles, updateRef} from '../utils';
+import {ScreenSize} from '../../decorators';
 
 const styles = css`
 	.limit-lines {
@@ -30,7 +31,7 @@ function getLinesInfo (limitLines, forceLines) {
 
 //TODO: recompute ellipse after a resize or size change
 
-const LimitLines = React.forwardRef(({children, style:propStyle, className, limitLines, forceLines, ...otherProps}, ref) => {
+const LimitLines = React.forwardRef(({children, style:propStyle, className, limitLines, forceLines, screenWidth, screenHeight, ...otherProps}, ref) => {
 	const single = limitLines != null ? limitLines === 1 : forceLines === 1;
 	const textNode = useRef();
 	const [{style:stateStyle, settled}, setState] = useState({style: {}, settled: false});
@@ -49,6 +50,7 @@ const LimitLines = React.forwardRef(({children, style:propStyle, className, limi
 
 		const {lines, style} = getLinesInfo(limitLines, forceLines);
 		const {lineHeight, paddingTop, paddingBottom} = getStyles(node, ['lineHeight', 'paddingTop', 'paddingBottom']);
+
 		const max = Math.ceil(lineHeight * lines) + (paddingTop || 0) + (paddingBottom + 0);
 
 		setState({
@@ -57,7 +59,7 @@ const LimitLines = React.forwardRef(({children, style:propStyle, className, limi
 			},
 			settled: true
 		});
-	}, [limitLines, forceLines, textNode.current]);
+	}, [limitLines, forceLines, textNode.current, screenWidth]);
 
 	useEffect(() => {
 		updateRef(ref, textNode.current);
@@ -84,7 +86,11 @@ LimitLines.propTypes = {
 	limitLines: PropTypes.number,
 	forceLines: PropTypes.number,
 	style: PropTypes.object,
-	children: PropTypes.any
+	children: PropTypes.any,
+
+	//from ScreenSize decorator
+	screenWidth: PropTypes.any,
+	screenHeight: PropTypes.any,
 };
 
-export default LimitLines;
+export default ScreenSize()(LimitLines);

@@ -49,7 +49,7 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 	useLayoutEffect(() => {
 		setState({});
 		fullTextNode.current = textNode.current?.innerHTML;
-	}, [fullText]);
+	}, [fullText, screenWidth]);
 
 	useEffect(() => {
 		const {current: node} = textNode;
@@ -96,7 +96,8 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 		{
 			...props,
 			text: text || fullText,
-			title: overflowed ? fullText : null,
+			title: props.title ?? (overflowed ? fullText : null),
+			hasMarkup: props.hasMarkup || overflowed,
 			ref: processText
 		}
 	);
@@ -106,6 +107,7 @@ Overflow.shouldApply = ({overflow, hasComponents}) => overflow != null && !hasCo
 Overflow.displayName = 'Overflow';
 Overflow.propTypes = {
 	text: PropTypes.string,
+	title: PropTypes.string,
 	overflow: PropTypes.string,
 	children: PropTypes.any,
 	hasMarkup: PropTypes.bool,
