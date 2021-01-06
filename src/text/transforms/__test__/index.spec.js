@@ -23,9 +23,9 @@ describe('getTransform tests', () => {
 		expect(transforms.indexOf(Linkify)).toBeLessThan(transforms.indexOf(LimitLines));
 	});
 
-	test('returns overflow before limit-lines', () => {
+	test('returns limit-lines before overflow', () => {
 		const transforms = getTransforms({overflow: '...', limitLines: 2});
 
-		expect(transforms.indexOf(Overflow)).toBeLessThan(transforms.indexOf(LimitLines));
+		expect(transforms.indexOf(LimitLines)).toBeLessThan(transforms.indexOf(Overflow));
 	});
 });
