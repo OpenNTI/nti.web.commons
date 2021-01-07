@@ -71,6 +71,11 @@ const DefaultProperties = {
 			}
 		}
 	},
+	mediaviewer: {
+		navigation: {
+			icon: 'light'
+		}
+	},
 	certificates: {
 		sidebar: {
 			logo: (_, globalTheme) => globalTheme.assets.certificate_logo || globalTheme.assets.logo,
