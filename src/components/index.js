@@ -78,4 +78,5 @@ export { default as StickyContainer } from './StickyContainer';
 export { default as Token } from './Token';
 export { default as TokenEditor } from './TokenEditor';
 export { default as Toggle } from './Toggle';
+export { default as Tooltip } from './Tooltip';
 export { default as Zoomable } from './Zoomable';
