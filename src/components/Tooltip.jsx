@@ -4,7 +4,7 @@ import React from 'react';
 import {Flyout} from '../index';
 
 ToolTip.propTypes = {
-	tooltip: PropTypes.string.isRequired,
+	tooltip: PropTypes.any.isRequired,
 };
 
 export default function ToolTip ({ tooltip, children }) {
