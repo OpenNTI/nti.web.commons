@@ -1,17 +1,21 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Flyout} from '../index';
+import {Flyout, Text} from '../';
 
-ToolTip.propTypes = {
+Tooltip.propTypes = {
 	tooltip: PropTypes.any.isRequired,
 };
 
-export default function ToolTip ({ tooltip, children }) {
+export default function Tooltip ({ tooltip:tooltipProp, children, ...otherProps }) {
 	const child = React.Children.only(children);
 
+	const isString = typeof tooltipProp === 'string';
+
+	const tooltip = isString ? <Text>{tooltipProp}</Text> : tooltipProp;
+
 	return (
-		<Flyout.Triggered hover trigger={child}>
+		<Flyout.Triggered dark {...otherProps} hover trigger={child}>
 			{tooltip}
 		</Flyout.Triggered>
 	);
