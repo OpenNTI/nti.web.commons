@@ -1,22 +1,33 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Tooltip from '@reach/tooltip';
 
-import {Flyout, Text} from '../';
+import {Text} from '..';
 
-Tooltip.propTypes = {
-	tooltip: PropTypes.any.isRequired,
+const styles = css`
+	.tooltip {
+		background-color: var(--primary-grey);
+		padding: 3px 5px;
+		box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.25);
+		text-transform: uppercase;
+		color: #FFFFFF;
+		font-size: 11px;
+		font-weight: 600;
+	}
+`;
+
+NTITooltip.propTypes = {
+	label: PropTypes.any.isRequired,
 };
 
-export default function Tooltip ({ tooltip:tooltipProp, children, ...otherProps }) {
-	const child = React.Children.only(children);
+export default function NTITooltip ({ label:labelProp, children }) {
+	const isString = typeof labelProp === 'string';
 
-	const isString = typeof tooltipProp === 'string';
-
-	const tooltip = isString ? <Text>{tooltipProp}</Text> : tooltipProp;
+	const label = isString ? <Text>{labelProp}</Text> : labelProp;
 
 	return (
-		<Flyout.Triggered dark {...otherProps} hover trigger={child}>
-			{tooltip}
-		</Flyout.Triggered>
+		<Tooltip label={label} style={styles.tooltip}>
+			{children}
+		</Tooltip>
 	);
 }
