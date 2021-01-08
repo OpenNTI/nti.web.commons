@@ -51,6 +51,12 @@ export const WEEKDAY_MONTH_NAME_ORDINAL_DAY_YEAR = 'eeee, MMMM do, yyyy';
 export const DEFAULT = MONTH_NAME_DAY_YEAR;
 
 
+export const MONTH_ABBR_DAY_AT_TIME = (formatter) => t('at', {
+	prefix: formatter(MONTH_ABBR_DAY),
+	time: formatter(TIME)
+});
+
+
 export const MONTH_ABBR_DAY_YEAR_AT_TIME = (formatter) => t('at', {
 	prefix: formatter(MONTH_ABBR_DAY_YEAR),
 	time: formatter(TIME)
