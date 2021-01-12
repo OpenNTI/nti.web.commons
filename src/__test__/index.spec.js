@@ -1,8 +1,12 @@
+import * as ns from '../index';
 /* eslint-env jest */
-describe('Test', () => {
+describe('Sanity Checks', () => {
 
-	test ('Test', () => {
+	test ('lol', () => {
 		expect(true).toBe(true);
 	});
 
+	test('Imports resolve', () => {
+		expect(ns).toBeTruthy();
+	});
 });
