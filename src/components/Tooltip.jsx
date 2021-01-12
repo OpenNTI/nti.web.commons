@@ -1,7 +1,7 @@
 import React from 'react';
 import Tooltip from '@reach/tooltip';
 
-import {Text} from '..';
+import {Text} from '.../text/index.js';
 
 export default styled(Tooltip).attrs(({label, ...props}) => ({
 	...props,
