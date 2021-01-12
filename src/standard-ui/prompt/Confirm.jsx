@@ -13,7 +13,7 @@ import Text from '../../text';
 
 import styles from './Confirm.css';
 
-const ConfirmCard = Variant(Card, {as: 'section', rounded: true});
+const ConfirmCard = Variant(Card, ({onDismiss, ...props}) => ({as: 'section', rounded: true, ...props}));
 
 const t = scoped('web-commons.standard-ui.prompt.Confirm', {
 	confirm: 'Confirm',
