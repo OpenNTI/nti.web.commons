@@ -76,9 +76,24 @@
 		}
 	}
 
+	&.fill {
+		& :global(input:not([type="checkbox"])) {
+			background: var(--panel-background);
+		}
+	}
+
+	&.no-label {
+		& :global(input:not([type="checkbox"])) {
+			& ~ .fieldset {
+				top: 0;
+			}
+		}
+	}
+
 	&:not(.locked).empty {
 		& :global(input:not([type="checkbox"])):not(:focus) {
-			border-color: var(--border-grey-light);
+			/* Boo !important but we need to override some mobile styles */
+			border-color: var(--border-grey-light) !important;
 
 			& ~ fieldset .legend {
 				transform: translateY(calc(50% + var(--padding-horizontal, 0.625rem)));
