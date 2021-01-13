@@ -15,4 +15,5 @@ export default styled(Tooltip).attrs(({label, ...props}) => ({
 		color: #FFFFFF;
 		font-size: 11px;
 		font-weight: 600;
+		width: fit-content;
 `;
