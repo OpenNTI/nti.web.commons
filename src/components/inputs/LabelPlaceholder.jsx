@@ -81,9 +81,9 @@ export default function LabelPlaceholder ({className, variant = Box, as:tag, lab
 				{label && (
 					<Text.Base as="label" className={styles.labelPlaceholder} htmlFor={id}>{label}</Text.Base>
 				)}
-				{variant === Box && (
+				{variant === Box && label && (
 					<fieldset className={styles.fieldset}>
-						{label && (<legend className={styles.legend}>{label}</legend>)}
+						<legend className={styles.legend}>{label}</legend>
 					</fieldset>
 				)}
 			</div>
