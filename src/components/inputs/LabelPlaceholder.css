@@ -1,4 +1,4 @@
-.nti-label-placeholder {
+.container {
 	--text-smaller: 0.875rem;
 	--padding-horizontal: 0;
 	--border: 1px solid;
@@ -14,7 +14,7 @@
 }
 
 /* Clear the base input styles, since we need to define them on the container */
-.nti-label-placeholder input:not([type="checkbox"]) {
+.container input:not([type="checkbox"]) {
 	border-radius: 0;
 	background: none;
 
@@ -29,28 +29,29 @@
 	height: auto;
 }
 
-.nti-label-placeholder.center input:not([type="checkbox"]) {
+.container.center input:not([type="checkbox"]) {
 	text-align: center;
 }
 
-.nti-label-placeholder .error-message {
+.container .error-message {
 	display: block;
 	margin: 0.125rem 0 var(--padding-horizontal, 0.625rem);
 	padding: 0 var(--padding-horizontal, 0.625rem);
 	font-size: 0.75rem;
 }
 
-.nti-label-placeholder.box {
+.container.box {
 	margin-top: calc(var(--text-smaller, 0.875rem) / 2);
 
 	--padding-horizontal: 0.625rem;
 
+	& label,
 	& input:not([type="checkbox"]) {
 		width: 100%;
 		border-radius: 2px;
 		padding: var(--padding-horizontal, 0.625rem);
 
-		& ~ .fieldset {
+		& ~ fieldset.fieldset {
 			position: absolute;
 			top: calc(var(--padding-horizontal, 0.625rem) * -1);
 			bottom: 0;
@@ -105,7 +106,7 @@
 	&.locked input:not([type="checkbox"]),
 	&:not(.empty) input:not([type="checkbox"]),
 	& input:not([type="checkbox"]):focus {
-		& ~ .fieldset {
+		& ~ fieldset.fieldset {
 			border-color: var(--border-grey-light);
 
 			& .legend {
@@ -179,7 +180,7 @@
 	}
 }
 
-.nti-label-placeholder.underlined {
+.container.underlined {
 	& input:not([type="checkbox"]) {
 		-webkit-appearance: none;
 		width: 100%;

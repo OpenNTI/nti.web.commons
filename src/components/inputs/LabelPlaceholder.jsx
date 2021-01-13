@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import Text from '../../text';
 import {Message as ErrorMessage} from '../../errors';
 
-import Styles from './LabelPlaceholder.css';
+import styles from './LabelPlaceholder.css';
 
-const cx = classnames.bind(Styles);
 
-const Box = cx('box');
-const Underlined = cx('underlined');
+const Box = styles.box;
+const Underlined = styles.underlined;
 
 let seenIds = 0;
 
@@ -62,33 +61,33 @@ export default function LabelPlaceholder ({className, variant = Box, as:tag, lab
 	};
 
 	const containerClass = cx(
-		'nti-label-placeholder',
+		styles.container,
 		className,
 		variant,
 		{
-			error,
-			locked,
-			center,
-			fill,
-			empty,
-			noLabel: !label
+			[styles.error]: error,
+			[styles.locked]: locked,
+			[styles.center]: center,
+			[styles.fill]: fill,
+			[styles.empty]: empty,
+			[styles.unlabeled]: !label
 		}
 	);
 
 	return (
 		<Cmp className={containerClass} data-input-id={id} {...otherProps} >
-			<div className={cx('input-wrapper')}>
+			<div className={styles.inputWrapper}>
 				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId, ref: clonedInputRef})}
 				{label && (
-					<Text.Base as="label" className={cx('label-placeholder')} htmlFor={id}>{label}</Text.Base>
+					<Text.Base as="label" className={styles.labelPlaceholder} htmlFor={id}>{label}</Text.Base>
 				)}
 				{variant === Box && (
-					<fieldset className={cx('fieldset')}>
-						{label && (<legend className={cx('legend')}>{label}</legend>)}
+					<fieldset className={styles.fieldset}>
+						{label && (<legend className={styles.legend}>{label}</legend>)}
 					</fieldset>
 				)}
 			</div>
-			{!noError && (<ErrorMessage error={error} className={cx('error-message')} id={errorId} role="alert" />)}
+			{!noError && (<ErrorMessage error={error} className={styles.errorMessage} id={errorId} role="alert" />)}
 		</Cmp>
 	);
 }
