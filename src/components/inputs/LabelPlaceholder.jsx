@@ -7,10 +7,6 @@ import {Message as ErrorMessage} from '../../errors';
 
 import styles from './LabelPlaceholder.css';
 
-
-const Box = styles.box;
-const Underlined = styles.underlined;
-
 let seenIds = 0;
 
 const getId = () => {
@@ -19,8 +15,6 @@ const getId = () => {
 	return `nti-${seenIds}`;
 };
 
-LabelPlaceholder.Box = Box;
-LabelPlaceholder.Underlined = Underlined;
 LabelPlaceholder.propTypes = {
 	className: PropTypes.string,
 	label: PropTypes.string,
@@ -31,13 +25,13 @@ LabelPlaceholder.propTypes = {
 	noError: PropTypes.bool,
 	fill: PropTypes.bool,
 
-	variant: PropTypes.oneOf([Box, Underlined]),
+	variant: PropTypes.oneOf(['box', 'underlined']),
 	as: PropTypes.string,
 
 	children: PropTypes.element
 };
 
-export default function LabelPlaceholder ({className, variant = Box, as:tag, label, error, locked, center, noError, fill, children, ...otherProps}) {
+export default function LabelPlaceholder ({className, variant = 'box', as:tag, label, error, locked, center, noError, fill, children, ...otherProps}) {
 	const [id] = React.useState(() => getId());
 	const errorId = `${id}-error`;
 	const input = React.Children.only(children);
@@ -63,7 +57,7 @@ export default function LabelPlaceholder ({className, variant = Box, as:tag, lab
 	const containerClass = cx(
 		styles.container,
 		className,
-		variant,
+		styles[variant],
 		{
 			[styles.error]: error,
 			[styles.locked]: locked,
@@ -76,14 +70,14 @@ export default function LabelPlaceholder ({className, variant = Box, as:tag, lab
 
 	return (
 		<Cmp className={containerClass} data-input-id={id} {...otherProps} >
-			<div className={styles.inputWrapper}>
+			<div className={styles.relative}>
 				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId, ref: clonedInputRef})}
 				{label && (
-					<Text.Base as="label" className={styles.labelPlaceholder} htmlFor={id}>{label}</Text.Base>
+					<Text.Base as="label" htmlFor={id}>{label}</Text.Base>
 				)}
-				{variant === Box && label && (
-					<fieldset className={styles.fieldset}>
-						<legend className={styles.legend}>{label}</legend>
+				{variant === 'box' && label && (
+					<fieldset>
+						<legend>{label}</legend>
 					</fieldset>
 				)}
 			</div>

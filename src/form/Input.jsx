@@ -54,7 +54,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 			<Input.LabelPlaceholder
 				className={className}
 				error={errorProp || errors[name]}
-				variant={underlined ? Input.LabelPlaceholder.Underlined : Input.LabelPlaceholder.Box}
+				variant={underlined ? 'underlined' : 'box'}
 				label={labelOnInput ? null : label}
 				{...labelProps}
 			>

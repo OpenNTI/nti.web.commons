@@ -14,7 +14,7 @@ export const Label = () => (
 			<input/>
 		</LabelPlaceholder>
 
-		<LabelPlaceholder label="test" variant={LabelPlaceholder.Underlined}>
+		<LabelPlaceholder label="test" variant="underlined">
 			<input/>
 		</LabelPlaceholder>
 

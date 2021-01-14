@@ -1,3 +1,9 @@
+@custom-selector :--inputs input:not([type="checkbox"]);
+@custom-selector :--box-up-state .box.locked :--inputs, .box:not(.empty) :--inputs, .box :--inputs:focus;
+@custom-selector :--box-error-up-state .box.error.locked :--inputs, .box.error:not(.empty) :--inputs, .box.error :--inputs:focus;
+@custom-selector :--underlined-up-state .underlined.locked :--inputs, .underlined:not(.empty) :--inputs, .underlined :--inputs:focus;
+@custom-selector :--underlined-error-up-state .underlined.error.locked :--inputs, .underlined.error:not(.empty) :--inputs, .underlined.error :--inputs:focus;
+
 .container {
 	--text-smaller: 0.875rem;
 	--padding-horizontal: 0;
@@ -7,188 +13,176 @@
 	display: block;
 	font-family: var(--body-font-family);
 	line-height: 1.375;
+
+	/* Clear the base input styles, since we need to define them on the container */
+	:--inputs {
+		border-radius: 0;
+		background: none;
+
+		/* Boo !important but we need to override some mobile styles */
+		border: var(--border, 1px solid) transparent !important;
+
+		/* again overriding mobile styles */
+		box-shadow: none;
+		color: inherit;
+		font: inherit;
+		padding: 0;
+		height: auto;
+	}
 }
 
-.input-wrapper {
+.relative {
 	position: relative;
 }
 
-/* Clear the base input styles, since we need to define them on the container */
-.container input:not([type="checkbox"]) {
-	border-radius: 0;
-	background: none;
-
-	/* Boo !important but we need to override some mobile styles */
-	border: var(--border, 1px solid) transparent !important;
-
-	/* again overriding mobile styles */
-	box-shadow: none;
-	color: inherit;
-	font: inherit;
-	padding: 0;
-	height: auto;
-}
-
-.container.center input:not([type="checkbox"]) {
+.center :--inputs {
 	text-align: center;
+
+	& ~ fieldset > legend {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
-.container .error-message {
+.error-message {
 	display: block;
 	margin: 0.125rem 0 var(--padding-horizontal, 0.625rem);
 	padding: 0 var(--padding-horizontal, 0.625rem);
 	font-size: 0.75rem;
 }
 
-.container.box {
+/* #region Boxes */
+
+.box {
 	margin-top: calc(var(--text-smaller, 0.875rem) / 2);
 
 	--padding-horizontal: 0.625rem;
 
-	& label,
-	& input:not([type="checkbox"]) {
+	label {
+		display: none;
+	}
+
+	:--inputs {
 		width: 100%;
 		border-radius: 2px;
 		padding: var(--padding-horizontal, 0.625rem);
-
-		& ~ fieldset.fieldset {
-			position: absolute;
-			top: calc(var(--padding-horizontal, 0.625rem) * -1);
-			bottom: 0;
-			left: 0;
-			right: 0;
-			padding: 0;
-			border: var(--border, 1px solid) transparent;
-			margin: 0;
-			border-radius: 2px;
-			pointer-events: none;
-
-			& .legend {
-				/* Using margin prevents the fieldset top-left corner being cut off */
-				padding: 0 calc(var(--padding-horizontal, 0.625rem) - 0.375rem);
-				margin-left: 0.375rem;
-				font-size: 1em;
-				color: var(--tertiary-grey);
-				transition:
-					font-size var(--transition-time, 0.2s),
-					transform var(--transition-time, 0.2s);
-				pointer-events: none;
-			}
-		}
 	}
 
-	&.fill {
-		& input:not([type="checkbox"]) {
-			background: var(--panel-background);
-		}
+	&.fill :--inputs {
+		background: var(--panel-background);
 	}
 
-	&.unlabeled {
-		& input:not([type="checkbox"]) {
-			& ~ .fieldset {
-				top: 0;
-			}
-		}
-	}
-
-	&:not(.locked).empty {
-		& input:not([type="checkbox"]):not(:focus) {
-			/* Boo !important but we need to override some mobile styles */
-			border-color: var(--border-grey-light) !important;
-
-			& ~ fieldset .legend {
-				transform: translateY(calc(50% + var(--padding-horizontal, 0.625rem)));
-			}
-		}
-	}
-
-	/* TODO: cleanup */
-	&.locked input:not([type="checkbox"]),
-	&:not(.empty) input:not([type="checkbox"]),
-	& input:not([type="checkbox"]):focus {
-		& ~ fieldset.fieldset {
-			border-color: var(--border-grey-light);
-
-			& .legend {
-				top: -0.7rem;
-				font-size: var(--text-smaller, 0.875rem);
-				transform: none;
-			}
-		}
-
-		&:focus {
-			& ~ .fieldset {
-				border-color: var(--secondary-green);
-
-				& .legend {
-					color: var(--secondary-green);
-				}
-			}
-		}
-	}
-
-	& input:not([type="checkbox"]):-webkit-autofill {
-		& ~ .fieldset {
-			border-color: var(--border-grey-light);
-
-			& .legend {
-				top: -0.7rem;
-				font-size: var(--text-smaller, 0.875rem);
-				transform: none;
-			}
-		}
-	}
-
-	&.center input:not([type="checkbox"]) ~ .fieldset .legend {
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	&.error {
-		&:not(.locked).empty {
-			& input:not([type="checkbox"]):not(:focus) {
-				border-color: var(--primary-red);
-			}
-		}
-
-		/* TODO: cleanup */
-		&.locked input:not([type="checkbox"]),
-		&:not(.empty) input:not([type="checkbox"]),
-		& input:not([type="checkbox"]):focus {
-			& ~ fieldset {
-				border-color: var(--primary-red);
-
-				& .legend {
-					color: var(--primary-red);
-				}
-			}
-		}
-
-		& input:not([type="checkbox"]):-webkit-autofill {
-			& ~ fieldset {
-				border-color: var(--primary-red);
-
-				& .legend {
-					color: var(--primary-red);
-				}
-			}
-		}
-	}
-
-	& .label-placeholder {
-		display: none;
+	&.unlabeled :--inputs ~ fieldset {
+		top: 0;
 	}
 }
 
-.container.underlined {
-	& input:not([type="checkbox"]) {
+.box :--inputs ~ fieldset {
+	position: absolute;
+	top: calc(var(--padding-horizontal, 0.625rem) * -1);
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 0;
+	border: var(--border, 1px solid) transparent;
+	margin: 0;
+	border-radius: 2px;
+	pointer-events: none;
+
+	& > legend {
+		/* Using margin prevents the fieldset top-left corner being cut off */
+		padding: 0 calc(var(--padding-horizontal, 0.625rem) - 0.375rem);
+		margin-left: 0.375rem;
+		font-size: 1em;
+		color: var(--tertiary-grey);
+		transition:
+			font-size var(--transition-time, 0.2s),
+			transform var(--transition-time, 0.2s);
+		pointer-events: none;
+	}
+}
+
+.box:not(.locked).empty :--inputs:not(:focus) {
+	/* Boo !important but we need to override some mobile styles */
+	border-color: var(--border-grey-light) !important;
+
+	& ~ fieldset > legend {
+		transform: translateY(calc(50% + var(--padding-horizontal, 0.625rem)));
+	}
+}
+
+:--box-up-state ~ fieldset {
+	border-color: var(--secondary-green);
+
+	& > legend {
+		top: -0.7rem;
+		color: var(--secondary-green);
+		font-size: var(--text-smaller, 0.875rem);
+		transform: none;
+	}
+}
+
+.box :--inputs:-webkit-autofill ~ fieldset {
+	border-color: var(--border-grey-light);
+
+	& > legend {
+		top: -0.7rem;
+		font-size: var(--text-smaller, 0.875rem);
+		transform: none;
+	}
+}
+
+.box.error {
+	&:not(.locked).empty :--inputs:not(:focus) {
+		border-color: var(--primary-red);
+	}
+
+	& :--inputs:-webkit-autofill ~ fieldset {
+		border-color: var(--primary-red);
+
+		& > legend {
+			color: var(--primary-red);
+		}
+	}
+}
+
+:--box-error-up-state ~ fieldset {
+	border-color: var(--primary-red);
+
+	& > legend {
+		color: var(--primary-red);
+	}
+}
+
+/* #endregion */
+
+/* #region Underline Styles */
+
+.underlined {
+	&.center label {
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+
+	&.fill {
+		--padding-horizontal: 0.625rem;
+
+		& :--inputs {
+			background: #f7f7f7;
+			border-radius: 5px 5px 0 0;
+		}
+	}
+
+	:--inputs {
+		appearance: none;
 		-webkit-appearance: none;
 		width: 100%;
 		box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
 		padding: 1.5625em var(--padding-horizontal, 0.625rem) 0.625rem;
 		background: none;
 
-		& + .label-placeholder {
+		& + label {
 			position: absolute;
 			left: var(--padding-horizontal, 0.625rem);
 			font-size: 1em;
@@ -200,76 +194,44 @@
 			pointer-events: none;
 		}
 	}
+}
 
-	&:not(.locked).empty {
-		& input:not([type="checkbox"]):not(:focus) {
-			& + .label-placeholder {
-				top: 50%;
-				transform: translateY(-50%);
-			}
-		}
-	}
+.underlined:not(.locked).empty :--inputs:not(:focus) + label {
+	top: 50%;
+	transform: translateY(-50%);
+}
 
-	/* TODO: cleanup */
-	&.locked input:not([type="checkbox"]),
-	&:not(.empty) input:not([type="checkbox"]),
-	& input:not([type="checkbox"]):focus {
-		& + .label-placeholder {
-			top: 0.25rem;
-			font-size: var(--text-smaller, 0.875rem);
-			transform: none;
-		}
+:--underlined-up-state {
+	box-shadow: inset 0 -1px 0 0 var(--secondary-green);
 
-		&:focus {
-			box-shadow: inset 0 -1px 0 0 var(--secondary-green);
-
-			& + .label-placeholder {
-				color: var(--secondary-green);
-			}
-		}
-	}
-
-	& input:not([type="checkbox"]):-webkit-autofill + .label-placeholder {
+	& + label {
+		color: var(--secondary-green);
 		top: 0.25rem;
 		font-size: var(--text-smaller, 0.875rem);
 		transform: none;
 	}
+}
 
-	&.center {
-		& .label-placeholder {
-			left: 0;
-			right: 0;
-			text-align: center;
+.underlined :--inputs:-webkit-autofill + label {
+	top: 0.25rem;
+	font-size: var(--text-smaller, 0.875rem);
+	transform: none;
+}
+
+.underlined.error {
+	&:not(.locked).empty {
+		& :--inputs:not(:focus) {
+			box-shadow: inset 0 -1px 0 0 var(--primary-red);
 		}
 	}
 
-	&.fill {
-		--padding-horizontal: 0.625rem;
-
-		& input:not([type="checkbox"]) {
-			background: #f7f7f7;
-			border-radius: 5px 5px 0 0;
-		}
-	}
-
-	&.error {
-		&:not(.locked).empty {
-			& input:not([type="checkbox"]):not(:focus) {
-				box-shadow: inset 0 -1px 0 0 var(--primary-red);
-			}
-		}
-
-		/* TODO: cleanup */
-		&.locked input:not([type="checkbox"]),
-		&:not(.empty) input:not([type="checkbox"]),
-		& input:not([type="checkbox"]):focus {
-			& + .label-placeholder {
-				color: var(--primary-red);
-			}
-		}
-
-		& input:not([type="checkbox"]):-webkit-autofill + .label-placeholder {
-			color: var(--primary-red);
-		}
+	& :--inputs:-webkit-autofill + label {
+		color: var(--primary-red);
 	}
 }
+
+:--underlined-error-up-state + label {
+	color: var(--primary-red);
+}
+
+/* #endregion */
