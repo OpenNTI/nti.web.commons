@@ -15,10 +15,13 @@ DateTime.propTypes = {
 	relativeTo: PropTypes.instanceOf(Date),
 	format: PropTypes.string,
 	relative: PropTypes.bool,
-	prefix: PropTypes.string,
+	prefix: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.oneOf([false])
+	]),
 	suffix: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.bool
+		PropTypes.oneOf([false])
 	]),
 	showToday: PropTypes.bool,
 	todayText: PropTypes.string
@@ -57,7 +60,7 @@ function DateTimeImpl ({
 	const addSuffix = !suffixExplicitlySuppressed && !hasCustomSuffix;
 
 	let text = relativeTo
-		? fromWhen(date, relativeTo)
+		? fromWhen(date, relativeTo, {addSuffix})
 		: relative
 			? fromNow(date, {addSuffix})
 			: format(date, pattern);

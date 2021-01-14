@@ -60,7 +60,7 @@ const normal = {
 	xHours: x => x * HOUR,
 	xDays: x => x * DAY,
 	xMonths: x => x * MONTH,
-	xYears: x => x & YEAR,
+	xYears: x => x * YEAR,
 };
 
 function formatDistance (token, count, options) {
