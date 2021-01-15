@@ -9,9 +9,9 @@ import {getTextPropsFromChildren} from './utils';
 import {getTransforms} from './transforms';
 import Renderer from './Renderer';
 
-const NTIText = React.forwardRef(({children, as: tag, className, localized, ...props}, ref) => {
+const NTIText = React.forwardRef(({children, as: tag, className, escaped, localized, ...props}, ref) => {
 
-	const textProps = getTextPropsFromChildren(children, localized);
+	const textProps = getTextPropsFromChildren(children, localized || escaped);
 	const combinedProps = {...props, ...textProps};
 
 	const transforms = getTransforms(combinedProps).reverse();
@@ -55,6 +55,7 @@ NTIText.propTypes = {
 	children: PropTypes.any,
 	as: PropTypes.string,
 	className: PropTypes.string,
+	escaped: PropTypes.bool,
 	localized: PropTypes.bool
 };
 
