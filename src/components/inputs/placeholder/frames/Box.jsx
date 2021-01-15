@@ -27,9 +27,21 @@ const styles = css`
 	&.fill :--inputs {
 		background: var(--panel-background);
 	}
+}
 
-	&.unlabeled :--inputs ~ fieldset {
-		top: 0;
+.box.unlabeled {
+	/* Boo !important but we need to override some mobile styles */
+	&:not(.error) :--inputs {
+		border: 1px solid var(--border-grey-light) !important;
+	}
+
+	&:not(.error) :--inputs:focus {
+		border: 1px solid var(--secondary-green) !important;
+	}
+
+	&.error :--inputs,
+	&.error :--inputs:focus {
+		border: 1px solid var(--primary-red) !important;
 	}
 }
 
@@ -67,14 +79,24 @@ const styles = css`
 	}
 }
 
-:--box-up-state ~ fieldset {
-	border-color: var(--secondary-green);
 
-	& > legend {
-		top: -0.7rem;
-		color: var(--secondary-green);
-		font-size: var(--text-smaller, 0.875rem);
-		transform: none;
+:--box-up-state {
+	& ~ fieldset {
+		border-color: var(--border-grey-light);
+
+		& > legend {
+			top: -0.7rem;
+			font-size: var(--text-smaller, 0.875rem);
+			transform: none;
+		}
+	}
+
+	&:focus ~ fieldset {
+		border-color: var(--secondary-green);
+
+		& > legend {
+			color: var(--secondary-green);
+		}
 	}
 }
 
@@ -90,7 +112,7 @@ const styles = css`
 
 .box.error {
 	&:not(.locked).empty :--inputs:not(:focus) {
-		border-color: var(--primary-red);
+		border-color: var(--primary-red) !important;
 	}
 
 	& :--inputs:-webkit-autofill ~ fieldset {
@@ -116,6 +138,7 @@ BoxFrame.propTypes = {
 	center: PropTypes.bool,
 	label: PropTypes.any,
 	error: PropTypes.any,
+	errorCmp: PropTypes.any,
 	empty: PropTypes.bool,
 	fill: PropTypes.bool,
 	locked: PropTypes.bool,
@@ -127,6 +150,7 @@ export default function BoxFrame ({
 	className,
 	empty,
 	error,
+	errorCmp,
 	fill,
 	label,
 	locked,
@@ -156,7 +180,7 @@ export default function BoxFrame ({
 					</fieldset>
 				)}
 			</Relative>
-			{error}
+			{errorCmp}
 		</Cmp>
 	);
 }

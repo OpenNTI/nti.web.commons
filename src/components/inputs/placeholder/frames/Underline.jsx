@@ -57,10 +57,16 @@ const styles = css`
 }
 
 :--underline-up-state {
-	box-shadow: inset 0 -1px 0 0 var(--secondary-green);
+	&:focus {
+		box-shadow: inset 0 -1px 0 0 var(--secondary-green);
+
+		& + label {
+			color: var(--secondary-green);
+		}
+	}
+
 
 	& + label {
-		color: var(--secondary-green);
 		top: 0.25rem;
 		font-size: var(--text-smaller, 0.875rem);
 		transform: none;
@@ -99,6 +105,7 @@ export default function UnderlineFrame ({
 	className,
 	empty,
 	error,
+	errorCmp,
 	fill,
 	label,
 	locked,
@@ -123,7 +130,7 @@ export default function UnderlineFrame ({
 			<Relative>
 				{children}
 			</Relative>
-			{error}
+			{errorCmp}
 		</Cmp>
 	);
 }

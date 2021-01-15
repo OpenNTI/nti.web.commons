@@ -87,12 +87,12 @@ export default function Label ({className, variant = 'box', error, noError, chil
 		}
 	}, [inputListener, setEmpty]);
 
-	const errorMessage = !noError && error && (
+	const errorMessage = !noError && (
 		<ErrorMessage error={error} id={errorId} role="alert" />
 	);
 
 	return (
-		<Frame className={cx(styles.container, className)} empty={empty} error={errorMessage} data-input-id={id} {...remainingProps} >
+		<Frame className={cx(styles.container, className)} empty={empty} errorCmp={errorMessage} error={!noError && error} data-input-id={id} {...remainingProps} >
 			{React.cloneElement(input, {
 				id,
 				placeholder: input.props.placeholder || ' ',
