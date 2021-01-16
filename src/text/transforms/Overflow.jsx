@@ -51,7 +51,7 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 		fullTextNode.current = textNode.current?.innerHTML;
 	}, [fullText, screenWidth]);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const {current: node} = textNode;
 		const {current: scratch} = fullTextNode;
 		if (!node || !scratch) { return; }
