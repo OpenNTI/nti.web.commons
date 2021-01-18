@@ -45,6 +45,18 @@ const styles = css`
 	}
 }
 
+.box :--inputs:disabled {
+	opacity: 0.8;
+
+	& ~ fieldset {
+		opacity: 0.8;
+
+		& > legend {
+			opacity: 0.8;
+		}
+	}
+}
+
 .box :--inputs ~ fieldset {
 	position: absolute;
 	top: calc(var(--padding-horizontal, 0.625rem) * -1);

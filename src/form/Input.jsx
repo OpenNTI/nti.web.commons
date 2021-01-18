@@ -39,7 +39,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 			}, {inputProps: {}, labelProps: {}});
 
 		const formContext = React.useContext(FormContext);
-		const {errors = {}, clearError} = formContext || {};
+		const {errors = {}, clearError, submitting} = formContext || {};
 
 		const clearProps = {};
 
@@ -65,6 +65,7 @@ function WrapperFactory (Cmp, clearOn = 'onChange', labelOnInput) {
 					aria-label={label ?? placeholder}
 					placeholder={placeholder}
 					aria-invalid={Boolean(errors[name])}
+					disabled={submitting}
 					{...inputProps}
 					{...clearProps}
 				/>

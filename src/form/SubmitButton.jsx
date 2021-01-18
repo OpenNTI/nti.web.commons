@@ -1,8 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
+import Styles from './Styles.css';
 import FormContext from './Context';
 
-export default function FormSubmitButton (props) {
+FormSubmitButton.propType = {
+	className: PropTypes.string
+};
+export default function FormSubmitButton ({className, ...props}) {
 	const formContext = React.useContext(FormContext);
 	const {disabled} = formContext || {};
 
@@ -14,6 +20,7 @@ export default function FormSubmitButton (props) {
 
 	return (
 		<button
+			className={cx(className, Styles.submitButton)}
 			type="submit"
 			{...disabledProps}
 			{...props}

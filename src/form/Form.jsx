@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import * as Errors from '../errors';
 
+import Styles from './Styles.css';
 import FormContext from './Context';
 import Input from './Input';
 import SubmitButton from './SubmitButton';
@@ -11,7 +13,7 @@ import * as Values from './values';
 
 const GlobalError = Symbol('Global Error');
 
-function getChangeHandler (form, addErrors, onChange, onValid, onInvalid) {
+function getChangeHandler ({form, addErrors, onChange, onValid, onInvalid}) {
 	if (!onChange && !onValid && !onInvalid) { return null; }
 
 	let wasValid = Validation.isValid(form.current);
@@ -41,7 +43,7 @@ function getChangeHandler (form, addErrors, onChange, onValid, onInvalid) {
 	};
 }
 
-function getSubmitHandler (form, disabled, addErrors, onSubmit) {
+function getSubmitHandler ({form, disabled, addErrors, onSubmit, afterSubmit, setSubmitting}) {
 	if (!onSubmit) { return null; }
 
 	return async (e) => {
@@ -58,10 +60,13 @@ function getSubmitHandler (form, disabled, addErrors, onSubmit) {
 		}
 
 		try {
+			setSubmitting(true);
 			await onSubmit(Values.getValues(form.current), e);
 		} catch (err) {
 			if (!err.field) { addErrors({[GlobalError]: err}); }
 			else { addErrors({[err.field]: err}); }
+		} finally {
+			setSubmitting(false);
 		}
 	};
 }
@@ -75,6 +80,8 @@ Form.Values = Values;
 Form.Input = Input;
 Form.SubmitButton = SubmitButton;
 Form.propTypes = {
+	className: PropTypes.string,
+
 	formRef: PropTypes.any,
 
 	onSubmit: PropTypes.func,
@@ -82,15 +89,21 @@ Form.propTypes = {
 	onValid: PropTypes.func,
 	onInvalid: PropTypes.func,
 
+	afterSubmit: PropTypes.func,
+
 	disabled: PropTypes.bool,
 	noValidate: PropTypes.bool,
 
 	initialError: PropTypes.any,
 
+	mask: PropTypes.any,
+
 	children: PropTypes.any
 };
 function Form (props) {
 	const {
+		className,
+
 		formRef,
 
 		onSubmit,
@@ -98,10 +111,14 @@ function Form (props) {
 		onValid,
 		onInvalid,
 
+		afterSubmit,
+
 		disabled,
 		noValidate = true,
 
 		initialError,
+
+		mask,
 
 		children,
 
@@ -110,35 +127,52 @@ function Form (props) {
 
 	const formEl = React.useRef(null);
 	const [errors, setErrors] = React.useState(getInitialErrorState(initialError));
+	const [submitting, setSubmitting] = React.useState(false);
 
 	React.useImperativeHandle(formRef, () => formEl.current);
 
-	const addErrors = (toAdd) => setErrors({...errors, ...toAdd});
-	const clearError = (name) => {
+	const addErrors = React.useCallback((toAdd) => setErrors({...errors, ...toAdd}), [errors]);
+	const clearError = React.useCallback((name) => {
 		if (errors && errors[name]) {
 			setErrors({...errors, [name]: void 0, [GlobalError]: void 0});
 		} else if (errors[GlobalError]) {
 			setErrors({...errors, [GlobalError]: void 0});
 		}
-	};
+	}, [errors]);
+
+	const submitHandler = React.useMemo(
+		() => getSubmitHandler({form: formEl, disabled, addErrors, onSubmit, afterSubmit, setSubmitting}),
+		[formEl, disabled, addErrors, onSubmit, afterSubmit, setSubmitting]
+	);
+
+	const changeHandler = React.useMemo(
+		() => getChangeHandler({form: formEl, addErrors, onChange, onValid, onInvalid}),
+		[formEl, addErrors, onChange, onValid, onInvalid]
+	);
 
 	return (
-		<FormContext.Provider value={{errors, clearError, disabled}}>
+		<FormContext.Provider value={{errors, clearError, disabled, submitting}}>
 			<form
 				ref={formEl}
+				className={cx(className, Styles.ntForm, {[Styles.disabled]: disabled, [Styles.submitting]: submitting, [Styles.hasMask]: Boolean(mask)})}
 				noValidate={noValidate}
-				onSubmit={getSubmitHandler(formEl, disabled, addErrors, onSubmit)}
-				onChange={getChangeHandler(formEl, addErrors, onChange, onValid, onInvalid)}
+				onSubmit={submitHandler}
+				onChange={changeHandler}
 				{...otherProps}
 			>
 				{errors[GlobalError] && (<Errors.Message error={errors[GlobalError]} />)}
 				{children}
+				{submitting && mask && (
+					<div className={Styles.formMask}>
+						{mask !== true ? (mask) : null}
+					</div>
+				)}
 			</form>
 		</FormContext.Provider>
 	);
 }
 
-const ForwardWrapper = (props, ref) => (<Form {...props} formRef={ref} />); 
+const ForwardWrapper = (props, ref) => (<Form {...props} formRef={ref} />);
 const ForwardRef = React.forwardRef(ForwardWrapper);
 
 ForwardRef.Validation = Validation;
