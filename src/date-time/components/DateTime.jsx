@@ -13,7 +13,10 @@ DateTimeImpl.propTypes =
 DateTime.propTypes = {
 	date: PropTypes.instanceOf(Date),
 	relativeTo: PropTypes.instanceOf(Date),
-	format: PropTypes.string,
+	format: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.func,
+	]),
 	relative: PropTypes.bool,
 	prefix: PropTypes.oneOfType([
 		PropTypes.string,
