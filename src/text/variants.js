@@ -3,6 +3,7 @@ import cx from 'classnames';
 const styles = css`
 	.nti-text {
 		font-family: var(--body-font-family);
+		white-space: pre-wrap;
 
 		& a {
 			text-decoration: none;
