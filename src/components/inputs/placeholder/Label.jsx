@@ -57,7 +57,7 @@ Label.propTypes = {
 	noError: PropTypes.bool,
 	fill: PropTypes.bool,
 
-	variant: PropTypes.oneOf(['box', 'underline']),
+	variant: PropTypes.oneOf(['box', 'underlined']),
 	as: PropTypes.any,
 
 	children: PropTypes.element
