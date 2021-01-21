@@ -15,10 +15,10 @@ export function useTheme () {
 	return theme;
 }
 
-export function useThemeProperty (prop) {
+export function useThemeProperty (prop, fallback) {
 	const theme = useTheme();
 
-	return theme && ObjectUtils.get(theme, prop);
+	return (theme && ObjectUtils.get(theme, prop)) ?? fallback;
 }
 
 
