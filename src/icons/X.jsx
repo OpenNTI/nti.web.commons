@@ -1,7 +1,15 @@
 import React from 'react';
 
 import SVGIcon from './SVG-Icon';
+import FontIcon from './Font-Icon';
 
+function BoldX (props) {
+	return (
+		<FontIcon icon="icon-bold-x" {...props} />
+	);
+}
+
+CloseIcon.Bold = BoldX;
 export default function CloseIcon (props) {
 	return (
 		<SVGIcon {...props}>
