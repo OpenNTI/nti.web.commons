@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
-import Styles from './SVG-Icon.css';
-
-const cx = classnames.bind(Styles);
+const SVG = styled('svg')`
+		display: inline-block;
+`;
 
 SVGIcon.propTypes = {
 	className: PropTypes.string,
@@ -13,7 +13,7 @@ SVGIcon.propTypes = {
 };
 export default function SVGIcon ({className, viewBox = '0 0 16 16', width = '1em', ...otherProps}) {
 	return (
-		<svg
+		<SVG
 			className={cx('svg-icon', className)}
 			xmlns="http://www.w3.org/2000/svg"
 			width={width}
