@@ -37,6 +37,7 @@ NTIText.Translator = (getString) => {
 
 	Translate.Base = Variant(Translate, variants.Base, 'Base');
 	Translate.Condensed = Variant(Translate, variants.Condensed, 'Condensed');
+	Translate.Label = Variant(Translate, variants.Label, 'Label');
 
 	return Translate;
 };
