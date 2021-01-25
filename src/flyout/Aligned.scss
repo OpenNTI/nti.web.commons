@@ -88,6 +88,11 @@
 		.flyout-inner {
 			box-shadow: 0 0 4px 0 var(--primary-blue);
 		}
+
+		// *:focus:not(:focus-visible) {
+		// 	outline: none;
+		// 	box-shadow: 0 0 4px 0 var(--primary-blue);
+		// }
 	}
 
 	.flyout-inner {
