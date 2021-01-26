@@ -1,5 +1,6 @@
 export {default as Alert} from './Alert';
 export {default as Arrow} from './Arrow';
+export {default as Check} from './Check';
 export {default as Chevron} from './Chevron';
 export {default as DisclosureArrow} from './DisclosureArrow';
 export {default as Download} from './Download';
