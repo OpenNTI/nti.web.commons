@@ -1,5 +1,3 @@
-import WithContainerQuery from "./WithContainerQuery";
-
 export {default as BasePath} from './BasePath';
 export {default as ItemChanges} from './ItemChanges';
 export {default as SingleInstance} from './SingleInstance';

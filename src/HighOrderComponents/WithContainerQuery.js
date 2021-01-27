@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {HOC} from '@nti/lib-commons';
 
-import {Monitor} from '../components';
+import {ElementSize} from '../components/monitors';
 
 import Variant from './Variant';
 
@@ -43,13 +43,13 @@ function ContainerQuery ({_propGetter, _component:Cmp, _componentRef, className,
 	const onSizeChange = React.useCallback((size) => setActiveProps(_propGetter(size)), [_propGetter]);
 
 	return (
-		<Monitor.ElementSize
+		<ElementSize
 			as={as}
 			onChange={onSizeChange}
 			className={cx(className, activeProps?.className)}
 		>
 			<Cmp {...Variant.combineProps(activeProps, otherProps)} ref={_componentRef} />
-		</Monitor.ElementSize>
+		</ElementSize>
 	);
 }
 
