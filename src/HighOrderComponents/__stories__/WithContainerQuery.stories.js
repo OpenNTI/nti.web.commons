@@ -12,8 +12,6 @@ TestCmp.propTypes = {
 	size: PropTypes.string
 };
 function TestCmp ({size}) {
-	debugger;
-
 	return (
 		<div>
 			{size}

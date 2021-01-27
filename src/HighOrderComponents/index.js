@@ -1,4 +1,7 @@
-export BasePath from './BasePath';
-export ItemChanges from './ItemChanges';
-export SingleInstance from './SingleInstance';
-export Variant from './Variant';
+import WithContainerQuery from "./WithContainerQuery";
+
+export {default as BasePath} from './BasePath';
+export {default as ItemChanges} from './ItemChanges';
+export {default as SingleInstance} from './SingleInstance';
+export {default as Variant} from './Variant';
+export {default as WithContainerQuery} from './WithContainerQuery';
