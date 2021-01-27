@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import {HOC} from '@nti/lib-commons';
 
-function combineProps (a, b) {
+function combineProps (a = {}, b = {}) {
 	const combined = {...a, ...b};
 
 	if (a.className != null && b.className != null) {
