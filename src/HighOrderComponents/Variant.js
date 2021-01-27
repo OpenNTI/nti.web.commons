@@ -16,6 +16,7 @@ function combineProps (a, b) {
 	return combined;
 }
 
+Variant.combineProps = combineProps;
 export default function Variant (Component, variantProps, name) {
 	const VariantWrapper = (props, ref) => {
 		const combinedProps = typeof variantProps === 'function' ? variantProps(props) : combineProps(variantProps, props);
