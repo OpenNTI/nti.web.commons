@@ -1,3 +1,4 @@
+export {default as Add} from './Add';
 export {default as Alert} from './Alert';
 export {default as Arrow} from './Arrow';
 export {default as Check} from './Check';
