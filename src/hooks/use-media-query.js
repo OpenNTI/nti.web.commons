@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useForceUpdate from './use-force-update';
+import {useForceUpdate} from './use-force-update';
 
 useMediaQuery.MobileQuery = '(max-width: 480px)';
 useMediaQuery.TabletQuery = '(min-width: 481px) and (max-width: 1024px)';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {equals} from '@nti/lib-commons';
 
-import useForceUpdate from './use-force-update';
+import {useForceUpdate} from './use-force-update';
 
 const Initial = Symbol('initial');
 

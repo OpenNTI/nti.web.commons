@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useForceUpdate from './use-force-update';
+import {useForceUpdate} from './use-force-update';
 
 const ChangeEvent = 'change';
 const addListener = (scope, event, fn) => {
