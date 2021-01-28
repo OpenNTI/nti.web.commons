@@ -14,7 +14,7 @@ function useResizeObserver (onChange) {
 	changeRef.current = onChange;
 	observerRef.current = new ResizeObserver((entries) => {
 		for (let entry of entries) {
-			onChange(entry.contentRect);
+			onChange(entry.target.getBoundingClientRect());
 		}
 	});
 
