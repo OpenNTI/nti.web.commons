@@ -25,15 +25,15 @@ const classes = {
 	}
 };
 
-ChevronIcon.Down = Variant(ChevronIcon, {direction: Down});
-ChevronIcon.Left = Variant(ChevronIcon, {direction: Left});
-ChevronIcon.Right = Variant(ChevronIcon, {direction: Right});
-ChevronIcon.Up = Variant(ChevronIcon, {direction: Up});
-ChevronIcon.propTypes = {
+Chevron.Down = Variant(Chevron, {direction: Down});
+Chevron.Left = Variant(Chevron, {direction: Left});
+Chevron.Right = Variant(Chevron, {direction: Right});
+Chevron.Up = Variant(Chevron, {direction: Up});
+Chevron.propTypes = {
 	direction: PropTypes.string,
 	large: PropTypes.bool
 };
-export default function ChevronIcon ({direction = Down, large, ...props}) {
+export function Chevron ({direction = Down, large, ...props}) {
 	const icon = classes[large ? 'large' : 'default'][direction];
 
 	return (

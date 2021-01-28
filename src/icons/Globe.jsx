@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function PersonIcon (props) {
+export function Globe (props) {
 	return (
 		<SVGIcon {...props} >
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">

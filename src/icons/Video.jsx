@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function VideoIcon (props) {
+export function Video (props) {
 	return (
 		<SVGIcon {...props} viewBox="0 0 26 19" width="1.375rem">
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">

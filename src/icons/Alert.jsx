@@ -3,7 +3,7 @@ import React from 'react';
 import FontIcon from './Font-Icon';
 import SVGIcon from './SVG-Icon';
 
-AlertIcon.Round = (props) => {
+Alert.Round = (props) => {
 	return (
 		<SVGIcon
 			{...props}
@@ -23,9 +23,9 @@ AlertIcon.Round = (props) => {
 	);
 };
 
-AlertIcon.Round.displayName = 'AlertIconRound';
+Alert.Round.displayName = 'AlertIconRound';
 
-export default function AlertIcon (props) {
+export function Alert (props) {
 	return (
 		<FontIcon icon="icon-alert" {...props} />
 	);

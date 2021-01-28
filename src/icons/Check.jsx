@@ -4,7 +4,7 @@ import FontIcon from './Font-Icon';
 
 const icon = 'icon-check';
 
-export default function CheckIcon (props) {
+export function Check (props) {
 	return (
 		<FontIcon icon={icon} {...props} />
 	);

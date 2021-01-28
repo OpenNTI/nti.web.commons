@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function DownloadIcon (props) {
+export function Download (props) {
 	return (
 		<SVGIcon {...props} viewBox="0 0 38 38">
 			<path

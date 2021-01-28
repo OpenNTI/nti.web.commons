@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function ImageIcon (props) {
+export function Image (props) {
 	return (
 		<SVGIcon viewBox="0 0 20 20" width="1.25em" >
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
@@ -17,5 +17,5 @@ export default function ImageIcon (props) {
 				</g>
 			</g>
 		</SVGIcon>
-	);	
+	);
 }

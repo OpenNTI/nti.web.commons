@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function LockIcon (props) {
+export function Lock (props) {
 	return (
 		<SVGIcon
 			width="0.875em"

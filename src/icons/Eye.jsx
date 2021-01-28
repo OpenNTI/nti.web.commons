@@ -14,11 +14,11 @@ const classes = {
 };
 
 
-EyeIcon.Slash = Variant(EyeIcon, {variant: Slash});
-EyeIcon.propTypes = {
+Eye.Slash = Variant(Eye, {variant: Slash});
+Eye.propTypes = {
 	variant: PropTypes.string
 };
-export default function EyeIcon ({variant = NoSlash, ...props}) {
+export function Eye ({variant = NoSlash, ...props}) {
 	const icon = classes[variant];
 
 	return (

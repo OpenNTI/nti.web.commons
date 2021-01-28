@@ -6,10 +6,10 @@ import SVGIcon from './SVG-Icon';
 Add.Circled = (props) => {
 	return (
 		<SVGIcon
-			{...props}
-			viewBox="0 0 26 26"
 			width="26"
 			height="26"
+			{...props}
+			viewBox="0 0 26 26"
 		>
 			<g transform="translate(1 1)" fill="none" fillRule="evenodd">
 				<circle stroke="currentColor" cx="12" cy="12" r="12"/>
@@ -19,7 +19,7 @@ Add.Circled = (props) => {
 	);
 };
 
-export default function Add (props) {
+export function Add (props) {
 	return (
 		<FontIcon icon="icon-add" {...props} />
 	);

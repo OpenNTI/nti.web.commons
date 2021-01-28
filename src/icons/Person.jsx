@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function PersonIcon (props) {
+export function Person (props) {
 	return (
 		<SVGIcon
 			{...props}

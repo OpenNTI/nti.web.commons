@@ -23,14 +23,14 @@ const fillClasses = {
 	[Down]: 'icon-movedown'
 };
 
-ArrowIcon.Up = Variant(ArrowIcon, {direction: Up});
-ArrowIcon.UpRight = Variant(ArrowIcon, {direction: UpRight});
-ArrowIcon.Down = Variant(ArrowIcon, {direction: Down});
-ArrowIcon.propTypes = {
+Arrow.Up = Variant(Arrow, {direction: Up});
+Arrow.UpRight = Variant(Arrow, {direction: UpRight});
+Arrow.Down = Variant(Arrow, {direction: Down});
+Arrow.propTypes = {
 	direction: PropTypes.string,
 	fill: PropTypes.bool
 };
-export default function ArrowIcon ({direction = UpRight, fill, ...otherProps}) {
+export function Arrow ({direction = UpRight, fill, ...otherProps}) {
 	const icon = fill ? fillClasses[direction] : classes[direction];
 
 	if (!icon) { throw new Error('Arrow Icon Direction not implemented'); }

@@ -9,8 +9,8 @@ function BoldX (props) {
 	);
 }
 
-CloseIcon.Bold = BoldX;
-export default function CloseIcon (props) {
+X.Bold = BoldX;
+export function X (props) {
 	return (
 		<SVGIcon {...props}>
 			<path fillRule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>

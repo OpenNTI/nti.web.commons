@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function DrawingIcon (props) {
+export function Drawing (props) {
 	return (
 		<SVGIcon {...props} viewBox="0 0 24 24" width="1.5em">
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

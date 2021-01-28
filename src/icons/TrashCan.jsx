@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import FontIcon from './Font-Icon';
 
-TrashIcon.propTypes = {
+TrashCan.propTypes = {
 	fill: PropTypes.bool
 };
-export default function TrashIcon ({fill, ...props}) {
+export function TrashCan ({fill, ...props}) {
 	const icon = fill ? 'icon-delete' : 'icon-trash';
 
 	return (

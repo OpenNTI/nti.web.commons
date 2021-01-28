@@ -2,7 +2,7 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export default function FileUploadIcon (props) {
+export function FileUpload (props) {
 	return (
 		<SVGIcon {...props} viewBox="0 0 18 22" width="1.125em">
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">

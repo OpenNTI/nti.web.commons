@@ -2,7 +2,7 @@ import React from 'react';
 
 import FontIcon from './Font-Icon';
 
-export default function ShareIcon (props) {
+export function Share (props) {
 	return (
 		<FontIcon icon="icon-share" {...props} />
 	);
