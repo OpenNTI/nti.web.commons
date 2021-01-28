@@ -10,4 +10,4 @@ export function useResponsiveValue (query, matchValue, noMatchValue) {
 
 export const useMobileValue = (...args) => useResponsiveValue(MobileQuery, ...args);
 export const useTabletValue = (...args) => useResponsiveValue(TabletQuery, ...args);
-export const useDestktopValue = (...args) => useResponsiveValue(DesktopQuery, ...args);
+export const useDesktopValue = (...args) => useResponsiveValue(DesktopQuery, ...args);
