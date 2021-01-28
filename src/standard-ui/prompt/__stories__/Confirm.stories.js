@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Confirm from '../Confirm';
 
 export default {
-	title: 'Confirms',
+	title: 'Prompts/Confirms',
 	component: Confirm
 };
 

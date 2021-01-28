@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import * as Errors from '../errors';
+import BasePrompt from '../standard-ui/prompt/Base';
 
 import Styles from './Styles.css';
 import FormContext from './Context';
@@ -62,6 +63,7 @@ function getSubmitHandler ({form, disabled, addErrors, onSubmit, afterSubmit, se
 		try {
 			setSubmitting(true);
 			await onSubmit(Values.getValues(form.current), e);
+			afterSubmit?.();
 		} catch (err) {
 			if (!err.field) { addErrors({[GlobalError]: err}); }
 			else { addErrors({[err.field]: err}); }
@@ -175,9 +177,18 @@ function Form (props) {
 const ForwardWrapper = (props, ref) => (<Form {...props} formRef={ref} />);
 const ForwardRef = React.forwardRef(ForwardWrapper);
 
+const noop = () => {};
+
+function FormPrompt (props) {
+	return (
+		<BasePrompt as={ForwardRef} onAction={noop} actionCmp={SubmitButton} {...props} />
+	);
+}
+
 ForwardRef.Validation = Validation;
 ForwardRef.Values = Values;
 ForwardRef.Input = Input;
 ForwardRef.SubmitButton = SubmitButton;
+ForwardRef.Prompt = FormPrompt;
 
 export default ForwardRef;

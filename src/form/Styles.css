@@ -5,6 +5,10 @@
 	}
 }
 
+.submit-button {
+	border: none;
+}
+
 .nt-form.has-mask {
 	position: relative;
 
