@@ -19,6 +19,7 @@ export {default as Pencil} from './Pencil';
 export {default as Person} from './Person';
 export {default as Plus} from './Plus';
 export {default as Report} from './Report';
+export {Search} from './Search';
 export {default as Share} from './Share';
 export {default as TrashCan} from './TrashCan';
 export {default as Video} from './Video';
