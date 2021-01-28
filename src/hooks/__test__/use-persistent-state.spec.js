@@ -2,13 +2,13 @@
 import {renderHook, act} from '@testing-library/react-hooks';
 import {Date} from '@nti/lib-commons';
 
-import usePersistantState from '../use-persistent-state';
+import {usePersistentState} from '../use-persistent-state';
 
 const {MockDate} = Date;
 
-describe('usePersistantState', () => {
+describe('usePersistentState', () => {
 	test('returns initial value', () => {
-		const {result} = renderHook(() => usePersistantState('test-key', 'foo'));
+		const {result} = renderHook(() => usePersistentState('test-key', 'foo'));
 
 		expect(result.current[0]).toBe('foo');
 	});
@@ -16,7 +16,7 @@ describe('usePersistantState', () => {
 	test('returns existing value', () => {
 		global.localStorage.setItem('existing-key', 'foo');
 
-		const {result} = renderHook(() => usePersistantState('existing-key', 'bar'));
+		const {result} = renderHook(() => usePersistentState('existing-key', 'bar'));
 
 		expect(result.current[0]).toBe('foo');
 	});
@@ -24,7 +24,7 @@ describe('usePersistantState', () => {
 	test('remembers until expireIn has passed', () => {
 		MockDate.install();
 
-		const {result, rerender} = renderHook(() => usePersistantState('expire-key', {initial: 'first', expireIn: 60000}));
+		const {result, rerender} = renderHook(() => usePersistentState('expire-key', {initial: 'first', expireIn: 60000}));
 
 		expect(result.current[0]).toBe('first');
 
