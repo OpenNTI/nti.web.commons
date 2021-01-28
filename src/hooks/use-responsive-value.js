@@ -1,9 +1,9 @@
-import {useMatchesMediaQuery} from './use-matches-media-query';
+import {useMediaQuery} from './use-media-query';
 
-const {MobileQuery, TabletQuery, DesktopQuery} = useMatchesMediaQuery;
+const {MobileQuery, TabletQuery, DesktopQuery} = useMediaQuery;
 
 export function useResponsiveValue (query, matchValue, noMatchValue) {
-	const matches = useMatchesMediaQuery(query);
+	const {matches} = useMediaQuery(query);
 
 	return matches ? matchValue : noMatchValue;
 }
