@@ -1,4 +1,4 @@
-import useMatchesMediaQuery from './use-matches-media-query';
+import {useMatchesMediaQuery} from './use-matches-media-query';
 
 const {MobileQuery, TabletQuery, DesktopQuery} = useMatchesMediaQuery;
 

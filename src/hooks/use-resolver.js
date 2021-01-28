@@ -9,7 +9,7 @@ useResolver.isPending = (v) => v instanceof Promise;
 useResolver.isErrored = (v) => v instanceof Error;
 useResolver.isResolved = (v) => !useResolver.isPending(v) && !useResolver.isErrored(v);
 
-export default function useResolver (resolver, dependencyList, config = {}) {
+export function useResolver (resolver, dependencyList, config = {}) {
 	const {buffer} = config;
 
 	const nonce = {};

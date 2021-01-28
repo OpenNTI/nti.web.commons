@@ -7,7 +7,7 @@ const DefaultOptions = {
 	subtree: true
 };
 
-export default function useMutationObserver (ref, callback, options = DefaultOptions) {
+export function useMutationObserver (ref, callback, options = DefaultOptions) {
 	React.useEffect(() => {
 		if (!ref?.current) { return; }
 

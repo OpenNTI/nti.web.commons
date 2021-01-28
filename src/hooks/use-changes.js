@@ -11,7 +11,7 @@ const addListener = (scope, event, fn) => {
 	};
 };
 
-export default function useChanges (item, callback, eventName = ChangeEvent) {
+export function useChanges (item, callback, eventName = ChangeEvent) {
 	const forceUpdate = useForceUpdate();
 
 	React.useEffect(() => {

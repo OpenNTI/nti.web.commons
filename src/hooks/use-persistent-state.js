@@ -41,7 +41,7 @@ const setValue = (key, newValue, {expireIn}) => {
 };
 
 
-export default function usePersistentState (key, configArg) {
+export function usePersistentState (key, configArg) {
 	const config = normalizeConfig(configArg);
 	const [value, setStateValue] = React.useState(getValue(key, config));
 
