@@ -1,3 +1,3 @@
-export Container from './Container';
-export Content from './Content';
-export Nav from './Nav';
+export { default as Container } from './Container';
+export { default as Content } from './Content';
+export { default as Nav } from './Nav';

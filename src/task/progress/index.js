@@ -1,2 +1,2 @@
-export Bar from './Bar';
-export Panel from './Panel';
+export { default as Bar } from './Bar';
+export { default as Panel } from './Panel';

@@ -1,1 +1,1 @@
-export getMirrorStyles from './get-mirror-styles';
+export { default as getMirrorStyles } from './get-mirror-styles';

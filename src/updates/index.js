@@ -1,1 +1,1 @@
-export Monitor from './components/UpdateMonitor';
+export { default as Monitor } from './components/UpdateMonitor';

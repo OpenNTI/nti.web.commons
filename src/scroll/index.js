@@ -1,1 +1,1 @@
-export BoundaryMonitor from './BoundaryMonitor';
+export { default as BoundaryMonitor } from './BoundaryMonitor';

@@ -1,2 +1,2 @@
-export Inline from './components/Inline';
-export Pill from './components/Pill';
+export { default as Inline } from './components/Inline';
+export { default as Pill } from './components/Pill';

@@ -1,1 +1,1 @@
-export getAssetSrc from './get-asset-src';
+export { default as getAssetSrc } from './get-asset-src';

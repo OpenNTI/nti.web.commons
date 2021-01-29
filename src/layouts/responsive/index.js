@@ -1,4 +1,4 @@
-export ClassList from './ClassList';
+export { default as ClassList } from './ClassList';
 export * from './Constants';
-export Container from './Container';
-export Item from './Item';
+export { default as Container } from './Container';
+export { default as Item } from './Item';

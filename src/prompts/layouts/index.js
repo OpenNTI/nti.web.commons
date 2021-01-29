@@ -1,3 +1,3 @@
-export BaseWindow from './base-window';
-export PagingWindow from './paging-window';
-export SaveCancel from './SaveCancel';
+export { default as BaseWindow } from './base-window';
+export { default as PagingWindow } from './paging-window';
+export { default as SaveCancel } from './SaveCancel';

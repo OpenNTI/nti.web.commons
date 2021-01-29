@@ -1,2 +1,2 @@
-export cleanTokens from './clean-tokens';
-export createToken from './create-token';
+export { default as cleanTokens } from './clean-tokens';
+export { default as createToken } from './create-token';

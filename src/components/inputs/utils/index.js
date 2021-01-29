@@ -1,1 +1,1 @@
-export getNumber from './get-number';
+export { default as getNumber } from './get-number';

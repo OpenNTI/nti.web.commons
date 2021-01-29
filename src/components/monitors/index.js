@@ -1,4 +1,4 @@
-export ChildHeight from './ChildHeight';
-export ElementSize from './ElementSize';
-export FocusVisible from './FocusVisible';
-export OnScreen from './OnScreen';
+export { default as ChildHeight } from './ChildHeight';
+export { default as ElementSize } from './ElementSize';
+export { default as FocusVisible } from './FocusVisible';
+export { default as OnScreen } from './OnScreen';

@@ -1,3 +1,3 @@
-export fixPageState from './fix-page-state';
-export initPageState from './init-page-state';
-export updatePageState from './update-page-state';
+export { default as fixPageState } from './fix-page-state';
+export { default as initPageState } from './init-page-state';
+export { default as updatePageState } from './update-page-state';

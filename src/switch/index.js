@@ -1,6 +1,6 @@
 export * from './Constants';
-export Container from './Container';
-export Controls from './Controls';
-export Item from './Item';
-export Panel from './Panel';
-export Trigger from './Trigger';
+export { default as Container } from './Container';
+export { default as Controls } from './Controls';
+export { default as Item } from './Item';
+export { default as Panel } from './Panel';
+export { default as Trigger } from './Trigger';

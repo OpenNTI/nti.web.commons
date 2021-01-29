@@ -1,3 +1,3 @@
-export getFixedImageSrc from './get-fixed-image-src';
-export getStylesForAspectRatio from './get-styles-for-aspect-ratio';
-export resolveImage from './resolve-image';
+export { default as getFixedImageSrc } from './get-fixed-image-src';
+export { default as getStylesForAspectRatio } from './get-styles-for-aspect-ratio';
+export { default as resolveImage } from './resolve-image';

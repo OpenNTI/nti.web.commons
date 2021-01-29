@@ -1,5 +1,5 @@
 import Chooser from './Chooser';
-export Browser from './Browser';
+export { default as Browser } from './Browser';
 
 
 /**
@@ -10,7 +10,7 @@ export Browser from './Browser';
  * @param  {function} [filter] - A callback that inspects a File/Folder. Return falsy to remove it from
  *                           the list. Truthy to include it.
  * @param  {string} [labelOfButton='Place'] - Sets the label on the "Accept/Select" blue button.
- * @return {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
+ * @returns {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
  */
 export function selectFrom (sourceID, accept, filter, labelOfButton = 'Place') {
 	return Chooser.show(sourceID, accept, filter, labelOfButton);

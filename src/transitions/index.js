@@ -1,2 +1,2 @@
-export Mount from './Mount';
-export Renders from './Renders';
+export { default as Mount } from './Mount';
+export { default as Renders } from './Renders';

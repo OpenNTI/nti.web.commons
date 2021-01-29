@@ -1,3 +1,3 @@
-export getValidationError from './get-validation-error';
-export getValidationErrors from './get-validation-errors';
-export isValid from './is-valid';
+export { default as getValidationError } from './get-validation-error';
+export { default as getValidationErrors } from './get-validation-errors';
+export { default as isValid } from './is-valid';

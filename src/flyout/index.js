@@ -33,8 +33,8 @@ export const SIZES = {
 };
 
 
-export InlineFlyout from './Inline';
-export Triggered from './Triggered';
-export Aligned from './Aligned';
+export { default as InlineFlyout } from './Inline';
+export { default as Triggered } from './Triggered';
+export { default as Aligned } from './Aligned';
 
-export ZBooster from './ZBooster';
+export { default as ZBooster } from './ZBooster';

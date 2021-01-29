@@ -1,1 +1,1 @@
-export isSameTabConfig from './is-same-tab-config';
+export { default as isSameTabConfig } from './is-same-tab-config';

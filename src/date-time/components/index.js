@@ -1,9 +1,9 @@
-export DateIcon from './DateIcon';
-export DateTimeField from './DateTimeField';
-export DayPicker from './DayPicker';
-export DayPickerRange from './DayPickerRange';
-export DayTimePicker from './DayTimePicker';
-export DayTimeToggle from './DayTimeToggle';
-export DayTimeToggleTrigger from './DayTimeToggleTrigger';
-export Duration from './Duration';
-export TimePicker from './TimePicker';
+export { default as DateIcon } from './DateIcon';
+export { default as DateTimeField } from './DateTimeField';
+export { default as DayPicker } from './DayPicker';
+export { default as DayPickerRange } from './DayPickerRange';
+export { default as DayTimePicker } from './DayTimePicker';
+export { default as DayTimeToggle } from './DayTimeToggle';
+export { default as DayTimeToggleTrigger } from './DayTimeToggleTrigger';
+export { default as Duration } from './Duration';
+export { default as TimePicker } from './TimePicker';

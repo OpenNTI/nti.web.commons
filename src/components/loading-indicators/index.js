@@ -1,7 +1,7 @@
-export Ellipse from './Ellipsis'; // deprecated
-export Ellipsis from './Ellipsis';
-export Mask from './Mask';
-export Overlay from './Overlay';
-export Placeholder from './Placeholder';
-export Spinner from './Spinner';
-export Whacky from './Whacky';
+export { default as Ellipse } from './Ellipsis'; // deprecated
+export { default as Ellipsis } from './Ellipsis';
+export { default as Mask } from './Mask';
+export { default as Overlay } from './Overlay';
+export { default as Placeholder } from './Placeholder';
+export { default as Spinner } from './Spinner';
+export { default as Whacky } from './Whacky';

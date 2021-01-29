@@ -6,12 +6,12 @@ export const REGISTER_FALLBACK = false;
 /*
  * Mount this component to enable the Conflict Resolver Subsystem.
  */
-export Component from './components/Resolver';
+export { default as Component } from './components/Resolver';
 
 /*
  * If you only want to hook behavior and want the default appearance, use this component as your modal body.
  */
-export DefaultConfirmPrompt from './components/DefaultConfirmPrompt';
+export { default as DefaultConfirmPrompt } from './components/DefaultConfirmPrompt';
 
 /**
  * @callback responder
@@ -26,7 +26,7 @@ export DefaultConfirmPrompt from './components/DefaultConfirmPrompt';
  * @param  {string} code - the error code.
  * @param  {Responder} responder - a responder's callback.
  * @param  {boolean} [prepend=true] - register the handler as a first responder or a last responder
- * @return {void}
+ * @returns {void}
  */
 export function registerHandler (code, responder, prepend) {
 	Registry.register(code, responder, prepend);
@@ -37,7 +37,7 @@ export function registerHandler (code, responder, prepend) {
  *
  * @param  {string} code - the error code.
  * @param  {Responder} responder - a responder's callback.
- * @return {void}
+ * @returns {void}
  */
 export function unregisterHandler (code, responder) {
 	Registry.unregister(code, responder);

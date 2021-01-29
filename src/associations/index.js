@@ -1,4 +1,4 @@
-export Interface from './interface';
+export { default as Interface } from './interface';
 export {
 	// createInterfaceForRecord, (symbol not exported by ./interface)
 	createInterfaceForActive,
@@ -7,7 +7,7 @@ export {
 } from './interface';
 
 export * as Sharing from './sharing';
-export Editor from './editor';
+export { default as Editor } from './editor';
 export {openEditorModal} from './editor';
 
 export * as Display from './display';

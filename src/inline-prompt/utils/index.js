@@ -1,3 +1,3 @@
-export getDialogPositionForRect from './get-dialog-position-for-rect';
-export getScrollOffsetForRect from './get-scroll-offset-for-rect';
-export positionsEqual from './positions-equal';
+export { default as getDialogPositionForRect } from './get-dialog-position-for-rect';
+export { default as getScrollOffsetForRect } from './get-scroll-offset-for-rect';
+export { default as positionsEqual } from './positions-equal';

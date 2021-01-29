@@ -1,4 +1,4 @@
-export Container from './Container';
+export { default as Container } from './Container';
 
-export List from './list';
-export Store from './store';
+export { default as List } from './list';
+export { default as Store } from './store';

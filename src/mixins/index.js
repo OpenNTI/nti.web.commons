@@ -1,4 +1,4 @@
-export BasePath from './BasePath';
-export ItemChanges from './ItemChanges';
-export NavigatableMixin from './NavigatableMixin';
-export NavigationAware from './NavigationAware';
+export { default as BasePath } from './BasePath';
+export { default as ItemChanges } from './ItemChanges';
+export { default as NavigatableMixin } from './NavigatableMixin';
+export { default as NavigationAware } from './NavigationAware';

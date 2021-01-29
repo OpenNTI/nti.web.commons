@@ -1,5 +1,5 @@
-export Dialog from './Dialog';
-export Triggered from './Triggered';
+export { default as Dialog } from './Dialog';
+export { default as Triggered } from './Triggered';
 import Prompt from './Prompt';
 import ManagerImport from './ModalManager';
 export * from './layouts';
@@ -38,8 +38,8 @@ export function areYouSure (message, title = 'Are you sure?', extra = {}) {
  *
  * @see {ModalManager#show()}
  * @param  {React.Element} content The JSX expression to render into a dialog
- * @param  {String|Object} options Options or className
- * @return {ModalReference} Stuff & Things
+ * @param  {string|Object} options Options or className
+ * @returns {ModalReference} Stuff & Things
  */
 export function modal (content, options) {
 	return Manager.show(content, options);

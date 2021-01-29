@@ -1,1 +1,1 @@
-export getEmbedLink from './get-embed-link';
+export { default as getEmbedLink } from './get-embed-link';

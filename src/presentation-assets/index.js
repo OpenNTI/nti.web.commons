@@ -1,3 +1,3 @@
 export * from './utils';
-export Asset from './components/Asset';
-export AssetBackground from './components/AssetBackground';
+export { default as Asset } from './components/Asset';
+export { default as AssetBackground } from './components/AssetBackground';

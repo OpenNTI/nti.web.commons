@@ -1,2 +1,2 @@
-export Bar from './Bar';
-export Message from './Message';
+export { default as Bar } from './Bar';
+export { default as Message } from './Message';

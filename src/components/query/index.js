@@ -1,2 +1,2 @@
 export * from './Contants';
-export ElementWidth from './ElementWidth';
+export { default as ElementWidth } from './ElementWidth';
