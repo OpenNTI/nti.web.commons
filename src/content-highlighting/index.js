@@ -1,1 +1,1 @@
-export default from './Highlighter';
+export { default } from './Highlighter';
