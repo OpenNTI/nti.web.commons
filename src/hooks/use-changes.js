@@ -4,10 +4,10 @@ import {useForceUpdate} from './use-force-update';
 
 const ChangeEvent = 'change';
 const addListener = (scope, event, fn) => {
-	scope.addListener(event, fn);
+	scope?.addListener?.(event, fn);
 
 	return () => {
-		scope.removeListener(event, fn);
+		scope?.removeListener?.(event, fn);
 	};
 };
 
