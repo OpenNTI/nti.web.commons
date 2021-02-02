@@ -49,7 +49,7 @@ export default class DefaultPath extends React.Component {
 	 *	or the first filter if all result in empty lists,
 	 *	or null if this.props.filters.length === 0
 	 *
-	 *	@return {object} The default filter or nothing.
+	 *	@returns {Object} The default filter or nothing.
 	 */
 	defaultFilterPath () {
 		if (this.props.defaultFilter) {

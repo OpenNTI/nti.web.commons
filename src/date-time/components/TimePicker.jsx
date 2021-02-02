@@ -53,7 +53,7 @@ export default class TimePicker extends React.Component {
 	 *
 	 * @param  {boolean} force - Use this to force value to an new date.
 	 * @param  {Object} props - defaults to {this.props}. The props to base the value off of.
-	 * @return {Time} - an instance of Time.
+	 * @returns {Time} - an instance of Time.
 	 */
 	getValue (force, props = this.props) {
 		let {value, allowEmpty} = props;

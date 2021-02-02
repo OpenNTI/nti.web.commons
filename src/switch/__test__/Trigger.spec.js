@@ -30,7 +30,6 @@ class Context extends React.Component {
 	}
 
 	getChildContext () {
-		// eslint-disable-next-line react/prop-types
 		return this.props.value;
 	}
 

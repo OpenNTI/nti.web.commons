@@ -7,7 +7,7 @@ import LimitedInline from './LimitedInline';
  *
  * @deprecated use LimitedInline instead
  * @param {Object} props children, and limit
- * @return {ReactElement} a react component
+ * @returns {ReactElement} a react component
  */
 export default function Inline (props) {
 	console.error('Inline has been moved to LimitedInline');//eslint-disable-line

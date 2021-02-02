@@ -125,7 +125,7 @@ export default class Modal extends React.Component {
 
 
 	/**
-	 * @param {object} e - the event
+	 * @param {Object} e - the event
 	 * @returns {undefined}
 	 */
 	close = (e) => {
@@ -147,7 +147,7 @@ export default class Modal extends React.Component {
 	}
 
 	/**
-	 * @param {object} e - the event
+	 * @param {Object} e - the event
 	 * @returns {undefined}
 	 */
 	onFocus = (e) => {
@@ -157,7 +157,7 @@ export default class Modal extends React.Component {
 	}
 
 	/**
-	 * @param {object} e - the event
+	 * @param {Object} e - the event
 	 * @returns {undefined}
 	 */
 	onBlur = (e) => {

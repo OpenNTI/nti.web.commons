@@ -1,5 +1,4 @@
 /* eslint-env jest */
-/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
@@ -44,7 +43,7 @@ describe ('Single Instance Decorator', () => {
 	test('One instance remains in DOM until all unmount', () => {
 		class Test extends React.PureComponent {
 			render () {
-				const {length} = this.props; //eslint-disable-line react/prop-types
+				const {length} = this.props;
 				return (
 					<div>{Array.from({length}, (_, i) => <Single key={i} />)}</div>
 				);

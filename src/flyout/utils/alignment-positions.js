@@ -31,7 +31,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} triggerRect the rect for the trigger
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
-		 * @return {Object} the vertical positioning
+		 * @returns {Object} the vertical positioning
 		 */
 		[ALIGN_TOP] ({top}, flyout, {height:viewHeight}) {
 			return {
@@ -53,7 +53,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} triggerRect the rect for the trigger
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
-		 * @return {Object} the vertical positioning
+		 * @returns {Object} the vertical positioning
 		 */
 		[ALIGN_BOTTOM] ({bottom}) {
 			return {
@@ -74,7 +74,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
 		 * @param {Object} reservedMargin the space to reserve between the edge of the screen
-		 * @return {Object} the vertical positioning
+		 * @returns {Object} the vertical positioning
 		 */
 		[DEFAULT_VERTICAL] ({top, bottom}, flyout, {height: viewHeight}, reservedMargin) {
 			const flyoutHeight = flyout.offsetHeight - getPseudoElementSpace(flyout);
@@ -112,7 +112,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} triggerRect the rect for the trigger
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
-		 * @return {Object} the horizontal positioning
+		 * @returns {Object} the horizontal positioning
 		 */
 		[ALIGN_LEFT] ({left}) {
 			return {
@@ -134,7 +134,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} triggerRect the rect for the trigger
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
-		 * @return {Object} the horizontal positioning
+		 * @returns {Object} the horizontal positioning
 		 */
 		[ALIGN_RIGHT] ({right}, flyout, {width: viewWidth}) {
 			return {
@@ -182,7 +182,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} triggerRect the rect for the trigger
 		 * @param {Object} flyout the flyout dom node
 		 * @param {Object} viewSize the size of the viewport
-		 * @return {Object} the horizontal positioning
+		 * @returns {Object} the horizontal positioning
 		 */
 		[ALIGN_CENTER] ({left, width:triggerWidth}, {offsetWidth: flyoutWidth}) {
 			const triggerMid = Math.floor(triggerWidth / 2);
@@ -199,7 +199,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * Default to ALIGN_CENTER
 		 *
 		 * @type {Function}
-		 * @return {Object} the horizontal positioning
+		 * @returns {Object} the horizontal positioning
 		 */
 		[DEFAULT_HORIZONTAL] (...args) {
 			return ALIGNMENT_POSITIONS[VERTICAL][ALIGN_CENTER](...args);

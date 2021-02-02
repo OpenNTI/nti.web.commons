@@ -52,7 +52,7 @@ export default class NumberInput extends React.Component {
 	/**
 	 * Convenience function. Prefer the 'value' property.
 	 *
-	 * @return {number} a number
+	 * @returns {number} a number
 	 */
 	getValue () {
 		return this.value;
@@ -61,7 +61,7 @@ export default class NumberInput extends React.Component {
 	/**
 	 * Return the value of the input, you shouldn't need to use this though.
 	 *
-	 * @return {String} the value of the input
+	 * @returns {string} the value of the input
 	 */
 	get value () {
 		return getNumber(this.input.value);
@@ -90,7 +90,7 @@ export default class NumberInput extends React.Component {
 	 *
 	 * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 	 *
-	 * @return {Object} the validity of the input
+	 * @returns {Object} the validity of the input
 	 */
 	get validity () {
 		const {value, min, max} = this.props;
@@ -198,7 +198,7 @@ export default class NumberInput extends React.Component {
 	 * Because of FIREFOX we still have to listen to KeyPress.
 	 *
 	 * @param  {Event} e KeyPress event.
-	 * @return {void}
+	 * @returns {void}
 	 */
 	onKeyPress = (e) => {
 		//if the owner component wants a KeyPress listener, don't hijack it.
@@ -225,7 +225,7 @@ export default class NumberInput extends React.Component {
 	 * Listen for the keydown to get the up and down arrow events
 	 *
 	 * @param  {Event} e KeyDown event.
-	 * @return {void}
+	 * @returns {void}
 	 */
 	onKeyDown = (e) => {
 		//if the owner component wants a KeyDown listener, don't hijack it.

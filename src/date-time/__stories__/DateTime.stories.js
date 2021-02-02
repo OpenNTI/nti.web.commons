@@ -20,7 +20,6 @@ export default {
 	},
 };
 
-// eslint-disable-next-line react/prop-types
 export const Basic = ({format, ...props}) => (
 	<DateTime date={new Date()} format={format ? DateTime[format] : void 0} {...props} />
 );

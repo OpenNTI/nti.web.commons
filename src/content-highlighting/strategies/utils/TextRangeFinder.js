@@ -183,13 +183,13 @@ const normalizeTextIndex = (node, doc, searchFor, which, textIndex) => textIndex
 /**
 * @param {Node} node - the node to search for ranges beneath
 * @param {document} doc - the document fragment node is a child of
-* @param {String} searchFor - a string or a regex to search for
-* @param {Number} [which] - if provided the subexpression of the regex to be matched or an array of subexpression idexes
-* @param {Number} [textIndex]
+* @param {string} searchFor - a string or a regex to search for
+* @param {number} [which] - if provided the subexpression of the regex to be matched or an array of subexpression idexes
+* @param {number} [textIndex]
 * Note cutz: for the which param to work it expects each part of your regex to be captured
 * IE if your goal is to have a capture in the middle of the regex you must also capture the first portion prior to it
 *
-* @return {Range[]} a list of range objects that represent the portion of text to highlight
+* @returns {Range[]} a list of range objects that represent the portion of text to highlight
 **/
 export function findTextRanges (...args) {
 	// const node = normalizeNode(...args);

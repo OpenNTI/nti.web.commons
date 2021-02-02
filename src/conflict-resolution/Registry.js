@@ -18,7 +18,7 @@ export default new class Registry {
 	 *
 	 * @param  {Object} challenge - The challenge body.
 	 * @param  {Object} challenge.code - The error code for the challenge.
-	 * @return {Promise|void} If handled, a Promise, otherwise void.
+	 * @returns {Promise|void} If handled, a Promise, otherwise void.
 	 */
 	handleConflict (challenge) {
 		const {code} = challenge || {};
@@ -46,7 +46,7 @@ export default new class Registry {
 	 * @param  {string} code - the error code.
 	 * @param  {Responder} responder - a responder's callback.
 	 * @param  {boolean} [prepend=true] - register the handler as a first responder or a last responder
-	 * @return {void}
+	 * @returns {void}
 	 */
 	register (code, responder, prepend = true) {
 		if (!code) {
@@ -70,7 +70,7 @@ export default new class Registry {
 	 *
 	 * @param  {string} code - the error code.
 	 * @param  {Responder} responder - a responder's callback.
-	 * @return {void}
+	 * @returns {void}
 	 */
 	unregister (code, responder) {
 		if (!code) {

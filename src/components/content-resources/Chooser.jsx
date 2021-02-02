@@ -29,7 +29,7 @@ export default class Chooser extends React.Component {
 	 *                           the list. Truthy to include it.
 	 * @param  {string} [selectButtonLabel] - Sets the label on the "Accept/Select" blue button.
 	 * @param  {boolean} [limited] - Restricts actions to basic selections.
-	 * @return {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
+	 * @returns {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
 	 */
 	static show (sourceID, accept, filter, selectButtonLabel, limited) {
 		return new Promise((select, reject) => {

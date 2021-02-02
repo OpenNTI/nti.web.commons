@@ -59,17 +59,17 @@ export class ModalManager extends EventEmitter {
 	 * Display a modal
 	 *
 	 * @param  {React.Element} content The JSX expression to render into a dialog
-	 * @param  {String|Object} options Options or className
-	 * @param {String} options.className Additional classname to add to the dialog
-	 * @param {Boolean} options.closeOnMaskClick Enables dismissing the dialog when the mask is clicked.
+	 * @param  {string|Object} options Options or className
+	 * @param {string} options.className Additional className to add to the dialog
+	 * @param {boolean} options.closeOnMaskClick Enables dismissing the dialog when the mask is clicked.
 	 * @param {Function} options.onBeforeDismiss ----
-	 * @param {Boolean} options.tall Don't center the dialog. Position it at the top instead.
+	 * @param {boolean} options.tall Don't center the dialog. Position it at the top instead.
 	 * @param {Node} options.mountPoint the DOM node that the dialog should mount/re-render to.
 	 * @param {Node} options.refocus the DOM node to refocus when the dialog closes.
-	 * @param {Boolean|Function} options.restoreScroll restore scroll position on dismissal
-	 * @param {Boolean} options.forceFront push the mount point to the front of the stack on re-renders
-	 * @param {Boolean} options.usePortal opt into using a portal
-	 * @return {ModalReference} Stuff & Things
+	 * @param {boolean|Function} options.restoreScroll restore scroll position on dismissal
+	 * @param {boolean} options.forceFront push the mount point to the front of the stack on re-renders
+	 * @param {boolean} options.usePortal opt into using a portal
+	 * @returns {ModalReference} Stuff & Things
 	 * @public
 	 */
 	show (content, options = {}) {
@@ -283,7 +283,7 @@ export class ModalManager extends EventEmitter {
 
 		const mask = Node.DOCUMENT_POSITION_FOLLOWING;
 
-		const isAfter = (a) => (top.mountPoint.compareDocumentPosition(a) & mask) === mask; //eslint-disable-line
+		const isAfter = (a) => (top.mountPoint.compareDocumentPosition(a) & mask) === mask;
 
 		/* istanbul ignore else */
 		if (!top.mountPoint.contains(e.target) && !isAfter(e.target) && document.contains(e.target) && !this.allowedExternalFocus(e.target)) {

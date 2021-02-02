@@ -25,7 +25,7 @@ export default class TextInput extends React.Component {
 	 * Return the validity of the input see below for more details:
 	 * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 	 *
-	 * @return {Object} the validity of the input
+	 * @returns {Object} the validity of the input
 	 */
 	get validity () {
 		return this.input.validity;

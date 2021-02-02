@@ -102,7 +102,7 @@ export default class TokenSuggestions extends React.Component {
 	 * This is called by the input component
 	 *
 	 * @param  {Event} e the key down event
-	 * @return {void}
+	 * @returns {void}
 	 */
 	onInputKeyDown = (e) => {
 		if (this.unmounted) { return; }

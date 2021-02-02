@@ -32,6 +32,4 @@ function Checkbox (props) {
 	);
 }
 
-
-// eslint-disable-next-line react/display-name
 export default React.forwardRef((props, ref) => <Checkbox {...props} domRef={ref} />);

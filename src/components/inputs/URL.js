@@ -54,7 +54,7 @@ export default class URLInput extends React.Component {
 	 *
 	 * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 	 *
-	 * @return {Object} the validity of the input
+	 * @returns {Object} the validity of the input
 	 */
 	get validity () {
 		const {value} = this.props;

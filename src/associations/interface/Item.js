@@ -17,7 +17,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param  {Function} onAddTo     callback for when the association is added, must return a Promise
 	 * @param  {Function} onRemoveFrom callback for when the association is removed, must return a Promise
 	 * @param  {Object} cfg          configuration options for the association
-	 * @return {Object}             	an instance of AssociationItem
+	 * @returns {Object}             	an instance of AssociationItem
 	 */
 	constructor (item, onAddTo, onRemoveFrom, cfg) {
 		super();
@@ -116,7 +116,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param  {Object} container the destination to add an association, if not passed use
 	 *                            this.item
 	 * @param {Object} association the parent object of the container if needed
-	 * @return {Promise}          Fulfills or rejects with the success of adding an association
+	 * @returns {Promise}          Fulfills or rejects with the success of adding an association
 	 */
 	onAddTo (container, association) {
 		if (this[ADD_TO]) {
@@ -138,7 +138,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param  {Object} container the destination to add an association, if not passed use
 	 *                            this.item
 	 * @param {Object} association the parent object of the container if needed
-	 * @return {Promise}          Fulfills or rejects with the success of adding an association
+	 * @returns {Promise}          Fulfills or rejects with the success of adding an association
 	 */
 	onRemoveFrom (container, association) {
 		if (this[REMOVE_FROM]) {

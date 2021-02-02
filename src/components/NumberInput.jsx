@@ -27,7 +27,7 @@ export default class NumberInput extends React.Component {
 	/**
 	 * Convenience function. Prefer the 'value' property.
 	 *
-	 * @return {number} a number
+	 * @returns {number} a number
 	 */
 	getValue () {
 		return this.value;
@@ -62,7 +62,7 @@ export default class NumberInput extends React.Component {
 	 * Because of FIREFOX we still have to listen to KeyPress.
 	 *
 	 * @param  {Event} e KeyPress event.
-	 * @return {void}
+	 * @returns {void}
 	 */
 	onKeyPress = (e) => {
 		//if the owner component wants a KeyPress listener, don't hijack it.

@@ -6,8 +6,8 @@
  * padding-bottom = ((100 / ratio) * elementWidth)
  *
  * 
- * @param  {Number} ratio Aspect ratio to enforce
- * @return {object}       styles to apply
+ * @param  {number} ratio Aspect ratio to enforce
+ * @returns {Object}       styles to apply
  */
 export default function getStylesForAspectRatio (ratio) {
 	return {

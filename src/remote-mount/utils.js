@@ -25,7 +25,7 @@ class MountPoint {
 
 	/**
 	 * Return the existing dom node, or create one and append it to the parent
-	 * @return {Node} the dom node for this mount point
+	 * @returns {Node} the dom node for this mount point
 	 */
 	get mountPoint () {
 		const {parent, className} = this;
@@ -43,7 +43,7 @@ class MountPoint {
 	 * @param  {Object} cmpCls   the react class to render
 	 * @param  {Object} props    the props to render the class with
 	 * @param  {Object} children the children to render with the class
-	 * @return {*} React opaque pointer... don't use in React15. See portal documentation.
+	 * @returns {*} React opaque pointer... don't use in React15. See portal documentation.
 	 */
 	render (cmpCls, props, children) {
 		return ReactDOM[this.renderer](

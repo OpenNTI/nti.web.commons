@@ -34,8 +34,8 @@ export function isToday (date) {
  *
  * Taken from: https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss/40350003#40350003
  *
- * @param  {Number} duration number of seconds to format
- * @return {String}          human readable format
+ * @param  {number} duration number of seconds to format
+ * @returns {string}          human readable format
  */
 export function formatDuration (duration) {
 	duration = Math.round(duration);

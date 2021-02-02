@@ -13,10 +13,10 @@ export default class Move extends Task {
 	/**
 	 * Move the entity to the path
 	 *
-	 * @param  {object} data - file object. Either the raw json, or the instance.
+	 * @param  {Object} data - file object. Either the raw json, or the instance.
 	 * @param  {Folder} target - Folder instance to move to.
 	 * @param  {function} [onComplete] - Optional callback for when the task completes
-	 * @return {void}
+	 * @returns {void}
 	 */
 	constructor (data, target, onComplete) {
 		super(()=> this.performMove(data, target.getPath()), 1, onComplete);

@@ -33,7 +33,7 @@ const t = scoped('common.components.durations.units', DEFAULT_TEXT);
 /**
  * Get the minutes (0-59) for the given seconds value.
  * @param  {number} seconds number of seconds
- * @return {integer} the minutes (0-59) for the given seconds value
+ * @returns {integer} the minutes (0-59) for the given seconds value
  */
 function getMinutes (seconds) {
 	return Math.floor((seconds % secondsPerHour) / 60);
@@ -43,7 +43,7 @@ function getMinutes (seconds) {
 /**
  * Get the hours (0-23) for the given seconds value
  * @param  {number} seconds The number of seconds
- * @return {integer} the number of hours (0-23) for the given seconds value
+ * @returns {integer} the number of hours (0-23) for the given seconds value
  */
 function getHours (seconds) {
 	return Math.floor((seconds % secondsPerDay) / secondsPerHour);
@@ -53,7 +53,7 @@ function getHours (seconds) {
 /**
  * Get the number of days for the given seconds value
  * @param  {number} seconds The number of seconds
- * @return {integer} the number of days for the given seconds value
+ * @returns {integer} the number of days for the given seconds value
  */
 function getDays (seconds) {
 	return Math.floor(seconds / secondsPerDay);
@@ -61,10 +61,10 @@ function getDays (seconds) {
 
 /**
  * Get the number of seconds for the given days, hours, and minutes
- * @param  {Number} days    number of days
- * @param  {Number} hours   number of hours
- * @param  {Number} minutes number of minutes
- * @return {Number}         number of seconds
+ * @param  {number} days    number of days
+ * @param  {number} hours   number of hours
+ * @param  {number} minutes number of minutes
+ * @returns {number}         number of seconds
  */
 function getValue (days, hours, minutes) {
 	return Math.max(0, (days * secondsPerDay) + (hours * secondsPerHour) + (minutes * secondsPerMinute));
@@ -73,8 +73,8 @@ function getValue (days, hours, minutes) {
 /**
  * Get a display string for the duration of a given number of
  * seconds
- * @param  {Number} seconds the number of seconds
- * @return {String}       display value
+ * @param  {number} seconds the number of seconds
+ * @returns {string}       display value
  */
 export function getDisplay (seconds) {
 	const days = getDays(seconds);

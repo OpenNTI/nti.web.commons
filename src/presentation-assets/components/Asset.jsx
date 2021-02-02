@@ -36,7 +36,7 @@ const ASSET_MAP = {
  * to use those values.  Ideally, we would be able to remove this logic and set the defaultValues
  * in ASSET_MAP to the imported values (commented out above)
  *
- * @return {void}
+ * @returns {void}
  */
 function initializeAssetMap () {
 	if(typeof document !== 'undefined' && !ASSET_MAP.loaded) {

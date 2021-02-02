@@ -13,8 +13,8 @@ import {Tokens} from '../utils';
 /**
  * Detect if any part of the node is completely above the boundary
  * @param  {Element}  node     the element to check
- * @param  {Number}  boundary the lower bound to check against
- * @return {Boolean}          if any part of the node is completely above the boundary
+ * @param  {number}  boundary the lower bound to check against
+ * @returns {boolean}          if any part of the node is completely above the boundary
  */
 function hasRectAboveBoundary (node, boundary) {
 	const rects = Array.from(node.getClientRects());
@@ -62,9 +62,9 @@ export function needsTruncating (pad, buffer) {
  * small enough to fit on the previous line.
  *
  * @param  {Element} pad        the element to remove words from
- * @param  {Number} lowerBound  marks the lower bound for container
- * @param  {Number} rightBound  marks the right bound for container
- * @return {void}
+ * @param  {number} lowerBound  marks the lower bound for container
+ * @param  {number} rightBound  marks the right bound for container
+ * @returns {void}
  */
 export function cleanupTokens (pad, lowerBound, rightBound) {
 	const tokens = Tokens.getTokensFromNode(pad);

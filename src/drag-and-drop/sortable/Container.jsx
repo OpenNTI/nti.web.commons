@@ -121,7 +121,6 @@ class Container extends React.Component {
 	}
 }
 
-// eslint-disable-next-line react/display-name
 export default React.forwardRef((props, ref) => (
 	<DndProvider backend={DNDBackend}>
 		<Container ref={ref} {...props}/>

@@ -19,7 +19,7 @@ function InnerWrapper ({text, hasMarkup, innerRef}) {
 	);
 }
 
-const Inner = React.forwardRef((props, ref) => (<InnerWrapper {...props} innerRef={ref} />));//eslint-disable-line
+const Inner = React.forwardRef((props, ref) => (<InnerWrapper {...props} innerRef={ref} />));
 
 describe('Linkify Tests', () => {
 	describe('statics', () => {

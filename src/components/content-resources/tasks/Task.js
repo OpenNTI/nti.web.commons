@@ -14,7 +14,7 @@ export default class Task extends EventEmitter {
 	 * @param  {function} callback - the callback to start the work.
 	 * @param  {number} units - number of units represented by this task.
 	 * @param  {function} [onComplete] - Optional callback when the task completes.
-	 * @return {void}
+	 * @returns {void}
 	 */
 	constructor (callback, units, onComplete) {
 		super();

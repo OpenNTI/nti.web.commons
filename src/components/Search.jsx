@@ -13,7 +13,7 @@ class Input extends React.Component {
 	attachRef = x => this.input = x
 
 	clear () {
-		const {input, props: {onChange}} = this; //eslint-disable-line
+		const {input, props: {onChange}} = this;
 		input.value = '';
 		if (onChange) {
 			onChange({

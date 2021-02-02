@@ -94,7 +94,7 @@ export default class ScrollTrigger extends React.Component {
 	};
 
 	render () {
-		const {props: {onEnterView, ...props}} = this;//eslint-disable-line no-unused-vars
+		const {props: {onEnterView, ...props}} = this;
 		return (
 			<div className="scrollTrigger" ref={this.attachDOMRef} {...props}/>
 		);

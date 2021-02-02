@@ -4,7 +4,7 @@ import {getElementRect as getRectInViewport} from '@nti/lib-dom';
  * @param  {DOMNode} element   A dom node to measure
  * @param  {Object}  alignment The alignment description
  * @param  {Rect}    viewport  The viewport rect.
- * @return {Rect} A partial rect.
+ * @returns {Rect} A partial rect.
  */
 export default function getViewportRelativeAlignments (element, alignment, viewport) {
 	//the alignment is relative to the coordinateRoot. We need to constrain to the screen...
