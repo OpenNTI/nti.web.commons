@@ -94,6 +94,7 @@ UnderlineFrame.propTypes = {
 	center: PropTypes.bool,
 	label: PropTypes.any,
 	error: PropTypes.any,
+	errorCmp:PropTypes.any,
 	empty: PropTypes.bool,
 	fill: PropTypes.bool,
 	locked: PropTypes.bool,

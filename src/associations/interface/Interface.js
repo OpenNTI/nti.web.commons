@@ -17,7 +17,7 @@ class ActiveInterface extends EventEmitter {
 	/**
 	 * Create an ActiveInterface
 	 * @param  {Object} active the list of active IDs
-	 * @return {Object}        the Active Interface
+	 * @returns {Object}        the Active Interface
 	 */
 	constructor (active) {
 		super();
@@ -119,7 +119,7 @@ export default class AssociationInterface extends EventEmitter {
 	/**
 	 * Set the possible destinations to create associations with
 	 * @param  {Object} destinations the list of destinations
-	 * @return {void}
+	 * @returns {void}
 	 */
 	set destinations (destinations) {
 		const groups = groupDestinations(destinations);
@@ -133,7 +133,7 @@ export default class AssociationInterface extends EventEmitter {
 	/**
 	 * Set the active associations in the possible destinations
 	 * @param  {Object} active list of active associations either object or ID
-	 * @return {void}
+	 * @returns {void}
 	 */
 	set active (active) {
 		if (this[ACTIVE]) {
@@ -155,7 +155,7 @@ export default class AssociationInterface extends EventEmitter {
 	/**
 	 * Add an active association
 	 * @param {Object} active possible destination to add or ID
-	 * @return {void}
+	 * @returns {void}
 	 */
 	addActive (active) {
 		if (this[ACTIVE]) {
@@ -168,8 +168,8 @@ export default class AssociationInterface extends EventEmitter {
 
 	/**
 	 * Remove an active association
-	 * @param  {Object|String} active active destination to remo
-	 * @return {void}
+	 * @param  {Object|string} active active destination to remove
+	 * @returns {void}
 	 */
 	removeActive (active) {
 		if (this[ACTIVE]) {
@@ -205,7 +205,7 @@ export default class AssociationInterface extends EventEmitter {
 	 * same active.
 	 *
 	 * @param {Object} destinations the destinations to have in the clone
-	 * @return {Object} a new associations interface
+	 * @returns {Object} a new associations interface
 	 */
 	[CLONE] (destinations) {
 		return new AssociationInterface(destinations, this[ACTIVE], this.backingItem);
@@ -215,7 +215,7 @@ export default class AssociationInterface extends EventEmitter {
 	 * Filter the possible destinations by a given fn, return a clone with
 	 * the filtered destinations.
 	 * @param  {Function} fn the filter function
-	 * @return {Object}      new associations interface
+	 * @returns {Object}      new associations interface
 	 */
 	filter (fn) {
 		const filteredGroups = filterGroups(this.destinations || [], fn);
@@ -228,7 +228,7 @@ export default class AssociationInterface extends EventEmitter {
 	 * Flatten the destinations to a flat array, return a clone with the
 	 * flattened destinations.
 	 *
-	 * @return {Object} new associations interface
+	 * @returns {Object} new associations interface
 	 */
 	flatten () {
 		const flattenedGroups = flattenGroups(this.destinations || []);
