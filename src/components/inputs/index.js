@@ -5,6 +5,7 @@ export { default as Date } from './Date';
 export { default as Email } from './Email';
 export { default as File } from './File';
 export { default as FileInputWrapper } from './FileInputWrapper';
+export { default as Icon} from './Icon';
 export { default as Hidden } from './Hidden';
 export { default as Label } from './Label';
 // export { default as LabelPlaceholder } from './LabelPlaceholder';
