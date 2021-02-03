@@ -56,8 +56,8 @@ export default function PagingControls ({className, total, current, onChange}) {
 					total: (<Emphasis>{total}</Emphasis>)
 				}}
 			/>
-			<Arrow onClick={onPrev} className={cx({disabled: !hasPrev})}><Chevron.Left large /></Arrow>
-			<Arrow onClick={onNext} className={cx({disabled: !hasNext})}><Chevron.Right large /></Arrow>
+			<Arrow onClick={onPrev} className={cx({disabled: !hasPrev})}><Chevron.Left skinny /></Arrow>
+			<Arrow onClick={onNext} className={cx({disabled: !hasNext})}><Chevron.Right skinny /></Arrow>
 		</Controls>
 	);
 }

@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import {Variant} from '../HighOrderComponents';
 
 import FontIcon from './Font-Icon';
+
+const styles = css`
+  .left { transform: rotate(270deg); }
+  .right { transform: rotate(270deg); }
+`;
 
 const Down = 'down';
 const Left = 'left';
@@ -11,6 +17,12 @@ const Right = 'right';
 const Up = 'up';
 
 const classes = {
+	skinny: {
+		[Down]: 'icon-chevrondown-25',
+		[Left]: cx('icon-chevronup-25', styles.left),
+		[Right]: cx('icon-chevrondown-25', styles.right),
+		[Up]: 'icon-chevronup-25'
+	},
 	large: {
 		[Down]: 'icon-chevron-down',
 		[Left]: 'icon-chevron-left',
@@ -31,10 +43,12 @@ Chevron.Right = Variant(Chevron, {direction: Right});
 Chevron.Up = Variant(Chevron, {direction: Up});
 Chevron.propTypes = {
 	direction: PropTypes.string,
-	large: PropTypes.bool
+	large: PropTypes.bool,
+	skinny: PropTypes.bool
 };
-export function Chevron ({direction = Down, large, ...props}) {
-	const icon = classes[large ? 'large' : 'default'][direction];
+export function Chevron ({direction = Down, large, skinny, ...props}) {
+	const type = large ? 'large' : (skinny ? 'skinny' : 'default');
+	const icon = classes[type][direction];
 
 	return (
 		<FontIcon icon={icon} {...props} />
