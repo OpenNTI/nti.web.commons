@@ -27,9 +27,24 @@ function getTranslatedContent (localeKey, getString, data) {
 
 	if (translationParts.length === 1) { return {text: translation, hasMarkup: true}; }
 
+	const text = (
+		<>
+			{
+				translationParts
+					.map((part, index) => {
+						if (index % 2 === 0) { return (<span key={index}>{part}</span>); }
+
+						const cmp = parts[part];
+
+						return React.cloneElement(cmp, {key: index});
+					})
+			}
+		</>
+	);
+
 	return {
 		hasComponents: true,
-		text: translationParts.map((part, index) => index % 2 === 0 ? part : parts[part])
+		text
 	};
 }
 
