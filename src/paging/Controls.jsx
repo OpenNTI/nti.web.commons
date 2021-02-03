@@ -32,7 +32,14 @@ const Count = styled(Translated.Base).attrs({localeKey: 'counts'})`
 const Emphasis = styled.strong`font-weight: 600;`;
 
 const Arrow = styled(Button).attrs({plain: true})`
+	font-size: 2rem;
+	color: var(--primary-blue);
+	cursor: pointer;
 
+	&:global(.disabled) {
+		color: var(--tertiary-grey);
+		pointer-events: none;
+	}
 `;
 
 PagingControls.propTypes = {
@@ -45,8 +52,8 @@ export default function PagingControls ({className, total, current, onChange}) {
 	const hasPrev = current > 1;
 	const hasNext = current < total;
 
-	const onPrev = React.useCallback(() => onChange(Math.max(current - 1, 0)), [onChange]);
-	const onNext = React.useCallback(() => onChange(Math.min(current + 1, total)), [onChange]);
+	const onPrev = React.useCallback(() => onChange(Math.max(current - 1, 0)), [onChange, current]);
+	const onNext = React.useCallback(() => onChange(Math.min(current + 1, total)), [onChange, current, total]);
 
 	return (
 		<Controls className={className}>
@@ -56,8 +63,8 @@ export default function PagingControls ({className, total, current, onChange}) {
 					total: (<Emphasis>{total}</Emphasis>)
 				}}
 			/>
-			<Arrow onClick={onPrev} className={cx({disabled: !hasPrev})}><Chevron.Left skinny /></Arrow>
-			<Arrow onClick={onNext} className={cx({disabled: !hasNext})}><Chevron.Right skinny /></Arrow>
+			<Arrow onClick={onPrev} className={cx({disabled: !hasPrev})} aria-label="previous page"><Chevron.Left skinny /></Arrow>
+			<Arrow onClick={onNext} className={cx({disabled: !hasNext})} aria-label="next page"><Chevron.Right skinny /></Arrow>
 		</Controls>
 	);
 }
