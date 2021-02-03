@@ -24,6 +24,7 @@ export { default as Navigation } from './navigation';
 export * as NotFound from './not-found';
 export * as Offline from './offline';
 export { default as Page } from './page';
+export * as Paging from './paging';
 export * as Presentation from './presentation-assets';
 export * as Prompt from './prompts';
 export * as RemoteMount from './remote-mount';
