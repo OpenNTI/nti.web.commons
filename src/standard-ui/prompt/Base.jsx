@@ -18,6 +18,7 @@ const styles = css`
 	.prompt:not(.inline) {
 		min-width: min(500px, 98vw);
 		background: white;
+		border-radius: 4px;
 	}
 
 	.prompt.large {
@@ -71,6 +72,7 @@ BasePrompt.propTypes = {
 	actionLabel: PropTypes.string,
 	actionType: PropTypes.oneOf([Destructive, Constructive, Dismissive]),
 	actionCmp: PropTypes.any,
+	actionHref: PropTypes.string,
 
 	onCancel: PropTypes.func,
 	cancelLabel: PropTypes.string
@@ -87,6 +89,7 @@ export default function BasePrompt ({
 	actionLabel,
 	actionType = 'dismissive',
 	actionCmp,
+	actionHref,
 
 	onCancel,
 	cancelLabel,
@@ -102,6 +105,14 @@ export default function BasePrompt ({
 
 	const cmp = tag || 'section';
 	const extraProps = typeof cmp === 'string' ? {} : otherProps;
+
+	const actionProps = {};
+
+	if (actionHref) {
+		actionProps.href = actionHref;
+		actionProps.rel = 'noopener noreferrer';
+		actionProps.target = '_blank';
+	}
 
 	let content = (
 		<Responsive.ClassList
@@ -128,6 +139,7 @@ export default function BasePrompt ({
 					rounded
 					as={actionCmp}
 					onClick={onAction}
+					{...actionProps}
 					className={cx(styles.action, {
 						[styles.destructive]: isDestructive,
 						[styles.constructive]: isConstructive,
