@@ -1,5 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {matches} from '@nti/lib-dom';
+
+function ignoreResize (target) {
+	return matches(target, '[aria-hidden=true], [aria-hidden=true] *');
+}
 
 function useResizeObserver (onChange) {
 	const changeRef = React.useRef(null);
@@ -14,7 +19,9 @@ function useResizeObserver (onChange) {
 	changeRef.current = onChange;
 	observerRef.current = new ResizeObserver((entries) => {
 		for (let entry of entries) {
-			onChange(entry.target.getBoundingClientRect());
+			if (!ignoreResize(entry.target)) {
+				onChange(entry.target.getBoundingClientRect());
+			}
 		}
 	});
 
