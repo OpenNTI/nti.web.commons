@@ -2,6 +2,7 @@ import {resolve} from 'path';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 
 import Store from '../../Store';
 
@@ -24,8 +25,6 @@ function getTabConfig (tab, index, baseRoute) {
 	};
 }
 
-export default
-@Store.connect(['setTabs', 'clearTabs', 'setExpandTabs'])
 class NavigationTabsConfig extends React.Component {
 	static Tab = Tab
 
@@ -82,3 +81,7 @@ class NavigationTabsConfig extends React.Component {
 		return null;
 	}
 }
+
+export default decorate(NavigationTabsConfig, [
+	Store.connect(['setTabs', 'clearTabs', 'setExpandTabs'])
+]);

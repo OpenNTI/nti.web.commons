@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {restProps} from '@nti/lib-commons';
 
 import {ClassList} from '../responsive';
 
@@ -14,8 +13,7 @@ const classList = [
 	{query: size => size.width >= 1024, className: cx('large')}
 ];
 
-@Store.connect(['aside'])
-class AsideContainer extends React.Component {
+const AsideContainer = Store.connect(['aside'])(class extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		children: PropTypes.any,
@@ -30,8 +28,15 @@ class AsideContainer extends React.Component {
 
 
 	render () {
-		const {className, children, aside, forwardedRef} = this.props;
-		const otherProps = restProps(AsideContainer, this.props);
+		const {
+			className,
+			children,
+			aside,
+			asideClassName,
+			forwardedRef,
+			store,
+			...otherProps
+		} = this.props;
 		const {side} = aside || {};
 
 		return (
@@ -57,7 +62,7 @@ class AsideContainer extends React.Component {
 
 		return (<AsidePlaceholder className={cx(asideClassName, styles.asideContainer)} {...aside} />);
 	}
-}
+});
 
 const AsideContainerFwdRef = (props, ref) => <AsideContainer {...props} forwardedRef={ref} />;
 export default React.forwardRef(AsideContainerFwdRef);

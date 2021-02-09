@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Store from '../Store';
@@ -14,8 +15,6 @@ const t = scoped('common.task.progress.Panel', {
 	cancel: 'Cancel'
 });
 
-export default
-@Store.connect({'task': 'monitor'})
 class TaskProgressPanel extends React.Component {
 	static deriveBindingFromProps (props) { return props.task; }
 
@@ -71,3 +70,7 @@ class TaskProgressPanel extends React.Component {
 		);
 	}
 }
+
+export default decorate(TaskProgressPanel, [
+	Store.connect({'task': 'monitor'})
+]);

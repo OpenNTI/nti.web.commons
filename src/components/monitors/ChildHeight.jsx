@@ -55,8 +55,6 @@ function getRemovedNodesFor (mutation, childSelector) {
 		.filter(Boolean);
 }
 
-export default
-@ForwardRef('monitorRef')
 class ChildHeightMonitor extends React.Component {
 	static propTypes = {
 		as: PropTypes.string,
@@ -210,3 +208,5 @@ class ChildHeightMonitor extends React.Component {
 		);
 	}
 }
+
+export default ForwardRef('monitorRef')(ChildHeightMonitor);

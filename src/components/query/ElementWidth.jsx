@@ -5,8 +5,6 @@ import {ScreenSize} from '../../decorators';
 
 import {mergeProps} from './util';
 
-export default
-@ScreenSize()
 class QueryElementWidth extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -95,3 +93,5 @@ class QueryElementWidth extends React.Component {
 		);
 	}
 }
+
+export default ScreenSize()(QueryElementWidth);

@@ -18,10 +18,9 @@ describe ('Single Instance Decorator', () => {
 		document.body.removeChild(mountPoint);
 	});
 
-	@SingleInstance
-	class Single extends React.PureComponent {
+	const Single = SingleInstance(class Single extends React.PureComponent {
 		render = () => <div className="test-component">Test</div>
-	}
+	});
 
 	test('Renders only one instance', () => {
 		ReactDOM.render((

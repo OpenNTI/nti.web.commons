@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {rawContent} from '@nti/lib-commons';
+import {decorate, rawContent} from '@nti/lib-commons';
 
 import Store from './Store';
 import styles from './AsidePlaceholder.css';
@@ -9,8 +9,6 @@ import styles from './AsidePlaceholder.css';
 const DATA_ATTR = 'data-aside-content-container';
 const placeholderTpl = `<div ${DATA_ATTR}></div>`;
 
-export default
-@Store.monitor(['setAsidePlaceholder'])
 class AsidePlaceholder extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -42,3 +40,8 @@ class AsidePlaceholder extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(AsidePlaceholder, [
+	Store.monitor(['setAsidePlaceholder'])
+]);

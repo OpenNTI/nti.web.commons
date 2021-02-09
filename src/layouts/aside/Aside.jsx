@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {restProps, PropTypes as NTIPropTypes} from '@nti/lib-commons';
+import {decorate,restProps, PropTypes as NTIPropTypes} from '@nti/lib-commons';
+
 
 import {LEFT, RIGHT} from './Constants';
 import Store from './Store';
 import Container from './Container';
 
-export default
-@Store.monitor(['placeholder', 'showAside', 'hideAside'])
 class Aside extends React.Component {
 	static Container = Container
 
@@ -50,3 +49,8 @@ class Aside extends React.Component {
 		return ReactDOM.createPortal(content, placeholder);
 	}
 }
+
+
+export default decorate(Aside, [
+	Store.monitor(['placeholder', 'showAside', 'hideAside'])
+]);

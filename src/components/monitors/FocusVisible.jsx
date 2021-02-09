@@ -4,8 +4,6 @@ import {restProps} from '@nti/lib-commons';
 
 import {ForwardRef} from '../../decorators';
 
-export default
-@ForwardRef()
 class FocusVisible extends React.Component {
 	static propTypes = {
 		as: PropTypes.any,
@@ -33,7 +31,7 @@ class FocusVisible extends React.Component {
 		const {onMouseDown} = this.props;
 
 		this.mousedown = true;
-		
+
 		if (onMouseDown) { onMouseDown(...args); }
 	}
 
@@ -71,3 +69,5 @@ class FocusVisible extends React.Component {
 		);
 	}
 }
+
+export default ForwardRef()(FocusVisible);

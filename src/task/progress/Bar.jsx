@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Store from '../Store';
@@ -13,8 +14,6 @@ const t = scoped('common.task.progress.Bar', {
 	cancel: 'Cancel'
 });
 
-export default
-@Store.connect({'task': 'monitor'})
 class TaskProgressBar extends React.Component {
 	static deriveBindingFromProps (props) { return props.task; }
 
@@ -22,7 +21,7 @@ class TaskProgressBar extends React.Component {
 		className: PropTypes.string,
 		task: PropTypes.object.isRequired,
 
-		monitor: PropTypes.object	
+		monitor: PropTypes.object
 	}
 
 
@@ -67,3 +66,6 @@ class TaskProgressBar extends React.Component {
 	}
 }
 
+export default decorate(TaskProgressBar, [
+	Store.connect({'task': 'monitor'})
+]);
