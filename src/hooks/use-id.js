@@ -5,7 +5,7 @@ import React from 'react';
 //pronounced id-eh-fi
 const idify = s => s.replace(/^[^a-z]+|[^\w:.-]+/gi, '');
 
-export default function useId (namespace) {
+export function useId (namespace) {
 	const [id] = React.useState(() => {
 		const guid = uuid();
 
