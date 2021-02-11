@@ -1,5 +1,6 @@
 import React from 'react';
 import Tooltip from '@reach/tooltip';
+import '@reach/tooltip/styles.css';
 
 import Text from '../text/index.js';
 
