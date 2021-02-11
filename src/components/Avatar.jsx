@@ -27,7 +27,9 @@ export default class Avatar extends BaseEntity {
 		className: PropTypes.string,
 
 		// fill for non-square avatars; 'none', 'src' or a canvas fillStyle compatible value.
-		letterbox: PropTypes.string
+		letterbox: PropTypes.string,
+
+		as: PropTypes.any,
 	}
 
 
@@ -80,7 +82,7 @@ export default class Avatar extends BaseEntity {
 
 	render () {
 		const {entity} = this.state;
-		const {className, letterbox = 'black', ...props} = this.props;
+		const {as: Component = Square, className, letterbox = 'black', ...props} = this.props;
 
 		if (!entity) { return null; }
 
@@ -102,13 +104,13 @@ export default class Avatar extends BaseEntity {
 		const imgSrc = ((entity.Deactivated) ? DEFAULT.entity : entity).avatarURL;
 
 		return imgSrc ? (
-			<Square {...childProps} src={imgSrc} onError={this.setUnknown} />
+			<Component {...childProps} src={imgSrc} onError={this.setUnknown} />
 		) : initials ? (
 			<svg {...childProps} viewBox="0 0 32 32">
 				<text textAnchor="middle" x="16px" y="21px">{initials}</text>
 			</svg>
 		) : (
-			<Square {...childProps} src={this.fallback()}/>
+			<Component {...childProps} src={this.fallback()}/>
 		);
 	}
 }
