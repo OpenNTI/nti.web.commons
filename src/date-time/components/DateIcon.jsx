@@ -12,7 +12,7 @@ import {DAY_OF_THE_MONTH, format, MONTH_ABBR} from '../utils';
 const Small = props => <div className="nti-calendar-date-icon-small-wrapper" {...props} />;
 const Badged = props => <Badge position={Badge.POSITIONS.TOP_RIGHT} {...props} {...Badge.offset(0, 4)} />;
 
-const DateIcon = React.forwardRef(({date = new Date(), small, minimal, className, badge, children, onClick, ...props}, ref) => {
+export const DateIcon = React.forwardRef(({date = new Date(), small, minimal, className, badge, children, onClick, ...props}, ref) => {
 	const Wrapper = small ? Small : Fragment;
 	const Container = badge == null ? Fragment : Badged;
 

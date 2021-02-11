@@ -1,4 +1,4 @@
-export { default as DateIcon } from './DateIcon';
+export { DateIcon } from './DateIcon';
 export { default as DateTimeField } from './DateTimeField';
 export { default as DayPicker } from './DayPicker';
 export { default as DayPickerRange } from './DayPickerRange';
