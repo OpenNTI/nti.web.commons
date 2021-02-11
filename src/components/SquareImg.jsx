@@ -18,7 +18,7 @@ function letterbox (ctx, image, type) {
 		const scale = Math.max(size / Math.min(w, h), 3);
 		const sw = w * scale;
 		const sh = h * scale;
-		
+
 		ctx.save();
 		ctx.translate(size / 2, size / 2);
 		ctx.globalAlpha = 0.5;
@@ -47,7 +47,7 @@ export function getSquareSrc (image, letterboxType) {
 	const size = canvas.width = canvas.height = ctx.width = ctx.height = isNaN(w) ? DEFAULT_SIZE : Math.max(w, h);
 
 	letterbox(ctx, image, letterboxType);
-	
+
 	ctx.translate(size / 2, size / 2);
 	ctx.drawImage(image, -w / 2, -h / 2);
 
@@ -62,16 +62,17 @@ export default class Square extends React.Component {
 		const {src} = props;
 		this.image.src = src;
 	}
-	
+
 	static propTypes = {
+		svg: PropTypes.bool,
 		src: PropTypes.string,
 		onLoad: PropTypes.func,
 		onError: PropTypes.func,
-		letterbox: PropTypes.string // 'src', 'none', or a canvas fillStyle
+		letterbox: PropTypes.string, // 'src', 'none', or a canvas fillStyle
 	};
-	
+
 	state = {};
-	
+
 	get image () {
 		if (!this._img) {
 			const img = this._img = new Image();
@@ -81,7 +82,7 @@ export default class Square extends React.Component {
 		}
 		return this._img;
 	}
-	
+
 	componentDidUpdate = ({src: prevSrc}) => {
 		const {src} = this.props;
 
@@ -99,7 +100,7 @@ export default class Square extends React.Component {
 		if (unmounted) {
 			return;
 		}
-		
+
 		this.setState({
 			src: getSquareSrc(target, this.props.letterbox)
 		});
@@ -111,18 +112,18 @@ export default class Square extends React.Component {
 
 
 	render () {
-		const {state: {src = BLANK_IMAGE}} = this;
-		const props = {
-			...this.props,
-			src
-		};
+		const {
+			props: {svg, onLoad, onError, letterbox: shape, ...props},
+			state: {src = BLANK_IMAGE},
+			image: {naturalWidth: size = 32} = {},
+		} = this;
 
-		delete props.onLoad;
-		delete props.onError;
-		delete props.letterbox;
-
-		return (
-			<img {...props} />
+		return svg ? (
+			<svg {...props} viewBox={`0 0 ${size} {size}`}>
+				<image xlinkHref={src} width="100%" height="100%" />
+			</svg>
+		) : (
+			<img src={src} {...props} />
 		);
 	}
 }
