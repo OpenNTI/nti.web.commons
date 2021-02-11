@@ -16,7 +16,9 @@ $avatarcolors:
 	#f4511e;
 
 svg.avatar {
-	background: var(--tertiary-grey);
+	rect {
+		fill: var(--tertiary-grey);
+	}
 	// border-radius: 5px;
 	text {
 		fill: white;
@@ -30,7 +32,9 @@ svg.avatar {
 	@for $i from 1 through length($avatarcolors) {
 		$color: nth($avatarcolors, $i);
 		&.avatar-color-#{$i} {
-			background: $color;
+			rect {
+				fill: $color;
+			}
 		}
 	}
 }

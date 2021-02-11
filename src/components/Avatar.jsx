@@ -107,6 +107,7 @@ export default class Avatar extends BaseEntity {
 			<Component {...childProps} src={imgSrc} onError={this.setUnknown} />
 		) : initials ? (
 			<svg {...childProps} viewBox="0 0 32 32">
+				<rect width="100%" height="100%"/>
 				<text textAnchor="middle" x="16px" y="21px">{initials}</text>
 			</svg>
 		) : (
