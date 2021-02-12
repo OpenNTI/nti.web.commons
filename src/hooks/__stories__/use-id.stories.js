@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import useId from '../use-id';
+import { useId } from '../use-id';
 
 export default {
 	title: 'Hooks/useId',
-	component: useId
+	component: useId,
 };
 
 const Bordered = styled.div`
@@ -16,9 +16,9 @@ const Bordered = styled.div`
 
 Child.propTypes = {
 	count: PropTypes.number,
-	namespace: PropTypes.string
+	namespace: PropTypes.string,
 };
-function Child ({count, namespace}) {
+function Child({ count, namespace }) {
 	const id = useId(namespace);
 
 	return (
@@ -29,7 +29,7 @@ function Child ({count, namespace}) {
 	);
 }
 
-function Test (props) {
+function Test(props) {
 	const [count, setCount] = React.useState(0);
 
 	return (
@@ -40,8 +40,8 @@ function Test (props) {
 	);
 }
 
-export const Base = (props) => (<Test {...props} />);
-export const Namespace = ({namespace = 'nti'}) => {
+export const Base = props => <Test {...props} />;
+export const Namespace = ({ namespace = 'nti' }) => {
 	const [clear, setClear] = React.useState(false);
 	const [ns, setNS] = React.useState();
 
@@ -54,19 +54,19 @@ export const Namespace = ({namespace = 'nti'}) => {
 		}
 	}, [clear]);
 
-	if (clear) { return (<div>Changing Namespace</div>); }
+	if (clear) {
+		return <div>Changing Namespace</div>;
+	}
 
-	return (
-		<Test namespace={ns} />
-	);
+	return <Test namespace={ns} />;
 };
 
 Namespace.propTypes = {
-	namespace: PropTypes.string
+	namespace: PropTypes.string,
 };
 
 Namespace.argTypes = {
 	namespace: {
-		control: {type: 'text'}
-	}
+		control: { type: 'text' },
+	},
 };
