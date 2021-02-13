@@ -52,11 +52,11 @@ OnScreenMonitor.propTypes = {
 	buffer: PropTypes.number,
 	onChange: PropTypes.func
 };
-export default function OnScreenMonitor ({onChange, as:tag, buffer, ...otherProps}) {
+function OnScreenMonitor ({onChange, as:tag, buffer, ...otherProps}, fwdRef) {
 	const Cmp = tag || 'div';
 
 	const observer = useIntersectionObserver(onChange, buffer);
-	const elementRef = React.useRef();
+	const elementRef = fwdRef || React.useRef();
 
 	React.useEffect(() => {
 		const target = elementRef.current;
@@ -70,3 +70,5 @@ export default function OnScreenMonitor ({onChange, as:tag, buffer, ...otherProp
 		<Cmp ref={elementRef} {...otherProps} />
 	);
 }
+
+export default React.forwardRef(OnScreenMonitor);
