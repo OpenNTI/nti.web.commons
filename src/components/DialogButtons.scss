@@ -1,9 +1,10 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .dialog-buttons {
 	// overflow: hidden;
 	position: relative;
-	text-align: right;
+	display: flex;
+	flex-direction: row-reverse;
 
 	&::before {
 		content: '';
@@ -27,6 +28,7 @@
 	}
 
 	.button {
+		flex: 0 0 auto;
 		border: none;
 		min-height: 2.5rem;
 		cursor: pointer;
@@ -51,6 +53,11 @@
 			text-decoration: underline;
 			background: rgba(0, 0, 0, 0) !important;
 			font-weight: 300;
+
+			&:focus,
+			&:focus-visible {
+				text-decoration: underline;
+			}
 		}
 
 		&.disabled {
@@ -86,6 +93,11 @@
 			&.caution {
 				background: var(--primary-red);
 				box-shadow: inset 1px 0 0 0 #dd4845;
+			}
+
+			&:focus,
+			&:focus-visible {
+				box-shadow: inset 0 0 0 3px var(--secondary-blue);
 			}
 		}
 

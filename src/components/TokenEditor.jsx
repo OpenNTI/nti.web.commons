@@ -16,21 +16,25 @@ class Suggestion extends React.Component {
 	static propTypes = {
 		suggestion: PropTypes.object.isRequired,
 		onClick: PropTypes.func,
-		selected: PropTypes.bool
-	}
+		selected: PropTypes.bool,
+	};
 
 	onSuggestionClick = () => {
 		const { onClick, suggestion } = this.props;
 
 		onClick && onClick(suggestion);
-	}
+	};
 
-	render () {
+	render() {
 		const { suggestion, selected } = this.props;
 
 		const classes = cx('suggestion', { selected });
 
-		return (<div className={classes} onClick={this.onSuggestionClick}>{suggestion.view || suggestion}</div>);
+		return (
+			<div className={classes} onClick={this.onSuggestionClick}>
+				{suggestion.view || suggestion}
+			</div>
+		);
 	}
 }
 
@@ -55,9 +59,8 @@ class Suggestion extends React.Component {
  */
 
 export default class TokenEditor extends React.Component {
-
 	static propTypes = {
-		tokens: PropTypes.array,//deprecated... we need to conform to the "value/onChange" api.
+		tokens: PropTypes.array, //deprecated... we need to conform to the "value/onChange" api.
 		value: PropTypes.array,
 		onChange: PropTypes.func,
 		onFocus: PropTypes.func,
@@ -69,22 +72,20 @@ export default class TokenEditor extends React.Component {
 		validator: PropTypes.func,
 		maxTokenLength: PropTypes.number,
 		disabled: PropTypes.bool,
-		onlyAllowSuggestions: PropTypes.bool
-	}
+		onlyAllowSuggestions: PropTypes.bool,
+	};
 
-	state = {inputValue: ''}
+	state = { inputValue: '' };
 
-	get value () {
+	get value() {
 		return [...this.state.values];
 	}
 
+	attachInputRef = x => (this.input = x);
 
-	attachInputRef = x => this.input = x
-
-
-	constructor (props) {
+	constructor(props) {
 		if (props.tokens) {
-			props = {value: props.tokens, ...props};
+			props = { value: props.tokens, ...props };
 			delete props.tokens;
 			logger.warn('tokens prop is deprecated, use value instead.');
 		}
@@ -94,52 +95,47 @@ export default class TokenEditor extends React.Component {
 			selectedSuggestionIndex: -1,
 			suggestions: undefined,
 			validationState: {
-				isValid: true // initially valid until invalid data is entered
-			}
+				isValid: true, // initially valid until invalid data is entered
+			},
 		};
 
 		this.initState(props, x => Object.assign(this.state, x));
 	}
 
-	cancelReset () {}
+	cancelReset() {}
 
 	cancel = () => {
 		this.cancelReset && this.cancelReset();
-	}
+	};
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.cancel();
 	}
 
-
-	componentDidUpdate (prevProps) {
+	componentDidUpdate(prevProps) {
 		if (prevProps.value !== this.props.value) {
 			this.initState();
 			this.cancel();
 		}
 	}
 
-
-	initState (props = this.props, updater = x => this.setState(x)) {
+	initState(props = this.props, updater = x => this.setState(x)) {
 		updater({
 			inputValue: '',
-			values: [... new Set(props.value)]//dedupe
+			values: [...new Set(props.value)], //dedupe
 		});
 	}
 
-
-	resetSuggestionState () {
+	resetSuggestionState() {
 		clearTimeout(this.inputBuffer);
 
 		this.setState({
 			suggestions: undefined,
-			selectedSuggestionIndex: -1
+			selectedSuggestionIndex: -1,
 		});
 	}
 
-
-	add = (value) => {
+	add = value => {
 		this.resetSuggestionState();
 
 		let v = value;
@@ -150,33 +146,28 @@ export default class TokenEditor extends React.Component {
 			v = this.props.preprocessToken(v);
 		}
 
-		const {values} = this.state;
+		const { values } = this.state;
 		if (!values.includes(v)) {
-			this.setState(
-				{values: [...values, v]},
-				()=> this.onChange()
-			);
+			this.setState({ values: [...values, v] }, () => this.onChange());
 		}
-	}
+	};
 
-
-	remove = (value) => {
-		const {values} = this.state;
-		const filtered =  values.filter(x => x !== value && x.display !== value);
+	remove = value => {
+		const { values } = this.state;
+		const filtered = values.filter(x => x !== value && x.display !== value);
 
 		if (filtered.length < values.length) {
-			this.setState(
-				{values: filtered},
-				()=> this.onChange()
-			);
+			this.setState({ values: filtered }, () => this.onChange());
 		}
-	}
-
+	};
 
 	clearInput = () => {
-		this.setState({ inputValue: '', suggestions: undefined, loadingSuggestions: false });
-	}
-
+		this.setState({
+			inputValue: '',
+			suggestions: undefined,
+			loadingSuggestions: false,
+		});
+	};
 
 	focusInput = () => {
 		if (this.input) {
@@ -185,18 +176,26 @@ export default class TokenEditor extends React.Component {
 		if (this.props.onFocus) {
 			this.props.onFocus();
 		}
-	}
+	};
 
-	addIfValid (value) {
+	addIfValid(value) {
 		const { validationState } = this.state;
 
-		if(validationState && validationState.isValid && value && value.trim() !== '') {
+		if (
+			validationState &&
+			validationState.isValid &&
+			value &&
+			value.trim() !== ''
+		) {
 			this.add(value);
 			this.clearInput();
+			return true;
 		}
+
+		return false;
 	}
 
-	onBlur = (e) => {
+	onBlur = e => {
 		const { onlyAllowSuggestions } = this.props;
 		// this.add(e.target.value);
 		// this.clearInput();
@@ -204,29 +203,33 @@ export default class TokenEditor extends React.Component {
 		// give a little delay before hiding suggestions on blur
 		const taskId = {};
 		this.currentTask = taskId;
-		const timerId = setTimeout(() => this.currentTask === taskId && this.resetSuggestionState(), BLUR_DELAY);
+		const timerId = setTimeout(
+			() => this.currentTask === taskId && this.resetSuggestionState(),
+			BLUR_DELAY
+		);
 
 		this.cancel(); // cancels existing timer if any
 
 		this.cancelReset = () => clearTimeout(timerId);
 
-		if(!onlyAllowSuggestions) {
+		if (!onlyAllowSuggestions) {
 			// on blur, add token as if a delimiter key was hit
 			this.addIfValid(e.target.value);
 		}
-	}
-
+	};
 
 	onChange = () => {
-		const {props: {onChange}, state: {values}} = this;
+		const {
+			props: { onChange },
+			state: { values },
+		} = this;
 
 		if (onChange) {
 			onChange(values);
 		}
-	}
+	};
 
-
-	onInputChange = (e) => {
+	onInputChange = e => {
 		const { validator } = this.props;
 		const { selectedSuggestionIndex, suggestions } = this.state;
 		const value = e.target.value;
@@ -234,71 +237,80 @@ export default class TokenEditor extends React.Component {
 		clearTimeout(this.inputBuffer);
 
 		let validationState = {
-			isValid: true
+			isValid: true,
 		};
 
-		if(validator) {
+		if (validator) {
 			const validationResults = validator(value);
 			validationState = {
 				isValid: validationResults && validationResults.length === 0,
-				errors: validationResults
+				errors: validationResults,
 			};
 		}
 
 		let newState = {
 			inputValue: value,
-			validationState
+			validationState,
 		};
 
-		if(suggestions && selectedSuggestionIndex >= suggestions.length) {
+		if (suggestions && selectedSuggestionIndex >= suggestions.length) {
 			newState.selectedSuggestionIndex = -1;
 		}
 
-		if(value === '') {
+		if (value === '') {
 			newState.suggestions = undefined;
 			newState.selectedSuggestionIndex = -1;
 		}
 
 		this.setState(newState);
 
-		if(value !== '') {
+		if (value !== '') {
 			// load suggestions if there is anything search for
 			this.inputBuffer = setTimeout(() => {
 				this.loadSuggestions(value);
 			}, SUGGESTION_BUFFER);
 		}
-	}
+	};
 
-
-	loadSuggestions (value, forceEmpty, callback) {
+	loadSuggestions(value, forceEmpty, callback) {
 		const { suggestionProvider } = this.props;
 
-		if(value === '' && !forceEmpty) {
-			this.setState({suggestions: undefined});
-		}
-		else if(suggestionProvider) {
+		if (value === '' && !forceEmpty) {
+			this.setState({ suggestions: undefined });
+		} else if (suggestionProvider) {
 			this.setState({ loadingSuggestions: true });
 
-			suggestionProvider(value).then((newSuggestions) => {
-				this.setState({
-					suggestions: newSuggestions,
-					loadingSuggestions: false
-				}, () => { callback && callback(); });
-			}).catch(() => {
-				this.setState({
-					suggestions: undefined,
-					loadingSuggestions: false
-				}, () => { callback && callback(); });
-			});
+			suggestionProvider(value)
+				.then(newSuggestions => {
+					this.setState(
+						{
+							suggestions: newSuggestions,
+							loadingSuggestions: false,
+						},
+						() => {
+							callback && callback();
+						}
+					);
+				})
+				.catch(() => {
+					this.setState(
+						{
+							suggestions: undefined,
+							loadingSuggestions: false,
+						},
+						() => {
+							callback && callback();
+						}
+					);
+				});
 		}
 	}
 
-
-	getTokenEditor = (el) => {
+	getTokenEditor = el => {
 		let parent = el.parentNode;
 
-		while(parent) {
-			if(parent.className === 'token-editor') {
+		while (parent) {
+			if (parent.className === 'token-editor') {
 				return parent;
 			}
 
@@ -306,174 +318,236 @@ export default class TokenEditor extends React.Component {
 		}
 
 		return null;
-	}
+	};
 
-
-	getSuggestionsContainer = (tokenEditor) => {
+	getSuggestionsContainer = tokenEditor => {
 		return tokenEditor.getElementsByClassName('suggestions-container')[0];
-	}
+	};
 
-
-	getSelectedSuggestion = (suggestionContainer) => {
+	getSelectedSuggestion = suggestionContainer => {
 		const selected = suggestionContainer.getElementsByClassName('selected');
 
 		return selected && selected[0];
-	}
+	};
 
+	adjustSuggestionScroll = el => {
+		const suggestionsContainer = this.getSuggestionsContainer(
+			this.getTokenEditor(el)
+		);
+		const selectedSuggestion = this.getSelectedSuggestion(
+			suggestionsContainer
+		);
 
-	adjustSuggestionScroll = (el) => {
-		const suggestionsContainer = this.getSuggestionsContainer(this.getTokenEditor(el));
-		const selectedSuggestion = this.getSelectedSuggestion(suggestionsContainer);
-
-		if(selectedSuggestion) {
+		if (selectedSuggestion) {
 			const containerRect = suggestionsContainer.getBoundingClientRect();
 			const itemRect = selectedSuggestion.getBoundingClientRect();
 
-			if(itemRect.top > containerRect.bottom) {
+			if (itemRect.top > containerRect.bottom) {
 				suggestionsContainer.scrollTop += itemRect.height;
-			}
-			else if(itemRect.top < containerRect.top) {
+			} else if (itemRect.top < containerRect.top) {
 				suggestionsContainer.scrollTop = selectedSuggestion.offsetTop;
 			}
 		}
-	}
+	};
 
-
-	onKeyDown = (e) => {
-		const { suggestions, selectedSuggestionIndex, loadingSuggestions } = this.state;
+	onKeyDown = e => {
+		const {
+			suggestions,
+			selectedSuggestionIndex,
+			loadingSuggestions,
+		} = this.state;
 		const { onlyAllowSuggestions } = this.props;
-		const { target } = e;
+		const { target, key } = e;
 
-		const finishingKeys = this.props.tokenDelimiterKeys || ['Enter', 'Tab', ' ', ','];
-		if (finishingKeys.indexOf(e.key) > -1) {
+		const finishingKeys = this.props.tokenDelimiterKeys || [
+			'Enter',
+			'Tab',
+			' ',
+			',',
+		];
+
+		const stopEvent = () => {
 			e.stopPropagation();
 			e.preventDefault();
+		};
 
-			if(suggestions && suggestions.length > 0 && selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
+		if (finishingKeys.indexOf(key) > -1) {
+			// Allow tabing if we don't add anything
+			if (key !== 'Tab') {
+				stopEvent();
+			}
+
+			if (
+				suggestions &&
+				suggestions.length > 0 &&
+				selectedSuggestionIndex >= 0 &&
+				suggestions[selectedSuggestionIndex]
+			) {
 				this.add(suggestions[selectedSuggestionIndex]);
 				this.clearInput();
-			}
-			else if(!onlyAllowSuggestions) {
+				stopEvent();
+			} else if (!onlyAllowSuggestions) {
 				// if onlyAllowSuggestions mode, don't allow this free text to be entered as a token.  Force user to
 				// select from a suggestion
-				this.addIfValid(target.value);
+				if (this.addIfValid(target.value)) {
+					stopEvent();
+				}
 			}
 		}
-		else if(e.key === 'ArrowDown') {
-			if(loadingSuggestions) {
+
+		if (key === 'ArrowDown') {
+			if (loadingSuggestions) {
 				// don't interrupt anything if we're still loading
 				return;
 			}
 
-			if(suggestions && suggestions.length > 0) {
-				let newSelection = Math.min(selectedSuggestionIndex + 1, suggestions.length - 1);
+			if (suggestions && suggestions.length > 0) {
+				let newSelection = Math.min(
+					selectedSuggestionIndex + 1,
+					suggestions.length - 1
+				);
 
-				this.setState({
-					selectedSuggestionIndex: newSelection,
-					inputValue: this.getValueForSuggestion(suggestions[newSelection])
-				}, () => {
-					this.adjustSuggestionScroll(target);
-				});
-			}
-			else {
+				this.setState(
+					{
+						selectedSuggestionIndex: newSelection,
+						inputValue: this.getValueForSuggestion(
+							suggestions[newSelection]
+						),
+					},
+					() => {
+						this.adjustSuggestionScroll(target);
+					}
+				);
+			} else {
 				this.loadSuggestions('', true, () => {
-					if(this.state.suggestions && this.state.suggestions.length > 0) {
+					if (
+						this.state.suggestions &&
+						this.state.suggestions.length > 0
+					) {
 						this.setState({
 							selectedSuggestionIndex: 0,
-							inputValue: this.getValueForSuggestion(this.state.suggestions[0])
+							inputValue: this.getValueForSuggestion(
+								this.state.suggestions[0]
+							),
 						});
 					}
 				});
 			}
 		}
-		else if(e.key === 'ArrowUp') {
-			if(loadingSuggestions) {
+
+		if (key === 'ArrowUp') {
+			if (loadingSuggestions) {
 				// don't interrupt anything if we're still loading
 				return;
 			}
 
-			if(suggestions && suggestions.length > 0) {
+			if (suggestions && suggestions.length > 0) {
 				let newSelection = Math.max(selectedSuggestionIndex - 1, 0);
 
-				this.setState({
-					selectedSuggestionIndex: newSelection,
-					inputValue: this.getValueForSuggestion(suggestions[newSelection])
-				}, () => {
-					this.adjustSuggestionScroll(target);
-				});
+				this.setState(
+					{
+						selectedSuggestionIndex: newSelection,
+						inputValue: this.getValueForSuggestion(
+							suggestions[newSelection]
+						),
+					},
+					() => {
+						this.adjustSuggestionScroll(target);
+					}
+				);
 			}
 		}
-		else if(isEmpty(e.target.value) && e.key === 'Backspace') {
+
+		if (isEmpty(e.target.value) && key === 'Backspace') {
 			e.preventDefault();
 			this.deleteLastValue();
 		}
-	}
+	};
 
-
-	getValueForSuggestion (suggestion) {
+	getValueForSuggestion(suggestion) {
 		return suggestion.display || suggestion;
 	}
 
-
 	deleteLastValue = () => {
-		const {values} = this.state;
+		const { values } = this.state;
 		if (values.length > 0) {
 			const lastValue = values[values.length - 1];
 			this.remove(lastValue);
 			this.setState({ inputValue: lastValue.display || lastValue });
 		}
-	}
+	};
 
-	onSuggestionClick = (suggestion) => {
+	onSuggestionClick = suggestion => {
 		this.add(suggestion);
 		this.clearInput();
 	};
 
 	renderSuggestion = (suggestion, index) => {
 		return (
-			<Suggestion key={suggestion.key || suggestion.display || suggestion}
+			<Suggestion
+				key={suggestion.key || suggestion.display || suggestion}
 				suggestion={suggestion}
 				onClick={this.onSuggestionClick}
 				selected={this.state.selectedSuggestionIndex === index}
 			/>
 		);
-	}
+	};
 
-
-	renderSuggestions () {
+	renderSuggestions() {
 		const { loadingSuggestions, suggestions } = this.state;
 
 		const style = {
-			marginLeft: (this.input && this.input.offsetLeft) + 'px'
+			marginLeft: this.input?.offsetLeft + 'px',
 		};
 
-		if(loadingSuggestions) {
-			return (<div style={style} className="suggestions-container loading">Loading suggestions...</div>);
-		}
-		else if(suggestions && suggestions.length > 0) {
-			return (<div style={style} className="suggestions-container">{suggestions.map(this.renderSuggestion)}</div>);
-		}
-		else if(suggestions && suggestions.length === 0) {
-			return (<div style={style} className="suggestions-container no-matches">No matches found</div>);
+		if (loadingSuggestions) {
+			return (
+				<div style={style} className="suggestions-container loading">
+					Loading suggestions...
+				</div>
+			);
+		} else if (suggestions && suggestions.length > 0) {
+			return (
+				<div style={style} className="suggestions-container">
+					{suggestions.map(this.renderSuggestion)}
+				</div>
+			);
+		} else if (suggestions && suggestions.length === 0) {
+			return (
+				<div style={style} className="suggestions-container no-matches">
+					No matches found
+				</div>
+			);
 		}
 
 		return null;
 	}
 
-
-	render () {
-
-		const {placeholder, disabled, maxTokenLength} = this.props;
-		const {values, inputValue, validationState} = this.state;
+	render() {
+		const { placeholder, disabled, maxTokenLength } = this.props;
+		const { values, inputValue, validationState } = this.state;
 
 		const classes = cx('token-editor', this.props.className);
 
-		const inputCls = cx('token', { error: validationState && !validationState.isValid });
+		const inputCls = cx('token', {
+			error: validationState && !validationState.isValid,
+		});
 
 		return (
 			<div className={classes} onClick={this.focusInput}>
-				{!disabled && placeholder && values.length === 0 && inputValue.length === 0 && <span className="placeholder">{placeholder}</span>}
-				{values.map(x => <Token key={x.display || x} value={x.display || x} onRemove={disabled ? void 0 : this.remove} />)}
+				{!disabled &&
+					placeholder &&
+					values.length === 0 &&
+					inputValue.length === 0 && (
+						<span className="placeholder">{placeholder}</span>
+					)}
+				{values.map(x => (
+					<Token
+						key={x.display || x}
+						value={x.display || x}
+						onRemove={disabled ? void 0 : this.remove}
+					/>
+				))}
 				<input
 					disabled={disabled}
 					className={inputCls}
