@@ -9,6 +9,7 @@ const styles = css`
 @custom-selector :--underline-up-state .underline.locked :--inputs, .underline:not(.empty) :--inputs, .underline :--inputs:focus;
 @custom-selector :--underline-error-up-state .underline.error.locked :--inputs, .underline.error:not(.empty) :--inputs, .underline.error :--inputs:focus;
 
+
 .center label {
 	left: 0;
 	right: 0;
@@ -16,7 +17,8 @@ const styles = css`
 }
 
 .fill.fill {
-	--padding-horizontal: 0.625rem;
+	--input-padding-left: 0.625rem;
+	--input-padding-right: 0.625rem;
 
 	:--inputs {
 		background: #f7f7f7;
@@ -29,12 +31,12 @@ const styles = css`
 	-webkit-appearance: none;
 	width: 100%;
 	box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
-	padding: 1.5625em var(--padding-horizontal, 0.625rem) 0.625rem;
+	padding: 1.5625em var(--input-padding-right, 0.625rem) 0.625rem var(--input-padding-left, 0.625rem);
 	background: none;
 
 	& + label {
 		position: absolute;
-		left: var(--padding-horizontal, 0.625rem);
+		left: var(--input-padding-left, 0.625rem);
 		font-size: 1em;
 		color: var(--tertiary-grey);
 		transition:
