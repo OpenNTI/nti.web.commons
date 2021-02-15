@@ -7,6 +7,8 @@ import { DataURIs } from '../constants';
 
 const { BLANK_IMAGE } = DataURIs;
 
+const DELAY = 250;
+
 const styles = css`
 	.img.loading {
 		animation: shimmer 2s infinite;
@@ -53,15 +55,28 @@ export default function DeferredImage ({src, className, ...props}) {
 	});
 
 	const preloader = useRef();
+	const preloaderTimeoutId = useRef();
 
 	const onChange = useCallback((onScreen) => {
-		if (onScreen && (src !== source)) {
-			if (preloader.current) {
-				preloader.current.removeEventListener('load', onPreload);
-			}
-			preloader.current = new Image();
-			preloader.current.addEventListener('load', onPreload);
-			preloader.current.src = src;
+		// if not on screen anymore kill the preload timeout
+		if (!onScreen) {
+			clearTimeout(preloaderTimeoutId.current);
+			preloaderTimeoutId.current = null;
+		}
+
+		// if onscreen setTimeout for preloading
+		if (onScreen && (src !== source) && !preloaderTimeoutId.current) {
+			// defer loading so we're not kicking off requests for images that are
+			// rapidly scrolling by; quickly coming into view and going back out again.
+			preloaderTimeoutId.current = setTimeout(() => {
+				if (preloader.current) {
+					preloader.current.removeEventListener('load', onPreload);
+				}
+				preloader.current = new Image();
+				preloader.current.addEventListener('load', onPreload);
+				preloader.current.src = src;
+				preloaderTimeoutId.current = null;
+			}, DELAY);
 		}
 	}, [src]);
 
