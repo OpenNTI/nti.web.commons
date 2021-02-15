@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 span.file-picker.button {
 	position: relative;
@@ -10,7 +10,8 @@ span.file-picker.button {
 	display: inline-block;
 
 	&.disabled {
-		&, input {
+		&,
+		input {
 			pointer-events: none;
 			cursor: default;
 		}
@@ -21,7 +22,7 @@ span.file-picker.button {
 		}
 	}
 
-	input[type=file] {
+	input[type='file'] {
 		position: absolute;
 		cursor: pointer;
 		right: 0;

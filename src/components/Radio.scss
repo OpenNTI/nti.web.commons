@@ -1,10 +1,10 @@
-@import "~@nti/style-common";
-@import "assets/retina";
+@import '~@nti/style-common';
+@import 'assets/retina';
 
 label.radio-component {
 	position: relative;
 
-	input[type=radio] {
+	input[type='radio'] {
 		opacity: 0;
 		position: absolute;
 		top: 0;
@@ -43,7 +43,7 @@ label.radio-component {
 		}
 	}
 
-	input[type=radio] + span.label,
+	input[type='radio'] + span.label,
 	div.sub {
 		margin-left: 1.625rem;
 	}

@@ -34,7 +34,7 @@
 	cursor: initial;
 }
 
-.toggler input[type=checkbox] {
+.toggler input[type='checkbox'] {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -45,7 +45,7 @@
 	cursor: pointer;
 }
 
-.toggler.disabled input[type=checkbox] {
+.toggler.disabled input[type='checkbox'] {
 	cursor: initial;
 }
 

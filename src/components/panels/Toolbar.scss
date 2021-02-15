@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .toolbar-component {
 	@include clearfix;
@@ -28,7 +28,7 @@
 			font-size: 14px;
 		}
 
-		input[type=text] {
+		input[type='text'] {
 			padding-left: rem-calc(27px);
 		}
 
