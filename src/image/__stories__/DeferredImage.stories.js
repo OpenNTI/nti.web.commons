@@ -17,7 +17,7 @@ function Container (props) {
 		<div
 			style={{
 				maxHeight: '100vh',
-				height: `${SIZE}px`,
+				height: `${SIZE * 1.5}px`,
 				overflow: 'auto'
 			}}
 			{...props}
@@ -27,7 +27,7 @@ function Container (props) {
 
 const ballpark = () => SIZE + (Math.floor(Math.random() * 100) - 50);
 
-export const Story = ({length = 100, ...props}) => (
+export const Story = ({length = 200, ...props}) => (
 	<Container>
 		{
 			Array.from({length}, (_, i) => (
