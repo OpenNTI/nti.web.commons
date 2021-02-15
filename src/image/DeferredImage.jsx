@@ -54,28 +54,25 @@ export default function DeferredImage ({src, className, ...props}) {
 		dispatch({ loaded: true, source: src });
 	});
 
-	const preloader = useRef();
-	const preloaderTimeoutId = useRef();
+	const preloader = useRef({ image: null });
 
 	const onChange = useCallback((onScreen) => {
 		// if not on screen anymore kill the preload timeout
 		if (!onScreen) {
-			clearTimeout(preloaderTimeoutId.current);
-			preloaderTimeoutId.current = null;
+			clearTimeout(preloader.current.timeout);
+			delete preloader.current.timeout;
 		}
 
 		// if onscreen setTimeout for preloading
-		if (onScreen && (src !== source) && !preloaderTimeoutId.current) {
+		if (onScreen && (src !== source) && !preloader.current.timeout) {
 			// defer loading so we're not kicking off requests for images that are
 			// rapidly scrolling by; quickly coming into view and going back out again.
-			preloaderTimeoutId.current = setTimeout(() => {
-				if (preloader.current) {
-					preloader.current.removeEventListener('load', onPreload);
-				}
-				preloader.current = new Image();
-				preloader.current.addEventListener('load', onPreload);
-				preloader.current.src = src;
-				preloaderTimeoutId.current = null;
+			preloader.current.timeout = setTimeout(() => {
+				preloader.current.image?.removeEventListener?.('load', onPreload);
+				preloader.current.image = new Image();
+				preloader.current.image.addEventListener('load', onPreload);
+				preloader.current.image.src = src;
+				delete preloader.current.timeout;
 			}, DELAY);
 		}
 	}, [src]);
