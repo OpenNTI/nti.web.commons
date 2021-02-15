@@ -56,37 +56,20 @@ const SpecialClassForInput = {
 	))
 };
 
-function resolveInput (ref) {
-	let pointer = ref.current;
-
-	while (pointer?.input) {
-		pointer = pointer.input;
-	}
-
-	return pointer;
-}
-
 FileIcon.propTypes = {
 	className: PropTypes.string,
 	children: PropTypes.any,
 
 	icon: PropTypes.node,
-	side: PropTypes.oneOf(['left', 'right']),
-
-	_ref: PropTypes.any
+	side: PropTypes.oneOf(['left', 'right'])
 };
-function FileIcon ({className, children, icon, side = 'right', _ref}) {
+export default function FileIcon ({className, children, icon, side = 'right'}) {
 	const input = React.Children.only(children);
 	const inputClass = SpecialClassForInput[input.type]?.(input) ?? '';
-	const inputRef = React.useRef(null);
-
-	React.useImperativeHandle(_ref, () => ({
-		get input () { return resolveInput(inputRef); }
-	}));
 
 	return (
 		<div className={cx(styles.inputIcon, className, styles[side], inputClass)}>
-			{React.cloneElement(input, {ref: inputRef})}
+			{input}
 			{icon && (
 				<div className={styles.icon}>
 					{icon}
@@ -96,8 +79,3 @@ function FileIcon ({className, children, icon, side = 'right', _ref}) {
 	);
 
 }
-
-const FileIconRef = (props, ref) => (
-	<FileIcon {...props} _ref={ref} />
-);
-export default React.forwardRef(FileIconRef);
