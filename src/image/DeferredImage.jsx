@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -14,23 +14,28 @@ const styles = css`
 		background-size: 1000px 100%;
 		background-attachment: fixed;
 	}
+
 	.img:not(.loading) {
 		animation: fadeup 0.5s;
 		animation-iteration-count: 1;
 		animation-fill-mode: both;
 	}
+
 	@keyframes shimmer {
 		0% { background-position: -1000px 0; }
 		100% { background-position: 1000px 0; }
 	}
+
 	@keyframes fadeup {
 		0% {
 			opacity: 0;
 			transform: scale(0.875);
 		}
+
 		30% {
 			transform: scale(1);
 		}
+
 		100% {
 			opacity: 1;
 		}
@@ -38,12 +43,13 @@ const styles = css`
 `;
 
 export default function DeferredImage ({src, className, ...props}) {
-	const [source, setSource] = useState(BLANK_IMAGE);
-	const [loaded, setLoaded] = useState(false);
+	const [{source, loaded}, dispatch] = useReducer((state, action) => ({
+		...state,
+		...action
+	}), {source: BLANK_IMAGE, loaded: false});
 
 	const onPreload = useCallback(() => {
-		setLoaded(true);
-		setSource(src);
+		dispatch({ loaded: true, source: src });
 	});
 
 	const preloader = useRef();
