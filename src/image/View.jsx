@@ -14,6 +14,7 @@ import { AspectRatios } from './Constants';
 import Container from './Container';
 import Error from './Error';
 import LightBox from './light-box';
+import DeferredImage from './DeferredImage';
 
 const { BLANK_IMAGE } = DataURIs;
 const t = scoped('common.image.View', {
@@ -24,6 +25,7 @@ class NTIImage extends React.Component {
 	static srcset = srcsetUtils;
 	static AspectRatios = AspectRatios;
 	static Container = Container;
+	static Deferred = DeferredImage;
 	static Error = Error;
 	static LightBox = LightBox;
 
