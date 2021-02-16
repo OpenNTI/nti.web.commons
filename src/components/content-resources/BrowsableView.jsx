@@ -1,53 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from '@nti/web-client';
-import {scoped} from '@nti/lib-locale';
+import { getService } from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
-import {buffer as buffered, Selection} from '@nti/lib-commons';
+import { buffer as buffered, Selection } from '@nti/lib-commons';
 
-import {alert} from '../../prompts';
+import { alert } from '../../prompts';
 
 import TaskQueue from './tasks/Queue';
 import MoveTask from './tasks/Move';
 import UploadTask from './tasks/Upload';
 
-const {ObjectSelectionModel} = Selection;
+const { ObjectSelectionModel } = Selection;
 
 const logger = Logger.get('common:components:content-resources:BrowsableView');
 
-const ONE_MINUTE = 60000;//60 * 1000ms
+const ONE_MINUTE = 60000; //60 * 1000ms
 
 const isFile = x => x && /nextthought.+(folder|file)/i.test(x.MimeType);
 
 const DEFAULT_TEXT = {
 	active: {
 		move: 'Moving %(filename)s...',
-		upload: 'Uploading %(filename)s...'
+		upload: 'Uploading %(filename)s...',
 	},
 	complete: {
 		unknown: 'Something went wrong.',
 		PermissionDeniedNoLink: 'Permission Denied.',
 		movefail: {
-			zero: 'Could not move <span class="named">%(filename)s</span>. %(message)s',
-			one: 'Failed to move <span class="named">%(filename)s</span>, and %(count)s other.',
-			other: 'Failed to move <span class="named">%(filename)s</span>, and %(count)s others.'
+			zero:
+				'Could not move <span class="named">%(filename)s</span>. %(message)s',
+			one:
+				'Failed to move <span class="named">%(filename)s</span>, and %(count)s other.',
+			other:
+				'Failed to move <span class="named">%(filename)s</span>, and %(count)s others.',
 		},
 		uploadfail: {
-			zero: 'Could not upload <span class="named">%(filename)s</span>. %(message)s',
-			one: 'Failed to upload <span class="named">%(filename)s</span>, and %(count)s other.',
-			other: 'Failed to upload <span class="named">%(filename)s</span>, and %(count)s others.'
+			zero:
+				'Could not upload <span class="named">%(filename)s</span>. %(message)s',
+			one:
+				'Failed to upload <span class="named">%(filename)s</span>, and %(count)s other.',
+			other:
+				'Failed to upload <span class="named">%(filename)s</span>, and %(count)s others.',
 		},
 		move: {
 			zero: 'Moved %(filename)s to %(folderName)s.',
 			one: 'Moved %(filename)s, and %(count)s other to %(folderName)s.',
-			other: 'Moved %(filename)s, and %(count)s others to %(folderName)s.'
+			other:
+				'Moved %(filename)s, and %(count)s others to %(folderName)s.',
 		},
 		upload: {
 			zero: 'Uploaded %(filename)s.',
 			one: 'Uploaded %(filename)s, and %(count)s other.',
-			other: 'Uploaded %(filename)s, and %(count)s others.'
-		}
-	}
+			other: 'Uploaded %(filename)s, and %(count)s others.',
+		},
+	},
 };
 
 const t = scoped('common.components.content-resources', DEFAULT_TEXT);
@@ -60,27 +67,24 @@ export default class BrowsableView extends React.Component {
 		onSelectionChange: PropTypes.func,
 		onTrigger: PropTypes.func,
 		sourceID: PropTypes.string,
-		limited: PropTypes.bool
-	}
-
+		limited: PropTypes.bool,
+	};
 
 	static childContextTypes = {
 		canSelectItem: PropTypes.func,
 		onTrigger: PropTypes.func,
 		onFolderDrop: PropTypes.func,
-		selectItem: PropTypes.func
-	}
-
+		selectItem: PropTypes.func,
+	};
 
 	getChildContext = () => ({
 		canSelectItem: this.canSelectItem,
 		onTrigger: this.onTrigger,
 		onFolderDrop: this.props.limited ? void 0 : this.onFolderDrop,
-		selectItem: this.selectItem
-	})
+		selectItem: this.selectItem,
+	});
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.selection = new ObjectSelectionModel();
 		this.taskQueue = new TaskQueue();
@@ -92,77 +96,80 @@ export default class BrowsableView extends React.Component {
 		this.taskQueue.addListener('finish', this.onTasksComplete);
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setup();
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {sourceID} = this.props;
+	componentDidUpdate(prevProps) {
+		const { sourceID } = this.props;
 		if (sourceID !== prevProps.sourceID) {
 			this.setup();
 		}
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.selection.removeListener('change', this.onSelectionChange);
 		this.taskQueue.removeListener('begin', this.onTasksEnqueued);
 		this.taskQueue.removeListener('progress', this.onTaskProgress);
 		this.taskQueue.removeListener('finish', this.onTasksComplete);
 	}
 
-
-	canSelectItem = (item) => {
-		const {accept} = this.props;
+	canSelectItem = item => {
+		const { accept } = this.props;
 		if (!accept || typeof accept !== 'function') {
 			return true;
 		}
 
 		return item.isFolder || accept(item);
-	}
+	};
 
-
-	dropItem = (item) => (
-		item = item && (item.getID ? item.getID() : item.NTIID),
+	dropItem = item => (
+		(item = item && (item.getID ? item.getID() : item.NTIID)),
 		new Promise(next =>
-			this.setState({folderContents: this.state.folderContents.filter(i => i.getID() !== item)}, next))
-	)
-
+			this.setState(
+				{
+					folderContents: this.state.folderContents.filter(
+						i => i.getID() !== item
+					),
+				},
+				next
+			)
+		)
+	);
 
 	gotoParent = () => {
-		const {folder} = this.state;
+		const { folder } = this.state;
 		const parent = folder && folder.getParentFolder();
 		if (parent) {
 			this.setFolder(parent);
 		}
-	}
+	};
 
-
-	refresh = () => this.setFolder(this.state.folder, this.state.folderContents, false)
-
+	refresh = () =>
+		this.setFolder(this.state.folder, this.state.folderContents, false);
 
 	search = buffered(BUFFERED_TIME, () => {
-		const {searchScope, folder, search, sort} = this.state;
+		const { searchScope, folder, search, sort } = this.state;
 
 		if (!search || search.trim().length === 0) {
 			return;
 		}
 
-		(searchScope || folder).search(search.trim(), sort, true)
+		(searchScope || folder)
+			.search(search.trim(), sort, true)
 			.then(searchResults => {
-				if (this.state.search !== search) {return;}
+				if (this.state.search !== search) {
+					return;
+				}
 
-				this.setState({folderContents: searchResults});
+				this.setState({ folderContents: searchResults });
 			})
-			.catch(error => this.setState({error}));
-	})
-
+			.catch(error => this.setState({ error }));
+	});
 
 	selectItem = (item, modifiers) => {
-		const {selection} = this;
-		const {metaKey, ctrlKey/*, altKey, shiftKey*/} = modifiers || {};
+		const { selection } = this;
+		const { metaKey, ctrlKey /*, altKey, shiftKey*/ } = modifiers || {};
 
 		if (!this.canSelectItem(item)) {
 			return;
@@ -177,16 +184,14 @@ export default class BrowsableView extends React.Component {
 
 		if (metaKey || ctrlKey) {
 			selection.add(item);
-		}
-		else {
+		} else {
 			selection.set(item);
 		}
-	}
-
+	};
 
 	setFolder = (folder, contents, clearProgress = true) => {
-		const additional = clearProgress ? {progress: void 0} : {};
-		const {sort} = this.state;
+		const additional = clearProgress ? { progress: void 0 } : {};
+		const { sort } = this.state;
 
 		this.setState(
 			{
@@ -195,60 +200,70 @@ export default class BrowsableView extends React.Component {
 				search: void 0,
 				searchScope: void 0,
 				showInfo: false,
-				...additional
+				...additional,
 			},
-			() => this.onSelectionChange());
+			() => this.onSelectionChange()
+		);
 
 		this.selection.set([]);
 
-		return folder.getContents(sort)
-			.then(c => (this.setState({folderContents: c, error: null}), c))
-			.catch(error => this.setState({error}));
-	}
+		return folder
+			.getContents(sort)
+			.then(c => (this.setState({ folderContents: c, error: null }), c))
+			.catch(error => this.setState({ error }));
+	};
 
-
-	setup (props = this.props) {
-		const {sourceID} = props;
+	setup(props = this.props) {
+		const { sourceID } = props;
 
 		getService()
 			.then(s => s.getObject(sourceID))
 			.then(c => c.getResources())
-			.then(folder => (this.setState({root: folder}), this.setFolder(folder)))
-			.catch(error => this.setState({error}));
+			.then(
+				folder => (
+					this.setState({ root: folder }), this.setFolder(folder)
+				)
+			)
+			.catch(error => this.setState({ error }));
 	}
-
 
 	moveEntities = (entities, target) => {
 		this.selection.set();
 
-		return Promise.all([...entities]
-			.map(item => new Promise(next =>
-				this.taskQueue.add(
-					new MoveTask(item, target,
-						() => this.dropItem(item).then(next)
+		return Promise.all(
+			[...entities].map(
+				item =>
+					new Promise(next =>
+						this.taskQueue.add(
+							new MoveTask(item, target, () =>
+								this.dropItem(item).then(next)
+							)
+						)
 					)
-				)
-			))
+			)
 		)
 			.then(() => target.refresh())
 			.then(this.refresh)
-			.then(() => null);//don't fulfill with any value.
-	}
-
+			.then(() => null); //don't fulfill with any value.
+	};
 
 	uploadFiles = (files, folder) => {
-		const add = (o) => {
-			let {folder: currentFolder, folderContents = []} = this.state;
+		const add = o => {
+			let { folder: currentFolder, folderContents = [] } = this.state;
 			//don't add the file to the folderContents if the file was added to a different folder.
 			const filesContainingFolder = o.getParentFolder();
-			if (!currentFolder || !filesContainingFolder || currentFolder.getPath() !== filesContainingFolder.getPath()) {
+			if (
+				!currentFolder ||
+				!filesContainingFolder ||
+				currentFolder.getPath() !== filesContainingFolder.getPath()
+			) {
 				return;
 			}
 
 			if (!folderContents.find(x => o.getID() === x.getID())) {
 				folderContents = [...folderContents, o];
 				this.selection.add(o);
-				this.setState({folderContents});
+				this.setState({ folderContents });
 			}
 		};
 
@@ -257,53 +272,52 @@ export default class BrowsableView extends React.Component {
 		Promise.all(
 			Array.from(files)
 				.sort(largestLast)
-				.map(item => new Promise(done =>
-					this.taskQueue.add(new UploadTask(item, folder, (o)=> {add(o);done();} ))
-				)
+				.map(
+					item =>
+						new Promise(done =>
+							this.taskQueue.add(
+								new UploadTask(item, folder, o => {
+									add(o);
+									done();
+								})
+							)
+						)
 				)
 		)
 
 			.then(() => folder.refresh())
 
 			.then(() => {
-
 				const ids = Array.from(this.selection).map(x => x.getID());
 
 				//always redraw...
-				this.refresh()
-					.then(items => {
-						//only alter selection if the folder is the same.
-						if (items && this.state.folder === folder) {
-							this.selection.add(
-								...items.filter(x => ids.includes(x.getID()))
-							);
-						}
-					});
-
+				this.refresh().then(items => {
+					//only alter selection if the folder is the same.
+					if (items && this.state.folder === folder) {
+						this.selection.add(
+							...items.filter(x => ids.includes(x.getID()))
+						);
+					}
+				});
 			});
-
-	}
-
+	};
 
 	onFolderDrop = (target, data, files) => {
-
 		if (files && files.length) {
 			this.uploadFiles(files, target);
-		}
-		else if (data && Array.isArray(data) && data.every(isFile)) {
+		} else if (data && Array.isArray(data) && data.every(isFile)) {
 			this.moveEntities(data, target);
 		}
 
 		logger.log('Drop: %s %o %o', target.path, data, files);
-	}
-
+	};
 
 	onSelectionChange = () => {
-		const {onSelectionChange} = this.props;
+		const { onSelectionChange } = this.props;
 		let selections = Array.from(this.selection);
 
 		if (selections.length === 0 || selections[0].isFolder) {
-			this.setState({showInfo: false});
+			this.setState({ showInfo: false });
 		} else {
 			this.forceUpdate();
 		}
@@ -312,34 +326,39 @@ export default class BrowsableView extends React.Component {
 			selections = selections.concat(this.state.folder);
 			onSelectionChange(selections);
 		}
-	}
-
+	};
 
 	onTasksComplete = (completed, indeterminate) => {
 		logger.log('All finished');
 
-		const dismiss = () => this.setState({progress: void 0});
+		const dismiss = () => this.setState({ progress: void 0 });
 
-		function getLabel (x, postfix = '') {
+		function getLabel(x, postfix = '') {
 			let [first, ...others] = x;
 
-			const {error} = first;
+			const { error } = first;
 			const errorKey = error && `complete.${error.code}`;
-			const specificErrorMessage = !error || t.isMissing(errorKey) ? null : t(errorKey);
+			const specificErrorMessage =
+				!error || t.isMissing(errorKey) ? null : t(errorKey);
 
 			return t(`complete.${first.verb}${postfix}`, {
 				filename: first.filename,
 				count: others.length,
 				folderName: first.folder && first.folder.getFileName(),
-				message: specificErrorMessage || (error || {}).message || t('complete.unknown')
+				message:
+					specificErrorMessage ||
+					(error || {}).message ||
+					t('complete.unknown'),
 			});
 		}
 
 		if (indeterminate.length === 0) {
 			dismiss();
-		}
-		else {
-			const [confirmation, errors] = indeterminate.reduce((a,x) => (a[x.error ? 1 : 0].push(x), a), [[],[ ]]);
+		} else {
+			const [confirmation, errors] = indeterminate.reduce(
+				(a, x) => (a[x.error ? 1 : 0].push(x), a),
+				[[], []]
+			);
 
 			let text = void 0;
 			if (confirmation.length > 0) {
@@ -357,17 +376,15 @@ export default class BrowsableView extends React.Component {
 					errors: errors.length > 0,
 					text,
 					max: 1,
-					value: 1
-				}
+					value: 1,
+				},
 			});
 		}
-	}
-
+	};
 
 	onTasksEnqueued = () => {
 		logger.log('Starting to work on tasks');
-	}
-
+	};
 
 	onTaskProgress = (task, value, max, abort) => {
 		const key = value === max ? 'complete' : 'active';
@@ -378,20 +395,19 @@ export default class BrowsableView extends React.Component {
 				text: t(`${key}.${task.verb}`, {
 					filename: task.filename,
 					count: 0,
-					folderName: task.folder && task.folder.getFileName()
+					folderName: task.folder && task.folder.getFileName(),
 				}),
 				max,
 				value,
-				abort
-			}
+				abort,
+			},
 		});
-	}
+	};
 
+	onTrigger = item => {
+		const { onTrigger } = this.props;
 
-	onTrigger = (item) => {
-		const {onTrigger} = this.props;
-
-		if(onTrigger && onTrigger(item)) {
+		if (onTrigger && onTrigger(item)) {
 			return;
 		}
 
@@ -400,11 +416,9 @@ export default class BrowsableView extends React.Component {
 		}
 
 		logger.debug('Selected File: %o', item);
-	}
+	};
 
-
-
-	render () {
+	render() {
 		return (
 			<div>Your class is missing a render method, or called super.</div>
 		);

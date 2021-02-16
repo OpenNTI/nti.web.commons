@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Container from './container';
 import Context from './Context';
-import {Locations, DefaultLocation, Styles, DefaultStyle} from './Constants';
-import {Factory, Card, MessageBar, MessageCard} from './layouts';
+import { Locations, DefaultLocation, Styles, DefaultStyle } from './Constants';
+import { Factory, Card, MessageBar, MessageCard } from './layouts';
 
 Toast.Card = Factory.Wrap(Toast, Card);
 Toast.MessageBar = Factory.Wrap(Toast, MessageBar);
@@ -14,9 +14,13 @@ Toast.Locations = Locations;
 Toast.propTypes = {
 	children: PropTypes.node,
 	location: PropTypes.oneOf(Object.values(Locations)),
-	style: PropTypes.oneOf(Object.values(Styles))
+	style: PropTypes.oneOf(Object.values(Styles)),
 };
-export default function Toast ({children, location = DefaultLocation, style = DefaultStyle}) {
+export default function Toast({
+	children,
+	location = DefaultLocation,
+	style = DefaultStyle,
+}) {
 	const container = React.useContext(Context);
 	const toastId = React.useRef(null);
 
@@ -38,17 +42,16 @@ export default function Toast ({children, location = DefaultLocation, style = De
 				id,
 				location,
 				style,
-				contents: React.Children.only(children)
+				contents: React.Children.only(children),
 			});
 		} else {
 			container.updateToast(toastId.current, {
 				location,
 				style,
-				contents: React.Children.only(children)
+				contents: React.Children.only(children),
 			});
 		}
 	}, [children, location, style]);
-
 
 	return null;
 }

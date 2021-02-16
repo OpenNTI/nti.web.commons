@@ -13,14 +13,12 @@ NavigationOutline.Item = Item;
 NavigationOutline.propTypes = {
 	className: PropTypes.string,
 	as: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function NavigationOutline ({className, as:tag, children}) {
+export default function NavigationOutline({ className, as: tag, children }) {
 	const Cmp = tag || 'div';
 
 	return (
-		<Cmp className={cx('navigation-outline', className)}>
-			{children}
-		</Cmp>
+		<Cmp className={cx('navigation-outline', className)}>{children}</Cmp>
 	);
 }

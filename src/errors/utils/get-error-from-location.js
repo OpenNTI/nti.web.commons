@@ -1,7 +1,9 @@
-export default function getErrorFromLocation (location = global.location) {
+export default function getErrorFromLocation(location = global.location) {
 	const href = location?.href;
 
-	if (!href) { return null; }
+	if (!href) {
+		return null;
+	}
 
 	const url = new URL(href);
 
@@ -9,6 +11,10 @@ export default function getErrorFromLocation (location = global.location) {
 	const failed = url.searchParams.get('failed');
 	const message = url.searchParams.get('message');
 
-	if (error) { return new Error(error); }
-	if (failed && message) { return new Error(message); }
+	if (error) {
+		return new Error(error);
+	}
+	if (failed && message) {
+		return new Error(message);
+	}
 }

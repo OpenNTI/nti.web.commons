@@ -2,17 +2,22 @@ import EventEmitter from 'events';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createDOM, getScrollPosition, getScrollParent, scrollElementTo} from '@nti/lib-dom';
-import {buffer} from '@nti/lib-commons';
+import {
+	createDOM,
+	getScrollPosition,
+	getScrollParent,
+	scrollElementTo,
+} from '@nti/lib-dom';
+import { buffer } from '@nti/lib-commons';
 
 import Modal from './Modal';
 
-
 const setHidden = (node, hidden) => node.setAttribute('aria-hidden', hidden);
-const focusElement = (node) => node && node.focus();
-const setScroll = ({maybeRestoreScroll, scroller, left, top} = {}) => ((top + left) > 0)
-	&& maybeRestoreScroll()
-	&& (setTimeout(() => scrollElementTo(scroller, left, top), 1));
+const focusElement = node => node && node.focus();
+const setScroll = ({ maybeRestoreScroll, scroller, left, top } = {}) =>
+	top + left > 0 &&
+	maybeRestoreScroll() &&
+	setTimeout(() => scrollElementTo(scroller, left, top), 1);
 const YesFn = () => true;
 
 const EVENT = 'updated';
@@ -24,23 +29,19 @@ const EVENT = 'updated';
  * @param {Node} refocus DOM element to refocus when closed
  */
 
-
-
 export class ModalManager extends EventEmitter {
+	active = [];
 
-	active = []
-
-	get lastIndex () {
+	get lastIndex() {
 		return this.active.length - 1;
 	}
 
-	getTopMost () {
-		const {lastIndex} = this;
+	getTopMost() {
+		const { lastIndex } = this;
 		return this.active[lastIndex];
 	}
 
-
-	hide (node) {
+	hide(node) {
 		const ref = this.active.find(x => x.mountPoint === node);
 		if (ref && !ref.isPortal) {
 			ReactDOM.unmountComponentAtNode(node);
@@ -72,12 +73,13 @@ export class ModalManager extends EventEmitter {
 	 * @returns {ModalReference} Stuff & Things
 	 * @public
 	 */
-	show (content, options = {}) {
+	show(content, options = {}) {
 		//Back-compat... if the second arg is a string, wrap it into an "options" object...otherwise, passthrough.
-		options = (typeof options === 'string')
-			/* istanbul ignore next */
-			? {className: options}
-			: options;
+		options =
+			typeof options === 'string'
+				? /* istanbul ignore next */
+				  { className: options }
+				: options;
 
 		const {
 			className,
@@ -94,14 +96,19 @@ export class ModalManager extends EventEmitter {
 
 		const container = this.getContainer(mountPoint, forceFront);
 
-		const dismiss = buffer(1, () =>
-			(!onBeforeDismiss || onBeforeDismiss() !== false) && this.hide(container));
+		const dismiss = buffer(
+			1,
+			() =>
+				(!onBeforeDismiss || onBeforeDismiss() !== false) &&
+				this.hide(container)
+		);
 
 		// scrollingElement is what we want ALL the time. (modals are appended to <body>),
 		// but in old browsers we need to fallback to getScrollParent(container)
 		// mountPoint is not intended to be provided by the first invocation, but subsequent
 		// calls (to re-render and update) will have the "reference" object passed as "options".
-		const scroller = document.scrollingElement || getScrollParent(container);
+		const scroller =
+			document.scrollingElement || getScrollParent(container);
 
 		const isPortal = Boolean(ReactDOM.createPortal && usePortal);
 		const reference = {
@@ -110,19 +117,24 @@ export class ModalManager extends EventEmitter {
 			mountPoint: container,
 			refocus,
 			closeOnEscape,
-			scroll: !restoreScroll ? void 0 : {
-				maybeRestoreScroll: typeof restoreScroll === 'function' ? restoreScroll : YesFn,
-				scroller,
-				...getScrollPosition(scroller)
-			}
+			scroll: !restoreScroll
+				? void 0
+				: {
+						maybeRestoreScroll:
+							typeof restoreScroll === 'function'
+								? restoreScroll
+								: YesFn,
+						scroller,
+						...getScrollPosition(scroller),
+				  },
 		};
 
-		const setReference = x => reference.component = x;
-		const render = isPortal ?
-			(...args) => ReactDOM.createPortal(...args) :
-			(...args) => void ReactDOM.render(...args);
+		const setReference = x => (reference.component = x);
+		const render = isPortal
+			? (...args) => ReactDOM.createPortal(...args)
+			: (...args) => void ReactDOM.render(...args);
 
-		reference.portalRef = render((
+		reference.portalRef = render(
 			<Modal
 				Manager={this}
 				ref={setReference}
@@ -132,23 +144,20 @@ export class ModalManager extends EventEmitter {
 				closeOnMaskClick={closeOnMaskClick}
 				isPortal={isPortal}
 				children={content}
-			/>
-		),
-		container
+			/>,
+			container
 		);
 
 		this.add(reference);
 
 		return reference;
-
 	}
 
-
-	getContainer (existing, forceFront) {
-		const container = existing || createDOM({class: 'modal'});
+	getContainer(existing, forceFront) {
+		const container = existing || createDOM({ class: 'modal' });
 		/* istanbul ignore else */
 		if (forceFront || !existing) {
-			const {body} = document;
+			const { body } = document;
 			/* istanbul ignore else */
 			if (body.lastChild !== container) {
 				body.appendChild(container);
@@ -157,19 +166,23 @@ export class ModalManager extends EventEmitter {
 		return container;
 	}
 
-
-	isHidden (component) {
+	isHidden(component) {
 		//reversed for lookup speed
 		const reversed = this.active.slice().reverse();
 		const lastIndex = 0;
-		const index = reversed.findIndex(x => (x.component === component) || x.mountPoint.contains(component.content));
+		const index = reversed.findIndex(
+			x =>
+				x.component === component ||
+				x.mountPoint.contains(component.content)
+		);
 		return index !== lastIndex;
 	}
 
-
-	add (reference) {
-		const {active} = this;
-		const index = active.findIndex(x => x.mountPoint === reference.mountPoint);
+	add(reference) {
+		const { active } = this;
+		const index = active.findIndex(
+			x => x.mountPoint === reference.mountPoint
+		);
 
 		//add
 		if (index < 0) {
@@ -179,19 +192,14 @@ export class ModalManager extends EventEmitter {
 		else {
 			const A = active.slice(0, index);
 			const B = active.slice(index + 1);
-			this.active = [
-				...A,
-				reference,
-				...B
-			];
+			this.active = [...A, reference, ...B];
 		}
 
 		this.update();
 	}
 
-
-	remove ({mountPoint, refocus, scroll}) {
-		const {lastIndex, active} = this;
+	remove({ mountPoint, refocus, scroll }) {
+		const { lastIndex, active } = this;
 
 		const index = active.findIndex(x => x.mountPoint === mountPoint);
 		const removingTopModal = lastIndex === index;
@@ -201,10 +209,7 @@ export class ModalManager extends EventEmitter {
 		if (index >= 0) {
 			const A = active.slice(0, index);
 			const B = active.slice(index + 1);
-			this.active = [
-				...A,
-				...B
-			];
+			this.active = [...A, ...B];
 		}
 
 		this.update(); //updating has to come before refocusing.
@@ -217,8 +222,7 @@ export class ModalManager extends EventEmitter {
 		}
 	}
 
-
-	update () {
+	update() {
 		this.updateARIA();
 
 		if (this.active.length) {
@@ -230,9 +234,8 @@ export class ModalManager extends EventEmitter {
 		this.emit(EVENT);
 	}
 
-
-	updateARIA () {
-		const {active, lastIndex} = this;
+	updateARIA() {
+		const { active, lastIndex } = this;
 		const mainContent = document.getElementById('content');
 
 		/* istanbul ignore else */
@@ -241,24 +244,19 @@ export class ModalManager extends EventEmitter {
 		}
 
 		active.forEach((ref, i) => {
-
 			setHidden(ref.mountPoint, i !== lastIndex);
-
 		});
 	}
 
-
-	addUpdateListener (fn) {
+	addUpdateListener(fn) {
 		this.addListener(EVENT, fn);
 	}
 
-
-	removeUpdateListener (fn) {
+	removeUpdateListener(fn) {
 		this.removeListener(EVENT, fn);
 	}
 
-
-	addDocumentListeners () {
+	addDocumentListeners() {
 		if (!this.installedDocumentListeners) {
 			this.installedDocumentListeners = true;
 			document.addEventListener('focus', this.onDocumentFocus, true);
@@ -266,15 +264,13 @@ export class ModalManager extends EventEmitter {
 		}
 	}
 
-
-	removeDocumentListeners () {
+	removeDocumentListeners() {
 		document.removeEventListener('focus', this.onDocumentFocus, true);
 		document.removeEventListener('keydown', this.onDocumentKeyDown, true);
 		delete this.installedDocumentListeners;
 	}
 
-
-	onDocumentFocus = (e) => {
+	onDocumentFocus = e => {
 		const top = this.getTopMost();
 		/* istanbul ignore if */
 		if (!top) {
@@ -283,10 +279,16 @@ export class ModalManager extends EventEmitter {
 
 		const mask = Node.DOCUMENT_POSITION_FOLLOWING;
 
-		const isAfter = (a) => (top.mountPoint.compareDocumentPosition(a) & mask) === mask;
+		const isAfter = a =>
+			(top.mountPoint.compareDocumentPosition(a) & mask) === mask;
 
 		/* istanbul ignore else */
-		if (!top.mountPoint.contains(e.target) && !isAfter(e.target) && document.contains(e.target) && !this.allowedExternalFocus(e.target)) {
+		if (
+			!top.mountPoint.contains(e.target) &&
+			!isAfter(e.target) &&
+			document.contains(e.target) &&
+			!this.allowedExternalFocus(e.target)
+		) {
 			e.stopPropagation();
 			try {
 				top.component.focus();
@@ -295,34 +297,39 @@ export class ModalManager extends EventEmitter {
 				console.error('Could not focus top most component: %o', top); //eslint-disable-line no-console
 			}
 		}
-	}
+	};
 
-
-	onDocumentKeyDown = (e) => {
+	onDocumentKeyDown = e => {
 		const top = this.getTopMost();
 		/* istanbul ignore else */
-		if (top && top.closeOnEscape && !this.ignoreEscape && e.keyCode === 27) {
+		if (
+			top &&
+			top.closeOnEscape &&
+			!this.ignoreEscape &&
+			e.keyCode === 27
+		) {
 			top.dismiss();
 		}
-	}
+	};
 
-	setAllowedExternalFocus (fn) {
+	setAllowedExternalFocus(fn) {
 		this.allowedExternalFocusInFn = fn;
 	}
 
-	allowedExternalFocus (target) {
-		return this.allowedExternalFocusInFn && this.allowedExternalFocusInFn(target);
+	allowedExternalFocus(target) {
+		return (
+			this.allowedExternalFocusInFn &&
+			this.allowedExternalFocusInFn(target)
+		);
 	}
-
 
 	suspendEscapeListener = () => {
 		this.ignoreEscape = true;
-	}
-
+	};
 
 	resumeEscapeListener = () => {
 		this.ignoreEscape = false;
-	}
+	};
 }
 
 export default new ModalManager();

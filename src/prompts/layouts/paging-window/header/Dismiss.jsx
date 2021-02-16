@@ -6,13 +6,14 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 
-
 Dismiss.propTypes = {
 	onDismiss: PropTypes.func,
-	flat: PropTypes.bool
+	flat: PropTypes.bool,
 };
-export default function Dismiss ({onDismiss, flat}) {
-	if (!onDismiss) { return null;}
+export default function Dismiss({ onDismiss, flat }) {
+	if (!onDismiss) {
+		return null;
+	}
 
 	const icon = flat ? 'icon-bold-x' : 'icon-light-x';
 

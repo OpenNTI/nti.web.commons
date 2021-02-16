@@ -2,7 +2,7 @@ import './FlyoutList.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import * as Flyout from '../../../flyout';
 
@@ -12,32 +12,40 @@ const defaultText = {
 	warnings: {
 		zero: 'No Warnings',
 		one: '%(count)s Warning',
-		other: '%(count)s Warnings'
+		other: '%(count)s Warnings',
 	},
 	errors: {
 		zero: 'No Errors',
 		one: '%(count)s Error',
-		other: '%(count)s Errors'
-	}
+		other: '%(count)s Errors',
+	},
 };
 const t = scoped('common.components.flyouts.field-error', defaultText);
 
 const DEFAULT_ALIGNMENT = 'top-center';
 
-function renderTrigger (errors, isWarnings) {
-	const cls = cx('nti-error-flyout-trigger', {warning: isWarnings});
+function renderTrigger(errors, isWarnings) {
+	const cls = cx('nti-error-flyout-trigger', { warning: isWarnings });
 
 	return (
 		<div className={cls}>
 			<i className="icon-alert" />
-			<span>{t(isWarnings ? 'warnings' : 'errors', {count: errors.length})}</span>
+			<span>
+				{t(isWarnings ? 'warnings' : 'errors', {
+					count: errors.length,
+				})}
+			</span>
 		</div>
 	);
 }
 
-function renderFlyout (errors, isWarnings, alignment) {
+function renderFlyout(errors, isWarnings, alignment) {
 	return (
-		<Flyout.Triggered arrow alignment={alignment} trigger={renderTrigger(errors, isWarnings)}>
+		<Flyout.Triggered
+			arrow
+			alignment={alignment}
+			trigger={renderTrigger(errors, isWarnings)}
+		>
 			<List errors={errors} isWarnings={isWarnings} />
 		</Flyout.Triggered>
 	);
@@ -46,13 +54,13 @@ function renderFlyout (errors, isWarnings, alignment) {
 ErrorListFlyout.propTypes = {
 	errors: PropTypes.array,
 	warnings: PropTypes.array,
-	alignment: PropTypes.string
+	alignment: PropTypes.string,
 };
 
-function ErrorListFlyout ({
+function ErrorListFlyout({
 	errors = [],
 	warnings = [],
-	alignment = DEFAULT_ALIGNMENT
+	alignment = DEFAULT_ALIGNMENT,
 }) {
 	return (
 		<div className="nti-error-flyout-list">
@@ -62,9 +70,6 @@ function ErrorListFlyout ({
 	);
 }
 
-export {
-	renderTrigger,
-	renderFlyout
-};
+export { renderTrigger, renderFlyout };
 
 export default ErrorListFlyout;

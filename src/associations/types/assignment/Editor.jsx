@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import BasicEditor from '../components/BasicEditor';
-import {DateTime} from '../../../';
-import {getDisplay} from '../../../components/DurationPicker';
+import { DateTime } from '../../../';
+import { getDisplay } from '../../../components/DurationPicker';
 
 const DEFAULT_TEXT = {
 	addLabel: 'Add to Assignment',
@@ -13,12 +13,15 @@ const DEFAULT_TEXT = {
 	published: 'Published',
 	dueDate: 'Due %(date)s',
 	noDueDate: 'No Due Date',
-	timeLimit: '%(limit)s Time Limit'
+	timeLimit: '%(limit)s Time Limit',
 };
 
-const t = scoped('common.components.associations.editor.assignment', DEFAULT_TEXT);
+const t = scoped(
+	'common.components.associations.editor.assignment',
+	DEFAULT_TEXT
+);
 
-function getSubLabels (item) {
+function getSubLabels(item) {
 	const assignment = item.item;
 	let labels = [];
 
@@ -29,36 +32,47 @@ function getSubLabels (item) {
 	if (assignment.isPublished()) {
 		labels.push(t('published'));
 	} else if (assignment.getAvailableForSubmissionBeginning()) {
-		labels.push(t('schedule', {
-			date: DateTime.format(assignment.getAvailableForSubmissionBeginning(), DateTime.MONTH_ABBR_DAY_YEAR)
-		}));
+		labels.push(
+			t('schedule', {
+				date: DateTime.format(
+					assignment.getAvailableForSubmissionBeginning(),
+					DateTime.MONTH_ABBR_DAY_YEAR
+				),
+			})
+		);
 	} else {
 		labels.push(t('draft'));
 	}
 
 	if (assignment.getDueDate()) {
-		labels.push(t('dueDate', {
-			date: DateTime.format(assignment.getDueDate(), DateTime.MONTH_ABBR_DAY_YEAR)
-		}));
+		labels.push(
+			t('dueDate', {
+				date: DateTime.format(
+					assignment.getDueDate(),
+					DateTime.MONTH_ABBR_DAY_YEAR
+				),
+			})
+		);
 	} else {
 		labels.push(t('noDueDate'));
 	}
 
 	if (assignment.getMaximumTimeAllowed) {
-		labels.push(t('timeLimit', {
-			limit: getDisplay(assignment.getMaximumTimeAllowed() / 1000)
-		}));
+		labels.push(
+			t('timeLimit', {
+				limit: getDisplay(assignment.getMaximumTimeAllowed() / 1000),
+			})
+		);
 	}
-
 
 	return labels;
 }
 
 AssignmentAssociationEditor.propTypes = {
 	item: PropTypes.object.isRequired,
-	associations: PropTypes.object
+	associations: PropTypes.object,
 };
-export default function AssignmentAssociationEditor ({item, associations}) {
+export default function AssignmentAssociationEditor({ item, associations }) {
 	return (
 		<BasicEditor
 			className="assignment-association"

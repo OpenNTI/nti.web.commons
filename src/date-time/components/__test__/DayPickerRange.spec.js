@@ -9,7 +9,7 @@ describe('DayPickerRange', () => {
 	const testEndDate = new Date(2017, 11, 24);
 
 	test('Test no dates provided', () => {
-		const {container} = render(<DayPickerRange />);
+		const { container } = render(<DayPickerRange />);
 
 		const [startDate, endDate] = container.querySelectorAll('.date');
 
@@ -21,11 +21,8 @@ describe('DayPickerRange', () => {
 	});
 
 	test('Test initial dates', () => {
-		const {container} = render(
-			<DayPickerRange
-				startDate={testStartDate}
-				endDate={testEndDate}
-			/>
+		const { container } = render(
+			<DayPickerRange startDate={testStartDate} endDate={testEndDate} />
 		);
 		const [startDate, endDate] = container.querySelectorAll('.date');
 
@@ -37,30 +34,31 @@ describe('DayPickerRange', () => {
 	});
 
 	test('Test date selection', () => {
-		const {container} = render(
-			<DayPickerRange
-				startDate={testStartDate}
-				endDate={testEndDate}
-			/>
+		const { container } = render(
+			<DayPickerRange startDate={testStartDate} endDate={testEndDate} />
 		);
 		const [startDate, endDate] = container.querySelectorAll('.date');
 
 		expect(startDate.getAttribute('class')).toMatch(/selected/);
 		expect(endDate.getAttribute('class')).not.toMatch(/selected/);
-		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('September 2017');
+		expect(
+			container.querySelector('.DayPicker-Caption').textContent
+		).toEqual('September 2017');
 
 		fireEvent.click(endDate);
 
 		expect(startDate.getAttribute('class')).not.toMatch(/selected/);
 		expect(endDate.getAttribute('class')).toMatch(/selected/);
-		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('December 2017');
+		expect(
+			container.querySelector('.DayPicker-Caption').textContent
+		).toEqual('December 2017');
 	});
 
 	test('Test start date removal', async () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const {container} = render(
+		const { container } = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -85,7 +83,7 @@ describe('DayPickerRange', () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const {container} = render(
+		const { container } = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -108,7 +106,7 @@ describe('DayPickerRange', () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const {container} = render(
+		const { container } = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -117,11 +115,15 @@ describe('DayPickerRange', () => {
 			/>
 		);
 
-		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('September 2017');
+		expect(
+			container.querySelector('.DayPicker-Caption').textContent
+		).toEqual('September 2017');
 
 		fireEvent.click(container.querySelector('.DayPicker-NavButton--next'));
 
-		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('October 2017');
+		expect(
+			container.querySelector('.DayPicker-Caption').textContent
+		).toEqual('October 2017');
 
 		const dayToClick = container.querySelectorAll('.DayPicker-Day')[30];
 
@@ -132,7 +134,6 @@ describe('DayPickerRange', () => {
 
 			expect(updateStartDate).toHaveBeenCalledWith(newDate);
 			expect(updateEndDate).not.toHaveBeenCalled();
-
 		});
 	});
 
@@ -140,7 +141,7 @@ describe('DayPickerRange', () => {
 		const updateStartDate = jest.fn();
 		const updateEndDate = jest.fn();
 
-		const {container} = render(
+		const { container } = render(
 			<DayPickerRange
 				startDate={testStartDate}
 				endDate={testEndDate}
@@ -153,12 +154,16 @@ describe('DayPickerRange', () => {
 
 		fireEvent.click(endDate);
 
-		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('December 2017');
+		expect(
+			container.querySelector('.DayPicker-Caption').textContent
+		).toEqual('December 2017');
 
 		fireEvent.click(container.querySelector('.DayPicker-NavButton--prev'));
 		fireEvent.click(container.querySelector('.DayPicker-NavButton--prev'));
 
-		expect(container.querySelector('.DayPicker-Caption').textContent).toEqual('October 2017');
+		expect(
+			container.querySelector('.DayPicker-Caption').textContent
+		).toEqual('October 2017');
 
 		const dayToClick = container.querySelectorAll('.DayPicker-Day')[30];
 
@@ -169,7 +174,6 @@ describe('DayPickerRange', () => {
 
 			expect(updateEndDate).toHaveBeenCalledWith(newDate);
 			expect(updateStartDate).not.toHaveBeenCalled();
-
 		});
 	});
 });

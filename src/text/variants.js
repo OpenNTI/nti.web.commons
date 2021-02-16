@@ -34,17 +34,13 @@ const styles = css`
 	}
 `;
 
-function makeClassVariant (className) {
-	return (props) => {
-		const {
-			className:incomingClassName,
-			color,
-			...otherIncoming
-		} = props;
+function makeClassVariant(className) {
+	return props => {
+		const { className: incomingClassName, color, ...otherIncoming } = props;
 
 		return {
 			className: cx(incomingClassName, className, color),
-			...otherIncoming
+			...otherIncoming,
 		};
 	};
 }
@@ -52,11 +48,11 @@ function makeClassVariant (className) {
 export const Colors = {
 	primaryGrey: styles.primaryGrey,
 	secondaryGrey: styles.secondaryGrey,
-	tertiaryGrey: styles.tertiaryGrey
+	tertiaryGrey: styles.tertiaryGrey,
 };
 
 export default {
 	Base: makeClassVariant(styles.ntiText),
 	Condensed: makeClassVariant(cx(styles.ntiText, styles.condensed)),
-	Label: makeClassVariant(cx(styles.ntiText, styles.label))
+	Label: makeClassVariant(cx(styles.ntiText, styles.label)),
 };

@@ -2,17 +2,21 @@ import React from 'react';
 
 import Clock from './Clock';
 
-export function useClock (interval) {
-	const [clock, setClock] = React.useState({running: false, current: 0, duration: -1});
+export function useClock(interval) {
+	const [clock, setClock] = React.useState({
+		running: false,
+		current: 0,
+		duration: -1,
+	});
 
 	React.useEffect(() => {
 		const started = new Date();
-		const onTick = (newClock) => {
+		const onTick = newClock => {
 			if (newClock.current - clock.current > interval) {
 				setClock({
 					...newClock,
 					clockDuration: newClock.duration,
-					duration: newClock.current - started
+					duration: newClock.current - started,
 				});
 			}
 		};
@@ -25,7 +29,7 @@ export function useClock (interval) {
 	return clock;
 }
 
-export function useTicks (interval) {
+export function useTicks(interval) {
 	const clock = useClock(interval);
 
 	const [ticks, setTicks] = React.useState(0);
@@ -33,17 +37,18 @@ export function useTicks (interval) {
 	React.useEffect(() => {
 		const newTicks = Math.floor(clock.duration / interval);
 
-		if (newTicks !== ticks) { setTicks(newTicks); }
+		if (newTicks !== ticks) {
+			setTicks(newTicks);
+		}
 	}, [clock]);
 
 	return ticks;
 }
 
-
-export function useWait (fn, interval) {
+export function useWait(fn, interval) {
 	React.useEffect(() => {
 		const started = new Date();
-		const onTick = (tick) => {
+		const onTick = tick => {
 			if (tick.current - started >= interval) {
 				fn();
 				Clock.removeListener(onTick);

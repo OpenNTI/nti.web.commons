@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Clock from './Clock';
-import {SECOND, MINUTE} from './Constants';
-import {useClock, useTicks, useWait} from './Hooks';
-
+import { SECOND, MINUTE } from './Constants';
+import { useClock, useTicks, useWait } from './Hooks';
 
 export default class Timer extends React.Component {
 	static Clock = Clock;
@@ -19,55 +18,51 @@ export default class Timer extends React.Component {
 	static propTypes = {
 		interval: PropTypes.number.isRequired,
 		children: PropTypes.node,
-		onTick: PropTypes.func
-	}
+		onTick: PropTypes.func,
+	};
 
 	static defaultProps = {
-		interval: SECOND
-	}
+		interval: SECOND,
+	};
 
+	state = { ticks: 0 };
 
-	state = {ticks: 0}
-
-
-	componentDidMount () {
+	componentDidMount() {
 		Clock.addListener(this.onTick);
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		Clock.removeListener(this.onTick);
 	}
 
-
-	onTick = (clock) => {
-		const {duration} = clock;
-		const {interval, onTick} = this.props;
-		const {ticks:oldTicks} = this.state;
+	onTick = clock => {
+		const { duration } = clock;
+		const { interval, onTick } = this.props;
+		const { ticks: oldTicks } = this.state;
 		const newTicks = Math.floor(duration / interval);
 
 		if (newTicks !== oldTicks) {
-			if (onTick) { onTick(clock); }
+			if (onTick) {
+				onTick(clock);
+			}
 
 			this.setState({
 				ticks: newTicks,
-				clock
+				clock,
 			});
 		}
-	}
+	};
 
-
-	render () {
-		const {children} = this.props;
+	render() {
+		const { children } = this.props;
 
 		if (!children) {
 			return null;
 		}
 
-		const {ticks, clock} = this.state;
+		const { ticks, clock } = this.state;
 		const child = React.Children.only(children);
 
-
-		return React.cloneElement(child, {ticks, clock});
+		return React.cloneElement(child, { ticks, clock });
 	}
 }

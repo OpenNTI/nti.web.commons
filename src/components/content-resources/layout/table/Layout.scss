@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 %name-column {
 	display: flex;
@@ -33,7 +33,8 @@
 		table-layout: fixed;
 	}
 
-	th, td {
+	th,
+	td {
 		padding-right: rem-calc(5px);
 
 		&:first-child {
@@ -116,7 +117,8 @@
 		&:hover.selected {
 			background: var(--primary-blue);
 
-			&, .filename {
+			&,
+			.filename {
 				color: #fff;
 			}
 		}
@@ -130,7 +132,8 @@
 			&:hover.selected {
 				background: none;
 
-				&, .filename {
+				&,
+				.filename {
 					color: var(--secondary-grey);
 				}
 			}

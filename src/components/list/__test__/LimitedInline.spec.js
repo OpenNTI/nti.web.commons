@@ -4,23 +4,22 @@ import ReactDOM from 'react-dom';
 
 import Inline from '../LimitedInline';
 
-
 describe('Inline List Tests', () => {
 	let div;
 
-	function getListDOM () {
+	function getListDOM() {
 		return div.querySelector('.inline-list');
 	}
 
-	function getItemsFromDOM () {
+	function getItemsFromDOM() {
 		return div.querySelectorAll('.inline-list > .item');
 	}
 
-	function getSeparatorsFromDOM () {
+	function getSeparatorsFromDOM() {
 		return div.querySelectorAll('.inline-list > .separator');
 	}
 
-	function getRemainingFromDOM () {
+	function getRemainingFromDOM() {
 		return div.querySelectorAll('.inline-list > .remaining');
 	}
 
@@ -29,7 +28,6 @@ describe('Inline List Tests', () => {
 
 		document.body.appendChild(div);
 	});
-
 
 	afterEach(() => {
 		document.body.removeChild(div);
@@ -80,13 +78,12 @@ describe('Inline List Tests', () => {
 		});
 	});
 
-
 	describe('Two Items', () => {
 		const children = ['Item 1', 'Item 2'];
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {limit: 5}, ...children),
+				React.createElement(Inline, { limit: 5 }, ...children),
 				div,
 				done
 			);
@@ -126,13 +123,12 @@ describe('Inline List Tests', () => {
 		});
 	});
 
-
 	describe('Less Than Max', () => {
 		const children = ['Item 1', 'Item 2', 'Item 3'];
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {limit: 5}, ...children),
+				React.createElement(Inline, { limit: 5 }, ...children),
 				div,
 				done
 			);
@@ -172,13 +168,12 @@ describe('Inline List Tests', () => {
 		});
 	});
 
-
 	describe('More Than Max', () => {
 		const children = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
 		beforeEach(done => {
 			ReactDOM.render(
-				React.createElement(Inline, {limit: 2}, ...children),
+				React.createElement(Inline, { limit: 2 }, ...children),
 				div,
 				done
 			);

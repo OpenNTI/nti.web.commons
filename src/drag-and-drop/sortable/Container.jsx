@@ -55,7 +55,6 @@ class Sortable extends React.Component {
 */
 
 class Container extends React.Component {
-
 	static propTypes = {
 		items: PropTypes.array.isRequired,
 		renderer: PropTypes.func.isRequired,
@@ -63,8 +62,8 @@ class Container extends React.Component {
 		onMove: PropTypes.func.isRequired,
 		onDragEnd: PropTypes.func.isRequired,
 		readOnly: PropTypes.bool,
-		className: PropTypes.string
-	}
+		className: PropTypes.string,
+	};
 
 	attachRef = el => {
 		const prev = this.containerNode;
@@ -74,8 +73,7 @@ class Container extends React.Component {
 				el.addEventListener('touchstart', stop, false);
 				el.addEventListener('touchmove', stop, false);
 				el.addEventListener('touchend', stop, false);
-			}
-			else if (prev) {
+			} else if (prev) {
 				prev.removeEventListener('touchstart', stop, false);
 				prev.removeEventListener('touchmove', stop, false);
 				prev.removeEventListener('touchend', stop, false);
@@ -83,18 +81,16 @@ class Container extends React.Component {
 
 			this.containerNode = el;
 		}
-	}
+	};
 
-
-	getDragPreview = (item) => {
-		const {renderer} = this.props;
+	getDragPreview = item => {
+		const { renderer } = this.props;
 		return renderer(item.item, {
-			isDragPreview: true
+			isDragPreview: true,
 		});
-	}
+	};
 
-	render () {
-
+	render() {
 		const {
 			items = [],
 			renderer,
@@ -104,18 +100,26 @@ class Container extends React.Component {
 		} = this.props;
 
 		return (
-			<ol className={cx('sortable-container', className)} ref={this.attachRef}>
-				{
-					items.map((item, index) =>
-						renderer(item, {
-							index,
-							item,
-							onDragEnd,
-							moveItem: onMove
-						})
-					)
-				}
-				{!polyfillDrag ? void 0 : ( <DragLayer key="__preview" getDragPreview={this.getDragPreview} /> )}
+			<ol
+				className={cx('sortable-container', className)}
+				ref={this.attachRef}
+			>
+				{items.map((item, index) =>
+					renderer(item, {
+						index,
+						item,
+						onDragEnd,
+						moveItem: onMove,
+					})
+				)}
+				{!polyfillDrag ? (
+					void 0
+				) : (
+					<DragLayer
+						key="__preview"
+						getDragPreview={this.getDragPreview}
+					/>
+				)}
 			</ol>
 		);
 	}
@@ -123,6 +127,6 @@ class Container extends React.Component {
 
 export default React.forwardRef((props, ref) => (
 	<DndProvider backend={DNDBackend}>
-		<Container ref={ref} {...props}/>
+		<Container ref={ref} {...props} />
 	</DndProvider>
 ));

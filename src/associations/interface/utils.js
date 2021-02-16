@@ -1,6 +1,6 @@
 import Group from './Group';
 
-export function groupDestinations (destinations) {
+export function groupDestinations(destinations) {
 	let currentWrapper = null;
 
 	return destinations.reduce((acc, destination) => {
@@ -20,7 +20,7 @@ export function groupDestinations (destinations) {
 	}, []);
 }
 
-export function flattenGroups (groups) {
+export function flattenGroups(groups) {
 	return groups.reduce((acc, group) => {
 		if (group instanceof Group) {
 			acc = [...acc, ...flattenGroups(group.items)];
@@ -32,8 +32,7 @@ export function flattenGroups (groups) {
 	}, []);
 }
 
-
-export function filterGroups (groups, fn) {
+export function filterGroups(groups, fn) {
 	return groups.reduce((acc, group) => {
 		const filteredGroup = group.filter(fn);
 
@@ -45,25 +44,27 @@ export function filterGroups (groups, fn) {
 	}, []);
 }
 
-
-export function groupItemsByParent (items) {
-	function getLabel (item) {
+export function groupItemsByParent(items) {
+	function getLabel(item) {
 		return item.label || item.title;
 	}
 
-	const parents = items.reduce((acc, item) => {
-		const parent = item.item.parent();
-		const id = parent.getID();
+	const parents = items.reduce(
+		(acc, item) => {
+			const parent = item.item.parent();
+			const id = parent.getID();
 
-		if (acc.map[id]) {
-			acc.map[id].push(item);
-		} else {
-			acc.order.push(id);
-			acc.map[id] = new Group (getLabel(parent), [item]);
-		}
+			if (acc.map[id]) {
+				acc.map[id].push(item);
+			} else {
+				acc.order.push(id);
+				acc.map[id] = new Group(getLabel(parent), [item]);
+			}
 
-		return acc;
-	}, {map: {}, order: []});
+			return acc;
+		},
+		{ map: {}, order: [] }
+	);
 
 	return parents.order.map(x => parents.map[x]);
 }

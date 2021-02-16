@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import {DropZone} from '../../drag-and-drop/';
+import { DropZone } from '../../drag-and-drop/';
 
 import Styles from './FileInputWrapper.css';
 
@@ -13,39 +13,42 @@ export default class FileInputWrapper extends React.Component {
 		className: PropTypes.string,
 		children: PropTypes.any,
 		style: PropTypes.any,
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	fileChanged (files, e) {
-		const {onChange} = this.props;
+	fileChanged(files, e) {
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange(files, e);
 		}
 	}
 
-	onChange = (e) => {
+	onChange = e => {
 		e.preventDefault();
 
-		const {target: {files = []} = {}} = e;
+		const { target: { files = [] } = {} } = e;
 
 		this.fileChanged(files, e);
-	}
+	};
 
-	onDrop = (e) => {
-		const {files} = e.dataTransfer;
+	onDrop = e => {
+		const { files } = e.dataTransfer;
 
 		this.fileChanged(files, e);
-	}
+	};
 
-
-	render () {
-		const {className, children, style, ...otherProps} = this.props;
+	render() {
+		const { className, children, style, ...otherProps } = this.props;
 
 		delete otherProps.onChange;
 
 		return (
-			<DropZone className={cx('nti-file-input-wrapper', className)} style={style} onDrop={this.onDrop}>
+			<DropZone
+				className={cx('nti-file-input-wrapper', className)}
+				style={style}
+				onDrop={this.onDrop}
+			>
 				<input type="file" {...otherProps} onChange={this.onChange} />
 				{children}
 			</DropZone>

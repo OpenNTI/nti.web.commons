@@ -9,10 +9,10 @@ export default class TextArea extends React.Component {
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		autoGrow: PropTypes.bool,
-		placeholder: PropTypes.string
-	}
+		placeholder: PropTypes.string,
+	};
 
-	attachInputRef = x => this.input = x;
+	attachInputRef = x => (this.input = x);
 
 	/**
 	 * Return the validity of the input see below for more details:
@@ -20,50 +20,73 @@ export default class TextArea extends React.Component {
 	 *
 	 * @returns {Object} the validity of the input
 	 */
-	get validity () {
+	get validity() {
 		return this.input.validity;
 	}
 
-
-	focus () {
+	focus() {
 		if (this.input) {
 			this.input.focus();
 		}
 	}
 
-
-	onChange = (e) => {
-		const {onChange} = this.props;
+	onChange = e => {
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange(e.target.value);
 		}
-	}
-
+	};
 
 	onClear = () => {
-		const {onChange} = this.props;
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange('');
 		}
 
 		this.focus();
-	}
+	};
 
+	render() {
+		const {
+			value,
+			className,
+			autoGrow,
+			placeholder,
+			...otherProps
+		} = this.props;
 
-	render () {
-		const {value, className, autoGrow, placeholder, ...otherProps} = this.props;
-
-		const sizerCls = cx('sizer', {'textarea-text': autoGrow }, {'placeholder': !value && placeholder });
-		const textareaCls = cx('textarea', className, 'textarea-text', { 'autogrow': autoGrow });
+		const sizerCls = cx(
+			'sizer',
+			{ 'textarea-text': autoGrow },
+			{ placeholder: !value && placeholder }
+		);
+		const textareaCls = cx('textarea', className, 'textarea-text', {
+			autogrow: autoGrow,
+		});
 
 		delete otherProps.onChange;
 
 		return (
 			<div className="textarea-container">
-				{autoGrow && <div className={sizerCls} dangerouslySetInnerHTML={{ __html: (value || placeholder || '') + '|' }} />}
-				<textarea className={textareaCls} type="text" value={value || ''} onChange={this.onChange} ref={this.attachInputRef} placeholder={placeholder} {...otherProps} />
+				{autoGrow && (
+					<div
+						className={sizerCls}
+						dangerouslySetInnerHTML={{
+							__html: (value || placeholder || '') + '|',
+						}}
+					/>
+				)}
+				<textarea
+					className={textareaCls}
+					type="text"
+					value={value || ''}
+					onChange={this.onChange}
+					ref={this.attachInputRef}
+					placeholder={placeholder}
+					{...otherProps}
+				/>
 			</div>
 		);
 	}

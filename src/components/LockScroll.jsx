@@ -1,16 +1,16 @@
 import './LockScroll.scss';
 import React from 'react';
-import {addClass, removeClass} from '@nti/lib-dom';
+import { addClass, removeClass } from '@nti/lib-dom';
 
 export default class LockScroll extends React.Component {
 	static refCount = 0;
 
-	componentDidMount () {
+	componentDidMount() {
 		LockScroll.refCount++;
 		addClass(document.body.parentNode, 'scroll-lock');
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		LockScroll.refCount--;
 
 		if (LockScroll.refCount <= 0) {
@@ -19,7 +19,7 @@ export default class LockScroll extends React.Component {
 		}
 	}
 
-	render () {
+	render() {
 		return null;
 	}
 }

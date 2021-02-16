@@ -1,27 +1,25 @@
-import {Stores} from '@nti/lib-store';
+import { Stores } from '@nti/lib-store';
 
 export default class AsideStore extends Stores.SimpleStore {
-	showAside (cmp, {side}) {
+	showAside(cmp, { side }) {
 		this.setImmediate({
-			aside: {cmp, side}
+			aside: { cmp, side },
 		});
 	}
 
-
-	hideAside (cmp) {
+	hideAside(cmp) {
 		const aside = this.get('aside');
 
 		if (aside && aside.cmp === cmp) {
 			this.setImmediate({
-				aside: null
+				aside: null,
 			});
 		}
 	}
 
-
-	setAsidePlaceholder (node) {
+	setAsidePlaceholder(node) {
 		this.set({
-			placeholder: node
+			placeholder: node,
 		});
 	}
 }

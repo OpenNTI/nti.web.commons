@@ -2,11 +2,22 @@ import React from 'react';
 
 import SVGIcon from './SVG-Icon';
 
-export function Globe (props) {
+export function Globe(props) {
 	return (
-		<SVGIcon {...props} >
-			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
-				<g transform="translate(-119.000000, -158.000000)" stroke="currentColor" strokeWidth="2">
+		<SVGIcon {...props}>
+			<g
+				stroke="none"
+				strokeWidth="1"
+				fill="none"
+				fillRule="evenodd"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			>
+				<g
+					transform="translate(-119.000000, -158.000000)"
+					stroke="currentColor"
+					strokeWidth="2"
+				>
 					<g transform="translate(112.000000, 151.000000)">
 						<g transform="translate(8.000000, 8.000000)">
 							<circle cx="7" cy="7" r="7"></circle>

@@ -43,25 +43,26 @@ const EMPTY = () => null;
  */
 
 export default class Table extends React.Component {
-	
 	static propTypes = {
 		className: PropTypes.string, // core prop, to allow customizing the table.
-		columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object])).isRequired, //classes return 'function' as a typeof check
+		columns: PropTypes.arrayOf(
+			PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+		).isRequired, //classes return 'function' as a typeof check
 		items: PropTypes.oneOfType([
 			PropTypes.shape({
-				map: PropTypes.func
+				map: PropTypes.func,
 			}),
-			PropTypes.array
+			PropTypes.array,
 		]).isRequired, //rows
 		store: PropTypes.any, //Optional
 		rowClassName: PropTypes.func,
 		sortOn: PropTypes.string,
 		sortDirection: PropTypes.string,
 		onSortChange: PropTypes.func,
-		onRowClick: PropTypes.func
-	}
+		onRowClick: PropTypes.func,
+	};
 
-	render () {
+	render() {
 		const {
 			className,
 			columns,
@@ -71,7 +72,7 @@ export default class Table extends React.Component {
 			sortOn,
 			sortDirection,
 			onSortChange,
-			onRowClick
+			onRowClick,
 		} = this.props;
 
 		const hasHeader = columns.some(x => x.HeaderComponent || x.Name);
@@ -82,38 +83,77 @@ export default class Table extends React.Component {
 				{hasHeader && (
 					<thead>
 						<tr>
-							{columns.map(({HeaderComponent = EMPTY, cssClassName, Name, SortKey},i) => (
-								<th key={i} className={cx(cssClassName, Name && 'nti-table-simple-header')}>
-									{HeaderComponent && HeaderComponent !== EMPTY
-										? <HeaderComponent store={store} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
-										: <SimpleHeader sortKey={SortKey} name={Name} onSortChange={onSortChange} sortOn={sortOn} sortDirection={sortDirection}/>
-									}
-								</th>
-							))}
+							{columns.map(
+								(
+									{
+										HeaderComponent = EMPTY,
+										cssClassName,
+										Name,
+										SortKey,
+									},
+									i
+								) => (
+									<th
+										key={i}
+										className={cx(
+											cssClassName,
+											Name && 'nti-table-simple-header'
+										)}
+									>
+										{HeaderComponent &&
+										HeaderComponent !== EMPTY ? (
+											<HeaderComponent
+												store={store}
+												onSortChange={onSortChange}
+												sortOn={sortOn}
+												sortDirection={sortDirection}
+											/>
+										) : (
+											<SimpleHeader
+												sortKey={SortKey}
+												name={Name}
+												onSortChange={onSortChange}
+												sortOn={sortOn}
+												sortDirection={sortDirection}
+											/>
+										)}
+									</th>
+								)
+							)}
 						</tr>
 					</thead>
 				)}
-		
+
 				<tbody>
 					{items.map((item, row) => (
-						<Row key={row}
+						<Row
+							key={row}
 							item={item}
 							columns={columns}
-							className={!rowClassName ? void 0 : rowClassName(item, row, items)}
+							className={
+								!rowClassName
+									? void 0
+									: rowClassName(item, row, items)
+							}
 							store={store}
 							onClick={onRowClick}
 						/>
 					))}
 				</tbody>
-		
+
 				{hasFooter && (
 					<tfoot>
 						<tr>
-							{columns.map(({FooterComponent = EMPTY, cssClassName},i) => (
-								<th key={i} className={cssClassName}>
-									<FooterComponent store={store}/>
-								</th>
-							))}
+							{columns.map(
+								(
+									{ FooterComponent = EMPTY, cssClassName },
+									i
+								) => (
+									<th key={i} className={cssClassName}>
+										<FooterComponent store={store} />
+									</th>
+								)
+							)}
 						</tr>
 					</tfoot>
 				)}
@@ -123,33 +163,36 @@ export default class Table extends React.Component {
 }
 
 class Row extends React.Component {
-
 	static propTypes = {
 		columns: PropTypes.array,
 		item: PropTypes.any,
 		store: PropTypes.any,
-		onClick: PropTypes.func
-	}
+		onClick: PropTypes.func,
+	};
 
 	onClick = e => {
-		const {item, onClick} = this.props;
+		const { item, onClick } = this.props;
 
 		if (onClick) {
 			onClick(item, e);
 		}
-	}
+	};
 
-	render () {
-		const {columns, item, store, onClick} = this.props;
+	render() {
+		const { columns, item, store, onClick } = this.props;
 		const clickHandler = onClick ? this.onClick : void 0;
 
 		return (
 			<tr onClick={clickHandler}>
-				{columns.map((Cell, cell) => (
-					Cell.rendersContainer
-						? <Cell key={cell} item={item} store={store} />
-						: <td key={cell} className={Cell.cssClassName}><Cell item={item} store={store} /></td>
-				))}
+				{columns.map((Cell, cell) =>
+					Cell.rendersContainer ? (
+						<Cell key={cell} item={item} store={store} />
+					) : (
+						<td key={cell} className={Cell.cssClassName}>
+							<Cell item={item} store={store} />
+						</td>
+					)
+				)}
 			</tr>
 		);
 	}

@@ -1,16 +1,17 @@
 import React from 'react';
-import {equals} from '@nti/lib-commons';
+import { equals } from '@nti/lib-commons';
 
-import {useForceUpdate} from './use-force-update';
+import { useForceUpdate } from './use-force-update';
 
 const Initial = Symbol('initial');
 
-useResolver.isPending = (v) => v instanceof Promise;
-useResolver.isErrored = (v) => v instanceof Error;
-useResolver.isResolved = (v) => !useResolver.isPending(v) && !useResolver.isErrored(v);
+useResolver.isPending = v => v instanceof Promise;
+useResolver.isErrored = v => v instanceof Error;
+useResolver.isResolved = v =>
+	!useResolver.isPending(v) && !useResolver.isErrored(v);
 
-export function useResolver (resolver, dependencyList, config = {}) {
-	const {buffer} = config;
+export function useResolver(resolver, dependencyList, config = {}) {
+	const { buffer } = config;
 
 	const nonce = {};
 	const prevDependencies = React.useRef();
@@ -19,7 +20,7 @@ export function useResolver (resolver, dependencyList, config = {}) {
 	let discarded = false;
 
 	const forceUpdate = useForceUpdate();
-	const updateValue = (v) => {
+	const updateValue = v => {
 		if (!discarded && nonce === value.current[Initial]) {
 			value.current = v;
 			forceUpdate();
@@ -27,7 +28,10 @@ export function useResolver (resolver, dependencyList, config = {}) {
 	};
 
 	//If the dependency list changed immediately move to a pending state.
-	if (prevDependencies.current && !equals(prevDependencies.current, dependencyList)) {
+	if (
+		prevDependencies.current &&
+		!equals(prevDependencies.current, dependencyList)
+	) {
 		value.current = initialState(nonce);
 		clearTimeout(bufferTimeout.current);
 	}
@@ -65,19 +69,17 @@ export function useResolver (resolver, dependencyList, config = {}) {
 			doResolve();
 		}
 
-		return () => discarded = true;
+		return () => (discarded = true);
 	}, dependencyList);
-
 
 	return value.current;
 }
 
-
-function initialState (nonce) {
+function initialState(nonce) {
 	let resolve;
 	let reject;
-	const p = new Promise((a,b) => (resolve = a, reject = b));
+	const p = new Promise((a, b) => ((resolve = a), (reject = b)));
 
-	Object.assign(p, {resolve, reject, [Initial]: nonce});
+	Object.assign(p, { resolve, reject, [Initial]: nonce });
 	return p;
 }

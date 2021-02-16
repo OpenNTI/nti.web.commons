@@ -14,7 +14,8 @@
 		visibility: hidden;
 	}
 
-	&.active, &:hover {
+	&.active,
+	&:hover {
 		color: var(--primary-blue);
 		font-weight: 600;
 	}
@@ -23,7 +24,8 @@
 		padding: 0.5rem 1rem;
 		text-align: left;
 
-		&.active, &:hover {
+		&.active,
+		&:hover {
 			font-weight: 400;
 		}
 	}

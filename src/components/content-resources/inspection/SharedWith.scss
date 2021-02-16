@@ -1,9 +1,10 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .resource-viewer-inspector-file-shared-with {
 	margin: rem-calc(17px 0 18px);
 
-	error, .empty {
+	error,
+	.empty {
 		font-style: italic;
 		line-height: 1.4;
 	}

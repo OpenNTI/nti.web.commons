@@ -7,9 +7,8 @@ import Clearable from '../Clearable';
 import Text from '../Text';
 
 describe('Clearable Inputs', () => {
-
-	function buildProps (props) {
-		const newProps = {...props, onChange: () => {}};
+	function buildProps(props) {
+		const newProps = { ...props, onChange: () => {} };
 
 		spyOn(newProps, 'onChange');
 
@@ -20,7 +19,11 @@ describe('Clearable Inputs', () => {
 		const inputProps = buildProps({});
 		const clearProps = buildProps({});
 
-		const {container} = render(<Clearable {...clearProps} ><Text {...inputProps} /></Clearable>);
+		const { container } = render(
+			<Clearable {...clearProps}>
+				<Text {...inputProps} />
+			</Clearable>
+		);
 		const clearButton = container.querySelector('.reset');
 
 		fireEvent.click(clearButton);
@@ -30,11 +33,15 @@ describe('Clearable Inputs', () => {
 
 	test('onClear is called when present and onChange is not', () => {
 		const inputProps = buildProps({});
-		const clearProps = buildProps({onClear: () => {}});
+		const clearProps = buildProps({ onClear: () => {} });
 
 		spyOn(clearProps, 'onClear');
 
-		const {container} = render(<Clearable {...clearProps} ><Text {...inputProps} /></Clearable>);
+		const { container } = render(
+			<Clearable {...clearProps}>
+				<Text {...inputProps} />
+			</Clearable>
+		);
 		const clearButton = container.querySelector('.reset');
 
 		fireEvent.click(clearButton);

@@ -3,44 +3,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {MountToBody} from '../../remote-mount';
+import { MountToBody } from '../../remote-mount';
 
 export default class UpdateNotice extends React.Component {
 	static propTypes = {
-		lastUpdated: PropTypes.number
-	}
+		lastUpdated: PropTypes.number,
+	};
 
 	state = {
-		hidden: false
-	}
+		hidden: false,
+	};
 
-
-	componentDidUpdate ({lastUpdated}) {
+	componentDidUpdate({ lastUpdated }) {
 		if (this.state.hidden && lastUpdated !== this.props.lastUpdated) {
-			this.setState({hidden: false});
+			this.setState({ hidden: false });
 		}
 	}
 
-
 	handleClick = () => {
-		const {location} = window;
+		const { location } = window;
 
 		location.reload(true);
-	}
-
+	};
 
 	handleHide = () => {
-		this.setState({hidden: true});
-	}
+		this.setState({ hidden: true });
+	};
 
-
-	render () {
-		const {hidden} = this.state;
+	render() {
+		const { hidden } = this.state;
 		return (
 			<MountToBody>
-				<h4 className={cx('application-update-notification', {'dismissed': hidden})}>
-					<i className="icon-bold-x" onClick={this.handleHide}/>
-					There is a new version available. <a href="#" onClick={this.handleClick}>Reload</a> at your earliest convenience...
+				<h4
+					className={cx('application-update-notification', {
+						dismissed: hidden,
+					})}
+				>
+					<i className="icon-bold-x" onClick={this.handleHide} />
+					There is a new version available.{' '}
+					<a href="#" onClick={this.handleClick}>
+						Reload
+					</a>{' '}
+					at your earliest convenience...
 				</h4>
 			</MountToBody>
 		);

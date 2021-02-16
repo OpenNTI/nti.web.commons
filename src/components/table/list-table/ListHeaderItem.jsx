@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {ASCENDING, DESCENDING} from './Constants';
-
+import { ASCENDING, DESCENDING } from './Constants';
 
 export default class ListHeaderCell extends React.Component {
 	static propTypes = {
@@ -14,19 +13,18 @@ export default class ListHeaderCell extends React.Component {
 				inactive: PropTypes.string,
 				active: PropTypes.string,
 				asc: PropTypes.string,
-				desc: PropTypes.string
+				desc: PropTypes.string,
 			}),
 			display: PropTypes.string,
-			sortFn: PropTypes.func.isRequired
+			sortFn: PropTypes.func.isRequired,
 		}),
 		active: PropTypes.bool,
 		direction: PropTypes.string,
-		onSort: PropTypes.func
-	}
+		onSort: PropTypes.func,
+	};
 
 	onClick = () => {
-		const {column, direction, onSort} = this.props;
-
+		const { column, direction, onSort } = this.props;
 
 		const newDirection = direction === ASCENDING ? DESCENDING : ASCENDING;
 		const directionMod = direction === ASCENDING ? -1 : 1;
@@ -40,16 +38,15 @@ export default class ListHeaderCell extends React.Component {
 		if (onSort) {
 			onSort(sortFn, column.name, newDirection);
 		}
-	}
+	};
 
-
-	render () {
-		const {column, active, direction} = this.props;
+	render() {
+		const { column, active, direction } = this.props;
 		const cls = cx('list-header-column', column.classes.name, {
 			[`${column.classes.inactive}`]: !active,
 			[`${column.classes.active}`]: active,
 			[`${column.classes.asc}`]: active && direction === ASCENDING,
-			[`${column.classes.desc}`]: active && direction === DESCENDING
+			[`${column.classes.desc}`]: active && direction === DESCENDING,
 		});
 
 		return (

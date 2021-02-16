@@ -9,31 +9,38 @@ export default class ReponsiveInlineListMenu extends React.Component {
 		items: PropTypes.array,
 		onDismiss: PropTypes.func,
 		addTriggerClass: PropTypes.func,
-		removeTriggerClass: PropTypes.func
-	}
-
+		removeTriggerClass: PropTypes.func,
+	};
 
 	onDismiss = () => {
-		const {onDismiss} = this.props;
+		const { onDismiss } = this.props;
 
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
+	};
 
-	render () {
-		const {items, hidden, addTriggerClass, removeTriggerClass} = this.props;
+	render() {
+		const {
+			items,
+			hidden,
+			addTriggerClass,
+			removeTriggerClass,
+		} = this.props;
 
 		return (
-			<ul className={cx('nti-responsive-inline-list-menu', {hidden})} aria-hidden={hidden} hidden={hidden}>
+			<ul
+				className={cx('nti-responsive-inline-list-menu', { hidden })}
+				aria-hidden={hidden}
+				hidden={hidden}
+			>
 				{items.map((item, index) => {
-
 					return (
 						<li key={index}>
 							{React.cloneElement(item, {
 								onDismiss: this.onDimiss,
 								addTriggerClass: addTriggerClass,
-								removeTriggerClass: removeTriggerClass
+								removeTriggerClass: removeTriggerClass,
 							})}
 						</li>
 					);

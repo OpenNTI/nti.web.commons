@@ -1,7 +1,6 @@
 import Chooser from './Chooser';
 export { default as Browser } from './Browser';
 
-
 /**
  * Open a Resource Browser-Picker. Currently only allowing a single item to be selected.
  *
@@ -12,6 +11,6 @@ export { default as Browser } from './Browser';
  * @param  {string} [labelOfButton='Place'] - Sets the label on the "Accept/Select" blue button.
  * @returns {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
  */
-export function selectFrom (sourceID, accept, filter, labelOfButton = 'Place') {
+export function selectFrom(sourceID, accept, filter, labelOfButton = 'Place') {
 	return Chooser.show(sourceID, accept, filter, labelOfButton);
 }

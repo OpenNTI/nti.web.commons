@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-select-input {
 	position: relative;
@@ -30,13 +30,15 @@
 		height: rem-calc(34px);
 		position: relative;
 
-		&:not(.searchable), &:not(.focused) {
+		&:not(.searchable),
+		&:not(.focused) {
 			.nti-text-input {
 				text-indent: -9999px;
 			}
 		}
 
-		&.has-selected, &.searchable {
+		&.has-selected,
+		&.searchable {
 			.placeholder {
 				display: none;
 			}
@@ -61,7 +63,8 @@
 			display: block;
 		}
 
-		.selected-option, .placeholder {
+		.selected-option,
+		.placeholder {
 			position: absolute;
 			top: 0;
 			bottom: 0;

@@ -1,17 +1,17 @@
-import {User, getAppUsername} from '@nti/web-client';
-import {scoped} from '@nti/lib-locale';
+import { User, getAppUsername } from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
 
-import {useResolver} from '../hooks';
+import { useResolver } from '../hooks';
 
-const {isResolved} = useResolver;
+const { isResolved } = useResolver;
 const t = scoped('web-commons.user.Hooks', {
-	anonymous: 'Anonymous User'
+	anonymous: 'Anonymous User',
 });
 
 const getId = x => x?.getID?.() ?? x;
 const getUnresolved = () => t('anonymous'); // do we need to show identifying number
 
-useUser.getAnonymous = (id) => {
+useUser.getAnonymous = id => {
 	const unresolved = getUnresolved(id);
 
 	return {
@@ -19,14 +19,14 @@ useUser.getAnonymous = (id) => {
 		displayName: unresolved,
 		username: unresolved,
 		getID: () => id || '__unresolvedUser__',
-		anonymous: true
+		anonymous: true,
 	};
 };
-export function useUser (user) {
+export function useUser(user) {
 	const resolver = useResolver(async () => {
 		try {
 			const id = user && (user === 'me' ? getAppUsername() : getId(user));
-			const entity = id && await User.resolve({entity: id});
+			const entity = id && (await User.resolve({ entity: id }));
 
 			return entity;
 		} catch (e) {
@@ -36,7 +36,7 @@ export function useUser (user) {
 				displayName: unresolved,
 				username: unresolved,
 				getID: () => '__unresolvedUser__',
-				anonymous: true
+				anonymous: true,
 			};
 		}
 	}, [user]);

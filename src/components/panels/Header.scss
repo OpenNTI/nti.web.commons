@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .panel-header-component {
 	@include clearfix;
@@ -22,8 +22,9 @@
 	}
 
 	.balancer {
-		&::after, &::before {
-			content: "\200B";
+		&::after,
+		&::before {
+			content: '\200B';
 		}
 	}
 

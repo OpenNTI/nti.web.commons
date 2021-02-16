@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {useMutationObserver} from '../hooks';
+import { useMutationObserver } from '../hooks';
 
 import * as Strategies from './strategies';
 import Ranges from './components/Ranges';
 
 const MutationObserverInit = {
 	subtree: true,
-	childList: true
+	childList: true,
 };
 
 ContentHighlighter.Strategies = Strategies;
@@ -19,9 +19,15 @@ ContentHighlighter.propTypes = {
 	as: PropTypes.any,
 	className: PropTypes.string,
 
-	strategy: PropTypes.func.isRequired
+	strategy: PropTypes.func.isRequired,
 };
-export default function ContentHighlighter ({children, as:tag, className, strategy, ...otherProps}) {
+export default function ContentHighlighter({
+	children,
+	as: tag,
+	className,
+	strategy,
+	...otherProps
+}) {
 	const [ranges, setRanges] = React.useState([]);
 
 	const Cmp = tag ?? 'div';
@@ -29,7 +35,7 @@ export default function ContentHighlighter ({children, as:tag, className, strate
 
 	useMutationObserver(
 		strategy.isActive() ? cmpRef : null,
-		() => setRanges(strategy(cmpRef.current)),//todo figure out if we can/need to optimize this based off of what entities changes
+		() => setRanges(strategy(cmpRef.current)), //todo figure out if we can/need to optimize this based off of what entities changes
 		MutationObserverInit
 	);
 
@@ -42,7 +48,7 @@ export default function ContentHighlighter ({children, as:tag, className, strate
 	}, [strategy]);
 
 	return (
-		<Cmp className={cx('content-highlighter', className)} ref={cmpRef} >
+		<Cmp className={cx('content-highlighter', className)} ref={cmpRef}>
 			{children}
 			<Ranges ranges={ranges} containerRef={cmpRef} />
 		</Cmp>

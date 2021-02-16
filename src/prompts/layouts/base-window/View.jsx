@@ -10,15 +10,17 @@ const cx = classnames.bind(Styles);
 
 BaseWindowLayout.propTypes = {
 	className: PropTypes.string,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function BaseWindowLayout ({className, children, ...otherProps}) {
+export default function BaseWindowLayout({
+	className,
+	children,
+	...otherProps
+}) {
 	return (
 		<div className={cx('base-window-layout', className)}>
 			<Header {...otherProps} />
-			<div className={cx('window-body')}>
-				{children}
-			</div>
+			<div className={cx('window-body')}>{children}</div>
 			<Footer {...otherProps} />
 		</div>
 	);

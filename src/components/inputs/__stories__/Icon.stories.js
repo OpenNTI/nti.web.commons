@@ -7,7 +7,7 @@ import * as Icons from '../../../icons';
 
 export default {
 	title: 'Components/inputs/Input Icon',
-	component: InputIcon
+	component: InputIcon,
 };
 
 export const Icon = () => (
@@ -19,7 +19,8 @@ export const Icon = () => (
 		<InputIcon icon={<Icons.Search />} side="right">
 			<Text placeholder="Input" />
 		</InputIcon>
-		<br /><br />
+		<br />
+		<br />
 		<InputIcon icon={<Icons.Search />}>
 			<PlaceholderLabel label="Input">
 				<Text />
@@ -30,7 +31,8 @@ export const Icon = () => (
 				<Text />
 			</PlaceholderLabel>
 		</InputIcon>
-		<br /><br />
+		<br />
+		<br />
 		<InputIcon icon={<Icons.Search />}>
 			<PlaceholderLabel label="Input" variant="underlined">
 				<Text />

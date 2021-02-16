@@ -1,6 +1,6 @@
-import {ALIGN_CENTER} from '../Constants';
+import { ALIGN_CENTER } from '../Constants';
 
-export function getAlignmentClass (alignment, vAlign, hAlign) {
+export function getAlignmentClass(alignment, vAlign, hAlign) {
 	//TODO: figure out what to do for horizontal alignment
 	let vCls = '';
 	let hCls = '';
@@ -19,5 +19,5 @@ export function getAlignmentClass (alignment, vAlign, hAlign) {
 		hCls = 'right';
 	}
 
-	return vCls && hCls ? `${vCls} ${hCls}` : (vCls || hCls);
+	return vCls && hCls ? `${vCls} ${hCls}` : vCls || hCls;
 }

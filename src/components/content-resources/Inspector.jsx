@@ -12,23 +12,23 @@ import Tags from './inspection/Tags';
 
 export default class Inspector extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-	state = {}
+	state = {};
 
-	render () {
-		const {item} = this.props;
+	render() {
+		const { item } = this.props;
 
 		return !item ? null : (
 			<div className="resource-viewer-inspector">
-				<Preview item={item}/>
-				<Filename item={item}/>
-				<TypeAndSize item={item}/>
-				<Field item={item} field="CreatedTime"/>
-				<Field item={item} field="creator"/>
-				<SharedWith item={item}/>
-				<Tags item={item}/>
+				<Preview item={item} />
+				<Filename item={item} />
+				<TypeAndSize item={item} />
+				<Field item={item} field="CreatedTime" />
+				<Field item={item} field="creator" />
+				<SharedWith item={item} />
+				<Tags item={item} />
 			</div>
 		);
 	}

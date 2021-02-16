@@ -1,16 +1,18 @@
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('common.errors.messages', {
-	default: 'An error occurred.'
+	default: 'An error occurred.',
 });
 
-export function getMessage (error) {
-	if (typeof error === 'string') { return error; }
+export function getMessage(error) {
+	if (typeof error === 'string') {
+		return error;
+	}
 
 	return error.Message || error.message || t('default');
 }
 
-export function mapMessage (error, msg) {
+export function mapMessage(error, msg) {
 	const mapped = new Error(msg);
 
 	mapped.cause = error;
@@ -19,11 +21,11 @@ export function mapMessage (error, msg) {
 	return mapped;
 }
 
-export function isWarning (error) {
+export function isWarning(error) {
 	return error?.isWarning;
 }
 
-export function makeWarning (error) {
+export function makeWarning(error) {
 	const message = getMessage(error);
 	const warning = new Error(message);
 

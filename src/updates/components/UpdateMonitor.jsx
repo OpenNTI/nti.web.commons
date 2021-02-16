@@ -1,41 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {InactivityMonitor} from '@nti/lib-dom';
-import {URL as UrlUtils} from '@nti/lib-commons';
+import { InactivityMonitor } from '@nti/lib-dom';
+import { URL as UrlUtils } from '@nti/lib-commons';
 import Logger from '@nti/util-logger';
 
 import Notification from './Notification';
 
-const ONE_MINUTE = 60000;//ms
+const ONE_MINUTE = 60000; //ms
 // const FIFTEEN_MINUTES = 900000;//ms
 
 const logger = Logger.get('common:update-monitor');
 
-const parseVersionFromTextFile = txt => (txt || '').split(/\n/)[0].split(' ')[0];
+const parseVersionFromTextFile = txt =>
+	(txt || '').split(/\n/)[0].split(' ')[0];
 
 export default class UpdateMonitor extends React.Component {
 	static propTypes = {
 		baseUrl: PropTypes.string.isRequired,
 		versionPath: PropTypes.string.isRequired,
-		getVersionString: PropTypes.func.isRequired
-	}
+		getVersionString: PropTypes.func.isRequired,
+	};
 
 	static defaultProps = {
 		versionPath: 'js/version',
-		getVersionString: parseVersionFromTextFile
-	}
+		getVersionString: parseVersionFromTextFile,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
-		const monitor = this.activeStateMonitor = new InactivityMonitor();
+	componentDidMount() {
+		const monitor = (this.activeStateMonitor = new InactivityMonitor());
 		this.unsubscribe = monitor.addChangeListener(this.onActiveStateChanged);
 
 		this.onActiveStateChanged(true);
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unsubscribe();
 		this.unsubscribe = () => {};
 
@@ -45,21 +45,18 @@ export default class UpdateMonitor extends React.Component {
 		this.onActiveStateChanged(false);
 	}
 
-
-	componentDidUpdate (prevProps, {version: previous}) {
-		const {version} = this.state;
+	componentDidUpdate(prevProps, { version: previous }) {
+		const { version } = this.state;
 
 		if (previous && previous !== version) {
 			logger.log('There is an update available: %s', version);
-			this.setState({update: true});
-		}
-		else if (!previous && version) {
+			this.setState({ update: true });
+		} else if (!previous && version) {
 			logger.debug('Version recorded %s', version);
 		}
 	}
 
-
-	onActiveStateChanged = (active) => {
+	onActiveStateChanged = active => {
 		logger.debug('Active State changed. (active: %s)', active);
 		this.active = active;
 
@@ -70,42 +67,40 @@ export default class UpdateMonitor extends React.Component {
 			this.check();
 			// this.recheck = setInterval(this.check, FIFTEEN_MINUTES);
 		}
-	}
-
+	};
 
 	check = async () => {
 		const {
-			props: {
-				baseUrl,
-				versionPath
-			},
-			state: {
-				version: lastVersion,
-				update,
-			}
+			props: { baseUrl, versionPath },
+			state: { version: lastVersion, update },
 		} = this;
 
 		const valid = Boolean(baseUrl && versionPath);
 
-		if (!this.active || !valid || update || (Date.now() - this.lastChecked) < ONE_MINUTE) {
+		if (
+			!this.active ||
+			!valid ||
+			update ||
+			Date.now() - this.lastChecked < ONE_MINUTE
+		) {
 			if (valid && update) {
-				this.setState({updated: Date.now()});
+				this.setState({ updated: Date.now() });
 			}
 			return;
 		}
 
 		this.lastChecked = Date.now();
 
-		const r = await fetch (UrlUtils.join(baseUrl, versionPath), {
+		const r = await fetch(UrlUtils.join(baseUrl, versionPath), {
 			method: 'GET',
 			headers: {
-				'pragma': 'no-cache',
-				'cache-control': 'no-cache'
-			}
+				pragma: 'no-cache',
+				'cache-control': 'no-cache',
+			},
 		});
 
 		if (!r.ok) {
-			this.setState({version: 'unknown'});
+			this.setState({ version: 'unknown' });
 			return logger.debug('%s %s: %s', r.status, r.statusText, r.url);
 		}
 
@@ -114,16 +109,13 @@ export default class UpdateMonitor extends React.Component {
 		const version = this.props.getVersionString(txt);
 
 		if (lastVersion !== version) {
-			this.setState({version});
+			this.setState({ version });
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		return this.state.update ? (
-			<Notification lastUpdated={this.state.updated}/>
-		) : (
-			null
-		);
+			<Notification lastUpdated={this.state.updated} />
+		) : null;
 	}
 }

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .date-picker-range {
 	.selected-dates {
@@ -65,11 +65,19 @@
 	}
 
 	.DayPicker-Day--rangeopen {
-		background: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, rgb(223, 239, 256) 50%);
+		background: linear-gradient(
+			90deg,
+			rgba(0, 0, 0, 0) 50%,
+			rgb(223, 239, 256) 50%
+		);
 	}
 
 	.DayPicker-Day--rangeclose {
-		background: linear-gradient(90deg, rgb(223, 239, 256) 50%, rgba(0, 0, 0, 0) 50%);
+		background: linear-gradient(
+			90deg,
+			rgb(223, 239, 256) 50%,
+			rgba(0, 0, 0, 0) 50%
+		);
 	}
 
 	.DayPicker-wrapper {

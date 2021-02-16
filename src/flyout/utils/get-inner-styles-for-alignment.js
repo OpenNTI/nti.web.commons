@@ -1,7 +1,7 @@
-import {ARROW_HEIGHT, VERTICAL} from '../Constants';
+import { ARROW_HEIGHT, VERTICAL } from '../Constants';
 
-export function getInnerStylesForAlignment (alignment, arrow, primaryAxis) {
-	let {maxWidth, maxHeight} = alignment;
+export function getInnerStylesForAlignment(alignment, arrow, primaryAxis) {
+	let { maxWidth, maxHeight } = alignment;
 
 	if (primaryAxis === VERTICAL && arrow) {
 		maxHeight = maxHeight - ARROW_HEIGHT;
@@ -11,6 +11,6 @@ export function getInnerStylesForAlignment (alignment, arrow, primaryAxis) {
 
 	return {
 		maxWidth: maxWidth ? `${maxWidth}px` : null,
-		maxHeight: maxHeight ? `${maxHeight}px` : null
+		maxHeight: maxHeight ? `${maxHeight}px` : null,
 	};
 }

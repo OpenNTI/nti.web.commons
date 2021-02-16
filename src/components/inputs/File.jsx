@@ -10,81 +10,87 @@ export default class File extends React.Component {
 		className: PropTypes.string,
 		label: PropTypes.string,
 		accept: PropTypes.string,
-		value: PropTypes.object,	// existing file
+		value: PropTypes.object, // existing file
 		defaultText: PropTypes.string,
 		onFileChange: PropTypes.func,
-		checkValid: PropTypes.func
-	}
+		checkValid: PropTypes.func,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
-			file: props.value
+			file: props.value,
 		};
 	}
 
-	renderFileName () {
-		if(this.state && this.state.file) {
-			return (<span>{this.state.file.name}</span>);
+	renderFileName() {
+		if (this.state && this.state.file) {
+			return <span>{this.state.file.name}</span>;
 		}
 
 		const text = this.props.defaultText ? this.props.defaultText : '';
 
-		return (<span className="nofile">{text}</span>);
+		return <span className="nofile">{text}</span>;
 	}
 
-	clearFile = (e) => {
+	clearFile = e => {
 		if (e) {
 			e.stopPropagation();
 			e.preventDefault();
 		}
 
-		this.setState( { file: undefined });
+		this.setState({ file: undefined });
 
-		if(this.input) {
+		if (this.input) {
 			this.input.value = '';
 		}
 
-		if(this.props.onFileChange) {
+		if (this.props.onFileChange) {
 			this.props.onFileChange();
 		}
 	};
 
-	renderClear () {
-		if(this.state && this.state.file) {
-			return(<span className="file-select-reset" onClick={this.clearFile}>x</span>);
+	renderClear() {
+		if (this.state && this.state.file) {
+			return (
+				<span className="file-select-reset" onClick={this.clearFile}>
+					x
+				</span>
+			);
 		}
 	}
 
-	onChange = (e) => {
+	onChange = e => {
 		e.stopPropagation();
 		e.preventDefault();
 
-		const {target: {files}} = e;
+		const {
+			target: { files },
+		} = e;
 
-		if(files && files.length === 1) {
+		if (files && files.length === 1) {
 			let inputValid = true;
-			if(this.props.checkValid) {
+			if (this.props.checkValid) {
 				inputValid = this.props.checkValid(files[0]);
 			}
 
-			if(inputValid) {
-				this.setState({ file : files[0] });
+			if (inputValid) {
+				this.setState({ file: files[0] });
 
-				if(this.props.onFileChange) {
+				if (this.props.onFileChange) {
 					this.props.onFileChange(files[0]);
 				}
 			}
 		}
 	};
 
-	render () {
-		const attachRef = (x) => {
+	render() {
+		const attachRef = x => {
 			this.input = x;
 		};
 
-		const {label = 'Choose file', className} = this.props;
+		const { label = 'Choose file', className } = this.props;
 
 		let props = {
 			icon: 'upload',
@@ -92,19 +98,19 @@ export default class File extends React.Component {
 			available: true,
 			onChange: this.onChange,
 			onDrop: this.onChange,
-			attachRef: attachRef
+			attachRef: attachRef,
 		};
 
-		if(this.props.accept) {
+		if (this.props.accept) {
 			props.accept = this.props.accept;
 		}
 
 		return (
 			<div className={cx('nti-file-input', className)}>
-				<FilePickerButton
-					{...props}
-				/>
-				<span className="file-select-filename">{this.renderFileName()}</span>
+				<FilePickerButton {...props} />
+				<span className="file-select-filename">
+					{this.renderFileName()}
+				</span>
 				{this.renderClear()}
 			</div>
 		);

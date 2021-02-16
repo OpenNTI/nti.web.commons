@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Events, PropTypes as NtiPropTypes } from '@nti/lib-commons';
+import { Events, PropTypes as NtiPropTypes } from '@nti/lib-commons';
 
 import styles from './Button.css';
 
@@ -19,16 +19,16 @@ export default class Button extends React.Component {
 		secondary: PropTypes.bool,
 		destructive: PropTypes.bool,
 		plain: PropTypes.bool,
-	}
+	};
 
-	ref = React.createRef()
+	ref = React.createRef();
 
-	getDOMNode () {
+	getDOMNode() {
 		return this.ref.current;
 	}
 
-	handleTrigger = (e) => {
-		const {disabled, onClick} = this.props;
+	handleTrigger = e => {
+		const { disabled, onClick } = this.props;
 
 		// This handler is called for clicks, and keyDown.
 		// This filter only allows "clicks" from physical clicks and "keyDown" events from Space or Enter.
@@ -43,10 +43,9 @@ export default class Button extends React.Component {
 		if (onClick) {
 			onClick(e);
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		const {
 			as = this.props.component || 'a',
 			className,
@@ -58,19 +57,15 @@ export default class Button extends React.Component {
 			...otherProps
 		} = this.props;
 		const Component = as;
-		const cls = cx(
-			'nti-button',
-			className,
-			{
-				button: !plain,
-				primary: !secondary && !destructive && !plain,
-				secondary,
-				destructive,
-				disabled,
-				rounded,
-				plain,
-			}
-		);
+		const cls = cx('nti-button', className, {
+			button: !plain,
+			primary: !secondary && !destructive && !plain,
+			secondary,
+			destructive,
+			disabled,
+			rounded,
+			plain,
+		});
 
 		delete otherProps.component;
 		delete otherProps.onClick;

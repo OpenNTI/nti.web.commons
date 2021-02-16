@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .token-editor {
 	font-size: rem-calc(14px); //we set the default font size to 14...
@@ -11,7 +11,9 @@
 	background: white;
 	min-height: 5rem;
 
-	&, input, .token {
+	&,
+	input,
+	.token {
 		line-height: $line-height;
 	}
 
@@ -52,7 +54,8 @@
 		overflow-y: scroll;
 		max-height: 400px;
 
-		&.loading, &.no-matches {
+		&.loading,
+		&.no-matches {
 			padding: 10px;
 		}
 

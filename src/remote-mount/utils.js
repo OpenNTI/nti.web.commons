@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {addClass} from '@nti/lib-dom';
+import { addClass } from '@nti/lib-dom';
 
 const MOUNT_POINT_NODE = Symbol('Mount Point Node');
 
-
-function makeMountPoint (cls) {
+function makeMountPoint(cls) {
 	const point = document.createElement('div');
 
 	addClass(point, cls);
@@ -14,9 +13,8 @@ function makeMountPoint (cls) {
 	return point;
 }
 
-
 class MountPoint {
-	constructor (parent, className, noPortal) {
+	constructor(parent, className, noPortal) {
 		this.className = className;
 		this.parent = parent;
 		this.isPortal = !noPortal && Boolean(ReactDOM.createPortal);
@@ -27,8 +25,8 @@ class MountPoint {
 	 * Return the existing dom node, or create one and append it to the parent
 	 * @returns {Node} the dom node for this mount point
 	 */
-	get mountPoint () {
-		const {parent, className} = this;
+	get mountPoint() {
+		const { parent, className } = this;
 
 		if (!this[MOUNT_POINT_NODE]) {
 			this[MOUNT_POINT_NODE] = makeMountPoint(className);
@@ -45,15 +43,14 @@ class MountPoint {
 	 * @param  {Object} children the children to render with the class
 	 * @returns {*} React opaque pointer... don't use in React15. See portal documentation.
 	 */
-	render (cmpCls, props, children) {
+	render(cmpCls, props, children) {
 		return ReactDOM[this.renderer](
 			React.createElement(cmpCls, props, children),
 			this.mountPoint
 		);
 	}
 
-
-	remove () {
+	remove() {
 		if (!this.isPortal) {
 			ReactDOM.unmountComponentAtNode(this.mountPoint);
 		}
@@ -66,6 +63,6 @@ class MountPoint {
 
 //A utility to create a div and append it the dom to create
 //a place to mount new react components
-export function createMountPoint (appendTo, cls, noPortal) {
+export function createMountPoint(appendTo, cls, noPortal) {
 	return new MountPoint(appendTo, cls, noPortal);
 }

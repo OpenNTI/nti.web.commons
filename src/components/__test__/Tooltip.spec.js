@@ -10,7 +10,7 @@ test('Tooltip', () => {
 	const { getByText, queryByText } = render(
 		<Tooltip label="tooltip label">
 			<button>button label</button>
-		</Tooltip>,
+		</Tooltip>
 	);
 
 	act(() => {

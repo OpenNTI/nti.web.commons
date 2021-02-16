@@ -1,11 +1,12 @@
 import Editor from './Editor';
 
-const ContentType = 'application/vnd.nextthought.courses.courseoutlinecontentnode';
+const ContentType =
+	'application/vnd.nextthought.courses.courseoutlinecontentnode';
 
 export default {
 	type: ContentType,
 
-	getEditor () {
+	getEditor() {
 		return Editor;
-	}
+	},
 };

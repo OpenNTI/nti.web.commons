@@ -1,26 +1,35 @@
-import {wait} from '@nti/lib-commons';
+import { wait } from '@nti/lib-commons';
 
 import AssociationsInterface from './Interface';
-import {groupItemsByParent} from './utils';
-
+import { groupItemsByParent } from './utils';
 
 export default AssociationsInterface;
 
-function createItem (item, onAddTo, onRemoveFrom) {
+function createItem(item, onAddTo, onRemoveFrom) {
 	return AssociationsInterface.createItem(item, onAddTo, onRemoveFrom);
 }
 
-export function createInterfaceForActive (active, destinations, onAddTo, onRemoveFrom) {
-	return new AssociationsInterface(destinations.map(x => createItem(x, onAddTo, onRemoveFrom)), active, onAddTo, onRemoveFrom);
+export function createInterfaceForActive(
+	active,
+	destinations,
+	onAddTo,
+	onRemoveFrom
+) {
+	return new AssociationsInterface(
+		destinations.map(x => createItem(x, onAddTo, onRemoveFrom)),
+		active,
+		onAddTo,
+		onRemoveFrom
+	);
 }
 
-
-export function createInterfaceForItem (item, scope, accepts, group) {
+export function createInterfaceForItem(item, scope, accepts, group) {
 	const provider = item.getPlacementProvider(scope);
 	const associations = new AssociationsInterface(null, null, item);
 
-	function onAddTo (container, association) {
-		return provider.placeIn(container)
+	function onAddTo(container, association) {
+		return provider
+			.placeIn(container)
 			.then(wait.min(wait.SHORT))
 			.then(() => {
 				return association && association.refresh();
@@ -30,9 +39,9 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 			});
 	}
 
-
-	function onRemoveFrom (container, association) {
-		return provider.removeFrom(container)
+	function onRemoveFrom(container, association) {
+		return provider
+			.removeFrom(container)
 			.then(wait.min(wait.SHORT))
 			.then(() => {
 				return association && association.refresh();
@@ -42,18 +51,16 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 			});
 	}
 
-
-	function parseItems (items) {
+	function parseItems(items) {
 		const parsed = items.map(x => createItem(x, onAddTo, onRemoveFrom));
 
 		return group ? groupItemsByParent(parsed) : parsed;
 	}
 
-
 	Promise.all([
 		item.getAssociations(accepts),
-		provider.getItems(accepts)
-	]).then((results) => {
+		provider.getItems(accepts),
+	]).then(results => {
 		const active = results[0];
 		const items = results[1];
 
@@ -64,7 +71,6 @@ export function createInterfaceForItem (item, scope, accepts, group) {
 	return associations;
 }
 
-
-export function createGroupedInterfaceForItem (item, scope, accepts) {
-	return createInterfaceForItem (item, scope, accepts, true);
+export function createGroupedInterfaceForItem(item, scope, accepts) {
+	return createInterfaceForItem(item, scope, accepts, true);
 }

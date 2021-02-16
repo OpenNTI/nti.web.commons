@@ -5,14 +5,14 @@ import ApplyTheme from './Apply';
 import ThemeContext from './Context';
 
 ScopeTheme.propTypes = {
-	scope: PropTypes.string
+	scope: PropTypes.string,
 };
-export default function ScopeTheme ({scope, ...otherProps}) {
+export default function ScopeTheme({ scope, ...otherProps }) {
 	return (
 		<ThemeContext.Consumer>
-			{(theme) => {
+			{theme => {
 				const scoped = theme?.scope?.(scope) || null;
-				return (<ApplyTheme value={scoped} {...otherProps} />);
+				return <ApplyTheme value={scoped} {...otherProps} />;
 			}}
 		</ThemeContext.Consumer>
 	);

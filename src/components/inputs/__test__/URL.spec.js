@@ -7,7 +7,7 @@ import URL from '../URL';
 describe('URL Input', () => {
 	test('attaches ref', async () => {
 		let instance = null;
-		render(<URL ref={x => instance = x} />);
+		render(<URL ref={x => (instance = x)} />);
 
 		return waitFor(() => {
 			expect(instance.input).toBeTruthy();

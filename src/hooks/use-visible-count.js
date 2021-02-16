@@ -1,10 +1,13 @@
-
 const int = x => parseInt(x, 10) || 0;
 const gap = el => int(getComputedStyle(el.parentElement).gap);
 // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing
 // TODO: review margin merging rules.
-const marginWidth = el => (el = getComputedStyle(el), int(el.marginLeft) + int(el.marginRight));
-const marginHeight = el => (el = getComputedStyle(el), int(el.marginTop) + int(el.marginBottom));
+const marginWidth = el => (
+	(el = getComputedStyle(el)), int(el.marginLeft) + int(el.marginRight)
+);
+const marginHeight = el => (
+	(el = getComputedStyle(el)), int(el.marginTop) + int(el.marginBottom)
+);
 
 const DIMENSION_RESOLVERS = {
 	width: el => el.clientWidth,
@@ -22,7 +25,7 @@ const ITEM_DIMENSION_RESOLVERS = {
  * @param {"height"|"width"} [dimension='height'] The dimension to count
  * @returns {number} The amount of items that will fit.
  */
-export function useVisibleCount ( sizeOrSelector, ref, dimension = 'height' ) {
+export function useVisibleCount(sizeOrSelector, ref, dimension = 'height') {
 	let size = typeof sizeOrSelector === 'number' ? sizeOrSelector : null;
 	const selector = size == null ? sizeOrSelector : null;
 	const container = ref?.current;

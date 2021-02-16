@@ -2,36 +2,34 @@ import './RemoveButton.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {areYouSure} from '../prompts/';
-
+import { areYouSure } from '../prompts/';
 
 export default class RemoveButton extends React.Component {
 	static propTypes = {
 		onRemove: PropTypes.func.isRequired,
-		confirmationMessage: PropTypes.string
+		confirmationMessage: PropTypes.string,
 	};
 
-
-	onClick = (e) => {
+	onClick = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {onRemove, confirmationMessage} = this.props;
+		const { onRemove, confirmationMessage } = this.props;
 
-		if(confirmationMessage) {
+		if (confirmationMessage) {
 			areYouSure(confirmationMessage).then(() => {
 				onRemove && onRemove();
 			});
-		}
-		else {
+		} else {
 			onRemove && onRemove();
 		}
 	};
 
-
-	render () {
+	render() {
 		return (
-			<div className="nt-remove-button" onClick={this.onClick}><i className="icon-remove"/></div>
+			<div className="nt-remove-button" onClick={this.onClick}>
+				<i className="icon-remove" />
+			</div>
 		);
 	}
 }

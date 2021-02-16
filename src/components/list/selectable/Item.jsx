@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import Styles from './Styles.css';
-import {SelectableItemProp} from './Constants';
+import { SelectableItemProp } from './Constants';
 import Context from './Context';
 
 const cx = classnames.bind(Styles);
@@ -16,15 +16,27 @@ SelectableItem.propTypes = {
 
 	className: PropTypes.string,
 	focusedClassName: PropTypes.string,
-	selectedClassName: PropTypes.string
+	selectedClassName: PropTypes.string,
 };
-export default function SelectableItem ({as: tag, id: idProp, value, className, focusedClassName, selectedClassName, ...otherProps}) {
+export default function SelectableItem({
+	as: tag,
+	id: idProp,
+	value,
+	className,
+	focusedClassName,
+	selectedClassName,
+	...otherProps
+}) {
 	const Cmp = tag || 'li';
 
 	const [id, setId] = React.useState(null);
 	const SelectableContext = React.useContext(Context);
 
-	if (!SelectableContext) { throw new Error('Cannot use Selectable Item outside of a Selectable List.'); }
+	if (!SelectableContext) {
+		throw new Error(
+			'Cannot use Selectable Item outside of a Selectable List.'
+		);
+	}
 
 	React.useEffect(() => {
 		const itemId = idProp || SelectableContext.getItemId();
@@ -41,19 +53,15 @@ export default function SelectableItem ({as: tag, id: idProp, value, className, 
 	const selected = SelectableContext.isSelected(id);
 
 	const itemProps = {
-		className: cx(
-			className,
-			'selectable-item',
-			{
-				[focusedClassName || 'focused-item']: focused,
-				[selectedClassName || 'selected-item']: selected
-			}
-		)
+		className: cx(className, 'selectable-item', {
+			[focusedClassName || 'focused-item']: focused,
+			[selectedClassName || 'selected-item']: selected,
+		}),
 	};
 
 	if (id) {
 		itemProps[SelectableItemProp] = id;
-		itemProps.onMouseDown = (e) => {
+		itemProps.onMouseDown = e => {
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -61,11 +69,5 @@ export default function SelectableItem ({as: tag, id: idProp, value, className, 
 		};
 	}
 
-	return (
-		<Cmp
-			{...otherProps}
-			{...itemProps}
-			role="listitem"
-		/>
-	);
+	return <Cmp {...otherProps} {...itemProps} role="listitem" />;
 }

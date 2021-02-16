@@ -1,17 +1,17 @@
 import './Inline.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import * as Flyout from '../../../flyout';
-import {List, Loading} from '../../../components';
+import { List, Loading } from '../../../components';
 
 const DEFAULT_TEXT = {
 	loading: {
 		one: 'Shared with %(count)s item',
-		other: 'Shared with %(count)s items'
+		other: 'Shared with %(count)s items',
 	},
-	empty: 'Add to Item'
+	empty: 'Add to Item',
 };
 
 const t = scoped('common.components.associations.inline', DEFAULT_TEXT);
@@ -21,25 +21,23 @@ export default class InlineAssociations extends React.Component {
 		item: PropTypes.shape({
 			addListener: PropTypes.func,
 			associationCount: PropTypes.number,
-			getAssociations: PropTypes.func
+			getAssociations: PropTypes.func,
 		}).isRequired,
 		scope: PropTypes.object,
 		onShow: PropTypes.func,
-		getString: PropTypes.func
-	}
+		getString: PropTypes.func,
+	};
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
-			loading: true
+			loading: true,
 		};
 	}
 
-
-	componentDidMount () {
-		const {item, scope} = this.props;
+	componentDidMount() {
+		const { item, scope } = this.props;
 
 		item.addListener('associations-update', () => {
 			this.loadAssociations(item, scope);
@@ -48,69 +46,61 @@ export default class InlineAssociations extends React.Component {
 		this.loadAssociations(item, scope);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {item, scope} = this.props;
+	componentDidUpdate(prevProps) {
+		const { item, scope } = this.props;
 
 		if (prevProps.item !== item || prevProps.scope !== scope) {
 			this.loadAssociations(item, scope);
 		}
 	}
 
-
-	loadAssociations (item, scope) {
+	loadAssociations(item, scope) {
 		this.setState({
-			loading: true
+			loading: true,
 		});
 
 		item.getAssociations(scope)
-			.then((associations) => {
+			.then(associations => {
 				this.setState({
 					loading: false,
-					associations
+					associations,
 				});
 			})
 			.catch(() => {
 				this.setState({
 					loading: false,
-					associations: []
+					associations: [],
 				});
 			});
 	}
 
-
-	getStringFn () {
-		const {getString} = this.props;
+	getStringFn() {
+		const { getString } = this.props;
 
 		return getString ? t.override(getString) : t;
 	}
 
-
-
 	showMore = () => {
-		const {onShow} = this.props;
+		const { onShow } = this.props;
 
 		if (onShow) {
 			onShow();
 		}
-	}
+	};
 
-
-	render () {
-		const {item} = this.props;
-		const {loading} = this.state;
-		const {associations} = this.state;
-		let {associationCount = 0} = item;
+	render() {
+		const { item } = this.props;
+		const { loading } = this.state;
+		const { associations } = this.state;
+		let { associationCount = 0 } = item;
 
 		if (associations && associations.length !== associationCount) {
 			associationCount = associations.length;
 		}
 
-		if (associationCount === 0 ) {
+		if (associationCount === 0) {
 			return (
-				<div className="inline-association">
-					{this.renderEmpty()}
-				</div>
+				<div className="inline-association">{this.renderEmpty()}</div>
 			);
 		}
 
@@ -123,41 +113,43 @@ export default class InlineAssociations extends React.Component {
 		);
 	}
 
-
-	renderEmpty () {
+	renderEmpty() {
 		const getString = this.getStringFn();
 
 		return getString('empty');
 	}
 
-
-	renderLoading () {
-		const {item} = this.props;
+	renderLoading() {
+		const { item } = this.props;
 		const getString = this.getStringFn();
 		const count = item.associationCount;
 
 		return (
-			<span className="loading-text">{getString('loading', {count})}</span>
+			<span className="loading-text">
+				{getString('loading', { count })}
+			</span>
 		);
 	}
 
-
-	renderAssociations () {
-		const {associations} = this.state;
+	renderAssociations() {
+		const { associations } = this.state;
 
 		const props = {
 			children: associations.map(x => x.title || x.label),
 			getString: this.getStringFn(),
-			max: 1
+			max: 1,
 		};
 
-		const trigger = (
-			<List.LimitedInline {...props} />
-		);
+		const trigger = <List.LimitedInline {...props} />;
 
 		return (
 			<Flyout.Triggered arrow hover trigger={trigger} dark>
-				<List.Limited {...props} className="inline-association-list" onShowMore={this.showMore} max={3} />
+				<List.Limited
+					{...props}
+					className="inline-association-list"
+					onShowMore={this.showMore}
+					max={3}
+				/>
 			</Flyout.Triggered>
 		);
 	}

@@ -5,12 +5,12 @@ import { DEFAULT } from './formats';
 import { fromNow, fromWhen } from './from-when';
 import t from './strings';
 
-export {fromNow, fromWhen};
+export { fromNow, fromWhen };
 
-const timeZone = global.Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone ?? undefined;
+const timeZone =
+	global.Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone ?? undefined;
 
-
-export function format (date, pattern = DEFAULT) {
+export function format(date, pattern = DEFAULT) {
 	if (!date) {
 		return;
 	}
@@ -20,12 +20,10 @@ export function format (date, pattern = DEFAULT) {
 	}
 
 	const f = x => formatter(date, x, { timeZone });
-	return (typeof pattern === 'function')
-		? pattern(f)
-		: f(pattern);
+	return typeof pattern === 'function' ? pattern(f) : f(pattern);
 }
 
-export function isToday (date) {
+export function isToday(date) {
 	return isSameDay(date, new Date());
 }
 
@@ -37,17 +35,15 @@ export function isToday (date) {
  * @param  {number} duration number of seconds to format
  * @returns {string}          human readable format
  */
-export function formatDuration (duration) {
+export function formatDuration(duration) {
 	duration = Math.round(duration);
 	const h = Math.floor(duration / 3600);
 	const m = Math.floor((duration % 3600) / 60);
 	const s = duration % 60;
 
-	return [
-		h,
-		m > 9 ? m : (h ? '0' + m : m || '0'),
-		s > 9 ? s : '0' + s,
-	].filter(a => a).join(':');
+	return [h, m > 9 ? m : h ? '0' + m : m || '0', s > 9 ? s : '0' + s]
+		.filter(a => a)
+		.join(':');
 }
 
 /**
@@ -56,7 +52,7 @@ export function formatDuration (duration) {
  * @param {number} accuracy - accuracy cutoff
  * @returns {string} - a human friendly description of the duration
  */
-export function getShortNaturalDuration (duration, accuracy) {
+export function getShortNaturalDuration(duration, accuracy) {
 	return getNaturalDuration(duration, accuracy, null, true);
 }
 
@@ -68,7 +64,7 @@ export function getShortNaturalDuration (duration, accuracy) {
  * @param {boolean} short - use short form
  * @returns {string} - a human friendly description of the duration
  */
-export function getNaturalDuration (duration, accuracy, singular, short) {
+export function getNaturalDuration(duration, accuracy, singular, short) {
 	let baseLocaleKey = 'timeUnits.';
 
 	if (short) {
@@ -80,17 +76,17 @@ export function getNaturalDuration (duration, accuracy, singular, short) {
 	const reference = new Date();
 	const d = intervalToDuration({
 		start: reference,
-		end: new Date(reference.getTime() + duration)
+		end: new Date(reference.getTime() + duration),
 	});
 
 	const getUnit = (unit, data) => t(`${baseLocaleKey}${unit}`, data);
 
 	let out = [];
 
-	function maybeAdd (unit) {
+	function maybeAdd(unit) {
 		let u = d[unit];
 		if (u > 0 && (!accuracy || out.length < accuracy)) {
-			out.push(getUnit(unit, {count: u}));
+			out.push(getUnit(unit, { count: u }));
 		}
 	}
 
@@ -103,7 +99,7 @@ export function getNaturalDuration (duration, accuracy, singular, short) {
 	maybeAdd('seconds');
 
 	if (out.length === 0) {
-		out.push(getUnit('seconds', {count: 0}));
+		out.push(getUnit('seconds', { count: 0 }));
 	}
 
 	if (short) {

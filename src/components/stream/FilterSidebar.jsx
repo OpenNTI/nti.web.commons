@@ -4,15 +4,10 @@ import PropTypes from 'prop-types';
 
 export default class FilterSidebar extends React.Component {
 	static propTypes = {
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
-	render () {
-		return (
-			<div className="filter-sidebar">
-				{this.props.children}
-			</div>
-		);
+	render() {
+		return <div className="filter-sidebar">{this.props.children}</div>;
 	}
 }
-

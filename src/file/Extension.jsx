@@ -6,7 +6,7 @@ import Text from '../text';
 
 import Name from './Name';
 
-function getExtension (file, mimeType) {
+function getExtension(file, mimeType) {
 	const type = mimeType ?? file?.contentType;
 	const extForType = type && mime.extension(type);
 
@@ -18,15 +18,13 @@ FileExtension.propTypes = {
 		PropTypes.string,
 		PropTypes.shape({
 			contentType: PropTypes.string,
-			filename: PropTypes.string
-		})
+			filename: PropTypes.string,
+		}),
 	]),
-	mimeType: PropTypes.string
+	mimeType: PropTypes.string,
 };
-export default function FileExtension ({file, mimeType, ...otherProps}) {
+export default function FileExtension({ file, mimeType, ...otherProps }) {
 	return (
-		<Text.Base {...otherProps}>
-			{getExtension(file, mimeType)}
-		</Text.Base>
+		<Text.Base {...otherProps}>{getExtension(file, mimeType)}</Text.Base>
 	);
 }

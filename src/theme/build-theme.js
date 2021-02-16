@@ -1,10 +1,10 @@
 import merge from 'merge';
-import {Color, ObjectUtils} from '@nti/lib-commons';
+import { Color, ObjectUtils } from '@nti/lib-commons';
 
 import Fallbacks from './fallback-assets';
 
 const DefaultLogo = '/site-assets/shared/brand_web.png';
-const makeAssetHREFFallbacks = (defaultAsset) => {
+const makeAssetHREFFallbacks = defaultAsset => {
 	return (_, globalTheme) => {
 		const logoHref = globalTheme.assets.logo.href;
 
@@ -16,14 +16,16 @@ const makeAssetHREFFallbacks = (defaultAsset) => {
 	};
 };
 
-const getAsset = (asset) => ({
+const getAsset = asset => ({
 	filename: '',
 	['Last Modified']: null,
-	cacheBust: (values) => values['Last Modified'],
-	cacheBustHREF: (values) => {
-		const {cacheBust, href} = values;
+	cacheBust: values => values['Last Modified'],
+	cacheBustHREF: values => {
+		const { cacheBust, href } = values;
 
-		if (!cacheBust) { return href; }
+		if (!cacheBust) {
+			return href;
+		}
 
 		const url = new URL(href, global.location.origin);
 
@@ -31,7 +33,7 @@ const getAsset = (asset) => ({
 
 		return url.toString();
 	},
-	...asset
+	...asset,
 });
 
 const DefaultProperties = {
@@ -39,19 +41,20 @@ const DefaultProperties = {
 		background: 'dark',
 		navigation: {
 			branding: (_, globalTheme) => globalTheme.assets.fullLogo,
-			backgroundColor: (_, globalTheme) => globalTheme.brandColor || '#2A2A2A',
-			search: (values) => {
+			backgroundColor: (_, globalTheme) =>
+				globalTheme.brandColor || '#2A2A2A',
+			search: values => {
 				try {
-					const {brightness} = Color(values.backgroundColor).hsv;
+					const { brightness } = Color(values.backgroundColor).hsv;
 
 					return brightness <= 0.2 ? 'dark' : 'light';
 				} catch (e) {
 					return 'light';
 				}
 			},
-			icon: (values) => {
+			icon: values => {
 				try {
-					const {brightness} = Color(values.backgroundColor).hsv;
+					const { brightness } = Color(values.backgroundColor).hsv;
 
 					return brightness >= 0.8 ? 'dark' : 'light';
 				} catch (e) {
@@ -61,31 +64,41 @@ const DefaultProperties = {
 			badges: {
 				knockout: (_, globalTheme) => {
 					try {
-						const {saturation, brightness} = Color(globalTheme.library.navigation.backgroundColor).hsv;
+						const { saturation, brightness } = Color(
+							globalTheme.library.navigation.backgroundColor
+						).hsv;
 
-						return saturation === 0 && (brightness <= 0.3 || brightness >= 0.9) ? true : false;
+						return saturation === 0 &&
+							(brightness <= 0.3 || brightness >= 0.9)
+							? true
+							: false;
 					} catch (e) {
 						return false;
 					}
-				}
-			}
-		}
+				},
+			},
+		},
 	},
 	mediaviewer: {
 		navigation: {
-			icon: 'light'
-		}
+			icon: 'light',
+		},
 	},
 	certificates: {
 		sidebar: {
-			logo: (_, globalTheme) => globalTheme.assets.certificate_logo || globalTheme.assets.logo,
-			backgroundColor: (_, globalTheme) => globalTheme.certificateBrandColor || globalTheme.brandColor || '#3FB34F',
-			image: (_, globalTheme) => globalTheme.assets.certificate_sidebar_image
+			logo: (_, globalTheme) =>
+				globalTheme.assets.certificate_logo || globalTheme.assets.logo,
+			backgroundColor: (_, globalTheme) =>
+				globalTheme.certificateBrandColor ||
+				globalTheme.brandColor ||
+				'#3FB34F',
+			image: (_, globalTheme) =>
+				globalTheme.assets.certificate_sidebar_image,
 		},
-		label: (_, globalTheme) => globalTheme.certificateCompletionLabel
+		label: (_, globalTheme) => globalTheme.certificateCompletionLabel,
 	},
 	brandName: 'NextThought',
-	brandColor: null,//'#3FB34F',
+	brandColor: null, //'#3FB34F',
 	certificateCompletionLabel: 'Certification of Completion',
 	certificateBrandColor: null,
 	suppressCertificateLogo: false,
@@ -94,33 +107,35 @@ const DefaultProperties = {
 			alt: 'logo',
 			fallback: Fallbacks.Logo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
-			href: DefaultLogo
+			href: DefaultLogo,
 		}),
 		fullLogo: getAsset({
 			alt: 'logo',
 			fallback: Fallbacks.FullLogo,
 			fill: (_, globalTheme) => globalTheme.brandColor,
-			href: makeAssetHREFFallbacks('/site-assets/shared/brand_web_library.png')
+			href: makeAssetHREFFallbacks(
+				'/site-assets/shared/brand_web_library.png'
+			),
 		}),
 		email: getAsset({
 			alt: 'email',
 			fallback: Fallbacks.Email,
-			href: makeAssetHREFFallbacks(Fallbacks.Email)
+			href: makeAssetHREFFallbacks(Fallbacks.Email),
 		}),
 		favicon: getAsset({
 			alt: 'favicon',
 			fallback: Fallbacks.Favicon,
-			href: '/favicon.ico'
+			href: '/favicon.ico',
 		}),
-		'certificate_logo': getAsset({
+		certificate_logo: getAsset({
 			alt: '',
-			href: makeAssetHREFFallbacks(Fallbacks.CertificateLogo)
+			href: makeAssetHREFFallbacks(Fallbacks.CertificateLogo),
 		}),
-		'certificate_sidebar_image': getAsset({
+		certificate_sidebar_image: getAsset({
 			alt: '',
-			href: ''
-		})
-	}
+			href: '',
+		}),
+	},
 };
 
 const Scope = Symbol('Scope');
@@ -129,7 +144,10 @@ const Parent = Symbol('Parent');
 BuildTheme.getAsset = getAsset;
 BuildTheme.makeAssetHREFFallbacks = makeAssetHREFFallbacks;
 BuildTheme.DefaultProperties = DefaultProperties;
-export default function BuildTheme (properties = DefaultProperties, internalConfig = {}) {
+export default function BuildTheme(
+	properties = DefaultProperties,
+	internalConfig = {}
+) {
 	const theme = {};
 	const parentTheme = internalConfig[Parent];
 	const initialScope = internalConfig[Scope] || [];
@@ -142,41 +160,51 @@ export default function BuildTheme (properties = DefaultProperties, internalConf
 		for (let scope of scopes) {
 			pointer = pointer[scope];
 
-			if (!pointer) { return null; }
+			if (!pointer) {
+				return null;
+			}
 		}
 
 		return pointer[key];
 	};
 
-	theme.getRoot = () => parentTheme ? parentTheme.getRoot() : theme;
+	theme.getRoot = () => (parentTheme ? parentTheme.getRoot() : theme);
 	theme.getParent = () => parentTheme;
 	theme.getScope = () => initialScope;
-	theme.getValues = () => parentTheme ? parentTheme.getValues() : values;
-	theme.setOverrides = (overrides, force) => values = force ? overrides : merge.recursive(values, {...overrides});
-	theme.scope = (scope) => {
+	theme.getValues = () => (parentTheme ? parentTheme.getValues() : values);
+	theme.setOverrides = (overrides, force) =>
+		(values = force
+			? overrides
+			: merge.recursive(values, { ...overrides }));
+	theme.scope = scope => {
 		const scopes = [...initialScope];
-		return BuildTheme(ObjectUtils.get(properties, scope, k => scopes.push(k)), {[Scope]: scopes, [Parent]: theme});
+		return BuildTheme(
+			ObjectUtils.get(properties, scope, k => scopes.push(k)),
+			{ [Scope]: scopes, [Parent]: theme }
+		);
 	};
 
 	const apply = (props, themeScope, valueScope) => {
 		for (let [key, value] of Object.entries(props)) {
 			if (value != null && typeof value === 'object') {
 				Object.defineProperty(themeScope, key, {
-					value: apply(value, {}, [...valueScope, key])
+					value: apply(value, {}, [...valueScope, key]),
 				});
 			} else {
 				Object.defineProperty(themeScope, key, {
 					get: () => {
 						const defined = getValue(valueScope, key);
 
-						if (defined != null) { return defined; }
+						if (defined != null) {
+							return defined;
+						}
 
 						if (typeof value === 'function') {
 							return value(themeScope, theme.getRoot());
 						}
 
 						return value;
-					}
+					},
 				});
 			}
 		}

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .association-pill {
 	background: var(--primary-purple);
@@ -10,7 +10,7 @@
 	line-height: 1;
 
 	&:hover {
-		background: #7c3fd9;//Didn't make this a variable because it seems like a one off.
+		background: #7c3fd9; //Didn't make this a variable because it seems like a one off.
 	}
 
 	i {

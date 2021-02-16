@@ -9,10 +9,8 @@ import LimitedInline from './LimitedInline';
  * @param {Object} props children, and limit
  * @returns {ReactElement} a react component
  */
-export default function Inline (props) {
-	console.error('Inline has been moved to LimitedInline');//eslint-disable-line
+export default function Inline(props) {
+	console.error('Inline has been moved to LimitedInline'); //eslint-disable-line
 
-	return (
-		<LimitedInline {...props} />
-	);
+	return <LimitedInline {...props} />;
 }

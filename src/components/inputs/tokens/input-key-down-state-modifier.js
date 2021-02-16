@@ -1,19 +1,21 @@
-import {Events} from '@nti/lib-commons';
+import { Events } from '@nti/lib-commons';
 
 const DEFAULT = 'default';
-const stop = e => { e.preventDefault(); e.stopPropagation(); };
+const stop = e => {
+	e.preventDefault();
+	e.stopPropagation();
+};
 
-function isFocusAtStart (e) {
+function isFocusAtStart(e) {
 	return e.target.selectionStart === 0 && e.target.selectionEnd === 0;
 }
 
-function selectPreviousToken (e, state) {
+function selectPreviousToken(e, state) {
 	stop(e);
-	const {focused, tokens} = state;
-
+	const { focused, tokens } = state;
 
 	if (!focused) {
-		return {...state, focused: tokens[tokens.length - 1]};
+		return { ...state, focused: tokens[tokens.length - 1] };
 	}
 
 	let prev = null;
@@ -29,14 +31,13 @@ function selectPreviousToken (e, state) {
 
 	return {
 		...state,
-		focused: prev || tokens[0]
+		focused: prev || tokens[0],
 	};
 }
 
-function selectNextToken (e, state) {
+function selectNextToken(e, state) {
 	stop(e);
-	const {focused, tokens} = state;
-
+	const { focused, tokens } = state;
 
 	let next = null;
 
@@ -51,14 +52,16 @@ function selectNextToken (e, state) {
 
 	return {
 		...state,
-		focused: next || null
+		focused: next || null,
 	};
 }
 
-function deleteSelectedToken (e, state) {
-	const {focused, tokens} = state;
+function deleteSelectedToken(e, state) {
+	const { focused, tokens } = state;
 
-	if (!focused) { return state; }
+	if (!focused) {
+		return state;
+	}
 
 	stop(e);
 
@@ -78,29 +81,30 @@ function deleteSelectedToken (e, state) {
 	return {
 		...state,
 		focused: prevToken || newTokens[0],
-		tokens: newTokens
+		tokens: newTokens,
 	};
 }
 
 const HANDLERS = {
-	'nti-backspace': (e, state) => (
-		state.focused ?
-			deleteSelectedToken(e, state) :
-			isFocusAtStart(e) ? selectPreviousToken(e, state) : state
-	),
+	'nti-backspace': (e, state) =>
+		state.focused
+			? deleteSelectedToken(e, state)
+			: isFocusAtStart(e)
+			? selectPreviousToken(e, state)
+			: state,
 
-	'nti-arrowleft': (e, state) => (
-		state.focused || isFocusAtStart(e) ? selectPreviousToken(e, state) : state
-	),
+	'nti-arrowleft': (e, state) =>
+		state.focused || isFocusAtStart(e)
+			? selectPreviousToken(e, state)
+			: state,
 
-	'nti-arrowright': (e, state) => (
-		isFocusAtStart(e) && state.focused ? selectNextToken(e, state) : state
-	),
+	'nti-arrowright': (e, state) =>
+		isFocusAtStart(e) && state.focused ? selectNextToken(e, state) : state,
 
-	[DEFAULT]: (e, state) => ({...state, focused: null})
+	[DEFAULT]: (e, state) => ({ ...state, focused: null }),
 };
 
-export default function inputKeyDownStateModifier (e, state) {
+export default function inputKeyDownStateModifier(e, state) {
 	const keyCode = Events.getKeyCode(e);
 	const handler = HANDLERS[keyCode] || HANDLERS[DEFAULT];
 

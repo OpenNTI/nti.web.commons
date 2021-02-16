@@ -1,5 +1,5 @@
-@import "~@nti/style-common";
-@import "./common";
+@import '~@nti/style-common';
+@import './common';
 
 .nti-navigation-tabs-menu {
 	position: relative;
@@ -75,7 +75,8 @@
 
 			&.active {
 				background-color: var(--primary-blue);
-				box-shadow: inset 3px 0 0 0 rgba(var(--accent-color-overlay), 0.2);
+				box-shadow: inset 3px 0 0 0
+					rgba(var(--accent-color-overlay), 0.2);
 				color: white;
 				font-weight: 600;
 			}

@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {DataURIs} from '../constants';
+import { DataURIs } from '../constants';
 
-const {BLANK_IMAGE} = DataURIs;
+const { BLANK_IMAGE } = DataURIs;
 const isSquare = (w, h) => w === h && ![w, h].some(isNaN) && w > 0;
 
-function letterbox (ctx, image, type) {
+function letterbox(ctx, image, type) {
 	if (!type || type === 'none' || type === 'transparent') {
 		return;
 	}
 
-	const {width: size} = ctx;
+	const { width: size } = ctx;
 
 	if (type === 'src') {
-		const {naturalWidth: w, naturalHeight: h} = image;
+		const { naturalWidth: w, naturalHeight: h } = image;
 		const scale = Math.max(size / Math.min(w, h), 3);
 		const sw = w * scale;
 		const sh = h * scale;
@@ -34,8 +34,8 @@ function letterbox (ctx, image, type) {
 	ctx.restore();
 }
 
-export function getSquareSrc (image, letterboxType) {
-	const {src, naturalWidth: w, naturalHeight: h} = image || {};
+export function getSquareSrc(image, letterboxType) {
+	const { src, naturalWidth: w, naturalHeight: h } = image || {};
 
 	if (isSquare(w, h)) {
 		return src;
@@ -44,7 +44,11 @@ export function getSquareSrc (image, letterboxType) {
 	const DEFAULT_SIZE = 300;
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
-	const size = canvas.width = canvas.height = ctx.width = ctx.height = isNaN(w) ? DEFAULT_SIZE : Math.max(w, h);
+	const size = (canvas.width = canvas.height = ctx.width = ctx.height = isNaN(
+		w
+	)
+		? DEFAULT_SIZE
+		: Math.max(w, h));
 
 	letterbox(ctx, image, letterboxType);
 
@@ -56,10 +60,9 @@ export function getSquareSrc (image, letterboxType) {
 
 // Renders a square img from a given src, creating a dataURI via canvas if the given src isn't already a 1:1 aspect ratio.
 export default class Square extends React.Component {
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		const {src} = props;
+		const { src } = props;
 		this.image.src = src;
 	}
 
@@ -73,9 +76,9 @@ export default class Square extends React.Component {
 
 	state = {};
 
-	get image () {
+	get image() {
 		if (!this._img) {
-			const img = this._img = new Image();
+			const img = (this._img = new Image());
 			img.crossOrigin = 'anonymous';
 			img.addEventListener('load', this.onLoad);
 			img.addEventListener('error', this.props.onError);
@@ -83,39 +86,41 @@ export default class Square extends React.Component {
 		return this._img;
 	}
 
-	componentDidUpdate = ({src: prevSrc}) => {
-		const {src} = this.props;
+	componentDidUpdate = ({ src: prevSrc }) => {
+		const { src } = this.props;
 
 		if (src !== this.props.src) {
 			this.image.src = src;
 		}
-	}
+	};
 
-	componentWillUnmount = () => this.unmounted = true
+	componentWillUnmount = () => (this.unmounted = true);
 
 	onLoad = e => {
-		const {target} = e || {};
-		const {props: {onLoad}, unmounted} = this;
+		const { target } = e || {};
+		const {
+			props: { onLoad },
+			unmounted,
+		} = this;
 
 		if (unmounted) {
 			return;
 		}
 
 		this.setState({
-			src: getSquareSrc(target, this.props.letterbox)
+			src: getSquareSrc(target, this.props.letterbox),
 		});
 
 		if (typeof onLoad === 'function') {
 			onLoad(e);
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		const {
-			props: {svg, onLoad, onError, letterbox: shape, ...props},
-			state: {src = BLANK_IMAGE},
-			image: {naturalWidth: size = 32} = {},
+			props: { svg, onLoad, onError, letterbox: shape, ...props },
+			state: { src = BLANK_IMAGE },
+			image: { naturalWidth: size = 32 } = {},
 		} = this;
 
 		return svg ? (

@@ -9,11 +9,12 @@ describe('TokenEditor', () => {
 
 	const testRender = (props, ...children) => [
 		render(React.createElement(TokenEditor, props, ...children)),
-		(shared.rerender(React.createElement(TokenEditor, props, ...children)),shared)
+		(shared.rerender(React.createElement(TokenEditor, props, ...children)),
+		shared),
 	];
 
 	test('Base Case', async () => {
-		testRender({value: ['test']});
+		testRender({ value: ['test'] });
 	});
 
 	//TODO: Validate DOM structure.

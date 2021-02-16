@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const SVG = styled('svg')`
-		display: inline-block;
+	display: inline-block;
 `;
 
 SVGIcon.propTypes = {
@@ -11,7 +11,12 @@ SVGIcon.propTypes = {
 	viewBox: PropTypes.string,
 	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
-export default function SVGIcon ({className, viewBox = '0 0 16 16', width = '1em', ...otherProps}) {
+export default function SVGIcon({
+	className,
+	viewBox = '0 0 16 16',
+	width = '1em',
+	...otherProps
+}) {
 	return (
 		<SVG
 			className={cx('svg-icon', className)}

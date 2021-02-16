@@ -1,10 +1,10 @@
 import './PanelButton.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const DEFAULTS = {
-	ok: 'OK'
+	ok: 'OK',
 };
 
 const t = scoped('web-commons.components.panelbutton', DEFAULTS);
@@ -21,30 +21,40 @@ export default class extends React.Component {
 		onClick: PropTypes.func, // click handler for the button
 		button: PropTypes.element, // pass in your own button if you need special behavior or treatment
 
-		children: PropTypes.any
+		children: PropTypes.any,
 	};
 
 	static defaultProps = {
 		linkText: t('ok'),
-		href: '#'
+		href: '#',
 	};
 
-	render () {
-		const {children, button, href, onClick, linkText, ...rest} = this.props;
+	render() {
+		const {
+			children,
+			button,
+			href,
+			onClick,
+			linkText,
+			...rest
+		} = this.props;
 
-		function renderButton () {
-
+		function renderButton() {
 			if (!button && (!href || href === '#') && !onClick) {
 				return null;
 			}
 
-			return button || (
-				<a {...{
-					href,
-					onClick: onClick,
-					className: 'button tiny column',
-					children: linkText
-				}}/>
+			return (
+				button || (
+					<a
+						{...{
+							href,
+							onClick: onClick,
+							className: 'button tiny column',
+							children: linkText,
+						}}
+					/>
+				)
 			);
 		}
 

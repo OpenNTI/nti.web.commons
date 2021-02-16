@@ -4,20 +4,17 @@ import LabelPlaceholder from '../LabelPlaceholder';
 
 export default {
 	title: 'Components/inputs/LabelPlaceholder',
-	component: LabelPlaceholder
+	component: LabelPlaceholder,
 };
 
 export const Label = () => (
 	<>
-
 		<LabelPlaceholder label="test">
-			<input/>
+			<input />
 		</LabelPlaceholder>
 
 		<LabelPlaceholder label="test" variant="underlined">
-			<input/>
+			<input />
 		</LabelPlaceholder>
-
 	</>
 );
-

@@ -2,7 +2,7 @@ import './DayTimePicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DayPicker, {DateUtils} from './DayPicker';
+import DayPicker, { DateUtils } from './DayPicker';
 import TimePicker from './TimePicker';
 
 export default class DayTimePicker extends React.Component {
@@ -11,32 +11,39 @@ export default class DayTimePicker extends React.Component {
 		onChange: PropTypes.func,
 		disabledDays: PropTypes.func,
 		disablePastNow: PropTypes.bool,
-		retainTime: PropTypes.bool	// when selecting a new day, specify whether to keep the old day's time on the newly selected date
-	}
+		retainTime: PropTypes.bool, // when selecting a new day, specify whether to keep the old day's time on the newly selected date
+	};
 
 	static defaultProps = {
 		disabledDays: DateUtils.isPastDay,
-		disablePastNow: false
-	}
+		disablePastNow: false,
+	};
 
-	onDateValueChange = (date) => {
+	onDateValueChange = date => {
 		const { value, retainTime } = this.props;
 
 		let newDate = date;
 
-		if(retainTime && value && value.getHours && value.getMinutes) {
-			newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), value.getHours(), value.getMinutes(), 0);
+		if (retainTime && value && value.getHours && value.getMinutes) {
+			newDate = new Date(
+				date.getFullYear(),
+				date.getMonth(),
+				date.getDate(),
+				value.getHours(),
+				value.getMinutes(),
+				0
+			);
 		}
 
 		this.onDateChange(newDate, false);
-	}
+	};
 
-	onTimeChange = (date) => {
+	onTimeChange = date => {
 		this.onDateChange(date, true);
-	}
+	};
 
-	onDateChange (date, timeChanged) {
-		const {onChange, disablePastNow} = this.props;
+	onDateChange(date, timeChanged) {
+		const { onChange, disablePastNow } = this.props;
 
 		if (DateUtils.isPastDay(date) && disablePastNow) {
 			let today = new Date();
@@ -44,14 +51,13 @@ export default class DayTimePicker extends React.Component {
 			date = today;
 		}
 
-		if(onChange) {
+		if (onChange) {
 			onChange(date, timeChanged);
 		}
 	}
 
-
-	render () {
-		const {value, disabledDays} = this.props;
+	render() {
+		const { value, disabledDays } = this.props;
 
 		return (
 			<div className="daytime-picker">
@@ -61,10 +67,7 @@ export default class DayTimePicker extends React.Component {
 					onChange={this.onDateValueChange}
 				/>
 				<div className="TimePicker-Header-Text">YOUR LOCAL TIME</div>
-				<TimePicker
-					value={value}
-					onChange={this.onTimeChange}
-				/>
+				<TimePicker value={value} onChange={this.onTimeChange} />
 			</div>
 		);
 	}

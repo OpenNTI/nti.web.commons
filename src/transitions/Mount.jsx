@@ -5,18 +5,28 @@ import Renders from './Renders';
 
 const DefaultTimeouts = {
 	enter: 250,
-	exit: 250
+	exit: 250,
 };
 
 ShowTransition.propTypes = {
 	children: PropTypes.any,
 	mount: PropTypes.bool,
-	timeout: PropTypes.any
+	timeout: PropTypes.any,
 };
-export default function ShowTransition ({children, mount, timeout = DefaultTimeouts, ...otherProps}) {
-	const renders = {entered: children, exiting: children};
+export default function ShowTransition({
+	children,
+	mount,
+	timeout = DefaultTimeouts,
+	...otherProps
+}) {
+	const renders = { entered: children, exiting: children };
 
 	return (
-		<Renders in={mount} renders={renders} timeout={timeout} {...otherProps} />
+		<Renders
+			in={mount}
+			renders={renders}
+			timeout={timeout}
+			{...otherProps}
+		/>
 	);
 }

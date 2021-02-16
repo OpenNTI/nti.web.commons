@@ -1,4 +1,4 @@
-import {isScreenWidthInRange} from './utils';
+import { isScreenWidthInRange } from './utils';
 
 //The ranges are taken from $responsive-ranges in @nti/style-common/responsive.scss
 export const isMobile = () => isScreenWidthInRange(0, 480);
@@ -8,14 +8,16 @@ export const isDesktop = () => isScreenWidthInRange(1025, Infinity);
 export const oneOf = (...args) => {
 	return (...queryArgs) => {
 		for (let fn of args) {
-			if (fn(...queryArgs)) { return true; }
+			if (fn(...queryArgs)) {
+				return true;
+			}
 		}
 
 		return false;
 	};
 };
 
-export const not = (query) => {
+export const not = query => {
 	return (...queryArgs) => {
 		return !query(...queryArgs);
 	};
@@ -25,7 +27,7 @@ let CONTEXT_FLAG = null;
 const WEBAPP_CONTEXT = 'webapp';
 const MOBILE_CONTEXT = 'mobile';
 
-function setContext (context) {
+function setContext(context) {
 	if (CONTEXT_FLAG !== null) {
 		throw new Error('Cannot override context once its been set');
 	}

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .modal-content {
 	max-height: 100vh;
@@ -104,7 +104,8 @@
 	}
 }
 
-.is-safari { // safari sucks
+.is-safari {
+	// safari sucks
 	.modal-mask {
 		transition: none !important;
 	}

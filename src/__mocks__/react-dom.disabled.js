@@ -4,7 +4,7 @@
 const React = require('react');
 const reactDom = jest.genMockFromModule('react-dom');
 
-function mockCreatePortal (element, target) {
+function mockCreatePortal(element, target) {
 	return (
 		<div data-type="portal" data-target-tag-name={target.tagName}>
 			{element}
@@ -13,5 +13,5 @@ function mockCreatePortal (element, target) {
 }
 
 module.exports = Object.assign(reactDom, {
-	createPortal: mockCreatePortal
+	createPortal: mockCreatePortal,
 });

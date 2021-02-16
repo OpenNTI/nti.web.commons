@@ -11,7 +11,7 @@ import { DialogButtons, Panels } from '../../components';
 const DEFAULT_TEXT = {
 	cancel: 'Cancel',
 	save: 'Save',
-	title: 'Title'
+	title: 'Title',
 };
 
 const t = scoped('common.prompts.layouts.SaveCancel', DEFAULT_TEXT);
@@ -24,39 +24,53 @@ class SaveCancel extends React.Component {
 		disableSave: PropTypes.bool,
 		getString: PropTypes.func,
 		nonDialog: PropTypes.bool,
-		className: PropTypes.string
-	}
+		className: PropTypes.string,
+	};
 
 	getStringFn = () => {
 		const { getString } = this.props;
 
 		return getString ? t.override(getString) : t;
-	}
+	};
 
 	renderTitle = () => {
 		const getString = this.getStringFn();
 		const { onCancel } = this.props;
-		return <Panels.TitleBar title={getString('title')} iconAction={onCancel} />;
-	}
+		return (
+			<Panels.TitleBar title={getString('title')} iconAction={onCancel} />
+		);
+	};
 
 	renderActionHeader = () => {
 		const getString = this.getStringFn();
 		const { onCancel, onSave } = this.props;
 
-		return <Panels.ActionHeader title={getString('title')} onCancel={onCancel} onSave={onSave} cancel={getString('cancel')} save={getString('save')} />;
-	}
+		return (
+			<Panels.ActionHeader
+				title={getString('title')}
+				onCancel={onCancel}
+				onSave={onSave}
+				cancel={getString('cancel')}
+				save={getString('save')}
+			/>
+		);
+	};
 
 	renderDialogButtons = () => {
 		const { onCancel, onSave, disableSave } = this.props;
 		const getString = this.getStringFn();
 		const buttons = [
 			{ label: getString('cancel'), onClick: onCancel },
-			{ label: getString('save'), onClick: onSave, disabled: disableSave }
+			{
+				label: getString('save'),
+				onClick: onSave,
+				disabled: disableSave,
+			},
 		];
 		return <DialogButtons buttons={buttons} />;
-	}
+	};
 
-	renderContents () {
+	renderContents() {
 		const { className } = this.props;
 
 		return (
@@ -70,9 +84,7 @@ class SaveCancel extends React.Component {
 					query={Responsive.isMobile}
 				/>
 
-				<div className="save-cancel-content">
-					{this.props.children}
-				</div>
+				<div className="save-cancel-content">{this.props.children}</div>
 
 				<Responsive.Item
 					render={this.renderDialogButtons}
@@ -82,23 +94,18 @@ class SaveCancel extends React.Component {
 		);
 	}
 
-	render () {
+	render() {
 		const { nonDialog, className } = this.props;
-		const cls = cx('save-cancel-dialog', className && className + '-dialog');
+		const cls = cx(
+			'save-cancel-dialog',
+			className && className + '-dialog'
+		);
 
-		if(nonDialog) {
-			return (
-				<div className={cls}>
-					{this.renderContents()}
-				</div>
-			);
+		if (nonDialog) {
+			return <div className={cls}>{this.renderContents()}</div>;
 		}
 
-		return (
-			<Dialog className={cls}>
-				{this.renderContents()}
-			</Dialog>
-		);
+		return <Dialog className={cls}>{this.renderContents()}</Dialog>;
 	}
 }
 

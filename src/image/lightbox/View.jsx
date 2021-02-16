@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {Triggered} from '../../prompts';
+import { Triggered } from '../../prompts';
 
 import Single from './Single';
 import Multiple from './Multiple';
@@ -19,16 +19,17 @@ const styles = css`
 
 ImageLightBox.propTypes = {
 	trigger: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function ImageLightBox ({trigger, children, ...otherProps}) {
+export default function ImageLightBox({ trigger, children, ...otherProps }) {
 	const Cmp = React.Children.count(children) > 1 ? Multiple : Single;
 
 	return (
-		<Triggered trigger={trigger} className={cx(styles.lightBoxDialog, 'nti-lightbox-dialog')}>
-			<Cmp {...otherProps}>
-				{children}
-			</Cmp>
+		<Triggered
+			trigger={trigger}
+			className={cx(styles.lightBoxDialog, 'nti-lightbox-dialog')}
+		>
+			<Cmp {...otherProps}>{children}</Cmp>
 		</Triggered>
 	);
 }

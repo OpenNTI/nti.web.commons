@@ -7,7 +7,7 @@ import ModalManager from '../ModalManager';
 jest.unmock('react-dom');
 
 describe('ModalManager', () => {
-	test ('Non-Portal modal', () => {
+	test('Non-Portal modal', () => {
 		jest.useFakeTimers();
 
 		const reference = ModalManager.show(
@@ -17,9 +17,13 @@ describe('ModalManager', () => {
 		expect(reference.component).toBeInstanceOf(Modal);
 		expect(reference.isPortal).toBe(false);
 		expect(reference.refocus).toBe(document.body);
-		expect(reference.mountPoint).toBe(document.querySelector('body > .modal'));
+		expect(reference.mountPoint).toBe(
+			document.querySelector('body > .modal')
+		);
 
-		expect(document.querySelector('body > .modal div.my-modal-content')).not.toBe(null);
+		expect(
+			document.querySelector('body > .modal div.my-modal-content')
+		).not.toBe(null);
 
 		reference.dismiss();
 

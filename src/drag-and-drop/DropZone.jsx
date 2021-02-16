@@ -5,29 +5,33 @@ import { restProps, FileAPI } from '@nti/lib-commons';
 
 const FILE_REGEX = /file/i;
 
-function acceptAnyFiles (e) {
-	const {files, items, types} = e.dataTransfer;
+function acceptAnyFiles(e) {
+	const { files, items, types } = e.dataTransfer;
 
-	return (files && files.length > 0) ||
+	return (
+		(files && files.length > 0) ||
 		Array.from(items || {}).some(item => FILE_REGEX.test(item.kind)) ||
-		Array.from(types || {}).some(type => FILE_REGEX.test(type));
+		Array.from(types || {}).some(type => FILE_REGEX.test(type))
+	);
 }
 
-function acceptFilesOfType (types) {
+function acceptFilesOfType(types) {
 	if (!Array.isArray(types)) {
 		types = [types];
 	}
 
 	const typeSet = new Set(types);
 
-	return (e) => {
-		const {items} = e.dataTransfer;
+	return e => {
+		const { items } = e.dataTransfer;
 
 		//Some browsers aren't giving us access to the files
 		//in all the events. So if we don't have any items, cross
 		//our fingers that something else down the line is going to
 		//error.
-		if (!items.length) { return true; }
+		if (!items.length) {
+			return true;
+		}
 
 		for (let item of items) {
 			if (FILE_REGEX.test(item.kind) && typeSet.has(item.type)) {
@@ -40,8 +44,8 @@ function acceptFilesOfType (types) {
 }
 
 export default class DropZone extends React.Component {
-	static acceptAnyFiles = acceptAnyFiles
-	static acceptFilesOfType = acceptFilesOfType
+	static acceptAnyFiles = acceptAnyFiles;
+	static acceptFilesOfType = acceptFilesOfType;
 
 	static propTypes = {
 		children: PropTypes.any,
@@ -62,36 +66,35 @@ export default class DropZone extends React.Component {
 		onDragEnter: PropTypes.func,
 		onDragLeave: PropTypes.func,
 		onDragOver: PropTypes.func,
-	}
+	};
 
-	attachDropZone = node => this.dropZone = node
+	attachDropZone = node => (this.dropZone = node);
 
-	state = {}
+	state = {};
 
-	dragEnterLock = 0
+	dragEnterLock = 0;
 
-	get hasDropListener () {
-		const {onDrop, onFileDrop} = this.props;
+	get hasDropListener() {
+		const { onDrop, onFileDrop } = this.props;
 
 		return onDrop || onFileDrop;
 	}
 
-	isValidEvent (e) {
-		const {accepts} = this.props;
+	isValidEvent(e) {
+		const { accepts } = this.props;
 
 		return !accepts || accepts(e);
 	}
 
-
-	getClassName () {
+	getClassName() {
 		const {
 			className,
 			dragOverClassName,
 			validDragOverClassName,
 			invalidDragOverClassName,
-			invalidDropClassName
+			invalidDropClassName,
 		} = this.props;
-		const {dragOver, dropped, isValid} = this.state;
+		const { dragOver, dropped, isValid } = this.state;
 
 		let stateClasses = {};
 
@@ -114,19 +117,19 @@ export default class DropZone extends React.Component {
 		return cx(className, 'nti-drop-zone', stateClasses);
 	}
 
-	onDrop = (e) => {
+	onDrop = e => {
 		e.stopPropagation();
 		e.preventDefault();
 
 		this.onDragLeave(e);
 
 		const isValid = this.isValidEvent(e);
-		const {onDrop, onFileDrop, invalidDropClassName} = this.props;
+		const { onDrop, onFileDrop, invalidDropClassName } = this.props;
 
 		if (invalidDropClassName && !isValid) {
 			this.setState({
 				dropped: true,
-				isValid: false
+				isValid: false,
 			});
 			return;
 		}
@@ -136,7 +139,7 @@ export default class DropZone extends React.Component {
 		}
 
 		if (onFileDrop) {
-			const {files: transferFiles, items} = e.dataTransfer;
+			const { files: transferFiles, items } = e.dataTransfer;
 			let files = transferFiles;
 
 			if (items) {
@@ -145,63 +148,63 @@ export default class DropZone extends React.Component {
 
 			onFileDrop(e, files, isValid);
 		}
-	}
+	};
 
-	onDragEnter = (e) => {
+	onDragEnter = e => {
 		e.stopPropagation();
 
 		this.dragEnterLock += 1;
 
-		const {onDragEnter} = this.props;
+		const { onDragEnter } = this.props;
 		const isValid = this.isValidEvent(e);
 
 		this.setState({
 			dropped: false,
 			dragOver: true,
-			isValid
+			isValid,
 		});
 
 		if (this.dragEnterLock === 1 && onDragEnter) {
 			onDragEnter(e, isValid);
 		}
+	};
 
-	}
-
-	onDragLeave = (e) => {
+	onDragLeave = e => {
 		e.stopPropagation();
 
-		this.dragEnterLock = Math.max(0, this.dragEnterLock - 1);//don't let it dip below 0
+		this.dragEnterLock = Math.max(0, this.dragEnterLock - 1); //don't let it dip below 0
 
-		const {onDragLeave} = this.props;
+		const { onDragLeave } = this.props;
 
-		if (this.dragEnterLock > 0) { return; }
+		if (this.dragEnterLock > 0) {
+			return;
+		}
 
 		this.setState({
 			dragOver: false,
-			isValid: null
+			isValid: null,
 		});
 
 		if (onDragLeave) {
 			onDragLeave(e);
 		}
-	}
+	};
 
-	onDragOver = (e) => {
+	onDragOver = e => {
 		//These are necessary to get the drop events
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {onDragOver} = this.props;
+		const { onDragOver } = this.props;
 		const isValid = this.isValidEvent(e);
 
 		if (onDragOver) {
 			onDragOver(e, isValid);
 		}
-	}
+	};
 
-
-	render () {
-		const {tag:Tag = 'div', children} = this.props;
+	render() {
+		const { tag: Tag = 'div', children } = this.props;
 		const extraProps = restProps(DropZone, this.props);
 
 		return (

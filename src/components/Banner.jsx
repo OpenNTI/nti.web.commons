@@ -4,8 +4,8 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {ItemChanges} from '../mixins';
-import {Asset} from '../presentation-assets';
+import { ItemChanges } from '../mixins';
+import { Asset } from '../presentation-assets';
 
 export default createReactClass({
 	displayName: 'Content:Banner',
@@ -21,14 +21,14 @@ export default createReactClass({
 		 */
 		item: PropTypes.shape({
 			CatalogEntry: PropTypes.any,
-			getPresentationProperties: PropTypes.func
+			getPresentationProperties: PropTypes.func,
 		}).isRequired,
 
-		preferBackground: PropTypes.bool
+		preferBackground: PropTypes.bool,
 	},
 
-	render () {
-		const {children, className, item, preferBackground} = this.props;
+	render() {
+		const { children, className, item, preferBackground } = this.props;
 		if (!item) {
 			return null;
 		}
@@ -36,8 +36,11 @@ export default createReactClass({
 
 		return (
 			<div className={cx('content-banner', className)}>
-				<Asset contentPackage={(item && item.CatalogEntry) || item} type={preferBackground ? 'background' : 'landing'}>
-					<img/>
+				<Asset
+					contentPackage={(item && item.CatalogEntry) || item}
+					type={preferBackground ? 'background' : 'landing'}
+				>
+					<img />
 				</Asset>
 				<label>
 					<h3>{p.title}</h3>
@@ -46,5 +49,5 @@ export default createReactClass({
 				{children}
 			</div>
 		);
-	}
+	},
 });

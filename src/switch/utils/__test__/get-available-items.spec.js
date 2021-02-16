@@ -1,10 +1,10 @@
 /* eslint-env jest */
 import getAvailableItems from '../get-available-items';
-import {NEXT, PREVIOUS} from '../../Constants';
+import { NEXT, PREVIOUS } from '../../Constants';
 
-function makeItem (name) {
+function makeItem(name) {
 	return {
-		props: {name}
+		props: { name },
 	};
 }
 
@@ -24,11 +24,11 @@ describe('get-available-items', () => {
 
 		const keys = Object.keys(available);
 
-		expect(keys.length).toEqual(names.length + 2);//Next and Previous should've been added
+		expect(keys.length).toEqual(names.length + 2); //Next and Previous should've been added
 	});
 
 	describe('Next', () => {
-		test ('Is available when active is not the last', () => {
+		test('Is available when active is not the last', () => {
 			const names = ['a', 'b', 'c', 'd'];
 			const available = getAvailableItems(names.map(makeItem), 'a');
 
@@ -44,7 +44,7 @@ describe('get-available-items', () => {
 	});
 
 	describe('Previous', () => {
-		test ('Is available when active is not the first', () => {
+		test('Is available when active is not the first', () => {
 			const names = ['a', 'b', 'c', 'd'];
 			const available = getAvailableItems(names.map(makeItem), 'd');
 

@@ -1,8 +1,8 @@
-import {createDOM} from '@nti/lib-dom';
+import { createDOM } from '@nti/lib-dom';
 
-import {getMirrorStyles} from './utils';
+import { getMirrorStyles } from './utils';
 
-const getBody = () => typeof document !== 'undefined' ? document.body : null;
+const getBody = () => (typeof document !== 'undefined' ? document.body : null);
 
 const containerConfig = {
 	style: {
@@ -14,56 +14,63 @@ const containerConfig = {
 		border: 'none',
 		overflow: 'hidden',
 		padding: '0',
-		visibility: 'hidden'
-	}
+		visibility: 'hidden',
+	},
 };
 
 export default class ScratchPad {
-	static mirrorStyles (node, styles) {
-		return new ScratchPad({style: getMirrorStyles(node, styles)});
+	static mirrorStyles(node, styles) {
+		return new ScratchPad({ style: getMirrorStyles(node, styles) });
 	}
 
-	static withStyles (style) {
-		return new ScratchPad({style});
+	static withStyles(style) {
+		return new ScratchPad({ style });
 	}
 
-	static work (...args) {
+	static work(...args) {
 		const pad = new ScratchPad();
 
 		return pad.work(...args);
 	}
 
-	#scratchPad = null
-	#config = null
-	#container = null
-	#node = null
+	#scratchPad = null;
+	#config = null;
+	#container = null;
+	#node = null;
 
-	constructor (config = {}) {
+	constructor(config = {}) {
 		this.#config = config;
 	}
 
 	#createNode = () => {
-		if (this.#node) { return this.#node; }
+		if (this.#node) {
+			return this.#node;
+		}
 
 		const body = getBody();
 
-		if (!body) { throw new Error('Cannot use scratch bad without a body'); }
+		if (!body) {
+			throw new Error('Cannot use scratch bad without a body');
+		}
 
 		this.#container = createDOM(containerConfig, body);
 		this.#node = createDOM(this.#config, this.#container);
 
 		return this.#node;
-	}
+	};
 
 	#removeNode = () => {
 		const body = getBody();
 
-		if (!body) { return; }
-		if (this.#container) { body.removeChild(this.#container); }
-	}
+		if (!body) {
+			return;
+		}
+		if (this.#container) {
+			body.removeChild(this.#container);
+		}
+	};
 
-
-	async work (fn) {
+	async work(fn) {
 		const node = this.#createNode();
 
 		try {

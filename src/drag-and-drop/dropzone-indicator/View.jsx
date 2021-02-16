@@ -12,7 +12,7 @@ const cx = classnames.bind(Styles);
 const messagePropType = PropTypes.oneOfType([
 	PropTypes.string,
 	PropTypes.node,
-	PropTypes.func
+	PropTypes.func,
 ]);
 
 export default class DropZoneIndicator extends React.Component {
@@ -26,26 +26,33 @@ export default class DropZoneIndicator extends React.Component {
 		dragOverClassName: PropTypes.string,
 		validDragOverClassName: PropTypes.string,
 		invalidDragOverClassName: PropTypes.string,
-	}
+	};
 
-
-	render () {
+	render() {
 		const {
 			className,
 			children,
 			dragOverClassName,
 			validDragOverClassName,
-			invalidDragOverClassName
+			invalidDragOverClassName,
 		} = this.props;
 		const otherProps = restProps(DropZoneIndicator, this.props);
 
 		return (
 			<DropZone
 				className={cx('nti-dropzone-indicator', className)}
-				dragOverClassName={cx('nti-dropzone-indicator-drag-over', dragOverClassName)}
-				validDragOverClassName={cx('nti-dropzone-indicator-valid-drag-over', validDragOverClassName)}
-				invalidDragOverClassName={cx('nti-dropzone-indicator-invalid-drag-over', invalidDragOverClassName)}
-
+				dragOverClassName={cx(
+					'nti-dropzone-indicator-drag-over',
+					dragOverClassName
+				)}
+				validDragOverClassName={cx(
+					'nti-dropzone-indicator-valid-drag-over',
+					validDragOverClassName
+				)}
+				invalidDragOverClassName={cx(
+					'nti-dropzone-indicator-invalid-drag-over',
+					invalidDragOverClassName
+				)}
 				{...otherProps}
 			>
 				{children}

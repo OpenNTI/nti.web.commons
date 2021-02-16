@@ -3,7 +3,7 @@ import getItemName from '../get-item-name';
 
 describe('get-item-name', () => {
 	test('gets name', () => {
-		expect(getItemName({props: {name: 'name'}})).toEqual('name');
+		expect(getItemName({ props: { name: 'name' } })).toEqual('name');
 	});
 
 	test('falsy if no props', () => {

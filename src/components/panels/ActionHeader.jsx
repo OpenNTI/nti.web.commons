@@ -8,16 +8,20 @@ class ActionHeader extends React.Component {
 		save: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
 		onCancel: PropTypes.func.isRequired,
-		onSave: PropTypes.func.isRequired
-	}
+		onSave: PropTypes.func.isRequired,
+	};
 
-	render () {
+	render() {
 		const { cancel, title, save, onCancel, onSave } = this.props;
 		return (
 			<div className="action-header">
-				<div className="action-cancel" onClick={onCancel}>{cancel}</div>
+				<div className="action-cancel" onClick={onCancel}>
+					{cancel}
+				</div>
 				<div className="action-title">{title}</div>
-				<div className="action-save" onClick={onSave}>{save}</div>
+				<div className="action-save" onClick={onSave}>
+					{save}
+				</div>
 			</div>
 		);
 	}

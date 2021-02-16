@@ -12,16 +12,20 @@ ToastMessage.propTypes = {
 	className: PropTypes.string,
 	title: PropTypes.string,
 	message: PropTypes.string,
-	onDismiss: PropTypes.func
+	onDismiss: PropTypes.func,
 };
-export default function ToastMessage ({className, title, message, onDismiss}) {
+export default function ToastMessage({ className, title, message, onDismiss }) {
 	return (
 		<div className={cx('toast-message-bar', className)} onClick={onDismiss}>
 			<div className={cx('message-container')}>
-				{title && (<Text.Base className={cx('title')}>{title}</Text.Base>)}
-				{message && (<Text.Base className={cx('message')}>{message}</Text.Base>)}
+				{title && (
+					<Text.Base className={cx('title')}>{title}</Text.Base>
+				)}
+				{message && (
+					<Text.Base className={cx('message')}>{message}</Text.Base>
+				)}
 			</div>
-			{onDismiss && (<i className={cx('icon-bold-x', 'close-icon')} />)}
+			{onDismiss && <i className={cx('icon-bold-x', 'close-icon')} />}
 		</div>
 	);
 }

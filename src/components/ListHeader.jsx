@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 ListHeader.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
 
-export default function ListHeader ({className, ...props}) {
+export default function ListHeader({ className, ...props }) {
 	return (
-		<div className={cx('list-header-component', className)} {...props}/>
+		<div className={cx('list-header-component', className)} {...props} />
 	);
 }

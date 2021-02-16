@@ -3,9 +3,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
-import {areYouSure} from '../prompts/';
+import { areYouSure } from '../prompts/';
 import ItemChanges from '../mixins/ItemChanges';
 
 const DEFAULT_TEXT = {
@@ -24,39 +24,39 @@ export default createReactClass({
 		label: PropTypes.bool,
 		item: PropTypes.object.isRequired,
 
-		className: PropTypes.string
+		className: PropTypes.string,
 	},
 
-
-	getDefaultProps () {
+	getDefaultProps() {
 		return {
-			label: true
+			label: true,
 		};
 	},
 
-
-	onClick (e) {
+	onClick(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
 		areYouSure('Report this as inappropriate?').then(
-			()=> {
+			() => {
 				this.props.item.flag();
 			},
-			()=> {}
+			() => {}
 		);
 	},
 
-	render () {
-		const {className, icon, item, label} = this.props;
+	render() {
+		const { className, icon, item, label } = this.props;
 		const isReported = item.hasLink('flag.metoo');
 
 		return (
-			<a className={cx(className, { flagged: isReported })} onClick={this.onClick}>
-				{icon && ( <i className="icon-flag"/> )}
+			<a
+				className={cx(className, { flagged: isReported })}
+				onClick={this.onClick}
+			>
+				{icon && <i className="icon-flag" />}
 				{label && t(isReported ? 'flagged' : 'flag')}
 			</a>
 		);
-	}
-
+	},
 });

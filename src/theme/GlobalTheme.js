@@ -10,7 +10,7 @@ export const getGlobalTheme = () => {
 	return globalTheme;
 };
 
-export const setGlobalThemeOverrides = (overrides) => {
+export const setGlobalThemeOverrides = overrides => {
 	const theme = getGlobalTheme();
 
 	theme.setOverrides(overrides, true);
@@ -18,8 +18,8 @@ export const setGlobalThemeOverrides = (overrides) => {
 
 //This should probably live in the apps, but we need it in both web and mobile.
 //This is just a convenient place to stick it for now
-export const siteBrandToTheme = (siteBrand) => {
-	const {assets} = siteBrand || {};
+export const siteBrandToTheme = siteBrand => {
+	const { assets } = siteBrand || {};
 
 	return {
 		...((siteBrand || {}).theme || {}),
@@ -29,6 +29,6 @@ export const siteBrandToTheme = (siteBrand) => {
 		certificateBrandColor: siteBrand['certificate_brand_color'],
 		suppressCertificateLogo: siteBrand['suppress_certificate_logo'],
 		HideNextThoughtBranding: siteBrand.HideNextThoughtBranding,
-		assets: assets ? {...assets, fullLogo: assets['full_logo']} : null
+		assets: assets ? { ...assets, fullLogo: assets['full_logo'] } : null,
 	};
 };

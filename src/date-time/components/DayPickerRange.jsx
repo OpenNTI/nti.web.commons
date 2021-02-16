@@ -6,7 +6,7 @@ import { DateUtils } from 'react-day-picker';
 import Date from './Date';
 import DayPicker from './DayPicker';
 
-export {DateUtils};
+export { DateUtils };
 
 export default class DayPickerRange extends React.Component {
 	static propTypes = {
@@ -16,37 +16,33 @@ export default class DayPickerRange extends React.Component {
 		startDate: PropTypes.object,
 		endDate: PropTypes.object,
 		updateStartDate: PropTypes.func,
-		updateEndDate: PropTypes.func
-	}
-
+		updateEndDate: PropTypes.func,
+	};
 
 	static defaultProps = {
-		value: null
-	}
+		value: null,
+	};
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		const {value} = props;
+		const { value } = props;
 
 		this.state = {
 			value,
-			selectedType: 'Start'
+			selectedType: 'Start',
 		};
 	}
 
-
-	componentDidUpdate ({value: oldValue}) {
-		const {value} = this.props;
+	componentDidUpdate({ value: oldValue }) {
+		const { value } = this.props;
 		if (oldValue !== value) {
 			this.setState({
-				value
+				value,
 			});
 		}
 	}
 
-
-	getValue (props = this.props) {
+	getValue(props = this.props) {
 		return props.value || this.state.value;
 	}
 
@@ -59,71 +55,82 @@ export default class DayPickerRange extends React.Component {
 	 * @param  {event} e - Click event.
 	 * @returns {void}
 	 */
-	handleDayClick = (value) => {
+	handleDayClick = value => {
 		const { selectedType } = this.state;
-		const { updateStartDate, updateEndDate, startDate, endDate } = this.props;
+		const {
+			updateStartDate,
+			updateEndDate,
+			startDate,
+			endDate,
+		} = this.props;
 
-		if(selectedType === 'Start' && endDate && DateUtils.isDayAfter(value, endDate)) {
+		if (
+			selectedType === 'Start' &&
+			endDate &&
+			DateUtils.isDayAfter(value, endDate)
+		) {
 			return;
 		}
 
-		if(selectedType === 'End' && startDate && DateUtils.isDayBefore(value, startDate)) {
+		if (
+			selectedType === 'End' &&
+			startDate &&
+			DateUtils.isDayBefore(value, startDate)
+		) {
 			return;
 		}
 
-		if(selectedType === 'Start' && updateStartDate) {
+		if (selectedType === 'Start' && updateStartDate) {
 			updateStartDate(value);
-		}
-		else if(selectedType === 'End' && updateEndDate) {
+		} else if (selectedType === 'End' && updateEndDate) {
 			updateEndDate(value);
 		}
-	}
+	};
 
-	onDateRemove = (type) => {
+	onDateRemove = type => {
 		const { updateStartDate, updateEndDate } = this.props;
 
-		if(type === 'Start') {
+		if (type === 'Start') {
 			updateStartDate && updateStartDate();
-		}
-		else {
+		} else {
 			updateEndDate && updateEndDate();
 		}
-	}
+	};
 
-	onDateSelect = (type) => {
-		this.setState({selectedType: type});
-	}
+	onDateSelect = type => {
+		this.setState({ selectedType: type });
+	};
 
-	getDateValue () {
-		if(this.state.selectedType === 'Start') {
+	getDateValue() {
+		if (this.state.selectedType === 'Start') {
 			return this.props.startDate;
-		}
-		else {
+		} else {
 			return this.props.endDate;
 		}
 	}
 
-	render () {
+	render() {
 		const { startDate, endDate, disabledDays } = this.props;
 
-		let modifiers = null, selectedDays = null;
+		let modifiers = null,
+			selectedDays = null;
 
-		if(startDate && endDate) {
+		if (startDate && endDate) {
 			modifiers = DateUtils.isSameDay(startDate, endDate)
 				? {
-					rangeonly: startDate
-				} :
-				{
-					rangeopen: startDate,
-					rangeclose: endDate
-				};
+						rangeonly: startDate,
+				  }
+				: {
+						rangeopen: startDate,
+						rangeclose: endDate,
+				  };
 
 			selectedDays = [
 				startDate,
 				{
 					from: startDate,
-					to: endDate
-				}
+					to: endDate,
+				},
 			];
 		}
 
@@ -137,22 +144,24 @@ export default class DayPickerRange extends React.Component {
 							type="Start"
 							onSelect={this.onDateSelect}
 							onRemove={this.onDateRemove}
-							selected={this.state.selectedType === 'Start'}/>
+							selected={this.state.selectedType === 'Start'}
+						/>
 						<Date
 							date={endDate}
 							type="End"
 							onSelect={this.onDateSelect}
 							onRemove={this.onDateRemove}
-							selected={this.state.selectedType === 'End'}/>
+							selected={this.state.selectedType === 'End'}
+						/>
 					</div>
 				</div>
 				<DayPicker
-					initialMonth={ value || void value }
-					month={value || void value }
-					selectedDays={ selectedDays }
-					disabledDays={ disabledDays }
-					onChange={ this.handleDayClick }
-					modifiers={ modifiers }
+					initialMonth={value || void value}
+					month={value || void value}
+					selectedDays={selectedDays}
+					disabledDays={disabledDays}
+					onChange={this.handleDayClick}
+					modifiers={modifiers}
 					enableOutsideDays
 				/>
 			</div>

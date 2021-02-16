@@ -8,15 +8,17 @@ import Checkbox from '../Checkbox';
 class TypeFilter extends React.Component {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
-		options: PropTypes.arrayOf(PropTypes.shape({
-			label: PropTypes.string.isRequired,
-			value: PropTypes.string.isRequired
-		})),
+		options: PropTypes.arrayOf(
+			PropTypes.shape({
+				label: PropTypes.string.isRequired,
+				value: PropTypes.string.isRequired,
+			})
+		),
 		values: PropTypes.arrayOf(PropTypes.string),
-		onChange: PropTypes.func.isRequired
-	}
+		onChange: PropTypes.func.isRequired,
+	};
 
-	renderTypeOption (option) {
+	renderTypeOption(option) {
 		const { values } = this.props;
 		const selected = (values || []).includes(option.value);
 		const cls = cx('option', 'type-filter', { selected });
@@ -30,13 +32,13 @@ class TypeFilter extends React.Component {
 		);
 	}
 
-	render () {
+	render() {
 		const { options, title } = this.props;
 
 		return (
 			<div className="stream-type-filter">
 				<div className="option-title">{title}</div>
-				{ options.map(option => this.renderTypeOption(option)) }
+				{options.map(option => this.renderTypeOption(option))}
 			</div>
 		);
 	}

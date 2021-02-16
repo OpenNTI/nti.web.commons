@@ -1,7 +1,7 @@
 import './Date.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 import SelectInput from './select';
@@ -20,28 +20,32 @@ const t = scoped('common.inputs.Date', {
 		8: 'September',
 		9: 'October',
 		10: 'November',
-		11: 'December'
+		11: 'December',
 	},
 	placeholders: {
 		month: 'Month',
-		year: 'Year'
-	}
+		year: 'Year',
+	},
 });
 const getMonthLabel = m => t(`months.${m}`);
 
-const stop = e => {e.stopPropagation(); e.preventDefault();};
+const stop = e => {
+	e.stopPropagation();
+	e.preventDefault();
+};
 
 const Precision = {
 	year: 1,
 	month: 2,
 	day: 3,
-	time: 4
+	time: 4,
 };
 
-
 const DateFromPrecision = {
-	[Precision.year]: (state) => {
-		if (state.year == null) { return null; }
+	[Precision.year]: state => {
+		if (state.year == null) {
+			return null;
+		}
 
 		const date = new Date();
 
@@ -55,20 +59,21 @@ const DateFromPrecision = {
 
 		return date;
 	},
-	[Precision.month]: (state) => {
+	[Precision.month]: state => {
 		const date = DateFromPrecision[Precision.year](state);
 
-		if (state.month == null || !date) { return null; }
+		if (state.month == null || !date) {
+			return null;
+		}
 
 		date.setMonth(state.month);
 
 		return date;
-	}
+	},
 };
 
-
 export default class DateInput extends React.Component {
-	static Precision = Precision
+	static Precision = Precision;
 
 	static propTypes = {
 		className: PropTypes.string,
@@ -78,34 +83,32 @@ export default class DateInput extends React.Component {
 		precision: PropTypes.oneOf(Object.values(Precision)),
 
 		min: PropTypes.object,
-		max: PropTypes.object
-	}
+		max: PropTypes.object,
+	};
 
 	static defaultProps = {
-		precision: Precision.time
-	}
+		precision: Precision.time,
+	};
 
 	state = {
-		possibleMonths: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-	}
+		possibleMonths: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {value: oldValue} = prevProps;
-		const {value: newValue} = this.props;
+	componentDidUpdate(prevProps) {
+		const { value: oldValue } = prevProps;
+		const { value: newValue } = this.props;
 
 		if (newValue !== oldValue) {
 			this.setupFor(this.props);
 		}
 	}
 
-
-	setupFor (props) {
-		const {value, precision} = props;
+	setupFor(props) {
+		const { value, precision } = props;
 
 		if (!value) {
 			this.setState({});
@@ -122,25 +125,29 @@ export default class DateInput extends React.Component {
 			state.month = value.getMonth();
 		}
 
-		if (state.month !== this.state.month || state.year !== this.state.year) {
+		if (
+			state.month !== this.state.month ||
+			state.year !== this.state.year
+		) {
 			this.setState(state);
 		}
-
 	}
 
-
-	onChange () {
-		const {precision, onChange, value, min, max} = this.props;
+	onChange() {
+		const { precision, onChange, value, min, max } = this.props;
 		let date = DateFromPrecision[precision](this.state);
 
-		if (isNaN(date) || (date && ((min && date < min) || (max && date > max)))) {
+		if (
+			isNaN(date) ||
+			(date && ((min && date < min) || (max && date > max)))
+		) {
 			date = null;
 			this.setState({
-				error: true
+				error: true,
 			});
 		} else {
 			this.setState({
-				error: false
+				error: false,
 			});
 		}
 
@@ -149,51 +156,59 @@ export default class DateInput extends React.Component {
 		}
 	}
 
-
-	setMonth = (month) => {
-		this.setState({
-			month
-		}, () => this.onChange());
-	}
+	setMonth = month => {
+		this.setState(
+			{
+				month,
+			},
+			() => this.onChange()
+		);
+	};
 
 	monthMatches = (month, term) => {
 		const label = getMonthLabel(month);
 
 		return label.toLowerCase().indexOf(term.toLowerCase()) === 0;
-	}
+	};
 
-
-	setYear = (year) => {
-		this.setState({
-			year
-		}, () => this.onChange());
-	}
-
+	setYear = year => {
+		this.setState(
+			{
+				year,
+			},
+			() => this.onChange()
+		);
+	};
 
 	onFocus = () => {
 		clearTimeout(this.blurTimeout);
 
 		this.setState({
-			focused: true
+			focused: true,
 		});
-	}
-
+	};
 
 	onBlur = () => {
 		this.blurTimeout = setTimeout(() => {
 			this.setState({
-				focused: false
+				focused: false,
 			});
 		}, 300);
-	}
+	};
 
-
-	render () {
-		const {className, precision} = this.props;
-		const {error, focused} = this.state;
+	render() {
+		const { className, precision } = this.props;
+		const { error, focused } = this.state;
 
 		return (
-			<div className={cx('nti-date-input', className, `precision-${precision}`, {error, focused})}>
+			<div
+				className={cx(
+					'nti-date-input',
+					className,
+					`precision-${precision}`,
+					{ error, focused }
+				)}
+			>
 				{this.renderMonth()}
 				{this.renderDay()}
 				{this.renderYear()}
@@ -201,12 +216,13 @@ export default class DateInput extends React.Component {
 		);
 	}
 
+	renderMonth() {
+		const { precision } = this.props;
+		const { month, possibleMonths } = this.state;
 
-	renderMonth () {
-		const {precision} = this.props;
-		const {month, possibleMonths} = this.state;
-
-		if (precision < Precision.month) { return null; }
+		if (precision < Precision.month) {
+			return null;
+		}
 
 		return (
 			<SelectInput
@@ -217,9 +233,13 @@ export default class DateInput extends React.Component {
 				onFocus={this.onFocus}
 				onBlur={this.onBlur}
 			>
-				{possibleMonths.map((m) => {
+				{possibleMonths.map(m => {
 					return (
-						<SelectInput.Option key={m} value={m} matches={this.monthMatches}>
+						<SelectInput.Option
+							key={m}
+							value={m}
+							matches={this.monthMatches}
+						>
 							{getMonthLabel(m)}
 						</SelectInput.Option>
 					);
@@ -228,14 +248,12 @@ export default class DateInput extends React.Component {
 		);
 	}
 
-
-	renderDay () {
+	renderDay() {
 		return null;
 	}
 
-
-	renderYear () {
-		const {year} = this.state;
+	renderYear() {
+		const { year } = this.state;
 
 		return (
 			<NumberInput

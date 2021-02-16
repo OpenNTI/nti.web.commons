@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getEffectiveScreenSize} from './utils';
+import { getEffectiveScreenSize } from './utils';
 
 export default class ResponsiveItem extends React.Component {
 	static propTypes = {
@@ -10,53 +10,57 @@ export default class ResponsiveItem extends React.Component {
 		component: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 		render: PropTypes.func,
 
-		additionalArguments: PropTypes.object
-	}
+		additionalArguments: PropTypes.object,
+	};
 
-	state = {}
+	state = {};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		if (!props.component && !props.render) {
-			throw new Error('Must have a component or render prop for a ResponsiveItem');
+			throw new Error(
+				'Must have a component or render prop for a ResponsiveItem'
+			);
 		}
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {additionalArguments:oldArguments} = prevProps;
-		const {additionalArguments:newArguments} = this.props;
+	componentDidUpdate(prevProps) {
+		const { additionalArguments: oldArguments } = prevProps;
+		const { additionalArguments: newArguments } = this.props;
 
 		// TODO: Eventually, have a more generic field comparison
-		if ((oldArguments || {}).containerWidth !== (newArguments || {}).containerWidth) {
+		if (
+			(oldArguments || {}).containerWidth !==
+			(newArguments || {}).containerWidth
+		) {
 			this.setupFor(this.props);
 		}
 	}
 
-
-	setupFor (props) {
-		const {query, additionalArguments} = props;
+	setupFor(props) {
+		const { query, additionalArguments } = props;
 
 		this.setState({
 			visible: query({
 				screenSize: getEffectiveScreenSize(),
-				...additionalArguments
-			})
+				...additionalArguments,
+			}),
 		});
 	}
 
+	render() {
+		const { visible } = this.state;
 
-	render () {
-		const {visible} = this.state;
+		if (!visible) {
+			return null;
+		}
 
-		if (!visible) { return null; }
-
-		const {component, render, ...otherProps} = this.props;
+		const { component, render, ...otherProps } = this.props;
 
 		delete otherProps.query;
 

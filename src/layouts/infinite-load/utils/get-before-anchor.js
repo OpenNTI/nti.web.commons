@@ -1,6 +1,12 @@
-export default function getBeforeAnchor (anchor, pageState, buffer, scrollingEl, getPageHeight) {
-	const {clientHeight} = scrollingEl;
-	const {anchorPage} = anchor;
+export default function getBeforeAnchor(
+	anchor,
+	pageState,
+	buffer,
+	scrollingEl,
+	getPageHeight
+) {
+	const { clientHeight } = scrollingEl;
+	const { anchorPage } = anchor;
 	const beforeBufferSize = clientHeight * buffer;
 
 	let before = [];
@@ -21,6 +27,6 @@ export default function getBeforeAnchor (anchor, pageState, buffer, scrollingEl,
 
 	return {
 		before: before.reverse(),
-		beforeHeight
+		beforeHeight,
 	};
 }

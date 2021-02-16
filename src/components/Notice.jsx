@@ -11,19 +11,17 @@ export default class extends React.Component {
 	static displayName = 'Notice';
 
 	static propTypes = {
-		className: PropTypes.string
+		className: PropTypes.string,
 	};
 
 	static defaultProps = {
-		className: ''
+		className: '',
 	};
 
-	render () {
-		let {className} = this.props;
+	render() {
+		let { className } = this.props;
 
 		className = ['notice'].concat(className).join(' ');
-		return (
-			<figure {...this.props} className={className}/>
-		);
+		return <figure {...this.props} className={className} />;
 	}
 }

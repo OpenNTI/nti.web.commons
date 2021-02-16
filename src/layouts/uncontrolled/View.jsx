@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {rawContent} from '@nti/lib-commons';
+import { rawContent } from '@nti/lib-commons';
 
-function attributesToString (attributes) {
-	if (!attributes) { return ''; }
+function attributesToString(attributes) {
+	if (!attributes) {
+		return '';
+	}
 
 	const keys = Object.keys(attributes);
 
@@ -17,7 +19,7 @@ function attributesToString (attributes) {
 }
 
 const DATA_ATTR = 'data-uncontrolled-placeholder';
-const PLACEHOLDER_TPL = (attributes) => {
+const PLACEHOLDER_TPL = attributes => {
 	return `<div ${DATA_ATTR} ${attributesToString(attributes)}></div>`;
 };
 
@@ -33,35 +35,38 @@ export default class Uncontrolled extends React.Component {
 		as: PropTypes.any,
 
 		onMount: PropTypes.func,
-		onUnmount: PropTypes.func
-	}
+		onUnmount: PropTypes.func,
+	};
 
-	componentWillUnmount () {
-		const {onUnmount, ...otherProps} = this.props;
+	componentWillUnmount() {
+		const { onUnmount, ...otherProps } = this.props;
 
 		if (onUnmount) {
 			onUnmount(this.placeholder, otherProps);
 		}
 	}
 
-	attachContainer = (node) => {
+	attachContainer = node => {
 		//execute call backs in the next event pump;
 		setTimeout(() => {
-			const {onMount, ...otherProps} = this.props;
+			const { onMount, ...otherProps } = this.props;
 
-			this.placeholder = node ? node.querySelector(`[${DATA_ATTR}]`) : null;
+			this.placeholder = node
+				? node.querySelector(`[${DATA_ATTR}]`)
+				: null;
 
 			if (!this.node && node) {
-				if (onMount) { onMount(this.placeholder, otherProps); }
+				if (onMount) {
+					onMount(this.placeholder, otherProps);
+				}
 			}
-			
+
 			this.node = node;
 		}, 1);
-	}
+	};
 
-
-	render () {
-		const {attributes, as: tag, ...otherProps} = this.props;
+	render() {
+		const { attributes, as: tag, ...otherProps } = this.props;
 		const tpl = PLACEHOLDER_TPL(attributes);
 		const Cmp = tag || 'div';
 

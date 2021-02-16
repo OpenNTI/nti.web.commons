@@ -1,28 +1,30 @@
 import './ResourceNotFound.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
-	header: 'Sorry, this page doesn\'t exist...',
+	header: "Sorry, this page doesn't exist...",
 	message: 'Your link may contain errors or the page may no longer exist.',
-	back: 'Back'
+	back: 'Back',
 };
 
 const t = scoped('common.components.resource-not-found', DEFAULT_TEXT);
 
-ResourceNotFound.getBackAction = (history) => ({
+ResourceNotFound.getBackAction = history => ({
 	label: t('back'),
-	handler: () => history?.goBack?.()
+	handler: () => history?.goBack?.(),
 });
 ResourceNotFound.propTypes = {
-	actions: PropTypes.arrayOf(PropTypes.shape({
-		label: PropTypes.string,
-		handler: PropTypes.func
-	})),
-	getString: PropTypes.func
+	actions: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string,
+			handler: PropTypes.func,
+		})
+	),
+	getString: PropTypes.func,
 };
-export default function ResourceNotFound ({actions = [], getString}) {
+export default function ResourceNotFound({ actions = [], getString }) {
 	const stringFn = getString ? t.override(getString) : t;
 
 	return (
@@ -35,7 +37,9 @@ export default function ResourceNotFound ({actions = [], getString}) {
 					<ul>
 						{actions.map((x, i) => {
 							return (
-								<li key={i} onClick={x.handler}>{x.label}</li>
+								<li key={i} onClick={x.handler}>
+									{x.label}
+								</li>
 							);
 						})}
 					</ul>

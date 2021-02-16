@@ -23,7 +23,11 @@
 }
 
 .saturation-layer {
-	background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+	background: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 1),
+		rgba(255, 255, 255, 0)
+	);
 }
 
 .brightness-layer {

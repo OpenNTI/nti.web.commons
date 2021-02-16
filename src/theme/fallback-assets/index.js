@@ -9,5 +9,5 @@ export default {
 	FullLogo,
 	Email,
 	Favicon,
-	CertificateLogo
+	CertificateLogo,
 };

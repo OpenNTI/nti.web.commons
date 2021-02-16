@@ -18,13 +18,18 @@ PageContent.propTypes = {
 	className: PropTypes.string,
 	as: PropTypes.any,
 	children: PropTypes.any,
-	card: PropTypes.bool
+	card: PropTypes.bool,
 };
-export default function PageContent ({className, as:tag, children, card = true}) {
+export default function PageContent({
+	className,
+	as: tag,
+	children,
+	card = true,
+}) {
 	const Cmp = tag || 'div';
 
 	return (
-		<Cmp className={cx('nt-page-content', className, {card})}>
+		<Cmp className={cx('nt-page-content', className, { card })}>
 			{children}
 		</Cmp>
 	);

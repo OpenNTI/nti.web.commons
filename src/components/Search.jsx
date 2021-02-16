@@ -7,40 +7,38 @@ import BufferedInput from './BufferedInput';
 
 const stop = e => e.preventDefault();
 
-
 class Input extends React.Component {
+	attachRef = x => (this.input = x);
 
-	attachRef = x => this.input = x
-
-	clear () {
-		const {input, props: {onChange}} = this;
+	clear() {
+		const {
+			input,
+			props: { onChange },
+		} = this;
 		input.value = '';
 		if (onChange) {
 			onChange({
 				target: input,
 				type: 'change',
-				persist () {},
-				preventDefault () {},
-				stopPropagation () {}
+				persist() {},
+				preventDefault() {},
+				stopPropagation() {},
 			});
 		}
 	}
 
-	focus () {
+	focus() {
 		if (this.input) {
 			this.input.focus();
 		}
 	}
 
-	render () {
-		return ( <input {...this.props} ref={this.attachRef}/> );
+	render() {
+		return <input {...this.props} ref={this.attachRef} />;
 	}
 }
 
-
-
 export default class Search extends React.Component {
-
 	static propTypes = {
 		className: PropTypes.string,
 		disabled: PropTypes.bool,
@@ -49,59 +47,72 @@ export default class Search extends React.Component {
 		onFocus: PropTypes.func,
 		defaultValue: PropTypes.string,
 		buffered: PropTypes.bool,
-		placeholder: PropTypes.string
-	}
-
+		placeholder: PropTypes.string,
+	};
 
 	static defaultProps = {
-		buffered: true
-	}
+		buffered: true,
+	};
 
+	state = {};
 
-	state = {}
+	attachRef = x => (this.input = x);
 
-
-	attachRef = x => this.input = x
-
-
-	clearFilter = (e) => {
+	clearFilter = e => {
 		e.stopPropagation();
 		e.preventDefault();
-		const {input} = this;
+		const { input } = this;
 		input.clear();
 		input.focus();
-	}
+	};
 
-
-	onChange = (event) => {
-		const {onChange} = this.props;
+	onChange = event => {
+		const { onChange } = this.props;
 		if (onChange) {
 			onChange(event.target.value);
 		}
-	}
+	};
 
+	onFocus = e => {
+		const { onFocus } = this.props;
+		if (onFocus) {
+			onFocus(e);
+		}
+		this.setState({ focused: true });
+	};
 
-	onFocus = (e) => {
-		const {onFocus} = this.props;
-		if (onFocus) { onFocus(e); }
-		this.setState({focused: true});
-	}
+	onBlur = e => {
+		const { onBlur } = this.props;
+		if (onBlur) {
+			onBlur(e);
+		}
+		this.setState({ focused: false });
+	};
 
-
-	onBlur = (e) => {
-		const {onBlur} = this.props;
-		if (onBlur) { onBlur(e); }
-		this.setState({focused: false});
-	}
-
-
-	render () {
-		const {props: {disabled, buffered, className, placeholder = 'Search', ...props}, state: {focused}} = this;
+	render() {
+		const {
+			props: {
+				disabled,
+				buffered,
+				className,
+				placeholder = 'Search',
+				...props
+			},
+			state: { focused },
+		} = this;
 		const Cmp = buffered ? BufferedInput : Input;
 		return (
-			<form onSubmit={stop} className={cx(className, 'search-component', {focused, disabled})} noValidate>
-				<i className="icon-search"/>
-				<Cmp {...props}
+			<form
+				onSubmit={stop}
+				className={cx(className, 'search-component', {
+					focused,
+					disabled,
+				})}
+				noValidate
+			>
+				<i className="icon-search" />
+				<Cmp
+					{...props}
 					type="text"
 					placeholder={placeholder}
 					disabled={disabled}
@@ -111,7 +122,7 @@ export default class Search extends React.Component {
 					ref={this.attachRef}
 					required
 				/>
-				<input type="reset" onClick={this.clearFilter}/>
+				<input type="reset" onClick={this.clearFilter} />
 			</form>
 		);
 	}

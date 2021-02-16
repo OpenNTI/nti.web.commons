@@ -29,7 +29,7 @@
 	transition: transform 0.3s;
 }
 
-.range-input input[type="range"] {
+.range-input input[type='range'] {
 	appearance: none;
 	position: absolute;
 	top: 0;

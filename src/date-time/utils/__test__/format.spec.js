@@ -43,7 +43,6 @@ describe('getNaturalDuration', () => {
 	//TODO: add more tests
 });
 
-
 describe('getShortNaturalDuration', () => {
 	const n = (...args) => format.getShortNaturalDuration(...args);
 

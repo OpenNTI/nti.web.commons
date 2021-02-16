@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .publish-controls.flyout {
 	.flyout-inner {
@@ -19,7 +19,7 @@
 	}
 
 	// Style the datepicker and timepicker
-	label[name="publish-radio"] {
+	label[name='publish-radio'] {
 		.sub {
 			font-size: rem-calc(12px);
 			line-height: 1.3;

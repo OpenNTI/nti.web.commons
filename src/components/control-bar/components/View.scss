@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-control-bar-mount {
 	position: fixed;
@@ -19,7 +19,7 @@
 		position: relative;
 		width: 94%;
 		max-width: 1060px;
-		padding: 0 rem-calc(18px);//(1060-1024)/2
+		padding: 0 rem-calc(18px); //(1060-1024)/2
 		height: rem-calc(52px);
 		margin: 0 auto;
 

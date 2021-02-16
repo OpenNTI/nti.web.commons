@@ -4,7 +4,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {ItemChanges} from '../mixins';
+import { ItemChanges } from '../mixins';
 
 export default createReactClass({
 	displayName: 'Favorite',
@@ -12,35 +12,32 @@ export default createReactClass({
 
 	propTypes: {
 		item: PropTypes.object.isRequired,
-		asButton: PropTypes.bool
+		asButton: PropTypes.bool,
 	},
 
-
-	onClick (e) {
+	onClick(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let {item} = this.props;
+		let { item } = this.props;
 
-		this.setState({loading: true});
-		item.favorite()
-			.then(()=> this.setState({loading: false}));
+		this.setState({ loading: true });
+		item.favorite().then(() => this.setState({ loading: false }));
 	},
 
-
-	render () {
-		let {item, asButton} = this.props;
+	render() {
+		let { item, asButton } = this.props;
 
 		let cls = cx('favorite', {
 			active: item.hasLink('unfavorite'),
-			'button-like': asButton
+			'button-like': asButton,
 		});
 
 		const Tag = asButton ? 'span' : 'a';
-		const extraProps = asButton ? {role: 'button', tabIndex: '0'} : {href: '#'};
+		const extraProps = asButton
+			? { role: 'button', tabIndex: '0' }
+			: { href: '#' };
 
-		return (
-			<Tag {...extraProps} className={cls} onClick={this.onClick}/>
-		);
-	}
+		return <Tag {...extraProps} className={cls} onClick={this.onClick} />;
+	},
 });

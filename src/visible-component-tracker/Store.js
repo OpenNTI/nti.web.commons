@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
-import {Events} from '@nti/lib-commons';
-import {getViewportHeight, getScrollParent} from '@nti/lib-dom';
+import { Events } from '@nti/lib-commons';
+import { getViewportHeight, getScrollParent } from '@nti/lib-dom';
 
 const BUS = new EventEmitter();
 const GROUP_TO_STORE = {};
@@ -12,14 +12,13 @@ const TRACKED_COMPONENTS = Symbol('Tracked Components');
 
 const getEventForGroup = group => `${group}-tracked-components-change`;
 
-function onGroupChange (group, order) {
+function onGroupChange(group, order) {
 	const event = getEventForGroup(group);
 
 	BUS.emit(event, order);
 }
 
-
-function onGroupEmptied (group) {
+function onGroupEmptied(group) {
 	setTimeout(() => {
 		const store = GROUP_TO_STORE[group];
 
@@ -29,20 +28,22 @@ function onGroupEmptied (group) {
 	}, 60000);
 }
 
-
-function componentsDidChange (a, b) {
-	if (a.length !== b.length) { return true; }
+function componentsDidChange(a, b) {
+	if (a.length !== b.length) {
+		return true;
+	}
 
 	for (let i = 0; i < a.length; i++) {
-		if (a[i].node !== b[i].node || a[i].data !== b[i].data) { return true; }
+		if (a[i].node !== b[i].node || a[i].data !== b[i].data) {
+			return true;
+		}
 	}
 
 	return false;
 }
 
-
 export default class VisibleComponentTrackerStore {
-	static getInstanceFor (group) {
+	static getInstanceFor(group) {
 		if (!GROUP_TO_STORE[group]) {
 			GROUP_TO_STORE[group] = new VisibleComponentTrackerStore(group);
 		}
@@ -50,7 +51,7 @@ export default class VisibleComponentTrackerStore {
 		return GROUP_TO_STORE[group];
 	}
 
-	static addGroupListener (group, fn) {
+	static addGroupListener(group, fn) {
 		const store = GROUP_TO_STORE[group];
 		const event = getEventForGroup(group);
 
@@ -61,31 +62,31 @@ export default class VisibleComponentTrackerStore {
 		}
 	}
 
-	static removeGroupListener (group, fn) {
+	static removeGroupListener(group, fn) {
 		const event = getEventForGroup(group);
 
 		BUS.removeListener(event, fn);
 	}
 
-	constructor (group) {
+	constructor(group) {
 		this[GROUP] = group;
 		this[ORDERED_COMPONENTS] = [];
 		this[TRACKED_COMPONENTS] = new Set([]);
 	}
 
-
-	get components () {
+	get components() {
 		return this[ORDERED_COMPONENTS];
 	}
 
-
-	hasTracked () {
-		if (this[TRACKED_COMPONENTS].size > 0) { return true; }
+	hasTracked() {
+		if (this[TRACKED_COMPONENTS].size > 0) {
+			return true;
+		}
 
 		return false;
 	}
 
-	track (cmp, group) {
+	track(cmp, group) {
 		const hadTracked = this.hasTracked();
 
 		this[TRACKED_COMPONENTS].add(cmp);
@@ -98,8 +99,7 @@ export default class VisibleComponentTrackerStore {
 		}
 	}
 
-
-	untrack (cmp, group) {
+	untrack(cmp, group) {
 		this[TRACKED_COMPONENTS].delete(cmp);
 
 		clearTimeout(this.recomputeOnUntrackTimeout);
@@ -111,18 +111,23 @@ export default class VisibleComponentTrackerStore {
 		}
 	}
 
-
 	onScroll = () => {
 		const viewportHeight = getViewportHeight();
 		const components = Array.from(this[TRACKED_COMPONENTS])
-			.map(cmp => ({node: cmp.node, data: cmp.data}))
-			.filter((cmp) => {
-				if (!cmp.node) { return false; }//filter out any components that don't have a node yet
+			.map(cmp => ({ node: cmp.node, data: cmp.data }))
+			.filter(cmp => {
+				if (!cmp.node) {
+					return false;
+				} //filter out any components that don't have a node yet
 
 				const rect = cmp.node.getBoundingClientRect();
 
-				if (rect.bottom <= 0) { return false; }
-				if (rect.top > viewportHeight) { return false; }
+				if (rect.bottom <= 0) {
+					return false;
+				}
+				if (rect.top > viewportHeight) {
+					return false;
+				}
 
 				return true;
 			})
@@ -137,35 +142,41 @@ export default class VisibleComponentTrackerStore {
 			this[ORDERED_COMPONENTS] = components;
 			onGroupChange(this[GROUP], components);
 		}
-	}
+	};
 
+	startListening() {
+		const scrollingElement = (this.scrollingElement =
+			this.scrollingElement || getScrollParent());
 
-	startListening () {
-		const scrollingElement = this.scrollingElement = this.scrollingElement || getScrollParent();
-
-		if (!scrollingElement) { return; }
+		if (!scrollingElement) {
+			return;
+		}
 
 		this.stopListening();
 
 		if (Events.supportsPassive()) {
-			scrollingElement.addEventListener('scroll', this.onScroll, {passive: true});
+			scrollingElement.addEventListener('scroll', this.onScroll, {
+				passive: true,
+			});
 		} else {
 			scrollingElement.addEventListener('scroll', this.onScroll);
 		}
 	}
 
+	stopListening() {
+		const scrollingElement = (this.scrollingElement =
+			this.scrollingElement || getScrollParent());
 
-	stopListening () {
-		const scrollingElement = this.scrollingElement = this.scrollingElement || getScrollParent();
-
-		if (!scrollingElement) { return; }
-
+		if (!scrollingElement) {
+			return;
+		}
 
 		if (Events.supportsPassive()) {
-			scrollingElement.removeEventListener('scroll', this.onScroll, {passive: true});
+			scrollingElement.removeEventListener('scroll', this.onScroll, {
+				passive: true,
+			});
 		} else {
 			scrollingElement.removeEventListener('scroll', this.onScroll);
 		}
 	}
-
 }

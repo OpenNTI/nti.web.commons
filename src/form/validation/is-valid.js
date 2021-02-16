@@ -1,5 +1,7 @@
-export default function isValid (form) {
-	if (!form) { return true; }
+export default function isValid(form) {
+	if (!form) {
+		return true;
+	}
 
 	const invalid = Array.from(form.querySelectorAll(':invalid'));
 

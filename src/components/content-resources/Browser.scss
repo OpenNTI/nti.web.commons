@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .content-resource-browser {
 	position: relative;
@@ -19,7 +19,7 @@
 	}
 
 	.panel-header-component {
-		min-height: 105px;//safari??
+		min-height: 105px; //safari??
 	}
 
 	.content-resource-view {
@@ -69,6 +69,8 @@
 	}
 
 	@media (max-width: 830px) {
-		.toolbar-component .toolbar-button > span { display: none; }
+		.toolbar-component .toolbar-button > span {
+			display: none;
+		}
 	}
 }

@@ -1,5 +1,7 @@
-function maybeAddConfig (embedLink, config) {
-	if (!config) { return embedLink; }
+function maybeAddConfig(embedLink, config) {
+	if (!config) {
+		return embedLink;
+	}
 
 	const configKeys = Object.keys(config);
 
@@ -14,14 +16,13 @@ function maybeAddConfig (embedLink, config) {
 	return embedLink;
 }
 
-
-function maybeAddFormat (embedLink, format) {
-	return format ?
-		`${embedLink}?format=${encodeURIComponent(format)}` :
-		embedLink;
+function maybeAddFormat(embedLink, format) {
+	return format
+		? `${embedLink}?format=${encodeURIComponent(format)}`
+		: embedLink;
 }
 
-export default function getEmbedLink (src, config, format) {
+export default function getEmbedLink(src, config, format) {
 	let embedLink = src;
 
 	embedLink = maybeAddFormat(embedLink, format);

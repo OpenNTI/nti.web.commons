@@ -1,13 +1,16 @@
 /* eslint-env jest */
-import {getRenderer} from '../';
+import { getRenderer } from '../';
 import Complex from '../Complex';
 import Markup from '../Markup';
 import PlainText from '../PlainText';
 
-
-const COMPLEX_PROPS = {text: 'text', hasMarkup: false, hasComponents: true};
-const MARK_UP_PROPS = {text: 'text', hasMarkup: true, hasComponents: false};
-const PLAIN_TEXT_PROPS = {text: 'text', hasMarkup: false, hasComponents: false};
+const COMPLEX_PROPS = { text: 'text', hasMarkup: false, hasComponents: true };
+const MARK_UP_PROPS = { text: 'text', hasMarkup: true, hasComponents: false };
+const PLAIN_TEXT_PROPS = {
+	text: 'text',
+	hasMarkup: false,
+	hasComponents: false,
+};
 
 describe('Renderers tests', () => {
 	describe('getRenderers', () => {

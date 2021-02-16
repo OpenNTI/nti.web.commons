@@ -1,9 +1,9 @@
 import './SortDragLayer.scss';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {DragLayer} from 'react-dnd';
+import { DragLayer } from 'react-dnd';
 
-import {MountToBody} from '../../remote-mount/';
+import { MountToBody } from '../../remote-mount/';
 
 const LAYER_STYLES = {
 	position: 'fixed',
@@ -12,38 +12,33 @@ const LAYER_STYLES = {
 	left: 0,
 	top: 0,
 	width: '100%',
-	height: '100%'
+	height: '100%',
 };
 
-
 class ContextWrapper extends React.Component {
-
 	static propTypes = {
-		dragDropManager: PropTypes.any
-	}
+		dragDropManager: PropTypes.any,
+	};
 
 	static childContextTypes = {
-		dragDropManager: PropTypes.any
-	}
+		dragDropManager: PropTypes.any,
+	};
 
-	getChildContext () {
-		const {dragDropManager} = this.props;
+	getChildContext() {
+		const { dragDropManager } = this.props;
 		return {
-			dragDropManager
+			dragDropManager,
 		};
 	}
 
-	render () {
-		const {...props} = this.props;
+	render() {
+		const { ...props } = this.props;
 
 		delete props.dragDropManager;
 
-		return (
-			<ol {...props}/>
-		);
+		return <ol {...props} />;
 	}
 }
-
 
 class SortDragLayer extends React.Component {
 	static propTypes = {
@@ -51,25 +46,25 @@ class SortDragLayer extends React.Component {
 		itemType: PropTypes.string,
 		currentOffset: PropTypes.shape({
 			x: PropTypes.number.isRequired,
-			y: PropTypes.number.isRequired
+			y: PropTypes.number.isRequired,
 		}),
 		isDragging: PropTypes.bool.isRequired,
-		getDragPreview: PropTypes.func
-	}
+		getDragPreview: PropTypes.func,
+	};
 
 	static contextTypes = {
-		dragDropManager: PropTypes.any.isRequired
-	}
+		dragDropManager: PropTypes.any.isRequired,
+	};
 
-	renderItem (item) {
-		const {getDragPreview} = this.props;
+	renderItem(item) {
+		const { getDragPreview } = this.props;
 		if (typeof getDragPreview === 'function') {
 			return getDragPreview(item);
 		}
 		return <span>{item.index + 1}</span>;
 	}
 
-	render () {
+	render() {
 		const { item, isDragging } = this.props;
 		if (!isDragging) {
 			return null;
@@ -89,12 +84,11 @@ class SortDragLayer extends React.Component {
 	}
 }
 
-
-function getItemStyles (props) {
+function getItemStyles(props) {
 	const { currentOffset } = props;
 	if (!currentOffset) {
 		return {
-			display: 'none'
+			display: 'none',
 		};
 	}
 
@@ -103,16 +97,15 @@ function getItemStyles (props) {
 	return {
 		transform: transform,
 		WebkitTransform: transform, //andriod 4.4, iOS8
-		width: 370
+		width: 370,
 	};
 }
 
-
-function collect (monitor) {
+function collect(monitor) {
 	return {
 		item: monitor.getItem(),
 		currentOffset: monitor.getSourceClientOffset(),
-		isDragging: monitor.isDragging()
+		isDragging: monitor.isDragging(),
 	};
 }
 

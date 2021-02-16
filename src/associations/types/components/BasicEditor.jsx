@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
-import {Loading} from '../../../components';
+import { Loading } from '../../../components';
 
 import ListItem from './ListItem';
 import ItemInfo from './ItemInfo';
@@ -14,7 +14,7 @@ import RemoveButton from './RemoveButton';
 const DEFAULT_TEXT = {
 	addLabel: 'Add',
 	failedToAdd: 'Failed to add.',
-	failedToRemove: 'Failed to remove.'
+	failedToRemove: 'Failed to remove.',
 };
 
 const t = scoped('common.components.associations.editor.basic', DEFAULT_TEXT);
@@ -26,32 +26,29 @@ class BasicEditor extends React.Component {
 		subLabels: PropTypes.array,
 		className: PropTypes.string,
 		getString: PropTypes.func,
-		disabled: PropTypes.bool
-	}
-
+		disabled: PropTypes.bool,
+	};
 
 	onAdd = () => {
-		const {item} = this.props;
+		const { item } = this.props;
 
 		item.onAddTo();
-	}
-
+	};
 
 	onRemove = () => {
-		const {item} = this.props;
+		const { item } = this.props;
 
 		item.onRemoveFrom();
-	}
-
+	};
 
 	getStringsFn = () => {
-		const {getString} = this.props;
+		const { getString } = this.props;
 
 		return getString ? t.override(getString) : t;
-	}
+	};
 
-	isCancelAction (item) {
-		const {error} = item;
+	isCancelAction(item) {
+		const { error } = item;
 
 		// NOTE: When a 409 is thrown, a challenge is raised and
 		// the user has to either confirm it or cancel it.
@@ -62,9 +59,8 @@ class BasicEditor extends React.Component {
 		return (error || {}).statusCode === 409;
 	}
 
-
-	render () {
-		const {item, associations, subLabels, className} = this.props;
+	render() {
+		const { item, associations, subLabels, className } = this.props;
 		const active = associations.isSharedWith(item);
 		const getString = this.getStringsFn();
 		const isCancel = this.isCancelAction(item);
@@ -72,16 +68,22 @@ class BasicEditor extends React.Component {
 		return (
 			<ListItem className={className} active={active}>
 				<ItemInfo label={item.label} subLabels={subLabels} />
-				{item.error && !isCancel && (<ErrorCmp error={getString(active ? 'failedToRemove' : 'failedToAdd')} white={active} />)}
+				{item.error && !isCancel && (
+					<ErrorCmp
+						error={getString(
+							active ? 'failedToRemove' : 'failedToAdd'
+						)}
+						white={active}
+					/>
+				)}
 				{(!active || isCancel) && item.canAddTo && this.renderAdd()}
-				{active  && item.canRemoveFrom && this.renderRemove()}
+				{active && item.canRemoveFrom && this.renderRemove()}
 			</ListItem>
 		);
 	}
 
-
 	renderAdd = () => {
-		const {item, disabled} = this.props;
+		const { item, disabled } = this.props;
 		const getString = this.getStringsFn();
 		const isCancel = this.isCancelAction(item);
 		let addButton;
@@ -90,39 +92,43 @@ class BasicEditor extends React.Component {
 			addButton = this.renderSaving();
 		} else {
 			addButton = (
-				<AddButton label={getString('addLabel')} error={!!item.error && !isCancel} onClick={this.onAdd} disabled={disabled} />
+				<AddButton
+					label={getString('addLabel')}
+					error={!!item.error && !isCancel}
+					onClick={this.onAdd}
+					disabled={disabled}
+				/>
 			);
 		}
 
 		return addButton;
-	}
-
+	};
 
 	renderRemove = () => {
-		const {item, disabled} = this.props;
+		const { item, disabled } = this.props;
 		let removeButton;
 
 		if (item.isSaving) {
 			removeButton = this.renderSaving();
 		} else {
 			removeButton = (
-				<RemoveButton onRemove={this.onRemove} error={!!item.error} disabled={disabled} />
+				<RemoveButton
+					onRemove={this.onRemove}
+					error={!!item.error}
+					disabled={disabled}
+				/>
 			);
 		}
 
 		return removeButton;
-	}
-
+	};
 
 	renderSaving = () => {
-		const {item, associations} = this.props;
+		const { item, associations } = this.props;
 		const active = associations.isSharedWith(item);
 
-		return (
-			<Loading.Spinner white={active} />
-		);
-	}
-
+		return <Loading.Spinner white={active} />;
+	};
 }
 
 export default ItemChanges.compose(BasicEditor);

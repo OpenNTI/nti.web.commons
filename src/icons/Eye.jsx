@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Variant} from '../HighOrderComponents';
+import { Variant } from '../HighOrderComponents';
 
 import FontIcon from './Font-Icon';
 
@@ -10,18 +10,15 @@ const NoSlash = 'no-slash';
 
 const classes = {
 	[Slash]: 'icon-hide',
-	[NoSlash]: 'icon-view'
+	[NoSlash]: 'icon-view',
 };
 
-
-Eye.Slash = Variant(Eye, {variant: Slash});
+Eye.Slash = Variant(Eye, { variant: Slash });
 Eye.propTypes = {
-	variant: PropTypes.string
+	variant: PropTypes.string,
 };
-export function Eye ({variant = NoSlash, ...props}) {
+export function Eye({ variant = NoSlash, ...props }) {
 	const icon = classes[variant];
 
-	return (
-		<FontIcon icon={icon} {...props} />
-	);
+	return <FontIcon icon={icon} {...props} />;
 }

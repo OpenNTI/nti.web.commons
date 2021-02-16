@@ -2,8 +2,8 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {FileAPI, Selection} from '@nti/lib-commons';
-import {addClass, removeClass, getEventTarget} from '@nti/lib-dom';
+import { FileAPI, Selection } from '@nti/lib-commons';
+import { addClass, removeClass, getEventTarget } from '@nti/lib-dom';
 import Logger from '@nti/util-logger';
 
 import EmptyList from '../EmptyList';
@@ -17,48 +17,44 @@ const logger = Logger.get('common:components:content-resources:View');
 const DRAG_CLASS = 'entity-drag-over';
 
 export default class ContentResourcesView extends React.Component {
-
 	static propTypes = {
 		children: PropTypes.any,
 		className: PropTypes.string,
 		onDragOverChanged: PropTypes.func,
 		onFileDrop: PropTypes.func,
 		onSortChanged: PropTypes.func,
-		layout: PropTypes.func,//React Component "Type"
+		layout: PropTypes.func, //React Component "Type"
 		limited: PropTypes.bool,
 		contents: PropTypes.array,
 		selection: PropTypes.instanceOf(Selection.Model),
 		sort: PropTypes.object,
 		folderContents: PropTypes.array,
-		searching: PropTypes.any
-	}
+		searching: PropTypes.any,
+	};
 
-	dragover = 0
+	dragover = 0;
 
+	attachRef = x => (this.viewEl = x);
 
-	attachRef = x => this.viewEl = x
+	clearSelection = e =>
+		!e.metaKey && !e.ctrlKey && this.props.selection.set();
 
+	allowDrops = () => !this.props.limited;
 
-	clearSelection = (e) => (!e.metaKey && !e.ctrlKey) && this.props.selection.set()
-
-
-	allowDrops = () => !this.props.limited
-
-
-	onDragOver = (e) => {
+	onDragOver = e => {
 		e.preventDefault();
 		if (!e.isDefaultPrevented()) {
-			e.dataTransfer.dropEffect = this.allowDrops() && accepts(e) ? 'move' : 'none';
+			e.dataTransfer.dropEffect =
+				this.allowDrops() && accepts(e) ? 'move' : 'none';
 
 			logger.debug('dragover');
 		}
 
 		clearTimeout(this.dragOverStopped);
 		this.dragOverStopped = setTimeout(this.onDragLeaveImplied, 100);
-	}
+	};
 
-
-	onDragEnter = (e) => {
+	onDragEnter = e => {
 		if (!this.allowDrops() || !accepts(e)) {
 			return;
 		}
@@ -72,14 +68,13 @@ export default class ContentResourcesView extends React.Component {
 
 		logger.debug('dragEnter', this.dragover, e.target);
 
-		const {onDragOverChanged} = this.props;
+		const { onDragOverChanged } = this.props;
 		if (this.dragover === 1 && onDragOverChanged) {
 			onDragOverChanged(true);
 		}
-	}
+	};
 
-
-	onDragLeave = (e) => {
+	onDragLeave = e => {
 		if (!this.allowDrops() || !accepts(e)) {
 			return;
 		}
@@ -96,8 +91,7 @@ export default class ContentResourcesView extends React.Component {
 		if (this.dragover === 0) {
 			this.onDragLeaveImplied();
 		}
-	}
-
+	};
 
 	onDragLeaveImplied = () => {
 		clearTimeout(this.dragOverStopped);
@@ -106,14 +100,13 @@ export default class ContentResourcesView extends React.Component {
 			removeClass(this.viewEl, DRAG_CLASS);
 		}
 
-		const {onDragOverChanged} = this.props;
+		const { onDragOverChanged } = this.props;
 		if (onDragOverChanged) {
 			onDragOverChanged(false);
 		}
-	}
+	};
 
-
-	onDrop = (e) => {
+	onDrop = e => {
 		e.stopPropagation();
 		e.preventDefault();
 		this.onDragLeave(e);
@@ -122,54 +115,82 @@ export default class ContentResourcesView extends React.Component {
 			return;
 		}
 
-		const {files:transferFiles, items} = e.dataTransfer;
+		const { files: transferFiles, items } = e.dataTransfer;
 		let files = transferFiles;
 
 		if (items) {
 			files = FileAPI.getFilesFromDataTransferItems(items);
 		}
 
-		const {onFileDrop} = this.props;
+		const { onFileDrop } = this.props;
 		if (onFileDrop && files && files.length > 0) {
 			onFileDrop(files);
 		}
-	}
+	};
 
-
-	render () {
-		const {children, className, contents, selection, layout, sort, onSortChanged} = this.props;
+	render() {
+		const {
+			children,
+			className,
+			contents,
+			selection,
+			layout,
+			sort,
+			onSortChanged,
+		} = this.props;
 		const hasSubView = !!children;
 
 		const Layout = layout || Grid;
 
 		return (
-			<div className={cx('content-resource-view', className, {split: hasSubView})} onClick={this.clearSelection}>
-				<div ref={this.attachRef} className="view-main-pane"
+			<div
+				className={cx('content-resource-view', className, {
+					split: hasSubView,
+				})}
+				onClick={this.clearSelection}
+			>
+				<div
+					ref={this.attachRef}
+					className="view-main-pane"
 					onDragOver={this.onDragOver}
 					onDragEnter={this.onDragEnter}
 					onDragLeave={this.onDragLeave}
 					onDrop={this.onDrop}
 				>
-					{(this.props.folderContents.length === 0) ? (
-						<EmptyList type={this.props.searching ? 'search' : 'content-resources'}/>
+					{this.props.folderContents.length === 0 ? (
+						<EmptyList
+							type={
+								this.props.searching
+									? 'search'
+									: 'content-resources'
+							}
+						/>
 					) : (
-						<Layout contents={contents} selection={selection} sort={sort} onSortChanged={onSortChanged}/>
+						<Layout
+							contents={contents}
+							selection={selection}
+							sort={sort}
+							onSortChanged={onSortChanged}
+						/>
 					)}
 				</div>
 				{hasSubView && (
-					<div className="context-view-pane" onClick={stop}>{children}</div>
+					<div className="context-view-pane" onClick={stop}>
+						{children}
+					</div>
 				)}
 			</div>
 		);
 	}
 }
 
-
-function accepts (e) {
-	const {files, items, types} = e.dataTransfer;
+function accepts(e) {
+	const { files, items, types } = e.dataTransfer;
 	const file = /file/i;
 
-	return (files && files.length > 0) ||
-			Array.from(items || {}).some(x => file.test(x.kind)) ||
-			Array.from(types || {}).some(x => file.test(x));
+	return (
+		(files && files.length > 0) ||
+		Array.from(items || {}).some(x => file.test(x.kind)) ||
+		Array.from(types || {}).some(x => file.test(x))
+	);
 }

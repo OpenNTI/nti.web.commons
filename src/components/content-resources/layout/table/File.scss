@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 body > .entity-row-item.row-file-asset.ghost,
 .content-resource-view-layout.table .row-file-asset {
@@ -26,7 +26,11 @@ body > .entity-row-item.row-file-asset.ghost,
 	}
 }
 
-.content-resource-view-layout.table .selected .row-file-asset .file-asset-icon > * {
+.content-resource-view-layout.table
+	.selected
+	.row-file-asset
+	.file-asset-icon
+	> * {
 	box-shadow: none;
 	border: 1px solid white;
 }

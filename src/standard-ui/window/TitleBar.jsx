@@ -12,24 +12,19 @@ TitleBar.propTypes = {
 	className: PropTypes.string,
 	closeLink: PropTypes.any,
 	onClose: PropTypes.func,
-	title: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.node
-	])
+	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
-export default function TitleBar ({className, closeLink, onClose, title}) {
-	const closeIcon = (<Icons.X className={cx('close-icon')} onClick={onClose} />);
+export default function TitleBar({ className, closeLink, onClose, title }) {
+	const closeIcon = (
+		<Icons.X className={cx('close-icon')} onClick={onClose} />
+	);
 
 	return (
 		<div className={cx('nt-title-bar', className)}>
-			{
-				closeLink ?
-					React.cloneElement(closeLink, {}, closeIcon) :
-					closeIcon
-			}
-			<div className={cx('title-container')}>
-				{title}
-			</div>
+			{closeLink
+				? React.cloneElement(closeLink, {}, closeIcon)
+				: closeIcon}
+			<div className={cx('title-container')}>{title}</div>
 		</div>
 	);
 }

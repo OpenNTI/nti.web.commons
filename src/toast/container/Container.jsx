@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {Locations} from '../Constants';
+import { Locations } from '../Constants';
 import ZStack from '../../flyout/ZBooster';
 
 import Region from './Region';
@@ -20,26 +20,29 @@ const styles = css`
 	}
 `;
 
-
-const RegionOrder = [
-	Locations.Top,
-	Locations.TopRight
-];
+const RegionOrder = [Locations.Top, Locations.TopRight];
 
 ToastContainer.propTypes = {
 	className: PropTypes.string,
 	location: PropTypes.oneOf(Object.values(Locations)),
 	toasts: PropTypes.arrayOf(
 		PropTypes.shape({
-			location: PropTypes.oneOf(Object.values(Locations))
+			location: PropTypes.oneOf(Object.values(Locations)),
 		})
-	)
+	),
 };
-export default function ToastContainer ({location, className, toasts, ...otherProps}) {
+export default function ToastContainer({
+	location,
+	className,
+	toasts,
+	...otherProps
+}) {
 	const regions = toasts.reduce((acc, toast) => {
 		const toastLocation = location || toast.location;
 
-		if (!acc[toastLocation]) { acc[toastLocation] = []; }
+		if (!acc[toastLocation]) {
+			acc[toastLocation] = [];
+		}
 
 		acc[toastLocation].push(toast);
 
@@ -47,16 +50,20 @@ export default function ToastContainer ({location, className, toasts, ...otherPr
 	}, {});
 
 	return (
-		<ZStack data-toast-container="yes" className={cx(styles.container, className)} {...otherProps}>
-			{
-				RegionOrder
-					.map((name) => {
-						if (!regions[name] || !regions[name].length) { return null; }
+		<ZStack
+			data-toast-container="yes"
+			className={cx(styles.container, className)}
+			{...otherProps}
+		>
+			{RegionOrder.map(name => {
+				if (!regions[name] || !regions[name].length) {
+					return null;
+				}
 
-						return (<Region key={name} location={name} toasts={regions[name]} />);
-					})
-					.filter(Boolean)
-			}
+				return (
+					<Region key={name} location={name} toasts={regions[name]} />
+				);
+			}).filter(Boolean)}
 		</ZStack>
 	);
 }

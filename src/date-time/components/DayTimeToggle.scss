@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .daytime-toggle.flyout {
 	min-width: 300px;
@@ -21,7 +21,11 @@
 		.part {
 			flex: 1 1 auto;
 			background: #fff;
-			background-image: -webkit-linear-gradient(top, #fff 0%, #f2f2f2 100%);
+			background-image: -webkit-linear-gradient(
+				top,
+				#fff 0%,
+				#f2f2f2 100%
+			);
 			background-image: linear-gradient(to bottom, #fff 0%, #f2f2f2 100%);
 			border: 1px solid rgba(150, 150, 150, 0.3);
 			text-align: center;

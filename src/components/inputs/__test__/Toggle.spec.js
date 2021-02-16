@@ -8,7 +8,7 @@ describe('Toggle Input', () => {
 	test('Test default state', async () => {
 		const onChange = jest.fn();
 
-		const {container} = render(<Toggle onChange={onChange}/>);
+		const { container } = render(<Toggle onChange={onChange} />);
 
 		const toggleLabel = container.querySelector('.toggle-label');
 		const toggler = container.querySelector('.toggler');
@@ -34,7 +34,9 @@ describe('Toggle Input', () => {
 
 	test('Test provided value', async () => {
 		const onChange = jest.fn();
-		const {container} = render(<Toggle className="test-name" value onChange={onChange}/>);
+		const { container } = render(
+			<Toggle className="test-name" value onChange={onChange} />
+		);
 
 		let toggleLabel = container.querySelector('.toggle-label');
 		let toggler = container.querySelector('.toggler');
@@ -59,7 +61,7 @@ describe('Toggle Input', () => {
 	});
 
 	test('Test hide label', () => {
-		const {container} = render(<Toggle hideLabel/>);
+		const { container } = render(<Toggle hideLabel />);
 
 		// label should not appear, but toggler should still be there
 		expect(container.querySelector('.toggle-label')).toBeFalsy();

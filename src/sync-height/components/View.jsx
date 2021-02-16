@@ -10,24 +10,22 @@ export default class SyncHeightView extends React.Component {
 			setHeightFor: PropTypes.func.isRequired,
 			addListener: PropTypes.func.isRequired,
 			removeListener: PropTypes.func.isRequired,
-			height: PropTypes.number.isRequired
+			height: PropTypes.number.isRequired,
 		}).isRequired,
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
-	attachHeightMonitorRef = x => this.heightMonitor = x
+	attachHeightMonitorRef = x => (this.heightMonitor = x);
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = this.getStateForGroup(props);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {group:newGroup} = this.props;
-		const {group:oldGroup} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { group: newGroup } = this.props;
+		const { group: oldGroup } = prevProps;
 
 		if (newGroup !== oldGroup) {
 			this.addListener(this.props);
@@ -36,74 +34,70 @@ export default class SyncHeightView extends React.Component {
 		}
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.addListeners();
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.removeListeners();
 	}
 
-
-	getStateForGroup (props = this.props) {
-		const {group} = props;
+	getStateForGroup(props = this.props) {
+		const { group } = props;
 
 		return {
 			item: group.getNewItem(),
-			height: group.height
+			height: group.height,
 		};
 	}
 
-
-	addListener (props = this.props) {
+	addListener(props = this.props) {
 		this.removeListener();
 
-		const {group} = props;
+		const { group } = props;
 
 		group.addListener('sync-height', this.syncHeight);
 	}
 
-
-	removeListener (props = this.props) {
-		const {group} = props;
+	removeListener(props = this.props) {
+		const { group } = props;
 
 		group.removeListener('sync-height', this.syncHeight);
 	}
 
-
 	syncHeight = () => {
-		const {height:newHeight} = this.props.group;
-		const {height:oldHeight} = this.state;
+		const { height: newHeight } = this.props.group;
+		const { height: oldHeight } = this.state;
 
 		if (newHeight !== oldHeight) {
 			this.setState({
-				height: newHeight
+				height: newHeight,
 			});
 		}
-	}
-
+	};
 
 	updateHeight = () => {
-		const {group} = this.props;
+		const { group } = this.props;
 		const height = this.heightMonitor && this.heightMonitor.height;
 
 		if (height != null && group) {
 			group.setHeightFor(this.item, height);
 		}
-	}
+	};
 
-
-	render () {
-		const {children, ...otherProps} = this.props;
-		const {height} = this.state;
+	render() {
+		const { children, ...otherProps } = this.props;
+		const { height } = this.state;
 
 		delete otherProps.group;
 
 		//TODO: maybe don't stomp on inline styles
 		return (
-			<div {...otherProps} style={{minHeight: `${height}px`}}>
-				<HeightMonitor ref={this.attachHeightMonitorRef} onChange={this.updateHeight}>
+			<div {...otherProps} style={{ minHeight: `${height}px` }}>
+				<HeightMonitor
+					ref={this.attachHeightMonitorRef}
+					onChange={this.updateHeight}
+				>
 					{children}
 				</HeightMonitor>
 			</div>

@@ -1,4 +1,4 @@
-export function getItem (o, p, ...r) {
+export function getItem(o, p, ...r) {
 	if (o.getItem) {
 		return o.getItem(p, ...r);
 	}
@@ -6,25 +6,21 @@ export function getItem (o, p, ...r) {
 }
 
 export default {
-
-	componentDidMount () {
+	componentDidMount() {
 		this.listen(getItem(this, this.props, this.state, this.context));
 	},
 
-
-	componentDidUpdate (...prev) {
+	componentDidUpdate(...prev) {
 		let next = [this.props, this.state, this.context];
 		this.stopListening(getItem(this, ...prev));
 		this.listen(getItem(this, ...next));
 	},
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.stopListening(getItem(this, this.props));
 	},
 
-
-	listen (item) {
+	listen(item) {
 		if (item) {
 			if (typeof item.addListener !== 'function') {
 				return;
@@ -33,19 +29,17 @@ export default {
 		}
 	},
 
-
-	stopListening (item) {
+	stopListening(item) {
 		if (item && typeof item.removeListener === 'function') {
 			item.removeListener('change', this.itemChanged);
 		}
 	},
 
-
-	itemChanged () {
+	itemChanged() {
 		if (this.onItemChanged) {
 			this.onItemChanged();
 		} else {
 			this.forceUpdate();
 		}
-	}
+	},
 };

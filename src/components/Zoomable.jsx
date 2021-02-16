@@ -2,7 +2,7 @@ import './Zoomable.scss';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import {Point} from '@nti/lib-commons';
+import { Point } from '@nti/lib-commons';
 
 const pointFromTouch = t => new Point(t.pageX, t.pageY, t.identifier);
 
@@ -13,23 +13,27 @@ export default createReactClass({
 
 	propTypes: {
 		src: PropTypes.string,
-		onClose: PropTypes.func
+		onClose: PropTypes.func,
 	},
 
-	attachContainerRef (x) {this.container = x;},
-	attachImageRef (x) {this.img = x;},
+	attachContainerRef(x) {
+		this.container = x;
+	},
+	attachImageRef(x) {
+		this.img = x;
+	},
 
-	getInitialState () {
+	getInitialState() {
 		return {
 			src: null,
 			startScale: 1.0,
 			scale: 1.0,
 			translate: Point.ORIGIN,
-			startOffset: Point.ORIGIN
+			startOffset: Point.ORIGIN,
 		};
 	},
 
-	close () {
+	close() {
 		activeTouches = {};
 		this.setState(this.getInitialState());
 		if (this.props.onClose) {
@@ -37,7 +41,7 @@ export default createReactClass({
 		}
 	},
 
-	touchStart (evt) {
+	touchStart(evt) {
 		// keep track of active touches.
 		let touches = evt.changedTouches;
 		for (let i = 0; i < touches.length; i++) {
@@ -46,8 +50,7 @@ export default createReactClass({
 		}
 	},
 
-	handleMultitouchMove (touches) {
-
+	handleMultitouchMove(touches) {
 		let t1 = pointFromTouch(touches[0]);
 		let t2 = pointFromTouch(touches[1]);
 		let ot1 = activeTouches[t1.id];
@@ -59,18 +62,21 @@ export default createReactClass({
 		let originalDistance = Math.sqrt(od.x * od.x + od.y * od.y);
 		let newDistance = Math.sqrt(nd.x * nd.x + nd.y * nd.y);
 		let startScale = this.state.startScale || 1.0;
-		let scale = Math.max(newDistance / originalDistance * startScale, 1.0);
+		let scale = Math.max(
+			(newDistance / originalDistance) * startScale,
+			1.0
+		);
 
 		let offset = this.constrainOffsets();
 
 		this.setState({
 			scale: scale,
-			translate: offset
+			translate: offset,
 		});
 	},
 
-	constrainOffsets (offset = this.state.translate) {
-		const {container, img} = this;
+	constrainOffsets(offset = this.state.translate) {
+		const { container, img } = this;
 		let containerRect = container.getBoundingClientRect();
 		let imgRect = img.getBoundingClientRect();
 
@@ -84,27 +90,26 @@ export default createReactClass({
 		return offset;
 	},
 
-	handleSingleTouchMove (point) {
+	handleSingleTouchMove(point) {
 		let ot = activeTouches[point.id];
 		let offset = point.minus(ot).plus(this.state.startOffset);
 		offset = this.constrainOffsets(offset);
 		this.setState({
-			translate: offset
+			translate: offset,
 		});
 	},
 
-	touchMove (evt) {
+	touchMove(evt) {
 		let touches = evt.changedTouches;
 		evt.preventDefault();
 		if (touches.length > 1) {
 			this.handleMultitouchMove(touches);
-		}
-		else if (Object.keys(activeTouches).length === 1) {
+		} else if (Object.keys(activeTouches).length === 1) {
 			this.handleSingleTouchMove(pointFromTouch(touches[0]));
 		}
 	},
 
-	touchEnd (evt) {
+	touchEnd(evt) {
 		// stop tracking ended touches.
 		let touches = evt.changedTouches;
 		for (let i = 0; i < touches.length; i++) {
@@ -112,25 +117,27 @@ export default createReactClass({
 			delete activeTouches[t.identifier];
 		}
 
-		const {state: {scale, translate}} = this;
+		const {
+			state: { scale, translate },
+		} = this;
 
 		this.setState({
 			startScale: scale || 1.0,
-			startOffset: translate || Point.ORIGIN
+			startOffset: translate || Point.ORIGIN,
 		});
 	},
 
-	render () {
-		let {src} = this.props;
+	render() {
+		let { src } = this.props;
 		if (!src) {
 			return null;
 		}
-		let {scale, transformOrigin, translate} = this.state;
+		let { scale, transformOrigin, translate } = this.state;
 		scale = scale || 1.0;
 
 		let style = {
 			WebkitTransform: `translate3d(${translate.x}px, ${translate.y}px, 0) scale3d(${scale}, ${scale}, 1)`,
-			transform: `translate3d(${translate.x}px, ${translate.y}px, 0) scale3d(${scale}, ${scale}, 1)`
+			transform: `translate3d(${translate.x}px, ${translate.y}px, 0) scale3d(${scale}, ${scale}, 1)`,
 		};
 
 		if (transformOrigin) {
@@ -138,15 +145,21 @@ export default createReactClass({
 		}
 
 		return (
-			<div className="zoomable"
+			<div
+				className="zoomable"
 				ref={this.attachContainerRef}
 				onTouchStart={this.touchStart}
 				onTouchMove={this.touchMove}
 				onTouchEnd={this.touchEnd}
 			>
-				<img src={src} style={style} ref={this.attachImageRef} className="zoomable-img" />
-				<button className="zoomable-close" onClick={this.close}/>
+				<img
+					src={src}
+					style={style}
+					ref={this.attachImageRef}
+					className="zoomable-img"
+				/>
+				<button className="zoomable-close" onClick={this.close} />
 			</div>
 		);
-	}
+	},
 });

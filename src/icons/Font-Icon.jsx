@@ -8,10 +8,8 @@ const cx = classnames.bind(Styles);
 
 FontIcon.propTypes = {
 	className: PropTypes.string,
-	icon: PropTypes.string
+	icon: PropTypes.string,
 };
-export default function FontIcon ({className, icon, ...otherProps}) {
-	return (
-		<i className={cx('font-icon', className, icon)} {...otherProps} />
-	);
+export default function FontIcon({ className, icon, ...otherProps }) {
+	return <i className={cx('font-icon', className, icon)} {...otherProps} />;
 }

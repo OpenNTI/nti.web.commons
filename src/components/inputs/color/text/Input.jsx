@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Select from '../../../Select';
 
@@ -14,31 +14,31 @@ const cx = classnames.bind(Styles);
 const t = scoped('common.inputs.color.text.Input', {
 	hex: 'HEX',
 	hsl: 'HSL',
-	rgb: 'RGB'
+	rgb: 'RGB',
 });
 
 const types = {
 	hex: Hex,
 	hsl: HSL,
-	rgb: RGB
+	rgb: RGB,
 };
 
 export default class ColorTextInput extends React.Component {
-	static Hex = Hex
-	static HSL = HSL
-	static RGB = RGB
+	static Hex = Hex;
+	static HSL = HSL;
+	static RGB = RGB;
 
 	static propTypes = {
-		className: PropTypes.string
-	}
+		className: PropTypes.string,
+	};
 
-	state = {selected: 'hex'}
+	state = { selected: 'hex' };
 
-	changeMode = (e) => this.setState({selected: e.target.value})
+	changeMode = e => this.setState({ selected: e.target.value });
 
-	render () {
-		const {className, ...otherProps} = this.props;
-		const {selected} = this.state;
+	render() {
+		const { className, ...otherProps } = this.props;
+		const { selected } = this.state;
 		const Cmp = types[selected];
 
 		return (

@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Tasks, getRefHandler} from '@nti/lib-commons';
+import { Tasks, getRefHandler } from '@nti/lib-commons';
 
-function setTextContent (node, text) {
+function setTextContent(node, text) {
 	if (text) {
-		const {firstChild, lastChild} = node;
+		const { firstChild, lastChild } = node;
 
-		if (firstChild && firstChild === lastChild && firstChild.nodeType === 3) {
+		if (
+			firstChild &&
+			firstChild === lastChild &&
+			firstChild.nodeType === 3
+		) {
 			firstChild.nodeValue = text;
 			return;
 		}
@@ -20,51 +24,43 @@ function setTextContent (node, text) {
 }
 
 export default class Ellipsed extends React.Component {
-
 	static propTypes = {
 		tag: PropTypes.string,
-		measureOverflow: PropTypes.oneOf(['self', 'parent']).isRequired
-	}
-
+		measureOverflow: PropTypes.oneOf(['self', 'parent']).isRequired,
+	};
 
 	static defaultProps = {
 		tag: 'div',
-		measureOverflow: 'self'
-	}
+		measureOverflow: 'self',
+	};
 
+	static trim = trim;
 
-	static trim = trim
+	attachRef = ref => (this.element = ref);
 
-
-	attachRef = ref => this.element = ref;
-
-
-	componentDidMount () {
+	componentDidMount() {
 		Tasks.SharedExecution.clear(this.tt);
 		this.tt = truncateText(this.element, this.props.measureOverflow);
 	}
 
-
-	componentDidUpdate () {
+	componentDidUpdate() {
 		Tasks.SharedExecution.clear(this.tt);
 		this.tt = truncateText(this.element, this.props.measureOverflow);
 	}
 
-
-	render () {
-		const {tag, ...otherProps} = this.props;
+	render() {
+		const { tag, ...otherProps } = this.props;
 		delete otherProps.measureOverflow;
 		const ref = getRefHandler(otherProps.ref, this.attachRef);
-		return React.createElement(tag, {...otherProps, ref});
+		return React.createElement(tag, { ...otherProps, ref });
 	}
 }
 
-function truncateText (el, measure) {
-	let textProperty = (el.textContent != null) ? 'textContent' : 'innerText';
+function truncateText(el, measure) {
+	let textProperty = el.textContent != null ? 'textContent' : 'innerText';
 
 	let getText = () => el[textProperty];
 	let setText = text => setTextContent(el, text);
-
 
 	let setTitleOnce = () => {
 		el.setAttribute('title', getText());
@@ -77,12 +73,12 @@ function truncateText (el, measure) {
 		return;
 	}
 
-
 	return Tasks.SharedExecution.schedule(() => {
-		const box = (measure === 'parent') ? el.parentNode : el;
-		const tooBig = () => box.scrollHeight - (box.clientHeight || box.offsetHeight) >= 1;
+		const box = measure === 'parent' ? el.parentNode : el;
+		const tooBig = () =>
+			box.scrollHeight - (box.clientHeight || box.offsetHeight) >= 1;
 
-		function trimStep () {
+		function trimStep() {
 			if (tooBig()) {
 				if (getText() !== '...') {
 					setTitleOnce();
@@ -98,8 +94,7 @@ function truncateText (el, measure) {
 	});
 }
 
-
-export function trim (value, len, word) {
+export function trim(value, len, word) {
 	if (value && value.length > len) {
 		if (word) {
 			const vs = value.substr(0, len - 2);
@@ -110,7 +105,7 @@ export function trim (value, len, word) {
 				vs.lastIndexOf('?')
 			);
 
-			if (index !== -1 && index >= (len - 15)) {
+			if (index !== -1 && index >= len - 15) {
 				return vs.substr(0, index) + '...';
 			}
 		}

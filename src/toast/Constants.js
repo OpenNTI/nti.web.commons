@@ -15,7 +15,7 @@ export const DefaultLocation = Locations.Top;
 export const Styles = {
 	Info: 'info',
 	Warning: 'warning',
-	Error: 'error'
+	Error: 'error',
 };
 
 export const DefaultStyle = Styles.Info;

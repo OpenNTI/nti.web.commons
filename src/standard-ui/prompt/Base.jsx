@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Card from '../Card';
 import Button from '../../components/Button';
-import {useMediaQuery} from '../../hooks/use-media-query';
+import { useMediaQuery } from '../../hooks/use-media-query';
 import * as Responsive from '../../layouts/responsive';
 import Dialog from '../../prompts/Dialog';
 
 const t = scoped('web-commons.standard-ui.prompt.Confirm', {
 	cancel: 'Cancel',
-	done: 'Done'
+	done: 'Done',
 });
 
 const styles = css`
@@ -45,15 +45,21 @@ const styles = css`
 	.large .action {
 		min-width: 150px;
 	}
-	.action.destructive { background-color: var(--primary-red); }
-	.action.constructive { background-color: var(--secondary-green); }
-	.action.dismissive { background-color: var(--primary-blue); }
+	.action.destructive {
+		background-color: var(--primary-red);
+	}
+	.action.constructive {
+		background-color: var(--secondary-green);
+	}
+	.action.dismissive {
+		background-color: var(--primary-blue);
+	}
 `;
 
 const SmallCutOff = 350;
 const classList = [
-	{query: s => s.width < SmallCutOff, className: styles.small},
-	{query: s => s.width >= SmallCutOff, className: styles.large}
+	{ query: s => s.width < SmallCutOff, className: styles.small },
+	{ query: s => s.width >= SmallCutOff, className: styles.large },
 ];
 
 const Destructive = 'destructive';
@@ -75,12 +81,12 @@ BasePrompt.propTypes = {
 	actionHref: PropTypes.string,
 
 	onCancel: PropTypes.func,
-	cancelLabel: PropTypes.string
+	cancelLabel: PropTypes.string,
 };
-export default function BasePrompt ({
+export default function BasePrompt({
 	className,
 
-	as:tag,
+	as: tag,
 	inline,
 
 	children,
@@ -118,12 +124,13 @@ export default function BasePrompt ({
 		<Responsive.ClassList
 			as={tag || 'section'}
 			classList={classList}
-			className={cx(styles.prompt, className, 'nti-prompt', {[styles.fullscreen]: isFullscreen, [styles.inline]: inline})}
+			className={cx(styles.prompt, className, 'nti-prompt', {
+				[styles.fullscreen]: isFullscreen,
+				[styles.inline]: inline,
+			})}
 			{...extraProps}
 		>
-			<div className={styles.content}>
-				{children}
-			</div>
+			<div className={styles.content}>{children}</div>
 			<div className={styles.buttons}>
 				{onCancel && (
 					<Button
@@ -143,7 +150,7 @@ export default function BasePrompt ({
 					className={cx(styles.action, {
 						[styles.destructive]: isDestructive,
 						[styles.constructive]: isConstructive,
-						[styles.dismissive]: isDismissive
+						[styles.dismissive]: isDismissive,
 					})}
 				>
 					{actionLabel ?? t('done')}
@@ -152,13 +159,13 @@ export default function BasePrompt ({
 		</Responsive.ClassList>
 	);
 
-	if (inline) { return content; }
+	if (inline) {
+		return content;
+	}
 
 	return (
 		<Dialog onBeforeDismiss={onCancel}>
-			<Card rounded>
-				{content}
-			</Card>
+			<Card rounded>{content}</Card>
 		</Dialog>
 	);
 }

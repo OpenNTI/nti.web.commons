@@ -1,8 +1,7 @@
 import './FilterBar.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getEventTarget} from '@nti/lib-dom';
-
+import { getEventTarget } from '@nti/lib-dom';
 
 //Only Used by CollectionFilter.jsx
 export default class FilterBar extends React.Component {
@@ -17,37 +16,37 @@ export default class FilterBar extends React.Component {
 		list: PropTypes.oneOfType([
 			PropTypes.array,
 			PropTypes.shape({
-				filter: PropTypes.func
-			})
+				filter: PropTypes.func,
+			}),
 		]),
-	}
+	};
 
 	static contextTypes = {
-		setFilter: PropTypes.func.isRequired
-	}
+		setFilter: PropTypes.func.isRequired,
+	};
 
-
-	onSelectFilter = (e) => {
+	onSelectFilter = e => {
 		e.stopPropagation();
 		e.preventDefault();
-		const {setFilter} = this.context;
+		const { setFilter } = this.context;
 
 		const anchor = getEventTarget(e, 'a[href]');
 		const filter = anchor.hash.substr(1);
 
 		setFilter(filter);
-	}
+	};
 
-
-	getItemCount (filter) {
-		const {props: {list}} = this;
-		if(filter && list.filter) {
+	getItemCount(filter) {
+		const {
+			props: { list },
+		} = this;
+		if (filter && list.filter) {
 			return list.filter(filter.test).length;
 		}
 		return 0;
 	}
 
-	render () {
+	render() {
 		return (
 			<div>
 				<h2>{this.props.title}</h2>
@@ -56,9 +55,10 @@ export default class FilterBar extends React.Component {
 		);
 	}
 
-
-	renderFilterBar  () {
-		const {props: {filters = []}} = this;
+	renderFilterBar() {
+		const {
+			props: { filters = [] },
+		} = this;
 		return filters.length === 0 ? null : (
 			<ul className="filter-bar">
 				{filters.map(this.renderFilterLink, this)}
@@ -66,21 +66,23 @@ export default class FilterBar extends React.Component {
 		);
 	}
 
-
-	renderFilterLink (filter) {
-		const {name, kind} = filter;
-		const {props: {filter: propsFilter}} = this;
-		const isActive = propsFilter.kind === filter.kind || propsFilter.name === filter.name;
+	renderFilterLink(filter) {
+		const { name, kind } = filter;
+		const {
+			props: { filter: propsFilter },
+		} = this;
+		const isActive =
+			propsFilter.kind === filter.kind ||
+			propsFilter.name === filter.name;
 
 		return (
 			<li key={name} className={isActive ? 'active' : null}>
 				<a href={`#${kind}`} onClick={this.onSelectFilter}>
 					<span className="filtername">{name}</span>
-					{' '/*preserves the space between spans*/}
+					{' ' /*preserves the space between spans*/}
 					<span className="count">{this.getItemCount(filter)}</span>
 				</a>
 			</li>
 		);
 	}
-
 }

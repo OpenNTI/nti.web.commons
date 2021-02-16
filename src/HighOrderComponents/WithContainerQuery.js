@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {HOC} from '@nti/lib-commons';
+import { HOC } from '@nti/lib-commons';
 
-import {ElementSize} from '../components/monitors';
+import { ElementSize } from '../components/monitors';
 
 import Variant from './Variant';
 
-function buildPropGetter (queries) {
+function buildPropGetter(queries) {
 	if (typeof queries === 'function') {
-		return (size) => queries(size);
+		return size => queries(size);
 	}
 
 	if (!Array.isArray(queries)) {
 		queries = [queries];
 	}
 
-	return (size) => {
+	return size => {
 		for (let query of queries) {
 			if (query.query(size)) {
 				if (typeof query.props === 'function') {
@@ -35,12 +35,22 @@ ContainerQuery.propTypes = {
 	_componentRef: PropTypes.any,
 
 	className: PropTypes.string,
-	as: PropTypes.any
+	as: PropTypes.any,
 };
-function ContainerQuery ({_propGetter, _component:Cmp, _componentRef, className, as, ...otherProps}) {
+function ContainerQuery({
+	_propGetter,
+	_component: Cmp,
+	_componentRef,
+	className,
+	as,
+	...otherProps
+}) {
 	const [activeProps, setActiveProps] = React.useState({});
 
-	const onSizeChange = React.useCallback((size) => setActiveProps(_propGetter(size)), [_propGetter]);
+	const onSizeChange = React.useCallback(
+		size => setActiveProps(_propGetter(size)),
+		[_propGetter]
+	);
 
 	return (
 		<ElementSize
@@ -48,15 +58,18 @@ function ContainerQuery ({_propGetter, _component:Cmp, _componentRef, className,
 			onChange={onSizeChange}
 			className={cx(className, activeProps?.className)}
 		>
-			<Cmp {...Variant.combineProps(activeProps, otherProps)} ref={_componentRef} />
+			<Cmp
+				{...Variant.combineProps(activeProps, otherProps)}
+				ref={_componentRef}
+			/>
 		</ElementSize>
 	);
 }
 
-export default function WithContainerQuery (queries, containerProps = {}) {
+export default function WithContainerQuery(queries, containerProps = {}) {
 	const propGetter = buildPropGetter(queries);
 
-	return (Cmp) => {
+	return Cmp => {
 		const Wrapper = (props, ref) => (
 			<ContainerQuery
 				_propGetter={propGetter}

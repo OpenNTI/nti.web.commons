@@ -5,8 +5,8 @@ import Registry from './Registry';
 
 const registry = Registry.getInstance();
 
-export const Types = {Complex, Markup, PlainText};
+export const Types = { Complex, Markup, PlainText };
 
-export function getRenderer (props) {
+export function getRenderer(props) {
 	return registry.getItemFor(props);
 }

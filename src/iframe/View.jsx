@@ -1,17 +1,17 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
-import {Loading} from '../components';
+import { Loading } from '../components';
 
-import {getEmbedLink} from './utils';
+import { getEmbedLink } from './utils';
 import Header from './Header';
 
 const t = scoped('web-common.iframe.Viewer', {
 	loading: 'Loading',
-	error: 'Unable to view contents.'
+	error: 'Unable to view contents.',
 });
 
 export default class IframeViewer extends React.Component {
@@ -29,9 +29,8 @@ export default class IframeViewer extends React.Component {
 
 		onError: PropTypes.func,
 
-		onDismiss: PropTypes.func
-	}
-
+		onDismiss: PropTypes.func,
+	};
 
 	static defaultProps = {
 		config: {
@@ -39,30 +38,26 @@ export default class IframeViewer extends React.Component {
 			toolbar: 0,
 			navpanes: 0,
 			statusbar: 0,
-			page: 1
-		}
-	}
+			page: 1,
+		},
+	};
 
+	state = { loading: true };
 
-	state = {loading: true}
-
-
-	get embedLink () {
-		const {src, config, format} = this.props;
+	get embedLink() {
+		const { src, config, format } = this.props;
 
 		return getEmbedLink(src, config, format);
 	}
 
-
 	onLoad = () => {
 		this.setState({
-			loading: false
+			loading: false,
 		});
-	}
-
+	};
 
 	onError = () => {
-		const {onError} = this.props;
+		const { onError } = this.props;
 
 		if (onError) {
 			onError();
@@ -70,18 +65,21 @@ export default class IframeViewer extends React.Component {
 
 		this.setState({
 			loading: false,
-			error: true
+			error: true,
 		});
-	}
+	};
 
-
-	render () {
-		const {onDismiss, className} = this.props;
-		const {loading, error} = this.state;
-		const {embedLink} = this;
+	render() {
+		const { onDismiss, className } = this.props;
+		const { loading, error } = this.state;
+		const { embedLink } = this;
 
 		return (
-			<div className={cx('nti-iframe-viewer', className, {modal: !!onDismiss})}>
+			<div
+				className={cx('nti-iframe-viewer', className, {
+					modal: !!onDismiss,
+				})}
+			>
 				<Header {...this.props} />
 				<div className="content">
 					{loading && this.renderLoading()}
@@ -101,24 +99,15 @@ export default class IframeViewer extends React.Component {
 		);
 	}
 
+	renderLoading() {
+		const { loadingMessage } = this.props;
 
-	renderLoading () {
-		const {loadingMessage} = this.props;
-
-		return (
-			<Loading.Mask message={loadingMessage || t('loading')} />
-		);
+		return <Loading.Mask message={loadingMessage || t('loading')} />;
 	}
 
+	renderError() {
+		const { errorMessage } = this.props;
 
-
-	renderError () {
-		const {errorMessage} = this.props;
-
-		return (
-			<div className="error">
-				{errorMessage || t('error')}
-			</div>
-		);
+		return <div className="error">{errorMessage || t('error')}</div>;
 	}
 }

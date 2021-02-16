@@ -4,8 +4,6 @@ import FontIcon from './Font-Icon';
 
 const Icon = 'icon-settings';
 
-export function Gear (props) {
-	return (
-		<FontIcon icon={Icon} />
-	);
+export function Gear(props) {
+	return <FontIcon icon={Icon} />;
 }

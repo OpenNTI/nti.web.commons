@@ -1,11 +1,13 @@
 import './Whacky.scss';
 import React from 'react';
 
-export default function LoadingInline () {
+export default function LoadingInline() {
 	return (
 		<div className="inline-loader-wrap">
 			<ul className="loader">
-				<li/><li/><li/>
+				<li />
+				<li />
+				<li />
 			</ul>
 		</div>
 	);

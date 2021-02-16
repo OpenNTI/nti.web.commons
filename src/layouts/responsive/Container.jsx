@@ -2,31 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
 
-import {Query} from '../../components';
+import { Query } from '../../components';
 
 import Item from './Item';
 
 const logger = Logger.get('common:layouts:responsive:container');
 
-
 export default class ResponsiveContainer extends React.Component {
 	static propTypes = {
-		children: PropTypes.any
-	}
+		children: PropTypes.any,
+	};
 
+	state = {};
 
-	state = {}
-
-
-	onWidthChange = (width) => {
+	onWidthChange = width => {
 		this.setState({
-			width
+			width,
 		});
-	}
+	};
 
-
-	render () {
-		const otherProps = {...this.props};
+	render() {
+		const otherProps = { ...this.props };
 
 		delete otherProps.children;
 
@@ -37,21 +33,26 @@ export default class ResponsiveContainer extends React.Component {
 		);
 	}
 
+	renderChildren() {
+		const { children } = this.props;
+		const { width } = this.state;
 
-	renderChildren () {
-		const {children} = this.props;
-		const {width} = this.state;
-
-		if (width == null) { return null; }
+		if (width == null) {
+			return null;
+		}
 
 		return (
 			<React.Fragment>
-				{React.Children.map(children, (child) => {
+				{React.Children.map(children, child => {
 					if (child.type !== Item) {
-						logger.warn('Unexpected child type given to Responsive.Container. Dropping it on the floor.');
+						logger.warn(
+							'Unexpected child type given to Responsive.Container. Dropping it on the floor.'
+						);
 					}
 
-					return React.cloneElement(child, {additionalArguments: {containerWidth: width}});
+					return React.cloneElement(child, {
+						additionalArguments: { containerWidth: width },
+					});
 				})}
 			</React.Fragment>
 		);

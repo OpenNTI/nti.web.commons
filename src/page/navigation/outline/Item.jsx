@@ -12,12 +12,19 @@ NavigationOutlineItem.activeClassName = cx('active-outline-item');
 NavigationOutlineItem.propTypes = {
 	className: PropTypes.string,
 
-	as: PropTypes.any
+	as: PropTypes.any,
 };
-export default function NavigationOutlineItem ({className, as: tag, ...otherProps}) {
+export default function NavigationOutlineItem({
+	className,
+	as: tag,
+	...otherProps
+}) {
 	const Cmp = tag || 'a';
 
 	return (
-		<Cmp className={cx('outline-item', className, Text.Classes.Base)} {...otherProps} />
+		<Cmp
+			className={cx('outline-item', className, Text.Classes.Base)}
+			{...otherProps}
+		/>
 	);
 }

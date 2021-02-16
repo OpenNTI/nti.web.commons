@@ -1,14 +1,13 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-layouts-carousel {
 	&.has-transition {
 		position: relative;
 	}
 
-	.carousel-transition-rotate-up-enter-active, .carousel-transition-rotate-up-exit-active {
-		transition:
-			opacity 1000ms ease-in-out,
-			top 1000ms ease-in-out,
+	.carousel-transition-rotate-up-enter-active,
+	.carousel-transition-rotate-up-exit-active {
+		transition: opacity 1000ms ease-in-out, top 1000ms ease-in-out,
 			transform 1000ms ease-in-out;
 	}
 

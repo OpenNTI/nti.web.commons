@@ -9,9 +9,9 @@ import Styles from './Error.css';
 const cx = classnames.bind(Styles);
 
 PageError.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function PageError ({className, ...otherProps}) {
+export default function PageError({ className, ...otherProps }) {
 	return (
 		<section className={cx('error-page', className)}>
 			<Errors.Message {...otherProps} />

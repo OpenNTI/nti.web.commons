@@ -8,21 +8,17 @@ import {
 	getChangedValues,
 	getValueForOption,
 	optionMatchesTerm,
-	multipleKeyDownStateModifier
+	multipleKeyDownStateModifier,
 } from './utils';
 
 const SCROLL_TO_OPTION = Symbol('Scroll To Option');
 
 const cx = classnames.bind(Styles);
 
-
 export default class MultipleSelect extends React.Component {
 	static propTypes = {
 		values: PropTypes.arrayOf(
-			PropTypes.oneOfType([
-				PropTypes.string,
-				PropTypes.number
-			])
+			PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 		),
 
 		className: PropTypes.string,
@@ -30,12 +26,12 @@ export default class MultipleSelect extends React.Component {
 		onChange: PropTypes.func,
 		children: PropTypes.node,
 
-		disabled: PropTypes.bool
-	}
+		disabled: PropTypes.bool,
+	};
 
-	attachInputRef = (node) => this.input = node
+	attachInputRef = node => (this.input = node);
 
-	attachFocusedRef = (node) => {
+	attachFocusedRef = node => {
 		const changed = this.focusedOption !== node;
 
 		this.focusedOption = node;
@@ -43,46 +39,45 @@ export default class MultipleSelect extends React.Component {
 		if (changed) {
 			this[SCROLL_TO_OPTION]();
 		}
-	}
+	};
 
-	attachOptionListRef = (node) => {
+	attachOptionListRef = node => {
 		this.optionList = node;
 
 		this[SCROLL_TO_OPTION]();
-	}
-
+	};
 
 	state = {
 		activeOptions: [],
 		selectedOptions: [],
-		focusedIndex: -1
-	}
+		focusedIndex: -1,
+	};
 
-	focus () {
+	focus() {
 		if (this.input) {
 			this.input.focus();
 		}
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
+	componentDidUpdate(prevProps) {
+		const { values: oldValues, children: oldChildren } = prevProps;
+		const { values, children } = this.props;
 
-	componentDidUpdate (prevProps) {
-		const {values: oldValues, children: oldChildren} = prevProps;
-		const {values, children} = this.props;
-
-		if (oldValues !== values || React.Children.count(oldChildren) !== React.Children.count(children)) {
+		if (
+			oldValues !== values ||
+			React.Children.count(oldChildren) !== React.Children.count(children)
+		) {
 			this.setupFor(this.props, oldValues);
 		}
 	}
 
-
-	setupFor (props, oldValues) {
-		const {children, values} = props;
-		const {focusedIndex} = this.state;
+	setupFor(props, oldValues) {
+		const { children, values } = props;
+		const { focusedIndex } = this.state;
 		const changedValuesSet = getChangedValues(values, oldValues);
 		const valuesSet = new Set(values);
 		const options = React.Children.toArray(children);
@@ -107,15 +102,16 @@ export default class MultipleSelect extends React.Component {
 			activeOptions: options,
 			selectedOptions,
 			selectedIndex,
-			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex
+			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex,
 		});
 	}
 
+	[SCROLL_TO_OPTION]() {
+		const { focusedOption, optionList } = this;
 
-	[SCROLL_TO_OPTION] () {
-		const {focusedOption, optionList} = this;
-
-		if (!focusedOption || !optionList) { return null; }
+		if (!focusedOption || !optionList) {
+			return null;
+		}
 
 		const listRect = optionList.getBoundingClientRect();
 		const optionRect = focusedOption.getBoundingClientRect();
@@ -135,17 +131,19 @@ export default class MultipleSelect extends React.Component {
 		optionList.scrollTop = newTop;
 	}
 
-	selectOptions (values) {
-		const {onChange} = this.props;
+	selectOptions(values) {
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange(values);
 		}
 	}
 
-	toggleOption = (value) => {
-		const {selectedOptions} = this.state;
-		const selectedValues = selectedOptions.map(option => getValueForOption(option));
+	toggleOption = value => {
+		const { selectedOptions } = this.state;
+		const selectedValues = selectedOptions.map(option =>
+			getValueForOption(option)
+		);
 		const selectedSet = new Set(selectedValues);
 
 		if (selectedSet.has(value)) {
@@ -156,12 +154,12 @@ export default class MultipleSelect extends React.Component {
 
 		this.selectOptions(Array.from(selectedSet));
 		this.focus();
-	}
+	};
 
-	onInputChange = (e) => {
-		const {value} = e.target;
+	onInputChange = e => {
+		const { value } = e.target;
 
-		const {activeOptions, focusedIndex} = this.state;
+		const { activeOptions, focusedIndex } = this.state;
 
 		clearTimeout(this.clearInputBufferTimeout);
 
@@ -176,62 +174,74 @@ export default class MultipleSelect extends React.Component {
 			}
 		}
 
-		this.setState({
-			inputBuffer: value,
-			focusedIndex: newFocused
-		}, () => {
-			this.clearInputBufferTimeout =  setTimeout(() => {
-				this.setState({
-					inputBuffer: ''
-				});
-			}, 250);
-		});
-	}
+		this.setState(
+			{
+				inputBuffer: value,
+				focusedIndex: newFocused,
+			},
+			() => {
+				this.clearInputBufferTimeout = setTimeout(() => {
+					this.setState({
+						inputBuffer: '',
+					});
+				}, 250);
+			}
+		);
+	};
 
 	onInputFocus = () => {
-		const {focusedIndex} = this.state;
+		const { focusedIndex } = this.state;
 
 		this.setState({
 			focused: true,
-			focusedIndex: (focusedIndex == null || focusedIndex < 0) ? 0 : focusedIndex
+			focusedIndex:
+				focusedIndex == null || focusedIndex < 0 ? 0 : focusedIndex,
 		});
-	}
+	};
 
 	onInputBlur = () => {
-		this.setState({focused: false});
-	}
+		this.setState({ focused: false });
+	};
 
-
-	onInputKeyDown = (e) => {
-		const {selectedOptions: oldSelected} = this.state;
+	onInputKeyDown = e => {
+		const { selectedOptions: oldSelected } = this.state;
 		const newState = multipleKeyDownStateModifier(e, this.state);
-		const {selectedOptions: newSelected} = newState;
+		const { selectedOptions: newSelected } = newState;
 
 		if (oldSelected !== newSelected) {
-			this.selectOptions(newSelected.map(selected => getValueForOption(selected)));
+			this.selectOptions(
+				newSelected.map(selected => getValueForOption(selected))
+			);
 		}
 
 		this.setState(newState);
-	}
+	};
 
 	onListClick = () => {
 		this.focus();
-	}
-
+	};
 
 	onListFocus = () => {
 		this.focus();
-	}
+	};
 
-
-	render () {
-		const {disabled, className, optionsClassName} = this.props;
-		const {activeOptions, selectedOptions, focusedIndex, focused, inputBuffer} = this.state;
+	render() {
+		const { disabled, className, optionsClassName } = this.props;
+		const {
+			activeOptions,
+			selectedOptions,
+			focusedIndex,
+			focused,
+			inputBuffer,
+		} = this.state;
 		const selectedSet = new Set(selectedOptions);
 
 		return (
 			<div
-				className={cx('nti-multiple-select-input', className, {disabled, focused})}
+				className={cx('nti-multiple-select-input', className, {
+					disabled,
+					focused,
+				})}
 				onClick={this.onListClick}
 				onFocus={this.onListFocus}
 				ref={this.attachOptionListRef}
@@ -245,28 +255,40 @@ export default class MultipleSelect extends React.Component {
 					onBlur={this.onInputBlur}
 					onKeyDown={this.onInputKeyDown}
 				/>
-				<ul className={cx('nti-multiple-select-input-options', optionsClassName)}>
-					{activeOptions && activeOptions.map((option, index) => {
-						if (option.type !== Option) { throw new Error('Child of select must be an option'); }
+				<ul
+					className={cx(
+						'nti-multiple-select-input-options',
+						optionsClassName
+					)}
+				>
+					{activeOptions &&
+						activeOptions.map((option, index) => {
+							if (option.type !== Option) {
+								throw new Error(
+									'Child of select must be an option'
+								);
+							}
 
-						const selected = selectedSet.has(option);
-						const isFocused = index === focusedIndex;
+							const selected = selectedSet.has(option);
+							const isFocused = index === focusedIndex;
 
-						const ref = isFocused ? this.attachFocusedRef : null;
+							const ref = isFocused
+								? this.attachFocusedRef
+								: null;
 
-						const optionCmp = React.cloneElement(option, {
-							index,
-							onClick: this.toggleOption,
-							selected,
-							focused: isFocused
-						});
+							const optionCmp = React.cloneElement(option, {
+								index,
+								onClick: this.toggleOption,
+								selected,
+								focused: isFocused,
+							});
 
-						return (
-							<li key={index} ref={ref}>
-								{optionCmp}
-							</li>
-						);
-					})}
+							return (
+								<li key={index} ref={ref}>
+									{optionCmp}
+								</li>
+							);
+						})}
 				</ul>
 			</div>
 		);

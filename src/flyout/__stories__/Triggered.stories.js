@@ -4,19 +4,14 @@ import Triggered from '../Triggered';
 
 export default {
 	title: 'Flyout/Triggered',
-	component: Triggered
+	component: Triggered,
 };
 
 export const Base = () => (
-	<Triggered
-		trigger={<button>Open Flyout</button>}
-	>
-		<p>
-			Flyout Content
-		</p>
+	<Triggered trigger={<button>Open Flyout</button>}>
+		<p>Flyout Content</p>
 	</Triggered>
 );
-
 
 export const KeyboardNavigation = () => (
 	<div>
@@ -41,14 +36,19 @@ export const PreventDismiss = () => {
 	return (
 		<div>
 			<label>
-				<input type="checkbox" checked={block} onChange={(e) => setBlock(e.target.checked)} />
+				<input
+					type="checkbox"
+					checked={block}
+					onChange={e => setBlock(e.target.checked)}
+				/>
 				<span>Block Dismiss</span>
 			</label>
 			<br />
-			<Triggered trigger={<button>Open Flyout</button>} beforeDismiss={() => !block}>
-				<p>
-					Flyout Content
-				</p>
+			<Triggered
+				trigger={<button>Open Flyout</button>}
+				beforeDismiss={() => !block}
+			>
+				<p>Flyout Content</p>
 			</Triggered>
 		</div>
 	);

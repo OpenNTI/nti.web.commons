@@ -9,24 +9,32 @@ FillToBottom.propTypes = {
 	style: PropTypes.object,
 	property: PropTypes.string,
 
-	as: PropTypes.any
+	as: PropTypes.any,
 };
-export default function FillToBottom ({padding = 20, limit, property: propertyProp, as:tag, style:styleProp, ...otherProps}) {
+export default function FillToBottom({
+	padding = 20,
+	limit,
+	property: propertyProp,
+	as: tag,
+	style: styleProp,
+	...otherProps
+}) {
 	const Cmp = tag || 'div';
-	const style = {...styleProp};
+	const style = { ...styleProp };
 	const property = propertyProp ?? (limit ? 'height' : 'minHeight');
 
 	style[property] = `var(${Property})`;
 
-	const attachRef = (node) => {
+	const attachRef = node => {
 		if (node) {
-			const {top} = node?.getBoundingClientRect() ?? {};
+			const { top } = node?.getBoundingClientRect() ?? {};
 
-			node.style.setProperty(Property, `calc(100vh - ${padding ?? 0}px - ${top ?? 0}px`);
+			node.style.setProperty(
+				Property,
+				`calc(100vh - ${padding ?? 0}px - ${top ?? 0}px`
+			);
 		}
 	};
 
-	return (
-		<Cmp ref={attachRef} style={style} {...otherProps} />
-	);
+	return <Cmp ref={attachRef} style={style} {...otherProps} />;
 }

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-select-input-option {
 	padding: rem-calc(1px 8px);
@@ -12,7 +12,8 @@
 		white-space: nowrap;
 	}
 
-	&:not(.display):not(.selected):not(.removable):hover, &.focused {
+	&:not(.display):not(.selected):not(.removable):hover,
+	&.focused {
 		background-color: var(--border-grey-light);
 	}
 

@@ -1,12 +1,14 @@
-import {getScrollParent, canScroll} from '@nti/lib-dom';
+import { getScrollParent, canScroll } from '@nti/lib-dom';
 
-import {getSelectableItemForId} from './selectable-items';
+import { getSelectableItemForId } from './selectable-items';
 
-export default function scrollFocusedIntoView (listRef, focused) {
+export default function scrollFocusedIntoView(listRef, focused) {
 	const cmp = getSelectableItemForId(listRef, focused);
 	const list = listRef.current;
 
-	if (!cmp) { return; }
+	if (!cmp) {
+		return;
+	}
 
 	const scroller = canScroll(list) ? list : getScrollParent(list);
 

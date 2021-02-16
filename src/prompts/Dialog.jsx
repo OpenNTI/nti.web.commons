@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Logger from '@nti/util-logger';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import Manager from './ModalManager';
 
@@ -21,7 +21,6 @@ const logger = Logger.get('common:prompts:ManagedDialog');
  * @component
  */
 export default class Dialog extends React.Component {
-
 	static propTypes = {
 		/** @ignore */
 		children: PropTypes.any,
@@ -45,17 +44,16 @@ export default class Dialog extends React.Component {
 		 * the modal to the top of the screen
 		 */
 		tall: PropTypes.bool,
-	}
+	};
 
-	mounted = true
+	mounted = true;
 
-	componentDidCatch (e) {
+	componentDidCatch(e) {
 		/* istanbul ignore next */
 		logger.error(e.stack || e.message || e);
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.uuid = uuid();
 		this.rollbackCountStateKey = this.uuid + '-rollbackCount';
 
@@ -63,12 +61,14 @@ export default class Dialog extends React.Component {
 		this.onHistory();
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		logger.debug('Un-mounting');
 		this.mounted = false;
 		const { rollbackCountStateKey: key } = this;
-		const { history, document: { title } } = global;
+		const {
+			history,
+			document: { title },
+		} = global;
 		const { ...state } = history.state || {};
 
 		// On Unmount remove our date and unregister our handler.
@@ -85,16 +85,15 @@ export default class Dialog extends React.Component {
 		}
 	}
 
-
 	onHistory = (/* e */) => {
 		const { rollbackCountStateKey: key } = this;
-		const { history, document: { title } } = global;
 		const {
-			[key]: rollbackCount = null,
-			...state
-		} = history.state || {};
+			history,
+			document: { title },
+		} = global;
+		const { [key]: rollbackCount = null, ...state } = history.state || {};
 
-		this.rollbackCount = ((this.rollbackCount || 0) + 1); //local increment...
+		this.rollbackCount = (this.rollbackCount || 0) + 1; //local increment...
 
 		// This looks unintuitive, but forward navigation does not have a 'state' value, so we have to track forward
 		// motions internally. Events from "back/forward" will have the state of that entry (so we should take it as is)
@@ -105,11 +104,10 @@ export default class Dialog extends React.Component {
 		history.replaceState(state, title);
 
 		logger.debug('History Entry changed: %o', state);
-	}
-
+	};
 
 	/* Call this to roll history back to before the dialog was opened */
-	rollback () {
+	rollback() {
 		const { rollbackCountStateKey: key } = this;
 		const { history } = global;
 		const { state } = history;
@@ -123,24 +121,22 @@ export default class Dialog extends React.Component {
 		}
 	}
 
-
 	onBeforeDismiss = () => {
-		const {onBeforeDismiss} = this.props;
+		const { onBeforeDismiss } = this.props;
 		if (this.mounted) {
 			logger.debug('Attempting to dismiss.');
 			/* istanbul ignore else */
 			if (onBeforeDismiss) {
 				onBeforeDismiss({
-					rollback: () => this.rollback()
+					rollback: () => this.rollback(),
 				});
 			}
 			return false; //don't dismiss unless we unmount
 		}
-	}
+	};
 
-
-	render () {
-		const {mountPoint} = this.m || {};
+	render() {
+		const { mountPoint } = this.m || {};
 		const {
 			props: {
 				children,
@@ -149,21 +145,19 @@ export default class Dialog extends React.Component {
 				closeOnEscape = true,
 				restoreScroll,
 				tall,
-			}
+			},
 		} = this;
 
-		this.m = Manager.show(children,
-			{
-				className: cx('managed-modal', className),
-				onBeforeDismiss: this.onBeforeDismiss,
-				closeOnMaskClick,
-				closeOnEscape,
-				restoreScroll,
-				mountPoint,
-				tall,
-				usePortal: true
-			}
-		);
+		this.m = Manager.show(children, {
+			className: cx('managed-modal', className),
+			onBeforeDismiss: this.onBeforeDismiss,
+			closeOnMaskClick,
+			closeOnEscape,
+			restoreScroll,
+			mountPoint,
+			tall,
+			usePortal: true,
+		});
 
 		return this.m.portalRef;
 	}

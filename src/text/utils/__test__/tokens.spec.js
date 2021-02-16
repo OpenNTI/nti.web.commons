@@ -1,7 +1,7 @@
 /* eslint-env jest */
 // import Tokens from '../tokens';
 
-export function buildMockToken (word) {
+export function buildMockToken(word) {
 	const token = document.createElement('span');
 
 	token.innerHTML = word;

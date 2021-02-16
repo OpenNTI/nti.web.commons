@@ -1,5 +1,5 @@
 /* eslint-env jest */
-export function mockComputedStyle (styles) {
+export function mockComputedStyle(styles) {
 	let oldComputedStyle;
 
 	beforeEach(() => {

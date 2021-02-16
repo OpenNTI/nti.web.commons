@@ -1,37 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from '@nti/lib-commons';
-import {formatISO, parseJSON} from 'date-fns';
+import { formatISO, parseJSON } from 'date-fns';
 
-import {DEFAULT, format, fromNow, fromWhen, isToday} from '../utils';
+import { DEFAULT, format, fromNow, fromWhen, isToday } from '../utils';
 import Text from '../../text';
 
 const DateTime = React.forwardRef(DateTimeImpl);
 export default DateTime;
 
-DateTimeImpl.propTypes =
-DateTime.propTypes = {
+DateTimeImpl.propTypes = DateTime.propTypes = {
 	date: PropTypes.instanceOf(Date),
 	relativeTo: PropTypes.instanceOf(Date),
-	format: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.func,
-	]),
+	format: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 	relative: PropTypes.bool,
-	prefix: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.oneOf([false])
-	]),
-	suffix: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.oneOf([false])
-	]),
+	prefix: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([false])]),
+	suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([false])]),
 	showToday: PropTypes.bool,
-	todayText: PropTypes.string
+	todayText: PropTypes.string,
 };
 
-DateTimeImpl.defaultProps =
-DateTime.defaultProps = {
+DateTimeImpl.defaultProps = DateTime.defaultProps = {
 	date: new Date(),
 	relativeTo: undefined,
 	format: DEFAULT,
@@ -39,21 +28,23 @@ DateTime.defaultProps = {
 	prefix: undefined,
 	suffix: undefined,
 	showToday: false,
-	todayText: undefined
+	todayText: undefined,
 };
 
-function DateTimeImpl ({
-	date,
-	format: pattern,
-	prefix,
-	suffix,
-	showToday,
-	relativeTo,
-	relative,
-	todayText,
-	...otherProps
-}, ref) {
-
+function DateTimeImpl(
+	{
+		date,
+		format: pattern,
+		prefix,
+		suffix,
+		showToday,
+		relativeTo,
+		relative,
+		todayText,
+		...otherProps
+	},
+	ref
+) {
 	if (date == null) {
 		return null;
 	}
@@ -63,20 +54,25 @@ function DateTimeImpl ({
 	const addSuffix = !suffixExplicitlySuppressed && !hasCustomSuffix;
 
 	let text = relativeTo
-		? fromWhen(date, relativeTo, {addSuffix})
+		? fromWhen(date, relativeTo, { addSuffix })
 		: relative
-			? fromNow(date, {addSuffix})
-			: format(date, pattern);
+		? fromNow(date, { addSuffix })
+		: format(date, pattern);
 
 	if ((showToday || !isEmpty(todayText)) && isToday(date)) {
 		text = (todayText || 'Today').replace('{time}', text);
 	}
 
-	const props = { ...otherProps, dateTime: formatISO(date instanceof Date ? date : parseJSON(date))};
+	const props = {
+		...otherProps,
+		dateTime: formatISO(date instanceof Date ? date : parseJSON(date)),
+	};
 
 	return (
 		<Text.Base ref={ref} as="time" {...props}>
-			{prefix || ''}{text}{suffix || ''}
+			{prefix || ''}
+			{text}
+			{suffix || ''}
 		</Text.Base>
 	);
 }

@@ -1,6 +1,8 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
-.associations-editor-modal-wrapper > .icon-close { display: none; }
+.associations-editor-modal-wrapper > .icon-close {
+	display: none;
+}
 
 .association-editor-modal {
 	width: 100vw;

@@ -1,43 +1,50 @@
-import {Events} from '@nti/lib-commons';
+import { Events } from '@nti/lib-commons';
 
-import {getSelectableItemIds} from './selectable-items';
+import { getSelectableItemIds } from './selectable-items';
 
 const stop = e => (e.preventDefault(), e.stopPropagation());
 const last = items => items[items.length - 1];
 const first = items => items[0];
 
-function moveFocusUp (e, items, {focused, setFocused}) {
+function moveFocusUp(e, items, { focused, setFocused }) {
 	stop(e);
 
 	const index = items.indexOf(focused);
 
-	if (index <= 0) { setFocused(last(items)); }
-	else { setFocused(items[index - 1]); }
+	if (index <= 0) {
+		setFocused(last(items));
+	} else {
+		setFocused(items[index - 1]);
+	}
 }
 
-function moveFocusDown (e, items, {focused, setFocused}) {
+function moveFocusDown(e, items, { focused, setFocused }) {
 	stop(e);
 
 	const index = items.indexOf(focused);
 
-	if (index < 0) { setFocused(first(items)); }
-	else if (index >= items.length - 1) { setFocused(first(items)); }
-	else { setFocused(items[index + 1]); }	
+	if (index < 0) {
+		setFocused(first(items));
+	} else if (index >= items.length - 1) {
+		setFocused(first(items));
+	} else {
+		setFocused(items[index + 1]);
+	}
 }
 
-function moveFocusToEnd (e, items, {focused, setFocused}) {
+function moveFocusToEnd(e, items, { focused, setFocused }) {
 	stop(e);
 
 	setFocused(last(items));
 }
 
-function moveFocusToStart (e, items, {focused, setFocused}) {
+function moveFocusToStart(e, items, { focused, setFocused }) {
 	stop(e);
 
 	setFocused(first(items));
 }
 
-function handleEnter (e, items, {focused, setSelected}) {
+function handleEnter(e, items, { focused, setSelected }) {
 	stop(e);
 
 	if (focused) {
@@ -67,8 +74,8 @@ const Handlers = {
 	'nti-meta-enter': handleEnter,
 };
 
-export default function getKeyDownHandler (listRef, state) {
-	return (e) => {
+export default function getKeyDownHandler(listRef, state) {
+	return e => {
 		const keyCode = Events.getKeyCode(e);
 		const handler = Handlers[keyCode];
 		const items = getSelectableItemIds(listRef);

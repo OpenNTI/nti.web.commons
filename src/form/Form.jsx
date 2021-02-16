@@ -14,44 +14,68 @@ import * as Values from './values';
 
 const GlobalError = Symbol('Global Error');
 
-function getChangeHandler ({form, addErrors, onChange, onValid, onInvalid}) {
-	if (!onChange && !onValid && !onInvalid) { return null; }
+function getChangeHandler({ form, addErrors, onChange, onValid, onInvalid }) {
+	if (!onChange && !onValid && !onInvalid) {
+		return null;
+	}
 
 	let wasValid = Validation.isValid(form.current);
 
-	const callOnChange = async (e) => {
-		if (!onChange) { return; }
+	const callOnChange = async e => {
+		if (!onChange) {
+			return;
+		}
 
 		try {
 			await onChange(Values.getValues(form.current), e);
 		} catch (err) {
-			if (!err.field) { addErrors({[GlobalError]: err}); }
-			else { addErrors({[err.field]: err}); }
+			if (!err.field) {
+				addErrors({ [GlobalError]: err });
+			} else {
+				addErrors({ [err.field]: err });
+			}
 		}
 	};
 
-	return (e) => {
+	return e => {
 		const valid = Validation.isValid(form.current);
 
 		callOnChange(e);
 
-		if (valid === wasValid) { return; }
+		if (valid === wasValid) {
+			return;
+		}
 
 		wasValid = valid;
 
-		if (valid && onValid) { onValid(e); }
-		if (!valid && onInvalid) { onInvalid(e); }
+		if (valid && onValid) {
+			onValid(e);
+		}
+		if (!valid && onInvalid) {
+			onInvalid(e);
+		}
 	};
 }
 
-function getSubmitHandler ({form, disabled, addErrors, onSubmit, afterSubmit, setSubmitting}) {
-	if (!onSubmit) { return null; }
+function getSubmitHandler({
+	form,
+	disabled,
+	addErrors,
+	onSubmit,
+	afterSubmit,
+	setSubmitting,
+}) {
+	if (!onSubmit) {
+		return null;
+	}
 
-	return async (e) => {
+	return async e => {
 		e.stopPropagation();
 		e.preventDefault();
 
-		if (disabled) { return; }
+		if (disabled) {
+			return;
+		}
 
 		const validationErrors = Validation.getValidationErrors(form.current);
 
@@ -65,16 +89,21 @@ function getSubmitHandler ({form, disabled, addErrors, onSubmit, afterSubmit, se
 			await onSubmit(Values.getValues(form.current), e);
 			afterSubmit?.();
 		} catch (err) {
-			if (!err.field) { addErrors({[GlobalError]: err}); }
-			else { addErrors({[err.field]: err}); }
+			if (!err.field) {
+				addErrors({ [GlobalError]: err });
+			} else {
+				addErrors({ [err.field]: err });
+			}
 		} finally {
 			setSubmitting(false);
 		}
 	};
 }
 
-function getInitialErrorState (initialError) {
-	return initialError ? {[initialError.field || GlobalError]: initialError} : {};
+function getInitialErrorState(initialError) {
+	return initialError
+		? { [initialError.field || GlobalError]: initialError }
+		: {};
 }
 
 Form.Validation = Validation;
@@ -100,9 +129,9 @@ Form.propTypes = {
 
 	mask: PropTypes.any,
 
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-function Form (props) {
+function Form(props) {
 	const {
 		className,
 
@@ -128,45 +157,76 @@ function Form (props) {
 	} = props;
 
 	const formEl = React.useRef(null);
-	const [errors, setErrors] = React.useState(getInitialErrorState(initialError));
+	const [errors, setErrors] = React.useState(
+		getInitialErrorState(initialError)
+	);
 	const [submitting, setSubmitting] = React.useState(false);
 
 	React.useImperativeHandle(formRef, () => formEl.current);
 
-	const addErrors = React.useCallback((toAdd) => setErrors({...errors, ...toAdd}), [errors]);
-	const clearError = React.useCallback((name) => {
-		if (errors && errors[name]) {
-			setErrors({...errors, [name]: void 0, [GlobalError]: void 0});
-		} else if (errors[GlobalError]) {
-			setErrors({...errors, [GlobalError]: void 0});
-		}
-	}, [errors]);
+	const addErrors = React.useCallback(
+		toAdd => setErrors({ ...errors, ...toAdd }),
+		[errors]
+	);
+	const clearError = React.useCallback(
+		name => {
+			if (errors && errors[name]) {
+				setErrors({ ...errors, [name]: void 0, [GlobalError]: void 0 });
+			} else if (errors[GlobalError]) {
+				setErrors({ ...errors, [GlobalError]: void 0 });
+			}
+		},
+		[errors]
+	);
 
 	const submitHandler = React.useMemo(
-		() => getSubmitHandler({form: formEl, disabled, addErrors, onSubmit, afterSubmit, setSubmitting}),
+		() =>
+			getSubmitHandler({
+				form: formEl,
+				disabled,
+				addErrors,
+				onSubmit,
+				afterSubmit,
+				setSubmitting,
+			}),
 		[formEl, disabled, addErrors, onSubmit, afterSubmit, setSubmitting]
 	);
 
 	const changeHandler = React.useMemo(
-		() => getChangeHandler({form: formEl, addErrors, onChange, onValid, onInvalid}),
+		() =>
+			getChangeHandler({
+				form: formEl,
+				addErrors,
+				onChange,
+				onValid,
+				onInvalid,
+			}),
 		[formEl, addErrors, onChange, onValid, onInvalid]
 	);
 
 	return (
-		<FormContext.Provider value={{errors, clearError, disabled, submitting}}>
+		<FormContext.Provider
+			value={{ errors, clearError, disabled, submitting }}
+		>
 			<form
 				ref={formEl}
-				className={cx(className, Styles.ntForm, {[Styles.disabled]: disabled, [Styles.submitting]: submitting, [Styles.hasMask]: Boolean(mask)})}
+				className={cx(className, Styles.ntForm, {
+					[Styles.disabled]: disabled,
+					[Styles.submitting]: submitting,
+					[Styles.hasMask]: Boolean(mask),
+				})}
 				noValidate={noValidate}
 				onSubmit={submitHandler}
 				onChange={changeHandler}
 				{...otherProps}
 			>
-				{errors[GlobalError] && (<Errors.Message error={errors[GlobalError]} />)}
+				{errors[GlobalError] && (
+					<Errors.Message error={errors[GlobalError]} />
+				)}
 				{children}
 				{submitting && mask && (
 					<div className={Styles.formMask}>
-						{mask !== true ? (mask) : null}
+						{mask !== true ? mask : null}
 					</div>
 				)}
 			</form>
@@ -174,14 +234,19 @@ function Form (props) {
 	);
 }
 
-const ForwardWrapper = (props, ref) => (<Form {...props} formRef={ref} />);
+const ForwardWrapper = (props, ref) => <Form {...props} formRef={ref} />;
 const ForwardRef = React.forwardRef(ForwardWrapper);
 
 const noop = () => {};
 
-function FormPrompt (props) {
+function FormPrompt(props) {
 	return (
-		<BasePrompt as={ForwardRef} onAction={noop} actionCmp={SubmitButton} {...props} />
+		<BasePrompt
+			as={ForwardRef}
+			onAction={noop}
+			actionCmp={SubmitButton}
+			{...props}
+		/>
 	);
 }
 

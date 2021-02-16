@@ -6,26 +6,21 @@ import Styles from './Tabs.css';
 
 const cx = classnames.bind(Styles);
 
-
-export default function Tabs ({children, className, active: a = 0, onChange}) {
+export default function Tabs({ children, className, active: a = 0, onChange }) {
 	return (
 		<ul className={cx('nti-tabs', className)}>
-			{
-				React.Children.map(children,
-					(c, i) => {
-						const active = a === i;
-						return (
-							<li key={i} className={cx('test', { active })} onClick={() => onChange(i)}>
-								{
-									active
-										? React.cloneElement(c, { active: true })
-										: c
-								}
-							</li>
-						);
-					}
-				)
-			}
+			{React.Children.map(children, (c, i) => {
+				const active = a === i;
+				return (
+					<li
+						key={i}
+						className={cx('test', { active })}
+						onClick={() => onChange(i)}
+					>
+						{active ? React.cloneElement(c, { active: true }) : c}
+					</li>
+				);
+			})}
 		</ul>
 	);
 }
@@ -33,5 +28,5 @@ export default function Tabs ({children, className, active: a = 0, onChange}) {
 Tabs.propTypes = {
 	active: PropTypes.number,
 	onChange: PropTypes.func.isRequired,
-	className: PropTypes.string
+	className: PropTypes.string,
 };

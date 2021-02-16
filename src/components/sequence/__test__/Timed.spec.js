@@ -7,9 +7,17 @@ import Timed from '../Timed';
 describe('Timed', () => {
 	const sharedWrapper = TestRenderer.create(<Timed />);
 
-	const testRender = (props) => [
-		TestRenderer.create(<Timed {...props}><div/></Timed>),
-		sharedWrapper.update(<Timed {...props}><div/></Timed>)
+	const testRender = props => [
+		TestRenderer.create(
+			<Timed {...props}>
+				<div />
+			</Timed>
+		),
+		sharedWrapper.update(
+			<Timed {...props}>
+				<div />
+			</Timed>
+		),
 	];
 
 	test('Base Case', async () => {

@@ -6,10 +6,10 @@ import cx from 'classnames';
 Error.propTypes = {
 	className: PropTypes.string,
 	error: PropTypes.string,
-	white: PropTypes.bool
+	white: PropTypes.bool,
 };
-export default function Error ({className, error, white}) {
-	const cls = cx(className, 'association-error', {white});
+export default function Error({ className, error, white }) {
+	const cls = cx(className, 'association-error', { white });
 
 	return (
 		<div className={cls}>

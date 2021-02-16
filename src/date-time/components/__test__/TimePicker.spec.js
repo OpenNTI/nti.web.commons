@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import {Time, Date as DateUtils} from '@nti/lib-commons';
+import { Time, Date as DateUtils } from '@nti/lib-commons';
 
 import TimePicker from '../TimePicker';
 
@@ -14,7 +14,14 @@ describe('TimePicker', () => {
 	const testRender = (props = {}, ...children) => {
 		const ref = React.createRef();
 		return [
-			{ref, ...render(<TimePicker ref={ref} {...props}>{children}</TimePicker>)},
+			{
+				ref,
+				...render(
+					<TimePicker ref={ref} {...props}>
+						{children}
+					</TimePicker>
+				),
+			},
 			//{ref: sharedRef, ...(sharedWrapper.rerender(<TimePicker ref={sharedRef} {...props}>{children}</TimePicker>)),sharedWrapper)}
 		];
 	};
@@ -49,16 +56,21 @@ describe('TimePicker', () => {
 	// check if wrapping up work
 	test('wraps to from noon to 1 pm works', () => {
 		testRender()
-			.map((x) => {
+			.map(x => {
 				const noon = new Date();
 				noon.setHours(12);
 				noon.setMinutes(0);
-				x.ref.current.setState({value: new Time(noon)});
-				const hourInput = x.container.querySelector('input[name="hours"]');
-				fireEvent.keyDown(hourInput, {keyCode: ARROW_UP, key: 'ArrowUp'});
+				x.ref.current.setState({ value: new Time(noon) });
+				const hourInput = x.container.querySelector(
+					'input[name="hours"]'
+				);
+				fireEvent.keyDown(hourInput, {
+					keyCode: ARROW_UP,
+					key: 'ArrowUp',
+				});
 				return x.ref.current.state.value;
 			})
-			.forEach( (value) => {
+			.forEach(value => {
 				expect(value.getHours()).toEqual(13);
 				expect(value.getMinutes()).toEqual(0);
 				expect(value.getPeriod()).toEqual('PM');
@@ -68,17 +80,22 @@ describe('TimePicker', () => {
 	// Check if wrapping down works
 	test('wraps to from 1pm to noon works', () => {
 		testRender()
-			.map((x) => {
+			.map(x => {
 				const onePM = new Date();
 				onePM.setHours(13);
 				onePM.setMinutes(0);
-				x.ref.current.setState({value: new Time(onePM)});
+				x.ref.current.setState({ value: new Time(onePM) });
 
-				const hourInput = x.container.querySelector('input[name="hours"]');
-				fireEvent.keyDown(hourInput, {keyCode: ARROW_DOWN, key: 'ArrowDown'});
+				const hourInput = x.container.querySelector(
+					'input[name="hours"]'
+				);
+				fireEvent.keyDown(hourInput, {
+					keyCode: ARROW_DOWN,
+					key: 'ArrowDown',
+				});
 				return x.ref.current.state.value;
 			})
-			.forEach( (value) => {
+			.forEach(value => {
 				expect(value.getHours()).toEqual(12);
 				expect(value.getMinutes()).toEqual(0);
 				expect(value.getPeriod()).toEqual('PM');
@@ -88,13 +105,15 @@ describe('TimePicker', () => {
 	//
 	test('changes to twentyFourHourTime when typed in', () => {
 		testRender()
-			.map((x) => {
+			.map(x => {
 				// Increment Hours
-				const hourInput = x.container.querySelector('input[name="hours"]');
-				fireEvent.change(hourInput, {target: {value: '13'}});
+				const hourInput = x.container.querySelector(
+					'input[name="hours"]'
+				);
+				fireEvent.change(hourInput, { target: { value: '13' } });
 				return x.ref.current.state.tfTime;
 			})
-			.forEach( (tfTime) => {
+			.forEach(tfTime => {
 				expect(tfTime).toEqual(true);
 			});
 	});
@@ -102,9 +121,14 @@ describe('TimePicker', () => {
 	test('wraps when in twentyFourHourTime from 23 to 0', () => {
 		testRender()
 			.map(x => {
-				const hourInput = x.container.querySelector('input[name="hours"]');
-				fireEvent.change(hourInput, {target: {value: '23'}});
-				fireEvent.keyDown(hourInput, {keyCode: ARROW_UP, key: 'ArrowUp'});
+				const hourInput = x.container.querySelector(
+					'input[name="hours"]'
+				);
+				fireEvent.change(hourInput, { target: { value: '23' } });
+				fireEvent.keyDown(hourInput, {
+					keyCode: ARROW_UP,
+					key: 'ArrowUp',
+				});
 				return x.ref.current.state.value;
 			})
 			.forEach(value => {
@@ -116,9 +140,14 @@ describe('TimePicker', () => {
 	test('wraps when in twentyFourHourTime from 0 to 23', () => {
 		testRender()
 			.map(x => {
-				const hourInput = x.container.querySelector('input[name="hours"]');
-				fireEvent.change(hourInput, {target: {value: '0'}});
-				fireEvent.keyDown(hourInput, {keyCode: ARROW_DOWN, key: 'ArrowDown'});
+				const hourInput = x.container.querySelector(
+					'input[name="hours"]'
+				);
+				fireEvent.change(hourInput, { target: { value: '0' } });
+				fireEvent.keyDown(hourInput, {
+					keyCode: ARROW_DOWN,
+					key: 'ArrowDown',
+				});
 				return x.ref.current.state.value;
 			})
 			.forEach(value => {

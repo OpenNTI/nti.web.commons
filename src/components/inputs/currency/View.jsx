@@ -12,11 +12,10 @@ import {
 	getMaskFromDisplay,
 	isValidIntermeddiateDisplay,
 	insertGroupSeparators,
-	fixDisplay
+	fixDisplay,
 } from './utils';
 
 const cx = classnames.bind(Styles);
-
 
 CurrencyInput.propTypes = {
 	className: PropTypes.string,
@@ -27,10 +26,22 @@ CurrencyInput.propTypes = {
 	omitFractional: PropTypes.bool,
 	max: PropTypes.number,
 
-	onChange: PropTypes.func
+	onChange: PropTypes.func,
 };
-export default function CurrencyInput ({className, amount, currency = 'USD', locale = 'en-US', max = Infinity, omitFractional, onChange:onChangeProp, ...otherProps}) {
-	const intlInfo = React.useMemo(() => getIntlFormatInfo(currency, locale, omitFractional), [currency, locale, omitFractional]);
+export default function CurrencyInput({
+	className,
+	amount,
+	currency = 'USD',
+	locale = 'en-US',
+	max = Infinity,
+	omitFractional,
+	onChange: onChangeProp,
+	...otherProps
+}) {
+	const intlInfo = React.useMemo(
+		() => getIntlFormatInfo(currency, locale, omitFractional),
+		[currency, locale, omitFractional]
+	);
 
 	const value = React.useRef(null);
 	const [display, setDisplay] = React.useState(null);
@@ -44,13 +55,20 @@ export default function CurrencyInput ({className, amount, currency = 'USD', loc
 	}, [amount]);
 
 	const onChange = (inputValue, e) => {
-		if (!isValidIntermeddiateDisplay(inputValue, intlInfo)) { return; }
+		if (!isValidIntermeddiateDisplay(inputValue, intlInfo)) {
+			return;
+		}
 
 		const backspaced = inputValue < display;
-		const nextDisplay = e.target.selectionEnd === inputValue.length ? insertGroupSeparators(inputValue, intlInfo, backspaced) : inputValue;
+		const nextDisplay =
+			e.target.selectionEnd === inputValue.length
+				? insertGroupSeparators(inputValue, intlInfo, backspaced)
+				: inputValue;
 		const nextValue = getAmountFromDisplay(nextDisplay, intlInfo);
 
-		if (nextValue > max) { return; }
+		if (nextValue > max) {
+			return;
+		}
 
 		const changed = value.current !== nextValue;
 

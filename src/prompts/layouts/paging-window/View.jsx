@@ -12,11 +12,17 @@ PromptLayoutPaging.propTypes = {
 	children: PropTypes.any,
 
 	flat: PropTypes.bool,
-	rounded: PropTypes.bool
+	rounded: PropTypes.bool,
 };
-export default function PromptLayoutPaging ({className, children, flat, rounded, ...props}) {
+export default function PromptLayoutPaging({
+	className,
+	children,
+	flat,
+	rounded,
+	...props
+}) {
 	return (
-		<section className={cx('paging-window', className, {flat, rounded})}>
+		<section className={cx('paging-window', className, { flat, rounded })}>
 			<Header {...props} flat={flat} />
 			{children}
 		</section>

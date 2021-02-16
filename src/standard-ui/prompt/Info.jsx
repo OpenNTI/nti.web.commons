@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Card from '../Card';
 import Button from '../../components/Button';
-import {Variant} from '../../HighOrderComponents';
-import {Dialog} from '../../prompts';
+import { Variant } from '../../HighOrderComponents';
+import { Dialog } from '../../prompts';
 
-const InfoCard = Variant(Card, ({onDismiss, ...props}) => ({as: 'section', rounded: true, ...props}));
+const InfoCard = Variant(Card, ({ onDismiss, ...props }) => ({
+	as: 'section',
+	rounded: true,
+	...props,
+}));
 
 const t = scoped('web-commons.standard-ui.prompt.Info', {
-	done: 'Done'
+	done: 'Done',
 });
 
 const styles = css`
@@ -44,16 +48,16 @@ InfoPrompt.propTypes = {
 	children: PropTypes.any,
 
 	onDone: PropTypes.func.isRequired,
-	doneLabel: PropTypes.string
+	doneLabel: PropTypes.string,
 };
-export default function InfoPrompt ({
+export default function InfoPrompt({
 	className,
 
-	as:tag,
+	as: tag,
 	children,
 
 	onDone,
-	doneLabel = t('done')
+	doneLabel = t('done'),
 }) {
 	const Cmp = tag || Dialog;
 

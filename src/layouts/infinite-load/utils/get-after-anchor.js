@@ -1,6 +1,12 @@
-export default function getAfterAnchor (anchor, pageState, buffer, scrollingEl, getPageHeight) {
-	const {clientHeight} = scrollingEl;
-	const {anchorPage} = anchor;
+export default function getAfterAnchor(
+	anchor,
+	pageState,
+	buffer,
+	scrollingEl,
+	getPageHeight
+) {
+	const { clientHeight } = scrollingEl;
+	const { anchorPage } = anchor;
 	const afterBufferSize = clientHeight * (buffer + 1);
 
 	let after = [anchorPage];
@@ -21,6 +27,6 @@ export default function getAfterAnchor (anchor, pageState, buffer, scrollingEl, 
 
 	return {
 		after,
-		afterHeight
+		afterHeight,
 	};
 }

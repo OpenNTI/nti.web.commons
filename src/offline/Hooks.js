@@ -1,10 +1,10 @@
 import React from 'react';
-import {getServer} from '@nti/web-client';
+import { getServer } from '@nti/web-client';
 
 let unloading = false;
-const setUnloading = () => unloading = true;
+const setUnloading = () => (unloading = true);
 
-export function useOffline () {
+export function useOffline() {
 	const server = React.useRef(getServer());
 	const [offline, setOffline] = React.useState(false);
 

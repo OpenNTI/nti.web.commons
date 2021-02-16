@@ -1,8 +1,14 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
-%icon-external-link { background-image: url(./assets/extern-link.png); }
-%icon-external-link-hover { background-image: url(./assets/extern-link_hover.png); }
-%circle-white-check-large { background-image: url(./assets/circle-check-white-large.png); }
+%icon-external-link {
+	background-image: url(./assets/extern-link.png);
+}
+%icon-external-link-hover {
+	background-image: url(./assets/extern-link_hover.png);
+}
+%circle-white-check-large {
+	background-image: url(./assets/circle-check-white-large.png);
+}
 
 .content-link.related-work-ref {
 	$gap: 20px;
@@ -74,7 +80,8 @@
 		font-size: rem-calc(10px);
 	}
 
-	.label, .extra-labels {
+	.label,
+	.extra-labels {
 		text-transform: uppercase;
 		font-family: var(--body-font-family);
 		font-weight: 600;
@@ -83,12 +90,15 @@
 	}
 
 	.extra-labels {
-		&:empty { display: none; }
+		&:empty {
+			display: none;
+		}
 
 		margin: 10px 0 0 0;
 		color: var(--tertiary-grey);
 
-		a, .nti-link-to-path {
+		a,
+		.nti-link-to-path {
 			color: var(--primary-blue);
 		}
 	}
@@ -122,7 +132,8 @@
 
 	&.seen {
 		.icon {
-			&::after, &::before, {
+			&::after,
+			&::before {
 				content: '';
 				display: block;
 				position: absolute;

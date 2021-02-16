@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Color} from '@nti/lib-commons';
+import { Color } from '@nti/lib-commons';
 
 import Thumb from '../Thumb';
 
 import Styles from './Input.css';
 import {
 	computeSaturationBrightnessForPoint,
-	updateSaturationBrightnessForKeyEvent
+	updateSaturationBrightnessForKeyEvent,
 } from './utils';
 
 const cx = classnames.bind(Styles);
 
-function getStyle (percent) {
+function getStyle(percent) {
 	return `${percent}%`;
 }
 
@@ -23,57 +23,68 @@ export default class SaturationBrightnessControls extends React.Component {
 			hsv: PropTypes.shape({
 				hue: PropTypes.number,
 				saturation: PropTypes.number,
-				brightness: PropTypes.number
-			}).isRequired
+				brightness: PropTypes.number,
+			}).isRequired,
 		}),
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	control = React.createRef()
-	state = {}
+	control = React.createRef();
+	state = {};
 
-	get current () {
-		const {movingOverride} = this.state;
-		const {value} = this.props;
+	get current() {
+		const { movingOverride } = this.state;
+		const { value } = this.props;
 
-		if (!value) { return null; }
+		if (!value) {
+			return null;
+		}
 
-		const {saturation: overrideS, brightness: overrideV} = movingOverride || {};
-		const {saturation: valueS, brightness: valueV} = value.hsv;
+		const { saturation: overrideS, brightness: overrideV } =
+			movingOverride || {};
+		const { saturation: valueS, brightness: valueV } = value.hsv;
 
 		return {
 			saturation: overrideS || valueS,
-			brightness: overrideV || valueV
+			brightness: overrideV || valueV,
 		};
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = true;
 		if (this.cleanupMouseListeners) {
 			this.cleanupMouseListeners();
 		}
 	}
 
-	update ({saturation, brightness}) {
-		const {value, onChange} = this.props;
+	update({ saturation, brightness }) {
+		const { value, onChange } = this.props;
 		const oldValue = value ? value : Color.fromHSL(0, 1, 0.5);
-		const newValue = Color.fromHSV(oldValue.hsv.hue, saturation, brightness);
+		const newValue = Color.fromHSV(
+			oldValue.hsv.hue,
+			saturation,
+			brightness
+		);
 
-		if (onChange && oldValue.hsv.saturation !== newValue.hsv.saturation || oldValue.hsv.brightness !== newValue.hsv.brightness) {
+		if (
+			(onChange && oldValue.hsv.saturation !== newValue.hsv.saturation) ||
+			oldValue.hsv.brightness !== newValue.hsv.brightness
+		) {
 			onChange(newValue);
 		}
 	}
 
-	setupMouseListeners () {
+	setupMouseListeners() {
 		if (this.cleanupMouseListeners) {
 			this.cleanupMouseListeners();
 		}
 
-		if (!global.addEventListener) { return; }
+		if (!global.addEventListener) {
+			return;
+		}
 
-		const mousemove = (e) => this.onMouseMove(e);
-		const mouseup = (e) => this.onMouseUp(e);
-
+		const mousemove = e => this.onMouseMove(e);
+		const mouseup = e => this.onMouseUp(e);
 
 		global.addEventListener('mousemove', mousemove);
 		global.addEventListener('mouseup', mouseup);
@@ -86,55 +97,66 @@ export default class SaturationBrightnessControls extends React.Component {
 		};
 	}
 
-	onMouseDown = (e) => {
-		this.update(computeSaturationBrightnessForPoint(e.clientX, e.clientY, this.control.current));
+	onMouseDown = e => {
+		this.update(
+			computeSaturationBrightnessForPoint(
+				e.clientX,
+				e.clientY,
+				this.control.current
+			)
+		);
 
 		this.setupMouseListeners();
-	}
+	};
 
-
-	onMouseMove = (e) => {
+	onMouseMove = e => {
 		this.setState({
-			movingOverride: computeSaturationBrightnessForPoint(e.clientX, e.clientY, this.control.current)
+			movingOverride: computeSaturationBrightnessForPoint(
+				e.clientX,
+				e.clientY,
+				this.control.current
+			),
 		});
 
 		clearTimeout(this.moveTimeout);
 		this.moveTimeout = setTimeout(() => {
-			const {movingOverride} = this.state;
+			const { movingOverride } = this.state;
 
 			this.update(movingOverride);
-			this.setState({movingOverride: null});
+			this.setState({ movingOverride: null });
 		}, 50);
-	}
+	};
 
-
-	onMouseUp = (e) => {
+	onMouseUp = e => {
 		if (this.cleanupMouseListeners) {
 			this.cleanupMouseListeners();
 		}
-	}
+	};
 
+	onKeyDown = e => {
+		const { current } = this;
 
-	onKeyDown = (e) => {
-		const {current} = this;
-
-		if (!current) { return; }
+		if (!current) {
+			return;
+		}
 
 		this.setState({
-			movingOverride: updateSaturationBrightnessForKeyEvent(e, this.current)
+			movingOverride: updateSaturationBrightnessForKeyEvent(
+				e,
+				this.current
+			),
 		});
 
 		clearTimeout(this.keyTimeout);
 		this.keyTimeout = setTimeout(() => {
-			const {movingOverride} = this.state;
+			const { movingOverride } = this.state;
 
 			this.update(movingOverride);
-			this.setState({movingOverride: null});
+			this.setState({ movingOverride: null });
 		}, 50);
-	}
+	};
 
-
-	render () {
+	render() {
 		return (
 			<div
 				className={cx('controls')}
@@ -148,21 +170,27 @@ export default class SaturationBrightnessControls extends React.Component {
 		);
 	}
 
-	renderThumb () {
-		const {value} = this.props;
+	renderThumb() {
+		const { value } = this.props;
 
-		if (!value) { return null; }
+		if (!value) {
+			return null;
+		}
 
-		const {saturation, brightness} = this.current || {};
+		const { saturation, brightness } = this.current || {};
 		const style = {
 			top: getStyle(100 * (1 - (brightness || 0))),
-			left: getStyle(100 * (saturation || 0))
+			left: getStyle(100 * (saturation || 0)),
 		};
 
 		const thumbValue = Color.fromHSV(value.hsv.hue, saturation, brightness);
 
 		return (
-			<Thumb className={cx('saturation-brightness-thumb')} style={style} value={thumbValue} />
+			<Thumb
+				className={cx('saturation-brightness-thumb')}
+				style={style}
+				value={thumbValue}
+			/>
 		);
 	}
 }

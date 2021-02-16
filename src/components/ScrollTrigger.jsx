@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getScreenWidth, getScreenHeight, getScrollParent} from '@nti/lib-dom';
+import { getScreenWidth, getScreenHeight, getScrollParent } from '@nti/lib-dom';
 
-const EMPTY = ()=>{};
+const EMPTY = () => {};
 
 export default class ScrollTrigger extends React.Component {
-
 	static propTypes = {
 		onEnterView: PropTypes.func.isRequired,
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
-	attachDOMRef = x => this.el = x
+	attachDOMRef = x => (this.el = x);
 
 	subscribeScroll = () => {
 		const scroller = getScrollParent(this.el);
-		const unsub = () => (scroller.removeEventListener('scroll', this.onScroll), this.unsubscribeScroll = EMPTY);
+		const unsub = () => (
+			scroller.removeEventListener('scroll', this.onScroll),
+			(this.unsubscribeScroll = EMPTY)
+		);
 		unsub.dom = scroller;
 
 		if (this.unsubscribeScroll) {
@@ -25,55 +27,53 @@ export default class ScrollTrigger extends React.Component {
 		scroller.addEventListener('scroll', this.onScroll);
 
 		this.unsubscribeScroll = unsub;
-	}
+	};
 
 	scrollerChanged = () => {
 		const scroller = getScrollParent(this.el);
 		return scroller !== (this.unsubscribeScroll || {}).dom;
-	}
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.subscribeScroll();
 		this.scheduleCheck(true);
 	}
 
-	componentDidUpdate () {
+	componentDidUpdate() {
 		if (this.scrollerChanged()) {
 			this.subscribeScroll();
 		}
 
-
 		this.scheduleCheck();
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		clearTimeout(this.schedule);
 		this.setState = () => {};
 		this.unsubscribeScroll();
 	}
 
-	scheduleCheck = (force) => {
+	scheduleCheck = force => {
 		clearTimeout(this.schedule);
-		this.schedule = setTimeout(()=> this.checkInView(force), 20);
-	}
+		this.schedule = setTimeout(() => this.checkInView(force), 20);
+	};
 
 	inView = () => {
 		return isElementInView(this.el);
-	}
+	};
 
 	onScroll = () => {
 		this.checkInView();
-	}
+	};
 
-	checkInView = (force) => {
-		const {inView} = this.state || {};
+	checkInView = force => {
+		const { inView } = this.state || {};
 		const newInView = this.inView();
 
-		if (force || (inView !== newInView)) {
+		if (force || inView !== newInView) {
 			if (newInView) {
 				this.onEnterView();
-			}
-			else {
+			} else {
 				this.onLeaveView();
 			}
 		}
@@ -84,7 +84,9 @@ export default class ScrollTrigger extends React.Component {
 	};
 
 	onEnterView = () => {
-		const {props: {onEnterView}} = this;
+		const {
+			props: { onEnterView },
+		} = this;
 
 		if (typeof onEnterView === 'function') {
 			onEnterView();
@@ -93,19 +95,25 @@ export default class ScrollTrigger extends React.Component {
 		this.setState({ inView: true });
 	};
 
-	render () {
-		const {props: {onEnterView, ...props}} = this;
+	render() {
+		const {
+			props: { onEnterView, ...props },
+		} = this;
 		return (
-			<div className="scrollTrigger" ref={this.attachDOMRef} {...props}/>
+			<div className="scrollTrigger" ref={this.attachDOMRef} {...props} />
 		);
 	}
 }
 
-function isElementInView (el) {
-	if (!el) {return false;}
+function isElementInView(el) {
+	if (!el) {
+		return false;
+	}
 	const rect = el.getBoundingClientRect();
 	const scroller = getScrollParent(el);
-	const {top, left} = scroller.getBoundingClientRect ? scroller.getBoundingClientRect() : {top: 0, left: 0};
+	const { top, left } = scroller.getBoundingClientRect
+		? scroller.getBoundingClientRect()
+		: { top: 0, left: 0 };
 
 	const viewportY = top;
 	const viewportX = left;

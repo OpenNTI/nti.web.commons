@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import Text from '../../text';
-import {Message as ErrorMessage} from '../../errors';
+import { Message as ErrorMessage } from '../../errors';
 
 import styles from './LabelPlaceholder.css';
 
@@ -28,10 +28,22 @@ LabelPlaceholder.propTypes = {
 	variant: PropTypes.oneOf(['box', 'underlined']),
 	as: PropTypes.string,
 
-	children: PropTypes.element
+	children: PropTypes.element,
 };
 
-export default function LabelPlaceholder ({className, variant = 'box', as:tag, label, error, locked, center, noError, fill, children, ...otherProps}) {
+export default function LabelPlaceholder({
+	className,
+	variant = 'box',
+	as: tag,
+	label,
+	error,
+	locked,
+	center,
+	noError,
+	fill,
+	children,
+	...otherProps
+}) {
 	const [id] = React.useState(() => getId());
 	const errorId = `${id}-error`;
 	const input = React.Children.only(children);
@@ -44,36 +56,42 @@ export default function LabelPlaceholder ({className, variant = 'box', as:tag, l
 	const clonedInputRef = component => {
 		const node = component?.input ?? component;
 
-		if(node && node instanceof HTMLInputElement && node !== inputRef.current) {
+		if (
+			node &&
+			node instanceof HTMLInputElement &&
+			node !== inputRef.current
+		) {
 			inputRef.current = node;
 			node.addEventListener('change', inputListener);
 			setEmpty(!node.value);
-		} else if(node == null && inputRef.current != null) {
+		} else if (node == null && inputRef.current != null) {
 			inputRef.current.removeEventListener('change', inputListener);
 			inputRef.current = null;
 		}
 	};
 
-	const containerClass = cx(
-		styles.container,
-		className,
-		styles[variant],
-		{
-			[styles.error]: error,
-			[styles.locked]: locked,
-			[styles.center]: center,
-			[styles.fill]: fill,
-			[styles.empty]: empty,
-			[styles.unlabeled]: !label
-		}
-	);
+	const containerClass = cx(styles.container, className, styles[variant], {
+		[styles.error]: error,
+		[styles.locked]: locked,
+		[styles.center]: center,
+		[styles.fill]: fill,
+		[styles.empty]: empty,
+		[styles.unlabeled]: !label,
+	});
 
 	return (
-		<Cmp className={containerClass} data-input-id={id} {...otherProps} >
+		<Cmp className={containerClass} data-input-id={id} {...otherProps}>
 			<div className={styles.relative}>
-				{React.cloneElement(input, {id, placeholder: input.props.placeholder || ' ', 'aria-describedby': errorId, ref: clonedInputRef})}
+				{React.cloneElement(input, {
+					id,
+					placeholder: input.props.placeholder || ' ',
+					'aria-describedby': errorId,
+					ref: clonedInputRef,
+				})}
 				{label && (
-					<Text.Base as="label" htmlFor={id}>{label}</Text.Base>
+					<Text.Base as="label" htmlFor={id}>
+						{label}
+					</Text.Base>
 				)}
 				{variant === 'box' && label && (
 					<fieldset>
@@ -81,7 +99,14 @@ export default function LabelPlaceholder ({className, variant = 'box', as:tag, l
 					</fieldset>
 				)}
 			</div>
-			{!noError && (<ErrorMessage error={error} className={styles.errorMessage} id={errorId} role="alert" />)}
+			{!noError && (
+				<ErrorMessage
+					error={error}
+					className={styles.errorMessage}
+					id={errorId}
+					role="alert"
+				/>
+			)}
 		</Cmp>
 	);
 }

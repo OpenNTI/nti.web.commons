@@ -47,5 +47,5 @@ export { default as VisibleComponentTracker } from './visible-component-tracker'
 
 //back-compat begin
 export const ConflictResolutionHandler = ConflictResolution.Component;
-export {ConflictResolution};
+export { ConflictResolution };
 //back-compat end

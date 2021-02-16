@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import zpad from 'zpad';
 
-import {getNumber} from './utils';
+import { getNumber } from './utils';
 
 const MAX_VALUE = Number.MAX_SAFE_INTEGER;
 
@@ -13,23 +13,16 @@ const DOWN_ARROW_KEY = 40;
 
 //https://github.com/vlad-ignatov/react-numeric-input
 
-
 export default class NumberInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		value: PropTypes.oneOfType([
-			PropTypes.oneOf(['']),
-			PropTypes.number
-		]),
+		value: PropTypes.oneOfType([PropTypes.oneOf(['']), PropTypes.number]),
 		onChange: PropTypes.func,
 
 		format: PropTypes.func,
 
 		constrain: PropTypes.bool,
-		pad: PropTypes.oneOfType([
-			PropTypes.bool,
-			PropTypes.number
-		]),
+		pad: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 
 		max: PropTypes.number,
 		min: PropTypes.number,
@@ -40,21 +33,21 @@ export default class NumberInput extends React.Component {
 		onKeyDown: PropTypes.func,
 
 		onIncrement: PropTypes.func,
-		onDecrement: PropTypes.func
-	}
+		onDecrement: PropTypes.func,
+	};
 
 	static defaultProps = {
-		step: 1
-	}
+		step: 1,
+	};
 
-	attachInputRef = (x) => this.input = x
+	attachInputRef = x => (this.input = x);
 
 	/**
 	 * Convenience function. Prefer the 'value' property.
 	 *
 	 * @returns {number} a number
 	 */
-	getValue () {
+	getValue() {
 		return this.value;
 	}
 
@@ -63,18 +56,18 @@ export default class NumberInput extends React.Component {
 	 *
 	 * @returns {string} the value of the input
 	 */
-	get value () {
+	get value() {
 		return getNumber(this.input.value);
 	}
 
-	get formattedValue () {
-		const {value, format, pad} = this.props;
+	get formattedValue() {
+		const { value, format, pad } = this.props;
 		const num = getNumber(value);
 
 		let formatted;
 
 		if (pad) {
-			formatted = zpad(value, (typeof pad === 'number') ? pad : 2);
+			formatted = zpad(value, typeof pad === 'number' ? pad : 2);
 		} else if (num) {
 			formatted = num.toFixed();
 		} else {
@@ -92,9 +85,12 @@ export default class NumberInput extends React.Component {
 	 *
 	 * @returns {Object} the validity of the input
 	 */
-	get validity () {
-		const {value, min, max} = this.props;
-		const input = Object.assign(document.createElement('input'), {type: 'number', value});
+	get validity() {
+		const { value, min, max } = this.props;
+		const input = Object.assign(document.createElement('input'), {
+			type: 'number',
+			value,
+		});
 
 		if (!isNaN(min)) {
 			input.min = min;
@@ -104,21 +100,19 @@ export default class NumberInput extends React.Component {
 			input.max = max;
 		}
 
-		return input.validity || {};//or with {} for testing
+		return input.validity || {}; //or with {} for testing
 	}
 
-
-	focus () {
+	focus() {
 		if (this.input) {
 			this.input.focus();
 		}
 	}
 
+	onValueChange(value) {
+		const { onChange, value: oldValue, min, max, constrain } = this.props;
 
-	onValueChange (value) {
-		const {onChange, value:oldValue, min, max, constrain} = this.props;
-
-		if(value != null) {
+		if (value != null) {
 			// null value is acceptable, even constrained.  Contraints should only be placed on numerical values
 
 			if (constrain && !isNaN(max)) {
@@ -131,28 +125,32 @@ export default class NumberInput extends React.Component {
 		}
 
 		//this is to keep large ints from turning into scientific notation and eventually infinity
-		if (value >= MAX_VALUE) { return; }
+		if (value >= MAX_VALUE) {
+			return;
+		}
 
 		if (value !== oldValue && onChange) {
 			onChange(isNaN(value) ? '' : value);
 		}
 	}
 
-
-	onInputChange = (e) => {
+	onInputChange = e => {
 		this.onValueChange(getNumber(e.target.value));
-	}
+	};
 
-
-	handleUpKey () {
-		const {value, step, max, min, onIncrement} = this.props;
+	handleUpKey() {
+		const { value, step, max, min, onIncrement } = this.props;
 		let newValue = getNumber(value || 0);
 
-		if (onIncrement) { return onIncrement(); }
+		if (onIncrement) {
+			return onIncrement();
+		}
 
 		//If the newValue is already greater than the max
 		//don't do anything
-		if (newValue >= max) { return; }
+		if (newValue >= max) {
+			return;
+		}
 
 		newValue += step;
 
@@ -164,20 +162,22 @@ export default class NumberInput extends React.Component {
 			newValue = Math.max(newValue, getNumber(min));
 		}
 
-
 		this.onValueChange(newValue);
 	}
 
-
-	handleDownKey () {
-		const {value, step, min, max, onDecrement} = this.props;
+	handleDownKey() {
+		const { value, step, min, max, onDecrement } = this.props;
 		let newValue = getNumber(value || 0);
 
-		if (onDecrement) { return onDecrement(); }
+		if (onDecrement) {
+			return onDecrement();
+		}
 
 		//If the newValue is already less than the min
 		//don't do anything
-		if (newValue <= min) { return; }
+		if (newValue <= min) {
+			return;
+		}
 
 		newValue -= step;
 
@@ -189,10 +189,8 @@ export default class NumberInput extends React.Component {
 			newValue = Math.min(newValue, getNumber(max));
 		}
 
-
 		this.onValueChange(newValue);
 	}
-
 
 	/**
 	 * Because of FIREFOX we still have to listen to KeyPress.
@@ -200,14 +198,14 @@ export default class NumberInput extends React.Component {
 	 * @param  {Event} e KeyPress event.
 	 * @returns {void}
 	 */
-	onKeyPress = (e) => {
+	onKeyPress = e => {
 		//if the owner component wants a KeyPress listener, don't hijack it.
-		const {onKeyPress, min} = this.props;
+		const { onKeyPress, min } = this.props;
 		const minNumber = getNumber(min);
 		const allowed = {
 			44: ',',
 			45: minNumber && minNumber < 0 ? '-' : false, //don't allow 'negative sign' if min is specified and positive.
-			46: '.'
+			46: '.',
 		};
 
 		//If we aren't a number and we aren't one of allowed characters
@@ -218,8 +216,7 @@ export default class NumberInput extends React.Component {
 		if (onKeyPress) {
 			onKeyPress(e);
 		}
-	}
-
+	};
 
 	/**
 	 * Listen for the keydown to get the up and down arrow events
@@ -227,9 +224,9 @@ export default class NumberInput extends React.Component {
 	 * @param  {Event} e KeyDown event.
 	 * @returns {void}
 	 */
-	onKeyDown = (e) => {
+	onKeyDown = e => {
 		//if the owner component wants a KeyDown listener, don't hijack it.
-		const {onKeyDown} = this.props;
+		const { onKeyDown } = this.props;
 
 		//up arrow
 		if (e.keyCode === UP_ARROW_KEY) {
@@ -246,13 +243,17 @@ export default class NumberInput extends React.Component {
 		if (onKeyDown) {
 			onKeyDown(e);
 		}
-	}
+	};
 
-
-	render () {
-		const {className, ...otherProps} = this.props;
-		const {validity} = this;
-		const cls = cx('number-input-component', 'nti-number-input', className, {valid: validity.valid, invalid: !validity.valid});
+	render() {
+		const { className, ...otherProps } = this.props;
+		const { validity } = this;
+		const cls = cx(
+			'number-input-component',
+			'nti-number-input',
+			className,
+			{ valid: validity.valid, invalid: !validity.valid }
+		);
 
 		let value = this.formattedValue;
 
@@ -264,7 +265,8 @@ export default class NumberInput extends React.Component {
 
 		//TODO: use the Text input
 		return (
-			<input {...otherProps}
+			<input
+				{...otherProps}
 				type="text"
 				className={cls}
 				pattern="[0-9]*"

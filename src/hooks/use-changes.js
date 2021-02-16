@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useForceUpdate} from './use-force-update';
+import { useForceUpdate } from './use-force-update';
 
 const ChangeEvent = 'change';
 const addListener = (scope, event, fn) => {
@@ -11,17 +11,23 @@ const addListener = (scope, event, fn) => {
 	};
 };
 
-export function useChanges (item, callback, eventName = ChangeEvent) {
+export function useChanges(item, callback, eventName = ChangeEvent) {
 	const forceUpdate = useForceUpdate();
 
 	React.useEffect(() => {
 		const handler = () => {
-			if (callback) { callback(); }
-			else { forceUpdate(); }
+			if (callback) {
+				callback();
+			} else {
+				forceUpdate();
+			}
 		};
 
 		if (item) {
-			return  item.subscribeToChange?.(handler) ?? addListener(item, eventName, handler);
+			return (
+				item.subscribeToChange?.(handler) ??
+				addListener(item, eventName, handler)
+			);
 		}
 	}, [item, callback, eventName]);
 }

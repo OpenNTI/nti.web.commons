@@ -1,6 +1,6 @@
 $trigger-height: 2.4375rem;
 
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .publish-trigger {
 	min-width: 10.375rem;
@@ -22,7 +22,7 @@ $trigger-height: 2.4375rem;
 		}
 
 		.publish-trigger-icon {
-			background-image: url("./assets/options-menu_hover.png");
+			background-image: url('./assets/options-menu_hover.png');
 		}
 	}
 
@@ -44,7 +44,7 @@ $trigger-height: 2.4375rem;
 
 	.publish-trigger-icon {
 		display: inline-block;
-		background-image: url("./assets/options-menu.png");
+		background-image: url('./assets/options-menu.png');
 		width: 16px;
 		height: 16px;
 		background-size: contain;

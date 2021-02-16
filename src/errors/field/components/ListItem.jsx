@@ -7,11 +7,11 @@ export default class ErrorListItem extends React.Component {
 	static propTypes = {
 		error: PropTypes.object.isRequired,
 		isWarning: PropTypes.bool,
-		onErrorFocus: PropTypes.func
-	}
+		onErrorFocus: PropTypes.func,
+	};
 
 	onClick = () => {
-		const {error, onErrorFocus} = this.props;
+		const { error, onErrorFocus } = this.props;
 
 		if (error && error.focus) {
 			error.focus();
@@ -20,17 +20,21 @@ export default class ErrorListItem extends React.Component {
 				onErrorFocus();
 			}
 		}
-	}
+	};
 
-	render () {
-		const {error, isWarning} = this.props;
-		const {attachedTo, message} = error;
-		const {label} = attachedTo;
-		const cls = cx('nti-error-list-item', {warning: isWarning});
+	render() {
+		const { error, isWarning } = this.props;
+		const { attachedTo, message } = error;
+		const { label } = attachedTo;
+		const cls = cx('nti-error-list-item', { warning: isWarning });
 
 		return (
 			<div className={cls}>
-				{label && (<span className="label" onClick={this.onClick}>{label}</span>)}
+				{label && (
+					<span className="label" onClick={this.onClick}>
+						{label}
+					</span>
+				)}
 				<span className="message">{message}</span>
 			</div>
 		);

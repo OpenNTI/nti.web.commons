@@ -1,37 +1,41 @@
 /* eslint-env jest */
 jest.mock('react-dom', () => require('../../__mocks__/react-dom.disabled'));
-jest.mock('@nti/lib-dom', () => ({...jest.requireActual('@nti/lib-dom'), 
+jest.mock('@nti/lib-dom', () => ({
+	...jest.requireActual('@nti/lib-dom'),
 	getScrollPosition: () => ({
 		top: 100,
 		left: 0,
-	})
+	}),
 }));
 
 import React from 'react';
 
-import {verify} from '../../__test__/utils';
+import { verify } from '../../__test__/utils';
 import Dialog from '../Dialog';
 import Manager from '../ModalManager';
 
-function getEscapeEvent () {
+function getEscapeEvent() {
 	const event = new CustomEvent('keydown');
 	event.keyCode = 27;
 	return event;
 }
 
-function mockScrollElement () {
+function mockScrollElement() {
 	Object.defineProperty(document, 'scrollingElement', {
 		configurable: true,
 		value: {
-			scrollTo: jest.fn()
-		}
+			scrollTo: jest.fn(),
+		},
 	});
 }
 
 describe('Dialogs', () => {
 	document.body.innerHTML = '<div id="content"></div>';
 	const content = document.body.firstChild;
-	Object.defineProperty(document, 'activeElement', {configurable: true, value: content});
+	Object.defineProperty(document, 'activeElement', {
+		configurable: true,
+		value: content,
+	});
 
 	beforeEach(() => {
 		Manager.active.splice(0); // prevent each test from corrupting the next.
@@ -42,14 +46,21 @@ describe('Dialogs', () => {
 		delete document.scrollingElement;
 	});
 
-	test ('Simple Mount & Unmount', () => {
+	test('Simple Mount & Unmount', () => {
 		jest.useFakeTimers();
 		const Hi = () => <div>Hi</div>;
-		const cmp = verify(<Dialog><Hi/></Dialog>);
+		const cmp = verify(
+			<Dialog>
+				<Hi />
+			</Dialog>
+		);
 
 		//Update lifecycle
-		cmp.update(<Dialog><div>Hi2</div></Dialog>);
-
+		cmp.update(
+			<Dialog>
+				<div>Hi2</div>
+			</Dialog>
+		);
 
 		expect(Manager.active.length).toBe(1);
 		cmp.unmount();
@@ -60,16 +71,20 @@ describe('Dialogs', () => {
 		expect(cmp.getInstance()).toBe(null);
 	});
 
-	test ('RestoreScroll on Unmount', () => {
+	test('RestoreScroll on Unmount', () => {
 		mockScrollElement();
 		jest.useFakeTimers();
 
 		Object.defineProperty(document, 'activeElement', {
 			configurable: true,
-			value: null
+			value: null,
 		});
 
-		const cmp = verify(<Dialog restoreScroll alignTop><div>Hi</div></Dialog>);
+		const cmp = verify(
+			<Dialog restoreScroll alignTop>
+				<div>Hi</div>
+			</Dialog>
+		);
 		jest.runAllTimers();
 
 		cmp.unmount();
@@ -79,12 +94,16 @@ describe('Dialogs', () => {
 		expect(document.scrollingElement.scrollTo).toHaveBeenCalledWith(0, 100);
 	});
 
-	test ('RestoreScroll custom fn on Unmount', () => {
+	test('RestoreScroll custom fn on Unmount', () => {
 		mockScrollElement();
 		jest.useFakeTimers();
 
 		const fn = jest.fn(() => true);
-		const cmp = verify(<Dialog restoreScroll={fn} alignTop><div>Hi</div></Dialog>);
+		const cmp = verify(
+			<Dialog restoreScroll={fn} alignTop>
+				<div>Hi</div>
+			</Dialog>
+		);
 
 		jest.runAllTimers();
 
@@ -96,13 +115,23 @@ describe('Dialogs', () => {
 		expect(document.scrollingElement.scrollTo).toHaveBeenCalledWith(0, 100);
 	});
 
-
-	test ('Escape Key Behavior', () => {
+	test('Escape Key Behavior', () => {
 		jest.useFakeTimers();
 		const fnA = jest.fn();
 		const fnB = jest.fn();
-		const btm = verify(<Dialog onBeforeDismiss={() => (fnA(), btm.unmount())}><div>Hi</div></Dialog>);
-		const top = verify(<Dialog closeOnEscape={false} onBeforeDismiss={() => (fnB(), top.unmount())}><div>Yo</div></Dialog>);
+		const btm = verify(
+			<Dialog onBeforeDismiss={() => (fnA(), btm.unmount())}>
+				<div>Hi</div>
+			</Dialog>
+		);
+		const top = verify(
+			<Dialog
+				closeOnEscape={false}
+				onBeforeDismiss={() => (fnB(), top.unmount())}
+			>
+				<div>Yo</div>
+			</Dialog>
+		);
 
 		expect(Manager.active.length).toBe(2);
 
@@ -154,8 +183,7 @@ describe('Dialogs', () => {
 	// 	btm.unmount();
 	// });
 
-
-	test ('Rollbock History', () => {
+	test('Rollbock History', () => {
 		jest.useFakeTimers();
 
 		const fn = jest.fn(x => {
@@ -164,12 +192,16 @@ describe('Dialogs', () => {
 			x.rollback();
 
 			// simulate no rollback required (empty state)
-			Object.defineProperty(global.history, 'state', {value: null});
+			Object.defineProperty(global.history, 'state', { value: null });
 			//should no-op and not throw
 			x.rollback();
 		});
 
-		const cmp = verify(<Dialog onBeforeDismiss={fn}><div>Yo</div></Dialog>);
+		const cmp = verify(
+			<Dialog onBeforeDismiss={fn}>
+				<div>Yo</div>
+			</Dialog>
+		);
 
 		document.dispatchEvent(getEscapeEvent());
 		jest.runAllTimers();
@@ -179,5 +211,4 @@ describe('Dialogs', () => {
 
 		cmp.unmount();
 	});
-
 });

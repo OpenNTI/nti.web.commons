@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .content-resource-search-scope-bar {
 	background-image: linear-gradient(to bottom, #f7f7f7, #ededed);
@@ -11,7 +11,8 @@
 	box-shadow: 0 1px 0 0 var(--border-grey-light);
 	min-height: 30px;
 
-	.item, .label {
+	.item,
+	.label {
 		display: inline-block;
 	}
 

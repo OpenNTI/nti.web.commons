@@ -6,10 +6,8 @@ import ThemeContext from './Context';
 //TODO: make apply have a dom node defining custom properties for the theme
 
 ApplyTheme.propTypes = {
-	theme: PropTypes.object
+	theme: PropTypes.object,
 };
-export default function ApplyTheme ({theme, ...otherProps}) {
-	return (
-		<ThemeContext.Provider value={theme} {...otherProps} />
-	);
+export default function ApplyTheme({ theme, ...otherProps }) {
+	return <ThemeContext.Provider value={theme} {...otherProps} />;
 }

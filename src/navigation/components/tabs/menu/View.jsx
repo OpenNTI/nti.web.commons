@@ -2,7 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Triggered} from '../../../../flyout';
+import { Triggered } from '../../../../flyout';
 
 import Trigger from './Trigger';
 import Menu from './Menu';
@@ -16,24 +16,23 @@ export default class NavigationTabsMenuView extends React.Component {
 				route: PropTypes.string,
 				label: PropTypes.string,
 				id: PropTypes.string,
-				active: PropTypes.bool
+				active: PropTypes.bool,
 			})
 		),
 		renderTab: PropTypes.func,
-		expandTabs: PropTypes.bool
-	}
+		expandTabs: PropTypes.bool,
+	};
 
+	render() {
+		const { tabs, renderTab, expandTabs } = this.props;
 
-	render () {
-		const {tabs, renderTab, expandTabs} = this.props;
-
-		if (!tabs || !tabs.length) { return null; }
+		if (!tabs || !tabs.length) {
+			return null;
+		}
 
 		const activeTab = tabs.find(tab => tab.active);
 
-		const trigger = (
-			<Trigger tab={activeTab} hasMore={tabs.length > 1} />
-		);
+		const trigger = <Trigger tab={activeTab} hasMore={tabs.length > 1} />;
 
 		return (
 			<Triggered
@@ -41,7 +40,10 @@ export default class NavigationTabsMenuView extends React.Component {
 				trigger={trigger}
 				verticalAlign={Triggered.ALIGNMENTS.BOTTOM}
 				horizontalAlign={Triggered.ALIGNMENTS.CENTER}
-				transition={{className: 'navigation-menu', timeout: transitionTimeout}}
+				transition={{
+					className: 'navigation-menu',
+					timeout: transitionTimeout,
+				}}
 				className="nti-navigation-menu-flyout"
 				defaultState={expandTabs ? Triggered.OPEN : Triggered.CLOSED}
 				focusOnOpen={false}

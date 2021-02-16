@@ -14,44 +14,39 @@ export default class Draggable extends React.Component {
 		onDragEnd: PropTypes.func,
 		onMouseDown: PropTypes.func,
 		onMouseUp: PropTypes.func,
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
+	attachChildRef = x => (this.child = x);
 
-	attachChildRef = x => this.child = x;
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.setDataForTransfer(props.data);
 	}
 
-
-	get domNode () {
-		const {child} = this;
+	get domNode() {
+		const { child } = this;
 
 		return child && child.getDomNode ? child.getDomNode() : child;
 	}
 
-
-	get childProp () {
-		const {children} = this.props;
+	get childProp() {
+		const { children } = this.props;
 
 		return React.Children.only(children);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {data:newData} = this.props;
-		const {data:oldData} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { data: newData } = this.props;
+		const { data: oldData } = prevProps;
 
 		if (newData !== oldData) {
 			this.setDataForTransfer(newData);
 		}
 	}
 
-
-	setDataForTransfer (data) {
+	setDataForTransfer(data) {
 		if (!Array.isArray(data)) {
 			data = [];
 		}
@@ -65,13 +60,12 @@ export default class Draggable extends React.Component {
 		}
 	}
 
-
-	onDragStart = (e) => {
+	onDragStart = e => {
 		e.stopPropagation();
 
-		const {domNode} = this;
-		const {onDragStart} = this.props;
-		const {dataTransfer} = e;
+		const { domNode } = this;
+		const { onDragStart } = this.props;
+		const { dataTransfer } = e;
 
 		dataTransfer.effectAllowed = 'all';
 		dataTransfer.dropEffect = 'move';
@@ -91,12 +85,11 @@ export default class Draggable extends React.Component {
 		if (onDragStart) {
 			onDragStart(e);
 		}
-	}
+	};
 
-
-	onDragEnd = (e) => {
-		const {domNode} = this;
-		const {onDragEnd} = this.props;
+	onDragEnd = e => {
+		const { domNode } = this;
+		const { onDragEnd } = this.props;
 
 		this.isDragging = false;
 
@@ -107,11 +100,10 @@ export default class Draggable extends React.Component {
 		if (onDragEnd) {
 			onDragEnd(e);
 		}
-	}
+	};
 
-
-	setDraggable (add) {
-		const {domNode} = this;
+	setDraggable(add) {
+		const { domNode } = this;
 		const listener = add ? 'addEventListener' : 'removeEventListener';
 
 		if (!domNode) {
@@ -129,33 +121,34 @@ export default class Draggable extends React.Component {
 		domNode[listener]('dragend', this.onDragEnd);
 	}
 
-
-	hasDragHandle () {
+	hasDragHandle() {
 		return this.dragHandleCount && this.dragHandleCount > 0;
 	}
 
-
-	addDragHandle () {
+	addDragHandle() {
 		let removed = false;
 
 		this.dragHandleCount = (this.dragHandleCount || 0) + 1;
 
 		return () => {
-			if (removed) { return; }
+			if (removed) {
+				return;
+			}
 			removed = true;
 			this.dragHandleCount = (this.dragHandleCount || 0) - 1;
 		};
 	}
 
+	onMouseDown = e => {
+		if (this.hasDragHandle()) {
+			return;
+		}
 
-	onMouseDown = (e) => {
-		if (this.hasDragHandle()) { return; }
-
-		const {childProp} = this;
+		const { childProp } = this;
 
 		e.stopPropagation();
 
-		const {onMouseDown} = this.props;
+		const { onMouseDown } = this.props;
 
 		if (onMouseDown) {
 			onMouseDown(e);
@@ -166,14 +159,15 @@ export default class Draggable extends React.Component {
 		}
 
 		this.setDraggable(true);
-	}
+	};
 
+	onMouseUp = e => {
+		if (this.hasDragHandle()) {
+			return;
+		}
 
-	onMouseUp = (e) => {
-		if (this.hasDragHandle()) { return; }
-
-		const {onMouseUp} = this.props;
-		const {childProp} = this;
+		const { onMouseUp } = this.props;
+		const { childProp } = this;
 
 		if (onMouseUp) {
 			onMouseUp(e);
@@ -184,11 +178,10 @@ export default class Draggable extends React.Component {
 		}
 
 		this.setDraggable(false);
-	}
+	};
 
-
-	render () {
-		const {children, ...props} = this.props;
+	render() {
+		const { children, ...props } = this.props;
 		const child = React.Children.only(children);
 
 		props.onMouseDown = this.onMouseDown;
@@ -204,10 +197,13 @@ export default class Draggable extends React.Component {
 				value={{
 					addDragHandle: () => this.addDragHandle(),
 					enableDrag: () => this.setDraggable(true),
-					disableDrag: () => this.setDraggable(false)
+					disableDrag: () => this.setDraggable(false),
 				}}
 			>
-				{React.cloneElement(child, {...props, ref: this.attachChildRef})}
+				{React.cloneElement(child, {
+					...props,
+					ref: this.attachChildRef,
+				})}
 			</Context.Provider>
 		);
 	}

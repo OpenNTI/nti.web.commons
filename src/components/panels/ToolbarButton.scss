@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .toolbar-button {
 	color: var(--primary-grey);
@@ -14,7 +14,9 @@
 
 	&:hover {
 		color: #333;
-		i { color: var(--primary-grey); }
+		i {
+			color: var(--primary-grey);
+		}
 	}
 
 	&:not(.disabled):focus,
@@ -51,7 +53,7 @@
 			border-color: #d9d9d9;
 		}
 
-		i[class*="icon-"] {
+		i[class*='icon-'] {
 			padding: rem-calc(7px 0);
 			display: block;
 

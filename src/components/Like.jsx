@@ -4,7 +4,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {ItemChanges} from '../mixins';
+import { ItemChanges } from '../mixins';
 
 export default createReactClass({
 	displayName: 'Like',
@@ -12,40 +12,40 @@ export default createReactClass({
 
 	propTypes: {
 		item: PropTypes.object.isRequired,
-		asButton: PropTypes.bool
+		asButton: PropTypes.bool,
 	},
 
-
-	onClick (e) {
+	onClick(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let {item} = this.props;
+		let { item } = this.props;
 
-		this.setState({loading: true});
-		item.like()
-			.then(()=> this.setState({loading: false}));
+		this.setState({ loading: true });
+		item.like().then(() => this.setState({ loading: false }));
 	},
 
-
-	render () {
-		let {item, asButton} = this.props;
-		let {LikeCount} = item;
+	render() {
+		let { item, asButton } = this.props;
+		let { LikeCount } = item;
 
 		let count = LikeCount || '';
 
 		let cls = cx('like', {
 			active: item.hasLink('unlike'),
 			'button-like': asButton,
-			count: !!count
+			count: !!count,
 		});
 
-
 		const Tag = asButton ? 'span' : 'a';
-		const extraProps = asButton ? {role: 'button', tabIndex: '0'} : {href: '#'};
+		const extraProps = asButton
+			? { role: 'button', tabIndex: '0' }
+			: { href: '#' };
 
 		return (
-			<Tag {...extraProps} className={cls} onClick={this.onClick}>{count}</Tag>
+			<Tag {...extraProps} className={cls} onClick={this.onClick}>
+				{count}
+			</Tag>
 		);
-	}
+	},
 });

@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import isIOS from '@nti/util-ios-version';
-import { declareCustomElement, addClickOutListener, parent } from '@nti/lib-dom';
+import {
+	declareCustomElement,
+	addClickOutListener,
+	parent,
+} from '@nti/lib-dom';
 
 import LockScroll from '../components/LockScroll';
 
 declareCustomElement('dialog');
 
-
-const needsSafariFix = e => e && (isIOS() && /input|textarea|select/i.test(e.target.tagName));
+const needsSafariFix = e =>
+	e && isIOS() && /input|textarea|select/i.test(e.target.tagName);
 const stopEvent = e => e && e.stopPropagation();
 
 /**
@@ -24,7 +28,6 @@ const stopEvent = e => e && e.stopPropagation();
  * @class Modal
  */
 export default class Modal extends React.Component {
-
 	static propTypes = {
 		/** @ignore */
 		children: PropTypes.any,
@@ -71,65 +74,68 @@ export default class Modal extends React.Component {
 		 * @ignore
 		 * @type {boolean}
 		 */
-		tall: PropTypes.bool
-	}
-
+		tall: PropTypes.bool,
+	};
 
 	static childContextTypes = {
-		close: PropTypes.func
-	}
+		close: PropTypes.func,
+	};
 
 	/* @ignore */
-	attachContentRef = (content) => {
+	attachContentRef = content => {
 		if (content && content !== this.content) {
 			this.content = content;
 
-			if (this.cleanupClickOut) { this.cleanupClickOut(); }
-			this.cleanupClickOut = addClickOutListener(content, (e) => {
-				const {closeOnMaskClick} = this.props;
+			if (this.cleanupClickOut) {
+				this.cleanupClickOut();
+			}
+			this.cleanupClickOut = addClickOutListener(
+				content,
+				e => {
+					const { closeOnMaskClick } = this.props;
 
-				if (closeOnMaskClick) {
-					this.close(e);
-				}
-			}, parent(content, '.modal-mask'));
+					if (closeOnMaskClick) {
+						this.close(e);
+					}
+				},
+				parent(content, '.modal-mask')
+			);
 		} else if (!content) {
-			if (this.cleanupClickOut) { this.cleanupClickOut(); }
+			if (this.cleanupClickOut) {
+				this.cleanupClickOut();
+			}
 		}
-	}
-
+	};
 
 	getChildContext = () => ({
-		close: this.close
-	})
+		close: this.close,
+	});
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.props.Manager.addUpdateListener(this.onManagerUpdate);
 		this.state = { staging: true };
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		// Staging is here because the ref content isn't set when the modal manager calls isHidden in the render.
 		// We set state for another render to occur and correctly call isHidden with a set ref.
 		this.setState({ staging: false }, () => this.focus());
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.props.Manager.removeUpdateListener(this.onManagerUpdate);
 	}
 
-
-	onManagerUpdate = () => !this.props.isPortal && this.forceUpdate()
-
+	onManagerUpdate = () => !this.props.isPortal && this.forceUpdate();
 
 	/**
 	 * @param {Object} e - the event
 	 * @returns {undefined}
 	 */
-	close = (e) => {
-		const {onDismiss} = this.props;
+	close = e => {
+		const { onDismiss } = this.props;
 
 		stopEvent(e);
 
@@ -137,46 +143,47 @@ export default class Modal extends React.Component {
 		if (onDismiss) {
 			onDismiss(e);
 		}
-	}
-
+	};
 
 	focus = () => {
 		if (this.content && this.content.focus) {
 			this.content.focus();
 		}
-	}
+	};
 
 	/**
 	 * @param {Object} e - the event
 	 * @returns {undefined}
 	 */
-	onFocus = (e) => {
+	onFocus = e => {
 		if (needsSafariFix(e)) {
-			this.setState({safariFix: true});
+			this.setState({ safariFix: true });
 		}
-	}
+	};
 
 	/**
 	 * @param {Object} e - the event
 	 * @returns {undefined}
 	 */
-	onBlur = (e) => {
+	onBlur = e => {
 		if (needsSafariFix(e)) {
-			this.setState({safariFix: false});
+			this.setState({ safariFix: false });
 		}
-	}
+	};
 
-
-	render () {
-		const {Manager, children, className, tall} = this.props;
-		const {safariFix} = this.state;
+	render() {
+		const { Manager, children, className, tall } = this.props;
+		const { safariFix } = this.state;
 		const hidden = Manager.isHidden(this);
 
-		const classes = cx('modal-mask', className, {hidden, 'safari-fix': safariFix, tall});
+		const classes = cx('modal-mask', className, {
+			hidden,
+			'safari-fix': safariFix,
+			tall,
+		});
 
 		const ios = isIOS();
 		const timeout = 500;
-
 
 		return (
 			<>
@@ -195,12 +202,22 @@ export default class Modal extends React.Component {
 							onFocus={this.onFocus}
 							onBlur={this.onBlur}
 						>
-							<i className="icon-close" onClick={this.close}/>
-							<dialog role="dialog" className="modal-content" open ref={this.attachContentRef} tabIndex="-1" onClick={stopEvent} aria-modal="true">
+							<i className="icon-close" onClick={this.close} />
+							<dialog
+								role="dialog"
+								className="modal-content"
+								open
+								ref={this.attachContentRef}
+								tabIndex="-1"
+								onClick={stopEvent}
+								aria-modal="true"
+							>
 								{React.Children.map(children, child =>
 									typeof child.type === 'string'
 										? child
-										: React.cloneElement(child, { onDismiss: this.close })
+										: React.cloneElement(child, {
+												onDismiss: this.close,
+										  })
 								)}
 							</dialog>
 						</div>
@@ -209,5 +226,4 @@ export default class Modal extends React.Component {
 			</>
 		);
 	}
-
 }

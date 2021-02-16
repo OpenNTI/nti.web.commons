@@ -10,35 +10,32 @@ export default class ErrorView extends React.Component {
 		className: PropTypes.string,
 		error: PropTypes.object.isRequired,
 		isWarning: PropTypes.bool,
-		onFocus: PropTypes.func
-	}
+		onFocus: PropTypes.func,
+	};
 
-	setErrorCmpRef = x => this.errorCmp = x
+	setErrorCmpRef = x => (this.errorCmp = x);
 
-	componentDidUpdate (prevProps) {
-		const {error: newError} = this.props;
-		const {error: oldError} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { error: newError } = this.props;
+		const { error: oldError } = prevProps;
 
 		if (newError !== oldError) {
 			this.addListener(newError);
 		}
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.addListener();
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.removeListener();
 	}
 
-
-	addListener (newError) {
+	addListener(newError) {
 		this.removeListener();
 
-		const {error} = this.props;
+		const { error } = this.props;
 		const listenTo = newError || error;
 
 		if (listenTo) {
@@ -46,30 +43,27 @@ export default class ErrorView extends React.Component {
 		}
 	}
 
-
-	removeListener () {
-		const {error} = this.props;
+	removeListener() {
+		const { error } = this.props;
 
 		if (error) {
 			error.removeListener('focus', this.doFocus);
 		}
 	}
 
-
 	doFocus = () => {
-		const {onFocus} = this.props;
+		const { onFocus } = this.props;
 
 		if (onFocus) {
 			onFocus();
 		} else if (this.errorCmp) {
 			this.errorCmp.focus();
 		}
-	}
+	};
 
-
-	render () {
-		const {error, isWarning, className} = this.props;
-		const cls = cx('nti-error', className, {warning: isWarning});
+	render() {
+		const { error, isWarning, className } = this.props;
+		const cls = cx('nti-error', className, { warning: isWarning });
 		const msg = error.message || DEFAULT_MESSAGE;
 
 		if (error.doNotShow) {
@@ -77,7 +71,9 @@ export default class ErrorView extends React.Component {
 		}
 
 		return (
-			<div ref={this.setErrorCmpRef} className={cls}>{msg}</div>
+			<div ref={this.setErrorCmpRef} className={cls}>
+				{msg}
+			</div>
 		);
 	}
 }

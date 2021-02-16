@@ -10,26 +10,42 @@ Checkbox.propTypes = {
 	green: PropTypes.bool,
 	label: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.object // rendered element
+		PropTypes.object, // rendered element
 	]),
 	name: PropTypes.string,
-	domRef: PropTypes.any
+	domRef: PropTypes.any,
 };
 
-function Checkbox (props) {
-	const {checked, disabled, children, green, label, name, domRef, ...otherProps} = props;
+function Checkbox(props) {
+	const {
+		checked,
+		disabled,
+		children,
+		green,
+		label,
+		name,
+		domRef,
+		...otherProps
+	} = props;
 	return (
-		<label className={cx('checkbox-component', {disabled})} name={name} ref={domRef}>
-			<input {...otherProps} name={name} checked={checked}
-				disabled={disabled} type="checkbox"/>
-			<span className={cx('label', {green})}>{label}</span>
-			{children && checked && (
-				<div className="sub">
-					{children}
-				</div>
-			)}
+		<label
+			className={cx('checkbox-component', { disabled })}
+			name={name}
+			ref={domRef}
+		>
+			<input
+				{...otherProps}
+				name={name}
+				checked={checked}
+				disabled={disabled}
+				type="checkbox"
+			/>
+			<span className={cx('label', { green })}>{label}</span>
+			{children && checked && <div className="sub">{children}</div>}
 		</label>
 	);
 }
 
-export default React.forwardRef((props, ref) => <Checkbox {...props} domRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<Checkbox {...props} domRef={ref} />
+));

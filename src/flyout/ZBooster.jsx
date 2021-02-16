@@ -1,18 +1,18 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {getMaxZIndex} from '@nti/lib-dom';
+import { getMaxZIndex } from '@nti/lib-dom';
 
-const ZBooster = React.forwardRef(({as = 'div', targetEl, ...props}, ref) => {
+const ZBooster = React.forwardRef(({ as = 'div', targetEl, ...props }, ref) => {
 	// getEffectiveZIndex(targetEl)
 	const effectiveZ = useMemo(() => getMaxZIndex(), []);
 	const style = {
 		...props.style,
-		zIndex: effectiveZ ? (effectiveZ + 1) : void 0,
+		zIndex: effectiveZ ? effectiveZ + 1 : void 0,
 	};
 
 	const Tag = as;
 
-	return <Tag {...props} style={style} ref={ref}/>;
+	return <Tag {...props} style={style} ref={ref} />;
 });
 ZBooster.displayName = 'ZBooster';
 ZBooster.propTypes = {

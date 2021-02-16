@@ -1,30 +1,32 @@
 /* eslint-env jest */
-import {Tokens} from '../../utils';
-import {buildMockToken as baseMockToken} from '../../utils/__test__/tokens.spec';
+import { Tokens } from '../../utils';
+import { buildMockToken as baseMockToken } from '../../utils/__test__/tokens.spec';
 import {
 	addTokens,
 	needsTruncating,
 	cleanupTokens,
 	addEllipse,
-	removeTokens
+	removeTokens,
 } from '../overflow-utils';
 
 const FONT_WIDTH = 10;
 const FONT_HEIGHT = 10;
 
-function buildMockToken (prevToken, containerWidth, word) {
+function buildMockToken(prevToken, containerWidth, word) {
 	const token = baseMockToken(word);
 
 	token.getBoundingClientRect = () => {
 		const inner = token.innerHTML;
 		const width = inner.length * FONT_WIDTH;
 
-		const prevRect = prevToken ? prevToken.getBoundingClientRect() : {top: 0, right: 0};
+		const prevRect = prevToken
+			? prevToken.getBoundingClientRect()
+			: { top: 0, right: 0 };
 		let top = prevRect.top;
 		let left = prevRect.right;
 
 		//if it won't fit, wrap to the next line
-		if ((left + width) > containerWidth) {
+		if (left + width > containerWidth) {
 			top = prevRect.bottom;
 			left = 0;
 		}
@@ -35,7 +37,7 @@ function buildMockToken (prevToken, containerWidth, word) {
 			bottom: top + FONT_HEIGHT,
 			right: left + width,
 			width,
-			height: FONT_HEIGHT
+			height: FONT_HEIGHT,
 		};
 	};
 
@@ -44,7 +46,7 @@ function buildMockToken (prevToken, containerWidth, word) {
 	return token;
 }
 
-function buildMockScratchPad (words, width) {
+function buildMockScratchPad(words, width) {
 	const pad = document.createElement('div');
 
 	let prevToken = null;
@@ -104,7 +106,7 @@ describe('overflow-utils tests', () => {
 				clientHeight: 100,
 				clientWidth: 100,
 				scrollHeight: 100,
-				scrollWidth: 100
+				scrollWidth: 100,
 			};
 
 			expect(needsTruncating(node, 0)).toBeFalsy();
@@ -126,7 +128,7 @@ describe('overflow-utils tests', () => {
 				clientHeight: 100,
 				clientWidth: 100,
 				scrollHeight: 100,
-				scrollWidth: 101
+				scrollWidth: 101,
 			};
 
 			expect(needsTruncating(node, 5)).toBeTruthy();
@@ -161,7 +163,7 @@ describe('overflow-utils tests', () => {
 			expect(tokens.length).toBe(1);
 			expect(tokens[0].innerHTML).toBe('aaa');
 		});
-		
+
 		test('two words, first word is too wide leaves only the first word', () => {
 			const width = 29;
 			const height = 21;

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .pager.desktop {
 	display: inline-flex;
@@ -54,7 +54,8 @@
 .pager.mobile {
 	white-space: nowrap;
 
-	&, & > * {
+	&,
+	& > * {
 		vertical-align: top;
 		display: inline-block;
 		white-space: nowrap;

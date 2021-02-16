@@ -3,27 +3,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames/bind';
-import {focusDescendantOrElement} from '@nti/lib-dom';
-import {restProps} from '@nti/lib-commons';
+import { focusDescendantOrElement } from '@nti/lib-dom';
+import { restProps } from '@nti/lib-commons';
 
 import {
 	DEFAULT_VERTICAL,
 	DEFAULT_HORIZONTAL,
 	DEFAULT_SIZING,
-
 	VERTICAL,
 	// HORIZONTAL,
-
 	ALIGN_TOP,
 	ALIGN_BOTTOM,
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
 	ALIGN_LEFT_OR_RIGHT,
-
 	MATCH_SIDE,
-
-	ClassHooks
+	ClassHooks,
 } from './Constants';
 import {
 	ALIGNMENT_POSITIONS,
@@ -39,7 +35,6 @@ import {
 import ZBooster from './ZBooster';
 
 const classHooks = cx.bind(ClassHooks);
-
 
 /* NOTE: for now the primary axis is always vertical
  *
@@ -102,16 +97,21 @@ export default class AlignedFlyout extends React.Component {
 		alignTo: PropTypes.shape({
 			getBoundingClientRect: PropTypes.func,
 			offsetParent: PropTypes.object,
-			parentNode: PropTypes.object
+			parentNode: PropTypes.object,
 		}),
 		parent: PropTypes.shape({
-			getBoundingClientRect: PropTypes.func
+			getBoundingClientRect: PropTypes.func,
 		}),
 
 		//For now this can only be vertical
 		primaryAxis: PropTypes.oneOf([VERTICAL]),
 		verticalAlign: PropTypes.oneOf([ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER]),
-		horizontalAlign: PropTypes.oneOf([ALIGN_LEFT, ALIGN_RIGHT, ALIGN_CENTER, ALIGN_LEFT_OR_RIGHT]),
+		horizontalAlign: PropTypes.oneOf([
+			ALIGN_LEFT,
+			ALIGN_RIGHT,
+			ALIGN_CENTER,
+			ALIGN_LEFT_OR_RIGHT,
+		]),
 
 		//Set the max-(height|width) to keep the flyout within the parent
 		constrain: PropTypes.bool,
@@ -121,13 +121,13 @@ export default class AlignedFlyout extends React.Component {
 
 		transition: PropTypes.shape({
 			className: PropTypes.string,
-			timeout: PropTypes.number
+			timeout: PropTypes.number,
 		}),
 
 		afterAlign: PropTypes.func,
 		onFlyoutSetup: PropTypes.func,
-		onFlyoutTearDown: PropTypes.func
-	}
+		onFlyoutTearDown: PropTypes.func,
+	};
 
 	static defaultProps = {
 		focusOnOpen: true,
@@ -151,11 +151,10 @@ export default class AlignedFlyout extends React.Component {
 			left: classHooks('left'),
 			right: classHooks('right'),
 		},
-		primaryAxis: VERTICAL
-	}
+		primaryAxis: VERTICAL,
+	};
 
-
-	attachFlyoutRef = (ref) => {
+	attachFlyoutRef = ref => {
 		const oldFlyout = this.flyout;
 		const hadFlyout = !!this.flyout;
 
@@ -166,12 +165,11 @@ export default class AlignedFlyout extends React.Component {
 		} else if (!ref) {
 			this.teardownFlyout(oldFlyout);
 		}
-	}
+	};
 
-	state = {alignment: null, visible: false}
+	state = { alignment: null, visible: false };
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		if (!props.parent) {
@@ -180,8 +178,7 @@ export default class AlignedFlyout extends React.Component {
 		}
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.mounted = true;
 
 		if (this.fly) {
@@ -193,8 +190,7 @@ export default class AlignedFlyout extends React.Component {
 		}
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.mounted = false;
 		this.clearTimeouts();
 		cancelAnimationFrame(this.realign?.timeout);
@@ -204,10 +200,13 @@ export default class AlignedFlyout extends React.Component {
 		}
 	}
 
-
-	componentDidUpdate (oldProps) {
-		const {visible, alignTo:newAlign, parent} = this.props;
-		const {alignTo:oldAlign, parent:oldParent, visible: oldVisible} = oldProps;
+	componentDidUpdate(oldProps) {
+		const { visible, alignTo: newAlign, parent } = this.props;
+		const {
+			alignTo: oldAlign,
+			parent: oldParent,
+			visible: oldVisible,
+		} = oldProps;
 
 		if (!parent && oldParent) {
 			this.fly = document.createElement('div');
@@ -226,34 +225,41 @@ export default class AlignedFlyout extends React.Component {
 		if (this.state.open && !this.state.aligning && this.flyout) {
 			const prev = this.flyoutSize;
 
-			const {offsetWidth: width, offsetHeight: height} = this.flyout;
+			const { offsetWidth: width, offsetHeight: height } = this.flyout;
 
-			this.flyoutSize = {width, height: height - getPseudoElementSpace(this.flyout)};
+			this.flyoutSize = {
+				width,
+				height: height - getPseudoElementSpace(this.flyout),
+			};
 
-			if (prev && (prev.width !== this.flyoutSize.width || prev.height !== this.flyoutSize.height)) {
+			if (
+				prev &&
+				(prev.width !== this.flyoutSize.width ||
+					prev.height !== this.flyoutSize.height)
+			) {
 				this.realign();
 			}
 		}
 	}
 
-
-	listenToScroll () {
-		if (typeof document === 'undefined') { return; }
+	listenToScroll() {
+		if (typeof document === 'undefined') {
+			return;
+		}
 
 		const scrollListener = () => this.realign();
-		const params = {passive: true, capture: true};
-
+		const params = { passive: true, capture: true };
 
 		document.addEventListener('scroll', scrollListener, params);
-		this.unlistenToScroll = () => document.removeEventListener('scroll', scrollListener, params);
+		this.unlistenToScroll = () =>
+			document.removeEventListener('scroll', scrollListener, params);
 	}
 
-
-	setupFlyout (ref) {
+	setupFlyout(ref) {
 		window.addEventListener('resize', this.realign);
 		this.listenToScroll();
 
-		const {onFlyoutSetup, focusOnOpen} = this.props;
+		const { onFlyoutSetup, focusOnOpen } = this.props;
 		const container = this.fly && this.fly.parentNode;
 
 		if (container) {
@@ -271,9 +277,8 @@ export default class AlignedFlyout extends React.Component {
 		}
 	}
 
-
-	teardownFlyout (ref) {
-		const {onFlyoutTearDown} = this.props;
+	teardownFlyout(ref) {
+		const { onFlyoutTearDown } = this.props;
 
 		window.removeEventListener('resize', this.realign);
 
@@ -286,79 +291,85 @@ export default class AlignedFlyout extends React.Component {
 		}
 	}
 
-	clearTimeouts () {
+	clearTimeouts() {
 		clearTimeout(this.showTimeout);
 		clearTimeout(this.hideTimeout);
 	}
 
-	doShow () {
-		const {transition} = this.props;
+	doShow() {
+		const { transition } = this.props;
 
 		if (transition && transition.timeout) {
+			this.setState(
+				{
+					open: true,
+					aligning: true,
+					opening: true,
+					closing: false,
+				},
+				() => {
+					this.clearTimeouts();
+					this.showTimeout = setTimeout(() => {
+						this.setState({
+							opening: false,
+						});
+					}, transition.timeout);
+				}
+			);
+		} else {
 			this.setState({
 				open: true,
 				aligning: true,
-				opening: true,
-				closing: false
-			}, () => {
-				this.clearTimeouts();
-				this.showTimeout = setTimeout(() => {
-					this.setState({
-						opening: false
-					});
-				}, transition.timeout);
-			});
-		} else {
-			this.setState({
-				open: true,
-				aligning: true
 			});
 		}
 	}
 
-
-	doHide () {
-		const {transition} = this.props;
+	doHide() {
+		const { transition } = this.props;
 
 		if (transition && transition.timeout) {
-			this.setState({
-				closing: true,
-				opening: false
-			}, () => {
-				this.clearTimeouts();
-				this.hideTimeout = setTimeout(() => {
-					this.setState({
-						open: false,
-						aligning: true,
-						opening: false,
-						closing: false
-					});
-				}, transition.timeout);
-			});
+			this.setState(
+				{
+					closing: true,
+					opening: false,
+				},
+				() => {
+					this.clearTimeouts();
+					this.hideTimeout = setTimeout(() => {
+						this.setState({
+							open: false,
+							aligning: true,
+							opening: false,
+							closing: false,
+						});
+					}, transition.timeout);
+				}
+			);
 		} else {
 			this.setState({
 				open: false,
-				aligning: true
+				aligning: true,
 			});
 		}
 	}
 
-
-	realign = (reason) => {
+	realign = reason => {
 		cancelAnimationFrame(this.realign.timeout);
 		this.realign.timeout = requestAnimationFrame(() => {
-			this.setState({
-				aligning: true
-			}, () => this.align());
-		});
-	}
-
-
-	align (cb = this.props.afterAlign) {
-		const {alignment:oldAlignment} = this.state;
-		const finish = (alignment) => {
 			this.setState(
-				{alignment, aligning: false},
+				{
+					aligning: true,
+				},
+				() => this.align()
+			);
+		});
+	};
+
+	align(cb = this.props.afterAlign) {
+		const { alignment: oldAlignment } = this.state;
+		const finish = alignment => {
+			this.setState(
+				{ alignment, aligning: false },
 				typeof cb === 'function' ? cb : void cb
 			);
 		};
@@ -371,43 +382,62 @@ export default class AlignedFlyout extends React.Component {
 			alignTo,
 			parent,
 			reservedMargin,
-			primaryAxis, verticalAlign, horizontalAlign, constrain, sizing
+			primaryAxis,
+			verticalAlign,
+			horizontalAlign,
+			constrain,
+			sizing,
 		} = this.props;
 
 		if (!alignTo) {
 			return finish(oldAlignment);
 		}
 
-		const {alignToRect, coordinateRoot, isFixed} = getAlignmentInfo(alignTo, parent);
+		const { alignToRect, coordinateRoot, isFixed } = getAlignmentInfo(
+			alignTo,
+			parent
+		);
 
 		const layoutArgs = [
 			alignToRect,
 			this.flyout,
 			coordinateRoot,
-			reservedMargin
+			reservedMargin,
 		];
 
 		const alignmentPositions = ALIGNMENT_POSITIONS[primaryAxis || VERTICAL];
 		const alignmentSizings = ALIGNMENT_SIZINGS[primaryAxis || VERTICAL];
 
-		const verticalPosition = alignmentPositions[verticalAlign || DEFAULT_VERTICAL](...layoutArgs);
-		const horizontalPosition = alignmentPositions[horizontalAlign || DEFAULT_HORIZONTAL](...layoutArgs);
-		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](...layoutArgs);
+		const verticalPosition = alignmentPositions[
+			verticalAlign || DEFAULT_VERTICAL
+		](...layoutArgs);
+		const horizontalPosition = alignmentPositions[
+			horizontalAlign || DEFAULT_HORIZONTAL
+		](...layoutArgs);
+		const flyoutSizing = alignmentSizings[sizing || DEFAULT_SIZING](
+			...layoutArgs
+		);
 
 		let newAlignment = {
 			...verticalPosition,
 			...horizontalPosition,
 			...flyoutSizing,
-			isFixed
+			isFixed,
 		};
 
-
 		if (constrain) {
-			const rect = getViewportRelativeAlignments(alignTo, newAlignment, coordinateRoot);
+			const rect = getViewportRelativeAlignments(
+				alignTo,
+				newAlignment,
+				coordinateRoot
+			);
 
-			const {maxWidth, maxHeight} = constrainAlignment(rect, coordinateRoot);
+			const { maxWidth, maxHeight } = constrainAlignment(
+				rect,
+				coordinateRoot
+			);
 
-			newAlignment = {...newAlignment, maxWidth, maxHeight};
+			newAlignment = { ...newAlignment, maxWidth, maxHeight };
 
 			//If the flyout is not going to be positioned fixed, let the flyout
 			//freely size vertically (only when growing down... for growing upward,
@@ -420,8 +450,7 @@ export default class AlignedFlyout extends React.Component {
 		finish(newAlignment);
 	}
 
-
-	render () {
+	render() {
 		const {
 			alignTo,
 			className,
@@ -439,31 +468,49 @@ export default class AlignedFlyout extends React.Component {
 			...otherProps
 		} = this.props;
 
-		const flyoutProps = {...restProps(AlignedFlyout, otherProps) };
-		const {alignment, aligning, open, opening, closing} = this.state;
+		const flyoutProps = { ...restProps(AlignedFlyout, otherProps) };
+		const { alignment, aligning, open, opening, closing } = this.state;
 
-		if (!open || !alignTo) { return null; }
+		if (!open || !alignTo) {
+			return null;
+		}
 
-		const {isFixed} = alignment || {};
+		const { isFixed } = alignment || {};
 
 		const outerStyles = {
 			//if the alignment isn't fixed, or we are rendering to a parent keep the position absolute
 			position: isFixed && this.fly ? 'fixed' : 'absolute',
 			visibility: aligning || !alignment ? 'hidden' : void 0,
-			...(!alignment ? {top: 0, left: 0} : getOuterStylesForAlignment(alignment || {}, arrow, primaryAxis, alignToArrow))
+			...(!alignment
+				? { top: 0, left: 0 }
+				: getOuterStylesForAlignment(
+						alignment || {},
+						arrow,
+						primaryAxis,
+						alignToArrow
+				  )),
 		};
 
 		if (outerStyles.top) {
 			outerStyles['--flyout-top'] = outerStyles.top;
 		}
 
-		const innerStyle = getInnerStylesForAlignment(alignment || {}, arrow, primaryAxis);
+		const innerStyle = getInnerStylesForAlignment(
+			alignment || {},
+			arrow,
+			primaryAxis
+		);
 		const cls = cx(
 			'aligned-flyout',
 			'open',
 			className,
 			(transition && transition.className) || '',
-			getAlignmentClass(alignment || {}, verticalAlign, horizontalAlign, classes),
+			getAlignmentClass(
+				alignment || {},
+				verticalAlign,
+				horizontalAlign,
+				classes
+			),
 			classes.flyout,
 			{
 				arrow,
@@ -472,7 +519,7 @@ export default class AlignedFlyout extends React.Component {
 				[classes.dark]: dark,
 				[classes.fixed]: isFixed,
 				[classes.closing]: closing,
-				[classes.opening]: opening
+				[classes.opening]: opening,
 			}
 		);
 
@@ -493,7 +540,7 @@ export default class AlignedFlyout extends React.Component {
 				style={outerStyles}
 				targetEl={alignTo}
 			>
-				{arrow && (<div className="flyout-arrow" />)}
+				{arrow && <div className="flyout-arrow" />}
 				<div className="flyout-inner" style={innerStyle}>
 					{children}
 				</div>

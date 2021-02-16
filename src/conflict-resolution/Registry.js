@@ -1,14 +1,12 @@
 /**
  * Singltion instance maintains custom handlers for conflict resolution.
  */
-export default new class Registry {
-
+export default new (class Registry {
 	/**
 	 * Maps error codes to a list of responders.
 	 * @type {Object}
 	 */
-	handlers = {}
-
+	handlers = {};
 
 	/**
 	 * Attempts to handle the challenge response.
@@ -20,10 +18,12 @@ export default new class Registry {
 	 * @param  {Object} challenge.code - The error code for the challenge.
 	 * @returns {Promise|void} If handled, a Promise, otherwise void.
 	 */
-	handleConflict (challenge) {
-		const {code} = challenge || {};
+	handleConflict(challenge) {
+		const { code } = challenge || {};
 		const handlers = code && this.handlers[code];
-		if (!handlers) { return; }
+		if (!handlers) {
+			return;
+		}
 
 		for (let handler of handlers) {
 			let handled = handler(challenge);
@@ -48,12 +48,12 @@ export default new class Registry {
 	 * @param  {boolean} [prepend=true] - register the handler as a first responder or a last responder
 	 * @returns {void}
 	 */
-	register (code, responder, prepend = true) {
+	register(code, responder, prepend = true) {
 		if (!code) {
 			throw new TypeError('An error code to handle is required');
 		}
 
-		const handlers = (this.handlers[code] = (this.handlers[code] || []));
+		const handlers = (this.handlers[code] = this.handlers[code] || []);
 
 		if (!handlers.includes(responder)) {
 			if (prepend) {
@@ -64,7 +64,6 @@ export default new class Registry {
 		}
 	}
 
-
 	/**
 	 * Remove a responder from the Registry.
 	 *
@@ -72,12 +71,12 @@ export default new class Registry {
 	 * @param  {Responder} responder - a responder's callback.
 	 * @returns {void}
 	 */
-	unregister (code, responder) {
+	unregister(code, responder) {
 		if (!code) {
 			throw new TypeError('An error code is required');
 		}
 
-		const handlers = (this.handlers[code] = (this.handlers[code] || []));
+		const handlers = (this.handlers[code] = this.handlers[code] || []);
 
 		const index = handlers.indexOf(responder);
 		if (index >= 0) {
@@ -85,5 +84,4 @@ export default new class Registry {
 			handlers.splice(index, 1);
 		}
 	}
-
-}();
+})();

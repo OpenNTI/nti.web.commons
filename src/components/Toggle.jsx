@@ -11,27 +11,38 @@ export default class extends React.Component {
 		options: PropTypes.arrayOf(PropTypes.string).isRequired,
 		onToggle: PropTypes.func.isRequired,
 
-		children: PropTypes.any
+		children: PropTypes.any,
 	};
 
-	onToggle = (e) => {
+	onToggle = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		this.props.onToggle(e.target.getAttribute('data-option'));
 	};
 
-	render () {
-		const {props: {active, options, children}} = this;
+	render() {
+		const {
+			props: { active, options, children },
+		} = this;
 		return (
 			<div className="toggle-group-container">
 				<ul className="toggle-group">
 					{options.map(option => (
-
-						<li key={option} className={cx('toggle-option', {'active': option === active})}>
-							<a href="#" data-option={option} onClick={this.onToggle}>{option}</a>
+						<li
+							key={option}
+							className={cx('toggle-option', {
+								active: option === active,
+							})}
+						>
+							<a
+								href="#"
+								data-option={option}
+								onClick={this.onToggle}
+							>
+								{option}
+							</a>
 						</li>
-
 					))}
 
 					{children}

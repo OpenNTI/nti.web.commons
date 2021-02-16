@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {modal} from '../../prompts';
+import { modal } from '../../prompts';
 import DialogButtons from '../DialogButtons';
 
 import Browser from './Browser';
@@ -17,8 +17,8 @@ export default class Chooser extends React.Component {
 		onCancel: PropTypes.func,
 		onDismiss: PropTypes.func,
 		onSelect: PropTypes.func,
-		selectButtonLabel: PropTypes.string
-	}
+		selectButtonLabel: PropTypes.string,
+	};
 
 	/**
 	 * Open a Resource Browser-Picker. Currently only allowing a single item to be selected.
@@ -31,10 +31,11 @@ export default class Chooser extends React.Component {
 	 * @param  {boolean} [limited] - Restricts actions to basic selections.
 	 * @returns {Promise} Will fulfill with the File(s) or Folder(s) object the user selected.
 	 */
-	static show (sourceID, accept, filter, selectButtonLabel, limited) {
+	static show(sourceID, accept, filter, selectButtonLabel, limited) {
 		return new Promise((select, reject) => {
 			modal(
-				<Chooser sourceID={sourceID}
+				<Chooser
+					sourceID={sourceID}
 					accept={accept}
 					filter={filter}
 					selectButtonLabel={selectButtonLabel}
@@ -47,30 +48,27 @@ export default class Chooser extends React.Component {
 		});
 	}
 
-	state = {}
+	state = {};
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		if (this.unmountCallback) {
 			this.unmountCallback();
 		}
 	}
 
-
-	dismiss () {
-		const {onDismiss} = this.props;
+	dismiss() {
+		const { onDismiss } = this.props;
 		if (onDismiss) {
 			onDismiss();
 		}
 	}
 
-
-	onCancel = (e) => {
+	onCancel = e => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
-		const {onCancel} = this.props;
+		const { onCancel } = this.props;
 
 		//Use this call back to wait until the Chooser has been closed
 		this.unmountCallback = () => {
@@ -80,17 +78,21 @@ export default class Chooser extends React.Component {
 		};
 
 		this.dismiss();
-	}
+	};
 
-
-	onSelect = (e) => {
+	onSelect = e => {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
-		const {props: {onSelect}, state: {selected}} = this;
+		const {
+			props: { onSelect },
+			state: { selected },
+		} = this;
 
-		if (!selected) { return; }
+		if (!selected) {
+			return;
+		}
 
 		//Use this call back to wait until the Chooser has been closed
 		this.unmountCallback = () => {
@@ -101,58 +103,56 @@ export default class Chooser extends React.Component {
 
 		this.dismiss();
 		return true;
-	}
+	};
 
-
-	onSelectionChange = (items) => {
-		const {accept, filter} = this.props;
+	onSelectionChange = items => {
+		const { accept, filter } = this.props;
 		const [item] = items || [];
 		const matchesFilter = x => x && (!filter || filter(x));
 		const matchesAccepts = x => x && (!accept || accept(x));
 
 		this.setState({
-			selected: (item
-					&& matchesAccepts(item)
-					&& matchesFilter(item)
-					//Singleton selections will also have "current folder" in the items.
-					&& items && items.length <= 2) ? item : void 0
+			selected:
+				item &&
+				matchesAccepts(item) &&
+				matchesFilter(item) &&
+				//Singleton selections will also have "current folder" in the items.
+				items &&
+				items.length <= 2
+					? item
+					: void 0,
 		});
-	}
+	};
 
+	onTrigger = item => {
+		return (
+			item === this.state.selected && !item.isFolder && this.onSelect()
+		);
+	};
 
-	onTrigger = (item) => {
-		return (item === this.state.selected && !item.isFolder && this.onSelect());
-	}
-
-
-	render () {
+	render() {
 		const {
-			state: {selected},
-			props:{
-				accept,
-				filter,
-				limited,
-				sourceID,
-				selectButtonLabel
-			}
+			state: { selected },
+			props: { accept, filter, limited, sourceID, selectButtonLabel },
 		} = this;
 
 		const buttons = [
 			{
 				label: 'Cancel',
 				className: 'cancel',
-				onClick: this.onCancel
+				onClick: this.onCancel,
 			},
 			{
-				className: cx({disabled: !selected}),
+				className: cx({ disabled: !selected }),
 				label: selectButtonLabel || 'Select',
-				onClick: this.onSelect
-			}
+				onClick: this.onSelect,
+			},
 		];
 
 		return (
 			<div className="content-resource-chooser">
-				<Browser sourceID={sourceID}
+				<Browser
+					sourceID={sourceID}
 					Chooser={Chooser}
 					accept={accept}
 					filter={filter}
@@ -161,7 +161,7 @@ export default class Chooser extends React.Component {
 					onTrigger={this.onTrigger}
 					limited={limited}
 				/>
-				<DialogButtons buttons={buttons}/>
+				<DialogButtons buttons={buttons} />
 			</div>
 		);
 	}

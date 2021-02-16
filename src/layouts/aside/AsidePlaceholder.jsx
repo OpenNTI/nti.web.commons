@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {decorate, rawContent} from '@nti/lib-commons';
+import { decorate, rawContent } from '@nti/lib-commons';
 
 import Store from './Store';
 import styles from './AsidePlaceholder.css';
@@ -13,11 +13,11 @@ class AsidePlaceholder extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 
-		setAsidePlaceholder: PropTypes.func
-	}
+		setAsidePlaceholder: PropTypes.func,
+	};
 
-	attachPlaceholder = (node) => {
-		const {setAsidePlaceholder} = this.props;
+	attachPlaceholder = node => {
+		const { setAsidePlaceholder } = this.props;
 
 		if (!this.node && node) {
 			this.node = node;
@@ -26,10 +26,10 @@ class AsidePlaceholder extends React.Component {
 			this.node = null;
 			setAsidePlaceholder(null);
 		}
-	}
+	};
 
-	render () {
-		const {className} = this.props;
+	render() {
+		const { className } = this.props;
 
 		return (
 			<aside
@@ -41,7 +41,6 @@ class AsidePlaceholder extends React.Component {
 	}
 }
 
-
 export default decorate(AsidePlaceholder, [
-	Store.monitor(['setAsidePlaceholder'])
+	Store.monitor(['setAsidePlaceholder']),
 ]);

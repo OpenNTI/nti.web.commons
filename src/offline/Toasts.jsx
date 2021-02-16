@@ -2,12 +2,14 @@ import React from 'react';
 
 import Toast from '../toast';
 
-import {useOffline} from './Hooks';
+import { useOffline } from './Hooks';
 
-export default function OfflineToasts () {
+export default function OfflineToasts() {
 	const offline = useOffline();
 
-	if (!offline) { return null; }
+	if (!offline) {
+		return null;
+	}
 
 	return (
 		<Toast.MessageCard

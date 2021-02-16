@@ -6,9 +6,9 @@
  * If you need something out of here, it should be moved to a different location
  * and be imported here.
  */
-import {replaceNode, removeNode} from '@nti/lib-dom';
+import { replaceNode, removeNode } from '@nti/lib-dom';
 
-import {Tokens} from '../utils';
+import { Tokens } from '../utils';
 
 /**
  * Detect if any part of the node is completely above the boundary
@@ -16,43 +16,47 @@ import {Tokens} from '../utils';
  * @param  {number}  boundary the lower bound to check against
  * @returns {boolean}          if any part of the node is completely above the boundary
  */
-function hasRectAboveBoundary (node, boundary) {
+function hasRectAboveBoundary(node, boundary) {
 	const rects = Array.from(node.getClientRects());
 
 	for (let rect of rects) {
-		if (rect.bottom <= boundary) { return true; }
+		if (rect.bottom <= boundary) {
+			return true;
+		}
 	}
 
 	return false;
 }
 
-function hasRectRightOfBoundary (node, boundary) {
+function hasRectRightOfBoundary(node, boundary) {
 	const rects = Array.from(node.getClientRects());
 
 	for (let rect of rects) {
-		if (rect.right > boundary) { return true;}
+		if (rect.right > boundary) {
+			return true;
+		}
 	}
 
 	return false;
 }
 
-function hasRectOutsideBoundary (node, bottom, right) {
+function hasRectOutsideBoundary(node, bottom, right) {
 	const rect = node.getBoundingClientRect();
 
-	return rect.bottom > bottom || rect.right > right ;
+	return rect.bottom > bottom || rect.right > right;
 }
 
-export function addTokens (pad, text) {
+export function addTokens(pad, text) {
 	pad.innerHTML = Tokens.tokenizeText(text);
 }
 
-export function needsTruncating (pad, buffer) {
+export function needsTruncating(pad, buffer) {
 	const height = pad.clientHeight || pad.offsetHeight;
 	const width = pad.clientWidth || pad.offsetWidth;
 	const scrollHeight = pad.scrollHeight;
 	const scrollWidth = pad.scrollWidth;
 
-	return (scrollHeight - height) > buffer || scrollWidth > width;
+	return scrollHeight - height > buffer || scrollWidth > width;
 }
 
 /**
@@ -66,7 +70,7 @@ export function needsTruncating (pad, buffer) {
  * @param  {number} rightBound  marks the right bound for container
  * @returns {void}
  */
-export function cleanupTokens (pad, lowerBound, rightBound) {
+export function cleanupTokens(pad, lowerBound, rightBound) {
 	const tokens = Tokens.getTokensFromNode(pad);
 	let overflown = false;
 
@@ -81,10 +85,12 @@ export function cleanupTokens (pad, lowerBound, rightBound) {
 	}
 }
 
-export function addEllipse (ellipse, pad, lowerBound, rightBound) {
+export function addEllipse(ellipse, pad, lowerBound, rightBound) {
 	const tokens = Tokens.getTokensFromNode(pad);
 
-	if (!tokens.length) { return; }
+	if (!tokens.length) {
+		return;
+	}
 
 	const lastToken = tokens[tokens.length - 1];
 
@@ -104,11 +110,13 @@ export function addEllipse (ellipse, pad, lowerBound, rightBound) {
 	}
 }
 
-export function removeTokens (pad) {
+export function removeTokens(pad) {
 	const tokens = Tokens.getTokensFromNode(pad);
 
 	for (let token of tokens) {
-		const textNode = document.createTextNode(token.innerText || token.textContent);
+		const textNode = document.createTextNode(
+			token.innerText || token.textContent
+		);
 
 		replaceNode(token, textNode);
 	}

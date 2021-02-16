@@ -4,51 +4,61 @@ import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:components:Currency');
 
-
 export default class Currency extends React.PureComponent {
-	static format = formatInternal
+	static format = formatInternal;
 
 	static propTypes = {
-		amount: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number,
-		]).isRequired,
-		omitFractional: PropTypes.bool
-	}
+		amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+			.isRequired,
+		omitFractional: PropTypes.bool,
+	};
 
-	render () {
-
-		const {amount, omitFractional, ...other} = this.props;
+	render() {
+		const { amount, omitFractional, ...other } = this.props;
 
 		const a = parseFloat(amount);
 
-		return (
-			isNaN(a) ? null : <span {...other}>{formatInternal(amount, omitFractional)}</span>
+		return isNaN(a) ? null : (
+			<span {...other}>{formatInternal(amount, omitFractional)}</span>
 		);
 	}
 }
 
 (function () {
 	if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-		if(!supports()) {
-			logger.warn('No browser support for Intl.NumberFormat. Adding polyfill.');
+		if (!supports()) {
+			logger.warn(
+				'No browser support for Intl.NumberFormat. Adding polyfill.'
+			);
 			const el = document.createElement('script');
-			el.src = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en';
+			el.src =
+				'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en';
 			el.defer = true;
 			el.async = true;
-			el.setAttribute('data-script-added-by', '@nti/web-commons:Currency');
+			el.setAttribute(
+				'data-script-added-by',
+				'@nti/web-commons:Currency'
+			);
 			document.getElementsByTagName('body')[0].appendChild(el);
 		}
 	}
-}());
+})();
 
-function supports () {
-	return typeof Intl === 'object' && Intl && typeof Intl.NumberFormat === 'function';
+function supports() {
+	return (
+		typeof Intl === 'object' &&
+		Intl &&
+		typeof Intl.NumberFormat === 'function'
+	);
 }
 
-function formatInternal (amount, omitFractional, locale = 'en-US', currency = 'USD') {
+function formatInternal(
+	amount,
+	omitFractional,
+	locale = 'en-US',
+	currency = 'USD'
+) {
 	if (supports()) {
-
 		const options = {
 			style: 'currency',
 			currency: currency,
@@ -59,7 +69,7 @@ function formatInternal (amount, omitFractional, locale = 'en-US', currency = 'U
 				maximumFractionDigits: 0,
 				// in Safari (desktop and mobile), setting maximumFractionDigits without setting minimumFractionDigits
 				// causes format() to throw a RangeError ('maximumFractionDigits is out of range')
-				minimumFractionDigits: 0
+				minimumFractionDigits: 0,
 			});
 		}
 

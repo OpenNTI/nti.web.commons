@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getFixedImageSrc} from '../utils';
+import { getFixedImageSrc } from '../utils';
 
 export default class FixAspect extends React.Component {
-	static shouldApply ({aspectRatio}) { return aspectRatio != null; }
+	static shouldApply({ aspectRatio }) {
+		return aspectRatio != null;
+	}
 
 	static propTypes = {
 		children: PropTypes.any,
@@ -13,38 +15,38 @@ export default class FixAspect extends React.Component {
 		letterbox: PropTypes.string,
 
 		src: PropTypes.string,
-		_loader: PropTypes.object
-	}
+		_loader: PropTypes.object,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup();
 	}
 
-	componentDidUpdate (prevProps) {
-		const {src} = this.props;
-		const {src: prevSrc} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { src } = this.props;
+		const { src: prevSrc } = prevProps;
 
 		if (src !== prevSrc) {
 			this.setup();
 		}
 	}
 
-	setup () {
-		const {_loader, aspectRatio, letterbox} = this.props;
+	setup() {
+		const { _loader, aspectRatio, letterbox } = this.props;
 
 		this.setState({
-			src: getFixedImageSrc(_loader, aspectRatio, letterbox)
+			src: getFixedImageSrc(_loader, aspectRatio, letterbox),
 		});
 	}
 
-	render () {
-		const {src: propSrc, children} = this.props;
-		const {src: fixedSrc} = this.state;
+	render() {
+		const { src: propSrc, children } = this.props;
+		const { src: fixedSrc } = this.state;
 
 		const child = React.Children.only(children);
 
-		return React.cloneElement(child, {src: fixedSrc || propSrc});
+		return React.cloneElement(child, { src: fixedSrc || propSrc });
 	}
 }

@@ -1,20 +1,15 @@
-import {
-	DEFAULT_SIZING,
-	VERTICAL,
-	MATCH_SIDE,
-} from '../Constants';
-
+import { DEFAULT_SIZING, VERTICAL, MATCH_SIDE } from '../Constants';
 
 export const ALIGNMENT_SIZINGS = {
 	//TODO: add horizontal sizing
 	[VERTICAL]: {
-		[MATCH_SIDE] ({width}) {
+		[MATCH_SIDE]({ width }) {
 			return {
-				width: width
+				width: width,
 			};
 		},
-		[DEFAULT_SIZING] () {
+		[DEFAULT_SIZING]() {
 			return {};
-		}
-	}
+		},
+	},
 };

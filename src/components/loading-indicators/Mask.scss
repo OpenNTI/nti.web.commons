@@ -20,7 +20,9 @@ figure.loading {
 	//seems to make it work.
 	animation: fadeIn 0.1s;
 
-	& + & { display: none; }
+	& + & {
+		display: none;
+	}
 
 	figcaption {
 		position: absolute;

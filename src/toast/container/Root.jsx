@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {Locations} from '../Constants';
+import { Locations } from '../Constants';
 import Context from '../Context';
 
 import Container from './Container';
@@ -11,9 +11,15 @@ ToastContainerRoot.propTypes = {
 	className: PropTypes.string,
 	location: PropTypes.oneOf(Object.values(Locations)),
 	as: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function ToastContainerRoot ({location, className, children, as:tag, ...otherProps}) {
+export default function ToastContainerRoot({
+	location,
+	className,
+	children,
+	as: tag,
+	...otherProps
+}) {
 	const Cmp = tag || 'div';
 
 	const idCount = React.useRef(0);
@@ -29,30 +35,31 @@ export default function ToastContainerRoot ({location, className, children, as:t
 	};
 
 	const context = {
-		getNextId () {
+		getNextId() {
 			idCount.current += 1;
 			return `toast-${idCount.current}`;
 		},
 
-		addToast (toast) {
+		addToast(toast) {
 			toastRaw.current = [...toastRaw.current, toast];
 			updateToasts();
 		},
 
-
-		updateToast (id, data) {
-			toastRaw.current = toastRaw.current
-				.map(toast => toast.id === id ? ({...toast, ...data}) : toast);
+		updateToast(id, data) {
+			toastRaw.current = toastRaw.current.map(toast =>
+				toast.id === id ? { ...toast, ...data } : toast
+			);
 
 			updateToasts();
 		},
 
-		removeToast (id) {
-			toastRaw.current = toastRaw.current
-				.filter(toast => toast.id !== id);
+		removeToast(id) {
+			toastRaw.current = toastRaw.current.filter(
+				toast => toast.id !== id
+			);
 
 			updateToasts();
-		}
+		},
 	};
 
 	return (

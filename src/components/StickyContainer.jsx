@@ -1,3 +1,3 @@
-import {StickyContainer} from '@nti/react-sticky';
+import { StickyContainer } from '@nti/react-sticky';
 
 export default StickyContainer;

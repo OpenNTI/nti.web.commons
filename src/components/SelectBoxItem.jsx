@@ -8,15 +8,15 @@ export default class extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
 			label: PropTypes.string,
-			value: PropTypes.any
+			value: PropTypes.any,
 		}),
 		onClick: PropTypes.func,
-		selected: PropTypes.bool
+		selected: PropTypes.bool,
 	};
 
-	onClick = (e) => {
-		const {option, onClick} = this.props;
-		if(onClick) {
+	onClick = e => {
+		const { option, onClick } = this.props;
+		if (onClick) {
 			e.stopPropagation();
 			e.preventDefault();
 		}
@@ -24,13 +24,15 @@ export default class extends React.Component {
 		onClick && onClick(option.value || option.label);
 	};
 
-	render () {
-		const {option, selected} = this.props;
+	render() {
+		const { option, selected } = this.props;
 
 		const className = cx('option-label', { selected });
 
 		return (
-			<li onClick={this.onClick}><span className={className}>{option.label}</span></li>
+			<li onClick={this.onClick}>
+				<span className={className}>{option.label}</span>
+			</li>
 		);
 	}
 }

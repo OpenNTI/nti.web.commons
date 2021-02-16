@@ -5,9 +5,14 @@ import cx from 'classnames';
 
 import ListItem from './ListItem';
 
-function renderListItem (error, isWarning, onErrorFocus) {
+function renderListItem(error, isWarning, onErrorFocus) {
 	return (
-		<ListItem key={error.ID} error={error} isWarning={isWarning} onErrorFocus={onErrorFocus} />
+		<ListItem
+			key={error.ID}
+			error={error}
+			isWarning={isWarning}
+			onErrorFocus={onErrorFocus}
+		/>
 	);
 }
 
@@ -17,19 +22,25 @@ ErrorList.propTypes = {
 	errors: PropTypes.array,
 	isWarnings: PropTypes.bool,
 	emptyText: PropTypes.string,
-	onErrorFocus: PropTypes.func
+	onErrorFocus: PropTypes.func,
 };
 
-function ErrorList ({errors = [], isWarnings, emptyText = DEFAULT_EMPTY_TEXT, onErrorFocus}) {
-	const cls = cx('nti-error-list', {warnings: isWarnings, empty: !errors.length});
+function ErrorList({
+	errors = [],
+	isWarnings,
+	emptyText = DEFAULT_EMPTY_TEXT,
+	onErrorFocus,
+}) {
+	const cls = cx('nti-error-list', {
+		warnings: isWarnings,
+		empty: !errors.length,
+	});
 
 	return (
 		<div className={cls}>
-			{
-				!errors.length ?
-					emptyText :
-					errors.map((x) => renderListItem(x, isWarnings, onErrorFocus))
-			}
+			{!errors.length
+				? emptyText
+				: errors.map(x => renderListItem(x, isWarnings, onErrorFocus))}
 		</div>
 	);
 }

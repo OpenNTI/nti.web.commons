@@ -3,10 +3,14 @@ const OnlyDigits = /^[0-9]+$/;
 const escapeRegExp = x => x.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 const getRegExp = (x, flags) => new RegExp(escapeRegExp(x), flags);
 
-export function getDisplayFromAmount (amount, intlInfo) {
-	if (amount == null) { return ''; }
+export function getDisplayFromAmount(amount, intlInfo) {
+	if (amount == null) {
+		return '';
+	}
 
-	let formatted = intlInfo.format(amount / 100).replace(intlInfo.currencySymbol, '');
+	let formatted = intlInfo
+		.format(amount / 100)
+		.replace(intlInfo.currencySymbol, '');
 
 	//On edge, the format is ignoring the maximumFractionDigits
 	//so we need to make sure its honored.
@@ -19,11 +23,13 @@ export function getDisplayFromAmount (amount, intlInfo) {
 	return formatted;
 }
 
-export function getAmountFromDisplay (display, intlInfo) {
-	if (!display) { return null; }
+export function getAmountFromDisplay(display, intlInfo) {
+	if (!display) {
+		return null;
+	}
 
 	const mask = getMaskFromDisplay(display, intlInfo);
-	let clean = (`${display}${mask}`)
+	let clean = `${display}${mask}`
 		.replace(getRegExp(intlInfo.group, 'g'), '')
 		.replace(getRegExp(intlInfo.decimal), '');
 
@@ -34,8 +40,10 @@ export function getAmountFromDisplay (display, intlInfo) {
 	return parseInt(clean, 10);
 }
 
-export function getMaskFromDisplay (display, intlInfo) {
-	if (!display) { return ''; }
+export function getMaskFromDisplay(display, intlInfo) {
+	if (!display) {
+		return '';
+	}
 
 	const [integer, fraction] = display.split(intlInfo.decimal);
 
@@ -45,57 +53,84 @@ export function getMaskFromDisplay (display, intlInfo) {
 	const lastGroup = groups && groups[groups.length - 1];
 
 	if (groups && groups.length > 1 && lastGroup.length < 3) {
-		mask += ('0').repeat(3 - lastGroup.length);
+		mask += '0'.repeat(3 - lastGroup.length);
 	}
 
 	const minFraction = intlInfo.minimumFractionDigits;
 	const maxFraction = intlInfo.maximumFractionDigits;
 
-	if (maxFraction === 0) { return mask; }
+	if (maxFraction === 0) {
+		return mask;
+	}
 
 	if (fraction == null) {
-		mask += `${intlInfo.decimal}${('0').repeat(minFraction)}`;
+		mask += `${intlInfo.decimal}${'0'.repeat(minFraction)}`;
 	} else if (fraction.length < minFraction) {
-		mask += ('0').repeat(minFraction - fraction.length);
+		mask += '0'.repeat(minFraction - fraction.length);
 	}
 
 	return mask;
 }
 
-export function isValidIntermeddiateDisplay (display, intlInfo) {
-	if (!display) { return true; }
+export function isValidIntermeddiateDisplay(display, intlInfo) {
+	if (!display) {
+		return true;
+	}
 
 	const [integer, fraction, extra] = display.split(intlInfo.decimal);
 
-	if (extra != null) { return false; }
-	if (fraction != null && intlInfo.maximumFractionDigits === 0) { return false; }
-	if (fraction && fraction.length > intlInfo.maximumFractionDigits) { return false; }
-	if (fraction && fraction.indexOf(intlInfo.group) >= 0) { return false; }
-	if (fraction && !OnlyDigits.test(fraction)) { return false; }
+	if (extra != null) {
+		return false;
+	}
+	if (fraction != null && intlInfo.maximumFractionDigits === 0) {
+		return false;
+	}
+	if (fraction && fraction.length > intlInfo.maximumFractionDigits) {
+		return false;
+	}
+	if (fraction && fraction.indexOf(intlInfo.group) >= 0) {
+		return false;
+	}
+	if (fraction && !OnlyDigits.test(fraction)) {
+		return false;
+	}
 
-	if (!integer) { return false; }
-	if (integer && integer.charAt(0) === '0' && integer.length > 1) { return false; }
+	if (!integer) {
+		return false;
+	}
+	if (integer && integer.charAt(0) === '0' && integer.length > 1) {
+		return false;
+	}
 
 	const groups = integer?.split(intlInfo.group);
 	const middle = groups.slice(1, -1);
 
 	for (let group of middle) {
-		if (group.length !== 3) { return false; }
+		if (group.length !== 3) {
+			return false;
+		}
 	}
 
 	return groups.every(group => !group || OnlyDigits.test(group));
 }
 
-export function insertGroupSeparators (display, intlInfo, force) {
-	if (!display) { return display; }
+export function insertGroupSeparators(display, intlInfo, force) {
+	if (!display) {
+		return display;
+	}
 
 	const [integer, fraction] = display.split(intlInfo.decimal);
 	const groups = integer.split(intlInfo.group);
 	const needsFixing = force || groups.some(group => group.length > 3);
 
-	if (!needsFixing) {	return display;	}
+	if (!needsFixing) {
+		return display;
+	}
 
-	const digits = integer.split('').filter(d => d !== intlInfo.group).reverse();
+	const digits = integer
+		.split('')
+		.filter(d => d !== intlInfo.group)
+		.reverse();
 	const separatedDigits = [];
 
 	for (let i = 0; i < digits.length; i++) {
@@ -110,10 +145,12 @@ export function insertGroupSeparators (display, intlInfo, force) {
 
 	const separated = separatedDigits.reverse().join('');
 
-	return fraction != null ? `${separated}${intlInfo.decimal}${fraction}` : separated;
+	return fraction != null
+		? `${separated}${intlInfo.decimal}${fraction}`
+		: separated;
 }
 
-export function fixDisplay (display, intlInfo) {
+export function fixDisplay(display, intlInfo) {
 	const mask = getMaskFromDisplay(display, intlInfo);
 
 	return insertGroupSeparators(`${display}${mask}`, intlInfo, true);

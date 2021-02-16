@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .DayPicker-wrapper {
 	display: flex;
@@ -122,7 +122,8 @@
 		outline: none;
 	}
 
-	.no-touch &:hover:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled):not(.DayPicker-Day--today):not(.DayPicker-Day--selected) {
+	.no-touch
+		&:hover:not(.DayPicker-Day--outside):not(.DayPicker-Day--disabled):not(.DayPicker-Day--today):not(.DayPicker-Day--selected) {
 		@extend %selected-treatment;
 	}
 }
@@ -159,7 +160,7 @@
 	z-index: 1;
 
 	&::before {
-		content: "";
+		content: '';
 		background-color: #f0f0f0;
 		border-radius: 100%;
 		position: absolute;

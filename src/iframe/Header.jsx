@@ -1,10 +1,10 @@
 import './Header.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('web-common.iframe.Header', {
-	download: 'Download'
+	download: 'Download',
 });
 
 export default class IframeHeader extends React.Component {
@@ -12,20 +12,18 @@ export default class IframeHeader extends React.Component {
 		src: PropTypes.string,
 		title: PropTypes.string,
 		downloadable: PropTypes.bool,
-		onDismiss: PropTypes.func
-	}
-
+		onDismiss: PropTypes.func,
+	};
 
 	onDismiss = () => {
-		const {onDismiss} = this.props;
+		const { onDismiss } = this.props;
 
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		return (
 			<div className="nti-iframe-header">
 				{this.renderTitle()}
@@ -35,20 +33,22 @@ export default class IframeHeader extends React.Component {
 		);
 	}
 
+	renderTitle() {
+		const { title } = this.props;
 
-	renderTitle () {
-		const {title} = this.props;
-
-		return title ?
-			(<div className="title">{title}</div>) :
-			(<div className="spacer" />);
+		return title ? (
+			<div className="title">{title}</div>
+		) : (
+			<div className="spacer" />
+		);
 	}
 
+	renderDownload() {
+		const { downloadable, src } = this.props;
 
-	renderDownload () {
-		const {downloadable, src} = this.props;
-
-		if (!downloadable || !src) { return; }
+		if (!downloadable || !src) {
+			return;
+		}
 
 		return (
 			<a className="download" href={src} download>
@@ -58,9 +58,7 @@ export default class IframeHeader extends React.Component {
 		);
 	}
 
-	renderDismiss () {
-		return (
-			<i className="icon-light-x dismiss" onClick={this.onDismiss} />
-		);
+	renderDismiss() {
+		return <i className="icon-light-x dismiss" onClick={this.onDismiss} />;
 	}
 }

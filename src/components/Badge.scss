@@ -1,6 +1,6 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
-@mixin base-badge ($size, $gap, $font-size) {
+@mixin base-badge($size, $gap, $font-size) {
 	position: relative;
 
 	// the var() calls require the unit, even on zero.
@@ -29,52 +29,64 @@
 
 	.badged-item-content {
 		height: 100%;
-		mask-image: radial-gradient(circle, transparent 0, transparent #{$size / 2 + $gap}, black #{$size / 2 + $gap + 1px});
+		mask-image: radial-gradient(
+			circle,
+			transparent 0,
+			transparent #{$size / 2 + $gap},
+			black #{$size / 2 + $gap + 1px}
+		);
 		mask-size: 200% 200%; // big enough to cover entire element when positioned at the corner
 		mask-position: left $mask-x bottom $mask-y; // center @ right top (default, same as .top-right)
 	}
 
 	&.top-left {
-		&::after { // position the badge
+		&::after {
+			// position the badge
 			top: $badge-y;
 			right: auto;
 			bottom: auto;
 			left: $badge-x;
 		}
 
-		.badged-item-content { // position the mask
+		.badged-item-content {
+			// position the mask
 			mask-position: right $mask-x bottom $mask-y; // center @ left top
 		}
 	}
 
 	&.top-right {
-		&::after { // position the badge
+		&::after {
+			// position the badge
 			top: $badge-y;
 			right: $badge-x;
 			bottom: auto;
 			left: auto;
 		}
 
-		.badged-item-content { // position the mask
+		.badged-item-content {
+			// position the mask
 			mask-position: left $mask-x bottom $mask-y; // center @ right top
 		}
 	}
 
 	&.bottom-right {
-		&::after { // position the badge
+		&::after {
+			// position the badge
 			top: auto;
 			right: $badge-x;
 			bottom: $badge-y;
 			left: auto;
 		}
 
-		.badged-item-content { // position the mask
+		.badged-item-content {
+			// position the mask
 			mask-position: left $mask-x top $mask-y; // center @ right top
 		}
 	}
 
 	&.center-right {
-		&::after { // position the badge
+		&::after {
+			// position the badge
 			top: calc(50% + var(--badge-offset-y, 0px));
 			right: $badge-x;
 			bottom: auto;
@@ -82,7 +94,8 @@
 			transform: translateY(-50%);
 		}
 
-		.badged-item-content { // position the mask
+		.badged-item-content {
+			// position the mask
 			$mask-y: calc(50% + var(--badge-offset-y, 0px) + #{$gap / 4});
 
 			mask-position: left $mask-x top $mask-y; // center @ right top
@@ -90,14 +103,16 @@
 	}
 
 	&.bottom-left {
-		&::after { // position the badge
+		&::after {
+			// position the badge
 			top: auto;
 			right: auto;
 			bottom: $badge-y;
 			left: $badge-x;
 		}
 
-		.badged-item-content { // position the mask
+		.badged-item-content {
+			// position the mask
 			mask-position: right $mask-x top $mask-y; // center @ left bottom
 		}
 	}

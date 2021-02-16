@@ -6,11 +6,11 @@ import Styles from './Styles.css';
 import FormContext from './Context';
 
 FormSubmitButton.propType = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function FormSubmitButton ({className, ...props}) {
+export default function FormSubmitButton({ className, ...props }) {
 	const formContext = React.useContext(FormContext);
-	const {disabled} = formContext || {};
+	const { disabled } = formContext || {};
 
 	const disabledProps = {};
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Events} from '@nti/lib-commons';
+import { Events } from '@nti/lib-commons';
 
-import {Spinner} from '../../../loading-indicators';
-import {cleanTokens, createToken} from '../utils';
+import { Spinner } from '../../../loading-indicators';
+import { cleanTokens, createToken } from '../utils';
 
 import Styles from './Suggestions.css';
 import Suggestion from './Suggestion';
@@ -26,60 +26,61 @@ export default class TokenSuggestions extends React.Component {
 		explicitAdd: PropTypes.bool,
 		hideSuggestions: PropTypes.func,
 		addToken: PropTypes.func,
-		removeToken: PropTypes.func
-	}
+		removeToken: PropTypes.func,
+	};
 
-	state = {suggestions: null, focused: null}
+	state = { suggestions: null, focused: null };
 
-	attachContainer = (node) => {
+	attachContainer = node => {
 		this.container = node;
 
 		if (this.focusedNode) {
 			this.scrollToNode(this.focusedNode);
 		}
-	}
+	};
 
-	attachFocused = (node) => {
+	attachFocused = node => {
 		if (node && this.focusedNode !== node) {
 			this.focusedNode = node;
 			this.scrollToNode(node);
 		}
-	}
+	};
 
-	get newToken () {
-		const {hasNewToken, suggestions} = this.state;
+	get newToken() {
+		const { hasNewToken, suggestions } = this.state;
 
 		return hasNewToken && suggestions[0];
 	}
 
-	get suggestions () {
-		const {hasNewToken, suggestions} = this.state;
+	get suggestions() {
+		const { hasNewToken, suggestions } = this.state;
 
 		return hasNewToken ? suggestions.slice(1) : suggestions;
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup();
 	}
 
-	componentDidUpdate (prevProps) {
-		const {match, selected} = this.props;
-		const {match:oldMatch, selected:oldSelected} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { match, selected } = this.props;
+		const { match: oldMatch, selected: oldSelected } = prevProps;
 
 		if (match !== oldMatch || selected !== oldSelected) {
 			this.setup();
 		}
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = true;
 	}
 
+	scrollToNode(node) {
+		if (!node || !this.container) {
+			return;
+		}
 
-	scrollToNode (node) {
-		if (!node || !this.container) { return; }
-
-		const {container} = this;
+		const { container } = this;
 		const containerRect = container.getBoundingClientRect();
 		const nodeRect = node.getBoundingClientRect();
 
@@ -104,8 +105,10 @@ export default class TokenSuggestions extends React.Component {
 	 * @param  {Event} e the key down event
 	 * @returns {void}
 	 */
-	onInputKeyDown = (e) => {
-		if (this.unmounted) { return; }
+	onInputKeyDown = e => {
+		if (this.unmounted) {
+			return;
+		}
 
 		const newState = keyDownStateMod(e, this.state);
 
@@ -114,8 +117,8 @@ export default class TokenSuggestions extends React.Component {
 			return;
 		}
 
-		const {focused, selectedMap} = this.state;
-		const {key} = e;
+		const { focused, selectedMap } = this.state;
+		const { key } = e;
 
 		if (SELECT_TRIGGERS.indexOf(key) > -1 && focused) {
 			Events.stop(e);
@@ -126,20 +129,25 @@ export default class TokenSuggestions extends React.Component {
 				this.addSuggestion(focused);
 			}
 		}
-	}
+	};
 
-
-	async setup () {
-		const {match, matchValidity, selected, getSuggestions, explicitAdd} = this.props;
-		const {tokens:oldTokens, focused} = this.state;
+	async setup() {
+		const {
+			match,
+			matchValidity,
+			selected,
+			getSuggestions,
+			explicitAdd,
+		} = this.props;
+		const { tokens: oldTokens, focused } = this.state;
 
 		if (!getSuggestions) {
-			this.setState({suggestions: null});
+			this.setState({ suggestions: null });
 			return;
 		}
 
 		const loadingTimeout = setTimeout(() => {
-			this.setState({suggestions: LOADING});
+			this.setState({ suggestions: LOADING });
 		}, 100);
 
 		const loaded = new Date();
@@ -147,7 +155,10 @@ export default class TokenSuggestions extends React.Component {
 		this.lastStart = loaded;
 
 		try {
-			const tokens = oldTokens && oldTokens.for === match ? oldTokens.value : await getSuggestions(match, selected);
+			const tokens =
+				oldTokens && oldTokens.for === match
+					? oldTokens.value
+					: await getSuggestions(match, selected);
 			clearTimeout(loadingTimeout);
 
 			if (this.lastStart !== loaded) {
@@ -155,11 +166,21 @@ export default class TokenSuggestions extends React.Component {
 			}
 
 			const suggestions = cleanTokens(tokens);
-			const selectedMap = (selected || []).reduce((acc, select) => ({...acc, [select.tokenId || select.value]: true}), {});
-			
-			const hasNewToken = explicitAdd && match &&
+			const selectedMap = (selected || []).reduce(
+				(acc, select) => ({
+					...acc,
+					[select.tokenId || select.value]: true,
+				}),
+				{}
+			);
+
+			const hasNewToken =
+				explicitAdd &&
+				match &&
 				(!matchValidity || matchValidity.isValid) &&
-				suggestions.every(suggestion => !suggestion.isExactMatch(match)) &&
+				suggestions.every(
+					suggestion => !suggestion.isExactMatch(match)
+				) &&
 				(selected || []).every(select => !select.isExactMatch(match));
 
 			if (hasNewToken) {
@@ -168,17 +189,23 @@ export default class TokenSuggestions extends React.Component {
 				suggestions.unshift(newToken);
 			}
 
-			const newFocused = focused && ((suggestions || []).some(suggestion => suggestion.isSameToken(focused))) ? focused : null;
+			const newFocused =
+				focused &&
+				(suggestions || []).some(suggestion =>
+					suggestion.isSameToken(focused)
+				)
+					? focused
+					: null;
 
 			this.setState({
 				suggestions,
 				tokens: {
 					value: tokens,
-					for: match
+					for: match,
 				},
 				hasNewToken,
 				selectedMap,
-				focused: newFocused || (match !== '' ? suggestions[0] : null)
+				focused: newFocused || (match !== '' ? suggestions[0] : null),
 			});
 		} catch (e) {
 			if (this.lastStart !== loaded) {
@@ -187,31 +214,29 @@ export default class TokenSuggestions extends React.Component {
 
 			this.setState({
 				error: e,
-				suggestions: null
+				suggestions: null,
 			});
 		}
 	}
 
-
-	addSuggestion = (suggestion) => {
-		const {addToken} = this.props;
+	addSuggestion = suggestion => {
+		const { addToken } = this.props;
 
 		if (addToken) {
 			addToken(suggestion, true);
 		}
-	}
+	};
 
-
-	removeSuggestion = (suggestion) => {
-		const {removeToken} = this.props;
+	removeSuggestion = suggestion => {
+		const { removeToken } = this.props;
 
 		if (removeToken) {
 			removeToken(suggestion, true);
 		}
-	}
+	};
 
-	render () {
-		const {suggestions, error} = this.state;
+	render() {
+		const { suggestions, error } = this.state;
 		const loading = suggestions === LOADING;
 		const empty = !this.suggestions || this.suggestions.length === 0;
 
@@ -227,12 +252,9 @@ export default class TokenSuggestions extends React.Component {
 		);
 	}
 
-	renderError () {
+	renderError() {}
 
-	}
-
-
-	renderLoading () {
+	renderLoading() {
 		return (
 			<div className={cx('loading')}>
 				<Spinner />
@@ -240,27 +262,26 @@ export default class TokenSuggestions extends React.Component {
 		);
 	}
 
-
-	renderEmpty () {
+	renderEmpty() {
 		return null;
 	}
 
+	renderLabel() {
+		const { label } = this.props;
 
-	renderLabel () {
-		const {label} = this.props;
-
-		return label ?
-			(<span className={cx('suggestions-label')}>{label}</span>) :
-			null;
+		return label ? (
+			<span className={cx('suggestions-label')}>{label}</span>
+		) : null;
 	}
 
+	renderNewToken() {
+		const { newToken } = this;
 
-	renderNewToken () {
-		const {newToken} = this;
+		if (!newToken) {
+			return null;
+		}
 
-		if (!newToken) { return null; }
-
-		const {focused} = this.state;
+		const { focused } = this.state;
 		const isFocused = focused === newToken;
 
 		return (
@@ -276,28 +297,38 @@ export default class TokenSuggestions extends React.Component {
 		);
 	}
 
+	renderSuggestions() {
+		const { suggestions } = this;
+		const { match } = this.props;
+		const { focused, selectedMap } = this.state;
 
-	renderSuggestions () {
-		const {suggestions} = this;
-		const {match} = this.props;
-		const {focused, selectedMap} = this.state;
-
-		if (!suggestions || suggestions.length === 0) { return null; }
+		if (!suggestions || suggestions.length === 0) {
+			return null;
+		}
 
 		return (
 			<ul className={cx('suggestions-list')}>
 				{suggestions.map((suggestion, index) => {
-					const isSelected = selectedMap[suggestion.tokenId || suggestion.value];
-					const isFocused = focused && suggestion.isSameToken(focused);
+					const isSelected =
+						selectedMap[suggestion.tokenId || suggestion.value];
+					const isFocused =
+						focused && suggestion.isSameToken(focused);
 
 					return (
-						<li key={index} ref={isFocused ? this.attachFocused : null}>
+						<li
+							key={index}
+							ref={isFocused ? this.attachFocused : null}
+						>
 							<Suggestion
 								selected={isSelected}
 								focused={isFocused}
 								match={match}
 								suggestion={suggestion}
-								onClick={isSelected ? this.removeSuggestion : this.addSuggestion}
+								onClick={
+									isSelected
+										? this.removeSuggestion
+										: this.addSuggestion
+								}
 							/>
 						</li>
 					);

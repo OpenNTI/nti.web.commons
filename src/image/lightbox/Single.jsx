@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import * as Icons from '../../icons';
-import {Card} from '../../standard-ui';
+import { Card } from '../../standard-ui';
 
 import styles from './Single.css';
 
 SingleImageLightBox.propTypes = {
 	className: PropTypes.string,
 	onDismiss: PropTypes.func,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function SingleImageLightBox ({className, onDismiss, children}) {
+export default function SingleImageLightBox({
+	className,
+	onDismiss,
+	children,
+}) {
 	return (
 		<article className={cx(styles.singleImageLightBox, className)}>
 			<header>
@@ -21,9 +25,7 @@ export default function SingleImageLightBox ({className, onDismiss, children}) {
 				</a>
 			</header>
 			<section>
-				<Card className={styles.lightBoxContent}>
-					{children}
-				</Card>
+				<Card className={styles.lightBoxContent}>{children}</Card>
 			</section>
 		</article>
 	);

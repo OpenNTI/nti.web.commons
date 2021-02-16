@@ -1,5 +1,7 @@
-export default function getChangedValues (values, oldValues) {
-	if (!oldValues) { return new Set(); }
+export default function getChangedValues(values, oldValues) {
+	if (!oldValues) {
+		return new Set();
+	}
 
 	const newSet = new Set(values);
 	const oldSet = new Set(oldValues);

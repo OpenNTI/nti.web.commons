@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Color, restProps} from '@nti/lib-commons';
+import { Color, restProps } from '@nti/lib-commons';
 
 import Hue from './Hue';
 import SaturationBrightness from './saturation-brightness';
@@ -22,11 +22,10 @@ export default class ColorInput extends React.Component {
 		className: PropTypes.string,
 		value: PropTypes.object,
 
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	attachInputRef = x => this.input = x;
-
+	attachInputRef = x => (this.input = x);
 
 	/**
 	 * Return the validity of the input see below for more details:
@@ -34,21 +33,20 @@ export default class ColorInput extends React.Component {
 	 *
 	 * @returns {Object} the validity of the input
 	 */
-	get validity () {
+	get validity() {
 		return this.input.validity;
 	}
 
-	onChange = (e) => {
-		const {onChange} = this.props;
+	onChange = e => {
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange(Color(e.target.value), e);
 		}
-	}
+	};
 
-
-	render () {
-		const {className, value} = this.props;
+	render() {
+		const { className, value } = this.props;
 		const otherProps = restProps(ColorInput, this.props);
 
 		if ('onChange' in this.props) {
@@ -56,7 +54,9 @@ export default class ColorInput extends React.Component {
 		}
 
 		if ('value' in this.props) {
-			otherProps.value = value ? value.rgb.setAlpha(1).hex.toString() : '';
+			otherProps.value = value
+				? value.rgb.setAlpha(1).hex.toString()
+				: '';
 		}
 
 		return (

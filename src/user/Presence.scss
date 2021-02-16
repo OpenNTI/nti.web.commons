@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 $offline: #747474;
 $online: var(--primary-green);
@@ -11,7 +11,9 @@ $dnd: var(--primary-red);
 	border-radius: 7px;
 	background: $offline;
 
-	&.Online, &.online, &.available {
+	&.Online,
+	&.online,
+	&.available {
 		background: $online;
 	}
 
@@ -19,7 +21,8 @@ $dnd: var(--primary-red);
 		background: $away;
 	}
 
-	&.DnD, &.dnd {
+	&.DnD,
+	&.dnd {
 		background: $dnd;
 	}
 

@@ -22,7 +22,6 @@ describe('Aligned Flyout Tests', () => {
 
 	// 	expect(inst.setState).toHaveBeenCalledWith({aligning: false, alignment}, undefined);
 	// });
-	
 
 	// test('Transition Support', () => {
 	// 	jest.useFakeTimers();
@@ -75,12 +74,11 @@ describe('Aligned Flyout Tests', () => {
 	// 		opening: false,
 	// 	});
 	// });
-	
+
 	// test('scrolling realigns', () => {
 	// 	let listener;
 	// 	jest.spyOn(document, 'addEventListener')
 	// 		.mockImplementation((evName, handler) => listener = handler);
-
 
 	// 	const renderer = verify( <Flyout open/>, {
 	// 		createNodeMock ({type}) {
@@ -103,7 +101,7 @@ describe('Aligned Flyout Tests', () => {
 
 	// 	expect(inst.realign).toHaveBeenCalled();
 	// });
-	
+
 	// test('constrained alignment does not limit height for non-top-aligned, non-fixed flyouts', () => {
 	// 	jest.useFakeTimers();
 	// 	const renderer = verify( <Flyout constrain open verticalAlign={Flyout.ALIGNMENTS.BOTTOM}><div/></Flyout>, {createNodeMock});
@@ -116,7 +114,6 @@ describe('Aligned Flyout Tests', () => {
 
 	// 	expect(inst.state.alignment).not.toHaveProperty('maxHeight');
 	// });
-
 
 	// test('zIndex resolition', () => {
 	// 	document.body.innerHTML = `
@@ -151,7 +148,6 @@ describe('Aligned Flyout Tests', () => {
 	// 	expect(flyout.props.style.zIndex).toBe(11);
 	// });
 
-
 	// test('position fixed resolition', () => {
 	// 	document.body.innerHTML = `
 	// 		<div>
@@ -184,7 +180,7 @@ describe('Aligned Flyout Tests', () => {
 
 	// 	expect(flyout.props.style.position).toBe('fixed');
 	// });
-	
+
 	// test('Opening the flyout should add listeners to window, and document', async () => {
 	// 	jest.spyOn(window, 'addEventListener');
 	// 	jest.spyOn(window, 'removeEventListener');
@@ -223,7 +219,6 @@ describe('Aligned Flyout Tests', () => {
 	// 	// expect(window.addEventListener).toHaveBeenCalledWith('scroll', component.realign);
 	// 	// expect(window.document.addEventListener).toHaveBeenCalledWith('click', expect.any(Function));
 
-
 	// 	jest.spyOn(component, 'doClose');
 	// 	jest.spyOn(component, 'doOpen');
 	// 	event.isPropagationStopped = () => true;
@@ -237,7 +232,6 @@ describe('Aligned Flyout Tests', () => {
 	// 	expect(event.stopPropagation).not.toHaveBeenCalled();
 	// 	expect(event.preventDefault).not.toHaveBeenCalled();
 	// });
-
 
 	// test('Closing the flyout should remove listeners to window, and document', async () => {
 	// 	jest.spyOn(window, 'addEventListener');
@@ -273,7 +267,7 @@ describe('Aligned Flyout Tests', () => {
 	// 	// expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
 	// 	// expect(window.document.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
 	// });
-	
+
 	// test('Flys echo classnames', async () => {
 
 	// 	const renderer = verify(

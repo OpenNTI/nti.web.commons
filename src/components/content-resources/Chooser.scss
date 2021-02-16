@@ -9,7 +9,9 @@
 .modal-mask.content-resource-chooser-dialog {
 	background: rgba(255, 255, 255, 0.7);
 
-	& > .icon-close { display: none; }
+	& > .icon-close {
+		display: none;
+	}
 
 	.content-resource-chooser {
 		box-shadow: 0 0 40px -16px black;

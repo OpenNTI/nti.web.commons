@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {createMountPoint} from '../utils';
+import { createMountPoint } from '../utils';
 
 class RemoteWrapper extends React.Component {
 	static propTypes = {
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
-	render () {
+	render() {
 		return React.Children.only(this.props.children);
 	}
 }
@@ -22,51 +22,54 @@ class RemoteWrapper extends React.Component {
 export default class RemoteMountPoint extends React.Component {
 	static propTypes = {
 		appendTo: PropTypes.shape({
-			appendChild: PropTypes.func
+			appendChild: PropTypes.func,
 		}).isRequired,
 		className: PropTypes.string,
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		const {className, appendTo} = props;
+		const { className, appendTo } = props;
 		this.mountPoint = createMountPoint(appendTo, className);
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.renderNonPortal();
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		if (this.mountPoint) {
 			this.mountPoint.remove();
 			delete this.mountPoint;
 		}
 	}
 
-
-	componentDidUpdate () {
+	componentDidUpdate() {
 		this.renderNonPortal();
 	}
 
-
-	renderNonPortal () {
-		const {props: {children}, mountPoint: m} = this;
+	renderNonPortal() {
+		const {
+			props: { children },
+			mountPoint: m,
+		} = this;
 		if (m && !m.isPortal) {
 			m.render(RemoteWrapper, {}, children);
 		}
 	}
 
-	render () {
-		const {props: {children}, mountPoint: m} = this;
-		return m.isPortal ? m.render(RemoteWrapper, {}, children) : (
-			<span data-placeholder="mount point placeholder"/>
+	render() {
+		const {
+			props: { children },
+			mountPoint: m,
+		} = this;
+		return m.isPortal ? (
+			m.render(RemoteWrapper, {}, children)
+		) : (
+			<span data-placeholder="mount point placeholder" />
 		);
 	}
 }
-
 
 //TODO: add a function to take content and render it, with out going through the high order component

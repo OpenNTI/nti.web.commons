@@ -18,30 +18,41 @@ ColorFlyout.propTypes = {
 	swatches: PropTypes.array,
 	value: PropTypes.shape({
 		hex: PropTypes.shape({
-			toString: PropTypes.func
-		})
+			toString: PropTypes.func,
+		}),
 	}),
-	onChange: PropTypes.func
+	onChange: PropTypes.func,
 };
-export default function ColorFlyout ({className, onChange, value, swatches, ...otherProps}) {
+export default function ColorFlyout({
+	className,
+	onChange,
+	value,
+	swatches,
+	...otherProps
+}) {
 	const style = {
-		background: value ? value.hex.toString() : '#fff'
+		background: value ? value.hex.toString() : '#fff',
 	};
 
 	const trigger = (
-		<span className={cx('color-flyout-trigger', className)} role="button" style={style} />
+		<span
+			className={cx('color-flyout-trigger', className)}
+			role="button"
+			style={style}
+		/>
 	);
 
 	return (
-		<Flyout.Triggered
-			{...otherProps}
-			trigger={trigger}
-		>
+		<Flyout.Triggered {...otherProps} trigger={trigger}>
 			<div className={cx('color-flyout-picker')}>
 				<SaturationBrightness value={value} onChange={onChange} />
 				<Hue className={cx('hue')} value={value} onChange={onChange} />
 				<Text value={value} onChange={onChange} />
-				<Preset swatches={swatches} selected={value} onSelect={onChange} />
+				<Preset
+					swatches={swatches}
+					selected={value}
+					onSelect={onChange}
+				/>
 			</div>
 		</Flyout.Triggered>
 	);

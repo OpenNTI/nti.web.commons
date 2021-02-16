@@ -1,22 +1,22 @@
 import './Browser.scss';
-import {dirname} from 'path';
+import { dirname } from 'path';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {TransitionGroup, CSSTransition} from 'react-transition-group';
-import {wait} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { wait } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 
 import CError from '../Error';
-import {Mask as Loading} from '../loading-indicators';
+import { Mask as Loading } from '../loading-indicators';
 import FilePickerButton from '../FilePickerButton';
 import ProgressBar from '../ProgressBar';
 import Search from '../Search';
 //
-import Header, {TitleBalancer} from '../panels/Header';
-import Toolbar, {Spacer as ToolbarSpacer} from '../panels/Toolbar';
+import Header, { TitleBalancer } from '../panels/Header';
+import Toolbar, { Spacer as ToolbarSpacer } from '../panels/Toolbar';
 import ToolbarButton from '../panels/ToolbarButton';
 import ToolbarButtonGroup from '../panels/ToolbarButtonGroup';
 
@@ -30,7 +30,7 @@ import View from './View';
 import TableLayout from './layout/table';
 import GridLayout from './layout/grid';
 
-const DropTransition = (props) => (
+const DropTransition = props => (
 	<CSSTransition
 		// Why was the timeout 1ms?
 		timeout={1}
@@ -45,22 +45,22 @@ const TABLE_LAYOUT = 'table';
 
 const LAYOUTS = {
 	[GRID_LAYOUT]: GridLayout,
-	[TABLE_LAYOUT]: TableLayout
+	[TABLE_LAYOUT]: TableLayout,
 };
 
 const logger = Logger.get('common:components:content-resources:Browser');
 
 const DEFAULT_TEXT = {
 	'drag-drop': {
-		'drag-over-mesasge': 'Drop files here to upload them to your library.'
+		'drag-over-mesasge': 'Drop files here to upload them to your library.',
 	},
-	'toolbar': {
-		'upload': 'Upload',
-		'mkdir': 'Create Folder',
-		'move': 'Move',
-		'delete': 'Delete',
-		'rename': 'Rename'
-	}
+	toolbar: {
+		upload: 'Upload',
+		mkdir: 'Create Folder',
+		move: 'Move',
+		delete: 'Delete',
+		rename: 'Rename',
+	},
 };
 
 const t = scoped('common.components.content-resources.browser', DEFAULT_TEXT);
@@ -74,31 +74,29 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		onClose: PropTypes.func,
 		onSelectionChange: PropTypes.func,
 		onTrigger: PropTypes.func,
-		limited: PropTypes.bool
-	}
+		limited: PropTypes.bool,
+	};
 
 	static userSelectedSort = {
 		[GRID_LAYOUT]: {
 			sortOn: 'name',
-			sortOrder: 'asc'
+			sortOrder: 'asc',
 		},
 		[TABLE_LAYOUT]: {
 			sortOn: 'name',
-			sortOrder: 'asc'
-		}
-	}
+			sortOrder: 'asc',
+		},
+	};
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		const layout = ContentResourcesBrowser.userSelectedLayout || GRID_LAYOUT;
+		const layout =
+			ContentResourcesBrowser.userSelectedLayout || GRID_LAYOUT;
 		this.state.sort = ContentResourcesBrowser.userSelectedSort[layout];
 		this.state.layout = layout;
 	}
 
-
-	toggle = () => this.setState({showInfo: !this.state.showInfo})
-
+	toggle = () => this.setState({ showInfo: !this.state.showInfo });
 
 	onDelete = () => {
 		const selection = Array.from(this.selection);
@@ -113,65 +111,61 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				.then(() => this.dropItem(item));
 		}
 
-
-		last.catch((e) => {
+		last.catch(e => {
 			logger.error(e);
 			this.refresh();
 		});
-	}
+	};
 
+	onDragOverChanged = dragover => {
+		this.setState({ dragover });
+	};
 
-	onDragOverChanged = (dragover) => {
-		this.setState({dragover});
-	}
-
-
-	onFileDrop = (files) => {
+	onFileDrop = files => {
 		this.uploadFiles(files, this.state.folder);
-	}
-
+	};
 
 	onMakeDirectory = () => {
-		const {folder} = this.state;
-		const {last} = this.onMakeDirectory;
+		const { folder } = this.state;
+		const { last } = this.onMakeDirectory;
 
-		const append = x => new Promise(next =>
-			this.setState(
-				{folderContents: [...this.state.folderContents, x]},
-				() => next(x)
-			));
-
-		this.onMakeDirectory.last = (last || Promise.resolve())
-			.then(() =>
-				folder.mkdir()
-					.then(append)
-					.then(x => this.selection.set(x))
-					.then(() => this.onRename())
-					.catch(e => logger.error(e))
+		const append = x =>
+			new Promise(next =>
+				this.setState(
+					{ folderContents: [...this.state.folderContents, x] },
+					() => next(x)
+				)
 			);
-	}
 
+		this.onMakeDirectory.last = (last || Promise.resolve()).then(() =>
+			folder
+				.mkdir()
+				.then(append)
+				.then(x => this.selection.set(x))
+				.then(() => this.onRename())
+				.catch(e => logger.error(e))
+		);
+	};
 
 	onMoveSelectTarget = () => {
 		const selected = Array.from(this.selection);
 		const filter = x => !this.selection.isSelected(x);
-		const accept = x => x.isFolder
-							&& !this.selection.isSelected(x)
-							&& !selected.some(item => dirname(item.path) === (x.path || '/'));
+		const accept = x =>
+			x.isFolder &&
+			!this.selection.isSelected(x) &&
+			!selected.some(item => dirname(item.path) === (x.path || '/'));
 
 		if (selected.lenth < 1) {
 			return;
 		}
-		this.setState({moving: true});
-		const {Chooser, sourceID} = this.props;
+		this.setState({ moving: true });
+		const { Chooser, sourceID } = this.props;
 		wait.on(
 			Chooser.show(sourceID, accept, filter, 'Move', true)
 				.then(folder => this.moveEntities(selected, folder))
 				.then(this.refresh, this.refresh)
-		)
-			.then(() => this.setState({moving: false}));
-	}
-
+		).then(() => this.setState({ moving: false }));
+	};
 
 	onRename = () => {
 		const selections = Array.from(this.selection);
@@ -183,66 +177,65 @@ export default class ContentResourcesBrowser extends BrowsableView {
 		const [item] = selections;
 
 		if (item.emit('rename')) {
-			this.setState({renaming: true});
-			item.once('rename-end', () => this.setState({renaming: false}));
-
+			this.setState({ renaming: true });
+			item.once('rename-end', () => this.setState({ renaming: false }));
 		}
-	}
+	};
 
-
-	onUploadFile = (e) => {
-		const {target: {files}} = e;
+	onUploadFile = e => {
+		const {
+			target: { files },
+		} = e;
 		this.uploadFiles(files, this.state.folder);
 		//These three lines allow the same file to be selected over and over again.
 		e.target.value = null;
 		e.preventDefault();
 		e.stopPropagation();
-	}
+	};
 
-
-	onSearch = (search) => {
+	onSearch = search => {
 		if (search && search.length > 0) {
-			this.setState({folderContents: null, search}, this.search);
+			this.setState({ folderContents: null, search }, this.search);
+		} else {
+			this.setState(
+				{ folderContents: null, search: void 0, searchScope: void 0 },
+				this.refresh
+			);
 		}
-		else {
-			this.setState({folderContents: null, search: void 0, searchScope: void 0}, this.refresh);
-		}
-	}
+	};
 
-
-	onChangeSearchScope = (scope) => this.setState({folderContents: null, searchScope: scope}, this.search)
-
+	onChangeSearchScope = scope =>
+		this.setState(
+			{ folderContents: null, searchScope: scope },
+			this.search
+		);
 
 	onSortChanged = (sortOn, sortOrder) => {
-		const {layout, search} = this.state;
-		const sort = {sortOn, sortOrder};
+		const { layout, search } = this.state;
+		const sort = { sortOn, sortOrder };
 
 		ContentResourcesBrowser.userSelectedSort[layout] = sort;
-		this.setState({folderContents: null, sort},
-			(search && search.length > 0)
-				? this.search
-				: this.refresh
+		this.setState(
+			{ folderContents: null, sort },
+			search && search.length > 0 ? this.search : this.refresh
 		);
-	}
+	};
 
+	setLayoutToList = () => this.setLayout(TABLE_LAYOUT);
+	setLayoutToGrid = () => this.setLayout(GRID_LAYOUT);
 
-	setLayoutToList = () => this.setLayout(TABLE_LAYOUT)
-	setLayoutToGrid = () => this.setLayout(GRID_LAYOUT)
-
-	setLayout = (layout) => {
-		const {search} = this.state;
+	setLayout = layout => {
+		const { search } = this.state;
 		const sort = ContentResourcesBrowser.userSelectedSort[layout] || {};
 
 		ContentResourcesBrowser.userSelectedLayout = layout;
-		this.setState({folderContents: null, layout, sort},
-			(search && search.length > 0)
-				? this.search
-				: this.refresh
+		this.setState(
+			{ folderContents: null, layout, sort },
+			search && search.length > 0 ? this.search : this.refresh
 		);
-	}
+	};
 
-
-	render () {
+	render() {
 		const {
 			selection,
 			state: {
@@ -258,24 +251,28 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				root,
 				search,
 				searchScope = folder,
-				sort = {}
+				sort = {},
 			},
-			props: {
-				filter,
-				limited
-			}
+			props: { filter, limited },
 		} = this;
 
-		const layout = (selectedLayout == null && search ? TABLE_LAYOUT : selectedLayout) || GRID_LAYOUT;
+		const layout =
+			(selectedLayout == null && search
+				? TABLE_LAYOUT
+				: selectedLayout) || GRID_LAYOUT;
 
-		const content = folderContents && filter ? folderContents.filter(filter) : folderContents;
+		const content =
+			folderContents && filter
+				? folderContents.filter(filter)
+				: folderContents;
 		const searching = search && search.length > 0;
 
 		const selections = Array.from(selection);
 		const selected = selections.length;
 		const currentFolderCan = x => folder && folder.can(x);
-		const selectionCan = x => !limited && selected > 0 && selections.every(i => i.can(x));
-		const disabled = (renaming || moving); //modal states
+		const selectionCan = x =>
+			!limited && selected > 0 && selections.every(i => i.can(x));
+		const disabled = renaming || moving; //modal states
 		const hasInfo = selected === 1 && !selections[0].isFolder;
 		const inspectItem = hasInfo ? selections[0] : void 0;
 
@@ -287,9 +284,13 @@ export default class ContentResourcesBrowser extends BrowsableView {
 			<div className="content-resource-browser">
 				<Header onClose={this.props.onClose}>
 					<div className="title-row">
-						<ParentFolder folder={folder} onClick={this.gotoParent} emptyComponent={TitleBalancer}/>
+						<ParentFolder
+							folder={folder}
+							onClick={this.gotoParent}
+							emptyComponent={TitleBalancer}
+						/>
 						<FolderName folder={folder} />
-						<TitleBalancer/>
+						<TitleBalancer />
 					</div>
 					<Toolbar>
 						<FilePickerButton
@@ -328,11 +329,19 @@ export default class ContentResourcesBrowser extends BrowsableView {
 							onClick={this.onDelete}
 						/>
 
-						<ToolbarSpacer/>
+						<ToolbarSpacer />
 
 						<ToolbarButtonGroup>
-							<ToolbarButton icon="list" checked={layout === TABLE_LAYOUT} onClick={this.setLayoutToList}/>
-							<ToolbarButton icon="grid" checked={layout === GRID_LAYOUT } onClick={this.setLayoutToGrid}/>
+							<ToolbarButton
+								icon="list"
+								checked={layout === TABLE_LAYOUT}
+								onClick={this.setLayoutToList}
+							/>
+							<ToolbarButton
+								icon="grid"
+								checked={layout === GRID_LAYOUT}
+								onClick={this.setLayoutToGrid}
+							/>
 						</ToolbarButtonGroup>
 
 						<ToolbarButton
@@ -351,15 +360,21 @@ export default class ContentResourcesBrowser extends BrowsableView {
 				</Header>
 
 				{searching && (
-					<SearchScopeBar scopes={searchScopes} scope={searchScope} onChange={this.onChangeSearchScope} />
+					<SearchScopeBar
+						scopes={searchScopes}
+						scope={searchScope}
+						onChange={this.onChangeSearchScope}
+					/>
 				)}
 
 				{error ? (
-					<CError error={error}/>
+					<CError error={error} />
 				) : !folderContents ? (
-					<Loading/>
+					<Loading />
 				) : (
-					<View contents={content} sort={sort}
+					<View
+						contents={content}
+						sort={sort}
 						layout={LayoutComponent}
 						selection={selection}
 						onDragOverChanged={this.onDragOverChanged}
@@ -369,14 +384,11 @@ export default class ContentResourcesBrowser extends BrowsableView {
 						folderContents={folderContents}
 						searching={searching}
 					>
-						{showInfo && (
-							<Inspector item={inspectItem}/>
-						)}
+						{showInfo && <Inspector item={inspectItem} />}
 					</View>
 				)}
 
-
-				<div className={cx('status-bar', {dragover})}>
+				<div className={cx('status-bar', { dragover })}>
 					<TransitionGroup>
 						{!dragover && progress && (
 							<DropTransition key="progress">

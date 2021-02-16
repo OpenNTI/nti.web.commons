@@ -7,21 +7,20 @@ const logger = Logger.get('common:sync-height:HeightChange');
 const OBSERVER_INIT = {
 	childList: true,
 	characterData: true,
-	subtree: true
+	subtree: true,
 };
 
-function getMutationObserver () {
+function getMutationObserver() {
 	return window.MutationObserver || window.WebKitMutationObserver;
 }
-
 
 export default class HeightMonitor extends React.Component {
 	static propTypes = {
 		children: PropTypes.node,
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	attachRef = (x) => {
+	attachRef = x => {
 		this.node = x;
 
 		if (x) {
@@ -29,9 +28,9 @@ export default class HeightMonitor extends React.Component {
 		} else {
 			this.stopObserver();
 		}
-	}
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		const mutationObserver = getMutationObserver();
@@ -41,45 +40,46 @@ export default class HeightMonitor extends React.Component {
 		if (mutationObserver) {
 			this.observer = new mutationObserver(() => this.maybeChanged());
 		} else {
-			logger.warn('Mutation Observer is not defined, onChange will not be called');
+			logger.warn(
+				'Mutation Observer is not defined, onChange will not be called'
+			);
 		}
 	}
 
-	get height () {
-		const {node} = this;
+	get height() {
+		const { node } = this;
 
 		return node ? 0 : node.clientHeight;
 	}
 
-	componentDidUpdate () {
+	componentDidUpdate() {
 		this.maybeChange();
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.stopObserver();
 	}
 
+	maybeChanged() {
+		const { onChange } = this.props;
 
-	maybeChanged () {
-		const {onChange} = this.props;
-
-		if (!onChange) { return; }
+		if (!onChange) {
+			return;
+		}
 
 		setTimeout(() => {
-			const {height:newHeight} = this;
+			const { height: newHeight } = this;
 
 			if (newHeight !== this.currentHeight) {
 				this.currentHeight = newHeight;
 				onChange(newHeight);
 			}
-		}, 1);//Wait for the dom to settle down
+		}, 1); //Wait for the dom to settle down
 	}
 
-
-	startObserver () {
+	startObserver() {
 		this.stopObserver();
-		const {node, height} = this;
+		const { node, height } = this;
 
 		this.currentHeight = height;
 
@@ -88,16 +88,14 @@ export default class HeightMonitor extends React.Component {
 		}
 	}
 
-
-	stopObserver () {
+	stopObserver() {
 		if (this.observer) {
 			this.observer.disconnect();
 		}
 	}
 
-
-	render () {
-		const {children, ...otherProps} = this.props;
+	render() {
+		const { children, ...otherProps } = this.props;
 
 		delete otherProps.onChange;
 

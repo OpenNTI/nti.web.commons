@@ -1,24 +1,20 @@
 import React from 'react';
 
-import {Responsive} from '../../../layouts';
+import { Responsive } from '../../../layouts';
 
 import List from './list';
 import Menu from './menu';
 
 export default class NavigationTabs extends React.Component {
 	renderList = () => {
-		return (
-			<List {...this.props} />
-		);
-	}
+		return <List {...this.props} />;
+	};
 
 	renderMenu = () => {
-		return (
-			<Menu {...this.props} />
-		);
-	}
+		return <Menu {...this.props} />;
+	};
 
-	render () {
+	render() {
 		return (
 			<React.Fragment>
 				<Responsive.Item

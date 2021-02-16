@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {HOC} from '@nti/lib-commons';
+import { HOC } from '@nti/lib-commons';
 
 export default class BasePath extends React.Component {
-
-	static connect (Component) {
-
+	static connect(Component) {
 		const cmp = class ItemChangesWrapper extends React.Component {
-			render () {
-				return (
-					<BasePath _component={Component} {...this.props}/>
-				);
+			render() {
+				return <BasePath _component={Component} {...this.props} />;
 			}
 		};
 
@@ -21,15 +17,15 @@ export default class BasePath extends React.Component {
 
 	static propTypes = {
 		_component: PropTypes.any,
-		children: PropTypes.node
-	}
+		children: PropTypes.node,
+	};
 
 	static contextTypes = {
-		basePath: PropTypes.string.isRequired
-	}
+		basePath: PropTypes.string.isRequired,
+	};
 
-	render () {
-		const {children, _component, ...props} = this.props;
+	render() {
+		const { children, _component, ...props } = this.props;
 
 		Object.assign(props, this.context);
 

@@ -9,7 +9,8 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: var(--small-padding) var(--small-padding) var(--small-padding) var(--large-padding);
+	padding: var(--small-padding) var(--small-padding) var(--small-padding)
+		var(--large-padding);
 	border-bottom: 1px solid var(--border-grey-light);
 
 	& img {

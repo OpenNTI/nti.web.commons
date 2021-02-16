@@ -1,9 +1,15 @@
-@import "~@nti/style-common/variables.scss";
-@import "~@nti/style-common/placeholders.scss";
+@import '~@nti/style-common/variables.scss';
+@import '~@nti/style-common/placeholders.scss';
 
-%x-close { background-image: url(./assets/close.png); }
-%icon-modal-red-sign { background-image: url(./assets/modal-red-sign.png); }
-%icon-modal-yellow-sign { background-image: url(./assets/modal-yellow-sign.png); }
+%x-close {
+	background-image: url(./assets/close.png);
+}
+%icon-modal-red-sign {
+	background-image: url(./assets/modal-red-sign.png);
+}
+%icon-modal-yellow-sign {
+	background-image: url(./assets/modal-yellow-sign.png);
+}
 
 .nti-dialog-mount-point > * {
 	position: fixed;
@@ -83,7 +89,10 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: { position: center center; repeat: no-repeat; }
+			background: {
+				position: center center;
+				repeat: no-repeat;
+			}
 		}
 	}
 

@@ -5,10 +5,7 @@ import cx from 'classnames';
 
 export default class SelectInputOption extends React.Component {
 	static propTypes = {
-		value: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number
-		]),
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		className: PropTypes.string,
 		children: PropTypes.node,
 		matches: PropTypes.func,
@@ -21,29 +18,26 @@ export default class SelectInputOption extends React.Component {
 		checkable: PropTypes.bool,
 		checked: PropTypes.bool,
 		removable: PropTypes.bool,
-		onRemove: PropTypes.func
-	}
+		onRemove: PropTypes.func,
+	};
 
-
-	onClick = (e) => {
-		const {onClick, value, display} = this.props;
+	onClick = e => {
+		const { onClick, value, display } = this.props;
 
 		if (onClick && !display) {
 			onClick(value, e);
 		}
-	}
+	};
 
-
-	onRemove = (e) => {
-		const {onRemove, value} = this.props;
+	onRemove = e => {
+		const { onRemove, value } = this.props;
 
 		if (onRemove) {
 			onRemove(value, e);
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		const {
 			value,
 			selected,
@@ -52,9 +46,15 @@ export default class SelectInputOption extends React.Component {
 			removable,
 			focused,
 			display,
-			children
+			children,
 		} = this.props;
-		const cls = cx('nti-select-input-option', {selected, checkable, removable, focused, display});
+		const cls = cx('nti-select-input-option', {
+			selected,
+			checkable,
+			removable,
+			focused,
+			display,
+		});
 
 		return (
 			<div
@@ -65,12 +65,10 @@ export default class SelectInputOption extends React.Component {
 			>
 				{checkable && (
 					<div className="check">
-						{checked && (<i className="icon-check" />)}
+						{checked && <i className="icon-check" />}
 					</div>
 				)}
-				<div className="content">
-					{children}
-				</div>
+				<div className="content">{children}</div>
 				{removable && (
 					<div className="remove" onClick={this.onRemove}>
 						<i className="icon-bold-x" />

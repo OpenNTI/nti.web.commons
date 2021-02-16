@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 
 import Tabs from './components/tabs';
 import TabsConfig from './configuration/tabs';
 import Store from './Store';
 
 class NavigationComponent extends React.Component {
-	static Tabs = TabsConfig
+	static Tabs = TabsConfig;
 
 	static propTypes = {
 		tabs: PropTypes.array,
-		expandTabs: PropTypes.bool
-	}
+		expandTabs: PropTypes.bool,
+	};
 
-	render () {
-		const {tabs, expandTabs, ...otherProps} = this.props;
+	render() {
+		const { tabs, expandTabs, ...otherProps } = this.props;
 
 		return (
 			<div>
@@ -25,7 +25,6 @@ class NavigationComponent extends React.Component {
 	}
 }
 
-
 export default decorate(NavigationComponent, [
-	Store.connect(['tabs', 'expandTabs'])
+	Store.connect(['tabs', 'expandTabs']),
 ]);

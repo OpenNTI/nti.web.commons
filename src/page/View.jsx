@@ -16,22 +16,26 @@ Page.Navigation = Navigation;
 Page.propTypes = {
 	className: PropTypes.string,
 	as: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function Page ({className, as: tag, children}) {
+export default function Page({ className, as: tag, children }) {
 	const items = React.Children.toArray(children).reduce((acc, child) => {
 		if (Navigation.isNavigation(child)) {
 			if (acc.some(c => c.cls === NavigationCls)) {
-				throw new Error('Cannot have more than one navigation component in a page');
+				throw new Error(
+					'Cannot have more than one navigation component in a page'
+				);
 			}
 
-			acc.push({cls: NavigationCls, cmp: child});
+			acc.push({ cls: NavigationCls, cmp: child });
 		} else if (Content.isContent(child)) {
 			if (acc.some(c => c.cls === ContentCls)) {
-				throw new Error('Cannot have more than one content component in a page');
+				throw new Error(
+					'Cannot have more than one content component in a page'
+				);
 			}
 
-			acc.push({cls: ContentCls, cmp: child});
+			acc.push({ cls: ContentCls, cmp: child });
 		} else {
 			throw new Error(`Unknown Page component: ${child.type}`);
 		}
@@ -39,15 +43,10 @@ export default function Page ({className, as: tag, children}) {
 		return acc;
 	}, []);
 
-	
 	const layoutCls = items.map(i => i.cls).join('-');
 	const content = items.map(i => i.cmp);
 
 	const Cmp = tag || 'article';
 
-	return (
-		<Cmp className={cx('nt-page', layoutCls)}>
-			{content}
-		</Cmp>
-	);
+	return <Cmp className={cx('nt-page', layoutCls)}>{content}</Cmp>;
 }

@@ -1,18 +1,18 @@
 import React from 'react';
-import {addClass, removeClass} from '@nti/lib-dom';
+import { addClass, removeClass } from '@nti/lib-dom';
 
 export default class extends React.Component {
 	static displayName = 'HideNavigation';
 
-	componentDidMount () {
+	componentDidMount() {
 		addClass(document.body.parentNode, 'hide-nav');
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		removeClass(document.body.parentNode, 'hide-nav');
 	}
 
-	render () {
+	render() {
 		return null;
 	}
 }

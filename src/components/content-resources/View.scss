@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .content-resource-view {
 	$sideMargin: 20px;
@@ -64,7 +64,8 @@
 		-khtml-user-drag: element;
 		-webkit-user-drag: element;
 
-		img, svg {
+		img,
+		svg {
 			pointer-events: none;
 		}
 	}

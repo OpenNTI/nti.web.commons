@@ -10,7 +10,7 @@ import OutlineIcon from './assets/outline.svg';
 
 const cx = classnames.bind(Styles);
 
-function getContents (title, children) {
+function getContents(title, children) {
 	try {
 		return React.Children.only(children);
 	} catch (e) {
@@ -28,9 +28,15 @@ NavigationOutlineHeader.propTypes = {
 	title: PropTypes.string,
 
 	as: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function NavigationOutlineHeader ({className, title, as: tag, children, ...otherProps}) {
+export default function NavigationOutlineHeader({
+	className,
+	title,
+	as: tag,
+	children,
+	...otherProps
+}) {
 	const Cmp = tag || 'div';
 
 	return (

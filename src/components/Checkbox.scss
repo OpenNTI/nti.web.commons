@@ -1,5 +1,5 @@
-@import "~@nti/style-common";
-@import "assets/retina";
+@import '~@nti/style-common';
+@import 'assets/retina';
 
 label.checkbox-component {
 	position: relative;
@@ -61,7 +61,8 @@ label.checkbox-component {
 	}
 
 	//reset foundation's 'label' & '.label'
-	&, & span.label {
+	&,
+	& span.label {
 		font-weight: inherit;
 		font-size: inherit;
 		font-style: inherit;

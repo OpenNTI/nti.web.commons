@@ -5,7 +5,6 @@ import cx from 'classnames';
 
 import NavigatableMixin from '../mixins/NavigatableMixin';
 
-
 //This is duplicating "./ActiveState"
 
 export default createReactClass({
@@ -16,15 +15,18 @@ export default createReactClass({
 	propTypes: {
 		href: PropTypes.string,
 		className: PropTypes.string,
-		children: PropTypes.any
+		children: PropTypes.any,
 	},
 
-	componentDidMount () {
-		console.warn('ActiveLink component is deprecated. Use ActiveState instead.'); //eslint-disable-line no-console
+	componentDidMount() {
+		//eslint-disable-next-line no-console
+		console.warn(
+			'ActiveLink component is deprecated. Use ActiveState instead.'
+		);
 	},
 
-	isActive () {
-		let {href} = this.props;
+	isActive() {
+		let { href } = this.props;
 		let path = this.getPath();
 		try {
 			path = this.context.router.getMatch().matchedPath;
@@ -36,12 +38,17 @@ export default createReactClass({
 		return path.indexOf(href) === 0;
 	},
 
-	render () {
-		const {context: {routerLinkComponent: Link = 'a'}, props: {className}} = this;
+	render() {
+		const {
+			context: { routerLinkComponent: Link = 'a' },
+			props: { className },
+		} = this;
 
 		return (
-			<Link {...this.props} className={cx(className, {active: this.isActive()})}/>
+			<Link
+				{...this.props}
+				className={cx(className, { active: this.isActive() })}
+			/>
 		);
-	}
-
+	},
 });

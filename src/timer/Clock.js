@@ -1,5 +1,4 @@
-import {VisibilityMonitor} from '@nti/lib-dom';
-
+import { VisibilityMonitor } from '@nti/lib-dom';
 
 const LISTENERS = Symbol('listeners');
 const START = Symbol('start');
@@ -10,7 +9,7 @@ const STATE = Symbol('state');
 
 const INTERVAL = 1000;
 
-async function callListener (listener, state) {
+async function callListener(listener, state) {
 	try {
 		listener(state);
 	} catch (e) {
@@ -19,16 +18,16 @@ async function callListener (listener, state) {
 }
 
 class Clock {
-	constructor () {
+	constructor() {
 		this[LISTENERS] = new Set([]);
 		this[STATE] = {};
 	}
 
-	hasListeners () {
+	hasListeners() {
 		return this[LISTENERS].size > 0;
 	}
 
-	addListener (fn) {
+	addListener(fn) {
 		const hadListeners = this.hasListeners();
 
 		this[LISTENERS].add(fn);
@@ -38,7 +37,7 @@ class Clock {
 		}
 	}
 
-	removeListener (fn) {
+	removeListener(fn) {
 		this[LISTENERS].delete(fn);
 
 		if (!this.hasListeners()) {
@@ -46,8 +45,7 @@ class Clock {
 		}
 	}
 
-
-	[EMIT] () {
+	[EMIT]() {
 		const listeners = Array.from(this[LISTENERS]);
 
 		for (let listener of listeners) {
@@ -55,9 +53,10 @@ class Clock {
 		}
 	}
 
-
-	[ON_TICK] () {
-		if (!this[STATE].running || this[STATE].paused) { return; }
+	[ON_TICK]() {
+		if (!this[STATE].running || this[STATE].paused) {
+			return;
+		}
 
 		const now = new Date();
 
@@ -65,13 +64,13 @@ class Clock {
 		this[STATE].duration = now - this[STATE].started;
 		this[EMIT]();
 
-
 		setTimeout(() => this[ON_TICK](), INTERVAL);
 	}
 
-
-	[START] () {
-		if (this[STATE].running) { return; }
+	[START]() {
+		if (this[STATE].running) {
+			return;
+		}
 
 		const now = new Date();
 
@@ -83,24 +82,24 @@ class Clock {
 		VisibilityMonitor.addChangeListener(this.onVisibilityChange);
 	}
 
-
-	[STOP] () {
-		if (!this[STATE].running) { return; }
+	[STOP]() {
+		if (!this[STATE].running) {
+			return;
+		}
 
 		this[STATE] = {};
 		this[STATE].running = false;
 		VisibilityMonitor.removeChangeListener(this.onVisibilityChange);
 	}
 
-
-	onVisibilityChange = (visible) => {
+	onVisibilityChange = visible => {
 		if (!visible) {
 			this[STATE].paused = true;
 		} else if (visible && this[STATE].paused) {
 			this[STATE].paused = false;
 			this[ON_TICK]();
 		}
-	}
+	};
 }
 
 export default new Clock();

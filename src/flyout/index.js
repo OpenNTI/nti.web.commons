@@ -1,22 +1,18 @@
 import {
-
 	VERTICAL,
 	// HORIZONTAL,
-
 	ALIGN_TOP,
 	ALIGN_BOTTOM,
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
 	ALIGN_LEFT_OR_RIGHT,
-
-	MATCH_SIDE
+	MATCH_SIDE,
 } from './Constants';
-
 
 export const AXIS = {
 	// HORIZONTAL, // Don't expose horizontal for now
-	VERTICAL
+	VERTICAL,
 };
 
 export const ALIGNMENTS = {
@@ -25,13 +21,12 @@ export const ALIGNMENTS = {
 	LEFT: ALIGN_LEFT,
 	CENTER: ALIGN_CENTER,
 	RIGHT: ALIGN_RIGHT,
-	LEFT_OR_RIGHT: ALIGN_LEFT_OR_RIGHT
+	LEFT_OR_RIGHT: ALIGN_LEFT_OR_RIGHT,
 };
 
 export const SIZES = {
-	MATCH_SIDE
+	MATCH_SIDE,
 };
-
 
 export { default as InlineFlyout } from './Inline';
 export { default as Triggered } from './Triggered';

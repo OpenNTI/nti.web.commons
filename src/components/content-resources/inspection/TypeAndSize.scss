@@ -1,11 +1,10 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .resource-viewer-inspector-file-type-and-size {
 	position: relative;
 	padding: 0;
 	background: var(--panel-background);
-	box-shadow:
-		inset 0 -1px 0 0 var(--border-grey-light),
+	box-shadow: inset 0 -1px 0 0 var(--border-grey-light),
 		inset 0 1px 0 0 var(--border-grey-light);
 	display: flex;
 
@@ -21,7 +20,7 @@
 	}
 
 	&::after {
-		content: "";
+		content: '';
 		position: absolute;
 		top: 0;
 		bottom: 0;

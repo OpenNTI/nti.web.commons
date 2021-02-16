@@ -1,7 +1,7 @@
 import './Asset.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {URL} from '@nti/lib-commons';
+import { URL } from '@nti/lib-commons';
 import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:presentation-assets:components:Asset');
@@ -13,20 +13,20 @@ const logger = Logger.get('common:presentation-assets:components:Asset');
 const ASSET_MAP = {
 	thumb: {
 		path: 'contentpackage-thumb-60x60.png',
-		defaultValue: 'thumb'
+		defaultValue: 'thumb',
 	},
 	landing: {
 		path: 'contentpackage-landing-232x170.png',
-		defaultValue: 'landing'
+		defaultValue: 'landing',
 	},
 	background: {
 		path: 'background.png',
-		defaultValue: 'background'
+		defaultValue: 'background',
 	},
 	promo: {
 		path: 'course-promo-large-16x9.png',
-		defaultValue: 'promo'
-	}
+		defaultValue: 'promo',
+	},
 };
 
 /**
@@ -38,10 +38,9 @@ const ASSET_MAP = {
  *
  * @returns {void}
  */
-function initializeAssetMap () {
-	if(typeof document !== 'undefined' && !ASSET_MAP.loaded) {
-
-		for(let key of Object.keys(ASSET_MAP)) {
+function initializeAssetMap() {
+	if (typeof document !== 'undefined' && !ASSET_MAP.loaded) {
+		for (let key of Object.keys(ASSET_MAP)) {
 			const el = document.createElement('div');
 
 			el.className = `course-asset-image ${key}`;
@@ -51,16 +50,18 @@ function initializeAssetMap () {
 			try {
 				const { backgroundImage } = getComputedStyle(el);
 
-				let [,url] = backgroundImage.match(/url\(([^)]+)\)/) || [];
+				let [, url] = backgroundImage.match(/url\(([^)]+)\)/) || [];
 
 				url = url && url.replace(/(^["'])|(["']$)/g, '');
 
 				ASSET_MAP[key].defaultValue = url;
-			}
-			catch(ex) {
-				logger.error('Could not resolve image for %s\n%s', key, ex.stack);
-			}
-			finally {
+			} catch (ex) {
+				logger.error(
+					'Could not resolve image for %s\n%s',
+					key,
+					ex.stack
+				);
+			} finally {
 				el.remove();
 			}
 		}
@@ -70,33 +71,38 @@ function initializeAssetMap () {
 }
 
 export default class Asset extends React.Component {
-	static getDefaultURLForType (type) {
+	static getDefaultURLForType(type) {
 		initializeAssetMap();
 
 		return ASSET_MAP[type] && ASSET_MAP[type].defaultValue;
 	}
 
-
-	static getAssetRoot (props) {
+	static getAssetRoot(props) {
 		const contentPackage = props.contentPackage || props.item;
 
-		if(!contentPackage) { return ''; }
+		if (!contentPackage) {
+			return '';
+		}
 
-		if (contentPackage.presentationroot) { return contentPackage.presentationroot; }
+		if (contentPackage.presentationroot) {
+			return contentPackage.presentationroot;
+		}
 
 		const resource = Asset.getPresentationResource(props);
 		const root = resource && resource.href;
 
-		contentPackage.presentationroot = root || Asset.getDefaultAssetRoot(contentPackage);
+		contentPackage.presentationroot =
+			root || Asset.getDefaultAssetRoot(contentPackage);
 
 		return contentPackage.presentationroot;
 	}
 
-
-	static getPresentationResource (props) {
+	static getPresentationResource(props) {
 		const contentPackage = props.contentPackage || props.item;
 
-		if (!contentPackage) { return {}; }
+		if (!contentPackage) {
+			return {};
+		}
 
 		const resources = contentPackage.PlatformPresentationResources || [];
 
@@ -109,9 +115,8 @@ export default class Asset extends React.Component {
 		return null;
 	}
 
-
-	static getPresentationAsset (contentPackage, type) {
-		const asset = Asset.getPresentationResource({contentPackage});
+	static getPresentationAsset(contentPackage, type) {
+		const asset = Asset.getPresentationResource({ contentPackage });
 
 		if (!asset || !asset.href) {
 			return type ? Asset.getDefaultURLForType(type) : '';
@@ -120,16 +125,17 @@ export default class Asset extends React.Component {
 		return asset.href + ASSET_MAP[type].path;
 	}
 
-
-	static getDefaultAssetRoot (scope) {
+	static getDefaultAssetRoot(scope) {
 		if (scope.getDefaultAssetRoot) {
 			return scope.getDefaultAssetRoot();
 		}
 
-		logger.debug('Missing implementation of "getDefaultAssetRoot" in', scope);
+		logger.debug(
+			'Missing implementation of "getDefaultAssetRoot" in',
+			scope
+		);
 		return '';
 	}
-
 
 	static propTypes = {
 		propName: PropTypes.string,
@@ -137,16 +143,14 @@ export default class Asset extends React.Component {
 		item: PropTypes.object,
 		type: PropTypes.string,
 		computeProps: PropTypes.func,
-		children: PropTypes.any
-	}
+		children: PropTypes.any,
+	};
 
-
-	getItem ({contentPackage, item} = this.props) {
+	getItem({ contentPackage, item } = this.props) {
 		return contentPackage || item;
 	}
 
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		initializeAssetMap();
@@ -154,37 +158,38 @@ export default class Asset extends React.Component {
 		this.state = this.getStateFor(props);
 	}
 
-
-	getStateFor (props) {
+	getStateFor(props) {
 		const { type } = props;
 
 		return {
-			resolvedUrl: this.getAsset(type, props)
+			resolvedUrl: this.getAsset(type, props),
 		};
 	}
 
-
-	verifyImage () {
+	verifyImage() {
 		const loaderImage = new Image();
 
 		loaderImage.onerror = this.onImgLoadError;
 		loaderImage.src = this.state.resolvedUrl;
 	}
 
-
-	componentDidUpdate (prevProps) {
-		if (this.getItem() !== this.getItem(prevProps) || this.props.type !== prevProps.type) {
+	componentDidUpdate(prevProps) {
+		if (
+			this.getItem() !== this.getItem(prevProps) ||
+			this.props.type !== prevProps.type
+		) {
 			this.setState(this.getStateFor(this.props), () => {
 				this.verifyImage();
 			});
 		}
 	}
 
-
-	getPresentationResource (props) {
+	getPresentationResource(props) {
 		const item = this.getItem(props);
 
-		if (!item) { return {}; }
+		if (!item) {
+			return {};
+		}
 
 		const resources = item.PlatformPresentationResources || [];
 
@@ -197,13 +202,16 @@ export default class Asset extends React.Component {
 		return null;
 	}
 
-
-	getAssetRoot (props) {
+	getAssetRoot(props) {
 		const item = this.getItem(props);
 
-		if(!item) { return ''; }
+		if (!item) {
+			return '';
+		}
 
-		if (item.presentationroot) { return item.presentationroot; }
+		if (item.presentationroot) {
+			return item.presentationroot;
+		}
 
 		const resource = this.getPresentationResource(props);
 		const root = resource && resource.href;
@@ -213,16 +221,16 @@ export default class Asset extends React.Component {
 		return item.presentationroot;
 	}
 
-
-	getLastModified (props) {
+	getLastModified(props) {
 		const resource = Asset.getPresentationResource(props);
 
 		return resource ? resource['Last Modified'] : 0;
 	}
 
-
-	getAsset (name, props, resolve = false) {
-		const assetPath = (ASSET_MAP[name] && ASSET_MAP[name].path) || `missing-${name}-asset.png`;
+	getAsset(name, props, resolve = false) {
+		const assetPath =
+			(ASSET_MAP[name] && ASSET_MAP[name].path) ||
+			`missing-${name}-asset.png`;
 		const root = Asset.getAssetRoot(props);
 		const lastMod = this.getLastModified(props);
 		const url = root && URL.resolve(root, assetPath);
@@ -230,31 +238,28 @@ export default class Asset extends React.Component {
 		return url && `${url}?t=${lastMod}`;
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.verifyImage();
 	}
-
 
 	onImgLoadError = () => {
 		const { resolvedUrl } = this.state;
 
-		const defaultValue = ASSET_MAP[this.props.type] && ASSET_MAP[this.props.type].defaultValue;
+		const defaultValue =
+			ASSET_MAP[this.props.type] &&
+			ASSET_MAP[this.props.type].defaultValue;
 
-		this.setState({resolvedUrl: defaultValue || resolvedUrl});
-	}
+		this.setState({ resolvedUrl: defaultValue || resolvedUrl });
+	};
 
-
-	render () {
-		const {children, computeProps, propName} = this.props;
+	render() {
+		const { children, computeProps, propName } = this.props;
 		const child = React.Children.only(children);
 
 		const childProps = computeProps
 			? computeProps(this.state.resolvedUrl)
-			: {[propName || 'src']: this.state.resolvedUrl};
+			: { [propName || 'src']: this.state.resolvedUrl };
 
-		return (
-			React.cloneElement(child, childProps)
-		);
+		return React.cloneElement(child, childProps);
 	}
 }

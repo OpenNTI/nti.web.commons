@@ -7,14 +7,14 @@ export default class AssetBackground extends React.Component {
 	static propTypes = {
 		contentPackage: PropTypes.object,
 		style: PropTypes.object,
-		type: PropTypes.string
-	}
+		type: PropTypes.string,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	computeProps = (resolvedUrl) => {
+	computeProps = resolvedUrl => {
 		const { style } = this.props;
 
 		const updatedStyle = { ...(style || {}) };
@@ -22,16 +22,20 @@ export default class AssetBackground extends React.Component {
 		updatedStyle.backgroundImage = `url(${resolvedUrl})`;
 
 		return { style: updatedStyle };
-	}
+	};
 
-	render () {
+	render() {
 		const { type, contentPackage, ...otherProps } = this.props;
 
 		delete otherProps.style;
 
 		return (
-			<Asset contentPackage={contentPackage} type={type} computeProps={this.computeProps}>
-				<div { ...otherProps}/>
+			<Asset
+				contentPackage={contentPackage}
+				type={type}
+				computeProps={this.computeProps}
+			>
+				<div {...otherProps} />
 			</Asset>
 		);
 	}

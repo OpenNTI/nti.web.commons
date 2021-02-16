@@ -1,17 +1,24 @@
 /* eslint-env jest */
 import getStyles from '../get-styles';
-import {mockComputedStyle} from '../../__test__/utils';
+import { mockComputedStyle } from '../../__test__/utils';
 
 describe('getStyles tests', () => {
 	describe('padding', () => {
 		const PADDING_TOP = 10;
 		const PADDING_BOTTOM = 20;
 
-		mockComputedStyle({'padding-top': `${PADDING_TOP}px`, 'padding-bottom': `${PADDING_BOTTOM}px`});
+		mockComputedStyle({
+			'padding-top': `${PADDING_TOP}px`,
+			'padding-bottom': `${PADDING_BOTTOM}px`,
+		});
 
 		test('returns only style that was asked for', () => {
-			expect(getStyles(void 0, ['paddingTop']).paddignBottom).toBeUndefined();
-			expect(getStyles(void 0, ['paddingBottom']).paddingTop).toBeUndefined();
+			expect(
+				getStyles(void 0, ['paddingTop']).paddignBottom
+			).toBeUndefined();
+			expect(
+				getStyles(void 0, ['paddingBottom']).paddingTop
+			).toBeUndefined();
 		});
 
 		test('returns paddingTop', () => {
@@ -21,7 +28,7 @@ describe('getStyles tests', () => {
 			expect(styles.paddingBottom).toBeUndefined();
 		});
 
-		test('returns paddingBottom',  () => {
+		test('returns paddingBottom', () => {
 			const styles = getStyles(void 0, ['paddingBottom']);
 
 			expect(styles.paddingTop).toBeUndefined();
@@ -39,7 +46,7 @@ describe('getStyles tests', () => {
 	describe('lineHeight', () => {
 		const LINE_HEIGHT = 18;
 
-		mockComputedStyle({'lineHeight': `${LINE_HEIGHT}px`});
+		mockComputedStyle({ lineHeight: `${LINE_HEIGHT}px` });
 
 		test('returns lineHeight', () => {
 			const styles = getStyles(void 0, ['lineHeight']);

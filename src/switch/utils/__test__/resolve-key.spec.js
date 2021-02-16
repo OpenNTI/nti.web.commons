@@ -1,10 +1,10 @@
 /* eslint-env jest */
 import resolveKey from '../resolve-key';
-import {NEXT, PREVIOUS} from '../../Constants';
+import { NEXT, PREVIOUS } from '../../Constants';
 
-function makeItem (name) {
+function makeItem(name) {
 	return {
-		props: {name}
+		props: { name },
 	};
 }
 

@@ -8,69 +8,72 @@ import Page from './Page';
 export default class InfiniteStoreLoad extends React.Component {
 	static propTypes = {
 		store: PropTypes.shape({
-			getTotalCount: PropTypes.func.isRequired
+			getTotalCount: PropTypes.func.isRequired,
 		}).isRequired,
 
 		renderPage: PropTypes.func.isRequired,
 		renderLoading: PropTypes.func,
-		renderError: PropTypes.func
-	}
+		renderError: PropTypes.func,
+	};
 
 	state = {
-		totalPages: null
-	}
+		totalPages: null,
+	};
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {store: newStore} = this.props;
-		const {store: oldStore} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { store: newStore } = this.props;
+		const { store: oldStore } = prevProps;
 
 		if (newStore !== oldStore) {
 			this.setupFor(this.props);
 		}
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = true;
 	}
 
+	setupFor(props = this.props) {
+		const { store } = this.props;
 
-	setupFor (props = this.props) {
-		const {store} = this.props;
+		this.setState(
+			{
+				total: null,
+				error: null,
+			},
+			async () => {
+				try {
+					const totalPages = await store.getTotalCount();
 
-		this.setState({
-			total: null,
-			error: null
-		}, async () => {
-			try {
-				const totalPages = await store.getTotalCount();
+					if (this.unmounted) {
+						return;
+					}
 
-				if (this.unmounted) { return; }
+					this.setState({
+						totalPages,
+						error: null,
+					});
+				} catch (e) {
+					if (this.unmounted) {
+						return;
+					}
 
-				this.setState({
-					totalPages,
-					error: null
-				});
-			} catch (e) {
-				if (this.unmounted) { return; }
-
-				this.setState({
-					totalPages: null,
-					error: e
-				});
+					this.setState({
+						totalPages: null,
+						error: e,
+					});
+				}
 			}
-		});
+		);
 	}
 
-
-	render () {
-		const {...otherProps} = this.props;
-		const {totalPages} = this.state;
+	render() {
+		const { ...otherProps } = this.props;
+		const { totalPages } = this.state;
 
 		delete otherProps.store;
 
@@ -84,10 +87,9 @@ export default class InfiniteStoreLoad extends React.Component {
 		);
 	}
 
-
 	renderLoading = () => {
-		const {renderLoading, renderError} = this.props;
-		const {error} = this.state;
+		const { renderLoading, renderError } = this.props;
+		const { error } = this.state;
 
 		if (error && renderError) {
 			return renderError();
@@ -98,14 +100,20 @@ export default class InfiniteStoreLoad extends React.Component {
 		}
 
 		return null;
-	}
+	};
 
-
-	renderPage = ({pageIndex, pageKey, isScrolling, pageHeight}) => {
-		const {renderPage, store} = this.props;
+	renderPage = ({ pageIndex, pageKey, isScrolling, pageHeight }) => {
+		const { renderPage, store } = this.props;
 
 		return (
-			<Page store={store} pageKey={pageKey} pageIndex={pageIndex} pageHeight={pageHeight} isScrolling={isScrolling} renderPage={renderPage} />
+			<Page
+				store={store}
+				pageKey={pageKey}
+				pageIndex={pageIndex}
+				pageHeight={pageHeight}
+				isScrolling={isScrolling}
+				renderPage={renderPage}
+			/>
 		);
-	}
+	};
 }

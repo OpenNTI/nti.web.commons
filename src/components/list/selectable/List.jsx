@@ -9,7 +9,7 @@ import {
 	getKeyDownHandler,
 	getItemId,
 	getSelectableItemIds,
-	scrollFocusedIntoView
+	scrollFocusedIntoView,
 } from './utils';
 import Context from './Context';
 import Item from './Item';
@@ -18,7 +18,11 @@ const cx = classnames.bind(Styles);
 
 //TODO: Use this components in the select/token inputs
 
-SelectableList.Unstyled = Variant(SelectableList, {className: cx('unstyled-list')}, 'Unstyled');
+SelectableList.Unstyled = Variant(
+	SelectableList,
+	{ className: cx('unstyled-list') },
+	'Unstyled'
+);
 SelectableList.Item = Item;
 SelectableList.propTypes = {
 	as: PropTypes.any,
@@ -28,13 +32,21 @@ SelectableList.propTypes = {
 	onSelectedChange: PropTypes.func,
 	onFocusedChange: PropTypes.func,
 
-	autoFocus: PropTypes.bool
+	autoFocus: PropTypes.bool,
 };
-export default function SelectableList ({as: tag, controlledBy, selected, onSelectedChange, onFocusedChange, autoFocus, ...otherProps}) {
+export default function SelectableList({
+	as: tag,
+	controlledBy,
+	selected,
+	onSelectedChange,
+	onFocusedChange,
+	autoFocus,
+	...otherProps
+}) {
 	const Cmp = tag || 'ul';
 	const cmpRef = React.useRef();
 	const cmpProps = {
-		role: 'listbox'
+		role: 'listbox',
 	};
 
 	const idsToValue = React.useRef({});
@@ -47,56 +59,62 @@ export default function SelectableList ({as: tag, controlledBy, selected, onSele
 			idsToValue.current[id] = value;
 		},
 
-		removeItem: (id) => {
+		removeItem: id => {
 			delete idsToValue.current[id];
 		},
-		
-		isFocused: (id) => id && id === focused,
-		isSelected: (id) => {
-			if (!selected) { return false; }
+
+		isFocused: id => id && id === focused,
+		isSelected: id => {
+			if (!selected) {
+				return false;
+			}
 
 			const value = idsToValue.current[id];
 
-			if (!Array.isArray(selected)) { return selected === value; }
+			if (!Array.isArray(selected)) {
+				return selected === value;
+			}
 
 			const selectedSet = new Set(selected);
 
 			return selectedSet.has(value);
 		},
 
-		setSelected: (id) => {
+		setSelected: id => {
 			const value = idsToValue.current[id];
 
 			onSelectedChange?.(value);
-		}
+		},
 	};
 
-	const onKeyDown = getKeyDownHandler(
-		cmpRef,
-		{
-			focused,
-			setFocused: (newFocused) => {
-				setFocused(newFocused);
-				scrollFocusedIntoView(cmpRef, newFocused);
-				
-				const value = idsToValue.current[newFocused];
+	const onKeyDown = getKeyDownHandler(cmpRef, {
+		focused,
+		setFocused: newFocused => {
+			setFocused(newFocused);
+			scrollFocusedIntoView(cmpRef, newFocused);
 
-				if (onFocusedChange) { onFocusedChange(value); }
-			},
+			const value = idsToValue.current[newFocused];
 
-			selected,
-			setSelected: (newSelected) => {
-				const value = idsToValue.current[newSelected];
-				
-				onSelectedChange?.(value);
+			if (onFocusedChange) {
+				onFocusedChange(value);
 			}
-		}
-	);
+		},
+
+		selected,
+		setSelected: newSelected => {
+			const value = idsToValue.current[newSelected];
+
+			onSelectedChange?.(value);
+		},
+	});
 
 	React.useEffect(() => {
-		if (!controlledBy) { return; }
+		if (!controlledBy) {
+			return;
+		}
 
-		const controller = controlledBy === global ? global.document : controlledBy;
+		const controller =
+			controlledBy === global ? global.document : controlledBy;
 
 		controller?.addEventListener('keydown', onKeyDown, true);
 
@@ -106,7 +124,9 @@ export default function SelectableList ({as: tag, controlledBy, selected, onSele
 	});
 
 	React.useEffect(() => {
-		if (!autoFocus) { return; }
+		if (!autoFocus) {
+			return;
+		}
 
 		setTimeout(() => {
 			const ids = getSelectableItemIds(cmpRef);

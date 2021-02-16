@@ -4,25 +4,23 @@ import Url from 'url';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {isNTIID} from '@nti/lib-ntiids';
+import { scoped } from '@nti/lib-locale';
+import { isNTIID } from '@nti/lib-ntiids';
 
-import {SeparatedInline} from './list';
+import { SeparatedInline } from './list';
 import AssetIcon from './AssetIcon';
-
 
 const t = scoped('common.units', {
 	comments: {
 		one: '%(count)s Comment',
-		other: '%(count)s Comments'
+		other: '%(count)s Comments',
 	},
-	by: 'By %(by)s'
+	by: 'By %(by)s',
 });
 
 const Seen = Symbol('Seen');
 
-const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
-
+const isExternal = item => /external/i.test(item.type) || !isNTIID(item.href);
 
 /*
 Internal Links:
@@ -48,10 +46,9 @@ External Links:
 
 */
 
-
 export default class RelatedWorkRefCard extends React.Component {
-	static async resolveIcon (item = {}, contentPackage) {
-		let {icon = ''} = item;
+	static async resolveIcon(item = {}, contentPackage) {
+		let { icon = '' } = item;
 
 		try {
 			const u = icon && Url.parse(icon);
@@ -60,7 +57,9 @@ export default class RelatedWorkRefCard extends React.Component {
 					? await item.resolveIcon(contentPackage)
 					: item.icon;
 
-				icon = (icon && await contentPackage.resolveContentURL(icon)) || null;
+				icon =
+					(icon && (await contentPackage.resolveContentURL(icon))) ||
+					null;
 			}
 		} catch (e) {
 			icon = null;
@@ -68,7 +67,6 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		return icon;
 	}
-
 
 	static propTypes = {
 		/**
@@ -96,7 +94,6 @@ export default class RelatedWorkRefCard extends React.Component {
 		 */
 		internalOverride: PropTypes.bool,
 
-
 		onClick: PropTypes.func,
 		icon: PropTypes.string,
 		seen: PropTypes.bool,
@@ -107,94 +104,79 @@ export default class RelatedWorkRefCard extends React.Component {
 		 * @type {object}
 		 */
 		labels: PropTypes.array,
-
-	}
-
+	};
 
 	static defaultProps = {
-		internalOverride: false
-	}
+		internalOverride: false,
+	};
 
-	static isExternal = isExternal
+	static isExternal = isExternal;
 
 	state = {
-		icon: null
-	}
+		icon: null,
+	};
 
-
-	isExternal (props = this.props) {
-		const {item, internalOverride} = props || {};
+	isExternal(props = this.props) {
+		const { item, internalOverride } = props || {};
 		return isExternal(item) && !internalOverride;
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.shouldHaveDOM = true;
 		this.resolveIcon(this.props);
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.setState = () => {};
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {item} = this.props;
-		if(item !== prevProps.item) {
+	componentDidUpdate(prevProps) {
+		const { item } = this.props;
+		if (item !== prevProps.item) {
 			this.setState({
 				icon: null,
 				iconResolved: false,
-				href: null
+				href: null,
 			});
 			this.resolveIcon(this.props);
 		}
 	}
 
-
-	async resolveIcon (props) {
-		const {contentPackage, item = {}} = props;
+	async resolveIcon(props) {
+		const { contentPackage, item = {} } = props;
 
 		const icon = await RelatedWorkRefCard.resolveIcon(item, contentPackage);
 
-		this.setState({iconResolved: true, icon});
+		this.setState({ iconResolved: true, icon });
 	}
 
+	isSeen() {
+		const { item, seen, noProgress } = this.props;
 
-	isSeen () {
-		const {item, seen, noProgress} = this.props;
-
-		if (noProgress) { return false; }
+		if (noProgress) {
+			return false;
+		}
 
 		return seen || item[Seen] || (item.hasCompleted && item.hasCompleted());
 	}
 
-
-	getType () {
-		const {item} = this.props;
+	getType() {
+		const { item } = this.props;
 		return [item.type || item.MimeType, item.targetMimeType]
 			.filter(x => x)
 			.reduce((a, b) => a.concat(b), []);
 	}
 
-
-	render () {
+	render() {
 		const {
-			state: {
-				href,
-				icon
-			},
-			props: {
-				item,
-				labels,
-				...remainder
-			}
+			state: { href, icon },
+			props: { item, labels, ...remainder },
 		} = this;
 
 		const external = this.isExternal();
 		const seen = this.isSeen();
 
-		const {label, title, desc, description, byline, creator} = item;
+		const { label, title, desc, description, byline, creator } = item;
 
 		const by = 'byline' in item ? byline : creator;
 
@@ -204,25 +186,26 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		const props = {
 			...remainder,
-			className: cx('content-link', 'related-work-ref', {external, seen}),
+			className: cx('content-link', 'related-work-ref', {
+				external,
+				seen,
+			}),
 			target: external ? '_blank' : null,
 			onClick: this.onClick,
-			ref: this.attachRef
+			ref: this.attachRef,
 		};
-
 
 		return (
 			<div {...props}>
-
 				<AssetIcon src={icon} mimeType={this.getType()} href={href}>
-					{external && <div className="external"/>}
+					{external && <div className="external" />}
 				</AssetIcon>
 
-				<h5>{(label || title)}</h5>
+				<h5>{label || title}</h5>
 				{by && by.trim().length > 0 && (
-					<div className="label">{t('by', {by: by})}</div>
+					<div className="label">{t('by', { by: by })}</div>
 				)}
-				<div className="description">{(description || desc)}</div>
+				<div className="description">{description || desc}</div>
 				{labels && (
 					<SeparatedInline className="extra-labels">
 						{labels}

@@ -19,7 +19,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param  {Object} cfg          configuration options for the association
 	 * @returns {Object}             	an instance of AssociationItem
 	 */
-	constructor (item, onAddTo, onRemoveFrom, cfg) {
+	constructor(item, onAddTo, onRemoveFrom, cfg) {
 		super();
 
 		this[ITEM] = item;
@@ -28,64 +28,56 @@ export default class AssociationItem extends EventEmitter {
 		this[CFG] = cfg;
 	}
 
-	isAssociationItem = true
+	isAssociationItem = true;
 
-
-	get ID () {
+	get ID() {
 		//TODO: make this better....
-		return this[ITEM].LessonOverviewNTIID || this[ITEM].NTIID || this[ITEM].ID;
+		return (
+			this[ITEM].LessonOverviewNTIID || this[ITEM].NTIID || this[ITEM].ID
+		);
 	}
 
-
-	get type () {
+	get type() {
 		return this[ITEM].MimeType || this[ITEM].type;
 	}
 
-
-	get label () {
+	get label() {
 		return this[ITEM].label || this[ITEM].title;
 	}
 
-
-	get item () {
+	get item() {
 		return this[ITEM];
 	}
 
-
-	get isSaving () {
+	get isSaving() {
 		return this[SAVING];
 	}
 
-
-	get error () {
+	get error() {
 		return this[ERROR];
 	}
 
-
-	get group () {
+	get group() {
 		return this[GROUP];
 	}
 
-
-	set group (group) {
+	set group(group) {
 		this[GROUP] = group;
 
 		this.emit('change');
 	}
 
-
-	get config () {
+	get config() {
 		return this[CFG];
 	}
 
-
-	set config (cfg) {
+	set config(cfg) {
 		this[CFG] = cfg;
 
 		this.emit('change');
 	}
 
-	[EDIT] (method, container, association) {
+	[EDIT](method, container, association) {
 		this[ERROR] = null;
 		this[SAVING] = true;
 		this.emit('change');
@@ -96,7 +88,7 @@ export default class AssociationItem extends EventEmitter {
 
 				this.emit('change');
 			})
-			.catch((reason) => {
+			.catch(reason => {
 				this[SAVING] = false;
 				this[ERROR] = reason;
 
@@ -104,11 +96,9 @@ export default class AssociationItem extends EventEmitter {
 			});
 	}
 
-
-	canAddTo () {
+	canAddTo() {
 		return !!this[ADD_TO];
 	}
-
 
 	/**
 	 * Add an association
@@ -118,7 +108,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param {Object} association the parent object of the container if needed
 	 * @returns {Promise}          Fulfills or rejects with the success of adding an association
 	 */
-	onAddTo (container, association) {
+	onAddTo(container, association) {
 		if (this[ADD_TO]) {
 			this[EDIT](ADD_TO, container, association);
 		} else {
@@ -126,11 +116,9 @@ export default class AssociationItem extends EventEmitter {
 		}
 	}
 
-
-	canRemoveFrom () {
+	canRemoveFrom() {
 		return !!this[REMOVE_FROM];
 	}
-
 
 	/**
 	 * Add an association
@@ -140,7 +128,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param {Object} association the parent object of the container if needed
 	 * @returns {Promise}          Fulfills or rejects with the success of adding an association
 	 */
-	onRemoveFrom (container, association) {
+	onRemoveFrom(container, association) {
 		if (this[REMOVE_FROM]) {
 			this[EDIT](REMOVE_FROM, container, association);
 		} else {

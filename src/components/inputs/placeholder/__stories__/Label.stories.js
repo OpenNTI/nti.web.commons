@@ -4,18 +4,17 @@ import Label from '../Label';
 
 export default {
 	title: 'Components/placeholder/Label',
-	component: Label
+	component: Label,
 };
 
 export const LabelPlaceholder = () => (
 	<>
 		<Label label="test">
-			<input/>
+			<input />
 		</Label>
 
 		<Label label="test" variant="underlined">
-			<input/>
+			<input />
 		</Label>
 	</>
 );
-

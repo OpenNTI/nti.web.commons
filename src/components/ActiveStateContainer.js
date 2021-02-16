@@ -15,36 +15,34 @@ const getPrivate = x => PRIVATE.get(x) || {};
 
 export default class ActiveStateSelector extends React.Component {
 	static propTypes = {
-		children: PropTypes.any
-	}
+		children: PropTypes.any,
+	};
 
 	static childContextTypes = {
 		[isActive]: PropTypes.func,
 		[register]: PropTypes.func,
-		[unregister]: PropTypes.func
-	}
+		[unregister]: PropTypes.func,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		initPrivate(this, {items: []});
+		initPrivate(this, { items: [] });
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		freePrivate(this);
 	}
 
-
-	getChildContext () {
+	getChildContext() {
 		return {
 			[isActive]: this.isChildActive,
 			[register]: this.registerActiveStateGroupChild,
-			[unregister]: this.unregisterActiveStateGroupChild
+			[unregister]: this.unregisterActiveStateGroupChild,
 		};
 	}
 
-
-	registerActiveStateGroupChild = (cmp) => {
-		const {items} = getPrivate(this);
+	registerActiveStateGroupChild = cmp => {
+		const { items } = getPrivate(this);
 		if (items) {
 			if (!items.includes(cmp)) {
 				items.push(cmp);
@@ -52,14 +50,12 @@ export default class ActiveStateSelector extends React.Component {
 
 			this.setState({});
 		}
-	}
+	};
 
-
-	unregisterActiveStateGroupChild = (cmp) => {
-		const {items} = getPrivate(this);
+	unregisterActiveStateGroupChild = cmp => {
+		const { items } = getPrivate(this);
 
 		if (items) {
-
 			const idx = items.indexOf(cmp);
 			if (items && idx >= 0) {
 				items.splice(idx, 1);
@@ -67,33 +63,30 @@ export default class ActiveStateSelector extends React.Component {
 
 			this.setState({});
 		}
-	}
+	};
 
+	isChildActive = cmp => {
+		const { items } = getPrivate(this);
+		if (!items) {
+			return false;
+		}
 
-	isChildActive = (cmp) => {
-		const {items} = getPrivate(this);
-		if (!items) {return false;}
-
-		const getRef = x=> x.props.href;
+		const getRef = x => x.props.href;
 		const href = getRef(cmp);
 
-
-		const active = items.filter(x => x
-									&& x.getActiveState()
-									&& getRef(x).length >= href.length
-		)
+		const active = items
+			.filter(
+				x => x && x.getActiveState() && getRef(x).length >= href.length
+			)
 			.sort((a, b) => getRef(b).length - getRef(a).length);
 
-
 		return cmp === active[0];
-	}
+	};
 
-
-	render () {
+	render() {
 		return this.props.children;
 	}
 }
-
 
 export const child = {
 	mixins: [BasePath, NavigatableMixin],
@@ -101,7 +94,7 @@ export const child = {
 	contextTypes: {
 		[isActive]: PropTypes.func.isRequired,
 		[register]: PropTypes.func.isRequired,
-		[unregister]: PropTypes.func.isRequired
+		[unregister]: PropTypes.func.isRequired,
 	},
 
 	propTypes: {
@@ -110,38 +103,37 @@ export const child = {
 		hasChildren: PropTypes.oneOfType([
 			PropTypes.bool,
 			PropTypes.shape({
-				test: PropTypes.func.isRequired
-			})
-		])
+				test: PropTypes.func.isRequired,
+			}),
+		]),
 	},
 
-	// eslint-disable-next-line camelcase
-	UNSAFE_componentWillMount () {
+	UNSAFE_componentWillMount() {
 		const reg = this.context[register];
 		if (reg) {
 			reg(this);
 		}
 	},
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		const unreg = this.context[unregister];
 		if (unreg) {
 			unreg(this);
 		}
 	},
 
-
-	isActive () {
-		const {[isActive]: active} = this.context;
+	isActive() {
+		const { [isActive]: active } = this.context;
 
 		return active ? active(this) : this.getActiveState();
 	},
 
-
-	getActiveState () {
-		const {href, hasChildren} = this.props;
+	getActiveState() {
+		const { href, hasChildren } = this.props;
 		const absolute = href && href.indexOf(this.getBasePath()) === 0;
-		const current = absolute ? this.makeHref(this.getPath()) : this.getPath();
+		const current = absolute
+			? this.makeHref(this.getPath())
+			: this.getPath();
 
 		if (hasChildren && current) {
 			if (hasChildren.test) {
@@ -151,6 +143,5 @@ export const child = {
 		}
 
 		return current === href;
-	}
-
+	},
 };

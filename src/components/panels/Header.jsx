@@ -2,30 +2,34 @@ import './Header.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Events} from '@nti/lib-commons';
+import { Events } from '@nti/lib-commons';
 
 export default class Header extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		children: PropTypes.any,
-		onClose: PropTypes.func
-	}
+		onClose: PropTypes.func,
+	};
 
-	onClose = (e) => {
-		const {onClose} = this.props;
+	onClose = e => {
+		const { onClose } = this.props;
 		if (onClose && Events.isActionable(e)) {
 			onClose(e);
 		}
-	}
+	};
 
-	render () {
-		const {children, className, onClose, ...otherProps} = this.props;
+	render() {
+		const { children, className, onClose, ...otherProps } = this.props;
 
 		return (
-			<div {...otherProps} className={cx('panel-header-component', className)}>
+			<div
+				{...otherProps}
+				className={cx('panel-header-component', className)}
+			>
 				{children}
 				{onClose && (
-					<i className="icon-light-x"
+					<i
+						className="icon-light-x"
 						role="button"
 						label="Close"
 						title="Close"
@@ -39,7 +43,6 @@ export default class Header extends React.Component {
 	}
 }
 
-
-export function TitleBalancer () {
-	return <span className="balancer"/>;
+export function TitleBalancer() {
+	return <span className="balancer" />;
 }

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .aligned-flyout {
 	&.right {
@@ -122,15 +122,23 @@ body.control-bar-open .aligned-flyout.bottom {
 }
 
 @keyframes error-flyout-fullwidth-btn {
-	from, to {
+	from,
+	to {
 		transform: translate3d(0, 0, 0);
 	}
 
-	10%, 30%, 50%, 70%, 90% {
+	10%,
+	30%,
+	50%,
+	70%,
+	90% {
 		transform: translate3d(-5px, 0, 0);
 	}
 
-	20%, 40%, 60%, 80% {
+	20%,
+	40%,
+	60%,
+	80% {
 		transform: translate3d(5px, 0, 0);
 	}
 }

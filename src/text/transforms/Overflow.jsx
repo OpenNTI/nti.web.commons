@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ScratchPad from '../../scratch-pad';
-import {ScreenSize} from '../../decorators';
+import { ScreenSize } from '../../decorators';
 import { updateRef } from '../utils';
 
 import {
@@ -10,7 +10,7 @@ import {
 	needsTruncating,
 	cleanupTokens,
 	addEllipse,
-	removeTokens
+	removeTokens,
 } from './overflow-utils';
 
 const MIRROR_STYLES = [
@@ -31,43 +31,56 @@ const MIRROR_STYLES = [
 	'padding-left',
 	'padding-right',
 	'text-transform',
-	'hyphens'
+	'hyphens',
 ];
 
 // const RESET_STATE = { overflowed: false, text: null };
 
-const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHeight, screenWidth, ...props}, ref) => {
-	const textNode = useRef();
-	const fullTextNode = useRef();
-	const [{text, overflowed}, setState] = useState({});
+const Overflow = React.forwardRef(
+	(
+		{
+			children,
+			overflow,
+			text: fullText,
+			screenHeight,
+			screenWidth,
+			...props
+		},
+		ref
+	) => {
+		const textNode = useRef();
+		const fullTextNode = useRef();
+		const [{ text, overflowed }, setState] = useState({});
 
-	const processText = (node) => {
-		textNode.current = node;
-		updateRef(ref, node);
-	};
+		const processText = node => {
+			textNode.current = node;
+			updateRef(ref, node);
+		};
 
-	useLayoutEffect(() => {
-		setState({});
-		fullTextNode.current = textNode.current?.innerHTML;
-	}, [fullText, screenWidth]);
+		useLayoutEffect(() => {
+			setState({});
+			fullTextNode.current = textNode.current?.innerHTML;
+		}, [fullText, screenWidth]);
 
-	useLayoutEffect(() => {
-		const {current: node} = textNode;
-		const {current: scratch} = fullTextNode;
-		if (!node || !scratch) { return; }
+		useLayoutEffect(() => {
+			const { current: node } = textNode;
+			const { current: scratch } = fullTextNode;
+			if (!node || !scratch) {
+				return;
+			}
 
-		let cancel = false;
-		ScratchPad
-			.mirrorStyles(node, MIRROR_STYLES)
-			.work((pad) => {
+			let cancel = false;
+			ScratchPad.mirrorStyles(node, MIRROR_STYLES).work(pad => {
 				addTokens(pad, scratch);
 
 				const bounds = pad.getBoundingClientRect();
-				const buffer = 2;//This was determined experimentally, I'm not really sure why its needed or why 2 seems to work.
+				const buffer = 2; //This was determined experimentally, I'm not really sure why its needed or why 2 seems to work.
 				const lowerBound = bounds.bottom + buffer;
 				const rightBound = bounds.right;
 
-				if (!needsTruncating(pad, buffer) || cancel) { return; }
+				if (!needsTruncating(pad, buffer) || cancel) {
+					return;
+				}
 
 				cleanupTokens(pad, lowerBound, rightBound);
 				addEllipse(overflow, pad, lowerBound, rightBound);
@@ -78,32 +91,30 @@ const Overflow = React.forwardRef(({children, overflow, text:fullText, screenHei
 				if (overflowedText !== scratch && !cancel) {
 					setState({
 						overflowed: true,
-						text: pad.innerHTML
+						text: pad.innerHTML,
 					});
 				}
 			});
 
-		return () => {
-			cancel = true;
-		};
-	}, [text == null, screenWidth, screenHeight]);
+			return () => {
+				cancel = true;
+			};
+		}, [text == null, screenWidth, screenHeight]);
 
+		const Text = React.Children.only(children);
 
-	const Text = React.Children.only(children);
-
-	return React.cloneElement(
-		Text,
-		{
+		return React.cloneElement(Text, {
 			...props,
 			text: text || fullText,
 			title: props.title ?? (overflowed ? fullText : null),
 			hasMarkup: props.hasMarkup || overflowed,
-			ref: processText
-		}
-	);
-});
+			ref: processText,
+		});
+	}
+);
 
-Overflow.shouldApply = ({overflow, hasComponents}) => overflow != null && !hasComponents;
+Overflow.shouldApply = ({ overflow, hasComponents }) =>
+	overflow != null && !hasComponents;
 Overflow.displayName = 'Overflow';
 Overflow.propTypes = {
 	text: PropTypes.string,

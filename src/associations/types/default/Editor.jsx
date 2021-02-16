@@ -8,24 +8,29 @@ import RemoveButton from '../components/RemoveButton';
 
 DefaultEditor.propTypes = {
 	item: PropTypes.object,
-	associations: PropTypes.object
+	associations: PropTypes.object,
 };
-export default function DefaultEditor ({item, associations}) {
+export default function DefaultEditor({ item, associations }) {
 	const active = associations.isSharedWith(item);
 
-	function onAdd () {
+	function onAdd() {
 		item.onAddTo();
 	}
 
-	function onRemove () {
+	function onRemove() {
 		item.onRemoveFrom();
 	}
 
 	return (
 		<ListItem active={active}>
-			<ItemInfo label={item.label} subLabels={[item.group.label, 'Test label']}/>
-			{!active && item.canAddTo && (<AddButton onClick={onAdd} />)}
-			{active && item.canRemoveFrom && (<RemoveButton onRemove={onRemove} />)}
+			<ItemInfo
+				label={item.label}
+				subLabels={[item.group.label, 'Test label']}
+			/>
+			{!active && item.canAddTo && <AddButton onClick={onAdd} />}
+			{active && item.canRemoveFrom && (
+				<RemoveButton onRemove={onRemove} />
+			)}
 		</ListItem>
 	);
 }

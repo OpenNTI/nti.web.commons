@@ -2,51 +2,46 @@ import EventEmitter from 'events';
 
 import Logger from '@nti/util-logger';
 
-const logger = Logger.get('common:components:content-resources:tasks:TaskQueue');
+const logger = Logger.get(
+	'common:components:content-resources:tasks:TaskQueue'
+);
 
 const List = () => ({ value: [], writable: true });
 
-
 export default class TaskQueue extends EventEmitter {
-
-	constructor (stopOnError) {
+	constructor(stopOnError) {
 		super();
 		Object.defineProperties(this, {
 			done: List(),
 			queue: List(),
-			stopOnError: {value: stopOnError}
+			stopOnError: { value: stopOnError },
 		});
 	}
 
-
-	get running () {
+	get running() {
 		return !!this.current || !!this.previous;
 	}
 
-
-	get empty () {
+	get empty() {
 		return this.queue.length === 0 && this.done.length === 0;
 	}
 
-
-	add (task) {
+	add(task) {
 		const queue = this.queue.filter(x => x !== task);
 		const move = this.queue.length !== queue.length;
 
 		this.queue = [task, ...queue];
 
-		logger.debug('Task %s: %o', (move ? 'moved' : 'added'), task);
+		logger.debug('Task %s: %o', move ? 'moved' : 'added', task);
 
 		if (!move) {
 			listen(this, task);
 		}
 
-
 		this.schedual();
 	}
 
-
-	beginHalt () {
+	beginHalt() {
 		delete this.previous;
 		const falted = x => x.error || x.needsConfirmation;
 		const completed = this.done.filter(x => !falted(x));
@@ -61,11 +56,10 @@ export default class TaskQueue extends EventEmitter {
 		this.emit('finish', completed, indeterminate);
 	}
 
-
-	schedual () {
+	schedual() {
 		if (!this.current) {
 			logger.debug('Starging next task');
-			let task = this.current = this.queue[this.queue.length - 1];
+			let task = (this.current = this.queue[this.queue.length - 1]);
 			if (!task) {
 				this.beginHalt();
 				return;
@@ -78,17 +72,22 @@ export default class TaskQueue extends EventEmitter {
 		}
 	}
 
-
 	onTaskProgress = (task, taskProgress, taskTotal, abort) => {
 		const count = (acc, t) => acc + t.total;
 		const done = this.done.reduce(count, 0);
 		const max = done + this.queue.reduce(count, 0);
 		const value = done + taskProgress;
 
-		logger.debug('Progress: %o %d (%d) %d (%d)', task, taskProgress, value, taskTotal, max);
+		logger.debug(
+			'Progress: %o %d (%d) %d (%d)',
+			task,
+			taskProgress,
+			value,
+			taskTotal,
+			max
+		);
 		this.emit('progress', task, value, max, abort);
-	}
-
+	};
 
 	onTaskFinish = (task, error) => {
 		stopListening(this, task);
@@ -111,25 +110,23 @@ export default class TaskQueue extends EventEmitter {
 		if (!error || !this.stopOnError) {
 			this.schedual();
 		}
-	}
+	};
 
-
-	onTaskAbort = (task) => {
-		this.queue.map(x => stopListening(this,x));
+	onTaskAbort = task => {
+		this.queue.map(x => stopListening(this, x));
 		this.queue = [];
 		this.onTaskFinish(task);
-	}
+	};
 }
 
-
-function stopListening (scope, task) {
+function stopListening(scope, task) {
 	task.removeListener('progress', scope.onTaskProgress);
 	task.removeListener('finish', scope.onTaskFinish);
 	task.removeListener('error', scope.onTaskFinish);
 	task.removeListener('abort', scope.onTaskAbort);
 }
 
-function listen (scope, task) {
+function listen(scope, task) {
 	task.addListener('progress', scope.onTaskProgress);
 	task.addListener('finish', scope.onTaskFinish);
 	task.addListener('error', scope.onTaskFinish);

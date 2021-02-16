@@ -1,13 +1,14 @@
-import {
-	VERTICAL,
-	ARROW_HEIGHT,
-	ARROW_OFFSET
-} from '../Constants';
+import { VERTICAL, ARROW_HEIGHT, ARROW_OFFSET } from '../Constants';
 
 const styleProps = ['top', 'bottom', 'left', 'right', 'width'];
 
-export function getOuterStylesForAlignment (alignment = {}, arrow, primaryAxis, alignToArrow) {
-	const clone = {...alignment};
+export function getOuterStylesForAlignment(
+	alignment = {},
+	arrow,
+	primaryAxis,
+	alignToArrow
+) {
+	const clone = { ...alignment };
 
 	if (primaryAxis === VERTICAL && arrow) {
 		if (clone.top != null) {

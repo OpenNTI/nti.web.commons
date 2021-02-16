@@ -1,9 +1,11 @@
 import getValidationError from './get-validation-error';
 
-export default function getValidationErrors (form) {
+export default function getValidationErrors(form) {
 	const invalid = Array.from(form.querySelectorAll(':invalid'));
 
-	if (!invalid || !invalid.length) { return null; }
+	if (!invalid || !invalid.length) {
+		return null;
+	}
 
 	return invalid.reduce((acc, field) => {
 		const error = getValidationError(field);

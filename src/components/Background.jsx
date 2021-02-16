@@ -2,7 +2,7 @@ import './Background.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {addClass, removeClass} from '@nti/lib-dom';
+import { addClass, removeClass } from '@nti/lib-dom';
 
 const CONTEXT_KEY = 'content-background';
 
@@ -12,15 +12,16 @@ export default class extends React.Component {
 	static propTypes = {
 		className: PropTypes.any,
 		imgUrl: PropTypes.string,
-		children: PropTypes.any
+		children: PropTypes.any,
 	};
 
 	static childContextTypes = { [CONTEXT_KEY]: PropTypes.string };
 	static contextTypes = { [CONTEXT_KEY]: PropTypes.string };
 
-	getChildContext () {
+	getChildContext() {
 		return {
-			[CONTEXT_KEY]: this.props.imgUrl || this.context[CONTEXT_KEY] || null
+			[CONTEXT_KEY]:
+				this.props.imgUrl || this.context[CONTEXT_KEY] || null,
 		};
 	}
 
@@ -28,9 +29,9 @@ export default class extends React.Component {
 		return this.context[CONTEXT_KEY];
 	};
 
-	setBodyBackground = (url) => {
-		const {body} = document;
-		const {style} = body;
+	setBodyBackground = url => {
+		const { body } = document;
+		const { style } = body;
 
 		const args = [body, 'content-background'];
 
@@ -48,27 +49,36 @@ export default class extends React.Component {
 		}
 	};
 
-	componentDidMount () {
-		const {props: {imgUrl}} = this;
+	componentDidMount() {
+		const {
+			props: { imgUrl },
+		} = this;
 		this.setBodyBackground(imgUrl);
 	}
 
-	componentDidUpdate (prevProps) {
-		const {imgUrl} = this.props;
+	componentDidUpdate(prevProps) {
+		const { imgUrl } = this.props;
 		if (imgUrl !== prevProps.imgUrl) {
 			this.setBodyBackground(imgUrl);
 		}
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		const prev = this.getPreviousBackground();
 		this.setBodyBackground(prev);
 	}
 
-	render () {
-		const {props: {className, imgUrl, children, ...props}} = this;
+	render() {
+		const {
+			props: { className, imgUrl, children, ...props },
+		} = this;
 		return (
-			<div {...props} className={cx('background-cmp', className, {'no-image': !imgUrl})}>
+			<div
+				{...props}
+				className={cx('background-cmp', className, {
+					'no-image': !imgUrl,
+				})}
+			>
 				{children}
 			</div>
 		);

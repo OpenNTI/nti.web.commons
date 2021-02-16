@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-calendar-date-icon-small-wrapper {
 	/*
@@ -93,7 +93,8 @@
 			}
 		}
 
-		&::before { // the little bars at the top representing the rings; rendered via gradient
+		&::before {
+			// the little bars at the top representing the rings; rendered via gradient
 			content: '';
 			display: block;
 			height: 4px;
@@ -104,18 +105,17 @@
 			$ringwidth: 2px;
 			$color: var(--secondary-grey);
 
-			background:
-				linear-gradient(
-					90deg,
-					transparent 10%,
-					$color 10%,
-					$color calc(10% + #{$ringwidth}),
-					transparent calc(10% + #{$ringwidth}),
-					transparent calc(90% - #{$ringwidth}),
-					$color calc(90% - #{$ringwidth}),
-					$color 90%,
-					transparent 90%
-				);
+			background: linear-gradient(
+				90deg,
+				transparent 10%,
+				$color 10%,
+				$color calc(10% + #{$ringwidth}),
+				transparent calc(10% + #{$ringwidth}),
+				transparent calc(90% - #{$ringwidth}),
+				$color calc(90% - #{$ringwidth}),
+				$color 90%,
+				transparent 90%
+			);
 		}
 	}
 }

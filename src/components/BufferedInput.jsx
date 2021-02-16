@@ -11,42 +11,41 @@ export default class BufferedInput extends React.Component {
 	static propTypes = {
 		defaultValue: PropTypes.string,
 		onChange: PropTypes.func,
-		delay: PropTypes.number
-	}
+		delay: PropTypes.number,
+	};
 
-	attachRef = x => this.input = x
+	attachRef = x => (this.input = x);
 
-
-	componentDidMount () {
+	componentDidMount() {
 		//eslint-disable-next-line no-console
-		console.warn('BufferedInput is deprecated. Please attempt to shift to a regular input and buffer the method onChange calls.');
+		console.warn(
+			'BufferedInput is deprecated. Please attempt to shift to a regular input and buffer the method onChange calls.'
+		);
 	}
 
-
-	clear () {
-		const {input} = this;
+	clear() {
+		const { input } = this;
 		input.value = '';
 		this.onChange({
 			target: input,
 			type: 'change',
-			persist () {},
-			preventDefault () {},
-			stopPropagation () {}
+			persist() {},
+			preventDefault() {},
+			stopPropagation() {},
 		});
 	}
 
-	focus () {
+	focus() {
 		this.input.focus();
 	}
 
-
-	onChange = (e) => {
-		const {delay = 0, onChange} = this.props;
+	onChange = e => {
+		const { delay = 0, onChange } = this.props;
 		if (!onChange) {
 			return;
 		}
 
-		let {inputBufferDelayTimer} = this;
+		let { inputBufferDelayTimer } = this;
 		if (inputBufferDelayTimer) {
 			clearTimeout(inputBufferDelayTimer);
 		}
@@ -56,15 +55,20 @@ export default class BufferedInput extends React.Component {
 		e.persist();
 
 		this.inputBufferDelayTimer = setTimeout(() => onChange(e), delay);
-	}
+	};
 
-	render () {
-		const props = { ...this.props};
+	render() {
+		const props = { ...this.props };
 
-		delete props.delay;//don't pass "our" props to the spread
+		delete props.delay; //don't pass "our" props to the spread
 
 		return (
-			<input {...props} ref={this.attachRef} onChange={this.onChange} value={void 0}/>
+			<input
+				{...props}
+				ref={this.attachRef}
+				onChange={this.onChange}
+				value={void 0}
+			/>
 		);
 	}
 }

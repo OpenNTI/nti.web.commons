@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import ListItem from '../components/ListItem';
 import ItemInfo from '../components/ItemInfo';
@@ -9,9 +9,9 @@ import RemoveButton from '../components/RemoveButton';
 import Locations from '../components/Locations';
 import ErrorCmp from '../components/Error';
 //
-import {DateTime} from '../../../';
-import {Loading} from '../../../components';
-import {InlineFlyout} from '../../../flyout';
+import { DateTime } from '../../../';
+import { Loading } from '../../../components';
+import { InlineFlyout } from '../../../flyout';
 import ItemChanges from '../../../HighOrderComponents/ItemChanges';
 
 import Groups from './groups';
@@ -23,19 +23,21 @@ const DEFAULT_TEXT = {
 	schedule: 'Scheduled for %(date)s',
 	published: 'Published',
 	failedToAdd: 'Failed to add.',
-	failedToRemove: 'Failed to remove.'
+	failedToRemove: 'Failed to remove.',
 };
 
-const t = scoped('common.components.associations.editor.content_node', DEFAULT_TEXT);
+const t = scoped(
+	'common.components.associations.editor.content_node',
+	DEFAULT_TEXT
+);
 
-function getCountFor (item, overview) {
+function getCountFor(item, overview) {
 	const refs = overview.getRefsTo(item);
 
 	return refs.length;
 }
 
-
-function getSubLabels (item, isActive) {
+function getSubLabels(item, isActive) {
 	const labels = [];
 
 	if (isActive) {
@@ -45,7 +47,14 @@ function getSubLabels (item, isActive) {
 	if (!item.item.isPublished()) {
 		labels.push(t('draft'));
 	} else if (item.item.AvailableBeginning) {
-		labels.push(t('schedule', {date: DateTime.format(item.item.getAvailableBeginning(), DateTime.MONTH_ABBR_DAY_YEAR)}));
+		labels.push(
+			t('schedule', {
+				date: DateTime.format(
+					item.item.getAvailableBeginning(),
+					DateTime.MONTH_ABBR_DAY_YEAR
+				),
+			})
+		);
 	} else {
 		labels.push(t('published'));
 	}
@@ -53,21 +62,19 @@ function getSubLabels (item, isActive) {
 	return labels;
 }
 
-
-function getTrigger (item) {
+function getTrigger(item) {
 	let trigger;
 
 	if (item.isSaving) {
-		trigger = (<Loading.Spinner />);
+		trigger = <Loading.Spinner />;
 	} else {
-		trigger = (<AddButton label={t('addLabel')} error={!!item.error} />);
+		trigger = <AddButton label={t('addLabel')} error={!!item.error} />;
 	}
 
 	return trigger;
 }
 
-
-function renderAdd (item, onAdd) {
+function renderAdd(item, onAdd) {
 	const trigger = getTrigger(item);
 
 	return (
@@ -77,43 +84,59 @@ function renderAdd (item, onAdd) {
 	);
 }
 
-
-function renderRemove (item, count, onRemove) {
+function renderRemove(item, count, onRemove) {
 	let remove;
 
 	if (item.isSaving) {
-		remove = (<Loading.Spinner white />);
+		remove = <Loading.Spinner white />;
 	} else {
-		remove = (<RemoveButton count={count}  onRemove={onRemove} error={!!item.error} />);
+		remove = (
+			<RemoveButton
+				count={count}
+				onRemove={onRemove}
+				error={!!item.error}
+			/>
+		);
 	}
 
 	return remove;
 }
 
-
 ContentNodeEditor.propTypes = {
 	item: PropTypes.object,
-	associations: PropTypes.object
+	associations: PropTypes.object,
 };
-function ContentNodeEditor ({item, associations}) {
+function ContentNodeEditor({ item, associations }) {
 	const active = associations.getAssociationFor(item);
 	const count = active && getCountFor(associations.backingItem, active);
 
-	function onAdd (group, overview) {
+	function onAdd(group, overview) {
 		item.onAddTo(group, overview);
 	}
 
-	function onRemove () {
+	function onRemove() {
 		item.onRemoveFrom(active);
 	}
 
 	return (
 		<ListItem className="content-node" active={!!active}>
-			<ItemInfo label={item.label} subLabels={getSubLabels(item, active)}/>
-			{item.error && (<ErrorCmp error={t(active ? 'failedToRemove' : 'failedToAdd')} white={!!active} />)}
-			{!active && item.canAddTo && (renderAdd(item, onAdd))}
-			{active && !item.isSaving && !item.error && count > 1 ? (<Locations count={count} />) : null}
-			{active && item.canRemoveFrom && (renderRemove(item, count, onRemove))}
+			<ItemInfo
+				label={item.label}
+				subLabels={getSubLabels(item, active)}
+			/>
+			{item.error && (
+				<ErrorCmp
+					error={t(active ? 'failedToRemove' : 'failedToAdd')}
+					white={!!active}
+				/>
+			)}
+			{!active && item.canAddTo && renderAdd(item, onAdd)}
+			{active && !item.isSaving && !item.error && count > 1 ? (
+				<Locations count={count} />
+			) : null}
+			{active &&
+				item.canRemoveFrom &&
+				renderRemove(item, count, onRemove)}
 		</ListItem>
 	);
 }

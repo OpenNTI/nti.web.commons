@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 const Cache = new WeakMap();
 
 const rootMarginFromBuffer = (buffer = 0) => {
-	if (typeof buffer === 'number') { return `${buffer}px ${buffer}px ${buffer}px ${buffer}px`; }
+	if (typeof buffer === 'number') {
+		return `${buffer}px ${buffer}px ${buffer}px ${buffer}px`;
+	}
 
 	//fill this in
 };
 
-function useIntersectionObserver (onChange, buffer) {
+function useIntersectionObserver(onChange, buffer) {
 	const changeRef = React.useRef(null);
 	const bufferRef = React.useRef(null);
 
@@ -25,8 +27,8 @@ function useIntersectionObserver (onChange, buffer) {
 	bufferRef.current = buffer;
 
 	observerRef.current = new IntersectionObserver(
-		(entries) => {
-			const entry = entries[0];//should only ever be one;
+		entries => {
+			const entry = entries[0]; //should only ever be one;
 			const onScreen = entry.isIntersecting;
 
 			const prev = Cache.get(entry.target);
@@ -36,23 +38,27 @@ function useIntersectionObserver (onChange, buffer) {
 			if (prev == null || prev !== onScreen) {
 				onChange(onScreen);
 			}
-
-		}, {
-			rootMargin: rootMarginFromBuffer(buffer)
+		},
+		{
+			rootMargin: rootMarginFromBuffer(buffer),
 		}
 	);
 
 	return observerRef.current;
 }
 
-
 OnScreenMonitor.propTypes = {
 	as: PropTypes.any,
 
 	buffer: PropTypes.number,
-	onChange: PropTypes.func
+	onChange: PropTypes.func,
 };
-export default function OnScreenMonitor ({onChange, as:tag, buffer, ...otherProps}) {
+export default function OnScreenMonitor({
+	onChange,
+	as: tag,
+	buffer,
+	...otherProps
+}) {
 	const Cmp = tag || 'div';
 
 	const observer = useIntersectionObserver(onChange, buffer);
@@ -66,7 +72,5 @@ export default function OnScreenMonitor ({onChange, as:tag, buffer, ...otherProp
 		return () => observer.unobserve(target);
 	}, [observer]);
 
-	return (
-		<Cmp ref={elementRef} {...otherProps} />
-	);
+	return <Cmp ref={elementRef} {...otherProps} />;
 }

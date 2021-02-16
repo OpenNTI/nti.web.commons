@@ -8,17 +8,17 @@ ParentFolder.propTypes = {
 		getFileName: PropTypes.func,
 		getParentFolder: PropTypes.func,
 	}),
-	emptyComponent: PropTypes.func
+	emptyComponent: PropTypes.func,
 };
 
-export default function ParentFolder (props) {
-	const {folder, emptyComponent: Empty, ...otherProps} = props;
+export default function ParentFolder(props) {
+	const { folder, emptyComponent: Empty, ...otherProps } = props;
 	const parent = folder && folder.getParentFolder();
 	return !parent ? (
 		!Empty ? null : (
-			<Empty/>
+			<Empty />
 		)
 	) : (
-		<DrillUp {...otherProps} label={parent.getFileName()}/>
+		<DrillUp {...otherProps} label={parent.getFileName()} />
 	);
 }

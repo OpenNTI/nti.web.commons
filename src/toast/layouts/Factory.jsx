@@ -1,7 +1,7 @@
 import React from 'react';
-import {HOC} from '@nti/lib-commons';
+import { HOC } from '@nti/lib-commons';
 
-export function Wrap (Parent, Component) {
+export function Wrap(Parent, Component) {
 	const Wrapper = (props, ref) => {
 		return (
 			<Parent {...props}>
@@ -11,7 +11,9 @@ export function Wrap (Parent, Component) {
 	};
 	const cmp = React.forwardRef(Wrapper);
 
-	const componentName = Component ? Component.displayName || Component.name : '';
+	const componentName = Component
+		? Component.displayName || Component.name
+		: '';
 	const parentName = Parent ? Parent.displayName || Parent.name : '';
 	const wrapperName = `${parentName}(${componentName})`;
 

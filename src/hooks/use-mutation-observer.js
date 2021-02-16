@@ -4,12 +4,14 @@ const DefaultOptions = {
 	attributes: true,
 	characterData: true,
 	childList: true,
-	subtree: true
+	subtree: true,
 };
 
-export function useMutationObserver (ref, callback, options = DefaultOptions) {
+export function useMutationObserver(ref, callback, options = DefaultOptions) {
 	React.useEffect(() => {
-		if (!ref?.current) { return; }
+		if (!ref?.current) {
+			return;
+		}
 
 		let task = null;
 

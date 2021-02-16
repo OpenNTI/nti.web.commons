@@ -1,3 +1,3 @@
-export default function getFormData (form) {
+export default function getFormData(form) {
 	return new FormData(form);
 }

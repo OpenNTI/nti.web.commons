@@ -12,16 +12,23 @@ export default class extends React.Component {
 		message: PropTypes.string,
 		tag: PropTypes.string,
 
-		children: PropTypes.any
+		children: PropTypes.any,
 	};
 
 	static defaultProps = {
 		tag: 'div',
-		message: 'Loading'
+		message: 'Loading',
 	};
 
-	render () {
-		const {tag: Tag, children, loading, maskScreen, message, ...otherProps} = this.props;
+	render() {
+		const {
+			tag: Tag,
+			children,
+			loading,
+			maskScreen,
+			message,
+			...otherProps
+		} = this.props;
 
 		if (!isEmpty(children) && !loading) {
 			return <Tag {...otherProps}>{children}</Tag>;
@@ -38,12 +45,11 @@ export default class extends React.Component {
 	}
 }
 
-
 Mask.propTypes = {
 	children: PropTypes.element,
-	mask: PropTypes.bool
+	mask: PropTypes.bool,
 };
-function Mask (props) {
-	const {children, mask} = props;
-	return mask ? ( <div className="mask-loader">{children}</div> ) : children;
+function Mask(props) {
+	const { children, mask } = props;
+	return mask ? <div className="mask-loader">{children}</div> : children;
 }

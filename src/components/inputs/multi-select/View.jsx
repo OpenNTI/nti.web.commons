@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
-import {getChangedValues, getValueForOption} from '../select/utils';
+import { getChangedValues, getValueForOption } from '../select/utils';
 import Option from '../select/Option';
 import Select from '../select';
 
@@ -12,21 +12,18 @@ import Styles from './View.css';
 const cx = classnames.bind(Styles);
 
 const t = scoped('common.components.inputs.multi-select.View', {
-	searchPlaceholder: 'Select...'
+	searchPlaceholder: 'Select...',
 });
 
 const childCount = children => React.Children.count(children);
 
 export default class NTIMultiSelectInput extends React.Component {
-	static Option = Option
+	static Option = Option;
 
 	static propTypes = {
 		className: PropTypes.string,
 		values: PropTypes.arrayOf(
-			PropTypes.oneOfType([
-				PropTypes.string,
-				PropTypes.number
-			])
+			PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 		),
 		searchPlaceholder: PropTypes.string,
 		placeholder: PropTypes.string,
@@ -35,31 +32,33 @@ export default class NTIMultiSelectInput extends React.Component {
 
 		optionsClassName: PropTypes.string,
 		onFocus: PropTypes.func,
-		onBlur: PropTypes.func
-	}
+		onBlur: PropTypes.func,
+	};
 
-	attachSelectRef = (node) => this.select = node;
+	attachSelectRef = node => (this.select = node);
 
 	state = {
-		activeOptions: []
-	}
+		activeOptions: [],
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup(this.props);
 	}
 
-	componentDidUpdate (prevProps) {
-		const {children, values} = this.props;
-		const {children:prevChildren, values: prevValues} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { children, values } = this.props;
+		const { children: prevChildren, values: prevValues } = prevProps;
 
-		if (values !== prevValues || childCount(children) !== childCount(prevChildren)) {
+		if (
+			values !== prevValues ||
+			childCount(children) !== childCount(prevChildren)
+		) {
 			this.setup(this.props, prevValues);
 		}
 	}
 
-
-	setup (props, oldValues) {
-		const {children, values} = props;
+	setup(props, oldValues) {
+		const { children, values } = props;
 		const changedValuesSet = getChangedValues(values, oldValues);
 		const valuesSet = new Set(values);
 		const options = React.Children.toArray(children);
@@ -92,39 +91,39 @@ export default class NTIMultiSelectInput extends React.Component {
 			return aIndex - bIndex;
 		});
 
-		this.setState({
-			selectedValue,
-			selectedOptions,
-			activeOptions
-		}, () => {
-			if (this.select) {
-				this.select.realign();
+		this.setState(
+			{
+				selectedValue,
+				selectedOptions,
+				activeOptions,
+			},
+			() => {
+				if (this.select) {
+					this.select.realign();
+				}
 			}
-		});
-
+		);
 	}
 
-	onChange (values) {
-		const {onChange} = this.props;
+	onChange(values) {
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange(values);
 		}
 	}
 
-
 	removeSelected = (value, e) => {
 		e.stopPropagation();
 		e.preventDefault();
 
-		const {values} = this.props;
+		const { values } = this.props;
 
 		this.onChange(values.filter(v => v !== value));
-	}
+	};
 
-
-	onSelectChanged = (value) => {
-		const {values} = this.props;
+	onSelectChanged = value => {
+		const { values } = this.props;
 		const valuesSet = new Set(values);
 
 		if (valuesSet.has(value)) {
@@ -134,30 +133,31 @@ export default class NTIMultiSelectInput extends React.Component {
 		}
 
 		this.onChange(Array.from(valuesSet));
-	}
+	};
 
-	render () {
-		const {className} = this.props;
+	render() {
+		const { className } = this.props;
 
 		return (
-			<div className={cx('multi-select', 'nti-multi-select-input', className)}>
+			<div
+				className={cx(
+					'multi-select',
+					'nti-multi-select-input',
+					className
+				)}
+			>
 				{this.renderSelected()}
 				{this.renderActive()}
 			</div>
 		);
 	}
 
-
-	renderSelected () {
-		const {placeholder} = this.props;
-		const {selectedOptions} = this.state;
+	renderSelected() {
+		const { placeholder } = this.props;
+		const { selectedOptions } = this.state;
 
 		if (!selectedOptions || selectedOptions.length === 0) {
-			return (
-				<div className={cx('placeholder')}>
-					{placeholder}
-				</div>
-			);
+			return <div className={cx('placeholder')}>{placeholder}</div>;
 		}
 
 		return (
@@ -166,23 +166,23 @@ export default class NTIMultiSelectInput extends React.Component {
 					const cmp = React.cloneElement(option, {
 						index: key,
 						onRemove: this.removeSelected,
-						removable: true
+						removable: true,
 					});
 
-					return (
-						<li key={key}>
-							{cmp}
-						</li>
-					);
+					return <li key={key}>{cmp}</li>;
 				})}
 			</ul>
 		);
 	}
 
-
-	renderActive () {
-		const {searchPlaceholder, optionsClassName, onFocus, onBlur} = this.props;
-		const {activeOptions, selectedOptions} = this.state;
+	renderActive() {
+		const {
+			searchPlaceholder,
+			optionsClassName,
+			onFocus,
+			onBlur,
+		} = this.props;
+		const { activeOptions, selectedOptions } = this.state;
 		const selectedSet = new Set(selectedOptions);
 
 		return (
@@ -201,13 +201,19 @@ export default class NTIMultiSelectInput extends React.Component {
 					const isSelected = selectedSet.has(option);
 
 					if (!isSelected) {
-						return React.cloneElement(option, {key, checkable: true});
+						return React.cloneElement(option, {
+							key,
+							checkable: true,
+						});
 					}
 
-					return React.cloneElement(option, {key, checkable: true, checked: true});
+					return React.cloneElement(option, {
+						key,
+						checkable: true,
+						checked: true,
+					});
 				})}
 			</Select>
 		);
-
 	}
 }

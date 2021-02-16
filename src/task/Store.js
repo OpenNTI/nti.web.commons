@@ -1,13 +1,15 @@
-import {Stores} from '@nti/lib-store';
+import { Stores } from '@nti/lib-store';
 
 export default class TaskStore extends Stores.BoundStore {
-	load () {
-		if (this.unsubscribe) { this.unsubscribe(); }
+	load() {
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
 
 		const task = this.binding;
 		const unsubscribe = task.addChangeListener(() => {
 			this.set({
-				task
+				task,
 			});
 		});
 
@@ -17,11 +19,11 @@ export default class TaskStore extends Stores.BoundStore {
 		};
 
 		this.set({
-			task
+			task,
 		});
 	}
 
-	cleanup () {
+	cleanup() {
 		if (this.unsubscribe) {
 			this.unsubscribe();
 		}

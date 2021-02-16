@@ -4,10 +4,9 @@ import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:components:content-resources:tasks:Task');
 
-const value = (x, y) => ({value: x, writable: y});
+const value = (x, y) => ({ value: x, writable: y });
 
 export default class Task extends EventEmitter {
-
 	/**
 	 * Setup a file task.
 	 *
@@ -16,39 +15,34 @@ export default class Task extends EventEmitter {
 	 * @param  {function} [onComplete] - Optional callback when the task completes.
 	 * @returns {void}
 	 */
-	constructor (callback, units, onComplete) {
+	constructor(callback, units, onComplete) {
 		super();
 		Object.defineProperties(this, {
 			executer: value(callback),
 			total: value(units, true),
-			onComplete: value(onComplete)
+			onComplete: value(onComplete),
 		});
 	}
 
-
-	begin = () => (this.fiberId = setTimeout(this.worker, 0))
-
+	begin = () => (this.fiberId = setTimeout(this.worker, 0));
 
 	worker = () => {
-		const {executer :start} = this;
+		const { executer: start } = this;
 
 		try {
 			const result = start(this);
 			if (result && result.then && result.catch) {
-				result
-					.catch(e => this.emitError(e))
-					.then(o => this.finish(o));
+				result.catch(e => this.emitError(e)).then(o => this.finish(o));
 			} else {
 				this.finish();
 			}
 		} catch (e) {
 			this.emitError(e);
 		}
-	}
+	};
 
-
-	finish (result) {
-		const {onComplete} = this;
+	finish(result) {
+		const { onComplete } = this;
 		if (typeof onComplete === 'function' && !this.error) {
 			try {
 				onComplete(result);
@@ -62,16 +56,13 @@ export default class Task extends EventEmitter {
 		this.emit('finish', this);
 	}
 
-
 	emitProgress = (current, total = this.total, abort) => (
-		this.current = current,
-		this.total = total,
+		(this.current = current),
+		(this.total = total),
 		this.emit('progress', this, current, total, abort)
-	)
+	);
 
-
-	emitError = (e) => (
-		this.finished = this.error = e,
-		this.emit('error', this, e)
-	)
+	emitError = e => (
+		(this.finished = this.error = e), this.emit('error', this, e)
+	);
 }

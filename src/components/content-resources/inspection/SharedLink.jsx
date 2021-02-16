@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 Link.propTypes = {
 	course: PropTypes.object,
 	unit: PropTypes.object,
-	outlineNode: PropTypes.object
+	outlineNode: PropTypes.object,
 };
 
-export default function Link (props) {
-	const {unit, outlineNode} = props;
+export default function Link(props) {
+	const { unit, outlineNode } = props;
 
 	const title = outlineNode ? outlineNode.title : 'Unknown';
 	const subtitle = unit ? unit.title : '';

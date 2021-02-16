@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .filters {
 	text-align: center;
@@ -30,7 +30,8 @@
 		$opacity: 0.1;
 		$color: black;
 
-		&::before { //underline
+		&::before {
+			//underline
 			content: '';
 			border-bottom: 1px solid $color;
 			position: absolute;
@@ -41,8 +42,9 @@
 			left: 0;
 		}
 
-		&::after { //arrow
-			$arrowsize:1em;
+		&::after {
+			//arrow
+			$arrowsize: 1em;
 
 			content: '';
 			border: ($arrowsize/2) solid transparent;

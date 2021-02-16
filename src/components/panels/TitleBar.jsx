@@ -8,15 +8,29 @@ TitleBar.propTypes = {
 	className: PropTypes.string,
 	iconAction: PropTypes.func,
 	iconCls: PropTypes.string,
-	iconLabel: PropTypes.string
+	iconLabel: PropTypes.string,
 };
-export default function TitleBar ({title, className, iconAction, iconCls = 'icon-light-x', iconLabel = 'Close'}) {
+export default function TitleBar({
+	title,
+	className,
+	iconAction,
+	iconCls = 'icon-light-x',
+	iconLabel = 'Close',
+}) {
 	const cls = cx('panel-title-bar', className);
 
 	return (
 		<div className={cls}>
 			<h1>{title}</h1>
-			{iconAction && (<i className={iconCls} role="button" data-tip={iconLabel} aria-label={iconLabel} onClick={iconAction} />)}
+			{iconAction && (
+				<i
+					className={iconCls}
+					role="button"
+					data-tip={iconLabel}
+					aria-label={iconLabel}
+					onClick={iconAction}
+				/>
+			)}
 		</div>
 	);
 }

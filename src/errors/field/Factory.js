@@ -2,8 +2,8 @@ import EventEmitter from 'events';
 
 const DATA = Symbol('Data');
 
-function getMessageForReason (reason, overrides) {
-	const {ErrorCode, code: reasonCode} = reason || {};
+function getMessageForReason(reason, overrides) {
+	const { ErrorCode, code: reasonCode } = reason || {};
 	const code = ErrorCode || reasonCode;
 	const override = overrides[code];
 
@@ -14,7 +14,6 @@ function getMessageForReason (reason, overrides) {
 	if (override) {
 		return override;
 	}
-
 
 	return (reason && reason.message) || 'Unknown Error';
 }
@@ -35,7 +34,7 @@ class FieldError extends EventEmitter {
 	 * @param  {Object} raw     the raw response from the server
 	 * @param  {Function} onClear callback for when the error is cleared
 	 */
-	constructor (id, attachedTo, message, raw, onClear) {
+	constructor(id, attachedTo, message, raw, onClear) {
 		super();
 
 		this.onClear = onClear;
@@ -44,48 +43,41 @@ class FieldError extends EventEmitter {
 			id,
 			attachedTo,
 			message,
-			raw
+			raw,
 		};
 	}
 
-
-	get ID () {
+	get ID() {
 		return this[DATA].id;
 	}
 
-	get raw () {
+	get raw() {
 		return this[DATA].raw;
 	}
 
-
-	get attachedTo () {
+	get attachedTo() {
 		return this[DATA].attachedTo;
 	}
 
-
-	get doNotShow () {
+	get doNotShow() {
 		return this.raw.doNotShow;
 	}
 
-
-	set attachedTo (value) {
+	set attachedTo(value) {
 		this[DATA].attachedTo = value;
 		this.emit('changed');
 	}
 
-
-	get message () {
+	get message() {
 		return this[DATA].message;
 	}
 
-
-	set message (value) {
+	set message(value) {
 		this[DATA].message = value;
 		this.emit('changed');
 	}
 
-
-	clear () {
+	clear() {
 		this.emit('clear');
 
 		if (this.onClear) {
@@ -93,29 +85,29 @@ class FieldError extends EventEmitter {
 		}
 	}
 
-
-	focus () {
+	focus() {
 		this.emit('focus');
 	}
 
-
-	isAttachedTo (ntiid, field) {
-		const {attachedTo} = this;
+	isAttachedTo(ntiid, field) {
+		const { attachedTo } = this;
 
 		//Is attached to the same NTIID, and if field is passed it is the same
-		return attachedTo.NTIID === ntiid && (field != null ? field === attachedTo.field : true);
+		return (
+			attachedTo.NTIID === ntiid &&
+			(field != null ? field === attachedTo.field : true)
+		);
 	}
 
-
-	isAttachedToField (field) {
-		const {attachedTo} = this;
+	isAttachedToField(field) {
+		const { attachedTo } = this;
 
 		return attachedTo.field === field;
 	}
 }
 
 export default class Factory {
-	constructor (config = {}) {
+	constructor(config = {}) {
 		this.overrides = config.overrides || {};
 		this.seenCount = 0;
 	}
@@ -127,11 +119,17 @@ export default class Factory {
 	 * @param  {Function} onClear what to do when the error is cleared
 	 * @returns {FieldError} A FieldError
 	 */
-	make (attachedTo, reason, onClear) {
+	make(attachedTo, reason, onClear) {
 		this.seenCount += 1;
 
 		const message = getMessageForReason(reason, this.overrides);
 
-		return new FieldError (this.seenCount, attachedTo, message, reason, onClear);
+		return new FieldError(
+			this.seenCount,
+			attachedTo,
+			message,
+			reason,
+			onClear
+		);
 	}
 }

@@ -1,34 +1,33 @@
+/* eslint react/no-find-dom-node: warn */
 import './Item.scss';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {findDOMNode} from 'react-dom';
-import {DragSource, DropTarget} from 'react-dnd';
+import { findDOMNode } from 'react-dom';
+import { DragSource, DropTarget } from 'react-dnd';
 import cx from 'classnames';
 
 const ITEM_TYPE = 'sortable-item-type';
 
-
 const itemSource = {
-	beginDrag (props) {
+	beginDrag(props) {
 		return {
 			index: props.index,
-			item: props.item
+			item: props.item,
 		};
 	},
-	canDrag (props/*, monitor */) {
+	canDrag(props /*, monitor */) {
 		return !!props.moveItem && !props.locked;
 	},
-	endDrag (props) {
-		const {onDragEnd} = props;
+	endDrag(props) {
+		const { onDragEnd } = props;
 		if (onDragEnd) {
 			onDragEnd();
 		}
-	}
+	},
 };
 
 const itemTarget = {
-
-	hover (props, monitor, component) {
+	hover(props, monitor, component) {
 		const dragIndex = monitor.getItem().index;
 		const hoverIndex = props.index;
 
@@ -43,10 +42,13 @@ const itemTarget = {
 		}
 
 		// Determine rectangle on screen
-		const hoverBoundingRect = findDOMNode(component).getBoundingClientRect(); // eslint-disable-line react/no-find-dom-node
+		const hoverBoundingRect = findDOMNode(
+			component
+		).getBoundingClientRect();
 
 		// Get vertical middle
-		const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+		const hoverMiddleY =
+			(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
 		// Determine mouse position
 		const clientOffset = monitor.getClientOffset();
@@ -76,26 +78,24 @@ const itemTarget = {
 		// but it's good here for the sake of performance
 		// to avoid expensive index searches.
 		monitor.getItem().index = hoverIndex;
-
-	}
+	},
 };
 
-function collect (connect, monitor) {
+function collect(connect, monitor) {
 	return {
 		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
-		isDragging: monitor.isDragging()
+		isDragging: monitor.isDragging(),
 	};
 }
 
-function collectDrop (connect) {
+function collectDrop(connect) {
 	return {
-		connectDropTarget: connect.dropTarget()
+		connectDropTarget: connect.dropTarget(),
 	};
 }
 
 class SortableItem extends React.Component {
-
 	static propTypes = {
 		index: PropTypes.number.isRequired,
 		moveItem: PropTypes.func,
@@ -105,16 +105,15 @@ class SortableItem extends React.Component {
 		connectDragSource: PropTypes.func,
 		connectDropTarget: PropTypes.func,
 		connectDragPreview: PropTypes.func,
-		children: PropTypes.any
-	}
+		children: PropTypes.any,
+	};
 
 	static defaultProps = {
-		connectDragSource: (x) => x,
-		connectDropTarget: (x) => x,
-	}
+		connectDragSource: x => x,
+		connectDropTarget: x => x,
+	};
 
-	render () {
-
+	render() {
 		const {
 			customHandle,
 			className,
@@ -122,14 +121,18 @@ class SortableItem extends React.Component {
 			connectDragSource,
 			connectDropTarget,
 			connectDragPreview,
-			children
+			children,
 		} = this.props;
 
-		const classes = cx('sortable-item', className, {dragging: isDragging});
+		const classes = cx('sortable-item', className, {
+			dragging: isDragging,
+		});
 
 		let content = connectDropTarget(
 			<li className={classes}>
-				{React.Children.map(children, (c) => React.cloneElement(c, {connectDragSource}))}
+				{React.Children.map(children, c =>
+					React.cloneElement(c, { connectDragSource })
+				)}
 			</li>
 		);
 

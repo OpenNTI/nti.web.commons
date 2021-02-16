@@ -7,7 +7,7 @@ describe('Alignment Sizing', () => {
 		const SIZINGS = ALIGNMENT_SIZINGS[VERTICAL];
 
 		test('Match Side', () => {
-			const size = SIZINGS[MATCH_SIDE]({width: 200});
+			const size = SIZINGS[MATCH_SIDE]({ width: 200 });
 
 			expect(size.width).toEqual(200);
 		});

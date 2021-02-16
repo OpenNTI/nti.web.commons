@@ -11,7 +11,7 @@ const Box = styled.div`
 	background: var(--button-border);
 `;
 
-const Icon = styled(Button).attrs(({layout, className, ...props}) => ({
+const Icon = styled(Button).attrs(({ layout, className, ...props }) => ({
 	as: 'i',
 	className: cx(`icon-${layout}`, className),
 	plain: true,
@@ -31,13 +31,18 @@ const Icon = styled(Button).attrs(({layout, className, ...props}) => ({
 	}
 `;
 
-export function GridList ({onChange, value = 'grid', ...props}) {
+export function GridList({ onChange, value = 'grid', ...props }) {
 	const layouts = ['grid', 'list'];
 
 	return (
 		<Box {...props}>
 			{layouts.map(name => (
-				<Icon key={name} layout={name} selected={value === name} onClick={() => onChange?.(name)}/>
+				<Icon
+					key={name}
+					layout={name}
+					selected={value === name}
+					onClick={() => onChange?.(name)}
+				/>
 			))}
 		</Box>
 	);

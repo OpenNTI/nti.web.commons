@@ -1,27 +1,25 @@
-import {Stores} from '@nti/lib-store';
+import { Stores } from '@nti/lib-store';
 import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:navigation:Store');
 
 export default class NavigationStore extends Stores.SimpleStore {
-	static Singleton = true
+	static Singleton = true;
 
-	constructor () {
+	constructor() {
 		super();
 
 		this.set({
 			tabs: null,
-			expandTabs: false
+			expandTabs: false,
 		});
 	}
 
-
-	setExpandTabs (expand) {
+	setExpandTabs(expand) {
 		this.set('expandTabs', expand);
 	}
 
-
-	setTabs (config) {
+	setTabs(config) {
 		const tabs = this.get('tabs');
 
 		if (tabs === config) {
@@ -31,12 +29,13 @@ export default class NavigationStore extends Stores.SimpleStore {
 		this.set('tabs', config);
 	}
 
-
-	clearTabs (config) {
+	clearTabs(config) {
 		const tabs = this.get('tabs');
 
 		if (config !== tabs) {
-			logger.error('Trying to clear tabs that aren\'t active, doing nothing.');
+			logger.error(
+				"Trying to clear tabs that aren't active, doing nothing."
+			);
 			return;
 		}
 

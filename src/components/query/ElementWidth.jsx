@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ScreenSize} from '../../decorators';
+import { ScreenSize } from '../../decorators';
 
-import {mergeProps} from './util';
+import { mergeProps } from './util';
 
 class QueryElementWidth extends React.Component {
 	static propTypes = {
@@ -12,45 +12,48 @@ class QueryElementWidth extends React.Component {
 
 		onChange: PropTypes.func,
 
-		queries: PropTypes.arrayOf(PropTypes.shape({
-			query: PropTypes.func,
-			default: PropTypes.bool,
-			props: PropTypes.object.isRequired
-		}))
-	}
+		queries: PropTypes.arrayOf(
+			PropTypes.shape({
+				query: PropTypes.func,
+				default: PropTypes.bool,
+				props: PropTypes.object.isRequired,
+			})
+		),
+	};
 
 	static defaultProps = {
 		queries: [],
-		tag: 'div'
-	}
+		tag: 'div',
+	};
 
-	state = {}
+	state = {};
 
-
-	attachRef = (x) => {
+	attachRef = x => {
 		this.ref = x;
 
 		if (x) {
 			this.computeMatches();
 		}
-	}
+	};
 
-
-	componentDidUpdate () {
+	componentDidUpdate() {
 		if (this.ref) {
 			this.computeMatches();
 		}
 	}
 
-
-	computeMatches () {
-		const {queries, onChange} = this.props;
-		const {width:lastWidth} = this.state;
+	computeMatches() {
+		const { queries, onChange } = this.props;
+		const { width: lastWidth } = this.state;
 		const width = this.ref && this.ref.offsetWidth;
 
-		if (lastWidth === width) { return; }
+		if (lastWidth === width) {
+			return;
+		}
 
-		if (onChange) { onChange(width); }
+		if (onChange) {
+			onChange(width);
+		}
 
 		let props = {};
 		let defaultProps = {};
@@ -73,24 +76,20 @@ class QueryElementWidth extends React.Component {
 
 		this.setState({
 			width,
-			extraProps: props
+			extraProps: props,
 		});
 	}
 
-
-
-	render () {
-		const {tag:Tag, ...otherProps} = this.props;
-		const {extraProps} = this.state;
+	render() {
+		const { tag: Tag, ...otherProps } = this.props;
+		const { extraProps } = this.state;
 
 		delete otherProps.queries;
 		delete otherProps.onChange;
 		delete otherProps.screenWidth;
 		delete otherProps.screenHeight;
 
-		return (
-			<Tag ref={this.attachRef} {...otherProps} {...extraProps} />
-		);
+		return <Tag ref={this.attachRef} {...otherProps} {...extraProps} />;
 	}
 }
 

@@ -5,11 +5,11 @@ import Form from '../Form';
 
 export default {
 	title: 'Form/Prompt',
-	component: Form.Prompt
+	component: Form.Prompt,
 };
 
-export const Playground = (props) => {
-	const submit = ({json}) => props.onSubmit(json);
+export const Playground = props => {
+	const submit = ({ json }) => props.onSubmit(json);
 	const cancel = props.allowCancel ? props.onCancel : null;
 
 	return (
@@ -22,13 +22,18 @@ export const Playground = (props) => {
 Playground.propTypes = {
 	onSubmit: PropTypes.func,
 	onCancel: PropTypes.func,
-	allowCancel: PropTypes.bool
+	allowCancel: PropTypes.bool,
 };
 
 Playground.argTypes = {
-	onSubmit: {action: 'submitted'},
-	onCancel: {action: 'canceled'},
-	allowCancel: {control: {type: 'boolean'}},
-	actionType: {control: {type: 'radio', options: ['destructive', 'constructive', 'dismissive']}},
-	actionLabel: {control: {type: 'text'}}
+	onSubmit: { action: 'submitted' },
+	onCancel: { action: 'canceled' },
+	allowCancel: { control: { type: 'boolean' } },
+	actionType: {
+		control: {
+			type: 'radio',
+			options: ['destructive', 'constructive', 'dismissive'],
+		},
+	},
+	actionLabel: { control: { type: 'text' } },
 };

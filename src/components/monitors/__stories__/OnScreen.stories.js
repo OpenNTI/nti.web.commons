@@ -7,20 +7,20 @@ export default {
 	title: 'Monitors/On Screen',
 	component: OnScreen,
 	argTypes: {
-		buffer: {type: 'number', min: 0, step: 1}
-	}
+		buffer: { type: 'number', min: 0, step: 1 },
+	},
 };
 
 Tile.propTypes = {
-	buffer: PropTypes.number
+	buffer: PropTypes.number,
 };
-function Tile ({buffer}) {
+function Tile({ buffer }) {
 	const [onScreen, setOnScreen] = React.useState();
 
 	const styles = {
 		width: '33vw',
 		height: '33vh',
-		background: onScreen ? 'green' : 'red'
+		background: onScreen ? 'green' : 'red',
 	};
 
 	return (
@@ -30,14 +30,14 @@ function Tile ({buffer}) {
 	);
 }
 
-const Tiles = Array.from({length: 30});
+const Tiles = Array.from({ length: 30 });
 
-export const Base = ({buffer}) => {
+export const Base = ({ buffer }) => {
 	const styles = {
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		width: '198vw'
+		width: '198vw',
 	};
 
 	return (
@@ -50,5 +50,5 @@ export const Base = ({buffer}) => {
 };
 
 Base.propTypes = {
-	buffer: PropTypes.number
+	buffer: PropTypes.number,
 };

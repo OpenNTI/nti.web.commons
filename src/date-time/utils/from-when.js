@@ -1,4 +1,4 @@
-import {formatDistanceStrict} from 'date-fns';
+import { formatDistanceStrict } from 'date-fns';
 const MINUTE = 60;
 const HOUR = 3600;
 const DAY = 86400;
@@ -27,26 +27,26 @@ const locale = {
 	M: 'a month',
 	MM: '{{count}} months',
 	y: 'a year',
-	yy: '{{count}} years'
+	yy: '{{count}} years',
 };
 
 const ranges = {
-	s:  [ 0,			44,					toSeconds],
-	m:  [45,			89,					toMinutes],
-	mm: [90,			(45 * MINUTE) - 1,	toMinutes],
-	h:  [45 * MINUTE,	(90 * MINUTE) - 1,	toHours],
-	hh: [90 * MINUTE,	(22 * HOUR) - 1,	toHours],
-	d:  [22 * HOUR,		(36 * HOUR) - 1,	toDays],
-	dd: [36 * HOUR,		7 * DAY - 1,		toDays],
-	w:  [6 * DAY, 		10 * DAY - 1,		toWeeks],
-	ww:	[10 * DAY,		4 * WEEK - 1,		toWeeks],
-	M:	[4 * WEEK,		45 * DAY - 1,		toMonths],
-	MM:	[45 * DAY,		320 * DAY - 1,		toMonths],
-	y:	[320 * DAY,		548 * DAY - 1,		toYears],
-	yy: [-Infinity, 	Infinity,			toYears]
+	s: [0, 44, toSeconds],
+	m: [45, 89, toMinutes],
+	mm: [90, 45 * MINUTE - 1, toMinutes],
+	h: [45 * MINUTE, 90 * MINUTE - 1, toHours],
+	hh: [90 * MINUTE, 22 * HOUR - 1, toHours],
+	d: [22 * HOUR, 36 * HOUR - 1, toDays],
+	dd: [36 * HOUR, 7 * DAY - 1, toDays],
+	w: [6 * DAY, 10 * DAY - 1, toWeeks],
+	ww: [10 * DAY, 4 * WEEK - 1, toWeeks],
+	M: [4 * WEEK, 45 * DAY - 1, toMonths],
+	MM: [45 * DAY, 320 * DAY - 1, toMonths],
+	y: [320 * DAY, 548 * DAY - 1, toYears],
+	yy: [-Infinity, Infinity, toYears],
 };
 
-function find (seconds) {
+function find(seconds) {
 	for (const [key, [start, end, convert]] of Object.entries(ranges)) {
 		if (seconds >= start && seconds <= end) {
 			return [key, convert(seconds)];
@@ -63,7 +63,7 @@ const normal = {
 	xYears: x => x * YEAR,
 };
 
-function formatDistance (token, count, options) {
+function formatDistance(token, count, options) {
 	options = options || {};
 
 	const norm = normal[token](count);
@@ -88,10 +88,13 @@ function formatDistance (token, count, options) {
 
 const DEFAULT_OPTIONS = { addSuffix: true, locale: { formatDistance } };
 
-export function fromWhen (date, baseDate, options) {
-	return formatDistanceStrict(date, baseDate, {...DEFAULT_OPTIONS, ...options});
+export function fromWhen(date, baseDate, options) {
+	return formatDistanceStrict(date, baseDate, {
+		...DEFAULT_OPTIONS,
+		...options,
+	});
 }
 
-export function fromNow (date, options) {
-	return fromWhen(date, Date.now(), {...DEFAULT_OPTIONS, ...options});
+export function fromNow(date, options) {
+	return fromWhen(date, Date.now(), { ...DEFAULT_OPTIONS, ...options });
 }

@@ -1,5 +1,5 @@
-@import "~@nti/style-common";
-@import "./common";
+@import '~@nti/style-common';
+@import './common';
 
 .nti-navigation-menu-flyout {
 	.flyout-inner {
@@ -9,7 +9,8 @@
 }
 
 .nti-navigation-tabs-menu {
-	.menu, .menu-mask {
+	.menu,
+	.menu-mask {
 		backface-visibility: hidden;
 		perspective: 1000;
 		position: fixed;

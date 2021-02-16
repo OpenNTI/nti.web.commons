@@ -3,21 +3,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {Triggered} from '../../../../flyout';
-import {isSameTabConfig} from '../../../utils';
+import { Triggered } from '../../../../flyout';
+import { isSameTabConfig } from '../../../utils';
 
 import Tab from './Tab';
 import Menu from './Menu';
 
-const InitialState = () => ({settled: false, tabsInMenu: {}, activeOffset: null});
+const InitialState = () => ({
+	settled: false,
+	tabsInMenu: {},
+	activeOffset: null,
+});
 
-const TriggerFwdRef = ({className, ...props}, ref) => (<div className={cx('show-remaining-tabs', className)} ref={ref} {...props}/>);
+const TriggerFwdRef = ({ className, ...props }, ref) => (
+	<div
+		className={cx('show-remaining-tabs', className)}
+		ref={ref}
+		{...props}
+	/>
+);
 const trigger = React.forwardRef(TriggerFwdRef);
 
-const ActiveTriggerFwdRef = ({className, ...props}, ref) => (<div className={cx('show-remaining-tabs', 'active', className)} ref={ref} {...props} />);
+const ActiveTriggerFwdRef = ({ className, ...props }, ref) => (
+	<div
+		className={cx('show-remaining-tabs', 'active', className)}
+		ref={ref}
+		{...props}
+	/>
+);
 const activeTrigger = React.forwardRef(ActiveTriggerFwdRef);
 
-function getParentFor (tab) {
+function getParentFor(tab) {
 	let node = tab;
 
 	while (node) {
@@ -37,31 +53,30 @@ export default class NavigationTabsListView extends React.Component {
 			PropTypes.shape({
 				route: PropTypes.string,
 				label: PropTypes.string,
-				id: PropTypes.string
+				id: PropTypes.string,
 			})
 		),
-		renderTab: PropTypes.func
-	}
+		renderTab: PropTypes.func,
+	};
 
-	node = React.createRef()
-	showMore = React.createRef()
+	node = React.createRef();
+	showMore = React.createRef();
 
-	state = InitialState()
+	state = InitialState();
 
-	componentDidMount () {
+	componentDidMount() {
 		this.maybeSettle(this.props);
 
 		global.addEventListener('resize', this.onWindowResize);
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		global.removeEventListener('resize', this.onWindowResize);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {tabs:prevTabs} = prevProps;
-		const {tabs} = this.props;
+	componentDidUpdate(prevProps) {
+		const { tabs: prevTabs } = prevProps;
+		const { tabs } = this.props;
 
 		if (!isSameTabConfig(tabs, prevTabs)) {
 			this.setState(InitialState);
@@ -70,9 +85,10 @@ export default class NavigationTabsListView extends React.Component {
 		}
 	}
 
-
 	onWindowResize = () => {
-		if (this.handleWindowResize) { return; }
+		if (this.handleWindowResize) {
+			return;
+		}
 
 		this.handleWindowResize = setTimeout(() => {
 			const node = this.node.current;
@@ -83,35 +99,39 @@ export default class NavigationTabsListView extends React.Component {
 
 			delete this.handleWindowResize;
 		}, 100);
-	}
+	};
 
-
-	maybeSettle (props) {
-		const {tabs} = props;
+	maybeSettle(props) {
+		const { tabs } = props;
 		const node = this.node.current;
-		const {settled} = this.state;
+		const { settled } = this.state;
 
 		const doSettle = () => {
 			this.settledWidth = node.offsetWidth;
 
-			this.setState({
-				settled: true
-			}, () => {
-				setTimeout(() => {
-					if (this.realignIndicator) {
-						this.realignIndicator();
-					}
-				}, 800);
-			});
+			this.setState(
+				{
+					settled: true,
+				},
+				() => {
+					setTimeout(() => {
+						if (this.realignIndicator) {
+							this.realignIndicator();
+						}
+					}, 800);
+				}
+			);
 		};
 
-		if (!node || !tabs || settled) { return; }
+		if (!node || !tabs || settled) {
+			return;
+		}
 		if (node.scrollWidth <= node.offsetWidth) {
 			doSettle();
 			return;
 		}
 
-		const {tabsInMenu} = this.state;
+		const { tabsInMenu } = this.state;
 
 		let tabToHide = null;
 
@@ -129,19 +149,19 @@ export default class NavigationTabsListView extends React.Component {
 		} else if (tabToHide) {
 			this.setState({
 				settled: false,
-				tabsInMenu: {...tabsInMenu, [tabToHide]: true}
+				tabsInMenu: { ...tabsInMenu, [tabToHide]: true },
 			});
 		}
 	}
 
-
-	alignIndicatorTo = (tab) => {
+	alignIndicatorTo = tab => {
 		const node = this.node.current || getParentFor(tab);
 
-		if (!node || !tab) { return; }
+		if (!node || !tab) {
+			return;
+		}
 
 		this.realignIndicator = () => {
-
 			const thisRect = node.getBoundingClientRect();
 			const tabRect = tab.getBoundingClientRect();
 
@@ -150,38 +170,42 @@ export default class NavigationTabsListView extends React.Component {
 			this.setState({
 				activeIndicatorStyles: {
 					left: `${tabRect.left - thisRect.left}px`,
-					width: `${tabRect.width}px`
-				}
+					width: `${tabRect.width}px`,
+				},
 			});
 		};
 
 		this.realignIndicator();
-	}
+	};
 
-
-	unalignIndicatorTo = (tab) => {
-		if (this.focusedTab !== tab) { return; }
+	unalignIndicatorTo = tab => {
+		if (this.focusedTab !== tab) {
+			return;
+		}
 
 		delete this.focusedTab;
 		this.realignIndicator = () => {};
 		this.setState({
 			focusedTab: null,
-			activeIndicatorStyles: null
+			activeIndicatorStyles: null,
 		});
-	}
+	};
 
+	alignIndicatorToShowMore = () => {};
 
-	alignIndicatorToShowMore = () => {}
+	render() {
+		const { tabs } = this.props;
+		const { settled } = this.state;
 
-
-	render () {
-		const {tabs} = this.props;
-		const {settled} = this.state;
-
-		if (!tabs || !tabs.length) { return null; }
+		if (!tabs || !tabs.length) {
+			return null;
+		}
 
 		return (
-			<div className={cx('nti-navigation-tabs-list', {settled})} ref={this.node}>
+			<div
+				className={cx('nti-navigation-tabs-list', { settled })}
+				ref={this.node}
+			>
 				{this.renderTabs()}
 				{this.renderMenu()}
 				{this.renderActiveInidicator()}
@@ -189,40 +213,43 @@ export default class NavigationTabsListView extends React.Component {
 		);
 	}
 
-
-	renderTabs () {
-		const {tabs, renderTab} = this.props;
-		const {tabsInMenu} = this.state;
+	renderTabs() {
+		const { tabs, renderTab } = this.props;
+		const { tabsInMenu } = this.state;
 
 		const visibleTabs = tabs.filter(tab => !tabsInMenu[tab.id]);
 
 		return (
 			<ul className="visible-tabs">
-				{
-					visibleTabs.map((tab, index) => {
-						const style = {
-							transitionDelay: `${0.3 + (0.1 * index)}s`
-						};
+				{visibleTabs.map((tab, index) => {
+					const style = {
+						transitionDelay: `${0.3 + 0.1 * index}s`,
+					};
 
-						return (
-							<li key={tab.id} style={style}>
-								<Tab tab={tab} alignIndicatorTo={this.alignIndicatorTo} unalignIndicatorTo={this.unalignIndicatorTo} renderTab={renderTab} />
-							</li>
-						);
-					})
-				}
+					return (
+						<li key={tab.id} style={style}>
+							<Tab
+								tab={tab}
+								alignIndicatorTo={this.alignIndicatorTo}
+								unalignIndicatorTo={this.unalignIndicatorTo}
+								renderTab={renderTab}
+							/>
+						</li>
+					);
+				})}
 			</ul>
 		);
 	}
 
-
-	renderMenu () {
-		const {tabs, renderTab} = this.props;
-		const {tabsInMenu} = this.state;
+	renderMenu() {
+		const { tabs, renderTab } = this.props;
+		const { tabsInMenu } = this.state;
 
 		const menuTabs = tabs.filter(tab => tabsInMenu[tab.id]);
 
-		if (!menuTabs.length) { return null; }
+		if (!menuTabs.length) {
+			return null;
+		}
 
 		const active = menuTabs.some(tab => tab.active);
 
@@ -236,12 +263,16 @@ export default class NavigationTabsListView extends React.Component {
 		);
 	}
 
-
-	renderActiveInidicator () {
-		const {activeIndicatorStyles} = this.state;
+	renderActiveInidicator() {
+		const { activeIndicatorStyles } = this.state;
 
 		return (
-			<div className={cx('active-indicator', {hidden: !activeIndicatorStyles})} style={activeIndicatorStyles} />
+			<div
+				className={cx('active-indicator', {
+					hidden: !activeIndicatorStyles,
+				})}
+				style={activeIndicatorStyles}
+			/>
 		);
 	}
 }

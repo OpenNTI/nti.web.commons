@@ -1,7 +1,7 @@
 import Editor from './Editor';
 
 export default {
-	getEditor () {
+	getEditor() {
 		return Editor;
-	}
+	},
 };

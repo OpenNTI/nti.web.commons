@@ -1,7 +1,7 @@
 import './ContentVersionConflictPrompt.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import DialogButtons from '../../components/DialogButtons';
 
@@ -16,75 +16,74 @@ const DEFAULT_TEXT = {
 	takeTheirs: 'Take Their Changes',
 	cancel: 'Cancel',
 	force: 'Force Yours',
-	take: 'Take Theirs'
+	take: 'Take Theirs',
 };
 
-const t = scoped('common.components.content.version-conflict-prompt', DEFAULT_TEXT);
+const t = scoped(
+	'common.components.content.version-conflict-prompt',
+	DEFAULT_TEXT
+);
 
 export default class ContentVersionConflictPrompt extends React.Component {
 	static propTypes = {
 		challenge: PropTypes.object,
 		onDismiss: PropTypes.func,
 		onConfirm: PropTypes.func,
-		onCancel: PropTypes.func
-	}
+		onCancel: PropTypes.func,
+	};
 
 	static defaultProps = {
 		onDismiss: NOOP,
 		onConfirm: NOOP,
-		onCancel: NOOP
-	}
+		onCancel: NOOP,
+	};
 
 	state = {
-		active: YOURS
-	}
+		active: YOURS,
+	};
 
 	onCancel = () => {
-		const {onDismiss, onCancel} = this.props;
+		const { onDismiss, onCancel } = this.props;
 
 		onCancel();
 		onDismiss();
-	}
-
+	};
 
 	onConfirm = () => {
-		const {onDismiss, onConfirm} = this.props;
-		const {active} = this.state;
+		const { onDismiss, onConfirm } = this.props;
+		const { active } = this.state;
 
-		onConfirm({rel: active});
+		onConfirm({ rel: active });
 		onDismiss();
-	}
-
+	};
 
 	takeYours = () => {
 		this.setState({
-			active: YOURS
+			active: YOURS,
 		});
-	}
-
+	};
 
 	takeTheirs = () => {
 		this.setState({
-			active: THEIRS
+			active: THEIRS,
 		});
-	}
+	};
 
-
-	render () {
-		const {challenge} = this.props;
-		const {active} = this.state;
+	render() {
+		const { challenge } = this.props;
+		const { active } = this.state;
 
 		const buttons = [
 			{
 				className: 'cancel',
 				label: t('cancel'),
-				onClick: this.onCancel
+				onClick: this.onCancel,
 			},
 			{
 				className: 'caution confirm',
 				label: active === YOURS ? t('force') : t('take'),
-				onClick: this.onConfirm
-			}
+				onClick: this.onConfirm,
+			},
 		];
 
 		return (
@@ -95,15 +94,37 @@ export default class ContentVersionConflictPrompt extends React.Component {
 						<h3>{t('title')}</h3>
 						<p>{challenge.message}</p>
 						<ul>
-							<li className={active === YOURS ? 'selected' : 'not-selected'}>
+							<li
+								className={
+									active === YOURS
+										? 'selected'
+										: 'not-selected'
+								}
+							>
 								<label>
-									<input type="radio" name="content-version-conflict-radio" onChange={this.takeYours} checked={active === YOURS} />
+									<input
+										type="radio"
+										name="content-version-conflict-radio"
+										onChange={this.takeYours}
+										checked={active === YOURS}
+									/>
 									<span>{t('takeYours')}</span>
 								</label>
 							</li>
-							<li className={active === THEIRS ? 'selected' : 'not-selected'}>
+							<li
+								className={
+									active === THEIRS
+										? 'selected'
+										: 'not-selected'
+								}
+							>
 								<label>
-									<input type="radio" name="content-version-conflict-radio" onChange={this.takeTheirs} checked={active === THEIRS} />
+									<input
+										type="radio"
+										name="content-version-conflict-radio"
+										onChange={this.takeTheirs}
+										checked={active === THEIRS}
+									/>
 									<span>{t('takeTheirs')}</span>
 								</label>
 							</li>

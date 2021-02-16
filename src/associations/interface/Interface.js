@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 
-import {groupDestinations, flattenGroups, filterGroups} from './utils';
+import { groupDestinations, flattenGroups, filterGroups } from './utils';
 import Group from './Group';
 import Item from './Item';
 
@@ -19,26 +19,25 @@ class ActiveInterface extends EventEmitter {
 	 * @param  {Object} active the list of active IDs
 	 * @returns {Object}        the Active Interface
 	 */
-	constructor (active) {
+	constructor(active) {
 		super();
 
 		this.active = active;
 	}
 
-	isActiveInterface = true
+	isActiveInterface = true;
 
-	set active (active) {
+	set active(active) {
 		if (active.isActiveInterface) {
 			active = active.active;
 		}
 
-		this[RAW_ACTIVE] = (active || []);
+		this[RAW_ACTIVE] = active || [];
 
 		this.emit('change');
 	}
 
-
-	getAssociationFor (item) {
+	getAssociationFor(item) {
 		const itemID = item.NTIID || item.ID;
 		const activeItems = this[RAW_ACTIVE];
 
@@ -51,13 +50,11 @@ class ActiveInterface extends EventEmitter {
 		}
 	}
 
-
-	hasAssociations () {
+	hasAssociations() {
 		return this[RAW_ACTIVE] && this[RAW_ACTIVE].length > 0;
 	}
 
-
-	add (item) {
+	add(item) {
 		let active = this[RAW_ACTIVE];
 
 		if (!this.getAssociationFor(item)) {
@@ -66,8 +63,7 @@ class ActiveInterface extends EventEmitter {
 		}
 	}
 
-
-	remove (item) {
+	remove(item) {
 		const id = item.NTIID || item.ID;
 		const active = this[RAW_ACTIVE];
 
@@ -76,15 +72,15 @@ class ActiveInterface extends EventEmitter {
 }
 
 export default class AssociationInterface extends EventEmitter {
-	static createItem (item, onAddTo, onRemoveFrom, cfg) {
+	static createItem(item, onAddTo, onRemoveFrom, cfg) {
 		return new Item(item, onAddTo, onRemoveFrom, cfg);
 	}
 
-	static createGroup (label, items) {
+	static createGroup(label, items) {
 		return new Group(label, items);
 	}
 
-	constructor (destinations, active, backing) {
+	constructor(destinations, active, backing) {
 		super();
 
 		if (active) {
@@ -98,30 +94,26 @@ export default class AssociationInterface extends EventEmitter {
 		this.backingItem = backing;
 	}
 
-
-	onChanged () {
+	onChanged() {
 		this.emit('change', this);
 	}
 
-
-	get isLoading () {
-		const {destinations} = this;
+	get isLoading() {
+		const { destinations } = this;
 
 		return !destinations;
 	}
 
-
-	get destinations () {
+	get destinations() {
 		return this[DESTINATIONS];
 	}
-
 
 	/**
 	 * Set the possible destinations to create associations with
 	 * @param  {Object} destinations the list of destinations
 	 * @returns {void}
 	 */
-	set destinations (destinations) {
+	set destinations(destinations) {
 		const groups = groupDestinations(destinations);
 
 		this[DESTINATIONS] = groups;
@@ -129,13 +121,12 @@ export default class AssociationInterface extends EventEmitter {
 		this.onChanged();
 	}
 
-
 	/**
 	 * Set the active associations in the possible destinations
 	 * @param  {Object} active list of active associations either object or ID
 	 * @returns {void}
 	 */
-	set active (active) {
+	set active(active) {
 		if (this[ACTIVE]) {
 			this[ACTIVE].active = active;
 		} else {
@@ -151,13 +142,12 @@ export default class AssociationInterface extends EventEmitter {
 		this.onChanged();
 	}
 
-
 	/**
 	 * Add an active association
 	 * @param {Object} active possible destination to add or ID
 	 * @returns {void}
 	 */
-	addActive (active) {
+	addActive(active) {
 		if (this[ACTIVE]) {
 			this[ACTIVE].add(active);
 		} else {
@@ -165,40 +155,34 @@ export default class AssociationInterface extends EventEmitter {
 		}
 	}
 
-
 	/**
 	 * Remove an active association
 	 * @param  {Object|string} active active destination to remove
 	 * @returns {void}
 	 */
-	removeActive (active) {
+	removeActive(active) {
 		if (this[ACTIVE]) {
 			this[ACTIVE].remove(active);
 		}
 	}
 
-
-	get hasSharedWith () {
+	get hasSharedWith() {
 		return this[ACTIVE] && this[ACTIVE].hasAssociations();
 	}
 
-
-	get isEmpty () {
+	get isEmpty() {
 		const destinations = this[DESTINATIONS];
 
 		return destinations.every(x => x.isEmpty);
 	}
 
-
-	isSharedWith (item) {
+	isSharedWith(item) {
 		return !!this.getAssociationFor(item);
 	}
 
-
-	getAssociationFor (item) {
+	getAssociationFor(item) {
 		return this[ACTIVE] && this[ACTIVE].getAssociationFor(item);
 	}
-
 
 	/**
 	 * Create a new interface with the given destinations, but with the
@@ -207,8 +191,12 @@ export default class AssociationInterface extends EventEmitter {
 	 * @param {Object} destinations the destinations to have in the clone
 	 * @returns {Object} a new associations interface
 	 */
-	[CLONE] (destinations) {
-		return new AssociationInterface(destinations, this[ACTIVE], this.backingItem);
+	[CLONE](destinations) {
+		return new AssociationInterface(
+			destinations,
+			this[ACTIVE],
+			this.backingItem
+		);
 	}
 
 	/**
@@ -217,12 +205,11 @@ export default class AssociationInterface extends EventEmitter {
 	 * @param  {Function} fn the filter function
 	 * @returns {Object}      new associations interface
 	 */
-	filter (fn) {
+	filter(fn) {
 		const filteredGroups = filterGroups(this.destinations || [], fn);
 
 		return this[CLONE](filteredGroups);
 	}
-
 
 	/**
 	 * Flatten the destinations to a flat array, return a clone with the
@@ -230,7 +217,7 @@ export default class AssociationInterface extends EventEmitter {
 	 *
 	 * @returns {Object} new associations interface
 	 */
-	flatten () {
+	flatten() {
 		const flattenedGroups = flattenGroups(this.destinations || []);
 
 		return this[CLONE](flattenedGroups);

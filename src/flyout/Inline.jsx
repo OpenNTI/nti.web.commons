@@ -6,54 +6,47 @@ import cx from 'classnames';
 export default class InlineFlyout extends React.Component {
 	static propTypes = {
 		trigger: PropTypes.node,
-		children: PropTypes.any
-	}
+		children: PropTypes.any,
+	};
 
+	setInnerRef = x => (this.innerWrapper = x);
 
-	setInnerRef = x => this.innerWrapper = x
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
-			open: false
+			open: false,
 		};
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.removeBodyListeners();
 	}
 
-
-	addBodyListeners () {
+	addBodyListeners() {
 		this.removeBodyListeners();
 		window.document.addEventListener('click', this.maybeDismiss);
 	}
 
-
-	removeBodyListeners () {
+	removeBodyListeners() {
 		window.document.removeEventListener('click', this.maybeDismiss);
 	}
 
-
-	maybeDismiss = (e) => {
+	maybeDismiss = e => {
 		if (this.innerWrapper && !this.innerWrapper.contains(e.target)) {
 			this.dismiss();
 		}
-	}
+	};
 
-
-	dismiss () {
+	dismiss() {
 		this.removeBodyListeners();
 		this.setState({
-			open: false
+			open: false,
 		});
 	}
 
-
 	toggle = () => {
-		const {open} = this.state;
+		const { open } = this.state;
 		const shouldOpen = !open;
 
 		if (shouldOpen) {
@@ -63,18 +56,17 @@ export default class InlineFlyout extends React.Component {
 		}
 
 		this.setState({
-			open: !open
+			open: !open,
 		});
-	}
+	};
 
-
-	render () {
-		const {trigger, children} = this.props;
+	render() {
+		const { trigger, children } = this.props;
 		const content = React.Children.only(children);
-		const c = React.cloneElement(content, {onDismiss: this.close});
-		const t = React.cloneElement(trigger, {onClick: this.toggle});
-		const {open} = this.state;
-		const cls = cx('inner-flyout', {open});
+		const c = React.cloneElement(content, { onDismiss: this.close });
+		const t = React.cloneElement(trigger, { onClick: this.toggle });
+		const { open } = this.state;
+		const cls = cx('inner-flyout', { open });
 
 		return (
 			<div className="inline-flyout" onClick={this.toggle}>

@@ -15,13 +15,19 @@ PageNavigation.propTypes = {
 	as: PropTypes.any,
 	children: PropTypes.any,
 	card: PropTypes.bool,
-	sticky: PropTypes.bool
+	sticky: PropTypes.bool,
 };
-export default function PageNavigation ({className, as: tag, children, card = true, sticky = true}) {
+export default function PageNavigation({
+	className,
+	as: tag,
+	children,
+	card = true,
+	sticky = true,
+}) {
 	const Cmp = tag || 'nav';
 
 	return (
-		<Cmp className={cx('nt-page-navigation', className, {card, sticky})} >
+		<Cmp className={cx('nt-page-navigation', className, { card, sticky })}>
 			{children}
 		</Cmp>
 	);

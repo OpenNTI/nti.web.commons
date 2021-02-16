@@ -6,9 +6,9 @@ export default {
 	title: 'Paging/Controls',
 	component: Controls,
 	argTypes: {
-		current: {control: {type: 'number', min: 0}},
-		total: {control: {type: 'number', min: 0}}
-	}
+		current: { control: { type: 'number', min: 0 } },
+		total: { control: { type: 'number', min: 0 } },
+	},
 };
 
-export const Story = (props) => (<Controls {...props} />);
+export const Story = props => <Controls {...props} />;

@@ -2,43 +2,49 @@ import './Folder.scss';
 import React from 'react';
 import cx from 'classnames';
 
-import {ItemChanges} from '../../../../HighOrderComponents';
+import { ItemChanges } from '../../../../HighOrderComponents';
 import Entity from '../../Entity';
 
-
 class Folder extends Entity {
-
-	render () {
-		const {props: {item, selection}, state: {rename}} = this;
+	render() {
+		const {
+			props: { item, selection },
+			state: { rename },
+		} = this;
 		const selected = selection.isSelected(item);
 		const renameable = item.can('rename');
 		const filename = item.getFileName();
 		const unselectable = !this.canSelect();
 
 		return (
-			<div className={cx('entity folder-asset', {renameable, selected, unselectable, dragging: this.isInDragSet()})}
+			<div
+				className={cx('entity folder-asset', {
+					renameable,
+					selected,
+					unselectable,
+					dragging: this.isInDragSet(),
+				})}
 				role="button"
 				aria-label={filename}
 				draggable={!rename && this.canDrag() ? true : null}
 				tabIndex="0"
-
 				onKeyDown={this.onSelect}
 				onClick={this.onSelect}
 				onDoubleClick={this.onTrigger}
-
 				onDragEnd={this.canDrag() && this.onDragEnd}
 				onDragStart={this.canDrag() && this.onDragStart}
-
 				onDragOver={this.onDragOver}
 				onDragEnter={this.onDragEnter}
 				onDragLeave={this.onDragLeave}
-
 				onDrop={this.onDrop}
 			>
-				<i className="icon-folder small"/>
-				<span className="filename" onClick={this.onTrigger}>{filename}</span>
+				<i className="icon-folder small" />
+				<span className="filename" onClick={this.onTrigger}>
+					{filename}
+				</span>
 				{rename && (
-					<input type="text"
+					<input
+						type="text"
 						ref={this.attachInputRef}
 						className="filename"
 						onBlur={this.onCommitRename}

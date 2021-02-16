@@ -8,7 +8,7 @@ import Text from '../Text';
 describe('Text Input', () => {
 	test('attaches ref', () => {
 		let instance;
-		const {container} = render(<Text ref={x => instance = x} />);
+		const { container } = render(<Text ref={x => (instance = x)} />);
 		const input = container.querySelector('input');
 
 		expect(instance.input).toEqual(input);
@@ -21,7 +21,7 @@ describe('Text Input', () => {
 		beforeEach(() => {
 			props = {
 				onChange: () => {},
-				value: 'test'
+				value: 'test',
 			};
 
 			spyOn(props, 'onChange');
@@ -32,9 +32,12 @@ describe('Text Input', () => {
 		test('Change to the input triggers the on change callback', () => {
 			const input = result.container.querySelector('input');
 
-			fireEvent.change(input, {target: {value: 'new'}});
+			fireEvent.change(input, { target: { value: 'new' } });
 
-			expect(props.onChange).toHaveBeenCalledWith('new', expect.any(Object));
+			expect(props.onChange).toHaveBeenCalledWith(
+				'new',
+				expect.any(Object)
+			);
 		});
 
 		test('Setting new prop updates input', () => {
@@ -42,7 +45,7 @@ describe('Text Input', () => {
 
 			expect(input.value).toEqual('test');
 
-			result.rerender(<Text {...props} value="new"/>);
+			result.rerender(<Text {...props} value="new" />);
 			input = result.container.querySelector('input');
 			expect(input.value).toEqual('new');
 		});

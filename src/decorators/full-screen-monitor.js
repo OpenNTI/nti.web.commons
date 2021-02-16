@@ -1,30 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {HOC} from '@nti/lib-commons';
+import { HOC } from '@nti/lib-commons';
 
 const KEYS = [
 	'fullscreenElement',
 	'webkitFullscreenElement',
 	'mozFullScreenElement',
-	'msFullscreenElement'
+	'msFullscreenElement',
 ];
 
 const EVENTS = [
 	'fullscreenchange',
 	'webkitfullscreenchange',
 	'mozfullscreenchange',
-	'msfullscreenchange'
+	'msfullscreenchange',
 ];
 
-function hasDocument () {
+function hasDocument() {
 	return typeof document !== 'undefined';
 }
 
-function getFullScreenElement () {
-	if (!hasDocument) { return null; }
+function getFullScreenElement() {
+	if (!hasDocument) {
+		return null;
+	}
 
 	for (let key of KEYS) {
-		if (document[key] != null) { return document[key]; }
+		if (document[key] != null) {
+			return document[key];
+		}
 	}
 }
 
@@ -32,36 +36,37 @@ class FullScreenMonitor extends React.Component {
 	static propTypes = {
 		_component: PropTypes.any,
 		_componentRef: PropTypes.func,
-		_propName: PropTypes.string
-	}
+		_propName: PropTypes.string,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setState({
-			fullscreenElement: getFullScreenElement()
+			fullscreenElement: getFullScreenElement(),
 		});
 
 		this.addListeners();
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.removeListeners();
 	}
 
-
-	addListeners () {
-		if (!hasDocument) { return; }
+	addListeners() {
+		if (!hasDocument) {
+			return;
+		}
 
 		this.removeListeners();
 
 		const onFullScreenChange = () => {
-			const {fullscreenElement:oldEl} = this.state;
+			const { fullscreenElement: oldEl } = this.state;
 			const newEl = getFullScreenElement();
 
 			if (oldEl !== newEl) {
 				this.setState({
-					fullscreenElement: newEl
+					fullscreenElement: newEl,
 				});
 			}
 		};
@@ -79,31 +84,32 @@ class FullScreenMonitor extends React.Component {
 		};
 	}
 
-	removeListeners () {
+	removeListeners() {
 		if (this.cleanupListeners) {
 			this.cleanupListeners();
 		}
 	}
 
-
-	render () {
-		const {_component:Cmp, _componentRef, _propName, ...otherProps} = this.props;
-		const {fullscreenElement} = this.state;
+	render() {
+		const {
+			_component: Cmp,
+			_componentRef,
+			_propName,
+			...otherProps
+		} = this.props;
+		const { fullscreenElement } = this.state;
 		const props = {
 			...otherProps,
 			[_propName]: fullscreenElement,
-			ref: _componentRef
+			ref: _componentRef,
 		};
 
-		return (
-			<Cmp {...props} />
-		);
+		return <Cmp {...props} />;
 	}
-
 }
 
-export default function fullScreenMonitor (propName = 'fullscreenElement') {
-	return function factory (Component) {
+export default function fullScreenMonitor(propName = 'fullscreenElement') {
+	return function factory(Component) {
 		const name = 'FullScreenMonitor';
 		const cmp = React.forwardRef((props, ref) => {
 			return (

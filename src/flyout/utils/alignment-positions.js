@@ -1,16 +1,14 @@
 import {
 	DEFAULT_VERTICAL,
 	DEFAULT_HORIZONTAL,
-
 	VERTICAL,
 	// HORIZONTAL,
-
 	ALIGN_TOP,
 	ALIGN_BOTTOM,
 	ALIGN_LEFT,
 	ALIGN_CENTER,
 	ALIGN_RIGHT,
-	ALIGN_LEFT_OR_RIGHT
+	ALIGN_LEFT_OR_RIGHT,
 } from '../Constants';
 
 import getPseudoElementSpace from './get-pseudo-element-space';
@@ -33,10 +31,10 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} viewSize the size of the viewport
 		 * @returns {Object} the vertical positioning
 		 */
-		[ALIGN_TOP] ({top}, flyout, {height:viewHeight}) {
+		[ALIGN_TOP]({ top }, flyout, { height: viewHeight }) {
 			return {
 				top: null,
-				bottom: viewHeight - top
+				bottom: viewHeight - top,
 			};
 		},
 
@@ -55,10 +53,10 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} viewSize the size of the viewport
 		 * @returns {Object} the vertical positioning
 		 */
-		[ALIGN_BOTTOM] ({bottom}) {
+		[ALIGN_BOTTOM]({ bottom }) {
 			return {
 				top: bottom,
-				bottom: null
+				bottom: null,
 			};
 		},
 
@@ -76,15 +74,26 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} reservedMargin the space to reserve between the edge of the screen
 		 * @returns {Object} the vertical positioning
 		 */
-		[DEFAULT_VERTICAL] ({top, bottom}, flyout, {height: viewHeight}, reservedMargin) {
-			const flyoutHeight = flyout.offsetHeight - getPseudoElementSpace(flyout);
-			const {top: reservedTop, bottom: reservedBottom} = reservedMargin || {};
+		[DEFAULT_VERTICAL](
+			{ top, bottom },
+			flyout,
+			{ height: viewHeight },
+			reservedMargin
+		) {
+			const flyoutHeight =
+				flyout.offsetHeight - getPseudoElementSpace(flyout);
+			const { top: reservedTop, bottom: reservedBottom } =
+				reservedMargin || {};
 
 			const topSpace = top - (reservedTop || 0);
 			const bottomSpace = viewHeight - bottom - (reservedBottom || 0);
 
-			const bottomAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_BOTTOM](...arguments);
-			const topAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_TOP](...arguments);
+			const bottomAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_BOTTOM](
+				...arguments
+			);
+			const topAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_TOP](
+				...arguments
+			);
 
 			let position;
 
@@ -93,7 +102,8 @@ export const ALIGNMENT_POSITIONS = {
 			} else if (topSpace >= flyoutHeight) {
 				position = topAlignment;
 			} else {
-				position = bottomSpace >= topSpace ? bottomAlignment : topAlignment;
+				position =
+					bottomSpace >= topSpace ? bottomAlignment : topAlignment;
 			}
 
 			return position;
@@ -114,10 +124,10 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} viewSize the size of the viewport
 		 * @returns {Object} the horizontal positioning
 		 */
-		[ALIGN_LEFT] ({left}) {
+		[ALIGN_LEFT]({ left }) {
 			return {
 				left: left,
-				right: null
+				right: null,
 			};
 		},
 
@@ -136,19 +146,27 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} viewSize the size of the viewport
 		 * @returns {Object} the horizontal positioning
 		 */
-		[ALIGN_RIGHT] ({right}, flyout, {width: viewWidth}) {
+		[ALIGN_RIGHT]({ right }, flyout, { width: viewWidth }) {
 			return {
 				left: null,
-				right: viewWidth - right
+				right: viewWidth - right,
 			};
 		},
 
-		[ALIGN_LEFT_OR_RIGHT] ({left, right}, {offsetWidth: flyoutWidth}, {width: viewWidth}) {
+		[ALIGN_LEFT_OR_RIGHT](
+			{ left, right },
+			{ offsetWidth: flyoutWidth },
+			{ width: viewWidth }
+		) {
 			const leftSpace = left;
 			const rightSpace = viewWidth - right;
 
-			const leftAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_LEFT](...arguments);
-			const rightAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_RIGHT](...arguments);
+			const leftAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_LEFT](
+				...arguments
+			);
+			const rightAlignment = ALIGNMENT_POSITIONS[VERTICAL][ALIGN_RIGHT](
+				...arguments
+			);
 
 			let position;
 
@@ -157,7 +175,8 @@ export const ALIGNMENT_POSITIONS = {
 			} else if (leftSpace >= flyoutWidth) {
 				position = rightAlignment;
 			} else {
-				position = leftSpace >= rightSpace ? rightAlignment : leftAlignment;
+				position =
+					leftSpace >= rightSpace ? rightAlignment : leftAlignment;
 			}
 
 			return position;
@@ -184,16 +203,18 @@ export const ALIGNMENT_POSITIONS = {
 		 * @param {Object} viewSize the size of the viewport
 		 * @returns {Object} the horizontal positioning
 		 */
-		[ALIGN_CENTER] ({left, width:triggerWidth}, {offsetWidth: flyoutWidth}) {
+		[ALIGN_CENTER](
+			{ left, width: triggerWidth },
+			{ offsetWidth: flyoutWidth }
+		) {
 			const triggerMid = Math.floor(triggerWidth / 2);
 			const flyoutMid = Math.floor(flyoutWidth / 2);
 
 			return {
 				left: left + (triggerMid - flyoutMid),
-				right: null
+				right: null,
 			};
 		},
-
 
 		/**
 		 * Default to ALIGN_CENTER
@@ -201,8 +222,8 @@ export const ALIGNMENT_POSITIONS = {
 		 * @type {Function}
 		 * @returns {Object} the horizontal positioning
 		 */
-		[DEFAULT_HORIZONTAL] (...args) {
+		[DEFAULT_HORIZONTAL](...args) {
 			return ALIGNMENT_POSITIONS[VERTICAL][ALIGN_CENTER](...args);
-		}
-	}
+		},
+	},
 };

@@ -5,11 +5,9 @@ import Logger from '@nti/util-logger';
 import FilterBar from './FilterBar';
 import NoMatches from './NoMatches';
 
-
 const logger = Logger.get('common:components:FilterableView');
 
 export default class FilterableView extends React.Component {
-
 	static propTypes = {
 		filtername: PropTypes.string,
 		filters: PropTypes.array,
@@ -21,8 +19,8 @@ export default class FilterableView extends React.Component {
 		list: PropTypes.oneOfType([
 			PropTypes.array,
 			PropTypes.shape({
-				filter: PropTypes.func
-			})
+				filter: PropTypes.func,
+			}),
 		]),
 	};
 
@@ -31,10 +29,12 @@ export default class FilterableView extends React.Component {
 	 * @param {Object} list Any object that implements filter.
 	 * @returns {Object} The result of calling filter on the `list`
 	 */
-	filter = (list) => {
-
+	filter = list => {
 		if (!(list && list.filter)) {
-			logger.error('List should be an array (or at least have a \'filter\' method. Returning an empty array. Received: %O', list);
+			logger.error(
+				"List should be an array (or at least have a 'filter' method. Returning an empty array. Received: %O",
+				list
+			);
 			return [];
 		}
 
@@ -42,8 +42,9 @@ export default class FilterableView extends React.Component {
 		let fkeys = Object.keys(this.props.filters);
 		let fname = fkeys.length > 0 ? fkeys[0] : undefined;
 
-		if (this.props.filtername) { // filter specified in the url, e.g. library/courses/archived
-			for(let i = 0; i < fkeys.length; i++) {
+		if (this.props.filtername) {
+			// filter specified in the url, e.g. library/courses/archived
+			for (let i = 0; i < fkeys.length; i++) {
 				if (this.props.filtername === fkeys[i].toLowerCase()) {
 					fname = fkeys[i];
 					break;
@@ -52,27 +53,31 @@ export default class FilterableView extends React.Component {
 		}
 
 		let selectedFilter = this.props.filters[fname];
-		return selectedFilter ? {
-			filter: selectedFilter,
-			list: list.filter(selectedFilter.test)
-		} : {
-			filter: null,
-			list: list
-		};
+		return selectedFilter
+			? {
+					filter: selectedFilter,
+					list: list.filter(selectedFilter.test),
+			  }
+			: {
+					filter: null,
+					list: list,
+			  };
 	};
 
-	render () {
-
-		let {filter, list} = this.filter(this.props.list);
+	render() {
+		let { filter, list } = this.filter(this.props.list);
 
 		return (
 			<div>
-				<FilterBar {...this.props}/>
-				{(!list || list.length === 0) ? (
+				<FilterBar {...this.props} />
+				{!list || list.length === 0 ? (
 					<NoMatches />
 				) : (
 					<div>
-						{React.cloneElement(this.props.listcomp, {list, filter})}
+						{React.cloneElement(this.props.listcomp, {
+							list,
+							filter,
+						})}
 					</div>
 				)}
 			</div>

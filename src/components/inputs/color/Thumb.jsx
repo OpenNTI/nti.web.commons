@@ -10,18 +10,27 @@ ColorInputThumb.propTypes = {
 	className: PropTypes.string,
 	value: PropTypes.shape({
 		hex: PropTypes.shape({
-			toString: PropTypes.func
-		})
+			toString: PropTypes.func,
+		}),
 	}),
-	style: PropTypes.object
+	style: PropTypes.object,
 };
-export default function ColorInputThumb ({className, value, style, ...otherProps}) {
+export default function ColorInputThumb({
+	className,
+	value,
+	style,
+	...otherProps
+}) {
 	return (
 		<div
-			className={cx('nti-color-input-thumb', 'color-input-thumb', className)}
+			className={cx(
+				'nti-color-input-thumb',
+				'color-input-thumb',
+				className
+			)}
 			style={{
 				...style,
-				...(value ? {background: value.hex.toString()} : {})
+				...(value ? { background: value.hex.toString() } : {}),
 			}}
 			{...otherProps}
 		/>

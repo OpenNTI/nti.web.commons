@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react';
-import {render} from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Markup from '../Markup';
 
@@ -9,7 +9,7 @@ describe('Markup text renderer', () => {
 		const boldText = 'mark up';
 		const text = `test <b>${boldText}</b> text`;
 
-		const {asFragment} = render(<Markup text={text} />);
+		const { asFragment } = render(<Markup text={text} />);
 		const fragment = asFragment();
 
 		const span = fragment.querySelector('span');
@@ -23,7 +23,7 @@ describe('Markup text renderer', () => {
 		const ref = jest.fn();
 		const text = 'test';
 
-		const {getByText} = render(<Markup text={text} ref={ref}/>);
+		const { getByText } = render(<Markup text={text} ref={ref} />);
 		const node = getByText(text);
 
 		expect(ref).toHaveBeenCalledWith(node);
@@ -34,7 +34,7 @@ describe('Markup text renderer', () => {
 			const href = 'http://www.google.com/';
 			const text = `test <a href="${href}">link</a> markup`;
 
-			const {asFragment} = render(<Markup text={text} />);
+			const { asFragment } = render(<Markup text={text} />);
 			const fragment = asFragment();
 
 			const anchor = fragment.querySelector('a');
@@ -48,7 +48,7 @@ describe('Markup text renderer', () => {
 			const href = 'path/to/something';
 			const text = `test <a href="${href}">link</a> markup`;
 
-			const {asFragment} = render(<Markup text={text} />);
+			const { asFragment } = render(<Markup text={text} />);
 			const fragment = asFragment();
 
 			const anchor = fragment.querySelector('a');

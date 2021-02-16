@@ -9,11 +9,12 @@ describe('Radio', () => {
 
 	const testRender = (props, ...children) => [
 		render(React.createElement(Radio, props, ...children)),
-		(shared.rerender(React.createElement(Radio, props, ...children)),shared)
+		(shared.rerender(React.createElement(Radio, props, ...children)),
+		shared),
 	];
 
 	test('Base Case', () => {
-		testRender({label: 'test'})
+		testRender({ label: 'test' })
 			.map(x => x.container.querySelector('.label').textContent)
 			.forEach(x => expect(x).toEqual('test'));
 	});

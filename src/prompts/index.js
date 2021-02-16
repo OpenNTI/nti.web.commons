@@ -6,32 +6,32 @@ export * from './layouts';
 
 export const Manager = ManagerImport;
 
-export function alert (message, title = 'Alert', extra = {}) {
-	return new Promise(acknowledge=> {
+export function alert(message, title = 'Alert', extra = {}) {
+	return new Promise(acknowledge => {
 		Prompt.show({
 			...extra,
 			confirmButtonClass: extra.confirmButtonClass || 'caution',
 			iconClass: extra.iconClass || 'caution',
-			message, title,
-			onConfirm: ()=> acknowledge()
+			message,
+			title,
+			onConfirm: () => acknowledge(),
 		});
 	});
 }
 
-export function areYouSure (message, title = 'Are you sure?', extra = {}) {
-	return new Promise((acknowledge, cancel)=> {
+export function areYouSure(message, title = 'Are you sure?', extra = {}) {
+	return new Promise((acknowledge, cancel) => {
 		Prompt.show({
 			...extra,
 			confirmButtonClass: extra.confirmButtonClass || 'caution',
 			iconClass: extra.iconClass || 'caution',
-			message, title,
-			onConfirm: ()=> acknowledge(),
-			onCancel: ()=> cancel('Prompt Canceled')
+			message,
+			title,
+			onConfirm: () => acknowledge(),
+			onCancel: () => cancel('Prompt Canceled'),
 		});
 	});
 }
-
-
 
 /**
  * Display a modal
@@ -41,6 +41,6 @@ export function areYouSure (message, title = 'Are you sure?', extra = {}) {
  * @param  {string|Object} options Options or className
  * @returns {ModalReference} Stuff & Things
  */
-export function modal (content, options) {
+export function modal(content, options) {
 	return Manager.show(content, options);
 }

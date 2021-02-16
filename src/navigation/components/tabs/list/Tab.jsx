@@ -8,33 +8,32 @@ export default class NavigationListTab extends React.Component {
 		tab: PropTypes.shape({
 			label: PropTypes.string,
 			route: PropTypes.string,
-			active: PropTypes.bool
+			active: PropTypes.bool,
 		}),
 		inMenu: PropTypes.bool,
 		renderTab: PropTypes.func,
 		alignIndicatorTo: PropTypes.func,
 		unalignIndicatorTo: PropTypes.func,
-		onDismiss: PropTypes.func
-	}
+		onDismiss: PropTypes.func,
+	};
 
-	node = React.createRef()
+	node = React.createRef();
 
-	componentDidMount () {
-		const {tab} = this.props;
+	componentDidMount() {
+		const { tab } = this.props;
 
 		if (tab.active) {
 			this.focusTab();
 		}
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unfocusTab();
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {tab:prevTab} = prevProps;
-		const {tab} = this.props;
+	componentDidUpdate(prevProps) {
+		const { tab: prevTab } = prevProps;
+		const { tab } = this.props;
 
 		if (prevTab.active && !tab.active) {
 			this.unfocusTab();
@@ -43,40 +42,39 @@ export default class NavigationListTab extends React.Component {
 		}
 	}
 
-
 	onClick = () => {
-		const {onDismiss} = this.props;
+		const { onDismiss } = this.props;
 
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
+	};
 
-
-	focusTab () {
-		const {alignIndicatorTo} = this.props;
+	focusTab() {
+		const { alignIndicatorTo } = this.props;
 
 		if (this.node.current && alignIndicatorTo) {
 			alignIndicatorTo(this.node.current);
 		}
 	}
 
-
-	unfocusTab () {
-		const {unalignIndicatorTo} = this.props;
+	unfocusTab() {
+		const { unalignIndicatorTo } = this.props;
 
 		if (this.node.current && unalignIndicatorTo) {
 			unalignIndicatorTo(this.node.current);
 		}
 	}
 
-
-	render () {
-		const {tab, inMenu, renderTab} = this.props;
+	render() {
+		const { tab, inMenu, renderTab } = this.props;
 
 		const tabCmp = (
 			<div
-				className={cx('nti-navigation-list-tab', {active: tab.active, 'in-menu': inMenu})}
+				className={cx('nti-navigation-list-tab', {
+					active: tab.active,
+					'in-menu': inMenu,
+				})}
 				ref={this.node}
 				data-text={tab.label}
 				onClick={this.onClick}

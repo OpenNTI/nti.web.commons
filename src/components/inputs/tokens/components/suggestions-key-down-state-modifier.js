@@ -1,10 +1,11 @@
-import {Events} from '@nti/lib-commons';
+import { Events } from '@nti/lib-commons';
 
+function moveDown(e, state) {
+	const { focused, suggestions } = state;
 
-function moveDown (e, state) {
-	const {focused, suggestions} = state;
-
-	if (!suggestions) { return state; }
+	if (!suggestions) {
+		return state;
+	}
 
 	Events.stop(e);
 
@@ -23,14 +24,16 @@ function moveDown (e, state) {
 
 	return {
 		...state,
-		focused: newFocused || suggestions[0]
+		focused: newFocused || suggestions[0],
 	};
 }
 
-function moveUp (e, state) {
-	const {focused, suggestions} = state;
+function moveUp(e, state) {
+	const { focused, suggestions } = state;
 
-	if (!suggestions) { return state; }
+	if (!suggestions) {
+		return state;
+	}
 
 	Events.stop(e);
 
@@ -48,33 +51,37 @@ function moveUp (e, state) {
 
 	return {
 		...state,
-		focused: newFocused || suggestions[suggestions.length - 1]
+		focused: newFocused || suggestions[suggestions.length - 1],
 	};
 }
 
-function moveToStart (e, state) {
-	const {suggestions} = state;
+function moveToStart(e, state) {
+	const { suggestions } = state;
 
-	if (!suggestions) { return state; }
+	if (!suggestions) {
+		return state;
+	}
 
 	Events.stop(e);
 
 	return {
 		...state,
-		focused: suggestions[0]
+		focused: suggestions[0],
 	};
 }
 
-function moveToEnd (e, state) {
-	const {suggestions} = state;
+function moveToEnd(e, state) {
+	const { suggestions } = state;
 
-	if (!suggestions) { return state; }
+	if (!suggestions) {
+		return state;
+	}
 
 	Events.stop(e);
 
 	return {
 		...state,
-		focused: suggestions[suggestions.length - 1]
+		focused: suggestions[suggestions.length - 1],
 	};
 }
 
@@ -94,7 +101,7 @@ const HANDLERS = {
 	'nti-meta-arrowup': moveToStart,
 };
 
-export default function keyDownStateModifier (e, state) {
+export default function keyDownStateModifier(e, state) {
 	const keyCode = Events.getKeyCode(e);
 	const handler = HANDLERS[keyCode];
 

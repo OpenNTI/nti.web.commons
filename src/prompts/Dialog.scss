@@ -1,3 +1,5 @@
 .modal-mask.managed-modal {
-	& > .icon-close { display: none; }
+	& > .icon-close {
+		display: none;
+	}
 }

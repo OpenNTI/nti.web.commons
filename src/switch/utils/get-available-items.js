@@ -1,8 +1,8 @@
-import {NEXT, PREVIOUS} from '../Constants';
+import { NEXT, PREVIOUS } from '../Constants';
 
 import getItemName from './get-item-name';
 
-export default function getAvailableItems (items, active) {
+export default function getAvailableItems(items, active) {
 	let activeItems = {};
 
 	activeItems[PREVIOUS] = true;

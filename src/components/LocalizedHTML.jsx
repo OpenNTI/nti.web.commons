@@ -10,16 +10,21 @@ export default class extends React.Component {
 
 		tag: PropTypes.string,
 
-		className: PropTypes.string
+		className: PropTypes.string,
 	};
 
 	static defaultProps = { tag: 'div' };
 
-	render () {
+	render() {
 		let Tag = this.props.tag;
 
 		return (
-			<Tag {...this.props} dangerouslySetInnerHTML={{__html: t(this.props.stringId, this.props)}} />
+			<Tag
+				{...this.props}
+				dangerouslySetInnerHTML={{
+					__html: t(this.props.stringId, this.props),
+				}}
+			/>
 		);
 	}
 }

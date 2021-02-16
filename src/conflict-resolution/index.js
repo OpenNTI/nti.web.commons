@@ -28,7 +28,7 @@ export { default as DefaultConfirmPrompt } from './components/DefaultConfirmProm
  * @param  {boolean} [prepend=true] - register the handler as a first responder or a last responder
  * @returns {void}
  */
-export function registerHandler (code, responder, prepend) {
+export function registerHandler(code, responder, prepend) {
 	Registry.register(code, responder, prepend);
 }
 
@@ -39,6 +39,6 @@ export function registerHandler (code, responder, prepend) {
  * @param  {Responder} responder - a responder's callback.
  * @returns {void}
  */
-export function unregisterHandler (code, responder) {
+export function unregisterHandler(code, responder) {
 	Registry.unregister(code, responder);
 }

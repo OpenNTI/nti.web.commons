@@ -4,7 +4,7 @@
 	cursor: pointer;
 }
 
-.nti-file-input-wrapper > input[type="file"] {
+.nti-file-input-wrapper > input[type='file'] {
 	position: absolute;
 	top: 0;
 	bottom: 0;

@@ -9,8 +9,8 @@ export default class TextInput extends React.Component {
 		className: PropTypes.string,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
-		type: PropTypes.string
-	}
+		type: PropTypes.string,
+	};
 
 	attachInputRef = x => {
 		this.input = x;
@@ -27,47 +27,44 @@ export default class TextInput extends React.Component {
 	 *
 	 * @returns {Object} the validity of the input
 	 */
-	get validity () {
+	get validity() {
 		return this.input.validity;
 	}
 
-
-	focus () {
+	focus() {
 		if (this.input) {
 			this.input.focus();
 		}
 	}
 
-
-	onChange = (e) => {
-		const {onChange} = this.props;
+	onChange = e => {
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange(e.target.value, e);
 		}
-	}
-
+	};
 
 	onClear = () => {
-		const {onChange} = this.props;
+		const { onChange } = this.props;
 
 		if (onChange) {
 			onChange('');
 		}
 
 		this.focus();
-	}
+	};
 
-
-	render () {
-		const {value, className, type = 'text', ...props} = this.props;
+	render() {
+		const { value, className, type = 'text', ...props } = this.props;
 
 		return (
-			<input {...props}
+			<input
+				{...props}
 				className={cx('nti-text-input', className)}
 				ref={this.attachInputRef}
 				onChange={'onChange' in this.props ? this.onChange : undefined}
-				value={'value' in this.props ? (value || '') : undefined}
+				value={'value' in this.props ? value || '' : undefined}
 				type={type}
 			/>
 		);

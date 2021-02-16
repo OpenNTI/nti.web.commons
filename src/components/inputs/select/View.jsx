@@ -2,10 +2,10 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {getScrollParent, canScroll} from '@nti/lib-dom';
+import { scoped } from '@nti/lib-locale';
+import { getScrollParent, canScroll } from '@nti/lib-dom';
 
-import {Triggered} from '../../../flyout';
+import { Triggered } from '../../../flyout';
 import Text from '../Text';
 
 import Multiple from './Mutilple';
@@ -14,25 +14,22 @@ import {
 	isSameOptions,
 	keyDownStateModifier,
 	getValueForOption,
-	optionMatchesTerm
+	optionMatchesTerm,
 } from './utils';
 
 const t = scoped('common.components.inputs.select.View', {
-	emptySearch: 'No Results Found'
+	emptySearch: 'No Results Found',
 });
 
 const SCROLL_TO_OPTION = Symbol('scroll to option');
 const SCROLL_LIST_TO_OPTION = Symbol('scroll list to option');
 
 export default class SelectInput extends React.Component {
-	static Option = Option
-	static Multiple = Multiple
+	static Option = Option;
+	static Multiple = Multiple;
 
 	static propTypes = {
-		value: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number
-		]),
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		className: PropTypes.string,
 		optionsClassName: PropTypes.string,
 		onChange: PropTypes.func,
@@ -46,22 +43,21 @@ export default class SelectInput extends React.Component {
 		applySearchTerm: PropTypes.func,
 		allowOtherValues: PropTypes.bool,
 
-
 		onFocus: PropTypes.func,
-		onBlur: PropTypes.func
-	}
+		onBlur: PropTypes.func,
+	};
 
-	attachFlyoutRef = x => this.flyout = x
-	attachLabelInputRef = x => this.input = x
-	attachOptionRef = () => {}
+	attachFlyoutRef = x => (this.flyout = x);
+	attachLabelInputRef = x => (this.input = x);
+	attachOptionRef = () => {};
 
-	attachOptionListRef = (list) => {
+	attachOptionListRef = list => {
 		this.optionList = list;
 
 		this[SCROLL_TO_OPTION]();
-	}
+	};
 
-	attachSelectedRef = (selected) => {
+	attachSelectedRef = selected => {
 		const changed = this.selectedOption !== selected;
 
 		this.selectedOption = selected;
@@ -69,10 +65,9 @@ export default class SelectInput extends React.Component {
 		if (changed) {
 			this[SCROLL_TO_OPTION]();
 		}
-	}
+	};
 
-
-	attachFocusedRef = (focused) => {
+	attachFocusedRef = focused => {
 		const changed = this.focusedOption !== focused;
 
 		this.focusedOption = focused;
@@ -80,8 +75,7 @@ export default class SelectInput extends React.Component {
 		if (changed) {
 			this[SCROLL_TO_OPTION]();
 		}
-	}
-
+	};
 
 	state = {
 		isOpen: false,
@@ -89,34 +83,34 @@ export default class SelectInput extends React.Component {
 		focusedIndex: -1,
 		activeOptions: [],
 		inputBuffer: '',
-		inputValue: ''
-	}
+		inputValue: '',
+	};
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
+	componentDidUpdate(prevProps) {
+		const { value: oldValue, children: oldChildren } = prevProps;
+		const { value: newValue, children: newChildren } = this.props;
 
-	componentDidUpdate (prevProps) {
-		const {value: oldValue, children: oldChildren} = prevProps;
-		const {value: newValue, children: newChildren} = this.props;
-
-		const same = isSameOptions(React.Children.toArray(newChildren), React.Children.toArray(oldChildren));
+		const same = isSameOptions(
+			React.Children.toArray(newChildren),
+			React.Children.toArray(oldChildren)
+		);
 
 		if (oldValue !== newValue || !same) {
 			this.setupFor(this.props);
 		}
 	}
 
-
-	setupFor (props) {
-		const {children, value} = this.props;
-		const {focusedIndex, inputValue} = this.state;
+	setupFor(props) {
+		const { children, value } = this.props;
+		const { focusedIndex, inputValue } = this.state;
 		const options = React.Children.toArray(children);
-		const activeOptions = inputValue ?
-			options.filter((option) => optionMatchesTerm(option, inputValue)) :
-			options;
+		const activeOptions = inputValue
+			? options.filter(option => optionMatchesTerm(option, inputValue))
+			: options;
 
 		let selectedOption = null;
 		let selectedIndex = -1;
@@ -135,37 +129,37 @@ export default class SelectInput extends React.Component {
 			options,
 			activeOptions,
 			selectedOption,
-			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex
+			focusedIndex: focusedIndex != null ? focusedIndex : selectedIndex,
 		});
 	}
 
-
-	focus () {
+	focus() {
 		if (this.input) {
 			this.input.focus();
 		}
 	}
 
-	realign () {
+	realign() {
 		if (this.flyout) {
 			this.flyout.realign();
 		}
 	}
 
-
-	[SCROLL_TO_OPTION] () {
+	[SCROLL_TO_OPTION]() {
 		const option = this.focusedOption || this.selectedOption;
-		const {optionList} = this;
+		const { optionList } = this;
 
-		if (!option || !optionList) { return null; }
-
+		if (!option || !optionList) {
+			return null;
+		}
 
 		this[SCROLL_LIST_TO_OPTION](optionList, option);
 	}
 
-
-	[SCROLL_LIST_TO_OPTION] (optionList, option) {
-		const scroller = canScroll(optionList) ? optionList : getScrollParent(optionList);
+	[SCROLL_LIST_TO_OPTION](optionList, option) {
+		const scroller = canScroll(optionList)
+			? optionList
+			: getScrollParent(optionList);
 
 		const scrollRect = scroller.getBoundingClientRect();
 		const optionRect = option.getBoundingClientRect();
@@ -185,36 +179,33 @@ export default class SelectInput extends React.Component {
 		scroller.scrollTop = newTop;
 	}
 
-
-	openMenu () {
-		const {isOpen} = this.state;
+	openMenu() {
+		const { isOpen } = this.state;
 
 		clearTimeout(this.closeMenuTimeout);
 
 		if (!isOpen) {
 			this.setState({
-				isOpen: true
+				isOpen: true,
 			});
 		}
 	}
 
-
-	closeMenu () {
+	closeMenu() {
 		this.closeMenuTimeout = setTimeout(() => {
-			const {isOpen, selectedOption, activeOptions} = this.state;
+			const { isOpen, selectedOption, activeOptions } = this.state;
 
 			if (isOpen) {
 				this.setState({
 					isOpen: false,
-					focusedIndex: activeOptions.indexOf(selectedOption)
+					focusedIndex: activeOptions.indexOf(selectedOption),
 				});
 			}
 		}, 300);
 	}
 
-
-	selectOption = (value) => {
-		const {onChange, maintainOnSelect} = this.props;
+	selectOption = value => {
+		const { onChange, maintainOnSelect } = this.props;
 
 		if (onChange) {
 			onChange(value);
@@ -229,22 +220,20 @@ export default class SelectInput extends React.Component {
 
 		this.setState({
 			inputBuffer: '',
-			inputValue: ''
+			inputValue: '',
 		});
-	}
-
+	};
 
 	onLabelClick = () => {
 		this.focus();
 		this.openMenu();
-	}
+	};
 
-
-	onDownArrowClick = (e) => {
+	onDownArrowClick = e => {
 		e.stopPropagation();
 		e.preventDefault();
 
-		const {isOpen} = this.state;
+		const { isOpen } = this.state;
 
 		if (isOpen) {
 			this.closeMenu();
@@ -252,14 +241,13 @@ export default class SelectInput extends React.Component {
 			this.focus();
 			this.openMenu();
 		}
-	}
-
+	};
 
 	onInputFocus = () => {
-		const {onFocus} = this.props;
+		const { onFocus } = this.props;
 
 		this.setState({
-			focused: true
+			focused: true,
 		});
 
 		this.openMenu();
@@ -267,28 +255,26 @@ export default class SelectInput extends React.Component {
 		if (onFocus) {
 			onFocus();
 		}
-	}
-
+	};
 
 	onInputBlur = () => {
-		const {onBlur} = this.props;
+		const { onBlur } = this.props;
 
 		this.setState({
-			focused: false
+			focused: false,
 		});
 		this.closeMenu();
 
 		if (onBlur) {
 			onBlur();
 		}
-	}
+	};
 
-
-	onInputKeyDown = (e) => {
-		const {maintainOnSelect} = this.props;
-		const {selectedOption:oldSelected} = this.state;
+	onInputKeyDown = e => {
+		const { maintainOnSelect } = this.props;
+		const { selectedOption: oldSelected } = this.state;
 		const newState = keyDownStateModifier(e, this.state);
-		const {selectedOption:newSelected} = newState;
+		const { selectedOption: newSelected } = newState;
 
 		if (oldSelected !== newSelected) {
 			this.selectOption(getValueForOption(newSelected));
@@ -300,11 +286,10 @@ export default class SelectInput extends React.Component {
 		}
 
 		this.setState(newState);
-	}
+	};
 
-
-	onInputChange = (value) => {
-		const {activeOptions, isOpen, focusedIndex} = this.state;
+	onInputChange = value => {
+		const { activeOptions, isOpen, focusedIndex } = this.state;
 
 		clearTimeout(this.clearInputBufferTimeout);
 
@@ -324,22 +309,23 @@ export default class SelectInput extends React.Component {
 			}
 		}
 
-		this.setState({
-			inputBuffer: value,
-			focusedIndex: newFocused
-		}, () => {
-			this.clearInputBufferTimeout = setTimeout(() => {
-				this.setState({
-					inputBuffer: ''
-				});
-			}, 250);
-		});
+		this.setState(
+			{
+				inputBuffer: value,
+				focusedIndex: newFocused,
+			},
+			() => {
+				this.clearInputBufferTimeout = setTimeout(() => {
+					this.setState({
+						inputBuffer: '',
+					});
+				}, 250);
+			}
+		);
+	};
 
-	}
-
-
-	onSearchableInputChange = (value) => {
-		const {options} = this.state;
+	onSearchableInputChange = value => {
+		const { options } = this.state;
 		// const selectedOption = options[selectedIndex];
 
 		// if (selectedOption && !optionMatchesTerm(selectedOption, value)) {
@@ -359,18 +345,33 @@ export default class SelectInput extends React.Component {
 			isOpen: true,
 			inputValue: value,
 			activeOptions: newActive,
-			focusedIndex: 0
+			focusedIndex: 0,
 		});
-	}
+	};
 
-
-	render () {
-		const {disabled, className, searchable, optionsClassName} = this.props;
-		const {isOpen, activeOptions, selectedOption, focusedIndex, focused} = this.state;
+	render() {
+		const {
+			disabled,
+			className,
+			searchable,
+			optionsClassName,
+		} = this.props;
+		const {
+			isOpen,
+			activeOptions,
+			selectedOption,
+			focusedIndex,
+			focused,
+		} = this.state;
 
 		return (
 			<div
-				className={cx('nti-select-input', className, {open: isOpen, disabled, searchable, focused})}
+				className={cx('nti-select-input', className, {
+					open: isOpen,
+					disabled,
+					searchable,
+					focused,
+				})}
 				role="listbox"
 			>
 				<Triggered
@@ -383,69 +384,91 @@ export default class SelectInput extends React.Component {
 					open={isOpen}
 					focusOnOpen={false}
 				>
-					<ul className={cx('nti-select-input-options', optionsClassName)} ref={this.attachOptionListRef}>
-						{activeOptions && activeOptions.map((option, index) => {
-							if (option.type !== Option) { throw new Error('Children of select must be an option'); }
-
-							const selected = selectedOption === option;
-							const isFocused = focusedIndex === index;
-
-							const ref = selected ?
-								this.attachSelectedRef :
-								isFocused ?
-									this.attachFocusedRef :
-									this.attachOptionRef;
-
-							const optionCmp = React.cloneElement(option, {
-								index,
-								onClick: this.selectOption,
-								selected,
-								focused: isFocused
-							});
-
-							return (
-								<li key={index} ref={ref}>
-									{optionCmp}
-								</li>
-							);
-						})}
-						{searchable && activeOptions && activeOptions.length === 0 && (
-							<li>
-								<Option display>
-									{t('emptySearch')}
-								</Option>
-							</li>
+					<ul
+						className={cx(
+							'nti-select-input-options',
+							optionsClassName
 						)}
+						ref={this.attachOptionListRef}
+					>
+						{activeOptions &&
+							activeOptions.map((option, index) => {
+								if (option.type !== Option) {
+									throw new Error(
+										'Children of select must be an option'
+									);
+								}
+
+								const selected = selectedOption === option;
+								const isFocused = focusedIndex === index;
+
+								const ref = selected
+									? this.attachSelectedRef
+									: isFocused
+									? this.attachFocusedRef
+									: this.attachOptionRef;
+
+								const optionCmp = React.cloneElement(option, {
+									index,
+									onClick: this.selectOption,
+									selected,
+									focused: isFocused,
+								});
+
+								return (
+									<li key={index} ref={ref}>
+										{optionCmp}
+									</li>
+								);
+							})}
+						{searchable &&
+							activeOptions &&
+							activeOptions.length === 0 && (
+								<li>
+									<Option display>{t('emptySearch')}</Option>
+								</li>
+							)}
 					</ul>
 				</Triggered>
 			</div>
 		);
 	}
 
-
-	renderLabel () {
-		const {searchable, placeholder} = this.props;
-		const {selectedOption, inputValue, inputBuffer, focused} = this.state;
+	renderLabel() {
+		const { searchable, placeholder } = this.props;
+		const { selectedOption, inputValue, inputBuffer, focused } = this.state;
 
 		return (
-			<div className={cx('select-label', {searchable, 'has-selected': selectedOption, focused})}>
+			<div
+				className={cx('select-label', {
+					searchable,
+					'has-selected': selectedOption,
+					focused,
+				})}
+			>
 				<Text
 					ref={this.attachLabelInputRef}
 					value={searchable ? inputValue : inputBuffer}
 					placeholder={placeholder}
-					onChange={searchable ? this.onSearchableInputChange : this.onInputChange}
+					onChange={
+						searchable
+							? this.onSearchableInputChange
+							: this.onInputChange
+					}
 					onFocus={this.onInputFocus}
 					onBlur={this.onInputBlur}
 					onKeyDown={this.onInputKeyDown}
 				/>
-				<div className="placeholder">
-					{placeholder || ''}
-				</div>
+				<div className="placeholder">{placeholder || ''}</div>
 				<div className="selected-option" onClick={this.onLabelClick}>
-					{selectedOption && React.cloneElement(selectedOption, {display: true})}
+					{selectedOption &&
+						React.cloneElement(selectedOption, { display: true })}
 				</div>
 				<div className="chevron-indicator">
-					<i className="icon-chevron-down" onClick={this.onDownArrowClick} />
+					<i
+						className="icon-chevron-down"
+						onClick={this.onDownArrowClick}
+					/>
 				</div>
 			</div>
 		);

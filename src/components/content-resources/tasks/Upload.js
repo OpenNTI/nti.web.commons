@@ -5,7 +5,6 @@ import Task from './Task';
 const logger = Logger.get('common:components:content-resources:tasks:Upload');
 
 export default class Upload extends Task {
-
 	/**
 	 * Upload the file to the path
 	 *
@@ -14,8 +13,8 @@ export default class Upload extends Task {
 	 * @param  {function} [onComplete] - Optional callback for when the task completes
 	 * @returns {void}
 	 */
-	constructor (file, folder, onComplete) {
-		super(()=> this.startUpload(file, folder), file.size, onComplete);
+	constructor(file, folder, onComplete) {
+		super(() => this.startUpload(file, folder), file.size, onComplete);
 		this.needsConfirmation = true;
 		this.verb = 'upload';
 		this.filename = file.name;
@@ -23,41 +22,41 @@ export default class Upload extends Task {
 		this.folder = folder;
 	}
 
-
 	abort = () => {
 		if (this.xhr) {
 			this.needsConfirmation = false;
 			this.xhr.abort();
 			this.emit('abort', this);
 		}
-	}
-
+	};
 
 	startUpload = (file, folder) => {
 		const url = folder.getLink('upload');
-		const xhr = this.xhr = new XMLHttpRequest();
+		const xhr = (this.xhr = new XMLHttpRequest());
 
 		xhr.addEventListener('progress', e => logger.log('Progress %o', e));
 
-		function json (str) {
+		function json(str) {
 			try {
 				return JSON.parse(str);
 			} catch (e) {
-				return {message: str};
+				return { message: str };
 			}
 		}
 
 		if (!url) {
 			return Promise.reject(
-				Object.assign(new Error(`Cannot upload into ${folder.getFileName()}.`), {
-					code: 'PermissionDeniedNoLink',
-					statusCode: 401
-				})
+				Object.assign(
+					new Error(`Cannot upload into ${folder.getFileName()}.`),
+					{
+						code: 'PermissionDeniedNoLink',
+						statusCode: 401,
+					}
+				)
 			);
 		}
 
 		return new Promise((finish, error) => {
-
 			const formdata = new FormData();
 
 			formdata.append(file.name, file);
@@ -69,23 +68,25 @@ export default class Upload extends Task {
 
 			this.emitProgress(1, this.total);
 
-			xhr.upload.onprogress = (e) => e.lengthComputable && this.emitProgress(e.loaded - 1, e.total, this.abort);
+			xhr.upload.onprogress = e =>
+				e.lengthComputable &&
+				this.emitProgress(e.loaded - 1, e.total, this.abort);
 			xhr.onload = () => {
-
 				if (xhr.status >= 200 && xhr.status < 300) {
 					this.emitProgress(this.total, this.total);
-					const {Items: [fileObj] = []} = json(xhr.responseText) || {};
+					const { Items: [fileObj] = [] } =
+						json(xhr.responseText) || {};
 					finish(folder.castFile(fileObj));
 				} else {
 					error({
 						status: xhr.status,
 						statusText: xhr.statusText,
-						...json(xhr.responseText)
+						...json(xhr.responseText),
 					});
 				}
 			};
 
-			setTimeout(()=> xhr.send(formdata), 1);
+			setTimeout(() => xhr.send(formdata), 1);
 		});
-	}
+	};
 }

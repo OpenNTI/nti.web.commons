@@ -1,7 +1,7 @@
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('common.date-time', {
-	at: '%(prefix)s at %(time)s'
+	at: '%(prefix)s at %(time)s',
 });
 
 export const DATE = 'M/dd/yyyy';
@@ -43,45 +43,50 @@ export const WEEKDAY_MONTH_NAME_DAY_TIME = 'eeee, MMMM d, h:mm a';
 export const WEEKDAY_MONTH_NAME_DAY_TIME_WITH_ZONE = 'eeee, MMMM d, h:mm a z';
 export const WEEKDAY_MONTH_NAME_DAY_YEAR = 'eeee, MMMM d, yyyy';
 export const WEEKDAY_MONTH_NAME_DAY_YEAR_TIME = 'eeee, MMMM d, yyyy h:mm a';
-export const WEEKDAY_MONTH_NAME_DAY_YEAR_TIME_WITH_ZONE = 'eeee, MMMM d, yyyy h:mm a z';
+export const WEEKDAY_MONTH_NAME_DAY_YEAR_TIME_WITH_ZONE =
+	'eeee, MMMM d, yyyy h:mm a z';
 export const WEEKDAY_MONTH_NAME_ORDINAL_DAY = 'eeee, MMMM do';
 export const WEEKDAY_MONTH_NAME_ORDINAL_DAY_YEAR = 'eeee, MMMM do, yyyy';
 
-
 export const DEFAULT = MONTH_NAME_DAY_YEAR;
 
+export const MONTH_ABBR_DAY_AT_TIME = formatter =>
+	t('at', {
+		prefix: formatter(MONTH_ABBR_DAY),
+		time: formatter(TIME),
+	});
 
-export const MONTH_ABBR_DAY_AT_TIME = (formatter) => t('at', {
-	prefix: formatter(MONTH_ABBR_DAY),
-	time: formatter(TIME)
-});
+export const MONTH_ABBR_DAY_YEAR_AT_TIME = formatter =>
+	t('at', {
+		prefix: formatter(MONTH_ABBR_DAY_YEAR),
+		time: formatter(TIME),
+	});
 
+export const MONTH_NAME_DAY_AT_TIME = formatter =>
+	t('at', {
+		prefix: formatter(MONTH_NAME_DAY),
+		time: formatter(TIME),
+	});
+export const MONTH_NAME_DAY_YEAR_AT_TIME = formatter =>
+	t('at', {
+		prefix: formatter(MONTH_NAME_DAY_YEAR),
+		time: formatter(TIME),
+	});
 
-export const MONTH_ABBR_DAY_YEAR_AT_TIME = (formatter) => t('at', {
-	prefix: formatter(MONTH_ABBR_DAY_YEAR),
-	time: formatter(TIME)
-});
+export const WEEKDAY_MONTH_NAME_DAY_AT_TIME = formatter =>
+	t('at', {
+		prefix: formatter(WEEKDAY_MONTH_NAME_DAY),
+		time: formatter(TIME),
+	});
 
-export const MONTH_NAME_DAY_AT_TIME = (formatter) => t('at', {
-	prefix: formatter(MONTH_NAME_DAY),
-	time: formatter(TIME)
-});
-export const MONTH_NAME_DAY_YEAR_AT_TIME = (formatter) => t('at', {
-	prefix: formatter(MONTH_NAME_DAY_YEAR),
-	time: formatter(TIME)
-});
+export const WEEKDAY_MONTH_NAME_DAY_AT_TIME_WITH_ZONE = formatter =>
+	t('at', {
+		prefix: formatter(WEEKDAY_MONTH_NAME_DAY),
+		time: formatter(TIME_WITH_ZONE),
+	});
 
-export const WEEKDAY_MONTH_NAME_DAY_AT_TIME = (formatter) => t('at', {
-	prefix: formatter(WEEKDAY_MONTH_NAME_DAY),
-	time: formatter(TIME)
-});
-
-export const WEEKDAY_MONTH_NAME_DAY_AT_TIME_WITH_ZONE = (formatter) => t('at', {
-	prefix: formatter(WEEKDAY_MONTH_NAME_DAY),
-	time: formatter(TIME_WITH_ZONE)
-});
-
-export const WEEKDAY_AT_TIME_PADDED_WITH_ZONE = (formatter) => t('at', {
-	prefix: formatter(WEEKDAY),
-	time: formatter(TIME_PADDED_WITH_ZONE)
-});
+export const WEEKDAY_AT_TIME_PADDED_WITH_ZONE = formatter =>
+	t('at', {
+		prefix: formatter(WEEKDAY),
+		time: formatter(TIME_PADDED_WITH_ZONE),
+	});

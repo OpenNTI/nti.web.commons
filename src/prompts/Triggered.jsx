@@ -8,15 +8,17 @@ import Dialog from './Dialog';
 const cx = classnames.bind(Styles);
 
 TriggeredDialog.propTypes = {
-	trigger: PropTypes.any
+	trigger: PropTypes.any,
 };
-export default function TriggeredDialog ({trigger, ...otherProps}) {
+export default function TriggeredDialog({ trigger, ...otherProps }) {
 	const [open, setOpen] = React.useState(!trigger);
-	
+
 	const focused = React.useRef(false);
 	const blurTimeout = React.useRef(null);
 
-	const onBeforeDismiss = (...args) => (setOpen(false), otherProps?.onBeforeDismiss?.(...args));
+	const onBeforeDismiss = (...args) => (
+		setOpen(false), otherProps?.onBeforeDismiss?.(...args)
+	);
 
 	const triggerProps = {
 		onFocus: () => {
@@ -25,11 +27,11 @@ export default function TriggeredDialog ({trigger, ...otherProps}) {
 		},
 		onBlur: () => {
 			blurTimeout.current = setTimeout(
-				() => focused.current = false,
+				() => (focused.current = false),
 				100
 			);
 		},
-		onKeyPress: (e) => {
+		onKeyPress: e => {
 			if (focused.current && e.charCode === 13 && !open) {
 				setOpen(true);
 			}
@@ -41,15 +43,19 @@ export default function TriggeredDialog ({trigger, ...otherProps}) {
 		tabIndex: 0,
 		'aria-haspopup': 'dialog',
 
-		className: cx('dialog-trigger', trigger?.props?.className)
+		className: cx('dialog-trigger', trigger?.props?.className),
 	};
 
-	const triggerCmp = trigger ? React.cloneElement(trigger, {...triggerProps}) : null;
+	const triggerCmp = trigger
+		? React.cloneElement(trigger, { ...triggerProps })
+		: null;
 
 	return (
 		<>
 			{triggerCmp}
-			{open && (<Dialog {...otherProps} onBeforeDismiss={onBeforeDismiss} />)}
+			{open && (
+				<Dialog {...otherProps} onBeforeDismiss={onBeforeDismiss} />
+			)}
 		</>
 	);
 }

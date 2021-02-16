@@ -1,42 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {restProps} from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { restProps } from '@nti/lib-commons';
 
-import {DataURIs} from '../constants';
-import {ForwardRef} from '../decorators';
+import { DataURIs } from '../constants';
+import { ForwardRef } from '../decorators';
 
-
-import {resolveImage} from './utils';
+import { resolveImage } from './utils';
 import * as srcsetUtils from './srcset';
-import {getTransforms} from './transforms';
+import { getTransforms } from './transforms';
 import Base from './Base';
-import {AspectRatios} from './Constants';
+import { AspectRatios } from './Constants';
 import Container from './Container';
 import Error from './Error';
 import LightBox from './lightbox';
 
-const {BLANK_IMAGE} = DataURIs;
+const { BLANK_IMAGE } = DataURIs;
 const t = scoped('common.image.View', {
-	alt: 'Image'
+	alt: 'Image',
 });
 
 class NTIImage extends React.Component {
-	static srcset = srcsetUtils
-	static AspectRatios = AspectRatios
-	static Container = Container
-	static Error = Error
-	static Lightbox = LightBox
+	static srcset = srcsetUtils;
+	static AspectRatios = AspectRatios;
+	static Container = Container;
+	static Error = Error;
+	static Lightbox = LightBox;
 
 	static propTypes = {
-		src: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.array,
-		]),
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 		srcset: PropTypes.arrayOf(
 			PropTypes.shape({
 				src: PropTypes.string,
-				query: PropTypes.string
+				query: PropTypes.string,
 			})
 		),
 		alt: PropTypes.string,
@@ -47,48 +43,50 @@ class NTIImage extends React.Component {
 		onLoad: PropTypes.func,
 		onError: PropTypes.func,
 
-		imageRef: PropTypes.func
-	}
+		imageRef: PropTypes.func,
+	};
 
 	#loader = null;
 
 	state = {};
 
-	get currentSrc () {
-		const {placeholder} = this.props;
-		const {src} = this.state;
+	get currentSrc() {
+		const { placeholder } = this.props;
+		const { src } = this.state;
 
-		if (!src) { return placeholder || BLANK_IMAGE; }
+		if (!src) {
+			return placeholder || BLANK_IMAGE;
+		}
 
 		return src || BLANK_IMAGE;
 	}
 
-	get alt () {
-		const {alt} = this.props;
+	get alt() {
+		const { alt } = this.props;
 
 		return alt || t('alt');
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setupSource();
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = true;
 	}
 
-	componentDidUpdate (prevProps) {
-		const {src} = this.props;
-		const {src: prevSrc} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { src } = this.props;
+		const { src: prevSrc } = prevProps;
 
 		if (src !== prevSrc) {
-			this.setState({src: null});
+			this.setState({ src: null });
 			this.setupSource();
 		}
 	}
 
-	async setupSource () {
-		const {src, fallback, srcset, onLoad, onError} = this.props;
+	async setupSource() {
+		const { src, fallback, srcset, onLoad, onError } = this.props;
 		const started = Date.now();
 
 		this.currentLoadStarted = started;
@@ -96,10 +94,12 @@ class NTIImage extends React.Component {
 		try {
 			this.#loader = await resolveImage(src, srcset, fallback);
 
-			if (this.unmounted || this.currentLoadStarted !== started ) { return; }
+			if (this.unmounted || this.currentLoadStarted !== started) {
+				return;
+			}
 
 			this.setState({
-				src: this.#loader.currentSrc || this.#loader.src
+				src: this.#loader.currentSrc || this.#loader.src,
 			});
 
 			if (onLoad) {
@@ -107,7 +107,7 @@ class NTIImage extends React.Component {
 			}
 		} catch (e) {
 			this.setState({
-				src: BLANK_IMAGE
+				src: BLANK_IMAGE,
 			});
 
 			if (onError) {
@@ -116,19 +116,29 @@ class NTIImage extends React.Component {
 		}
 	}
 
-
-	render () {
-		const {imageRef} = this.props;
-		const {currentSrc, alt} = this;
+	render() {
+		const { imageRef } = this.props;
+		const { currentSrc, alt } = this;
 		const otherProps = restProps(NTIImage, this.props);
 
 		const transforms = getTransforms(this.props).reverse();
 
-		let cmp = (<Base src={currentSrc} alt={alt} imageRef={imageRef} {...otherProps} />);
+		let cmp = (
+			<Base
+				src={currentSrc}
+				alt={alt}
+				imageRef={imageRef}
+				{...otherProps}
+			/>
+		);
 
 		for (let Transform of transforms) {
 			cmp = (
-				<Transform {...this.props} src={currentSrc} _loader={this.#loader} >
+				<Transform
+					{...this.props}
+					src={currentSrc}
+					_loader={this.#loader}
+				>
 					{cmp}
 				</Transform>
 			);

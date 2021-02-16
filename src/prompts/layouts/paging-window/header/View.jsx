@@ -24,14 +24,14 @@ PagingHeader.propTypes = {
 		total: PropTypes.number,
 		current: PropTypes.number,
 		nextAnchor: PropTypes.node,
-		previousAnchor: PropTypes.node
-	})
+		previousAnchor: PropTypes.node,
+	}),
 };
-export default function PagingHeader (props) {
-	const {flat} = props;
+export default function PagingHeader(props) {
+	const { flat } = props;
 
 	return (
-		<div className={cx('paging-window-header', {flat})}>
+		<div className={cx('paging-window-header', { flat })}>
 			<Dismiss {...props} />
 			<Title {...props} />
 			<Pager {...props} />

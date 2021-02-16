@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .item-sharing {
 	color: var(--primary-purple);
@@ -7,7 +7,8 @@
 	cursor: pointer;
 	margin-bottom: rem-calc(5px);
 
-	&.single, &.none {
+	&.single,
+	&.none {
 		color: var(--primary-blue);
 	}
 

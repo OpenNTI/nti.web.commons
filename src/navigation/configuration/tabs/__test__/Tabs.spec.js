@@ -10,13 +10,13 @@ const store = Store.getStore();
 
 describe('Tabs Config', () => {
 	test('Sets the correct config', () => {
-		TestRenderer.create((
+		TestRenderer.create(
 			<Tabs>
 				<Tab label="tab1" route="/route1" active />
 				<Tab label="tab2" route="/route2" />
 				<Tab label="tab3" route="/route3" />
 			</Tabs>
-		));
+		);
 
 		const tabs = store.get('tabs');
 

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {LockScroll, FillToBottom} from '../../../../components';
+import { LockScroll, FillToBottom } from '../../../../components';
 
 const menuOpenBodyClass = 'nav-menu-open';
 
@@ -12,46 +12,42 @@ export default class NavigationMenu extends React.Component {
 		tabs: PropTypes.arrayOf(
 			PropTypes.shape({
 				label: PropTypes.string,
-				active: PropTypes.bool
+				active: PropTypes.bool,
 			})
 		),
 		renderTab: PropTypes.func,
-		onDismiss: PropTypes.func
-	}
+		onDismiss: PropTypes.func,
+	};
 
-
-	componentDidMount () {
+	componentDidMount() {
 		if (typeof document !== 'undefined') {
 			document.body.classList.add(menuOpenBodyClass);
 		}
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		if (typeof document !== 'undefined') {
 			document.body.classList.remove(menuOpenBodyClass);
 		}
 	}
 
-
 	dismissMenu = () => {
-		const {onDismiss} = this.props;
+		const { onDismiss } = this.props;
 
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
+	};
 
-
-	render () {
-		const {tabs} = this.props;
+	render() {
+		const { tabs } = this.props;
 
 		return (
 			<FillToBottom className="nti-navigation-tabs-menu">
 				<LockScroll />
-				<div className="mask" onClick={this.dismissMenu}/>
+				<div className="mask" onClick={this.dismissMenu} />
 				<ul>
-					{tabs.map((tab) => {
+					{tabs.map(tab => {
 						return (
 							<li key={tab.id} onClick={this.dismissMenu}>
 								{this.renderTab(tab)}
@@ -63,13 +59,14 @@ export default class NavigationMenu extends React.Component {
 		);
 	}
 
-
-	renderTab (tab) {
-		const {renderTab} = this.props;
+	renderTab(tab) {
+		const { renderTab } = this.props;
 
 		const tabCmp = (
 			<div
-				className={cx('nti-navigation-menu-tab', {active: tab.active})}
+				className={cx('nti-navigation-menu-tab', {
+					active: tab.active,
+				})}
 				data-text={tab.label}
 			>
 				{tab.label}

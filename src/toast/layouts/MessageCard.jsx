@@ -14,9 +14,16 @@ ToastCardLayout.propTypes = {
 	icon: PropTypes.node,
 	title: PropTypes.string,
 	style: PropTypes.string,
-	message: PropTypes.string
+	message: PropTypes.string,
 };
-export default function ToastCardLayout ({className, style, icon, title, message, ...otherProps}) {
+export default function ToastCardLayout({
+	className,
+	style,
+	icon,
+	title,
+	message,
+	...otherProps
+}) {
 	return (
 		<Card
 			className={cx('toast-message-card', className)}
@@ -24,10 +31,14 @@ export default function ToastCardLayout ({className, style, icon, title, message
 			style={style}
 			{...otherProps}
 		>
-			{icon && (<div className={cx('icon')}>{icon}</div>)}
+			{icon && <div className={cx('icon')}>{icon}</div>}
 			<div className={cx('message')}>
-				{title && (<Text.Base className={cx('title')}>{title}</Text.Base>)}
-				{message && (<Text.Base className={cx('message')}>{message}</Text.Base>)}
+				{title && (
+					<Text.Base className={cx('title')}>{title}</Text.Base>
+				)}
+				{message && (
+					<Text.Base className={cx('message')}>{message}</Text.Base>
+				)}
 			</div>
 		</Card>
 	);

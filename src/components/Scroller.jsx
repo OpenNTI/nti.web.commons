@@ -3,17 +3,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ease from 'eases/cubic-out';
 import cx from 'classnames';
-import {buffer} from '@nti/lib-commons';
+import { buffer } from '@nti/lib-commons';
 
 import ScrollerButton from './ScrollerButton';
 
 export default class Scroller extends React.Component {
-
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			canScrollLeft: true,
-			canScrollRight: true
+			canScrollRight: true,
 		};
 	}
 
@@ -21,16 +20,16 @@ export default class Scroller extends React.Component {
 		children: PropTypes.element.isRequired,
 		duration: PropTypes.number.isRequired,
 		distance: PropTypes.number.isRequired,
-		className: PropTypes.string
-	}
+		className: PropTypes.string,
+	};
 
 	componentDidMount = () => {
 		this.updateScrollButtons();
-	}
+	};
 
 	componentDidUpdate = () => {
 		this.updateScrollButtons();
-	}
+	};
 
 	updateScrollButtons = () => {
 		const node = this.child;
@@ -38,51 +37,73 @@ export default class Scroller extends React.Component {
 			return;
 		}
 		const canScrollLeft = node.scrollLeft > 0;
-		const canScrollRight = (node.scrollLeft + node.offsetWidth) < node.scrollWidth;
-		if(canScrollLeft !== this.state.canScrollLeft || canScrollRight !== this.state.canScrollRight) {
+		const canScrollRight =
+			node.scrollLeft + node.offsetWidth < node.scrollWidth;
+		if (
+			canScrollLeft !== this.state.canScrollLeft ||
+			canScrollRight !== this.state.canScrollRight
+		) {
 			this.setState({
 				canScrollLeft,
-				canScrollRight
+				canScrollRight,
 			});
 		}
-	}
+	};
 
-	scroll = (amount) => {
-		const {duration} = this.props;
+	scroll = amount => {
+		const { duration } = this.props;
 		const node = this.child;
 		const startScroll = node.scrollLeft;
 		let start;
-		if (!window.requestAnimationFrame) { // IE9
+		if (!window.requestAnimationFrame) {
+			// IE9
 			node.scrollLeft += amount;
 			return;
 		}
 		const animate = function (timestamp) {
-			if(!start) {
+			if (!start) {
 				start = timestamp;
 			}
 			const progress = timestamp - start;
 			const percent = progress / duration;
-			node.scrollLeft = startScroll + (amount * ease(percent));
+			node.scrollLeft = startScroll + amount * ease(percent);
 			if (progress < duration) {
 				return requestAnimationFrame(animate);
-			}
-			else {
+			} else {
 				this.updateScrollButtons();
 			}
 		}.bind(this);
 		requestAnimationFrame(animate);
-	}
+	};
 
-	render () {
-		const {distance, className} = this.props;
-		const {canScrollLeft, canScrollRight} = this.state;
+	render() {
+		const { distance, className } = this.props;
+		const { canScrollLeft, canScrollRight } = this.state;
 		const child = React.Children.only(this.props.children);
-		const clone = React.cloneElement(child, {ref: (x) => this.child = x, className: cx(child.props.className, 'scroller-content') , onScroll: buffer(500,this.updateScrollButtons)});
+		const clone = React.cloneElement(child, {
+			ref: x => (this.child = x),
+			className: cx(child.props.className, 'scroller-content'),
+			onScroll: buffer(500, this.updateScrollButtons),
+		});
 		return (
 			<div className={cx('scroller', className)}>
-				<ScrollerButton className="left" amount={-distance} onClick={this.scroll} disabled={!canScrollLeft}>&lt;</ScrollerButton>
+				<ScrollerButton
+					className="left"
+					amount={-distance}
+					onClick={this.scroll}
+					disabled={!canScrollLeft}
+				>
+					&lt;
+				</ScrollerButton>
 				{clone}
-				<ScrollerButton className="right" amount={distance} onClick={this.scroll} disabled={!canScrollRight}>&gt;</ScrollerButton>
+				<ScrollerButton
+					className="right"
+					amount={distance}
+					onClick={this.scroll}
+					disabled={!canScrollRight}
+				>
+					&gt;
+				</ScrollerButton>
 			</div>
 		);
 	}

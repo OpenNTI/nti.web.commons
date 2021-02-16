@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Variant} from '../HighOrderComponents';
+import { Variant } from '../HighOrderComponents';
 
 import FontIcon from './Font-Icon';
 
@@ -15,27 +15,27 @@ const Down = 'down';
 // const UpLeft = 'up-left';
 
 const classes = {
-	[UpRight]: 'icon-launch'
+	[UpRight]: 'icon-launch',
 };
 
 const fillClasses = {
 	[Up]: 'icon-moveup',
-	[Down]: 'icon-movedown'
+	[Down]: 'icon-movedown',
 };
 
-Arrow.Up = Variant(Arrow, {direction: Up});
-Arrow.UpRight = Variant(Arrow, {direction: UpRight});
-Arrow.Down = Variant(Arrow, {direction: Down});
+Arrow.Up = Variant(Arrow, { direction: Up });
+Arrow.UpRight = Variant(Arrow, { direction: UpRight });
+Arrow.Down = Variant(Arrow, { direction: Down });
 Arrow.propTypes = {
 	direction: PropTypes.string,
-	fill: PropTypes.bool
+	fill: PropTypes.bool,
 };
-export function Arrow ({direction = UpRight, fill, ...otherProps}) {
+export function Arrow({ direction = UpRight, fill, ...otherProps }) {
 	const icon = fill ? fillClasses[direction] : classes[direction];
 
-	if (!icon) { throw new Error('Arrow Icon Direction not implemented'); }
+	if (!icon) {
+		throw new Error('Arrow Icon Direction not implemented');
+	}
 
-	return (
-		<FontIcon icon={icon} {...otherProps} />
-	);
+	return <FontIcon icon={icon} {...otherProps} />;
 }
