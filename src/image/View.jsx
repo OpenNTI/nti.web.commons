@@ -13,7 +13,7 @@ import Base from './Base';
 import { AspectRatios } from './Constants';
 import Container from './Container';
 import Error from './Error';
-import LightBox from './lightbox';
+import LightBox from './light-box';
 
 const { BLANK_IMAGE } = DataURIs;
 const t = scoped('common.image.View', {
