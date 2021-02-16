@@ -166,21 +166,9 @@ export default class Asset extends React.Component {
 		};
 	}
 
-	verifyImage() {
-		const loaderImage = new Image();
-
-		loaderImage.onerror = this.onImgLoadError;
-		loaderImage.src = this.state.resolvedUrl;
-	}
-
-	componentDidUpdate(prevProps) {
-		if (
-			this.getItem() !== this.getItem(prevProps) ||
-			this.props.type !== prevProps.type
-		) {
-			this.setState(this.getStateFor(this.props), () => {
-				this.verifyImage();
-			});
+	componentDidUpdate (prevProps) {
+		if (this.getItem() !== this.getItem(prevProps) || this.props.type !== prevProps.type) {
+			this.setState(this.getStateFor(this.props));
 		}
 	}
 
@@ -238,10 +226,6 @@ export default class Asset extends React.Component {
 		return url && `${url}?t=${lastMod}`;
 	}
 
-	componentDidMount() {
-		this.verifyImage();
-	}
-
 	onImgLoadError = () => {
 		const { resolvedUrl } = this.state;
 
@@ -258,7 +242,10 @@ export default class Asset extends React.Component {
 
 		const childProps = computeProps
 			? computeProps(this.state.resolvedUrl)
-			: { [propName || 'src']: this.state.resolvedUrl };
+			: {
+				[propName || 'src']: this.state.resolvedUrl,
+				onError: this.onImgLoadError
+			};
 
 		return React.cloneElement(child, childProps);
 	}
