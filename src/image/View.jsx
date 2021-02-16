@@ -25,7 +25,7 @@ class NTIImage extends React.Component {
 	static AspectRatios = AspectRatios;
 	static Container = Container;
 	static Error = Error;
-	static Lightbox = LightBox;
+	static LightBox = LightBox;
 
 	static propTypes = {
 		src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),

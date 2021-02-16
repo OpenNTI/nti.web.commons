@@ -25,9 +25,9 @@ export default function ImageTest () {
 			</Image>
 			<br />
 			<h2>Light Box:</h2>
-			<Image.Lightbox trigger={(<Image src={SRC} />)}>
+			<Image.LightBox trigger={(<Image src={SRC} />)}>
 				<Image src={SRC} />
-			</Image.Lightbox>
+			</Image.LightBox>
 		</div>
 	);
 }
