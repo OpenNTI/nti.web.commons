@@ -1,8 +1,6 @@
-import XRegExp from 'xregexp';
-
 const MatchSplitRegex = /<hit>|<\/hit>/g;
 
-export function extractTermFromMatch(match) {
+function extractTermFromMatch(match) {
 	const parts = match.split(MatchSplitRegex);
 
 	//with splitting the em tags the odd items should be terms between the tags
@@ -17,13 +15,9 @@ export function extractTermFromMatch(match) {
 
 export function contentRegexFromSearchTerm(term, isPhrase) {
 	if (isPhrase) {
-		term = XRegExp.replace(
-			term,
-			new XRegExp('\\p{^L}+([^\\]]|$)', 'g'),
-			'\\p{^L}+$1'
-		);
+		term = term.replace(/[^\p{L}]+([^\]]|$)/gu, '[^\\p{L}]+$1');
 	} else {
-		term = XRegExp.replace(term, new XRegExp('\\p{P}+', 'g'), '\\p{P}+');
+		term = term.replace(/\p{P}+/gu, '\\p{P}+');
 	}
 	return term;
 }
@@ -43,17 +37,16 @@ export function contentRegexForFragment(fragment, phraseSearch) {
 	const { Matches: matches = [] } = fragment;
 	let terms = [];
 
-	matches.forEach(match => {
-		let term = extractTermFromMatch(match);
-
+	for (const match of matches) {
+		const term = extractTermFromMatch(match);
 		if (term) {
-			terms = terms.concat(term);
+			terms = [...terms, term];
 		}
-	});
+	}
 
 	const escapedParts = terms.map(item =>
 		contentRegexFromSearchTerm(item, phraseSearch)
 	);
 
-	return new XRegExp(escapedParts.join('|'), 'ig');
+	return new RegExp(escapedParts.join('|'), 'uig');
 }
