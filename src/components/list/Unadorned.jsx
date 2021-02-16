@@ -1,10 +1,10 @@
-import React from 'react';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
-import styles from './Unadorned.css';
-
-const cx = classnames.bind(styles);
-
-export default function UnadornedList({ className, ...props }) {
-	return <ul className={cx('unadorned-list', className)} {...props} />;
-}
+export default styled('ul').attrs(({className, ...props}) => ({
+	...props,
+	className: cx('unadorned-list', className)
+}))`
+	list-style: none;
+	padding: 0;
+	margin: 0;
+`;
