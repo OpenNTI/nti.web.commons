@@ -34,6 +34,7 @@ export const Story = ({ length = 200, ...props }) => (
 				key={i}
 				width={SIZE}
 				height={SIZE}
+				style={{margin: '0.5rem'}}
 				src={`//placekitten.com/${ballpark()}/${ballpark()}`}
 				{...props}
 			/>
