@@ -1,10 +1,13 @@
-/* eslint react/no-find-dom-node: warn */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames/bind';
 import { restProps, getRefHandler } from '@nti/lib-commons';
-import { addClickOutListener, addKeyboardBlurListener, hasFocusWithin } from '@nti/lib-dom';
+import {
+	addClickOutListener,
+	addKeyboardBlurListener,
+	hasFocusWithin,
+} from '@nti/lib-dom';
 
 import Styles from './Triggered.css';
 import Aligned from './Aligned';
@@ -171,6 +174,7 @@ export default class TriggeredFlyout extends React.Component {
 				);
 			}
 
+			// eslint-disable-next-line react/no-find-dom-node
 			ref = ReactDOM.findDOMNode(ref);
 		}
 
@@ -231,7 +235,9 @@ export default class TriggeredFlyout extends React.Component {
 	}
 
 	dismiss = cb => {
-		const wasFocused = this.flyoutRef.current?.flyout && hasFocusWithin(this.flyoutRef.current.flyout);
+		const wasFocused =
+			this.flyoutRef.current?.flyout &&
+			hasFocusWithin(this.flyoutRef.current.flyout);
 
 		this.doClose(() => {
 			if (wasFocused) {
@@ -240,7 +246,7 @@ export default class TriggeredFlyout extends React.Component {
 
 			cb?.();
 		});
-	}
+	};
 
 	doClose(cb) {
 		if (this.isControlled()) {

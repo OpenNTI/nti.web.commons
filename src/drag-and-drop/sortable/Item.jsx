@@ -1,4 +1,3 @@
-/* eslint react/no-find-dom-node: warn */
 import './Item.scss';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -42,6 +41,7 @@ const itemTarget = {
 		}
 
 		// Determine rectangle on screen
+		// eslint-disable-next-line react/no-find-dom-node
 		const hoverBoundingRect = findDOMNode(
 			component
 		).getBoundingClientRect();
