@@ -163,14 +163,12 @@ export default class Asset extends React.Component {
 	}
 
 	computeState(props) {
-		const { type } = props;
-
 		return {
-			resolvedUrl: this.getAsset(type, props),
+			resolvedUrl: this.getAsset(props.type, props),
 		};
 	}
 
-	verifyImage() {
+	verifyImage = () => {
 		if (this.propName === 'src') {
 			// assume child handles onError
 			return;
@@ -180,7 +178,7 @@ export default class Asset extends React.Component {
 
 		loaderImage.onerror = this.onImgLoadError;
 		loaderImage.src = this.state.resolvedUrl;
-	}
+	};
 
 	componentDidMount() {
 		this.verifyImage();
@@ -191,9 +189,7 @@ export default class Asset extends React.Component {
 			this.getItem() !== this.getItem(prevProps) ||
 			this.props.type !== prevProps.type
 		) {
-			this.setState(this.computeState(this.props), () => {
-				this.verifyImage();
-			});
+			this.setState(this.computeState(this.props), this.verifyImage);
 		}
 	}
 
@@ -266,7 +262,7 @@ export default class Asset extends React.Component {
 		const child = React.Children.only(children);
 
 		const childProps = {
-			[this.propsName]: this.state.resolvedUrl,
+			[this.propName]: this.state.resolvedUrl,
 			onError: this.onImgLoadError,
 			...computeProps?.(this.state.resolvedUrl),
 		};
