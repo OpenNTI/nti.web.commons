@@ -155,10 +155,14 @@ export default class Asset extends React.Component {
 
 		initializeAssetMap();
 
-		this.state = this.getStateFor(props);
+		this.state = this.computeState(props);
 	}
 
-	getStateFor(props) {
+	get propName() {
+		return this.props.propName || 'src';
+	}
+
+	computeState(props) {
 		const { type } = props;
 
 		return {
@@ -166,9 +170,30 @@ export default class Asset extends React.Component {
 		};
 	}
 
-	componentDidUpdate (prevProps) {
-		if (this.getItem() !== this.getItem(prevProps) || this.props.type !== prevProps.type) {
-			this.setState(this.getStateFor(this.props));
+	verifyImage() {
+		if (this.propName === 'src') {
+			// assume child handles onError
+			return;
+		}
+
+		const loaderImage = new Image();
+
+		loaderImage.onerror = this.onImgLoadError;
+		loaderImage.src = this.state.resolvedUrl;
+	}
+
+	componentDidMount() {
+		this.verifyImage();
+	}
+
+	componentDidUpdate(prevProps) {
+		if (
+			this.getItem() !== this.getItem(prevProps) ||
+			this.props.type !== prevProps.type
+		) {
+			this.setState(this.computeState(this.props), () => {
+				this.verifyImage();
+			});
 		}
 	}
 
@@ -237,15 +262,14 @@ export default class Asset extends React.Component {
 	};
 
 	render() {
-		const { children, computeProps, propName } = this.props;
+		const { children, computeProps } = this.props;
 		const child = React.Children.only(children);
 
-		const childProps = computeProps
-			? computeProps(this.state.resolvedUrl)
-			: {
-				[propName || 'src']: this.state.resolvedUrl,
-				onError: this.onImgLoadError
-			};
+		const childProps = {
+			[this.propsName]: this.state.resolvedUrl,
+			onError: this.onImgLoadError,
+			...computeProps?.(this.state.resolvedUrl),
+		};
 
 		return React.cloneElement(child, childProps);
 	}
