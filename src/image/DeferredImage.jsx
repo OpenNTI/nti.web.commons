@@ -65,30 +65,31 @@ export default function DeferredImage ({src, className, ...props}) {
 		dispatch({ loaded: true, source: src });
 	}, [src]);
 
-	const preloader = useRef({ image: null });
+	// we never reassign current so we can get away with destructuring this here
+	const { current: preloader } = useRef({ image: null });
 
 	const onError = useCallback((...args) => void props.onError?.(...args), [props.onError]);
 
 	const preload = useCallback(() => {
 		// abort any pending preload timeout
-		clearTimeout(preloader.current.timeout);
+		clearTimeout(preloader.timeout);
 
 		// setTimeout to defer loading so we're not kicking off requests for images that
 		// are rapidly scrolling by; quickly coming into view and going back out again.
-		preloader.current.timeout = setTimeout(() => {
-			preloader.current.image?.removeEventListener?.('load', onPreload);
-			preloader.current.image?.removeEventListener?.('error', onError);
-			preloader.current.image = new Image();
-			preloader.current.image.addEventListener('load', onPreload);
-			preloader.current.image.addEventListener('error', onError);
-			preloader.current.image.src = src;
-			delete preloader.current.timeout;
+		preloader.timeout = setTimeout(() => {
+			preloader.image?.removeEventListener?.('load', onPreload);
+			preloader.image?.removeEventListener?.('error', onError);
+			preloader.image = new Image();
+			preloader.image.addEventListener('load', onPreload);
+			preloader.image.addEventListener('error', onError);
+			preloader.image.src = src;
+			delete preloader.timeout;
 		}, DELAY);
 	}, [src]);
 
 	// if we're already on screen when src changes, kick off the preload
 	useEffect(() => {
-		if (isOnScreen && source !== src && preloader.current.image?.src !== src) {
+		if (isOnScreen && source !== src && preloader.image?.src !== src) {
 			preload();
 		}
 	}, [src, source, preload]);
@@ -98,12 +99,12 @@ export default function DeferredImage ({src, className, ...props}) {
 
 		// if not on screen anymore kill the preload timeout
 		if (!onScreen) {
-			clearTimeout(preloader.current.timeout);
-			delete preloader.current.timeout;
+			clearTimeout(preloader.timeout);
+			delete preloader.timeout;
 		}
 
 		// if onscreen setTimeout for preloading
-		if (onScreen && (src !== source) && !preloader.current.timeout) {
+		if (onScreen && (src !== source) && !preloader.timeout) {
 			preload();
 		}
 	}, [src, props.onError]);
