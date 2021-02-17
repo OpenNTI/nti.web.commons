@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames/bind';
 import { restProps, getRefHandler } from '@nti/lib-commons';
-import { addClickOutListener, addKeyboardBlurListener } from '@nti/lib-dom';
+import { addClickOutListener, addKeyboardBlurListener, hasFocusWithin } from '@nti/lib-dom';
 
 import Styles from './Triggered.css';
 import Aligned from './Aligned';
@@ -229,7 +229,19 @@ export default class TriggeredFlyout extends React.Component {
 			this.dismiss();
 		}
 	}
-	dismiss = cb => this.doClose(cb);
+
+	dismiss = cb => {
+		const wasFocused = this.flyoutRef.current?.flyout && hasFocusWithin(this.flyoutRef.current.flyout);
+
+		this.doClose(() => {
+			if (wasFocused) {
+				this.trigger?.focus();
+			}
+
+			cb?.();
+		});
+	}
+
 	doClose(cb) {
 		if (this.isControlled()) {
 			return;
