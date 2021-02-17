@@ -18,7 +18,6 @@ export * as Hooks from './hooks';
 export * as Icons from './icons';
 export { default as Iframe } from './iframe';
 export { default as Image } from './image';
-export { DeferredImage } from './image';
 export * as Layouts from './layouts';
 export * as Mixins from './mixins';
 export { default as Navigation } from './navigation';
