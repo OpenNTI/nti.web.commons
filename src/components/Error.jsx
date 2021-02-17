@@ -3,14 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logger from '@nti/util-logger';
 import { rawContent } from '@nti/lib-commons';
+import { reportError } from '@nti/web-client';
 
 const logger = Logger.get('common:components:Error');
 
 const isHTML = /<html|<([a-z]+)[^>]*>(.+)<\/\1>/i;
 
-export default class extends React.Component {
-	static displayName = 'Error';
-
+export default class Error extends React.Component {
 	static propTypes = {
 		error: PropTypes.any.isRequired,
 	};
@@ -27,13 +26,17 @@ export default class extends React.Component {
 
 	log = (props = this.props) => {
 		let { error } = props;
-		logger.error(
-			error?.stack ||
-				error?.message ||
-				error?.responseText ||
-				error ||
-				props
-		);
+		if (reportError(error) === false) {
+			logger.error(
+				error?.stack ||
+					error?.message ||
+					error?.responseText ||
+					error ||
+					props
+			);
+		} else {
+			logger.error('Error reported.');
+		}
 	};
 
 	isAccessError = (props = this.props) => {
@@ -60,11 +63,9 @@ export default class extends React.Component {
 		let { error } = this.props;
 		let label = 'Error';
 		let message =
-			error?.stack ||
-			error?.message ||
-			error?.responseText ||
-			error ||
-			'';
+			(error?.stack || error?.message || error?.responseText
+				? ''
+				: error) || 'Something went wrong.';
 
 		if (isHTML.test(message)) {
 			message = <pre {...rawContent(message)} />;
