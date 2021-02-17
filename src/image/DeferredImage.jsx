@@ -64,8 +64,6 @@ export default function DeferredImage({ src, className, onError, ...props }) {
 		{ source: BLANK_IMAGE, loaded: false, isOnScreen: false }
 	);
 
-	console.log(src);
-
 	const { current: internal } = useRef({ image: null });
 
 	useEffect(() => {
