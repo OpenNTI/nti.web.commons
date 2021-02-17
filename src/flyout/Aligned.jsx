@@ -500,6 +500,11 @@ export default class AlignedFlyout extends React.Component {
 			arrow,
 			primaryAxis
 		);
+
+		if (innerStyle.maxHeight) {
+			innerStyle['--flyout-max-height'] = innerStyle.maxHeight;
+		}
+
 		const cls = cx(
 			'aligned-flyout',
 			'open',
