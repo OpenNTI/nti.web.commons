@@ -124,7 +124,7 @@ export default class Square extends React.Component {
 		} = this;
 
 		return svg ? (
-			<svg {...props} viewBox={`0 0 ${size} {size}`}>
+			<svg {...props} viewBox={`0 0 ${size} ${size}`}>
 				<image xlinkHref={src} width="100%" height="100%" />
 			</svg>
 		) : (
