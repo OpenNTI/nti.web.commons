@@ -244,7 +244,9 @@ export default class TriggeredFlyout extends React.Component {
 				this.trigger?.focus();
 			}
 
-			cb?.();
+			if (typeof cb === 'function') {
+				cb();
+			}
 		});
 	};
 
