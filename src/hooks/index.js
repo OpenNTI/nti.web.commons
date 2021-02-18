@@ -9,3 +9,4 @@ export { useResolver } from './use-resolver';
 export { useVisibleCount } from './use-visible-count';
 export { useWindowSize } from './use-window-size';
 export * from './use-responsive-value';
+export * from './use-shared-dom';
