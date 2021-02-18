@@ -97,7 +97,7 @@ export default class Avatar extends BaseEntity {
 			...props,
 			letterbox,
 			'data-for': User.getDebugUsernameString(entity),
-			alt: 'Avatar for ' + displayName,
+			alt: displayName && 'Avatar for ' + displayName,
 			className: cx('avatar', color, className),
 		};
 
