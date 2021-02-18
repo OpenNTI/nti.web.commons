@@ -25,6 +25,7 @@ function Container(props) {
 	);
 }
 
+// to vary the image size a bit so we're not requesting the same image over and over
 const ballpark = () => SIZE + (Math.floor(Math.random() * 100) - 50);
 
 export const Story = ({ length = 200, ...props }) => (
