@@ -11,22 +11,9 @@ const rootMarginFromBuffer = (buffer = 0) => {
 	//fill this in
 };
 
-function useIntersectionObserver(onChange, buffer) {
-	const changeRef = React.useRef(null);
-	const bufferRef = React.useRef(null);
-
-	const observerRef = React.useRef(null);
-
-	if (changeRef.current === onChange && bufferRef.current === buffer) {
-		return observerRef.current;
-	}
-
-	observerRef.current?.disconnect();
-
-	changeRef.current = onChange;
-	bufferRef.current = buffer;
-
-	observerRef.current = new IntersectionObserver(
+const hasIntersectionObserver = () => false;//typeof global.IntersectionObserver === 'undefined';
+const getIntersectionObserver = (onChange, buffer) => (
+	new IntersectionObserver(
 		entries => {
 			const entry = entries[0]; //should only ever be one;
 			const onScreen = entry.isIntersecting;
@@ -42,7 +29,35 @@ function useIntersectionObserver(onChange, buffer) {
 		{
 			rootMargin: rootMarginFromBuffer(buffer),
 		}
-	);
+	)
+);
+
+const getFallbackObserver = (onChange) => (
+	{
+		observe: () => onChange(true),
+		unobserve: () => {},
+		disconnect: () => {}
+	}
+);
+
+function useIntersectionObserver(onChange, buffer) {
+	const changeRef = React.useRef(null);
+	const bufferRef = React.useRef(null);
+
+	const observerRef = React.useRef(null);
+
+	if (changeRef.current === onChange && bufferRef.current === buffer) {
+		return observerRef.current;
+	}
+
+	observerRef.current?.disconnect();
+
+	changeRef.current = onChange;
+	bufferRef.current = buffer;
+
+	observerRef.current = hasIntersectionObserver() ?
+		getIntersectionObserver(onChange, buffer) :
+		getFallbackObserver(onChange, buffer);
 
 	return observerRef.current;
 }
