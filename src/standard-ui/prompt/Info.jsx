@@ -18,7 +18,7 @@ const t = scoped('web-commons.standard-ui.prompt.Info', {
 	done: 'Done',
 });
 
-const styles = css`
+const styles = stylesheet`
 	.info-card {
 		background: white;
 		max-width: 500px;

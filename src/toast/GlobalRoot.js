@@ -2,7 +2,7 @@ import { createMountPoint } from '../remote-mount';
 
 import Container from './container/Container';
 
-const styles = css`
+const styles = stylesheet`
 	.global-root {
 	}
 	.global-container {

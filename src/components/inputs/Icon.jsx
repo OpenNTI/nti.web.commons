@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import PlaceholderLabel from './placeholder/Label';
 
-const styles = css`
+const styles = stylesheet`
 	.input-icon {
 		position: relative;
 		display: inline-block;

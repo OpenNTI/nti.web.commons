@@ -14,7 +14,7 @@ const t = scoped('web-commons.standard-ui.prompt.Confirm', {
 	done: 'Done',
 });
 
-const styles = css`
+const styles = stylesheet`
 	.prompt:not(.inline) {
 		min-width: min(500px, 98vw);
 		background: white;

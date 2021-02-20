@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import Relative from './Relative';
 
-const styles = css`
+const styles = stylesheet`
 	@custom-selector :--inputs input:not([type="checkbox"]);
 	@custom-selector :--underline-up-state .underline.locked :--inputs, .underline:not(.empty) :--inputs, .underline :--inputs:focus;
 	@custom-selector :--underline-error-up-state .underline.error.locked :--inputs, .underline.error:not(.empty) :--inputs, .underline.error :--inputs:focus;

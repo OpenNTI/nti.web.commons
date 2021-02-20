@@ -7,7 +7,7 @@ import ZStack from '../../flyout/ZBooster';
 
 import Region from './Region';
 
-const styles = css`
+const styles = stylesheet`
 	.container {
 		position: fixed;
 		top: 0;

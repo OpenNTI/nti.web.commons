@@ -9,7 +9,7 @@ const { BLANK_IMAGE } = DataURIs;
 
 const DELAY = 250;
 
-const styles = css`
+const styles = stylesheet`
 	.img.loading {
 		animation: shimmer 2s infinite;
 		background: linear-gradient(

@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { getStyles, updateRef } from '../utils';
 import { ScreenSize } from '../../decorators';
 
-const styles = css`
+const styles = stylesheet`
 	.limit-lines {
 		display: inline-block;
 		overflow: hidden;

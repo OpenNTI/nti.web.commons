@@ -7,7 +7,7 @@ import { Triggered } from '../../prompts';
 import Single from './Single';
 import Multiple from './Multiple';
 
-const styles = css`
+const styles = stylesheet`
 	:global(.modal) .light-box-dialog {
 		display: flex !important;
 

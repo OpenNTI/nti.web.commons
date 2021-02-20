@@ -9,7 +9,7 @@ import { Message } from '../../../errors';
 import Box from './frames/Box';
 import Underline from './frames/Underline';
 
-const styles = css`
+const styles = stylesheet`
 	@custom-selector :--inputs input:not([type="checkbox"]);
 
 	.container {

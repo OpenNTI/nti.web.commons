@@ -1,6 +1,6 @@
 import cx from 'classnames';
 
-const styles = css`
+const styles = stylesheet`
 	.nti-text {
 		font-family: var(--body-font-family);
 		white-space: pre-wrap;

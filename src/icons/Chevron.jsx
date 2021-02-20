@@ -6,7 +6,7 @@ import { Variant } from '../HighOrderComponents';
 
 import FontIcon from './Font-Icon';
 
-const styles = css`
+const styles = stylesheet`
 	.left {
 		transform: rotate(270deg);
 	}
