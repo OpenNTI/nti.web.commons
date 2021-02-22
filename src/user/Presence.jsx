@@ -14,10 +14,7 @@ export default class UserPresence extends React.Component {
 
 	static propTypes = {
 		className: PropTypes.string,
-		user: PropTypes.oneOfType([
-			PropTypes.object,
-			PropTypes.string
-		]),
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		children: PropTypes.element,
 		border: PropTypes.bool,
 		dark: PropTypes.bool,
