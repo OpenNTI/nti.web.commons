@@ -22,7 +22,7 @@ export function Person(props) {
 				<g
 					transform="translate(-120.000000, -268.000000)"
 					stroke="currentColor"
-					strokeWdth="2"
+					strokeWidth="2"
 				>
 					<g transform="translate(112.000000, 261.000000)">
 						<g transform="translate(9.000000, 8.000000)">
