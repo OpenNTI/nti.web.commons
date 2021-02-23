@@ -63,9 +63,7 @@ export default class Error extends React.Component {
 		let { error } = this.props;
 		let label = 'Error';
 		let message =
-			(error?.stack || error?.message || error?.responseText
-				? ''
-				: error) || 'Something went wrong.';
+			(typeof error !== 'string' ? '' : error) || 'Something went wrong.';
 
 		if (isHTML.test(message)) {
 			message = <pre {...rawContent(message)} />;
