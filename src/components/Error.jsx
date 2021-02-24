@@ -11,6 +11,7 @@ const isHTML = /<html|<([a-z]+)[^>]*>(.+)<\/\1>/i;
 
 export default class Error extends React.Component {
 	static propTypes = {
+		message: PropTypes.string,
 		error: PropTypes.any.isRequired,
 	};
 
