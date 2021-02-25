@@ -12,7 +12,8 @@ const rootMarginFromBuffer = (buffer = 0) => {
 };
 
 const hasIntersectionObserver = () =>
-	typeof global.IntersectionObserver === 'undefined';
+	typeof global.IntersectionObserver !== 'undefined';
+
 const getIntersectionObserver = (onChange, buffer) =>
 	new IntersectionObserver(
 		entries => {
