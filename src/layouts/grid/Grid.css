@@ -5,6 +5,8 @@
     gap: var(--gap, 14px);
     margin: 0;
     justify-content: center;
+	list-style: none;
+	padding: 0;
 }
 
 /* headers and directly nested containers occupy the full available width */
