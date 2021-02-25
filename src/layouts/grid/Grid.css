@@ -9,6 +9,7 @@
 
 /* headers and directly nested containers occupy the full available width */
 .container > .container,
+.single-column > *,
 .header {
 	grid-column: 1 / -1;
 }
