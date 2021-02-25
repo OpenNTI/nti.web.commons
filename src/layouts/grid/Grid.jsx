@@ -27,9 +27,6 @@ Grid.Header = ({as: Cmp = 'div', className, ...props}) => (
 	<Cmp className={cx(styles.header, className)} {...props} />
 );
 
-// provides a "block" element while retaining the grid's width-snapping characteristics
-Grid.SingleColumn = props => <Grid {...props} singleColumn />
-
 Grid.propTypes = {
 	as: PropTypes.node,
 	colsize: PropTypes.oneOfType([
@@ -37,5 +34,5 @@ Grid.propTypes = {
 		PropTypes.string // e.g. 'minmax(200, 1fr)'
 	]),
 	gap: PropTypes.number,
-	singleColumn: PropTypes.bool
+	singleColumn: PropTypes.bool // provides a "block" element while retaining the grid's width-snapping characteristics
 };
