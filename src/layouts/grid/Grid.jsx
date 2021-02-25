@@ -8,7 +8,7 @@ import styles from './Grid.css';
 const numpx = num => typeof num === 'number' ? `${num}px` : num;
 
 // Renders a grid container that fills with as many columns as will fit, centered
-export default function Grid ({as: Cmp = 'div', colsize, gap, className, ...other}) {
+export default function Grid ({as: Cmp = 'div', colsize, gap, className, singleColumn, ...other}) {
 	const cssProperties = {
 		'--colsize': numpx(colsize),
 		'--gap': numpx(gap),
@@ -16,7 +16,7 @@ export default function Grid ({as: Cmp = 'div', colsize, gap, className, ...othe
 	return (
 		<Cmp
 			style={cssProperties}
-			className={cx(styles.container, className)}
+			className={cx(styles.container, {[styles.singleColumn]: singleColumn}, className)}
 			{...other}
 		/>
 	);
@@ -27,11 +27,15 @@ Grid.Header = ({as: Cmp = 'div', className, ...props}) => (
 	<Cmp className={cx(styles.header, className)} {...props} />
 );
 
+// provides a "block" element while retaining the grid's width-snapping characteristics
+Grid.SingleColumn = props => <Grid {...props} singleColumn />
+
 Grid.propTypes = {
 	as: PropTypes.node,
 	colsize: PropTypes.oneOfType([
 		PropTypes.number, // e.g. 200
 		PropTypes.string // e.g. 'minmax(200, 1fr)'
 	]),
-	gap: PropTypes.number
+	gap: PropTypes.number,
+	singleColumn: PropTypes.bool
 };
