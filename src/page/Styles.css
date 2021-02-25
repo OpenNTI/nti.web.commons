@@ -4,6 +4,7 @@
 	--side-padding: 2rem;
 
 	max-width: 1024px;
+	width: 100vw;
 	margin: 0 auto;
 	padding-top: var(--page-margin-top);
 
