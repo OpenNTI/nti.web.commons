@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Variant } from '../HighOrderComponents';
 
 import variants, { Colors } from './variants';
-import { Overflow } from './constants';
 import { getTextPropsFromChildren } from './utils';
 import { getTransforms } from './transforms';
 import Renderer from './Renderer';
@@ -41,7 +40,6 @@ const NTIText = React.forwardRef(
 );
 
 NTIText.displayName = 'NTIText';
-NTIText.Overflow = Overflow;
 
 NTIText.Translator = getString => {
 	const Translate = Variant(NTIText, { getString }, 'translator');

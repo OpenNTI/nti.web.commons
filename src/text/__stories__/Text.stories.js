@@ -31,7 +31,7 @@ export const ComplexTranslate = () => (
 );
 
 export const MaxLinesRich = () => (
-	<Text linkify limitLines={2} overflow={Text.Overflow.Ellipsis}>
+	<Text linkify limitLines={2}>
 		{`<b>Lorem</b> ipsum http://dolor.com sit amet, consectetur adipiscing elit. Aenean vulputate non justo at feugiat. Aenean pellentesque porta ligula, at pulvinar lectus dictum ut. Donec eleifend neque posuere ipsum finibus sagittis. Maecenas ultricies sapien felis, at vestibulum risus ultricies at. Proin imperdiet quam diam, vel feugiat quam fermentum ut. Maecenas blandit nec diam et accumsan. Curabitur eget arcu dignissim, consequat leo in, sodales felis. Suspendisse magna magna, tincidunt at leo non, mattis luctus mauris. Vivamus sagittis nulla eu posuere imperdiet. Duis et quam at ipsum volutpat tristique. Nullam vulputate ante fermentum ligula condimentum fermentum.
 
 Vivamus pretium sollicitudin elit non mollis. Donec sed ligula lectus. Maecenas ac sapien vel eros mollis vestibulum id in lorem. Proin porta varius lorem, a gravida velit elementum quis. Nullam eget ultrices ex. Pellentesque ullamcorper augue et neque pharetra, in sollicitudin odio imperdiet. Vivamus scelerisque, est eu sodales maximus, est justo facilisis libero, ac placerat dui justo vitae erat. Pellentesque semper auctor imperdiet. Sed in varius elit.
