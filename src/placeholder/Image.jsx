@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ImageContainer from '../image/Container';
 
-import Base from './Base';
+import { Base } from './Base';
 import generator from './generator';
 
 const Outer = styled(ImageContainer)`
@@ -34,4 +34,4 @@ function ImagePlaceholder ({aspectRatio, flat, ...otherProps}) {
 	);
 }
 
-export default generator(ImagePlaceholder);
+export const Image = generator(ImagePlaceholder);

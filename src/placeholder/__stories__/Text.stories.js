@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TextPlaceholder from '../Text';
+import {Text as TextPlaceholder} from '../Text';
 
 export default {
 	title: 'Placeholder/Text',

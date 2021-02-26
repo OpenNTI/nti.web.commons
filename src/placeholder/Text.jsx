@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import generator from './generator';
+import { Base } from './Base';
 
-import Base from './Base';
-
-const Text = styled('span')`
+const TextInner = styled('span')`
 	display: inline-block;
 	position: relative;
 	color: rgba(0, 0, 0, 0);
@@ -28,11 +28,11 @@ TextPlaceholder.propTypes = {
 };
 function TextPlaceholder ({text, flat, ...otherProps}) {
 	return (
-		<Text {...otherProps} full={!text}>
+		<TextInner {...otherProps} full={!text}>
 			<span ariaHidden>{text || 'w'}</span>
 			<Placeholder flat={flat} />
-		</Text>
+		</TextInner>
 	)
 }
 
-export default generator(TextPlaceholder);
+export const Text = generator(TextPlaceholder);

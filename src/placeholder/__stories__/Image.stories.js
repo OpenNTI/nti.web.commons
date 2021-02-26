@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ImagePlaceholder from '../Image';
+import {Image as ImagePlaceholder} from '../Image';
 
 export default {
 	title: 'Placeholder/Image',
