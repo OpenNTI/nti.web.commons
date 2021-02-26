@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {Image as ImagePlaceholder} from '../Image';
+import { Image as ImagePlaceholder } from '../Image';
 
 export default {
 	title: 'Placeholder/Image',
-	component: ImagePlaceholder
+	component: ImagePlaceholder,
 };
 
-export const Base = (props) => (<ImagePlaceholder {...props} />);
+export const Base = props => <ImagePlaceholder {...props} />;
 Base.argTypes = {
-	flat: {control: {type: 'boolean'}},
-	aspectRatio: {control: {type: 'number'}}
+	flat: { control: { type: 'boolean' } },
+	aspectRatio: { control: { type: 'number' } },
 };
 
 const Img = styled('img')`
@@ -18,7 +18,7 @@ const Img = styled('img')`
 	height: 200px;
 `;
 
-export const Styled = (props) => (<ImagePlaceholder as={Img} {...props} />);
+export const Styled = props => <ImagePlaceholder as={Img} {...props} />;
 Styled.argTypes = {
-	flat: {control: {type: 'boolean'}}
+	flat: { control: { type: 'boolean' } },
 };

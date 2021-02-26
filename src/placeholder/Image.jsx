@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ImageContainer from '../image/Container';
 
 import { Base } from './Base';
-import generator from './generator';
+import { generator } from './generator';
 
 const Outer = styled(ImageContainer)`
 	position: relative;
@@ -21,14 +21,11 @@ const Inner = styled(Base)`
 
 ImagePlaceholder.propTypes = {
 	aspectRatio: PropTypes.number,
-	flat: PropTypes.bool
+	flat: PropTypes.bool,
 };
-function ImagePlaceholder ({aspectRatio, flat, ...otherProps}) {
+function ImagePlaceholder({ aspectRatio, flat, ...otherProps }) {
 	return (
-		<Outer
-			{...otherProps}
-			aspectRatio={aspectRatio}
-		>
+		<Outer {...otherProps} aspectRatio={aspectRatio}>
 			<Inner flat={flat} />
 		</Outer>
 	);
