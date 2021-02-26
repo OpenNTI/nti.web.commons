@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { HOC } from '@nti/lib-commons';
 
@@ -9,22 +9,19 @@ const propTypes = {
 };
 
 export function generator(placeholder) {
-	const Generated = ({ as, ...otherProps }) => {
-		if (as && !as.withComponent) {
+	const Generated = ({ as: typeReplacement, ...otherProps }) => {
+		if (typeReplacement && !typeReplacement.withComponent) {
 			throw new Error(
 				'Invalid "as" prop given to placeholder. Must be a styled component'
 			);
 		}
 
-		const [Cmp] = React.useState(() => {
-			if (!as) {
-				return placeholder;
-			}
+		const Type = useMemo(
+			() => typeReplacement?.withComponent?.(placeholder) ?? placeholder,
+			[typeReplacement]
+		);
 
-			return as.withComponent(placeholder);
-		});
-
-		return <Cmp {...otherProps} />;
+		return <Type {...otherProps} />;
 	};
 
 	Generated.propTypes = propTypes;
