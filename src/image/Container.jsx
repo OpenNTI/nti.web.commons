@@ -1,33 +1,32 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
-import Styles from './Container.css';
 import { getStylesForAspectRatio } from './utils';
 
-ImageContainer.propTypes = {
-	as: PropTypes.any,
-	className: PropTypes.string,
-	aspectRatio: PropTypes.number,
-	style: PropTypes.object,
-};
-export default function ImageContainer({
-	as:tag,
-	aspectRatio,
-	className,
-	style,
-	...otherProps
-}) {
-	const Cmp = tag || 'div';
-	const aspectStyle = aspectRatio
-		? { paddingBottom: getStylesForAspectRatio(aspectRatio).paddingBottom }
-		: {};
+const Container = styled('div').attrs(({ aspectRatio, style, ...props }) => ({
+	...props,
+	style: {
+		...style,
+		...(!aspectRatio
+			? null
+			: {
+					paddingBottom: getStylesForAspectRatio(aspectRatio)
+						.paddingBottom,
+			  }),
+	},
+}))`
+	position: relative;
+	height: 0;
+	overflow: hidden;
 
-	return (
-		<Cmp
-			className={cx(Styles.imageContainer, className)}
-			style={{ ...(style || {}), ...aspectStyle }}
-			{...otherProps}
-		/>
-	);
-}
+	& img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+`;
+
+Container.propTypes = {
+	aspectRatio: PropTypes.number,
+};
+export default Container;
