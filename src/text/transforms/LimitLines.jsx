@@ -4,15 +4,15 @@ import cx from 'classnames';
 
 const styles = stylesheet`
 	.limit-lines {
-		display: -webkit-box;
-		-webkit-line-clamp: var(--line-limit, 2);
+		display: -webkit-box !important;
+		-webkit-line-clamp: var(--line-limit);
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
 
 		/* The eventual standard:
 		https://drafts.csswg.org/css-overflow-3/#propdef-line-clamp */
-		line-clamp: var(--line-limit, 2) "…";
+		line-clamp: var(--line-limit) "…";
 	}
 `;
 
