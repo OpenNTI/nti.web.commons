@@ -2,121 +2,57 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { getStyles, updateRef } from '../utils';
-import { ScreenSize } from '../../decorators';
-
 const styles = stylesheet`
 	.limit-lines {
-		display: inline-block;
+		display: -webkit-box !important;
+		-webkit-line-clamp: var(--line-limit);
+		-webkit-box-orient: vertical;
 		overflow: hidden;
+		text-overflow: ellipsis;
+		max-height: calc(var(--line-limit) * var(--line-height));
+
+		/* The eventual standard:
+		https://drafts.csswg.org/css-overflow-3/#propdef-line-clamp */
+		line-clamp: var(--line-limit) "…";
 	}
 `;
 
-function getLinesInfo(limitLines, forceLines) {
-	if (limitLines != null) {
-		return {
-			lines: limitLines,
-			style: 'maxHeight',
-		};
-	}
-
-	if (forceLines != null) {
-		return {
-			lines: forceLines,
-			style: 'height',
-		};
-	}
-}
-
-//TODO: recompute ellipse after a resize or size change
-
 const LimitLines = React.forwardRef(
-	(
-		{
-			children,
-			style: propStyle,
-			className,
-			limitLines,
-			forceLines,
-			screenWidth,
-			screenHeight,
-			...otherProps
-		},
-		ref
-	) => {
-		const single = limitLines != null ? limitLines === 1 : forceLines === 1;
-		const textNode = useRef();
-		const [{ style: stateStyle, settled }, setState] = useState({
-			style: {},
-			settled: false,
-		});
-
-		const processRef = useCallback(
-			node => {
-				textNode.current = node;
-
-				//NOTE: We are waiting to call the textRef back until after we've set and rendered the maxHeight,
-				//but we don't need to wait when we are unmounting.
-				updateRef(ref, node);
-			},
-			[ref]
-		);
-
-		useEffect(() => {
-			const { current: node } = textNode;
-			if (!node) {
-				return;
-			}
-
-			const { lines, style } = getLinesInfo(limitLines, forceLines);
-			const { lineHeight, paddingTop, paddingBottom } = getStyles(node, [
-				'lineHeight',
-				'paddingTop',
-				'paddingBottom',
-			]);
-
-			const max =
-				Math.ceil(lineHeight * lines) +
-				(paddingTop || 0) +
-				(paddingBottom + 0);
-
-			setState({
-				style: {
-					[style]: `${max}px`,
-				},
-				settled: true,
-			});
-		}, [limitLines, forceLines, textNode.current, screenWidth]);
-
-		useEffect(() => {
-			updateRef(ref, textNode.current);
-		}, [textNode.current, stateStyle, settled]);
-
+	({ children, style, className, limitLines: limit, ...otherProps }, ref) => {
+		const local = useRef();
 		const Text = React.Children.only(children);
+		const [lineHeight, setLineHeight] = useState('1em');
+
+		const handleRef = useCallback(x => {
+			local.current = x;
+			if (ref) {
+				ref.current = x;
+			}
+		}, []);
+
+		useEffect(() => {
+			setLineHeight(getComputedStyle(local.current).lineHeight);
+		}, [className]);
 
 		return React.cloneElement(Text, {
 			...otherProps,
-			className: cx(className, styles.limitLines, { single, settled }),
-			style: { ...(propStyle || {}), ...(stateStyle || {}) },
-			ref: processRef,
+			ref: handleRef,
+			className: cx(className, styles.limitLines),
+			style: {
+				...style,
+				'--line-limit': limit,
+				'--line-height': lineHeight,
+			},
 		});
 	}
 );
 
 LimitLines.displayName = 'LimitLines';
-LimitLines.shouldApply = ({ limitLines, forceLines }) =>
-	limitLines != null || forceLines != null;
+LimitLines.shouldApply = ({ limitLines }) => limitLines != null;
 
 LimitLines.propTypes = {
-	className: PropTypes.string,
 	limitLines: PropTypes.number,
-	forceLines: PropTypes.number,
 	style: PropTypes.object,
-	children: PropTypes.any,
-
-	//from ScreenSize decorator
-	screenWidth: PropTypes.any,
-	screenHeight: PropTypes.any,
 };
 
-export default ScreenSize()(LimitLines);
+export default LimitLines;
