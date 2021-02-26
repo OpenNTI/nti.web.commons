@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {Text as TextPlaceholder} from '../Text';
+import { Text as TextPlaceholder } from '../Text';
 
 export default {
 	title: 'Placeholder/Text',
-	component: TextPlaceholder
+	component: TextPlaceholder,
 };
 
-export const Base = (props) => (<TextPlaceholder {...props} />)
+export const Base = props => <TextPlaceholder {...props} />;
 Base.argTypes = {
-	flat: {control: {type: 'boolean'}},
-	text: {control: {type: 'text'}}
+	flat: { control: { type: 'boolean' } },
+	text: { control: { type: 'text' } },
 };
 
 const Text = styled('span')`
@@ -18,8 +18,8 @@ const Text = styled('span')`
 	line-height: 1.3;
 `;
 
-export const Styled = (props) => (<TextPlaceholder as={Text} {...props} />);
+export const Styled = props => <TextPlaceholder as={Text} {...props} />;
 Styled.argTypes = {
-	flat: {control: {type: 'boolean'}},
-	text: {control: {type: 'text'}}
+	flat: { control: { type: 'boolean' } },
+	text: { control: { type: 'text' } },
 };

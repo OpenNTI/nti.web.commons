@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import generator from './generator';
+import { generator } from './generator';
 import { Base } from './Base';
 
 const TextInner = styled('span')`
@@ -24,15 +24,15 @@ const Placeholder = styled(Base)`
 
 TextPlaceholder.propTypes = {
 	text: PropTypes.string,
-	flat: PropTypes.bool
+	flat: PropTypes.bool,
 };
-function TextPlaceholder ({text, flat, ...otherProps}) {
+function TextPlaceholder({ text, flat, ...otherProps }) {
 	return (
 		<TextInner {...otherProps} full={!text}>
 			<span ariaHidden>{text || 'w'}</span>
 			<Placeholder flat={flat} />
 		</TextInner>
-	)
+	);
 }
 
 export const Text = generator(TextPlaceholder);

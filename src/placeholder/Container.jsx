@@ -1,12 +1,9 @@
 import React from 'react';
 
-import generator from './generator';
+import { generator } from './generator';
 
-
-function ContainerPlaceholder ({...otherProps}) {
-	return (
-		<div {...otherProps} />
-	);
+function ContainerPlaceholder({ ...otherProps }) {
+	return <div {...otherProps} />;
 }
 
 export const Container = generator(ContainerPlaceholder);
