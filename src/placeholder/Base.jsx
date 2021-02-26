@@ -1,9 +1,9 @@
 export default styled.div`
-	.flat {
+	&.flat {
 		background-color: #e2e2e2;
 	}
 
-	:not(.flat) {
+	&:not(.flat) {
 		animation: shimmer 2s infinite;
 		background:
 			linear-gradient(
