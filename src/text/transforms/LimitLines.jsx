@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { updateRef } from '../utils';
+
 const styles = stylesheet`
 	.limit-lines {
 		display: -webkit-box !important;
@@ -25,9 +27,7 @@ const LimitLines = React.forwardRef(
 
 		const handleRef = useCallback(x => {
 			local.current = x;
-			if (ref) {
-				ref.current = x;
-			}
+			updateRef(ref, x);
 		}, []);
 
 		useEffect(() => {
