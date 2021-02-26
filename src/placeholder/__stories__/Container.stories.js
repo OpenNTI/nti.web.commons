@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ContainerPlaceholder from '../Container';
+import {Container as ContainerPlaceholder} from '../Container';
 
 export default {
 	title: 'Placeholder/Container',

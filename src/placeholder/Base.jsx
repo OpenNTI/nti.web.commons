@@ -1,4 +1,4 @@
-export default styled.div`
+export const Base = styled.div`
 	&.flat {
 		background-color: #e2e2e2;
 	}

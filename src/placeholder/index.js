@@ -1,3 +1,3 @@
-export { default as Container} from './Container';
-export { default as Image} from './Image';
-export { default as Text} from './Text';
+export { Container } from './Container';
+export { Image } from './Image';
+export { Text } from './Text';
