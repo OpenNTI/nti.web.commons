@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ScratchPad from '../../scratch-pad';
@@ -62,7 +62,7 @@ const Overflow = React.forwardRef(
 			fullTextNode.current = textNode.current?.innerHTML;
 		}, [fullText, screenWidth]);
 
-		useLayoutEffect(() => {
+		useEffect(() => {
 			const { current: node } = textNode;
 			const { current: scratch } = fullTextNode;
 			if (!node || !scratch) {
