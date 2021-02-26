@@ -5,13 +5,12 @@ export const Base = styled.div`
 
 	&:not(.flat) {
 		animation: shimmer 2s infinite;
-		background:
-			linear-gradient(
-				to right,
-				#eff1f3 4%,
-				#e2e2e2 25%,
-				#eff1f3 36%
-			);
+		background: linear-gradient(
+			105deg,
+			var(--panel-background-alt, #e2e2e2) 40%,
+			white 50%,
+			var(--panel-background-alt, #e2e2e2) 60%
+		);
 		background-size: 1000px 100%;
 		background-attachment: fixed;
 	}
