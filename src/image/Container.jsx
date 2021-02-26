@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import Styles from './Container.css';
 import { getStylesForAspectRatio } from './utils';
-
-const cx = classnames.bind(Styles);
 
 ImageContainer.propTypes = {
 	as: PropTypes.any,
@@ -27,7 +25,7 @@ export default function ImageContainer({
 
 	return (
 		<Cmp
-			className={cx('image-container', className)}
+			className={cx(Styles.imageContainer, className)}
 			style={{ ...(style || {}), ...aspectStyle }}
 			{...otherProps}
 		/>
