@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-export default class ReponsiveInlineListMenu extends React.Component {
+export default class ResponsiveInlineListMenu extends React.Component {
 	static propTypes = {
 		hidden: PropTypes.bool,
 		items: PropTypes.array,
@@ -34,17 +34,15 @@ export default class ReponsiveInlineListMenu extends React.Component {
 				aria-hidden={hidden}
 				hidden={hidden}
 			>
-				{items.map((item, index) => {
-					return (
-						<li key={index}>
-							{React.cloneElement(item, {
-								onDismiss: this.onDimiss,
-								addTriggerClass: addTriggerClass,
-								removeTriggerClass: removeTriggerClass,
-							})}
-						</li>
-					);
-				})}
+				{items.map((item, index) => (
+					<li key={index}>
+						{React.cloneElement(item, {
+							onDismiss: this.onDismiss,
+							addTriggerClass: addTriggerClass,
+							removeTriggerClass: removeTriggerClass,
+						})}
+					</li>
+				))}
 			</ul>
 		);
 	}
