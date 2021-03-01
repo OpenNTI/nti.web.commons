@@ -48,19 +48,21 @@ export default function GridLogic({
 		'--gap': pixels(gap),
 	};
 
-	const columnWidth =
+	const columnWidthSpec = pixels(
 		width ||
-		(!el
-			? 0
-			: parseInt(
-					// should be reading from a cached style computation
-					getComputedStyle(el).getPropertyValue('--col-width'),
-					10
-			  ));
+			(!el ? 0 : getComputedStyle(el).getPropertyValue('--col-width'))
+	);
+	const [, valueStr, unit] = columnWidthSpec.split(/([\d.]+)/);
+	const value = parseFloat(valueStr);
 
 	const columns = singleColumn
 		? 1
-		: Math.max(1, Math.floor(containerWidth / columnWidth) || 1);
+		: Math.max(
+				1,
+				Math.floor(
+					unit === '%' ? 100 / value : containerWidth / value
+				) || 1
+		  );
 
 	return (
 		<Grid
