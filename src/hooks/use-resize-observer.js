@@ -18,11 +18,11 @@ export function useResizeObserver(onChange) {
 	changeRef.current = onChange;
 
 	if (typeof ResizeObserver === 'undefined') {
-		observerRef.current = {
+		return (observerRef.current = {
 			disconnect() {},
 			observe() {},
 			unobserve() {},
-		};
+		});
 	}
 
 	observerRef.current = new ResizeObserver(entries => {
