@@ -21,10 +21,6 @@ const Grid = styled('div')`
 	&.variant-single-column > * {
 		grid-column: 1 / -1;
 	}
-
-	& > * {
-		overflow: hidden;
-	}
 `;
 
 // append 'px' if it's a number otherwise leave it alone
