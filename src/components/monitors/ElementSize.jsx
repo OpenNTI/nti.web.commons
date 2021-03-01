@@ -1,32 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { matches } from '@nti/lib-dom';
 
-function ignoreResize(target) {
-	return matches(target, '[aria-hidden=true], [aria-hidden=true] *');
-}
-
-function useResizeObserver(onChange) {
-	const changeRef = React.useRef(null);
-	const observerRef = React.useRef(null);
-
-	if (changeRef.current === onChange) {
-		return observerRef.current;
-	}
-
-	observerRef.current?.disconnect();
-
-	changeRef.current = onChange;
-	observerRef.current = new ResizeObserver(entries => {
-		for (let entry of entries) {
-			if (!ignoreResize(entry.target)) {
-				onChange(entry.target.getBoundingClientRect());
-			}
-		}
-	});
-
-	return observerRef.current;
-}
+import { useResizeObserver } from '../../hooks/use-resize-observer';
 
 ElementSizeMonitorResize.propTypes = {
 	as: PropTypes.any,
