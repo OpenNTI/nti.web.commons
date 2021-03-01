@@ -32,6 +32,7 @@ export default function GridLogic({
 	colWidth: width,
 	gap,
 	singleColumn,
+	style,
 	...other
 }) {
 	const ref = useRef();
@@ -40,6 +41,7 @@ export default function GridLogic({
 
 	const childRenderer = typeof children === 'function';
 	const cssProperties = {
+		...style,
 		'--col-width': pixels(width),
 		'--gap': pixels(gap),
 	};
@@ -83,4 +85,5 @@ GridLogic.propTypes = {
 	]),
 	gap: PropTypes.number,
 	singleColumn: PropTypes.bool, // provides a "block" element while retaining the grid's width-snapping characteristics
+	style: PropTypes.object,
 };
