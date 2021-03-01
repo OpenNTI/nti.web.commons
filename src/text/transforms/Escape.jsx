@@ -18,7 +18,7 @@ const Escape = React.forwardRef(
 			setText(span.innerHTML);
 		}, [text]);
 
-		if (!isString) {
+		if (!isString || hasMarkup || hasComponents) {
 			return React.cloneElement(Text, {
 				...props,
 				text,
