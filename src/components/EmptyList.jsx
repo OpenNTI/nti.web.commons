@@ -1,10 +1,20 @@
-import './EmptyList.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { scoped } from '@nti/lib-locale';
 
 import Notice from './Notice';
+
+const Box = styled(Notice)`
+	text-align: center;
+	color: var(--tertiary-grey);
+	font-size: 0.875rem;
+
+	h1 {
+		font-size: 1.75rem;
+		font-weight: 300;
+	}
+`;
 
 const DEFAULT_TEXT = {
 	default: 'This list is empty.',
@@ -46,10 +56,10 @@ export default function EmptyList({ type, className }) {
 	}
 
 	return (
-		<Notice className={cx('empty-list', type, className)}>
+		<Box className={cx('empty-list', type, className)}>
 			{heading && <h1>{heading}</h1>}
 			{message}
-		</Notice>
+		</Box>
 	);
 }
 

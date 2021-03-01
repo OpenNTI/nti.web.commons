@@ -1,27 +1,20 @@
-import './Notice.scss';
-import React from 'react';
-import PropTypes from 'prop-types';
+const Notice = styled('figure').attrs(props => ({
+	...props,
+	small: props.className.includes('small'),
+}))`
+	margin: 1rem;
+	padding: 2rem 1rem;
+	background: var(--panel-background);
+	color: var(--secondary-grey);
+	border: 1px solid var(--border-grey);
+	border-radius: 2px;
+	word-break: break-word;
+	word-wrap: break-word;
 
-/**
- * Whats the point of this component? why not just use the element with classname?
- * <figure class="notice">...
- */
-
-export default class extends React.Component {
-	static displayName = 'Notice';
-
-	static propTypes = {
-		className: PropTypes.string,
-	};
-
-	static defaultProps = {
-		className: '',
-	};
-
-	render() {
-		let { className } = this.props;
-
-		className = ['notice'].concat(className).join(' ');
-		return <figure {...this.props} className={className} />;
+	&.small {
+		font-size: 0.6875rem;
+		padding: 0.25rem;
 	}
-}
+`;
+
+export default Notice;
