@@ -1,6 +1,6 @@
 import { useMediaQuery } from './use-media-query';
 
-const { MobileQuery, TabletQuery, DesktopQuery } = useMediaQuery;
+const { MOBILE, TABLET, DESKTOP } = useMediaQuery;
 
 export function useResponsiveValue(query, matchValue, noMatchValue) {
 	const { matches } = useMediaQuery(query);
@@ -8,9 +8,7 @@ export function useResponsiveValue(query, matchValue, noMatchValue) {
 	return matches ? matchValue : noMatchValue;
 }
 
-export const useMobileValue = (...args) =>
-	useResponsiveValue(MobileQuery, ...args);
-export const useTabletValue = (...args) =>
-	useResponsiveValue(TabletQuery, ...args);
+export const useMobileValue = (...args) => useResponsiveValue(MOBILE, ...args);
+export const useTabletValue = (...args) => useResponsiveValue(TABLET, ...args);
 export const useDesktopValue = (...args) =>
-	useResponsiveValue(DesktopQuery, ...args);
+	useResponsiveValue(DESKTOP, ...args);
