@@ -56,6 +56,18 @@ export default function GridLogic({
 		'--gap': pixels(gap),
 	};
 
+	if (
+		childRenderer &&
+		!singleColumn &&
+		!/^\d+/.test(cssProperties['--col-width'])
+	) {
+		// eslint-disable-next-line no-console
+		console.warn(
+			'The number of columns cannot be computed with the width of %o. Please use regular children nodes instead of a render function.',
+			width
+		);
+	}
+
 	const columns = useMemo(() => {
 		if (singleColumn) {
 			return 1;
