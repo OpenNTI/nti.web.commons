@@ -42,7 +42,7 @@ export function useMediaQuery(query) {
 	}
 
 	// This isn't really required but to help weed out accidental shortcut names, I'm going to require all queries start with (
-	if (!query?.startsWith('(')) {
+	if (query && !query.startsWith('(')) {
 		throw new TypeError(`Invalid media query: ${query}`);
 	}
 
