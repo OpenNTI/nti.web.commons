@@ -26,6 +26,15 @@ const Grid = styled('div')`
 // append 'px' if it's a number otherwise leave it alone
 const pixels = num => (typeof num === 'number' ? `${num}px` : num);
 
+const getValue = (spec, containerWidth) => {
+	const [,valueStr, unit] = spec.split(/([\d.]+)/);
+	const value = parseFloat(valueStr, 10);
+
+	return unit === '%' ?
+		containerWidth * (100 / value) :
+		value;
+}
+
 // Renders a grid container that fills with as many columns as will fit, centered
 export default function GridLogic({
 	children,
@@ -36,7 +45,6 @@ export default function GridLogic({
 	...other
 }) {
 	const ref = useRef();
-	const { current: el } = ref;
 	const containerWidth = useContainerWidth(ref);
 
 	const childRenderer = typeof children === 'function';
@@ -46,21 +54,22 @@ export default function GridLogic({
 		'--gap': pixels(gap),
 	};
 
-	const columnWidthSpec = pixels(
-		width ||
-			(!el ? 0 : getComputedStyle(el).getPropertyValue('--col-width'))
-	);
-	const [, valueStr, unit] = columnWidthSpec.split(/([\d.]+)/);
-	const value = parseFloat(valueStr);
+	const columns = React.useMemo(() => {
+		if (singleColumn) { return 1; }
 
-	const columns = singleColumn
-		? 1
-		: Math.max(
-				1,
-				Math.floor(
-					unit === '%' ? 100 / value : containerWidth / value
-				) || 1
-		  );
+		const el = ref.current;
+		const getComputedProperty = prop => (!el ? 0 : getComputedStyle(el).getPropertyValue(prop));
+
+		const columnWidthSpec = pixels(width || getComputedProperty('--col-width'));
+		const columnGapSpec = pixels(gap || getComputedProperty('--gap'));
+
+		const columnWidth = getValue(columnWidthSpec, containerWidth);
+		const columnGap = getValue(columnGapSpec, containerWidth);
+
+		const rawColumnCount = Math.floor((containerWidth + columnGap) / (columnWidth + columnGap));
+
+		return Math.max(1, rawColumnCount || 1);
+	}, [containerWidth]);
 
 	return (
 		<Grid
