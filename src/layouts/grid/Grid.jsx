@@ -28,7 +28,10 @@ const Grid = styled('div')`
 // append 'px' if it's a number otherwise leave it alone
 const pixels = num => (typeof num === 'number' ? `${num}px` : num);
 
-const getValue = (givenValue, property, { current: el }, containerWidth) => {
+const resolveValue = ({ current: el }, containerWidth) => ([
+	givenValue,
+	property,
+]) => {
 	const valueSpec = pixels(
 		givenValue ||
 			(!el ? 0 : getComputedStyle(el).getPropertyValue(property))
@@ -91,7 +94,7 @@ export default function GridLogic({
 					...[
 						[width, '--col-width'],
 						[gap, '--gap'],
-					].map(x => getValue(...x, ref, containerWidth))
+					].map(resolveValue(ref, containerWidth))
 			  );
 
 	return (
