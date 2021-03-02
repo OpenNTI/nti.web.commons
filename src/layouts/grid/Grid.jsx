@@ -84,7 +84,7 @@ export default function GridLogic({
 				(containerWidth + columnGap) / columnWidth + columnGap
 			) || 1
 		);
-	}, [containerWidth]);
+	}, [containerWidth, width, gap, singleColumn]);
 
 	return (
 		<Grid
