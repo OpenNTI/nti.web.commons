@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { useContainerWidth } from '../../hooks';
@@ -26,14 +26,16 @@ const Grid = styled('div')`
 // append 'px' if it's a number otherwise leave it alone
 const pixels = num => (typeof num === 'number' ? `${num}px` : num);
 
-const getValue = (spec, containerWidth) => {
-	const [,valueStr, unit] = spec.split(/([\d.]+)/);
+const getValue = (givenValue, property, { current: el }, containerWidth) => {
+	const valueSpec = pixels(
+		givenValue ||
+			(!el ? 0 : getComputedStyle(el).getPropertyValue(property))
+	);
+	const [, valueStr, unit] = valueSpec.split(/([\d.]+)/);
 	const value = parseFloat(valueStr, 10);
 
-	return unit === '%' ?
-		containerWidth * (100 / value) :
-		value;
-}
+	return unit === '%' ? containerWidth * (100 / value) : value;
+};
 
 // Renders a grid container that fills with as many columns as will fit, centered
 export default function GridLogic({
@@ -54,21 +56,22 @@ export default function GridLogic({
 		'--gap': pixels(gap),
 	};
 
-	const columns = React.useMemo(() => {
-		if (singleColumn) { return 1; }
+	const columns = useMemo(() => {
+		if (singleColumn) {
+			return 1;
+		}
 
-		const el = ref.current;
-		const getComputedProperty = prop => (!el ? 0 : getComputedStyle(el).getPropertyValue(prop));
+		const [columnWidth, columnGap] = [
+			[width, '--col-width'],
+			[gap, '--gap'],
+		].map(x => getValue(...x, ref, containerWidth));
 
-		const columnWidthSpec = pixels(width || getComputedProperty('--col-width'));
-		const columnGapSpec = pixels(gap || getComputedProperty('--gap'));
-
-		const columnWidth = getValue(columnWidthSpec, containerWidth);
-		const columnGap = getValue(columnGapSpec, containerWidth);
-
-		const rawColumnCount = Math.floor((containerWidth + columnGap) / (columnWidth + columnGap));
-
-		return Math.max(1, rawColumnCount || 1);
+		return Math.max(
+			1,
+			Math.floor(
+				(containerWidth + columnGap) / columnWidth + columnGap
+			) || 1
+		);
 	}, [containerWidth]);
 
 	return (
