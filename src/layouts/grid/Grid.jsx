@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useContainerWidth } from '../../hooks';
@@ -23,6 +23,8 @@ const Grid = styled('div')`
 	}
 `;
 
+//#region macros
+
 // append 'px' if it's a number otherwise leave it alone
 const pixels = num => (typeof num === 'number' ? `${num}px` : num);
 
@@ -31,11 +33,22 @@ const getValue = (givenValue, property, { current: el }, containerWidth) => {
 		givenValue ||
 			(!el ? 0 : getComputedStyle(el).getPropertyValue(property))
 	);
+	//A spec is the css value of the column width: 200px, 100%, minmax(200, 1ft), etc.
 	const [, valueStr, unit] = valueSpec.split(/([\d.]+)/);
+	//if the unit is %, "" or px we're okay...
 	const value = parseFloat(valueStr, 10);
+
+	// but if its anything else, our calculation will be wrong.
 
 	return unit === '%' ? containerWidth * (100 / value) : value;
 };
+
+const computeColumns = (containerWidth, columnWidth, columnGap) =>
+	Math.max(
+		1,
+		Math.floor((containerWidth + columnGap) / columnWidth + columnGap) || 1
+	);
+//#endregion
 
 // Renders a grid container that fills with as many columns as will fit, centered
 export default function GridLogic({
@@ -68,23 +81,18 @@ export default function GridLogic({
 		);
 	}
 
-	const columns = useMemo(() => {
-		if (singleColumn) {
-			return 1;
-		}
-
-		const [columnWidth, columnGap] = [
-			[width, '--col-width'],
-			[gap, '--gap'],
-		].map(x => getValue(...x, ref, containerWidth));
-
-		return Math.max(
-			1,
-			Math.floor(
-				(containerWidth + columnGap) / columnWidth + columnGap
-			) || 1
-		);
-	}, [containerWidth, width, gap, singleColumn]);
+	const columns =
+		singleColumn || !childRenderer
+			? 1
+			: // Only compute the column count if we have a render
+			  // function child, and we are not in single-column mode.
+			  computeColumns(
+					containerWidth,
+					...[
+						[width, '--col-width'],
+						[gap, '--gap'],
+					].map(x => getValue(...x, ref, containerWidth))
+			  );
 
 	return (
 		<Grid
