@@ -66,7 +66,7 @@ export default function GridLogic({
 		const columnWidth = getValue(columnWidthSpec, containerWidth);
 		const columnGap = getValue(columnGapSpec, containerWidth);
 
-		const rawColumnCount = Math.floor((containerWidth + columnGap) / columnWidth + columnGap);
+		const rawColumnCount = Math.floor((containerWidth + columnGap) / (columnWidth + columnGap));
 
 		return Math.max(1, rawColumnCount || 1);
 	}, [containerWidth]);
