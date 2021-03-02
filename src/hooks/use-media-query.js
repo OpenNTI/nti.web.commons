@@ -47,11 +47,11 @@ export function useMediaQuery(query) {
 	}
 
 	const forceUpdate = useForceUpdate();
-	const mediaQuery = React.useMemo(() => global.matchMedia(query), [query]);
+	const mediaQuery = React.useMemo(() => global.matchMedia?.(query), [query]);
 
 	React.useEffect(() => {
-		mediaQuery.addEventListener('change', forceUpdate);
-		return () => mediaQuery.removeEventListener('change', forceUpdate);
+		mediaQuery?.addEventListener?.('change', forceUpdate);
+		return () => mediaQuery?.removeEventListener?.('change', forceUpdate);
 	}, [mediaQuery]);
 
 	return mediaQuery;
