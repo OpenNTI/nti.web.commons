@@ -26,7 +26,7 @@ export const WithHeader = props => {
 			<Grid {...props} singleColumn>
 				<h4>Header</h4>
 			</Grid>
-			<Grid {...props}>{content()}</Grid>
+			<Grid {...props}>{content}</Grid>
 		</div>
 	);
 };
