@@ -1,6 +1,6 @@
 const Notice = styled('figure').attrs(props => ({
 	...props,
-	small: props.className.includes('small'),
+	small: props.className?.includes?.('small'),
 }))`
 	margin: 1rem;
 	padding: 2rem 1rem;
