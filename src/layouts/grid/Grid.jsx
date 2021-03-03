@@ -49,7 +49,8 @@ const resolveValue = ({ current: el }, containerWidth) => ([
 const computeColumns = (containerWidth, columnWidth, columnGap) =>
 	Math.max(
 		1,
-		Math.floor((containerWidth + columnGap) / columnWidth + columnGap) || 1
+		Math.floor((containerWidth + columnGap) / (columnWidth + columnGap)) ||
+			1
 	);
 //#endregion
 
