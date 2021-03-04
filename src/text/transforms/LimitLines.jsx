@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { updateRef } from '../utils';
 
 const styles = stylesheet`
-	.limit-lines {
+	.multi-line-limit {
 		display: -webkit-box !important;
 		-webkit-line-clamp: var(--line-limit);
 		-webkit-box-orient: vertical;
@@ -16,6 +16,13 @@ const styles = stylesheet`
 		/* The eventual standard:
 		https://drafts.csswg.org/css-overflow-3/#propdef-line-clamp */
 		line-clamp: var(--line-limit) "…";
+	}
+
+	.single-line-limit {
+		display: block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 `;
 
@@ -37,11 +44,18 @@ const LimitLines = React.forwardRef(
 		return React.cloneElement(Text, {
 			...otherProps,
 			ref: handleRef,
-			className: cx(className, styles.limitLines),
+			className: cx(
+				className,
+				limit > 1 ? styles.multiLineLimit : styles.singleLineLimit
+			),
 			style: {
 				...style,
-				'--line-limit': limit,
-				'--line-height': lineHeight,
+				...(limit > 1
+					? {
+							'--line-limit': limit,
+							'--line-height': lineHeight,
+					  }
+					: null),
 			},
 		});
 	}
