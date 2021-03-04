@@ -1,6 +1,5 @@
 import './AssetIcon.scss';
 import { extname } from 'path';
-import { parse as parseUrl } from 'url';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -76,7 +75,7 @@ export default class Icon extends React.Component {
 			!this.isExternalTool(props) &&
 			!this.isScorm(props)
 				? ''
-				: this.getFileExtention(props);
+				: this.getFileExtension(props);
 		const label = fallback && ext && !/^(www|bin)$/i.test(ext) ? ext : null;
 
 		const cls =
@@ -119,7 +118,10 @@ export default class Icon extends React.Component {
 		return this.getTypes(props).some(x => x === SCORM_TYPE);
 	}
 
-	isEmbeddableDocument(props = this.props) {
+	/** @deprecated */
+	isEmbeddableDocument = this.isEmbedableDocument;
+
+	isEmbedableDocument(props = this.props) {
 		return (
 			!this.isDocument(props) &&
 			this.getTypes(props).some(x => mime.extension(x) === 'pdf')
@@ -143,7 +145,7 @@ export default class Icon extends React.Component {
 		return Array.isArray(mimeType) ? mimeType : [mimeType];
 	}
 
-	getFileExtention(props = this.props) {
+	getFileExtension(props = this.props) {
 		const types = this.getTypes(props);
 		const ext = types.reduce((a, x) => a || mime.extension(x), null);
 		const isPlatformType = types.some(x => /nextthought/i.test(x));
@@ -157,10 +159,13 @@ export default class Icon extends React.Component {
 		}
 
 		if (!ext || ext === 'bin') {
-			return extname(parseUrl(props.href || '').pathname).replace(
-				/\./,
-				''
-			);
+			try {
+				return extname(
+					new URL(props.href || '', document.URL).pathname
+				).replace(/\./, '');
+			} catch {
+				return 'bin';
+			}
 		}
 
 		return ext;
