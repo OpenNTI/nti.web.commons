@@ -19,20 +19,20 @@ Object.assign(useMediaQuery, {
 	DESKTOP: '(min-width: 2015px)',
 
 	// these mirror the custom media queries in variables.css (and legacy mixin.scss respond-to)
-	SMALLEST_HANDHELDS: `(max-width: ${BREAK.minimum})`,
-	HANDHELDS: `(max-width: ${BREAK.handheld})`,
-	SMALL_SCREENS: `(max-width: ${BREAK.small})`,
+	SMALLEST_HANDHELDS: `(max-width: ${BREAK.minimum}px)`,
+	HANDHELDS: `(max-width: ${BREAK.handheld}px)`,
+	SMALL_SCREENS: `(max-width: ${BREAK.small}px)`,
 	MEDIUM_SCREENS: `
-		(min-width: ${BREAK.small + 1}) and
-		(max-width: ${BREAK.large - 1})`,
+		(min-width: ${BREAK.small + 1}px) and
+		(max-width: ${BREAK.large - 1}px)`,
 	WIDE_SCREENS: `
-		(min-width: ${BREAK.large}) and
-		(max-width: ${BREAK.wide})`,
-	ULTRA_WIDE_SCREENS: `(min-width: ${BREAK.wide + 1})`,
-	UP_TO_MEDIUM_SCREENS: `(max-width: ${BREAK.large})`,
-	UP_TO_WIDE_SCREENS: `(max-width: ${BREAK.wide})`,
-	DOWN_TO_HANDHELDS: `(min-width: ${BREAK.handheld + 1})`,
-	SHORT_SCREENS: `(max-height: ${BREAK.short})`,
+		(min-width: ${BREAK.large}px) and
+		(max-width: ${BREAK.wide}px)`,
+	ULTRA_WIDE_SCREENS: `(min-width: ${BREAK.wide + 1}px)`,
+	UP_TO_MEDIUM_SCREENS: `(max-width: ${BREAK.large}px)`,
+	UP_TO_WIDE_SCREENS: `(max-width: ${BREAK.wide}px)`,
+	DOWN_TO_HANDHELDS: `(min-width: ${BREAK.handheld + 1}px)`,
+	SHORT_SCREENS: `(max-height: ${BREAK.short}px)`,
 });
 
 export function useMediaQuery(query) {
@@ -48,6 +48,12 @@ export function useMediaQuery(query) {
 
 	const forceUpdate = useForceUpdate();
 	const mediaQuery = React.useMemo(() => global.matchMedia?.(query), [query]);
+
+	if (mediaQuery && mediaQuery.media !== query) {
+		throw new Error(
+			`Invalid media query, serialized query (${mediaQuery.media}) does not match input (${query})!`
+		);
+	}
 
 	React.useEffect(() => {
 		if (mediaQuery?.addEventListener)
