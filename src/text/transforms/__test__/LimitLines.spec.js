@@ -23,7 +23,7 @@ describe('LimitLines transform tests', () => {
 		);
 		const node = getByText(text);
 
-		expect(node.classList.contains('limitLines')).toBeTruthy();
+		expect(node.classList.contains('multiLineLimit')).toBeTruthy();
 	});
 
 	test('forwards ref', () => {
