@@ -1,6 +1,14 @@
 import { useMediaQuery } from './use-media-query';
 
-export default (maxCompactWidth = '736px') =>
-	useMediaQuery(`(max-width: ${maxCompactWidth})`).matches
+const useListItemVariant = (
+	propVariant = 'auto',
+	maxCompactWidth = '736px'
+) => {
+	const variant = useMediaQuery(`(max-width: ${maxCompactWidth})`).matches
 		? 'list-item'
 		: 'card';
+
+	return propVariant === 'auto' ? variant : propVariant;
+};
+
+export default useListItemVariant;
