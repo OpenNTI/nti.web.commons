@@ -117,9 +117,12 @@ GridLogic.propTypes = {
 	as: PropTypes.any,
 	colWidth: PropTypes.oneOfType([
 		PropTypes.number, // e.g. 200
-		PropTypes.string, // e.g. 'minmax(200, 1fr)'
+		PropTypes.string, // e.g. '48%'
 	]),
-	gap: PropTypes.number,
+	gap: PropTypes.oneOfType([
+		PropTypes.number, // e.g. 200
+		PropTypes.string, // e.g. '2%'
+	]),
 	singleColumn: PropTypes.bool, // provides a "block" element while retaining the grid's width-snapping characteristics
 	style: PropTypes.object,
 };
