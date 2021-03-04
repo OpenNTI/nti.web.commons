@@ -10,5 +10,3 @@ export const useListItemVariant = (
 
 	return propVariant === 'auto' ? variant : propVariant;
 };
-
-export default useListItemVariant;
