@@ -136,7 +136,6 @@ export default class RelatedWorkRefCard extends React.Component {
 			this.setState({
 				icon: null,
 				iconResolved: false,
-				href: null,
 			});
 			this.resolveIcon(this.props);
 		}
@@ -169,7 +168,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 	render() {
 		const {
-			state: { href, icon },
+			state: { icon },
 			props: { item, labels, ...remainder },
 		} = this;
 
@@ -197,7 +196,11 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		return (
 			<div {...props}>
-				<AssetIcon src={icon} mimeType={this.getType()} href={href}>
+				<AssetIcon
+					src={icon}
+					mimeType={this.getType()}
+					href={item?.href}
+				>
 					{external && <div className="external" />}
 				</AssetIcon>
 
