@@ -1,6 +1,6 @@
 import { useMediaQuery } from './use-media-query';
 
-const useListItemVariant = (
+export const useListItemVariant = (
 	propVariant = 'auto',
 	maxCompactWidth = '736px'
 ) => {
