@@ -6,4 +6,5 @@ export * as InfiniteScroll from './infinite-scroll';
 export * as InfiniteLoad from './infinite-load';
 export * as NavContent from './nav-content';
 export * as Responsive from './responsive';
+export * as CardList from './card-list';
 export { default as grid } from './grid';
