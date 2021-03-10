@@ -1,6 +1,7 @@
 import './Error.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Logger from '@nti/util-logger';
 import { rawContent } from '@nti/lib-commons';
 import { reportError } from '@nti/web-client';

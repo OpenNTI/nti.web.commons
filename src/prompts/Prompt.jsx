@@ -2,6 +2,7 @@ import './Prompt.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+
 import Logger from '@nti/util-logger';
 import { addClass } from '@nti/lib-dom';
 import { rawContent, wait } from '@nti/lib-commons';

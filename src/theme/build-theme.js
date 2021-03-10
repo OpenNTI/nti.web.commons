@@ -1,4 +1,5 @@
 import merge from 'merge';
+
 import { Color, ObjectUtils } from '@nti/lib-commons';
 
 import Fallbacks from './fallback-assets';

@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ease from 'eases/cubic-out';
 import cx from 'classnames';
+
 import { buffer } from '@nti/lib-commons';
 
 import ScrollerButton from './ScrollerButton';

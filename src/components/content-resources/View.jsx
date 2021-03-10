@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { FileAPI, Selection } from '@nti/lib-commons';
 import { addClass, removeClass, getEventTarget } from '@nti/lib-dom';
 import Logger from '@nti/util-logger';

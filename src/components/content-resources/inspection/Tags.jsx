@@ -1,6 +1,7 @@
 import './Tags.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 import { buffer as buffered } from '@nti/lib-commons';
 

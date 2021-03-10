@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { restProps, FileAPI } from '@nti/lib-commons';
 
 const FILE_REGEX = /file/i;

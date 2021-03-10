@@ -2,6 +2,7 @@ import './Background.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { addClass, removeClass } from '@nti/lib-dom';
 
 const CONTEXT_KEY = 'content-background';

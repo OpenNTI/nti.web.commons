@@ -2,8 +2,9 @@ import './Dialog.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Logger from '@nti/util-logger';
 import { v4 as uuid } from 'uuid';
+
+import Logger from '@nti/util-logger';
 
 import Manager from './ModalManager';
 

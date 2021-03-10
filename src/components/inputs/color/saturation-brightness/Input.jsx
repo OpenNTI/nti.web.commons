@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { Color } from '@nti/lib-commons';
 
 import Styles from './Input.css';

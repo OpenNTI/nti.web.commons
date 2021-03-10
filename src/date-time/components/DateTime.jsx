@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from '@nti/lib-commons';
 import { formatISO, parseJSON } from 'date-fns';
+
+import { isEmpty } from '@nti/lib-commons';
 
 import { DEFAULT, format, fromNow, fromWhen, isToday } from '../utils';
 import Text from '../../text';

@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import mime from 'mime-types';
+
 import { isNTIID } from '@nti/lib-ntiids';
 
 import GoogleAppDocs from './assets/file-types/google-app-docs.svg';

@@ -2,6 +2,7 @@ import './Presence.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { getAppUsername } from '@nti/web-client';
 import Logger from '@nti/util-logger';
 

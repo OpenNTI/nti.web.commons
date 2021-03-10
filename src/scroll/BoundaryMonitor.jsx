@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { restProps } from '@nti/lib-commons';
 
 const DISTANCES = {

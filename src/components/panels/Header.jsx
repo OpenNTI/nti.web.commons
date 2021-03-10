@@ -2,6 +2,7 @@ import './Header.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Events } from '@nti/lib-commons';
 
 export default class Header extends React.Component {

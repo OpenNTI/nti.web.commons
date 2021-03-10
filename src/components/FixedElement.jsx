@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { buffer, equals } from '@nti/lib-commons';
 
 const SCROLL_STOP_TIMEOUT = 500;

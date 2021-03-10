@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { InactivityMonitor } from '@nti/lib-dom';
 import { URL as UrlUtils } from '@nti/lib-commons';
 import Logger from '@nti/util-logger';

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Tasks, getRefHandler } from '@nti/lib-commons';
 
 function setTextContent(node, text) {

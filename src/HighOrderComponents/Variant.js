@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+
 import { HOC } from '@nti/lib-commons';
 
 function combineProps(a = {}, b = {}) {

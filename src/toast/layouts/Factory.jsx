@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { HOC } from '@nti/lib-commons';
 
 export function Wrap(Parent, Component) {

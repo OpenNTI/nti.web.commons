@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { addClass, removeClass } from '@nti/lib-dom';
 
 const NODES = new WeakMap();

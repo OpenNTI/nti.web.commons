@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Storage from '@nti/web-storage';
 
 const normalizeConfig = config => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { Events } from '@nti/lib-commons';
 
 import { Spinner } from '../../../loading-indicators';

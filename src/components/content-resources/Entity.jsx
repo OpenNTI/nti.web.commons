@@ -3,6 +3,7 @@ import path from 'path';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
 	addClass,
 	removeClass,

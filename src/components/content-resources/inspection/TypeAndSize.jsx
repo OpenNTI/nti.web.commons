@@ -4,6 +4,7 @@ import { extname } from 'path';
 import React from 'react';
 import PropTypes from 'prop-types';
 import mime from 'mime-types';
+
 import { scoped } from '@nti/lib-locale';
 
 import { filesize } from '../../../utils';

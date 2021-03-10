@@ -2,6 +2,7 @@ import './PromiseButton.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { wait } from '@nti/lib-commons';
 
 import { Ellipse as TinyLoader } from './loading-indicators';

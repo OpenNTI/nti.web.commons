@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { User, getAppUsername } from '@nti/web-client';
 import { PropTypes as MorePropTypes } from '@nti/lib-commons';
 

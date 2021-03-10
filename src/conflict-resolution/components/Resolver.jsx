@@ -1,6 +1,7 @@
 import './Resolver.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { getServer } from '@nti/web-client';
 import { REQUEST_CONFLICT_EVENT } from '@nti/lib-interfaces';
 

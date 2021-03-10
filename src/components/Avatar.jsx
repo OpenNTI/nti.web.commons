@@ -2,6 +2,7 @@ import './Avatar.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { User } from '@nti/web-client';
 
 import { DataURIs } from '../constants';

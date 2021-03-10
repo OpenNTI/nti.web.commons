@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 import { wait } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';

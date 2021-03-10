@@ -1,6 +1,7 @@
 import './NTIContent.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { declareCustomElement } from '@nti/lib-dom';
 
 declareCustomElement('nti:content');

@@ -2,6 +2,7 @@ import './ToolbarButton.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Events } from '@nti/lib-commons';
 
 const HANDLERS = new WeakMap();

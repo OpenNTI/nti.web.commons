@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Color, restProps } from '@nti/lib-commons';
 
 import Hue from './Hue';

@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { scoped } from '@nti/lib-locale';
 
 import { areYouSure } from '../prompts/';
