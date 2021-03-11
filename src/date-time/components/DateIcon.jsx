@@ -45,6 +45,8 @@ export const DateIcon = React.forwardRef(
 								o[k] = props[k];
 								delete props[k];
 							}
+
+							return o;
 						},
 						{ badge }
 				  );
