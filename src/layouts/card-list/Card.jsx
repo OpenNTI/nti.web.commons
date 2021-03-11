@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { Card as StandardCard } from '../../standard-ui';
@@ -7,10 +8,13 @@ import { Asset } from '../../presentation-assets';
 import { useListItemVariant } from '../../hooks';
 import Text from '../../text';
 
+import Badges from './BadgeList';
+
 export default styled(Card)`
 	background: white;
 	padding: 5px;
 	height: 305px;
+	position: relative;
 `;
 
 const ImgContainer = styled('div')`
@@ -87,7 +91,7 @@ const Byline = styled('div')`
 
 const metadata = ['SAMPL-1001', 'January 2021'];
 
-function Card({ resource, variant: v, className, ...other }) {
+function Card({ resource, variant: v, badges, className, ...other }) {
 	const variant = useListItemVariant(v);
 
 	return (
@@ -102,6 +106,13 @@ function Card({ resource, variant: v, className, ...other }) {
 				<Title>This is the title</Title>
 				<Byline>test 1, test 2, test 3</Byline>
 			</InfoContainer>
+			<Badges badges={badges} />
 		</StandardCard>
 	);
 }
+
+Card.propTypes = {
+	variant: PropTypes.oneOf(['list-item', 'card', 'auto']),
+	badges: PropTypes.arrayOf(PropTypes.node),
+	resource: PropTypes.object,
+};
