@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { v4 as uuid } from 'uuid';
 
+import { reportError } from '@nti/web-client';
 import Logger from '@nti/util-logger';
 
 import Manager from './ModalManager';
@@ -51,6 +52,7 @@ export default class Dialog extends React.Component {
 
 	componentDidCatch(e) {
 		/* istanbul ignore next */
+		reportError(e);
 		logger.error(e.stack || e.message || e);
 	}
 
