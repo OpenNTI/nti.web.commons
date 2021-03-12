@@ -103,7 +103,7 @@ export default function BasePrompt({
 
 	...otherProps
 }) {
-	const isMobile = useMediaQuery(useMediaQuery.MobileQuery).matches;
+	const { matches: isMobile } = useMediaQuery('mobile');
 	const isFullscreen = !inline && isMobile;
 
 	const isDestructive = actionType === Destructive;
