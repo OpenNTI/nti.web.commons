@@ -209,7 +209,20 @@ export default class RelatedWorkRefCard extends React.Component {
 				{by && by.trim().length > 0 && (
 					<div className="label">{t('by', { by: by })}</div>
 				)}
-				<div className="description">{description || desc}</div>
+				{React.isValidElement(description) ? (
+					typeof description.type !== 'string' ? (
+						description
+					) : (
+						React.cloneElement(description, {
+							className: cx(
+								'description',
+								description.props?.className
+							),
+						})
+					)
+				) : (
+					<div className="description">{description || desc}</div>
+				)}
 				{labels && (
 					<SeparatedInline className="extra-labels">
 						{labels}
