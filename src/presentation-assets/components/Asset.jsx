@@ -196,20 +196,9 @@ export default class Asset extends React.Component {
 
 	getPresentationResource(props) {
 		const item = this.getItem(props);
-
-		if (!item) {
-			return {};
-		}
-
-		const resources = item.PlatformPresentationResources || [];
-
-		for (let resource of resources) {
-			if (resource.PlatformName === 'webapp') {
-				return resource;
-			}
-		}
-
-		return null;
+		return (item?.PlatformPresentationResources || []).find(
+			resource => resource.PlatformName === 'webapp'
+		);
 	}
 
 	getAssetRoot(props) {
@@ -237,7 +226,7 @@ export default class Asset extends React.Component {
 		return resource ? resource['Last Modified'] : 0;
 	}
 
-	getAsset(name, props, resolve = false) {
+	getAsset(name, props) {
 		const assetPath =
 			(ASSET_MAP[name] && ASSET_MAP[name].path) ||
 			`missing-${name}-asset.png`;
