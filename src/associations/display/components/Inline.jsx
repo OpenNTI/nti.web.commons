@@ -123,7 +123,7 @@ export default class InlineAssociations extends React.Component {
 	renderLoading() {
 		const { item } = this.props;
 		const getString = this.getStringFn();
-		const count = item.associationCount;
+		const count = item.associationCount || 0;
 
 		return (
 			<span className="loading-text">
