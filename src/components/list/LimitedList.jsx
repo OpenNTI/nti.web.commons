@@ -5,6 +5,8 @@ import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
 
+import { filterProps } from '../../utils';
+
 const noop = () => {};
 
 const DEFAULT_TEXT = {
@@ -45,7 +47,7 @@ export default function LimitedList({
 	const stringFn = getString ? t.override(getString) : t;
 
 	return (
-		<ul className={cls} {...otherProps}>
+		<ul className={cls} {...filterProps(otherProps, 'ul')}>
 			{items.map((x, index) => (
 				<li key={index}>{x}</li>
 			))}

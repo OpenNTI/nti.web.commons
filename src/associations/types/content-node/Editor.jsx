@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
@@ -103,24 +103,18 @@ function renderRemove(item, count, onRemove) {
 	return remove;
 }
 
-ContentNodeEditor.propTypes = {
-	item: PropTypes.object,
-	associations: PropTypes.object,
-};
-function ContentNodeEditor({ item, associations }) {
+const ContentNodeEditor = React.forwardRef(({ item, associations }, ref) => {
 	const active = associations.getAssociationFor(item);
 	const count = active && getCountFor(associations.backingItem, active);
 
-	function onAdd(group, overview) {
-		item.onAddTo(group, overview);
-	}
-
-	function onRemove() {
-		item.onRemoveFrom(active);
-	}
+	const onAdd = useCallback(
+		(group, overview) => item.onAddTo(group, overview),
+		[item]
+	);
+	const onRemove = useCallback(() => item.onRemoveFrom(active), [item]);
 
 	return (
-		<ListItem className="content-node" active={!!active}>
+		<ListItem ref={ref} className="content-node" active={!!active}>
 			<ItemInfo
 				label={item.label}
 				subLabels={getSubLabels(item, active)}
@@ -140,6 +134,11 @@ function ContentNodeEditor({ item, associations }) {
 				renderRemove(item, count, onRemove)}
 		</ListItem>
 	);
-}
+});
+
+ContentNodeEditor.propTypes = {
+	item: PropTypes.object,
+	associations: PropTypes.object,
+};
 
 export default ItemChanges.compose(ContentNodeEditor);
