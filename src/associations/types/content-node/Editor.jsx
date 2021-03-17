@@ -47,7 +47,7 @@ function getSubLabels(item, isActive) {
 
 	if (!item.item.isPublished()) {
 		labels.push(t('draft'));
-	} else if (item.item.AvailableBeginning) {
+	} else if (item.item.getAvailableBeginning) {
 		labels.push(
 			t('schedule', {
 				date: DateTime.format(
