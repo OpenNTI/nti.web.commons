@@ -59,7 +59,7 @@ export default class Lessons extends React.Component {
 			none: count === 0,
 		});
 
-		return item && item.hasLink('Lessons') ? (
+		return item && item.hasLink?.('Lessons') ? (
 			<div className={cls} onClick={this.onClick}>
 				<i className="icon-folder" />
 				<Inline
