@@ -6,7 +6,10 @@ import Text from '../text/index.js';
 
 export default styled(Tooltip).attrs(({ label, ...props }) => ({
 	...props,
-	label: typeof label === 'string' ? <Text>{label}</Text> : label,
+	label:
+		typeof label === 'string'
+			? React.createElement(Text, {}, label)
+			: label,
 }))`
 	background-color: var(--primary-grey);
 	padding: 3px 5px;
