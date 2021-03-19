@@ -19,4 +19,7 @@ export default styled(Tooltip).attrs(({ label, ...props }) => ({
 	font-size: 11px;
 	font-weight: 600;
 	width: fit-content;
+
+	/* if reach-tooltip ever considers body's offsets we'll need to remove this. */
+	transform: translateY(calc(0px - var(--nt-app-top-offset, 0)));
 `;
