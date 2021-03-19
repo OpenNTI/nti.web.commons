@@ -7,6 +7,7 @@ import { User } from '@nti/web-client';
 
 import { DataURIs } from '../constants';
 
+import { filterProps } from '../utils';
 import BaseEntity from './BaseEntity';
 import Square from './SquareImg';
 
@@ -90,19 +91,17 @@ export default class Avatar extends BaseEntity {
 		const color = Avatar.getColorClass(entity);
 		const { initials, displayName } = entity || {};
 
-		delete props.entity;
-		delete props.entityId;
-		delete props.me;
+		const imgSrc = (entity.Deactivated ? DEFAULT.entity : entity).avatarURL;
+
+		const renderer = imgSrc || !initials ? Component : 'svg';
 
 		const childProps = {
-			...props,
+			...filterProps(props, renderer),
 			letterbox,
 			'data-for': User.getDebugUsernameString(entity),
 			alt: displayName && 'Avatar for ' + displayName,
 			className: cx('avatar', color, className),
 		};
-
-		const imgSrc = (entity.Deactivated ? DEFAULT.entity : entity).avatarURL;
 
 		return imgSrc ? (
 			<Component {...childProps} src={imgSrc} onError={this.setUnknown} />
