@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { DataURIs } from '../constants';
+import { filterProps } from '../utils';
 
 const { BLANK_IMAGE } = DataURIs;
 const isSquare = (w, h) => w === h && ![w, h].some(isNaN) && w > 0;
@@ -124,11 +125,11 @@ export default class Square extends React.Component {
 		} = this;
 
 		return svg ? (
-			<svg {...props} viewBox={`0 0 ${size} ${size}`}>
+			<svg {...filterProps(props, 'svg')} viewBox={`0 0 ${size} ${size}`}>
 				<image xlinkHref={src} width="100%" height="100%" />
 			</svg>
 		) : (
-			<img src={src} {...props} />
+			<img src={src} {...filterProps(props, 'img')} />
 		);
 	}
 }
