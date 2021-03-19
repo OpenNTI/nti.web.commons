@@ -6,8 +6,8 @@ import cx from 'classnames';
 import { User } from '@nti/web-client';
 
 import { DataURIs } from '../constants';
-
 import { filterProps } from '../utils';
+
 import BaseEntity from './BaseEntity';
 import Square from './SquareImg';
 
@@ -58,7 +58,7 @@ export default class Avatar extends BaseEntity {
 	}
 
 	isGroup() {
-		return /\..*(friendslist|community)/i.test(
+		return /\..*(friendsList|community)/i.test(
 			(this.state.entity || {}).MimeType
 		);
 	}
