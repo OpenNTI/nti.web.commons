@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
-import {
-	decorate,
-	restProps,
-	PropTypes as NTIPropTypes,
-} from '@nti/lib-commons';
+import { decorate, PropTypes as NTIPropTypes } from '@nti/lib-commons';
 
 import { LEFT, RIGHT } from './Constants';
 import Store from './Store';
@@ -41,14 +37,22 @@ class Aside extends React.Component {
 	}
 
 	render() {
-		const { component: Cmp, placeholder } = this.props;
+		const {
+			component: Cmp,
+			placeholder,
+			// consume these props
+			side,
+			showAside,
+			hideAside,
+			// the rest
+			...props
+		} = this.props;
 
 		if (!placeholder) {
 			return null;
 		}
 
-		const otherProps = restProps(Aside, this.props);
-		const content = <Cmp {...otherProps} />;
+		const content = Cmp ? <Cmp {...props} /> : <>{props.children}</>;
 
 		return ReactDOM.createPortal(content, placeholder);
 	}
