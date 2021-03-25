@@ -32,7 +32,7 @@ export default class PresenceStore extends EventEmitter {
 		}
 	}
 
-	getPresenceFor(user) {
+	getPresence(user) {
 		const username = user && user.getID ? user.getID() : user;
 
 		return username ? this[PRESENCE_MAP][username] : null;

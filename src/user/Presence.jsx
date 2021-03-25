@@ -1,117 +1,104 @@
-import './Presence.scss';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { getAppUsername } from '@nti/web-client';
-import Logger from '@nti/util-logger';
 
-const logger = Logger.get('web-commons.user.Presence');
+import PresenceStore from './PresenceStore';
 
-import Store from './PresenceStore';
+const Dot = styled.div`
+	width: 7px;
+	height: 7px;
+	border-radius: 7px;
+	background: var(--presence-offline);
 
-export default class UserPresence extends React.Component {
-	static Store = new Store();
-
-	static propTypes = {
-		className: PropTypes.string,
-		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-		children: PropTypes.element,
-		border: PropTypes.bool,
-		dark: PropTypes.bool,
-		me: PropTypes.bool,
-	};
-
-	state = {};
-
-	componentDidMount() {
-		this.setupFor(this.props);
-		this.addListener();
+	&.online,
+	&.available {
+		background: var(--presence-available);
 	}
 
-	componentWillUnmount() {
-		this.removeListener();
+	&.away {
+		background: var(--presence-away);
 	}
 
-	componentDidUpdate(prevProps) {
-		const { user: oldUser } = prevProps;
-		const { user: newUser } = this.props;
+	&.dnd {
+		background: var(--presence-dnd);
+	}
 
-		if (oldUser !== newUser) {
-			this.setupFor(this.props);
+	&.border {
+		width: 11px;
+		height: 11px;
+		border: 2px solid white;
+
+		&.dark {
+			border-color: #313131;
 		}
 	}
+`;
 
-	setupFor(props) {
-		const { user, me } = props;
+const Store = new PresenceStore();
 
-		if (user && me) {
-			logger.warn('Specify props.user or props.me, not both.');
-		}
+const UserPresence = props => {
+	const {
+		children,
+		className,
+		border,
+		dark,
+		user,
+		me,
+		...otherProps
+	} = props;
 
-		this.setState({
-			presence: UserPresence.Store.getPresenceFor(
-				me ? getAppUsername() : user
-			),
-		});
+	const current = me ? getAppUsername() : user.getID?.() || user;
+	if (typeof current !== 'string') {
+		throw new TypeError('Invalid user prop given');
 	}
 
-	addListener() {
-		UserPresence.Store.addListener(
-			'presence-changed',
-			this.onPresenceChanged
-		);
+	if (user && me) {
+		throw new Error('Specify props.user or props.me, not both.');
+	}
 
-		this.unsubcribe = () => {
-			UserPresence.Store.removeListener(
-				'presence-changed',
-				this.onPresenceChanged
-			);
+	const [presence, setPresence] = useState(Store.getPresence(current));
+	const state = presence?.getName?.().toLowerCase() || '';
+
+	useEffect(() => {
+		setPresence(Store.getPresence(current));
+
+		const onPresenceChanged = (username, newPresence) => {
+			if (current === username) {
+				setPresence(newPresence);
+			}
 		};
-	}
 
-	removeListener() {
-		if (this.unsubscribe) {
-			this.unsubscribe();
-		}
-	}
+		Store.addListener('presence-changed', onPresenceChanged);
 
-	onPresenceChanged = (username, presence) => {
-		const { user, me } = this.props;
+		return () => {
+			Store.removeListener('presence-changed', onPresenceChanged);
+		};
+	}, [current]);
 
-		const current = me ? getAppUsername() : user && user.getID();
+	return children ? (
+		React.cloneElement(React.Children.only(children), { presence })
+	) : (
+		<Dot
+			border={border}
+			dark={dark}
+			className={cx('nti-user-presence-dot', className, state)}
+			{...otherProps}
+			{...{ [state]: !!state }}
+		/>
+	);
+};
 
-		if (current === username) {
-			this.setState({
-				presence,
-			});
-		}
-	};
+UserPresence.Store = Store;
 
-	render() {
-		const { children } = this.props;
-		const { presence } = this.state;
+UserPresence.propTypes = {
+	className: PropTypes.string,
+	user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+	children: PropTypes.element,
+	border: PropTypes.bool,
+	dark: PropTypes.bool,
+	me: PropTypes.bool,
+};
 
-		return children
-			? React.cloneElement(React.Children.only(children), { presence })
-			: this.renderDot(presence);
-	}
-
-	renderDot(presence) {
-		const { className, border, dark, ...otherProps } = this.props;
-		const name = presence ? presence.getName() : '';
-
-		delete otherProps.user;
-		delete otherProps.me;
-
-		return (
-			<div
-				className={cx('nti-user-presence-dot', name, className, {
-					border,
-					dark,
-				})}
-				{...otherProps}
-			/>
-		);
-	}
-}
+export default UserPresence;
