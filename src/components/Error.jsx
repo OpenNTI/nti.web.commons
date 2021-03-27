@@ -34,7 +34,6 @@ const Label = styled.span`
 const Glyph = styled('div').attrs({ className: 'm glyph icon-alert' })`
 	color: #b33333;
 	font-size: 5em;
-	width: 5em;
 	text-align: center;
 
 	/* .m */
