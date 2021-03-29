@@ -9,12 +9,27 @@ import { getTransforms } from './transforms';
 import Renderer from './Renderer';
 
 const NTIText = React.forwardRef(
-	({ children, as: tag, className, escaped, localized, ...props }, ref) => {
-		const textProps = getTextPropsFromChildren(
+	(
+		{
 			children,
+			dangerouslySetInnerHTML,
+			as: tag,
+			className,
+			escaped,
+			localized,
+			...props
+		},
+		ref
+	) => {
+		const textProps = getTextPropsFromChildren(
+			dangerouslySetInnerHTML?.__html || children,
 			localized || escaped
 		);
 		const combinedProps = { ...props, ...textProps };
+
+		if (dangerouslySetInnerHTML) {
+			combinedProps.hasMarkup = true;
+		}
 
 		const transforms = getTransforms(combinedProps).reverse();
 
@@ -63,6 +78,7 @@ NTIText.Colors = Colors;
 
 NTIText.propTypes = {
 	children: PropTypes.any,
+	dangerouslySetInnerHTML: PropTypes.shape({ __html: PropTypes.string }),
 	as: PropTypes.string,
 	className: PropTypes.string,
 	escaped: PropTypes.bool,

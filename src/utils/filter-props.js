@@ -19,7 +19,9 @@ export function filterProps(props, cmp) {
 			isData(prop) ||
 			prop in elements[cmp] ||
 			prop in specials ||
-			prop.toLowerCase() in elements[cmp]
+			prop.toLowerCase() in elements[cmp] ||
+			prop === 'dangerouslySetInnerHTML' ||
+			prop === 'children'
 		) {
 			filtered[prop] = props[prop];
 		}
