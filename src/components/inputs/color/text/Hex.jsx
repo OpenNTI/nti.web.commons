@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Color } from '@nti/lib-commons';
+import { Color, String as StringUtils } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Text from '../../Text';
@@ -16,10 +16,10 @@ const t = scoped('common.inputs.color.text.Hex', {
 
 const ValidHexRegex = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i;
 const ValidInput = /^#?[a-f0-9]{0,6}$/i;
-const PASTE_FILTER = /(#[a-f0-9]{0,6})/im;
+const PASTE_FILTER = /(#?[a-f0-9]{0,6})/im;
 
 function fix(value) {
-	if (value.charAt(0) !== '#') {
+	if (value && value.charAt(0) !== '#') {
 		return `#${value}`;
 	}
 
@@ -95,11 +95,22 @@ export default class NTIHexInput extends React.Component {
 	onPaste = event => {
 		event.preventDefault();
 
-		const { clipboardData } = event;
-		const data = clipboardData?.getData('text/plain') || '';
-		const [match] = PASTE_FILTER.exec(data);
+		const {
+			clipboardData,
+			target: { selectionStart, selectionEnd, value },
+		} = event;
+		const start = Math.min(selectionStart, selectionEnd);
+		const end = Math.max(selectionStart, selectionEnd);
 
-		this.onChange(match);
+		const data = clipboardData?.getData('text/plain') || '';
+
+		const inserted = StringUtils.replaceRange(value, start, end, data);
+
+		const [match] = PASTE_FILTER.exec(inserted);
+
+		if (match) {
+			this.onChange(fix(match));
+		}
 	};
 
 	render() {
