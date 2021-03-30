@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as Flyout from '../../../flyout';
+import { filterProps } from '../../../utils';
 
 import HueBase from './Hue';
 import SaturationBrightness from './saturation-brightness';
@@ -21,7 +22,10 @@ const Trigger = styled('span').attrs({
 	cursor: pointer;
 `;
 
-const Picker = styled('div').attrs({ className: 'color-flyout-picker' })`
+const Picker = styled('div').attrs(props => ({
+	...filterProps(props, 'div'),
+	className: 'color-flyout-picker',
+}))`
 	padding: 0.5rem;
 `;
 

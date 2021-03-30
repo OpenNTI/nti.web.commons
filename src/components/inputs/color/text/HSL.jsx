@@ -17,14 +17,14 @@ const t = scoped('common.inputs.color.text.RGB', {
 	lightness: 'L',
 });
 
-export default class NTIRGBInput extends React.Component {
+export default class NTIHSLInput extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		value: PropTypes.shape({
 			hsl: PropTypes.shape({
-				hue: PropTypes.string,
-				saturation: PropTypes.string,
-				lightness: PropTypes.string,
+				hue: PropTypes.number,
+				saturation: PropTypes.number,
+				lightness: PropTypes.number,
 				setHue: PropTypes.func,
 				setSaturation: PropTypes.func,
 				setLightness: PropTypes.func,
@@ -69,7 +69,7 @@ export default class NTIRGBInput extends React.Component {
 
 	render() {
 		const { value, className } = this.props;
-		const otherProps = restProps(NTIRGBInput, this.props);
+		const otherProps = restProps(NTIHSLInput, this.props);
 		const hue = value ? value.hsl.hue : 0;
 		const saturation = value ? value.hsl.saturation : 0;
 		const lightness = value ? value.hsl.lightness : 0;

@@ -22,9 +22,9 @@ export default class NTIRGBInput extends React.Component {
 		className: PropTypes.string,
 		value: PropTypes.shape({
 			rgb: PropTypes.shape({
-				red: PropTypes.string,
-				green: PropTypes.string,
-				blue: PropTypes.string,
+				red: PropTypes.number,
+				green: PropTypes.number,
+				blue: PropTypes.number,
 				setRed: PropTypes.func,
 				setGreen: PropTypes.func,
 				setBlue: PropTypes.func,
