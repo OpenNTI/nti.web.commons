@@ -1,18 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import { Color, String as StringUtils } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Text from '../../Text';
 
-import Styles from './Hex.css';
-
-const cx = classnames.bind(Styles);
 const t = scoped('common.inputs.color.text.Hex', {
 	placeholder: '#RRGGBB',
 });
+
+const Input = styled(Text).attrs(props => ({
+	...props,
+	className: cx('nti-color-hex-input', props.className),
+}))`
+	width: 100%;
+	border-radius: 0;
+	background: white;
+`;
 
 const ValidHexRegex = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i;
 const ValidInput = /^#?[a-f0-9]{0,6}$/i;
@@ -114,14 +120,11 @@ export default class NTIHexInput extends React.Component {
 	};
 
 	render() {
-		const { className } = this.props;
-		const { value } = this.state;
-
 		return (
-			<Text
-				className={cx('nti-color-hex-input', className)}
+			<Input
+				className={this.props.className}
 				placeholder={t('placeholder')}
-				value={value}
+				value={this.state.value}
 				onPaste={this.onPaste}
 				onChange={this.onChange}
 			/>
