@@ -96,7 +96,8 @@ export default class NTIHexInput extends React.Component {
 		event.preventDefault();
 
 		const { clipboardData } = event;
-		const data = clipboardData?.getData('text/plain') || '';
+		let data = clipboardData?.getData('text/plain') || '';
+		data = (event.target.value || '') + data;
 		const [match] = PASTE_FILTER.exec(data);
 
 		this.onChange(match);
