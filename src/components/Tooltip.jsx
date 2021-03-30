@@ -6,6 +6,7 @@ import Text from '../text/index.js';
 
 export default styled(Tooltip).attrs(({ label, ...props }) => ({
 	...props,
+	position: positionTooltip,
 	label:
 		typeof label === 'string'
 			? React.createElement(Text, {}, label)
@@ -19,7 +20,66 @@ export default styled(Tooltip).attrs(({ label, ...props }) => ({
 	font-size: 11px;
 	font-weight: 600;
 	width: fit-content;
-
-	/* if reach-tooltip ever considers body's offsets we'll need to remove this. */
-	transform: translateY(calc(0px - var(--nt-app-top-offset, 0)));
 `;
+
+// The default positioning of the tooltip doesn't account for body being offset...
+// we opened an issue, and they closed/resolved it with this custom position function:
+// https://github.com/reach/reach-ui/issues/765#issuecomment-810296590
+const OFFSET_DEFAULT = 8;
+
+function positionTooltip(triggerRect, tooltipRect, offset = OFFSET_DEFAULT) {
+	// account for top padding on html node
+	const bodyOffset = document.body.getBoundingClientRect().top;
+	offset -= bodyOffset;
+	const {
+		width: windowWidth,
+		height: windowHeight,
+	} = getDocumentDimensions();
+
+	if (!triggerRect || !tooltipRect) {
+		return {};
+	}
+
+	const collisions = {
+		top: triggerRect.top - tooltipRect.height < 0,
+		right: windowWidth < triggerRect.left + tooltipRect.width,
+		bottom: windowHeight < triggerRect.bottom + tooltipRect.height + offset,
+		left: triggerRect.left - tooltipRect.width < 0,
+	};
+
+	const directionRight = collisions.right && !collisions.left;
+	const directionUp = collisions.bottom && !collisions.top;
+
+	return {
+		left: directionRight
+			? `${triggerRect.right - tooltipRect.width + window.pageXOffset}px`
+			: `${triggerRect.left + window.pageXOffset}px`,
+		top: directionUp
+			? `${
+					triggerRect.top -
+					offset -
+					tooltipRect.height +
+					window.pageYOffset
+			  }px`
+			: `${
+					triggerRect.top +
+					offset +
+					triggerRect.height +
+					window.pageYOffset
+			  }px`,
+	};
+}
+
+function getDocumentDimensions(element) {
+	if (typeof document === 'undefined') {
+		return {
+			width: 0,
+			height: 0,
+		};
+	}
+
+	return {
+		width: document.documentElement.clientWidth ?? window.innerWidth,
+		height: document.documentElement.clientHeight ?? window.innerHeight,
+	};
+}
