@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import * as Flyout from '../../../flyout';
 import { filterProps } from '../../../utils';
@@ -9,10 +10,11 @@ import SaturationBrightness from './saturation-brightness';
 import Text from './text';
 import Preset from './preset-swatches';
 
-const Trigger = styled('span').attrs({
-	className: 'color-flyout-trigger',
+const Trigger = styled('span').attrs(props => ({
+	...props,
+	className: cx('color-flyout-trigger', props.className),
 	role: 'button',
-})`
+}))`
 	display: inline-block;
 	width: 25px;
 	height: 25px;
@@ -24,7 +26,8 @@ const Trigger = styled('span').attrs({
 
 const Picker = styled('div').attrs(props => ({
 	...filterProps(props, 'div'),
-	className: 'color-flyout-picker',
+	'data-color-picker-panel': true,
+	className: cx('color-flyout-picker', props.className),
 }))`
 	padding: 0.5rem;
 `;
@@ -62,7 +65,7 @@ export default function ColorFlyout({
 
 	return (
 		<Flyout.Triggered {...otherProps} trigger={trigger}>
-			<Picker>
+			<Picker className={className}>
 				<SaturationBrightness value={value} onChange={onChange} />
 				<Hue value={value} onChange={onChange} />
 				<Text value={value} onChange={onChange} />
