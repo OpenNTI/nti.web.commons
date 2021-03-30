@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Color } from '@nti/lib-commons';
+import { Color, String as StringUtils } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Text from '../../Text';
@@ -95,10 +95,18 @@ export default class NTIHexInput extends React.Component {
 	onPaste = event => {
 		event.preventDefault();
 
-		const { clipboardData } = event;
+		const {
+			clipboardData,
+			target: { selectionStart, selectionEnd, value },
+		} = event;
+		const start = Math.min(selectionStart, selectionEnd);
+		const end = Math.max(selectionStart, selectionEnd);
+
 		const data = clipboardData?.getData('text/plain') || '';
 
-		const [match] = PASTE_FILTER.exec(data);
+		const inserted = StringUtils.replaceRange(value, start, end, data);
+
+		const [match] = PASTE_FILTER.exec(inserted);
 
 		if (match) {
 			this.onChange(fix(match));
