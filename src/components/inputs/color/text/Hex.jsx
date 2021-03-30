@@ -16,6 +16,7 @@ const t = scoped('common.inputs.color.text.Hex', {
 
 const ValidHexRegex = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i;
 const ValidInput = /^#?[a-f0-9]{0,6}$/i;
+const PASTE_FILTER = /(#[a-f0-9]{0,6})/im;
 
 function fix(value) {
 	if (value.charAt(0) !== '#') {
@@ -95,11 +96,10 @@ export default class NTIHexInput extends React.Component {
 		event.preventDefault();
 
 		const { clipboardData } = event;
-		let data = clipboardData?.getData('text/plain') || '';
-		data = (event.target.value || '#') + data;
-		const [match] = ValidInput.exec(data);
+		const data = clipboardData?.getData('text/plain') || '';
+		const [match] = PASTE_FILTER.exec(fix(data));
 
-		this.onChange(fix(match));
+		this.onChange(match);
 	};
 
 	render() {
