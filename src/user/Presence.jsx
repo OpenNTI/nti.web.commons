@@ -78,7 +78,11 @@ const UserPresence = props => {
 	}, [current]);
 
 	return children ? (
-		React.cloneElement(React.Children.only(children), { presence })
+		typeof children === 'function' ? (
+			children({ presence })
+		) : (
+			React.cloneElement(React.Children.only(children), { presence })
+		)
 	) : (
 		<Dot
 			border={border}
