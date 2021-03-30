@@ -33,7 +33,7 @@ export default class ColorInputTest extends React.Component {
 					value={value}
 					onChange={this.onChange}
 					arrow
-					veriticalAlign={Input.Color.Flyout.ALIGNMENTS.BOTTOM}
+					verticalAlign={Input.Color.Flyout.ALIGNMENTS.BOTTOM}
 					horizontalAlign={Input.Color.Flyout.ALIGNMENTS.LEFT}
 				/>
 				<Input.Color.SaturationBrightness value={value} onChange={this.onChange} />
