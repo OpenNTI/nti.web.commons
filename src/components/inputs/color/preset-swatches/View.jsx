@@ -1,11 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 
-import Styles from './Style.css';
 import Swatch from './Swatch';
 
-const cx = classnames.bind(Styles);
+const List = styled.ul`
+	list-style: none;
+	padding: 0;
+	margin: 0 -0.25rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+`;
+
+const Item = styled.li`
+	display: inline-block;
+	flex: 0 0 auto;
+	padding: 0;
+	margin: 0 0.25rem 0.5rem;
+`;
 
 NTIColorPresets.propTypes = {
 	swatches: PropTypes.arrayOf(
@@ -20,18 +33,18 @@ NTIColorPresets.propTypes = {
 };
 export default function NTIColorPresets({ swatches, selected, onSelect }) {
 	return (
-		<ul className={cx('nti-color-preset-swatches')}>
+		<List className="nti-color-preset-swatches">
 			{(swatches || []).map((preset, i) => {
 				return (
-					<li key={i}>
+					<Item key={i}>
 						<Swatch
 							swatch={preset}
 							onSelect={onSelect}
 							selected={preset.color.isSameColor(selected)}
 						/>
-					</li>
+					</Item>
 				);
 			})}
-		</ul>
+		</List>
 	);
 }

@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
-import Styles from './Thumb.css';
-
-const cx = classnames.bind(Styles);
+const Thumb = styled.div`
+	width: 14px;
+	height: 14px;
+	border-radius: 14px;
+	border: 2px solid white;
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.63);
+`;
 
 ColorInputThumb.propTypes = {
 	className: PropTypes.string,
@@ -22,7 +26,7 @@ export default function ColorInputThumb({
 	...otherProps
 }) {
 	return (
-		<div
+		<Thumb
 			className={cx(
 				'nti-color-input-thumb',
 				'color-input-thumb',

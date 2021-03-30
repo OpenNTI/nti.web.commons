@@ -1,12 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 
-import Styles from './Style.css';
-
-const cx = classnames.bind(Styles);
 const stop = e => (e.preventDefault(), e.stopPropagation());
 
+const SwatchBase = styled('a').attrs({
+	className: 'nti-color-swatch',
+	tabIndex: '0',
+	role: 'button',
+})`
+	display: inline-block;
+	cursor: pointer;
+	width: 38px;
+	height: 38px;
+	border-radius: 38px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+
+	&:focus {
+		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3),
+			0 0 3px 1px var(--primary-blue);
+	}
+
+	&.selected {
+		transform: scale(1.2);
+	}
+`;
 export default class Swatch extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -43,21 +60,18 @@ export default class Swatch extends React.Component {
 	};
 
 	render() {
-		const { className, swatch, selected } = this.props;
+		const { swatch, ...props } = this.props;
 		const { color, title } = swatch;
-		const style = {
-			backgroundColor: color.rgb.toString(),
-		};
 
 		return (
-			<a
-				className={cx('nti-color-swatch', className, { selected })}
-				tabIndex="0"
-				role="button"
+			<SwatchBase
+				{...props}
 				title={title}
 				onClick={this.onClick}
 				onKeyPress={this.onKeyPress}
-				style={style}
+				style={{
+					backgroundColor: `${color.rgb}`,
+				}}
 			/>
 		);
 	}

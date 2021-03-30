@@ -1,16 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 
 import * as Flyout from '../../../flyout';
 
-import Styles from './Flyout.css';
-import Hue from './Hue';
+import HueBase from './Hue';
 import SaturationBrightness from './saturation-brightness';
 import Text from './text';
 import Preset from './preset-swatches';
 
-const cx = classnames.bind(Styles);
+const Trigger = styled('span').attrs({
+	className: 'color-flyout-trigger',
+	role: 'button',
+})`
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border-radius: 25px;
+	border: 3px solid white;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+`;
+
+const Picker = styled('div').attrs({ className: 'color-flyout-picker' })`
+	padding: 0.5rem;
+`;
+
+const Hue = styled(HueBase)`
+	margin: 10px 0;
+`;
 
 ColorFlyout.ALIGNMENTS = Flyout.ALIGNMENTS;
 ColorFlyout.propTypes = {
@@ -30,30 +47,27 @@ export default function ColorFlyout({
 	swatches,
 	...otherProps
 }) {
-	const style = {
-		background: value ? value.hex.toString() : '#fff',
-	};
-
 	const trigger = (
-		<span
-			className={cx('color-flyout-trigger', className)}
-			role="button"
-			style={style}
+		<Trigger
+			className={className}
+			style={{
+				background: `${value?.hex || '#fff'}`,
+			}}
 		/>
 	);
 
 	return (
 		<Flyout.Triggered {...otherProps} trigger={trigger}>
-			<div className={cx('color-flyout-picker')}>
+			<Picker>
 				<SaturationBrightness value={value} onChange={onChange} />
-				<Hue className={cx('hue')} value={value} onChange={onChange} />
+				<Hue value={value} onChange={onChange} />
 				<Text value={value} onChange={onChange} />
 				<Preset
 					swatches={swatches}
 					selected={value}
 					onSelect={onChange}
 				/>
-			</div>
+			</Picker>
 		</Flyout.Triggered>
 	);
 }
