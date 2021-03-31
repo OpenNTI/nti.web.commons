@@ -37,7 +37,7 @@ export default class NTIHSLInput extends React.Component {
 	onHueChange = (hue, e) => {
 		const { onChange, value } = this.props;
 		const newValue = value
-			? Color.fromHSL(hue, value.hsl.saturation, value.hsl.lightness)
+			? value.hsl.setHue(hue)
 			: Color.fromHSL(hue, 1, 0.5);
 
 		if (onChange) {
@@ -48,7 +48,7 @@ export default class NTIHSLInput extends React.Component {
 	onSaturationChange = (sat, e) => {
 		const { onChange, value } = this.props;
 		const newValue = value
-			? Color.fromHSL(value.hsl.hue, sat, value.hsl.lightness)
+			? value.hsl.setSaturation(sat / 100)
 			: Color.fromHSL(0, sat / 100, 0.5);
 
 		if (onChange) {
@@ -59,7 +59,7 @@ export default class NTIHSLInput extends React.Component {
 	onLightnessChange = (light, e) => {
 		const { onChange, value } = this.props;
 		const newValue = value
-			? Color.fromHSL(value.hsl.hue, value.hsl.saturation, light)
+			? value.hsl.setLightness(light / 100)
 			: Color.fromRGB(0, 0, light / 100);
 
 		if (onChange) {

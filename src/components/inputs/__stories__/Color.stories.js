@@ -24,7 +24,7 @@ export const Picker = () => {
 };
 
 export const Flyout = () => {
-	const [value, setValue] = useState();
+	const [value, setValue] = useState(Color.fromHex('#3fb3f6'));
 
 	return (
 		<Input.Color.Flyout
