@@ -1,9 +1,9 @@
 import { intervalToDuration, isSameDay, parseJSON } from 'date-fns';
 import { format as formatter } from 'date-fns-tz';
 
-import { DEFAULT } from './formats';
-import { fromNow, fromWhen } from './from-when';
-import t from './strings';
+import { DEFAULT } from './formats.js';
+import { fromNow, fromWhen } from './from-when.js';
+import t from './strings.js';
 
 export { fromNow, fromWhen };
 
