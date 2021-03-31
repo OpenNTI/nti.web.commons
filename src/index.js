@@ -20,6 +20,7 @@ export * as Icons from './icons';
 export { default as Iframe } from './iframe';
 export { default as Image } from './image';
 export * as Layouts from './layouts';
+export * from './menu';
 export * as Mixins from './mixins';
 export { default as Navigation } from './navigation';
 export * as NotFound from './not-found';
