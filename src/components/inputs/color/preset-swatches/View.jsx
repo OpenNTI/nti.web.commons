@@ -32,9 +32,11 @@ NTIColorPresets.propTypes = {
 	onSelect: PropTypes.func,
 };
 export default function NTIColorPresets({ swatches, selected, onSelect }) {
-	return (
-		<List className="nti-color-preset-swatches">
-			{(swatches || []).map((preset, i) => {
+	const rows = Array.isArray(swatches[0]) ? swatches : [swatches]
+
+	return rows.map((row, key) => (
+		<List className="nti-color-preset-swatches" key={key}>
+			{(row || []).map((preset, i) => {
 				return (
 					<Item key={i}>
 						<Swatch
@@ -46,5 +48,5 @@ export default function NTIColorPresets({ swatches, selected, onSelect }) {
 				);
 			})}
 		</List>
-	);
+	));
 }
