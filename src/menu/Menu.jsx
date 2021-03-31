@@ -6,7 +6,6 @@ import { Check as CheckIcon } from '../icons';
 
 const MenuTitle = styled('h1')`
 	font: normal 300 1.25em/2em var(--body-font-family);
-	color: white;
 	font-size: 18px;
 	margin: 0;
 	white-space: nowrap;
