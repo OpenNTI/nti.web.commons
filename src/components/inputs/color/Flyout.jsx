@@ -10,14 +10,11 @@ import SaturationBrightness from './saturation-brightness';
 import Text from './text';
 import Preset from './preset-swatches';
 
-const Trigger = styled('span').attrs(props => {
-	debugger;
-	return ({
-		...props,
-		className: cx('color-flyout-trigger', props.className),
-		role: 'button',
-	});
-})`
+const Trigger = styled('span').attrs(props => ({
+	...props,
+	className: cx('color-flyout-trigger', props.className),
+	role: 'button',
+}))`
 	display: inline-block;
 	width: 25px;
 	height: 25px;
