@@ -100,10 +100,7 @@ BasePrompt.propTypes = {
 	onCancel: PropTypes.func,
 	cancelLabel: PropTypes.string,
 
-	mask: PropTypes.oneOf(
-		PropTypes.node,
-		PropTypes.bool
-	)
+	mask: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
 };
 export default function BasePrompt({
 	className,
@@ -185,9 +182,7 @@ export default function BasePrompt({
 				</Button>
 			</div>
 			{isMasked && (
-				<div className={styles.mask}>
-					{mask !== true ? mask : null}
-				</div>
+				<div className={styles.mask}>{mask !== true ? mask : null}</div>
 			)}
 		</Responsive.ClassList>
 	);
