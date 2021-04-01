@@ -16,6 +16,10 @@ const t = scoped('web-commons.standard-ui.prompt.Confirm', {
 });
 
 const styles = stylesheet`
+	.prompt {
+		position: relative;
+	}
+
 	.prompt:not(.inline) {
 		min-width: min(500px, 98vw);
 		background: white;
@@ -55,6 +59,18 @@ const styles = stylesheet`
 	.action.dismissive {
 		background-color: var(--primary-blue);
 	}
+
+	.mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 `;
 
 const SmallCutOff = 350;
@@ -83,6 +99,11 @@ BasePrompt.propTypes = {
 
 	onCancel: PropTypes.func,
 	cancelLabel: PropTypes.string,
+
+	mask: PropTypes.oneOf(
+		PropTypes.node,
+		PropTypes.bool
+	)
 };
 export default function BasePrompt({
 	className,
@@ -101,10 +122,14 @@ export default function BasePrompt({
 	onCancel,
 	cancelLabel,
 
+	mask,
+
 	...otherProps
 }) {
 	const { matches: isMobile } = useMediaQuery('mobile');
 	const isFullscreen = !inline && isMobile;
+
+	const isMasked = Boolean(mask);
 
 	const isDestructive = actionType === Destructive;
 	const isConstructive = actionType === Constructive;
@@ -139,15 +164,17 @@ export default function BasePrompt({
 						secondary
 						className={styles.cancel}
 						onClick={onCancel}
+						disabled={isMasked}
 					>
 						{cancelLabel ?? t('cancel')}
 					</Button>
 				)}
 				<Button
+					{...actionProps}
 					rounded
 					as={actionCmp}
 					onClick={onAction}
-					{...actionProps}
+					disabled={isMasked}
 					className={cx(styles.action, {
 						[styles.destructive]: isDestructive,
 						[styles.constructive]: isConstructive,
@@ -157,6 +184,11 @@ export default function BasePrompt({
 					{actionLabel ?? t('done')}
 				</Button>
 			</div>
+			{isMasked && (
+				<div className={styles.mask}>
+					{mask !== true ? mask : null}
+				</div>
+			)}
 		</Responsive.ClassList>
 	);
 
