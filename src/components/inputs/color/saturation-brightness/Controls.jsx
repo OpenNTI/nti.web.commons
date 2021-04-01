@@ -61,11 +61,7 @@ export default class SaturationBrightnessControls extends React.Component {
 	update({ saturation, brightness }) {
 		const { value, onChange } = this.props;
 		const oldValue = value ? value : Color.fromHSL(0, 1, 0.5);
-		const newValue = Color.fromHSV(
-			oldValue.hsv.hue,
-			saturation,
-			brightness
-		);
+		const newValue = oldValue.hsv.setSaturation(saturation).hsv.setBrightness(brightness);
 
 		if (
 			(onChange && oldValue.hsv.saturation !== newValue.hsv.saturation) ||
