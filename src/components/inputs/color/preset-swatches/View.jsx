@@ -32,6 +32,8 @@ NTIColorPresets.propTypes = {
 	onSelect: PropTypes.func,
 };
 export default function NTIColorPresets({ swatches, selected, onSelect }) {
+	if (!swatches) { return null; }
+
 	const rows = Array.isArray(swatches[0]) ? swatches : [swatches]
 
 	return rows.map((row, key) => (
