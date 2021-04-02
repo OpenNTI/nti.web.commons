@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { filterProps } from '../utils';
+
 const StandardComponent = React.forwardRef(
 	({ as: tag, ...otherProps }, ref) => {
 		const Cmp = tag || 'div';
 
-		return <Cmp {...otherProps} ref={ref} />;
+		return <Cmp {...filterProps(otherProps, Cmp)} ref={ref} />;
 	}
 );
 
