@@ -56,7 +56,7 @@ export default class BaseEntity extends React.Component {
 			}
 		} catch (e) {
 			const unresolvedName = this.getUsername(
-				props.entity.username || props.entity
+				props.entity?.username || props.entity
 			);
 
 			set({
