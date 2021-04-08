@@ -10,6 +10,11 @@ const MenuTitle = styled('h1')`
 	margin: 0;
 	white-space: nowrap;
 
+	[class^='icon'] {
+		font-size: 0.75em;
+		margin-left: 0.25em;
+	}
+
 	:global(.library-light-background) & {
 		color: var(--secondary-grey);
 	}
@@ -86,7 +91,11 @@ export const Menu = ({
 	options,
 	onChange,
 }) => {
-	const Text = <MenuTitle>{title}</MenuTitle>;
+	const Text = (
+		<MenuTitle>
+			{title} <i className="icon-chevron-down" />
+		</MenuTitle>
+	);
 	return !options?.length ? (
 		Text
 	) : (
