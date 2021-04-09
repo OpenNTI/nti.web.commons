@@ -3,9 +3,16 @@ import { useEffect } from 'react';
 import { createDOM } from '@nti/lib-dom';
 
 const CACHE = new Map();
+const getKey = spec =>
+	spec instanceof Object
+		? spec
+		: (getKey.keys = getKey.keys || {})[spec] ||
+		  (getKey.keys[spec] = { spec });
 const getDOM = spec =>
-	CACHE.get(spec) ||
-	CACHE.set(spec, { refs: 0, dom: createDOM(spec) }).get(spec);
+	CACHE.get(getKey(spec)) ||
+	CACHE.set(getKey(spec), { refs: 0, dom: createDOM(spec) }).get(
+		getKey(spec)
+	);
 
 export function useSharedDOM(domSpec) {
 	useEffect(() => {
