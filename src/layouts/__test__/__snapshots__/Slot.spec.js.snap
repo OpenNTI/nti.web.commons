@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slot Component snapshot 1`] = `
+<section>
+  <header>
+    <div
+      className="header"
+    >
+      Header
+    </div>
+  </header>
+  <nav>
+    <div
+      className="nav"
+    >
+      Nav
+    </div>
+  </nav>
+  <aside>
+    <div
+      className="aside"
+    >
+      Aside
+    </div>
+  </aside>
+  <p>
+    <div
+      className="p"
+    >
+      P
+    </div>
+  </p>
+  <footer>
+    <div
+      className="footer"
+    >
+      Footer
+    </div>
+  </footer>
+  <div
+    className="unslotted"
+  >
+    <span>
+      Unslotted
+    </span>
+    <span>
+      Unslotted
+    </span>
+    <span>
+      Unslotted
+    </span>
+  </div>
+</section>
+`;
