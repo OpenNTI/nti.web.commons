@@ -89,7 +89,7 @@ const UserPresence = props => {
 			dark={dark}
 			className={cx('nti-user-presence-dot', className, state)}
 			{...otherProps}
-			{...{ [state]: !!state }}
+			{...(state ? { [state]: !!state } : null)}
 		/>
 	);
 };
@@ -99,7 +99,7 @@ UserPresence.Store = Store;
 UserPresence.propTypes = {
 	className: PropTypes.string,
 	user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-	children: PropTypes.element,
+	children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
 	border: PropTypes.bool,
 	dark: PropTypes.bool,
 	me: PropTypes.bool,
