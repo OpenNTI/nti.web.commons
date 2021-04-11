@@ -51,7 +51,7 @@ export function useUser(user) {
  * @param {[string]} keys - Optional - If provided, change events will only fire for the given preference keys
  * @returns {Object} - a UserPreferences object
  */
-export const usePrefs = keys => {
+export const usePreferences = keys => {
 	const r = useResolver(getUserPreferences);
 	const prefs = isResolved(r) ? r : null;
 	const forceUpdate = useForceUpdate();
