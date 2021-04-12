@@ -47,7 +47,7 @@
     "@nti/util-logger": "NextThought/nti.util.logger",
     "@nti/web-client": "NextThought/nti.web.client",
     "@nti/web-storage": "NextThought/nti.web.storage",
-    "@reach/tooltip": "^0.14.0",
+    "@reach/tooltip": "^0.15.0",
     "create-react-class": "^15.5.2",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.10",
