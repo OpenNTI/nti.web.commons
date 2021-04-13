@@ -5,6 +5,8 @@ import cx from 'classnames';
 import t, { scoped } from '@nti/lib-locale';
 import { getAppUsername, User } from '@nti/web-client';
 
+import { filterProps } from '../utils/filter-props.js';
+
 import BaseEntity from './BaseEntity';
 
 const strings = scoped('web-commons.components.DisplayName', {
@@ -106,6 +108,6 @@ export default class DisplayName extends BaseEntity {
 			});
 		}
 
-		return <Tag {...props} rel="author" />;
+		return <Tag {...filterProps(props, Tag)} rel="author" />;
 	}
 }
