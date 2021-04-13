@@ -6,11 +6,14 @@ svg.avatar {
 	/* border-radius: 5px; */
 	text {
 		fill: white;
-		font-weight: 700;
-		font-size: 10pt;
-		font-family: Tahoma, Arial, sans-serif;
+		font-weight: 600;
+		font-size: 9pt;
+		font-family: var(--body-font-family);
 		text-transform: uppercase;
 		-webkit-font-smoothing: subpixel-antialiased;
+
+		/* font-weight: 700;
+		/* font-family: Tahoma, Arial, sans-serif; */
 	}
 
 	&.with-presence {
