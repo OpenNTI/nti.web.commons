@@ -27,8 +27,9 @@ export function areYouSure(message, title = 'Are you sure?', extra = {}) {
 			iconClass: extra.iconClass || 'caution',
 			message,
 			title,
-			onConfirm: () => acknowledge(),
-			onCancel: () => cancel('Prompt Canceled'),
+			onConfirm: () => acknowledge(true),
+			// FIXME: do not reject, acknowledge false.
+			onCancel: () => cancel(new Error('Prompt Canceled')),
 		});
 	});
 }
