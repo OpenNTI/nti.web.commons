@@ -1,4 +1,3 @@
-import './Avatar.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -7,14 +6,27 @@ import { User } from '@nti/web-client';
 
 import { DataURIs } from '../constants';
 import { filterProps } from '../utils';
+import { useSharedDOM } from '../hooks/use-shared-dom.js';
 
 import BaseEntity from './BaseEntity';
 import Square from './SquareImg';
+import styles from './Avatar.css';
 
 const { BLANK_AVATAR, BLANK_GROUP_AVATAR } = DataURIs;
 
 const DEFAULT = { entity: { avatarURL: BLANK_AVATAR } };
 const DEFAULT_GROUP = { entity: { avatarURL: BLANK_GROUP_AVATAR } };
+
+const MASK_SPEC = `
+<svg style="position:absolute;width:0;height:0">
+	<defs>
+		<mask id="presence-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+			<circle cx=".50" cy=".50" r=".50" fill="white" />
+			<circle cx=".867" cy="0.865" r=".135" fill="black"/>
+		</mask>
+	</defs>
+</svg>
+`;
 
 export default class Avatar extends BaseEntity {
 	static propTypes = {
@@ -28,6 +40,8 @@ export default class Avatar extends BaseEntity {
 		letterbox: PropTypes.string,
 
 		as: PropTypes.any,
+
+		presence: PropTypes.any,
 	};
 
 	static getColorClass(entity) {
@@ -80,6 +94,7 @@ export default class Avatar extends BaseEntity {
 		const {
 			as: Component = Square,
 			className,
+			presence,
 			letterbox = 'black',
 			...props
 		} = this.props;
@@ -100,20 +115,36 @@ export default class Avatar extends BaseEntity {
 			letterbox,
 			'data-for': User.getDebugUsernameString(entity),
 			alt: displayName && 'Avatar for ' + displayName,
-			className: cx('avatar', color, className),
+			className: cx(styles.avatar, 'avatar', color, className, {
+				[styles.withPresence]: presence,
+			}),
 		};
 
-		return imgSrc ? (
-			<Component {...childProps} src={imgSrc} onError={this.setUnknown} />
-		) : initials ? (
-			<svg {...childProps} viewBox="0 0 32 32">
-				<rect width="100%" height="100%" />
-				<text textAnchor="middle" x="16px" y="21px">
-					{initials}
-				</text>
-			</svg>
-		) : (
-			<Component {...childProps} src={this.fallback()} />
+		return (
+			<>
+				{imgSrc ? (
+					<Component
+						{...childProps}
+						src={imgSrc}
+						onError={this.setUnknown}
+					/>
+				) : initials ? (
+					<svg {...childProps} viewBox="0 0 32 32">
+						<rect width="100%" height="100%" />
+						<text textAnchor="middle" x="16px" y="21px">
+							{initials}
+						</text>
+					</svg>
+				) : (
+					<Component {...childProps} src={this.fallback()} />
+				)}
+				{presence && <AvatarMask />}
+			</>
 		);
 	}
+}
+
+function AvatarMask() {
+	useSharedDOM(MASK_SPEC);
+	return null;
 }

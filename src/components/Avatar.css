@@ -1,0 +1,62 @@
+svg.avatar {
+	rect {
+		fill: var(--tertiary-grey);
+	}
+
+	/* border-radius: 5px; */
+	text {
+		fill: white;
+		font-weight: 700;
+		font-size: 10pt;
+		font-family: Tahoma, Arial, sans-serif;
+		text-transform: uppercase;
+		-webkit-font-smoothing: subpixel-antialiased;
+	}
+
+	&.with-presence {
+		& rect,
+		& image {
+			mask: url(#presence-mask);
+		}
+	}
+
+	&:global(.avatar-color-1) rect {
+		fill: #5e35b1;
+	}
+	&:global(.avatar-color-2) rect {
+		fill: #3949ab;
+	}
+	&:global(.avatar-color-3) rect {
+		fill: #1e88e5;
+	}
+	&:global(.avatar-color-4) rect {
+		fill: #039be5;
+	}
+	&:global(.avatar-color-5) rect {
+		fill: #00acc1;
+	}
+	&:global(.avatar-color-6) rect {
+		fill: #00897b;
+	}
+	&:global(.avatar-color-7) rect {
+		fill: #43a047;
+	}
+	&:global(.avatar-color-8) rect {
+		fill: #7cb342;
+	}
+	&:global(.avatar-color-9) rect {
+		fill: #c0ca33;
+	}
+	&:global(.avatar-color-10) rect {
+		fill: #fdd835;
+	}
+	&:global(.avatar-color-11) rect {
+		fill: #ffb300;
+	}
+	&:global(.avatar-color-12) rect {
+		fill: #fb8c00;
+	}
+	&:global(.avatar-color-13) rect {
+		fill: #f4511e;
+	}
+}
