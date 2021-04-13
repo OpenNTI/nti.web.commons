@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 
 import { User, getAppUsername, getUserPreferences } from '@nti/web-client';
 import { scoped } from '@nti/lib-locale';
@@ -55,23 +55,19 @@ export const usePreferences = keys => {
 	const r = useResolver(getUserPreferences);
 	const prefs = isResolved(r) ? r : null;
 	const forceUpdate = useForceUpdate();
-	const onChange = useCallback(
-		changes => {
+
+	useEffect(() => {
+		const onChange = changes => {
 			if (
 				!keys ||
 				Object.keys(changes || {}).some(k => keys.includes(k))
 			) {
 				forceUpdate();
 			}
-		},
-		[keys]
-	);
+		};
 
-	useEffect(() => {
-		if (prefs) {
-			prefs.addListener('change', onChange);
-			return () => prefs.removeListener('change', onChange);
-		}
-	}, [prefs, onChange]);
+		prefs?.addListener('change', onChange);
+		return () => prefs?.removeListener('change', onChange);
+	}, [prefs, keys, forceUpdate]);
 	return prefs;
 };
