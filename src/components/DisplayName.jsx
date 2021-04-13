@@ -30,8 +30,7 @@ export default class DisplayName extends BaseEntity {
 
 		tag: PropTypes.any,
 
-		entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
-			.isRequired,
+		entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 
 		/**
 		 * Specifies to substitute your name with the specified string, or "You" if prop is boolean.
