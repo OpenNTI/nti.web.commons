@@ -1,16 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { DisplayName } from '../components';
 
-export default class UserDisplayName extends React.Component {
-	static propTypes = {
-		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-	};
-
-	render() {
-		const { user, ...otherProps } = this.props;
-
-		return <DisplayName {...otherProps} entity={user} />;
-	}
+/**
+ * Convenance helpers to reduce imports on commons if you just need User.x stuff
+ *
+ * @param {*} props
+ * @returns {React.ReactElement}
+ */
+export default function UserDisplayName({
+	/**
+	 * @deprecated use entity instead
+	 */
+	user,
+	...props
+}) {
+	return <DisplayName entity={user} {...props} />;
 }

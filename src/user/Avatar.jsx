@@ -1,11 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Avatar } from '../components';
 
-UserAvatar.propTypes = {
-	user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-};
-export default function UserAvatar({ user, ...props }) {
+/**
+ * Convenance helpers to reduce imports on commons if you just need User.x stuff
+ *
+ * @param {*} props
+ * @returns {React.ReactElement}
+ */
+export default function UserAvatar({
+	/**
+	 * @deprecated use entity instead
+	 */
+	user,
+	...props
+}) {
 	return <Avatar entity={user} {...props} />;
 }
