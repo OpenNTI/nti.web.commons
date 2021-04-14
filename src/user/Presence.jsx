@@ -11,17 +11,16 @@ const Dot = styled.div`
 	height: 7px;
 	border-radius: 7px;
 	background: var(--presence-offline);
-
-	&.online,
-	&.available {
+	&.presence-online,
+	&.presence-available {
 		background: var(--presence-available);
 	}
 
-	&.away {
+	&.presence-away {
 		background: var(--presence-away);
 	}
 
-	&.dnd {
+	&.presence-dnd {
 		background: var(--presence-dnd);
 	}
 
@@ -87,14 +86,15 @@ const UserPresence = props => {
 		<Dot
 			border={border}
 			dark={dark}
+			presence={state}
 			className={cx('nti-user-presence-dot', className, state)}
 			{...otherProps}
-			{...(state ? { [state]: !!state } : null)}
 		/>
 	);
 };
 
 UserPresence.Store = Store;
+UserPresence.Dot = Dot;
 
 UserPresence.propTypes = {
 	className: PropTypes.string,
