@@ -22,7 +22,10 @@ export default class PresenceStore extends EventEmitter {
 		this[PRESENCE_MAP] = {};
 	}
 
-	setPresenceFor(username, presenceInfo) {
+	/** @deprecated Use setPresence instead*/
+	setPresenceFor = this.setPresence;
+
+	setPresence(username, presenceInfo) {
 		const oldPresence = this[PRESENCE_MAP][username];
 
 		this[PRESENCE_MAP][username] = presenceInfo;
