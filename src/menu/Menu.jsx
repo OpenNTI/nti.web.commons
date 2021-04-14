@@ -15,9 +15,7 @@ const MenuTitle = styled('h1')`
 		margin-left: 0.25em;
 	}
 
-	:global(.library-light-background) & {
-		color: var(--secondary-grey);
-	}
+	color: var(--text-color-primary);
 `;
 
 const MenuList = styled(List.Unadorned)`
