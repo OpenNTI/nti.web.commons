@@ -59,7 +59,6 @@ const MenuContent = ({
 		event?.stopPropagation?.();
 		event?.preventDefault?.();
 		onChange(option);
-		dismissFlyout();
 	};
 	return (
 		<MenuList>
@@ -100,6 +99,7 @@ export const Menu = ({
 		<Flyout.Triggered
 			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 			trigger={Text}
+			autoDismissOnAction
 		>
 			<MenuContent
 				value={value}
