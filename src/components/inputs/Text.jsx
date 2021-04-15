@@ -6,6 +6,7 @@ import cx from 'classnames';
 export default class TextInput extends React.Component {
 	static propTypes = {
 		autoFocus: PropTypes.bool,
+		autoSelect: PropTypes.bool,
 		className: PropTypes.string,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
@@ -65,12 +66,19 @@ export default class TextInput extends React.Component {
 		this.focus();
 	};
 
+	onFocus = e => {
+		e.target.setSelectionRange(0, e.target.value.length);
+		// eslint-disable-next-line react/prop-types
+		this.props.onFocus?.(e);
+	};
+
 	render() {
 		const { value, className, type = 'text', ...props } = this.props;
 
 		return (
 			<input
 				{...props}
+				onFocus={this.onFocus}
 				className={cx('nti-text-input', className)}
 				ref={this.attachInputRef}
 				onChange={'onChange' in this.props ? this.onChange : undefined}
