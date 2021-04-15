@@ -42,12 +42,13 @@ export default class ClearableInput extends React.Component {
 	};
 
 	render() {
-		const { className } = this.props;
-		const cls = cx('nti-clearable-input', className);
-
+		const { children, className, ...props } = this.props;
+		const child = React.Children.only(children);
 		return (
-			<div className={cls}>
-				{this.renderInput()}
+			<div className={cx('nti-clearable-input', className)} {...props}>
+				{React.cloneElement(child, {
+					ref: getRefHandler(child.ref, this.attachInputRef),
+				})}
 				<div
 					className="reset"
 					onClick={this.onClear}
@@ -56,13 +57,4 @@ export default class ClearableInput extends React.Component {
 			</div>
 		);
 	}
-
-	renderInput = () => {
-		const { children } = this.props;
-		const child = React.Children.only(children);
-
-		return React.cloneElement(child, {
-			ref: getRefHandler(child.ref, this.attachInputRef),
-		});
-	};
 }
