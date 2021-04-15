@@ -8,6 +8,30 @@
 	align-items: flex-start;
 }
 
+.toast-message-bar.error {
+	background-color: var(--primary-red);
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+
+	.icon-container {
+		color: white;
+	}
+
+	.message-container {
+		color: white;
+	}
+
+	.close-icon {
+		color: white;
+	}
+}
+
+.icon-container {
+	flex: 0 0 auto;
+	align-self: center;
+	margin-right: 0.25rem;
+	color: var(--secondary-grey);
+}
+
 .message-container {
 	flex: 1 1 auto;
 	font-size: 0.875rem;

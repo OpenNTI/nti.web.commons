@@ -10,13 +10,19 @@ const cx = classnames.bind(Styles);
 
 ToastMessage.propTypes = {
 	className: PropTypes.string,
+	error: PropTypes.bool,
+
+	icon: PropTypes.node,
+
 	title: PropTypes.string,
 	message: PropTypes.string,
+
 	onDismiss: PropTypes.func,
 };
-export default function ToastMessage({ className, title, message, onDismiss }) {
+export default function ToastMessage({ className, error, icon, title, message, onDismiss }) {
 	return (
-		<div className={cx('toast-message-bar', className)} onClick={onDismiss}>
+		<div className={cx('toast-message-bar', className, {error})} onClick={onDismiss}>
+			{icon && (<div className={cx('icon-container')}>{icon}</div>)}
 			<div className={cx('message-container')}>
 				{title && (
 					<Text.Base className={cx('title')}>{title}</Text.Base>

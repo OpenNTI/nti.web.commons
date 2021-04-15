@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import Container from './container';
 import Context from './Context';
 import { Locations, DefaultLocation, Styles, DefaultStyle } from './Constants';
-import { Factory, Card, MessageBar, MessageCard } from './layouts';
+import { Factory, Card, ErrorBar, MessageBar, MessageCard } from './layouts';
 
 Toast.Card = Factory.Wrap(Toast, Card);
+Toast.ErrorBar = Factory.Wrap(Toast, ErrorBar);
 Toast.MessageBar = Factory.Wrap(Toast, MessageBar);
 Toast.MessageCard = Factory.Wrap(Toast, MessageCard);
 Toast.Container = Container;
