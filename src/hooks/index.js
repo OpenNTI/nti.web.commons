@@ -12,5 +12,6 @@ export * from './use-list-item-variant';
 export * from './use-container-width';
 export * from './use-resize-observer';
 export * from './use-responsive-value';
+export * from './use-service';
 export * from './use-shared-dom';
 export * from './use-toggle';
