@@ -9,14 +9,21 @@ import Region from './Region';
 
 const styles = stylesheet`
 	.container {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		bottom: 0;
 		right: 0;
 		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+
+	.container.global {
+		position: fixed;
 		width: 100vw;
 		height: 100vh;
-		pointer-events: none;
+		top: var(--nt-app-top-offset, 0);
 	}
 `;
 
@@ -24,6 +31,7 @@ const RegionOrder = [Locations.Top, Locations.TopRight];
 
 ToastContainer.propTypes = {
 	className: PropTypes.string,
+	global: PropTypes.bool,
 	location: PropTypes.oneOf(Object.values(Locations)),
 	toasts: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -34,6 +42,7 @@ ToastContainer.propTypes = {
 export default function ToastContainer({
 	location,
 	className,
+	global: globalToast,
 	toasts,
 	...otherProps
 }) {
@@ -52,7 +61,7 @@ export default function ToastContainer({
 	return (
 		<ZStack
 			data-toast-container="yes"
-			className={cx(styles.container, className)}
+			className={cx(styles.container, className, {[styles.global]: globalToast})}
 			{...otherProps}
 		>
 			{RegionOrder.map(name => {

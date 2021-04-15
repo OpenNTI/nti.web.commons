@@ -3,12 +3,7 @@ import { createMountPoint } from '../remote-mount';
 import Container from './container/Container';
 
 const styles = stylesheet`
-	.global-root {
-	}
-	.global-container {
-		position: fixed;
-		top: var(--nt-app-top-offset, 0);
-	}
+	.global-root {}
 `;
 
 let idCount = 0;
@@ -38,7 +33,7 @@ const updateToasts = () => {
 	} else {
 		getMountPoint()?.render(Container, {
 			toasts,
-			className: styles.globalContainer,
+			global: true
 		});
 	}
 };
