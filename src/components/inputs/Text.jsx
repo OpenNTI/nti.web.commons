@@ -31,6 +31,16 @@ export default class TextInput extends React.Component {
 		return this.input.validity;
 	}
 
+	get value() {
+		return this.input?.value;
+	}
+
+	set value(v) {
+		if (this.input) {
+			this.input.value = v;
+		}
+	}
+
 	focus() {
 		if (this.input) {
 			this.input.focus();

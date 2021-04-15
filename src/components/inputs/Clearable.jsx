@@ -30,7 +30,7 @@ export default class ClearableInput extends React.Component {
 		const { children, onClear } = this.props;
 
 		if (onClear) {
-			return onClear();
+			return onClear(this.input);
 		}
 
 		const child = React.Children.only(children);
