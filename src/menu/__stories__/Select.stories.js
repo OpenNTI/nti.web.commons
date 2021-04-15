@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Menu } from '../Menu';
+import { Select } from '../Select';
 
 export const Basic = props => {
 	const options = React.useMemo(() =>
@@ -9,7 +9,12 @@ export const Basic = props => {
 	const [value, setValue] = React.useState(options[0]);
 
 	return (
-		<Menu options={options} value={value} onChange={setValue} {...props} />
+		<Select
+			options={options}
+			value={value}
+			onChange={setValue}
+			{...props}
+		/>
 	);
 };
 
@@ -20,7 +25,7 @@ export const WithTitle = props => {
 	const [value, setValue] = React.useState(options[0]);
 
 	return (
-		<Menu
+		<Select
 			title={`Menu Title via prop (${value})`}
 			options={options}
 			value={value}
@@ -40,7 +45,7 @@ export const WithStrings = props => {
 	const [value, setValue] = React.useState(options[0]);
 
 	return (
-		<Menu
+		<Select
 			getText={getText}
 			options={options}
 			value={value}
@@ -51,12 +56,12 @@ export const WithStrings = props => {
 };
 
 export const NoOptions = props => {
-	return <Menu value="No Options - Renders value as Text" {...props} />;
+	return <Select value="No Options - Renders value as Text" {...props} />;
 };
 
 export default {
 	title: 'Menu',
-	component: Menu,
+	component: Select,
 	argTypes: {
 		title: {
 			control: { type: 'text' },
