@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { filterProps } from '../../utils';
+
 export default class TextInput extends React.Component {
 	static propTypes = {
 		autoFocus: PropTypes.bool,
@@ -73,17 +75,16 @@ export default class TextInput extends React.Component {
 	};
 
 	render() {
-		const { value, className, type = 'text', ...props } = this.props;
+		const { value, className, ...props } = this.props;
 
 		return (
 			<input
-				{...props}
+				{...filterProps(props, 'input')}
 				onFocus={this.onFocus}
 				className={cx('nti-text-input', className)}
 				ref={this.attachInputRef}
 				onChange={'onChange' in this.props ? this.onChange : undefined}
 				value={'value' in this.props ? value || '' : undefined}
-				type={type}
 			/>
 		);
 	}
