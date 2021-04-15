@@ -81,7 +81,7 @@ const MenuContent = ({
 
 const t = x => x;
 
-export const Menu = ({
+export const Select = ({
 	getText = t,
 	value,
 	title = getText(value),
