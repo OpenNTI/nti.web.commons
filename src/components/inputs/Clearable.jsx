@@ -42,7 +42,7 @@ export default class ClearableInput extends React.Component {
 	};
 
 	render() {
-		const { children, className, ...props } = this.props;
+		const { children, className, onClear, ...props } = this.props;
 		const child = React.Children.only(children);
 		return (
 			<div className={cx('nti-clearable-input', className)} {...props}>
