@@ -6,7 +6,7 @@ export function useToggle(initial = false) {
 		// if the toggle function is passed directly to an onClick, mark it handled.
 		e?.stopPropagation?.();
 		e?.preventDefault?.();
-		setState(x => !x), [];
+		setState(x => (typeof e === 'boolean' ? e : !x)), [];
 	});
 	return [state, toggle];
 }
