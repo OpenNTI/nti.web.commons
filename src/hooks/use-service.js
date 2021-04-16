@@ -1,8 +1,9 @@
-import { getService } from '@nti/web-client';
+import { getService, getAppUser } from '@nti/web-client';
 
 /** @typedef {import('@nti/lib-interfaces/src/stores/Service').default} Service */
+/** @typedef {import('@nti/lib-interfaces/src/models/entities/User').default} User */
 
-let service;
+const DATA = {};
 
 /**
  * A "hook" that returns the service document. The components that use this
@@ -11,10 +12,23 @@ let service;
  * @returns {Service}
  */
 export function useService() {
-	if (!service) {
-		service = wrapPromise(getService());
+	if (!DATA.service) {
+		DATA.service = wrapPromise(getService());
 	}
-	return service.read();
+	return DATA.service.read();
+}
+
+/**
+ * A "hook" that returns the app user model. The components that use this
+ * must be wrapped in <Suspense fallback={...}>.
+ *
+ * @returns {User}
+ */
+export function useAppUser() {
+	if (!DATA.appUser) {
+		DATA.appUser = wrapPromise(getAppUser());
+	}
+	return DATA.appUser.read();
 }
 
 // Suspense integration ... should probably be moved somewhere better.
