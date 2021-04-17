@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { getAppUsername } from '@nti/web-client';
-
-import PresenceStore from './PresenceStore';
+import { UserPresence as UserPresenceStore } from '@nti/lib-interfaces';
 
 const Dot = styled.div`
 	width: 7px;
@@ -35,8 +34,6 @@ const Dot = styled.div`
 	}
 `;
 
-const Store = new PresenceStore();
-
 const UserPresence = props => {
 	const {
 		children,
@@ -57,11 +54,13 @@ const UserPresence = props => {
 		throw new Error('Specify props.user or props.me, not both.');
 	}
 
-	const [presence, setPresence] = useState(Store.getPresence(current));
+	const [presence, setPresence] = useState(
+		UserPresenceStore.getPresence(current)
+	);
 	const state = presence?.getName?.().toLowerCase() || '';
 
 	useEffect(() => {
-		setPresence(Store.getPresence(current));
+		setPresence(UserPresenceStore.getPresence(current));
 
 		const onPresenceChanged = (username, newPresence) => {
 			if (current === username) {
@@ -69,10 +68,13 @@ const UserPresence = props => {
 			}
 		};
 
-		Store.addListener('presence-changed', onPresenceChanged);
+		UserPresenceStore.addListener('presence-changed', onPresenceChanged);
 
 		return () => {
-			Store.removeListener('presence-changed', onPresenceChanged);
+			UserPresenceStore.removeListener(
+				'presence-changed',
+				onPresenceChanged
+			);
 		};
 	}, [current]);
 
@@ -93,7 +95,7 @@ const UserPresence = props => {
 	);
 };
 
-UserPresence.Store = Store;
+UserPresence.Store = UserPresenceStore;
 UserPresence.Dot = Dot;
 
 UserPresence.propTypes = {
