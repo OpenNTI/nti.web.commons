@@ -88,9 +88,11 @@ export const Select = ({
 	options,
 	onChange,
 }) => {
+	const hasOptions = !!options?.length;
+
 	const Text = (
 		<MenuTitle>
-			{title} <i className="icon-chevron-down" />
+			{title} {hasOptions && <i className="icon-chevron-down" />}
 		</MenuTitle>
 	);
 	return !options?.length ? (
