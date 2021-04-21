@@ -79,6 +79,7 @@ export default class TextInput extends React.Component {
 
 		return (
 			<input
+				type="text"
 				{...filterProps(props, 'input')}
 				onFocus={this.onFocus}
 				className={cx('nti-text-input', className)}
