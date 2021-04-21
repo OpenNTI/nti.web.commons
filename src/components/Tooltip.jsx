@@ -28,9 +28,8 @@ export default styled(Tooltip).attrs(({ label, ...props }) => ({
 const OFFSET_DEFAULT = 8;
 
 function positionTooltip(triggerRect, tooltipRect, offset = OFFSET_DEFAULT) {
-	// account for top padding on html node
-	const bodyOffset = document.body.getBoundingClientRect().top;
-	offset -= bodyOffset;
+	// account for top offset due to sticky navigation bar
+	offset -= parseInt(getComputedStyle(triggerRect.element || document.body).getPropertyValue('--nt-app-top-offset'), 10);
 	const {
 		width: windowWidth,
 		height: windowHeight,
