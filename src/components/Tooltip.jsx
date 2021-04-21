@@ -29,7 +29,10 @@ const OFFSET_DEFAULT = 8;
 
 function positionTooltip(triggerRect, tooltipRect, offset = OFFSET_DEFAULT) {
 	// account for top offset due to sticky navigation bar
-	offset -= parseInt(getComputedStyle(triggerRect.element || document.body).getPropertyValue('--nt-app-top-offset'), 10);
+	offset -= parseInt(
+		getComputedStyle(document.body).getPropertyValue('--nt-app-top-offset'),
+		10
+	);
 	const {
 		width: windowWidth,
 		height: windowHeight,
