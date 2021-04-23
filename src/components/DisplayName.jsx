@@ -17,7 +17,7 @@ const strings = scoped('web-commons.components.DisplayName', {
  * This DisplayName component can use the full Entity instance if you have it.
  * Otherwise, it will take a username string for the entity prop. If you do not
  * have the full entity object, and you want to show the display name, do not
- * resolve the full entity object yourself just to pass to this componenent.
+ * resolve the full entity object yourself just to pass to this component.
  * Only resolve the entity IF and ONLY IF you need it for something else. Most
  * likely, if its a link, or something, use the corresponding Component,
  * do not roll your own.
@@ -50,8 +50,34 @@ export default class DisplayName extends BaseEntity {
 		useGeneralName: PropTypes.bool,
 	};
 
+	/**
+	 *
+	 * @param {import('@nti/lib-interfaces').Models.entities.Entity} entity
+	 * @param {Object} options
+	 * @param {boolean} options.useGeneralName
+	 * @param {boolean} options.usePronoun
+	 * @returns {string}
+	 */
+	static from(entity, { usePronoun, useGeneralName } = {}) {
+		const appUser = getAppUsername();
+		const { generalName } = entity;
+		const displayName =
+			usePronoun && entity.getID() === appUser
+				? typeof usePronoun === 'string'
+					? usePronoun
+					: 'You'
+				: entity.displayName;
+
+		let name = (useGeneralName && generalName) || displayName;
+
+		if (entity.Deactivated) {
+			name = strings('deactivated', { name });
+		}
+
+		return name;
+	}
+
 	render() {
-		const appuser = getAppUsername();
 		const {
 			props: {
 				className,
@@ -69,19 +95,7 @@ export default class DisplayName extends BaseEntity {
 			return null;
 		}
 
-		const { generalName } = entity;
-		const displayName =
-			usePronoun && entity.getID() === appuser
-				? typeof usePronoun === 'string'
-					? usePronoun
-					: 'You'
-				: entity.displayName;
-
-		let name = (useGeneralName && generalName) || displayName;
-
-		if (entity.Deactivated) {
-			name = strings('deactivated', { name });
-		}
+		let name = DisplayName.from(entity);
 
 		const props = {
 			...otherProps,
