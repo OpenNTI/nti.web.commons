@@ -20,6 +20,7 @@ export default styled(Tooltip).attrs(({ label, ...props }) => ({
 	color: #fff;
 	font-size: 11px;
 	font-weight: 600;
+	z-index: 3;
 `;
 
 // The default positioning of the tooltip doesn't account for body being offset...
