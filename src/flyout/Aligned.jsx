@@ -529,6 +529,7 @@ export default class AlignedFlyout extends React.Component {
 			}
 		);
 
+		flyoutProps['role'] = 'menu';
 		if (!menu) {
 			flyoutProps['role'] = 'dialog';
 		}

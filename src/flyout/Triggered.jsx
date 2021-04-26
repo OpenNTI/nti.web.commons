@@ -418,6 +418,7 @@ export default class TriggeredFlyout extends React.Component {
 			classes,
 			className,
 			focusOnOpen,
+			menu,
 			...otherProps
 		} = this.props;
 		const { open: stateOpen } = this.state;
@@ -427,6 +428,7 @@ export default class TriggeredFlyout extends React.Component {
 		const flyoutProps = {
 			...restProps(TriggeredFlyout, otherProps),
 			className,
+			menu,
 		};
 
 		const open = stateOpen || controlledOpen;
