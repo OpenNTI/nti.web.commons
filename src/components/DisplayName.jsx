@@ -22,106 +22,102 @@ const strings = scoped('web-commons.components.DisplayName', {
  * likely, if its a link, or something, use the corresponding Component,
  * do not roll your own.
  */
-export default class DisplayName extends BaseEntity {
-	static propTypes = {
-		...BaseEntity.propTypes,
 
-		className: PropTypes.string,
+export default function DisplayName(props) {
+	return <BaseEntity {...props}>{DisplayNameContent}</BaseEntity>;
+}
 
-		localeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+DisplayName.propTypes = {
+	...BaseEntity.propTypes,
 
-		tag: PropTypes.any,
+	localeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
-		entity: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-
-		/**
-		 * Specifies to substitute your name with the specified string, or "You" if prop is boolean.
-		 *
-		 * @type {boolean|string}
-		 */
-		usePronoun: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-
-		/**
-		 * Sharing Scopes (entity objects) are given GeneralNames by the suggestion provider.
-		 * This flag will instruct this component to use that designation instead of the displayName.
-		 *
-		 * @type {boolean}
-		 */
-		useGeneralName: PropTypes.bool,
-	};
+	tag: PropTypes.any,
 
 	/**
+	 * Specifies to substitute your name with the specified string, or "You" if prop is boolean.
 	 *
-	 * @param {import('@nti/lib-interfaces').Models.entities.Entity} entity
-	 * @param {Object} options
-	 * @param {boolean} options.useGeneralName
-	 * @param {boolean} options.usePronoun
-	 * @returns {string}
+	 * @type {boolean|string}
 	 */
-	static from(entity, { usePronoun, useGeneralName } = {}) {
-		const appUser = getAppUsername();
-		const { generalName } = entity;
-		const displayName =
-			usePronoun && entity.getID() === appUser
-				? typeof usePronoun === 'string'
-					? usePronoun
-					: 'You'
-				: entity.displayName;
+	usePronoun: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 
-		let name = (useGeneralName && generalName) || displayName;
+	/**
+	 * Sharing Scopes (entity objects) are given GeneralNames by the suggestion provider.
+	 * This flag will instruct this component to use that designation instead of the displayName.
+	 *
+	 * @type {boolean}
+	 */
+	useGeneralName: PropTypes.bool,
+};
 
-		if (entity.Deactivated) {
-			name = strings('deactivated', { name });
-		}
+DisplayName.from = from;
 
-		return name;
+function DisplayNameContent({
+	entity,
+	className,
+	localeKey,
+	tag,
+	usePronoun,
+	useGeneralName,
+	...otherProps
+}) {
+	const Tag = tag || (localeKey ? 'address' : 'span');
+
+	if (!entity) {
+		return null;
 	}
 
-	render() {
-		const {
-			props: {
-				className,
-				localeKey,
-				tag,
-				usePronoun,
-				useGeneralName,
-				...otherProps
-			},
-			state: { entity },
-		} = this;
-		const Tag = tag || (localeKey ? 'address' : 'span');
+	let name = from(entity);
 
-		if (!entity) {
-			return null;
-		}
+	const props = {
+		...otherProps,
+		className: cx('username', className),
+		children: name,
+		'data-for': User.getDebugUsernameString(entity),
+	};
 
-		let name = DisplayName.from(entity);
+	delete props.entity;
+	delete props.entityId;
 
-		const props = {
-			...otherProps,
-			className: cx('username', className),
-			children: name,
-			'data-for': User.getDebugUsernameString(entity),
-		};
+	if (localeKey) {
+		const innerTag = Tag === 'a' ? 'span' : 'a';
+		name = `<${innerTag} rel="author" class="username">${name}</${innerTag}>`;
 
-		delete props.entity;
-		delete props.entityId;
+		const getString =
+			typeof localeKey === 'function' ? localeKey : o => t(localeKey, o);
 
-		if (localeKey) {
-			const innerTag = Tag === 'a' ? 'span' : 'a';
-			name = `<${innerTag} rel="author" class="username">${name}</${innerTag}>`;
-
-			const getString =
-				typeof localeKey === 'function'
-					? localeKey
-					: o => t(localeKey, o);
-
-			Object.assign(props, {
-				children: void 0,
-				dangerouslySetInnerHTML: { __html: getString({ name }) },
-			});
-		}
-
-		return <Tag {...filterProps(props, Tag)} rel="author" />;
+		Object.assign(props, {
+			children: void 0,
+			dangerouslySetInnerHTML: { __html: getString({ name }) },
+		});
 	}
+
+	return <Tag {...filterProps(props, Tag)} rel="author" />;
+}
+
+/**
+ *
+ * @param {import('@nti/lib-interfaces').Models.entities.Entity} entity
+ * @param {Object} options
+ * @param {boolean} options.useGeneralName
+ * @param {boolean} options.usePronoun
+ * @returns {string}
+ */
+function from(entity, { usePronoun, useGeneralName } = {}) {
+	const appUser = getAppUsername();
+	const { generalName } = entity;
+	const displayName =
+		usePronoun && entity.getID() === appUser
+			? typeof usePronoun === 'string'
+				? usePronoun
+				: 'You'
+			: entity.displayName;
+
+	let name = (useGeneralName && generalName) || displayName;
+
+	if (entity.Deactivated) {
+		name = strings('deactivated', { name });
+	}
+
+	return name;
 }
