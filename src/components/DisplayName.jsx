@@ -63,10 +63,6 @@ function DisplayNameContent({
 }) {
 	const Tag = tag || (localeKey ? 'address' : 'span');
 
-	if (!entity) {
-		return null;
-	}
-
 	let name = from(entity);
 
 	const props = {
@@ -105,17 +101,17 @@ function DisplayNameContent({
  */
 function from(entity, { usePronoun, useGeneralName } = {}) {
 	const appUser = getAppUsername();
-	const { generalName } = entity;
+	const { generalName } = entity || {};
 	const displayName =
-		usePronoun && entity.getID() === appUser
+		usePronoun && entity?.getID() === appUser
 			? typeof usePronoun === 'string'
 				? usePronoun
 				: 'You'
-			: entity.displayName;
+			: entity?.displayName;
 
 	let name = (useGeneralName && generalName) || displayName;
 
-	if (entity.Deactivated) {
+	if (entity?.Deactivated) {
 		name = strings('deactivated', { name });
 	}
 

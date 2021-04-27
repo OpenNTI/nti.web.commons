@@ -56,15 +56,12 @@ function AvatarContent({
 		setFailed(isGroup(entity) ? BLANK_GROUP_AVATAR : BLANK_AVATAR);
 	};
 
-	if (!entity) {
-		return null;
-	}
-
 	const color = getColorClass(entity);
 	const { initials, displayName } = entity || {};
 
 	const imgSrc =
-		failedImage || (entity.Deactivated ? BLANK_AVATAR : entity.avatarURL);
+		failedImage ||
+		(!entity || entity.Deactivated ? BLANK_AVATAR : entity.avatarURL);
 
 	const renderer = imgSrc || !initials ? Component : 'svg';
 
@@ -133,8 +130,7 @@ function getColorClass(entity) {
 	const NUM_COLORS = 12;
 
 	let hashedString =
-		(typeof entity === 'string' ? entity : (entity || {}).Username) ||
-		'unknown';
+		(typeof entity === 'string' ? entity : entity?.Username) || 'unknown';
 
 	let idx = Math.abs(hash(hashedString)) % NUM_COLORS;
 
