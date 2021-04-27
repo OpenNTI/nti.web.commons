@@ -9,10 +9,12 @@ const MenuTitle = styled('h1')`
 	font-size: 18px;
 	margin: 0;
 	white-space: nowrap;
+	display: flex;
+	align-items: baseline;
 
 	[class^='icon'] {
 		font-size: 0.75em;
-		margin-left: 0.25em;
+		margin-left: 0.5em;
 	}
 
 	color: var(--text-color-primary);
