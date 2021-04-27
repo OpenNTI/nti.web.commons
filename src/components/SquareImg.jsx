@@ -90,7 +90,7 @@ export default class Square extends React.Component {
 	componentDidUpdate = ({ src: prevSrc }) => {
 		const { src } = this.props;
 
-		if (src !== this.props.src) {
+		if (src !== prevSrc) {
 			this.image.src = src;
 		}
 	};
