@@ -12,15 +12,17 @@ export default styled(Tooltip).attrs(({ label, ...props }) => ({
 			? React.createElement(Text, {}, label)
 			: label,
 }))`
-	background-color: var(--primary-grey);
-	border-color: var(--primary-grey);
-	padding: 3px 5px;
-	box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.25);
-	text-transform: uppercase;
-	color: #fff;
-	font-size: 11px;
-	font-weight: 600;
-	z-index: 3;
+	&, &[data-reach-tooltip] {
+		background-color: var(--primary-grey);
+		border-color: var(--primary-grey);
+		padding: 3px 5px;
+		box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.25);
+		text-transform: uppercase;
+		color: #fff;
+		font-size: 11px;
+		font-weight: 600;
+		z-index: 3;
+	}
 `;
 
 // The default positioning of the tooltip doesn't account for body being offset...
