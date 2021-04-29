@@ -48,6 +48,7 @@ export function useUser(user) {
 
 /**
  * Provides convenient access to UserPreferences and listens for user preference changes
+ *
  * @param {[string]} keys - Optional - If provided, change events will only fire for the given preference keys
  * @returns {Object} - a UserPreferences object
  */
@@ -61,7 +62,7 @@ export const usePreferences = keys => {
 			if (
 				keys == null ||
 				changes == null ||
-				Object.keys(changes).some(k => keys.includes(k))
+				Object.keys(changes).some(k => keys.find(x => k.startsWith(x)))
 			) {
 				forceUpdate();
 			}
