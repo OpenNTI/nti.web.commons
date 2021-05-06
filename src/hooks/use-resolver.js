@@ -14,6 +14,10 @@ useResolver.isResolved = v =>
 export function useResolver(resolver, dependencyList, config = {}) {
 	const { buffer } = config;
 
+	if (!dependencyList) {
+		throw new Error('Invalid invocation');
+	}
+
 	const nonce = {};
 	const prevDependencies = React.useRef();
 	const bufferTimeout = React.useRef();
@@ -22,10 +26,12 @@ export function useResolver(resolver, dependencyList, config = {}) {
 
 	const forceUpdate = useForceUpdate();
 	const updateValue = v => {
-		if (!discarded && nonce === value.current[Initial]) {
+		if (discarded) return;
+		if (nonce === value.current[Initial]) {
 			value.current = v;
-			forceUpdate();
 		}
+
+		forceUpdate();
 	};
 
 	//If the dependency list changed immediately move to a pending state.
