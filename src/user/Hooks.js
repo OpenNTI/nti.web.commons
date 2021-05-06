@@ -53,7 +53,7 @@ export function useUser(user) {
  * @returns {Object} - a UserPreferences object
  */
 export const usePreferences = keys => {
-	const r = useResolver(getUserPreferences);
+	const r = useResolver(getUserPreferences, [getUserPreferences]);
 	const prefs = isResolved(r) ? r : null;
 	const forceUpdate = useForceUpdate();
 
