@@ -57,7 +57,7 @@ const UserPresence = props => {
 	const [presence, setPresence] = useState(
 		UserPresenceStore.getPresence(current)
 	);
-	const state = presence?.getName?.().toLowerCase() || '';
+	const state = presence?.getName?.()?.toLowerCase?.() || '';
 
 	useEffect(() => {
 		setPresence(UserPresenceStore.getPresence(current));
