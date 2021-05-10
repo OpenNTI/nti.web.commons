@@ -70,6 +70,7 @@ const MenuContent = ({
 					<MenuOption
 						key={option}
 						active={active}
+						data-testid={option}
 						onClick={e => onClick(e, option)}
 					>
 						{active && <Check />}
