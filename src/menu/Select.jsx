@@ -63,7 +63,7 @@ const MenuContent = ({
 		onChange(option);
 	};
 	return (
-		<MenuList>
+		<MenuList data-testid="menu-options">
 			{options.map(option => {
 				const active = value === option;
 				return (
@@ -88,13 +88,14 @@ export const Select = ({
 	getText = t,
 	value,
 	title = getText(value),
+	name = 'select-menu-trigger',
 	options,
 	onChange,
 }) => {
 	const hasOptions = !!options?.length;
 
 	const Text = (
-		<MenuTitle>
+		<MenuTitle data-testid={name} data-value={value}>
 			{title} {hasOptions && <i className="icon-chevron-down" />}
 		</MenuTitle>
 	);
