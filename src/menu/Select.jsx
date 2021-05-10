@@ -3,6 +3,7 @@ import React from 'react';
 import * as Flyout from '../flyout';
 import * as List from '../components/list';
 import { Check as CheckIcon } from '../icons';
+import { useMobileValue } from '../hooks';
 
 const MenuTitle = styled('h1')`
 	font: normal 300 1.25em/2em var(--body-font-family);
@@ -11,6 +12,7 @@ const MenuTitle = styled('h1')`
 	white-space: nowrap;
 	display: flex;
 	align-items: baseline;
+	position: relative;
 
 	[class^='icon'] {
 		font-size: 0.75em;
@@ -47,6 +49,16 @@ const Check = styled(CheckIcon)`
 	font-size: 1rem;
 	position: absolute;
 	left: 1rem;
+`;
+
+const NativeSelect = styled('select')`
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	opacity: 0;
 `;
 
 const MenuContent = ({
@@ -93,13 +105,29 @@ export const Select = ({
 	onChange,
 }) => {
 	const hasOptions = !!options?.length;
+	const isMobile = useMobileValue(true);
+	const useNativeSelect = hasOptions && isMobile;
+	const useFlyout = hasOptions && !useNativeSelect;
 
 	const Text = (
 		<MenuTitle data-testid={name} data-value={value}>
 			{title} {hasOptions && <i className="icon-chevron-down" />}
+			{useNativeSelect && (
+				<NativeSelect
+					value={value}
+					onChange={e => onChange(e.target.value)}
+				>
+					{options.map(o => (
+						<option key={o} value={o}>
+							{getText(o)}
+						</option>
+					))}
+				</NativeSelect>
+			)}
 		</MenuTitle>
 	);
-	return !options?.length ? (
+
+	return !useFlyout ? (
 		Text
 	) : (
 		<Flyout.Triggered
