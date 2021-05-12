@@ -22,19 +22,23 @@ const Item = styled.li`
 
 NTIColorPresets.propTypes = {
 	swatches: PropTypes.arrayOf(
-		PropTypes.shape({
-			color: PropTypes.shape({
-				isSameColor: PropTypes.func.isRequired,
-			}).isRequired,
-		})
+		PropTypes.arrayOf(
+			PropTypes.shape({
+				color: PropTypes.shape({
+					isSameColor: PropTypes.func.isRequired,
+				}).isRequired,
+			})
+		)
 	),
 	selected: PropTypes.any,
 	onSelect: PropTypes.func,
 };
 export default function NTIColorPresets({ swatches, selected, onSelect }) {
-	if (!swatches) { return null; }
+	if (!swatches) {
+		return null;
+	}
 
-	const rows = Array.isArray(swatches[0]) ? swatches : [swatches]
+	const rows = Array.isArray(swatches[0]) ? swatches : [swatches];
 
 	return rows.map((row, key) => (
 		<List className="nti-color-preset-swatches" key={key}>
