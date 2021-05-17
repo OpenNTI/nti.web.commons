@@ -93,9 +93,10 @@ export function useObject(id, Type = Models.Base) {
 		// This effect just returns a cleanup call.
 		() =>
 			// The cleanup will decrement the used count and if zero,
-			// remove it so we get a fresh object next time.
+			// remove it so we get a fresh object next time. (but only
+			// if the object matches what we have)
 			() => {
-				if (--reader.used <= 0) {
+				if (--reader.used <= 0 && reader === DATA.objects[key]) {
 					delete DATA.objects[key];
 				}
 			},
