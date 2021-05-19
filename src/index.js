@@ -5,7 +5,7 @@ import * as ConflictResolution from './conflict-resolution';
 export * as Associations from './associations';
 export * as Constants from './constants';
 export { default as ContentHighlighting } from './content-highlighting';
-export { default as DateTime } from './date-time';
+export { DateTime } from './date-time';
 export * from './date-time/components';
 export * as Decorators from './decorators';
 export * as DnD from './drag-and-drop';

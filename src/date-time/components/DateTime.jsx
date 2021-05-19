@@ -7,41 +7,33 @@ import { isEmpty } from '@nti/lib-commons';
 import { DEFAULT, format, fromNow, fromWhen, isToday } from '../utils';
 import Text from '../../text';
 
-const DateTime = React.forwardRef(DateTimeImpl);
-export default DateTime;
+/**
+ * @typedef {Object} DateTimeProps
+ * @property {Date} date The date reference
+ * @property {Date} relativeTo A anchor date reference to calculate relative formats with
+ * @property {string} format The format to use
+ * @property {string} prefix Prefix string
+ * @property {string} suffix Postfix string
+ * @property {boolean} showToday When the given date represents the current day, print text supplied by 'todayText'
+ * @property {boolean} relative Enable relative formatting
+ * @property {string} todayText Text to print when the date represents the current date.
+ */
 
-DateTimeImpl.propTypes = DateTime.propTypes = {
-	date: PropTypes.instanceOf(Date),
-	relativeTo: PropTypes.instanceOf(Date),
-	format: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-	relative: PropTypes.bool,
-	prefix: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([false])]),
-	suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([false])]),
-	showToday: PropTypes.bool,
-	todayText: PropTypes.string,
-};
-
-DateTimeImpl.defaultProps = DateTime.defaultProps = {
-	date: new Date(),
-	relativeTo: undefined,
-	format: DEFAULT,
-	relative: false,
-	prefix: undefined,
-	suffix: undefined,
-	showToday: false,
-	todayText: undefined,
-};
-
+/**
+ * @param {DateTimeProps} props
+ * @param {any} ref
+ * @returns {React.ReactElement}
+ */
 function DateTimeImpl(
 	{
-		date,
-		format: pattern,
-		prefix,
-		suffix,
-		showToday,
-		relativeTo,
-		relative,
-		todayText,
+		date = new Date(),
+		format: pattern = DEFAULT,
+		prefix = void 0,
+		suffix = void 0,
+		showToday = false,
+		relativeTo = void 0,
+		relative = false,
+		todayText = void 0,
 		...otherProps
 	},
 	ref
@@ -77,3 +69,16 @@ function DateTimeImpl(
 		</Text.Base>
 	);
 }
+
+/** @type {(props: DateTimeProps) => React.ReactElement} */
+export const DateTime = React.forwardRef(DateTimeImpl);
+DateTimeImpl.propTypes = DateTime.propTypes = {
+	date: PropTypes.instanceOf(Date),
+	relativeTo: PropTypes.instanceOf(Date),
+	format: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+	relative: PropTypes.bool,
+	prefix: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([false])]),
+	suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([false])]),
+	showToday: PropTypes.bool,
+	todayText: PropTypes.string,
+};

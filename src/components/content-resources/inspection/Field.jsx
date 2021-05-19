@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
 
-import DateTime from '../../../date-time';
+import { DateTime } from '../../../date-time';
 import LabeledValue from '../../LabeledValue';
 
 const DEFAULT_TEXT = {
