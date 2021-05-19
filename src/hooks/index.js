@@ -10,6 +10,7 @@ export { useVisibleCount } from './use-visible-count';
 export { useWindowSize } from './use-window-size';
 export * from './use-list-item-variant';
 export * from './use-container-width';
+export * from './use-extern-class-name';
 export * from './use-resize-observer';
 export * from './use-responsive-value';
 export * from './use-service';
