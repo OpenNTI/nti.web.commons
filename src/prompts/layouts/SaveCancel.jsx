@@ -24,7 +24,7 @@ class SaveCancel extends React.Component {
 		onSave: PropTypes.func.isRequired,
 		disableSave: PropTypes.bool,
 		getString: PropTypes.func,
-		nonDialog: PropTypes.bool,
+		dialog: PropTypes.bool,
 		className: PropTypes.string,
 	};
 
@@ -96,13 +96,13 @@ class SaveCancel extends React.Component {
 	}
 
 	render() {
-		const { nonDialog, className } = this.props;
+		const { dialog = true, className } = this.props;
 		const cls = cx(
 			'save-cancel-dialog',
 			className && className + '-dialog'
 		);
 
-		if (nonDialog) {
+		if (!dialog) {
 			return <div className={cls}>{this.renderContents()}</div>;
 		}
 
