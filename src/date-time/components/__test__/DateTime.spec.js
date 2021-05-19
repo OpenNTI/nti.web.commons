@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { subDays } from 'date-fns';
 
-import DateTime from '../../';
+import { DateTime } from '../../';
 
 const date = new Date('2015-10-22T21:00:00.000Z');
 const relativeTo = new Date('2015-10-24T22:01:00.000Z'); //+1 day, and +1 hour
