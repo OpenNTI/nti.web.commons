@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
-import Styles from './Font-Icon.css';
-
-const cx = classnames.bind(Styles);
+const Icon = styled('i')`
+	display: inline-block;
+`;
 
 FontIcon.propTypes = {
 	className: PropTypes.string,
 	icon: PropTypes.string,
 };
 export default function FontIcon({ className, icon, ...otherProps }) {
-	return <i className={cx('font-icon', className, icon)} {...otherProps} />;
+	return <Icon className={cx('font-icon', 'nt-icon', className, icon)} {...otherProps} />;
 }

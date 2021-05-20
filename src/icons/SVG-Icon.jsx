@@ -19,7 +19,7 @@ export default function SVGIcon({
 }) {
 	return (
 		<SVG
-			className={cx('svg-icon', className)}
+			className={cx('svg-icon', 'nt-icon', className)}
 			xmlns="http://www.w3.org/2000/svg"
 			width={width}
 			viewBox={viewBox}
