@@ -14,6 +14,7 @@ export { Globe } from './Globe';
 export { Gripper } from './Gripper';
 export { Image } from './Image';
 export { Lock } from './Lock';
+export { MediaViewer } from './MediaViewer';
 export { PaperClip } from './PaperClip';
 export { Pencil } from './Pencil';
 export { Person } from './Person';
