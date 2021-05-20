@@ -56,3 +56,8 @@ export function Chevron({ direction = Down, large, skinny, ...props }) {
 
 	return <FontIcon icon={icon} {...props} />;
 }
+
+Chevron.Down.propTypes = Chevron.propTypes;
+Chevron.Left.propTypes = Chevron.propTypes;
+Chevron.Right.propTypes = Chevron.propTypes;
+Chevron.Up.propTypes = Chevron.propTypes;

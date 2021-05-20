@@ -17,6 +17,8 @@ Add.Circled = props => {
 	);
 };
 
+Add.Circled.displayName = 'AddCircled';
+
 export function Add(props) {
 	return <FontIcon icon="icon-add" {...props} />;
 }

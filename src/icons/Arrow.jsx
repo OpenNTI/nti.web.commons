@@ -34,8 +34,12 @@ export function Arrow({ direction = UpRight, fill, ...otherProps }) {
 	const icon = fill ? fillClasses[direction] : classes[direction];
 
 	if (!icon) {
-		throw new Error('Arrow Icon Direction not implemented');
+		return null;
 	}
 
 	return <FontIcon icon={icon} {...otherProps} />;
 }
+
+Arrow.Up.propTypes = Arrow.propTypes;
+Arrow.UpRight.propTypes = Arrow.propTypes;
+Arrow.Down.propTypes = Arrow.propTypes;
