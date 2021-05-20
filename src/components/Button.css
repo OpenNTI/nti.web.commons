@@ -27,16 +27,34 @@
 	&:global(.primary) {
 		background-color: var(--primary-blue);
 		color: white;
+
+		&:global(.inverted) {
+			background: white;
+			color: var(--primary-blue);
+			box-shadow: 0 0 0 1px var(--border-grey-light);
+		}
 	}
 
 	&:global(.destructive) {
 		background-color: var(--primary-red);
 		color: white;
+
+		&:global(.inverted) {
+			background: white;
+			color: var(--primary-red);
+			box-shadow: 0 0 0 1px var(--primary-red);
+		}
 	}
 
 	&:global(.secondary) {
 		background-color: var(--border-grey-light);
 		color: var(--secondary-grey);
+
+		&:global(.inverted) {
+			background: white;
+			color: var(--secondary-grey);
+			box-shadow: 0 0 0 1px var(--border-grey-light);
+		}
 	}
 
 	& span {

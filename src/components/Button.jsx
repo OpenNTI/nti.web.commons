@@ -19,6 +19,7 @@ export default class Button extends React.Component {
 		disabled: PropTypes.bool,
 		secondary: PropTypes.bool,
 		destructive: PropTypes.bool,
+		inverted: PropTypes.bool,
 		plain: PropTypes.bool,
 	};
 
@@ -54,6 +55,7 @@ export default class Button extends React.Component {
 			disabled,
 			secondary,
 			destructive,
+			inverted,
 			plain,
 			...otherProps
 		} = this.props;
@@ -66,6 +68,7 @@ export default class Button extends React.Component {
 			disabled,
 			rounded,
 			plain,
+			inverted
 		});
 
 		delete otherProps.component;
