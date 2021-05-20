@@ -79,7 +79,7 @@ NTIText.Colors = Colors;
 NTIText.propTypes = {
 	children: PropTypes.any,
 	dangerouslySetInnerHTML: PropTypes.shape({ __html: PropTypes.string }),
-	as: PropTypes.string,
+	as: PropTypes.any,
 	className: PropTypes.string,
 	escaped: PropTypes.bool,
 	localized: PropTypes.bool,
