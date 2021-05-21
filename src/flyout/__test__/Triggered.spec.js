@@ -388,14 +388,28 @@ describe('Triggered Flyout', () => {
 			{ createNodeMock }
 		);
 
-		console.log(
-			'Hello There',
-			renderer.toJSON(),
-			renderer.getInstance().triggerRef,
-			ref
-		);
 		jest.runAllTimers();
-
-		expect(ref.current).toBeDefined();
+		expect(ref.current).toBeTruthy();
+		// console.log(
+		// 	'Hello There',
+		// 	renderer.toJSON(),
+		// 	renderer.getInstance().triggerRef,
+		// 	ref
+		// );
+		expect(renderer.toJSON()).toMatchInlineSnapshot(`
+		<a
+		  aria-haspopup="dialog"
+		  className="flyout-trigger flyout-closed"
+		  href="#test"
+		  onBlur={[Function]}
+		  onClick={[Function]}
+		  onFocus={[Function]}
+		  onKeyPress={[Function]}
+		  tabIndex={0}
+		  value="Test"
+		>
+		  Test
+		</a>
+	`);
 	});
 });
