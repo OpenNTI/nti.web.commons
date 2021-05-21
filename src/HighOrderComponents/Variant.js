@@ -1,8 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { HOC } from '@nti/lib-commons';
-
 function combineProps(a = {}, b = {}) {
 	const combined = { ...a, ...b };
 
@@ -34,7 +32,7 @@ export default function Variant(Component, variantProps, name) {
 		: '';
 	const variantName = `${componentName}(${name || 'Variant'})`;
 
-	HOC.hoistStatics(cmp, Component, variantName);
+	cmp.displayName = variantName;
 
 	return cmp;
 }
