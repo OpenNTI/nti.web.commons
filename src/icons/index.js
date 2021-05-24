@@ -24,4 +24,5 @@ export { Search } from './Search';
 export { Share } from './Share';
 export { TrashCan } from './TrashCan';
 export { Video } from './Video';
+export { VideoResume } from './VideoResume';
 export { X } from './X';
