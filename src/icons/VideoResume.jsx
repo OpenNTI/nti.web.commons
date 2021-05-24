@@ -9,7 +9,7 @@ export function VideoResume(props) {
 	const maskURL = `url(#${maskId})`;
 
 	return (
-		<SVGIcon {...props} viewBox="0 0 17 15">
+		<SVGIcon {...props} viewBox="0 0 17 15" width="1.125em">
 			<g fill="none" fillRule="evenodd">
 				<path fill="currentColor" d="M12 7.5 7 10V5z" />
 				<mask id={maskId} fill="currentColor">

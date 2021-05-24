@@ -4,7 +4,7 @@ import SVGIcon from './SVG-Icon';
 
 export function Video(props) {
 	return (
-		<SVGIcon {...props} viewBox="0 0 26 19" width="1.375rem">
+		<SVGIcon {...props} viewBox="0 0 26 19" width="1.375em">
 			<g
 				stroke="none"
 				strokeWidth="1"
