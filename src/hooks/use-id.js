@@ -3,10 +3,10 @@ import React from 'react';
 
 import { toCSSClassName } from '@nti/lib-dom';
 
-export function useId(namespace) {
+export function useId(namespace = 'id') {
 	const [id] = React.useState(() => {
-		const guid = uuid();
-		return !namespace ? guid : `${toCSSClassName(namespace)}-${guid}`;
+		const guid = uuid().replace(/-/g, '');
+		return `${toCSSClassName(namespace)}-${guid}`;
 	});
 
 	return id;
