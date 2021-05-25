@@ -1,4 +1,3 @@
-/* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
@@ -56,7 +55,7 @@ describe('DateTimeField', () => {
 	test('on date change is called with clicked month', () => {
 		const [x] = testRender({ onChange: value => value });
 		const cmp = x.ref.current;
-		spyOn(cmp, 'onDateChange');
+		jest.spyOn(cmp, 'onDateChange');
 
 		const monthSelect = x.container.querySelector('.month-wrapper Select');
 		const event = { target: { value: '9' } };
@@ -72,7 +71,7 @@ describe('DateTimeField', () => {
 		const [x] = testRender({ onChange: value => value });
 
 		const cmp = x.ref.current;
-		spyOn(cmp, 'onDateChange');
+		jest.spyOn(cmp, 'onDateChange');
 
 		const dateSelect = x.container.querySelector('.date-wrapper Select');
 		const event = { target: { value: '20' } };
@@ -88,7 +87,7 @@ describe('DateTimeField', () => {
 		const [x] = testRender({ onChange: value => value });
 
 		const cmp = x.ref.current;
-		spyOn(cmp, 'onDateChange');
+		jest.spyOn(cmp, 'onDateChange');
 
 		const yearSelect = x.container.querySelector('.year-wrapper Select');
 		const event = { target: { value: String(new Date().getFullYear()) } };
@@ -137,7 +136,7 @@ describe('DateTimeField', () => {
 		});
 	});
 
-	test('updating when a prop value was intially passed', () => {
+	test('updating when a prop value was initially passed', () => {
 		const onChangeSpy = jest.fn();
 
 		const now = new Date();

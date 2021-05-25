@@ -1,4 +1,3 @@
-/* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
@@ -10,7 +9,7 @@ describe('Clearable Inputs', () => {
 	function buildProps(props) {
 		const newProps = { ...props, onChange: () => {} };
 
-		spyOn(newProps, 'onChange');
+		jest.spyOn(newProps, 'onChange');
 
 		return newProps;
 	}
@@ -35,7 +34,7 @@ describe('Clearable Inputs', () => {
 		const inputProps = buildProps({});
 		const clearProps = buildProps({ onClear: () => {} });
 
-		spyOn(clearProps, 'onClear');
+		jest.spyOn(clearProps, 'onClear');
 
 		const { container } = render(
 			<Clearable {...clearProps}>

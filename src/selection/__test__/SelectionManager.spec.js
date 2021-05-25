@@ -1,4 +1,3 @@
-/* globals spyOn */
 /* eslint-env jest */
 import SelectionManager from '../SelectionManager';
 import SelectionItem from '../SelectionItem';
@@ -13,7 +12,7 @@ describe('Selection Manager tests', () => {
 			changed: () => {},
 		};
 
-		spyOn(listeners, 'changed');
+		jest.spyOn(listeners, 'changed');
 
 		selectionManager = new SelectionManager();
 

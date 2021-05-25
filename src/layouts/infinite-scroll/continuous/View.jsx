@@ -31,7 +31,7 @@ function getScrollInfo(scroller) {
 	};
 }
 
-export default class InfiniteContinousScroll extends React.Component {
+export default class InfiniteContinuousScroll extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		as: PropTypes.string,
@@ -98,7 +98,7 @@ export default class InfiniteContinousScroll extends React.Component {
 
 		if (scrollHeight === height || scrollTop > trigger) {
 			this.loadingMore = true;
-			setImmediate(() => loadMore());
+			setTimeout(() => loadMore(), 0);
 		}
 	};
 
@@ -116,7 +116,7 @@ export default class InfiniteContinousScroll extends React.Component {
 		return (
 			<Cmp
 				ref={this.node}
-				className={cx(className, 'nti-continous-scroll', {
+				className={cx(className, 'nti-continuous-scroll', {
 					'has-more': !!loadMore,
 				})}
 				data-scroll-buffer={buffer}

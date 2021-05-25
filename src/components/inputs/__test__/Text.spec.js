@@ -1,4 +1,3 @@
-/* globals spyOn */
 /* eslint-env jest */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
@@ -24,7 +23,7 @@ describe('Text Input', () => {
 				value: 'test',
 			};
 
-			spyOn(props, 'onChange');
+			jest.spyOn(props, 'onChange');
 
 			result = render(<Text {...props} />);
 		});
