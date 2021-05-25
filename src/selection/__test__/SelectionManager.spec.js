@@ -58,7 +58,7 @@ describe('Selection Manager tests', () => {
 		selectionManager.select(itemA);
 		selectionManager.select(itemB);
 
-		expect(listeners.changed.calls.count()).toEqual(1);
+		expect(listeners.changed).toHaveBeenCalledTimes(1);
 	});
 
 	test('Unselect removes item from selection', () => {
@@ -83,7 +83,7 @@ describe('Selection Manager tests', () => {
 	test("Unselect doesn't fire selection changed if nothing selected", () => {
 		selectionManager.unselect(new SelectionItem({ id: 0 }));
 
-		expect(listeners.changed.calls.count()).toEqual(0);
+		expect(listeners.changed).toHaveBeenCalledTimes(0);
 	});
 
 	test('Unselect does fire selection changed if unselecting selected item', () => {
@@ -92,6 +92,6 @@ describe('Selection Manager tests', () => {
 		selectionManager.select(item);
 		selectionManager.unselect(item);
 
-		expect(listeners.changed.calls.count()).toEqual(2);
+		expect(listeners.changed).toHaveBeenCalledTimes(2);
 	});
 });
