@@ -119,9 +119,6 @@ export default class Icon extends React.Component {
 		return this.getTypes(props).some(x => x === SCORM_TYPE);
 	}
 
-	/** @deprecated */
-	isEmbeddableDocument = this.isEmbedableDocument;
-
 	isEmbedableDocument(props = this.props) {
 		return (
 			!this.isDocument(props) &&
