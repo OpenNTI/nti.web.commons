@@ -1,12 +1,6 @@
 import { URL } from '@nti/lib-commons';
 
-const ASSET_MAP = {
-	thumb: 'contentpackage-thumb-60x60.png',
-	landing: 'contentpackage-landing-232x170.png',
-	background: 'background.png',
-	promo: 'course-promo-large-16x9.png',
-	source: 'client_image_source.png',
-};
+import { ASSET_MAP } from '../components/Asset';
 
 function getResource(scope) {
 	if (!scope) {
@@ -50,7 +44,7 @@ function getLastModified(scope) {
 }
 
 export default function getAssetSrc(scope, name) {
-	const assetPath = ASSET_MAP[name] || `missing-${name}-asset.png`;
+	const assetPath = ASSET_MAP[name]?.path || `missing-${name}-asset.png`;
 	const root = getRoot(scope);
 	const lastMod = getLastModified(scope);
 	const url = root && URL.resolve(root, assetPath);

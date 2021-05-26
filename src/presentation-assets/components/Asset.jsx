@@ -1,17 +1,36 @@
-import './Asset.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import { URL } from '@nti/lib-commons';
 import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:presentation-assets:components:Asset');
 
-// import background from './assets/default-course/background.png';
-// import landing from './assets/default-course/contentpackage-landing-232x170.png';
-// import thumb from './assets/default-course/contentpackage-thumb-60x60.png';
+const styles = stylesheet`
+	.root {
+		position: absolute;
+		opacity: 0;
+	}
 
-const ASSET_MAP = {
+	.promo {
+		background-image: url(./assets/default-course/course-promo-large-16x9.png);
+	}
+
+	.thumb {
+		background-image: url(./assets/default-course/contentpackage-thumb-60x60.png);
+	}
+
+	.landing {
+		background-image: url(./assets/default-course/contentpackage-landing-232x170.png);
+	}
+
+	.background {
+		background-image: url(./assets/default-course/background.png);
+	}
+`;
+
+export const ASSET_MAP = {
 	thumb: {
 		path: 'contentpackage-thumb-60x60.png',
 		defaultValue: 'thumb',
@@ -28,6 +47,10 @@ const ASSET_MAP = {
 		path: 'course-promo-large-16x9.png',
 		defaultValue: 'promo',
 	},
+	source: {
+		path: 'client_image_source.png',
+		defaultValue: 'source',
+	},
 };
 
 /**
@@ -41,10 +64,18 @@ const ASSET_MAP = {
  */
 function initializeAssetMap() {
 	if (typeof document !== 'undefined' && !ASSET_MAP.loaded) {
-		for (let key of Object.keys(ASSET_MAP)) {
+		const keys = Object.keys(ASSET_MAP);
+		ASSET_MAP.loaded = true;
+
+		for (let key of keys) {
 			const el = document.createElement('div');
 
-			el.className = `course-asset-image ${key}`;
+			el.className = cx(
+				'course-asset-image',
+				styles.root,
+				styles[key],
+				key
+			);
 
 			document.body.appendChild(el);
 
@@ -53,7 +84,7 @@ function initializeAssetMap() {
 
 				let [, url] = backgroundImage.match(/url\(([^)]+)\)/) || [];
 
-				url = url && url.replace(/(^["'])|(["']$)/g, '');
+				url = url?.replace(/(^["'])|(["']$)/g, '');
 
 				ASSET_MAP[key].defaultValue = url;
 			} catch (ex) {
@@ -66,8 +97,6 @@ function initializeAssetMap() {
 				el.remove();
 			}
 		}
-
-		ASSET_MAP.loaded = true;
 	}
 }
 
@@ -75,7 +104,7 @@ export default class Asset extends React.Component {
 	static getDefaultURLForType(type) {
 		initializeAssetMap();
 
-		return ASSET_MAP[type] && ASSET_MAP[type].defaultValue;
+		return ASSET_MAP[type]?.defaultValue;
 	}
 
 	static getAssetRoot(props) {
@@ -175,6 +204,7 @@ export default class Asset extends React.Component {
 			return;
 		}
 
+		console.log('hit');
 		const loaderImage = new Image();
 
 		loaderImage.onerror = this.onImgLoadError;
