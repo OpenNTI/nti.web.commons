@@ -12,7 +12,7 @@ export default function DialogButtons(props) {
 
 	const c = cx('dialog-buttons', { flat }, css);
 
-	return (
+	return !buttons ? null : (
 		<div className={c}>
 			{buttons
 				.slice()
