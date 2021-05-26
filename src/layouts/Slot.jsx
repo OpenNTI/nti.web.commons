@@ -1,7 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const matchFn = slot => ({ props: { slot: s } }) => (!slot ? !s : s === slot);
+const Matchers = {
+	string:
+		slot =>
+		({ props: { slot: slotProp } }) =>
+			slot === slot,
+
+	function:
+		slot =>
+		({ type }) =>
+			type === slot,
+};
+
+function buildMatchFn(slot) {
+	const matcher = Matchers[typeof slot];
+
+	if (!matcher) {
+		throw new Error('Unknown slot value');
+	}
+
+	return matcher(slot);
+}
 
 /*
  * This component provides a mechanism by which a parent component
@@ -21,11 +41,11 @@ const matchFn = slot => ({ props: { slot: s } }) => (!slot ? !s : s === slot);
  * </Parent>
  */
 export const Slot = ({ slot, children }) => (
-	<>{React.Children.toArray(children).filter(matchFn(slot))}</>
+	<>{React.Children.toArray(children).filter(buildMatchFn(slot))}</>
 );
 
 Slot.exists = (slot, children) =>
-	React.Children.toArray(children).some(matchFn(slot));
+	React.Children.toArray(children).some(buildMatchFn(slot));
 
 Slot.propTypes = {
 	slot: PropTypes.string,
