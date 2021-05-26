@@ -204,7 +204,6 @@ export default class Asset extends React.Component {
 			return;
 		}
 
-		console.log('hit');
 		const loaderImage = new Image();
 
 		loaderImage.onerror = this.onImgLoadError;
