@@ -44,8 +44,29 @@ export const Slot = ({ slot, children }) => (
 	<>{React.Children.toArray(children).filter(buildMatchFn(slot))}</>
 );
 
+Slot.find = (slot, children) =>
+	React.Children.toArray(children).find(buildMatchFn(slot));
+
 Slot.exists = (slot, children) =>
 	React.Children.toArray(children).some(buildMatchFn(slot));
+
+Slot.order = (slots, children) => {
+	const childList = React.Children.toArray(children);
+	const matchers = slots.map(slot => ({
+		slot,
+		matches: buildMatchFn(slot),
+	}));
+
+	return childList.map((child, ...args) => {
+		const slot =
+			matchers.find(m => m.matches(child, ...args))?.slot ?? undefined;
+
+		return {
+			slot,
+			child,
+		};
+	});
+};
 
 Slot.propTypes = {
 	slot: PropTypes.string,
