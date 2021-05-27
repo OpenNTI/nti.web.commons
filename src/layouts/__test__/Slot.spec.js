@@ -4,6 +4,8 @@ import TestRenderer from 'react-test-renderer';
 
 import { Slot } from '../Slot';
 
+const Aside = props => <div className="aside" {...props} />;
+
 const Sample = props => (
 	<section>
 		<header>
@@ -13,7 +15,7 @@ const Sample = props => (
 			<Slot {...props} slot="nav" />
 		</nav>
 		<aside>
-			<Slot {...props} slot="aside" />
+			<Slot {...props} slot={Aside} />
 		</aside>
 		<p>
 			<Slot {...props} slot="p" />
@@ -22,7 +24,10 @@ const Sample = props => (
 			<Slot {...props} slot="footer" />
 		</footer>
 		<div className="unslotted">
-			<Slot {...props} />
+			<Slot
+				{...props}
+				exclude={['header', 'nav', 'p', 'footer', Aside]}
+			/>
 		</div>
 	</section>
 );
@@ -33,7 +38,7 @@ const SampleLayout = () => (
 	<Sample>
 		<SlottedDiv slot="header">Header</SlottedDiv>
 		<SlottedDiv slot="nav">Nav</SlottedDiv>
-		<SlottedDiv slot="aside">Aside</SlottedDiv>
+		<Aside>Aside</Aside>
 		<SlottedDiv slot="p">P</SlottedDiv>
 		<SlottedDiv slot="footer">Footer</SlottedDiv>
 		<span>Unslotted</span>
@@ -43,6 +48,61 @@ const SampleLayout = () => (
 );
 
 describe('Slot Component', () => {
+	describe('statics', () => {
+		const named = <div slot="named" id="named" />;
+		const cmp = <Aside id="cmp" />;
+		const unslotted = <div id="unslotted" />;
+		const children = [named, cmp, unslotted];
+
+		describe('exists', () => {
+			test('existing named', () =>
+				expect(Slot.exists('named', children)).toBeTruthy());
+
+			test('missing name', () =>
+				expect(Slot.exists('non-existent', children)).toBeFalsy());
+
+			test('existing cmp', () =>
+				expect(Slot.exists(Aside, children)).toBeTruthy());
+
+			test('missing cmp', () =>
+				expect(Slot.exists(SampleLayout, children)).toBeFalsy());
+		});
+
+		describe('find', () => {
+			test('existing named', () =>
+				expect(Slot.find('named', children).props.id).toBe('named'));
+
+			test('missing name', () =>
+				expect(Slot.find('non-existent', children)).toBeUndefined());
+
+			test('existing cmp', () =>
+				expect(Slot.find(Aside, children).props.id).toBe('cmp'));
+
+			test('missing cmp', () =>
+				expect(Slot.find(SampleLayout, children)).toBeUndefined());
+		});
+
+		describe('order', () => {
+			test('finds all children', () =>
+				expect(
+					Slot.order(['named', Aside, 'unused'], children).length
+				).toBe(3));
+
+			test('finds in children order', () => {
+				const order = Slot.order([Aside, 'named'], children);
+
+				expect(order[0].slot).toBe('named');
+				expect(order[0].child.props.id).toBe('named');
+
+				expect(order[1].slot).toBe(Aside);
+				expect(order[1].child.props.id).toBe('cmp');
+
+				expect(order[2].slot).toBeUndefined();
+				expect(order[2].child.props.id).toBe('unslotted');
+			});
+		});
+	});
+
 	test('snapshot', () => {
 		const testRender = TestRenderer.create(<SampleLayout />);
 		expect(testRender.toJSON()).toMatchSnapshot();
@@ -66,21 +126,26 @@ describe('Slot Component', () => {
 			expect(headerContent.children[0]?.toLowerCase?.()).toEqual(slot); // text content
 		};
 
-		['header', 'nav', 'aside', 'p', 'footer'].forEach(checkSlot);
+		['header', 'nav', 'p', 'footer'].forEach(checkSlot);
+
+		expect(() => byType(Aside)).not.toThrow();
+		expect(() => byClassName('aside', byType(Aside))).not.toThrow();
 
 		expect(byClassName('unslotted').findAllByType('span')).toHaveLength(3);
 	});
 
-	test('omits nonmatching slots', () => {
+	test('non-excluded unknown slots get included', () => {
 		const testRender = TestRenderer.create(
 			<Sample>
 				<SlottedDiv slot="missing">Missing</SlottedDiv>
 			</Sample>
 		);
 
-		expect(() =>
-			testRender.root.find(x => x.props.className === 'missing')
-		).toThrow(); // not found; should throw.
+		const unslotted = testRender.root.find(
+			t => t.props.className === 'unslotted'
+		);
+
+		expect(() => unslotted.findByType(SlottedDiv)).not.toThrow();
 	});
 
 	test('detects presence of children for the given slot', () => {
