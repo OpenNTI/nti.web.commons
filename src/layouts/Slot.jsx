@@ -106,15 +106,9 @@ export const Slot = ({ slot, exclude, children }) => {
 		throw new Error('Slot cannot be given a slot and exclude prop');
 	}
 
-	const matched = React.useMemo(
-		() =>
-			React.Children.toArray(children).filter(
-				exclude ? buildMatchFn(exclude, true) : buildMatchFn(slot)
-			),
-		[children, slot, exclude]
+	return React.Children.toArray(children).filter(
+		exclude ? buildMatchFn(exclude, true) : buildMatchFn(slot)
 	);
-
-	return matched;
 };
 
 /**
