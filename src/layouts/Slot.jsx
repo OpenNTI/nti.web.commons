@@ -155,9 +155,6 @@ Slot.order = (slots, children) => {
 		const slot =
 			matchers.find(m => m.matches(child, ...args))?.slot ?? undefined;
 
-		return {
-			slot,
-			child,
-		};
+		return slot;
 	});
 };
