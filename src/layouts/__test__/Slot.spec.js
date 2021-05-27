@@ -91,14 +91,7 @@ describe('Slot Component', () => {
 			test('finds in children order', () => {
 				const order = Slot.order([Aside, 'named'], children);
 
-				expect(order[0].slot).toBe('named');
-				expect(order[0].child.props.id).toBe('named');
-
-				expect(order[1].slot).toBe(Aside);
-				expect(order[1].child.props.id).toBe('cmp');
-
-				expect(order[2].slot).toBeUndefined();
-				expect(order[2].child.props.id).toBe('unslotted');
+				expect(order).toEqual(['named', Aside, undefined]);
 			});
 		});
 	});
