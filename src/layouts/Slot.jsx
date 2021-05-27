@@ -114,7 +114,6 @@ export const Slot = ({ slot, exclude, children }) => {
 	return matched;
 };
 
-
 /**
  * Find the first child that matches the slot
  *
@@ -136,7 +135,7 @@ Slot.exists = (slot, children) =>
 	React.Children.toArray(children).some(buildMatchFn(slot));
 
 /**
- * Return the order of a given set of slots used in a children
+ * Return the order of a given set of slots used in the children
  *
  * @param {Slot} slots
  * @param {React.Children} children
