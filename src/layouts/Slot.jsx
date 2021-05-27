@@ -3,7 +3,6 @@
 /** @typedef {(cmp: React.ReactElement) => boolean} Matcher */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const Matchers = {
 	string:
@@ -103,6 +102,10 @@ export function buildMatchFn(slot, inverse) {
  * @returns {JSX.Element}
  */
 export const Slot = ({ slot, exclude, children }) => {
+	if (slot && exclude) {
+		throw new Error('Slot cannot be given a slot and exclude prop');
+	}
+
 	const matched = React.useMemo(
 		() =>
 			React.Children.toArray(children).filter(
