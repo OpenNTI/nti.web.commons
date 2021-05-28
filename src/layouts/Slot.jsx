@@ -1,6 +1,8 @@
 /** @typedef {string|React.ReactElement} SlotIdentifier - either a name or React component */
 /** @typedef {SlotIdentifier|[SlotIdentifier]} Slot */
 /** @typedef {(cmp: React.ReactElement) => boolean} Matcher */
+/** @typedef {(cmp: React.ReactElement, index:number) => JSX.Element} Mapper */
+/** @typedef {(slot:Slot, cmp: React.ReactElement, index:number) => JSX.Element} ListMapper*/
 
 import React from 'react';
 
@@ -93,23 +95,54 @@ export function buildMatchFn(slot, inverse) {
  * 		</Parent>
  *
  * Matchers:
- * 1.) slot - look for children that matches the slot identifer
+ * 1.) slot - look for children that match the slot identifer
  * 1a) [slot] - look for children that match one of the slot identifiers
  * 2.) exclude - look for children that do not match the slot identifier
  * 2a.) [exclude] - look for children that do not match any of the slot identifiers
  *
- * @param {{slot:Slot, exclude: Slot}} props
+ * @param {{slot:Slot, exclude: Slot, map: Mapper}} props
  * @returns {JSX.Element}
  */
-export const Slot = ({ slot, exclude, children }) => {
+export const Slot = ({ slot, exclude, children, map }) => {
 	if (slot && exclude) {
 		throw new Error('Slot cannot be given a slot and exclude prop');
 	}
 
-	return React.Children.toArray(children).filter(
+	const match = React.Children.toArray(children).filter(
 		exclude ? buildMatchFn(exclude, true) : buildMatchFn(slot)
 	);
+
+	return map ? match.map(map) : match;
 };
+
+/**
+ * Iterate all children and map them with the slot they match
+ *
+ * @param {{slots: [Slot], map: ListMapper}} props
+ * @returns {JSX.Element}
+ */
+Slot.List = ({ slots, map, children }) => {
+	const matchers = slots.map(slot => ({
+		slot,
+		matches: buildMatchFn(slot),
+	}));
+
+	return React.Children.map(children, (child, index) => {
+		const slot =
+			matchers.find(m => m.matches(child, index))?.slot ?? undefined;
+
+		return map(slot, child, index);
+	});
+};
+
+/**
+ * Whether or not a child matches a slot
+ *
+ * @param {Slot} slot
+ * @param {React.ReactElement} child
+ * @returns {boolean}
+ */
+Slot.matches = (slot, child) => buildMatchFn(slot)(child);
 
 /**
  * Find the first child that matches the slot
