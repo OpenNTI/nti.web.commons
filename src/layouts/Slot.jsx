@@ -2,7 +2,8 @@
 /** @typedef {SlotIdentifier|[SlotIdentifier]} Slot */
 /** @typedef {(cmp: React.ReactElement) => boolean} Matcher */
 /** @typedef {(cmp: React.ReactElement, index:number) => JSX.Element} Mapper */
-/** @typedef {(slot:Slot, cmp: React.ReactElement, index:number) => JSX.Element} ListMapper*/
+/** @typedef {(slot:Slot, cmp: React.ReactElement, index:number) => JSX.Element} ListMapper */
+/** @typedef {(slot: Slot, cmp: React.ReactElement, index: number) => boolean | boolean} ListFilter - if === true filter any child that does not match a slot, if a function filter by the return value*/
 
 import React from 'react';
 
@@ -118,21 +119,25 @@ export const Slot = ({ slot, exclude, children, map }) => {
 /**
  * Iterate all children and map them with the slot they match
  *
- * @param {{slots: [Slot], map: ListMapper}} props
+ * @param {{slots: [Slot], map: ListMapper, filter: ListFilter}} props
  * @returns {JSX.Element}
  */
-Slot.List = ({ slots, map, children }) => {
+Slot.List = ({ slots, map, filter, children }) => {
 	const matchers = slots.map(slot => ({
 		slot,
 		matches: buildMatchFn(slot),
 	}));
 
-	return React.Children.map(children, (child, index) => {
+	const filterFn = filter === true ? slot => !slot : filter;
+
+	return React.Children.toArray(children).reduce((acc, child, index) => {
 		const slot =
 			matchers.find(m => m.matches(child, index))?.slot ?? undefined;
 
-		return map(slot, child, index);
-	});
+		return filterFn && !filterFn(slot, child, index)
+			? acc
+			: [...acc, map(slot, child, index)];
+	}, []);
 };
 
 /**
