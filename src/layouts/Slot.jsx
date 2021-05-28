@@ -174,7 +174,7 @@ Slot.exists = (slot, children) =>
  *
  * @param {Slot} slots
  * @param {React.Children} children
- * @returns {[{slot:Slot, child: React.ReactElement}]}
+ * @returns {[Slot]}
  */
 Slot.order = (slots, children) => {
 	const childList = React.Children.toArray(children);
