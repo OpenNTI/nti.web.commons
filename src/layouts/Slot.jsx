@@ -122,7 +122,7 @@ export const Slot = ({ slot, exclude, children, map }) => {
  * @param {{slots: [Slot], map: ListMapper, filter: ListFilter}} props
  * @returns {JSX.Element}
  */
-Slot.List = ({ slots, map, filter, children }) => {
+Slot.List = ({ slots, map = x => x, filter, children }) => {
 	const matchers = slots.map(slot => ({
 		slot,
 		matches: buildMatchFn(slot),
