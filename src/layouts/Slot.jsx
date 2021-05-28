@@ -2,8 +2,8 @@
 /** @typedef {SlotIdentifier|[SlotIdentifier]} Slot */
 /** @typedef {(cmp: React.ReactElement) => boolean} Matcher */
 /** @typedef {(cmp: React.ReactElement, index:number) => JSX.Element} Mapper */
-/** @typedef {(slot:Slot, cmp: React.ReactElement, index:number) => JSX.Element} ListMapper */
-/** @typedef {(slot: Slot, cmp: React.ReactElement, index: number) => boolean | boolean} ListFilter - if === true filter any child that does not match a slot, if a function filter by the return value*/
+/** @typedef {(slot:Slot, cmp: React.ReactElement, index:number) => JSX.Element} ElementMapper */
+/** @typedef {(slot: Slot, cmp: React.ReactElement, index: number) => boolean | boolean} ElementFilter - if === true filter any child that does not match a slot, if a function filter by the return value*/
 
 import React from 'react';
 
@@ -119,7 +119,7 @@ export const Slot = ({ slot, exclude, children, map }) => {
 /**
  * Iterate all children and map them with the slot they match
  *
- * @param {{slots: [Slot], map: ListMapper, filter: ListFilter}} props
+ * @param {{slots: [Slot], map: ElementMapper, filter: ElementFilter}} props
  * @returns {JSX.Element}
  */
 Slot.List = ({ slots, map = x => x, filter, children }) => {
