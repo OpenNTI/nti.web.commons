@@ -11,8 +11,12 @@ useResolver.isErrored = v => v instanceof Error;
 useResolver.isResolved = v =>
 	!useResolver.isPending(v) && !useResolver.isErrored(v);
 
-export function useResolver(resolver, dependencyList, config = {}) {
+export function useResolver(resolver, dependencyList = [], config = {}) {
 	const { buffer } = config;
+
+	if (!Array.isArray(dependencyList)) {
+		throw new Error('Invalid dependency list argument. ');
+	}
 
 	const nonce = {};
 	const prevDependencies = React.useRef();
