@@ -32,6 +32,9 @@ DisplayName.propTypes = {
 
 	localeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
+	as: PropTypes.any,
+
+	/** @deprecated use 'as' */
 	tag: PropTypes.any,
 
 	/**
@@ -53,10 +56,11 @@ DisplayName.propTypes = {
 DisplayName.from = from;
 
 function DisplayNameContent({
+	as,
 	entity,
 	className,
 	localeKey,
-	tag,
+	tag = as,
 	usePronoun,
 	useGeneralName,
 	...otherProps
