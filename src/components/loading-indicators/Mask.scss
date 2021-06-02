@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .mask-loader {
 	position: fixed;
 	top: 0;
@@ -12,7 +14,7 @@ figure.loading {
 
 	overflow: visible;
 	position: absolute;
-	margin-top: -($size/2);
+	margin-top: -(math.div($size, 2));
 	top: 50%;
 	left: 0;
 	right: 0;

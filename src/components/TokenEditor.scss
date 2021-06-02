@@ -1,9 +1,11 @@
+@use "sass:math";
+
 @import '~@nti/style-common';
 
 .token-editor {
 	font-size: rem-calc(14px); //we set the default font size to 14...
 	// so all the "relative" sizes are in em's so you can change one font size and they all stay in sync. See the 14 denominators.
-	$line-height: (18/14);
+	$line-height: math.div(18, 14);
 
 	position: relative;
 	padding: rem-calc(6px);

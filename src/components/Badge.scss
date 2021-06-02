@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '~@nti/style-common';
 
 @mixin base-badge($size, $gap, $font-size) {
@@ -5,8 +7,8 @@
 
 	// the var() calls require the unit, even on zero.
 	// stylelint-disable length-zero-no-unit
-	$badge-x: calc(#{-$size / 2} + var(--badge-offset-x, 0px));
-	$badge-y: calc(#{-$size / 2} + var(--badge-offset-y, 0px));
+	$badge-x: calc(#{math.div(-$size, 2)} + var(--badge-offset-x, 0px));
+	$badge-y: calc(#{math.div(-$size, 2)} + var(--badge-offset-y, 0px));
 	$mask-x: calc(0px - var(--badge-offset-x, 0px));
 	$mask-y: calc(0px - var(--badge-offset-y, 0px));
 
@@ -32,8 +34,8 @@
 		mask-image: radial-gradient(
 			circle,
 			transparent 0,
-			transparent #{$size / 2 + $gap},
-			black #{$size / 2 + $gap + 1px}
+			transparent #{math.div($size, 2) + $gap},
+			black #{math.div($size, 2) + $gap + 1px}
 		);
 		mask-size: 200% 200%; // big enough to cover entire element when positioned at the corner
 		mask-position: left $mask-x bottom $mask-y; // center @ right top (default, same as .top-right)
@@ -96,7 +98,7 @@
 
 		.badged-item-content {
 			// position the mask
-			$mask-y: calc(50% + var(--badge-offset-y, 0px) + #{$gap / 4});
+			$mask-y: calc(50% + var(--badge-offset-y, 0px) + #{math.div($gap, 4)});
 
 			mask-position: left $mask-x top $mask-y; // center @ right top
 		}

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '~@nti/style-common';
 
 .labeled-value {
@@ -13,7 +15,7 @@
 
 	.value {
 		font-size: rem-calc(13px);
-		line-height: (18/13);
+		line-height: math.div(18, 13);
 		color: var(--primary-grey);
 
 		.placeholder {
@@ -36,7 +38,7 @@
 			position: absolute;
 			right: 0.5rem;
 			top: 50%;
-			transform: translateY(-$size/2);
+			transform: translateY(math.div(-$size, 2));
 		}
 	}
 
