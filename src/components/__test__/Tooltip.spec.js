@@ -1,12 +1,10 @@
 /* eslint-env jest */
 import React from 'react';
-import { render, act, fireEvent } from '@testing-library/react';
+import { render, act, fireEvent, waitFor } from '@testing-library/react';
 
 import Tooltip from '../Tooltip';
 
-test('Tooltip', () => {
-	jest.useFakeTimers();
-
+test('Tooltip', async () => {
 	const { getByText, queryByText } = render(
 		<Tooltip label="tooltip label">
 			<button>button label</button>
@@ -15,15 +13,13 @@ test('Tooltip', () => {
 
 	act(() => {
 		fireEvent.mouseOver(getByText('button label'));
-		jest.runAllTimers();
 	});
 
-	expect(queryByText('tooltip label')).toBeTruthy();
+	await waitFor(() => expect(queryByText('tooltip label')).toBeTruthy());
 
 	act(() => {
 		fireEvent.mouseOut(getByText('button label'));
-		jest.runAllTimers();
 	});
 
-	expect(queryByText('tooltip label')).toBeNull();
+	await waitFor(() => expect(queryByText('tooltip label')).toBeNull());
 });
