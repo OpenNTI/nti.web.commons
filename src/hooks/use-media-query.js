@@ -67,5 +67,6 @@ export function useMediaQuery(query) {
 		};
 	}, [mediaQuery]);
 
-	return mediaQuery;
+	// Too many things assume this returns something... make it always return something.
+	return mediaQuery || {};
 }
