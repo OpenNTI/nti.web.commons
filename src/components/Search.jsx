@@ -178,7 +178,6 @@ class Search extends React.Component {
 				})}
 				noValidate
 			>
-				<Icon className="icon-search" />
 				<Cmp
 					{...props}
 					type="text"
@@ -191,22 +190,67 @@ class Search extends React.Component {
 					ref={this.attachRef}
 					required
 				/>
+
+				<Icon className="icon-search" />
 				<Reset onClick={this.clearFilter} />
 			</form>
 		);
 	}
 }
 
-export default styled(Search)`
+const StyledSearch = styled(Search)`
 	position: relative;
 	overflow: hidden;
 	background: #fafafa;
 	border-radius: 0.3125rem;
-	box-shadow: 0 0 0 0.0625rem #eaeaea;
+	box-shadow: 0 0 0 0.0625rem var(--border-grey-light-alt);
 	margin: 0.5rem;
 	line-height: 2.375rem;
 
 	&.square {
 		border-radius: 0;
+	}
+`;
+
+export default StyledSearch;
+
+//TODO: better name
+StyledSearch.Inverted = styled(StyledSearch)`
+	border-radius: 3px;
+	font-size: 14px;
+	line-height: 2.45;
+
+	input:not([type='reset']) {
+		padding: 0 35px 0 1em;
+		line-height: inherit;
+		font-size: 1em;
+
+		&:valid + i::before {
+			opacity: 0;
+		}
+	}
+
+	${Icon} {
+		display: block;
+		border: 1px solid transparent;
+		border-left-color: var(--border-grey-light-alt);
+		background: white;
+		top: 0;
+		right: 0;
+		left: auto;
+		bottom: 0;
+		height: auto;
+		width: 35px;
+		transform: none;
+		font-size: 1.5em;
+
+		&::before {
+			transition: opacity 0.5s;
+			opacity: 1;
+			position: absolute;
+			top: 50%;
+			left: 55%;
+			transform: translate(-50%, -50%);
+		}
 	}
 `;
