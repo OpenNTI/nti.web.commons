@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { getService, getAppUser } from '@nti/web-client';
 import { Promises } from '@nti/lib-commons';
@@ -105,4 +105,21 @@ export function useObject(id, Type = Models.Base) {
 	);
 
 	return reader.read();
+}
+
+/**
+ * Provides the object with id to child as prop named.
+ * Primarily intended for storybook.
+ *
+ * @param {Object} props
+ * @param {string} props.id
+ * @param {string} props.prop
+ * @param {JSX.Element} props.children
+ * @returns {JSX.Element}
+ */
+export function NTObject({ id, prop, children }) {
+	const child = React.Children.only(children);
+	const item = useObject(id);
+
+	return React.cloneElement(child, { [prop]: item });
 }
