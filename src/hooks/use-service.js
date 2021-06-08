@@ -5,6 +5,7 @@ import { Promises } from '@nti/lib-commons';
 import { Models } from '@nti/lib-interfaces';
 
 /** @typedef {import('@nti/lib-interfaces/src/stores/Service').default} Service */
+/** @typedef {import('@nti/lib-interfaces/src/models/Base').default} Model */
 /** @typedef {import('@nti/lib-interfaces/src/models/entities/User').default} User */
 
 const DATA = {
@@ -12,7 +13,7 @@ const DATA = {
 	service: null,
 	/** @type {Promises.Reader<User>} */
 	appUser: null,
-	/** @type {Object<string, Promises.Reader<Models.Base>>} */
+	/** @type {Object<string, Promises.Reader<any>>} */
 	objects: {},
 };
 
@@ -23,11 +24,17 @@ const DATA = {
  * @returns {Service}
  */
 export function useService() {
+	// This doesn't use the async value hook because we do not want the
+	// service document flushing until we explicitly direct it to.
 	if (!DATA.service) {
 		DATA.service = Promises.toReader(getService());
 	}
+
 	return DATA.service.read();
 }
+// Storybook, tests, and logouts
+useService.flush = () => (DATA.service = null);
+global.addEventListener?.('flush-service-document', useService.flush);
 
 /**
  * A "hook" that returns the app user model. The components that use this
@@ -36,10 +43,7 @@ export function useService() {
  * @returns {User}
  */
 export function useAppUser() {
-	if (!DATA.appUser) {
-		DATA.appUser = Promises.toReader(getAppUser());
-	}
-	return DATA.appUser.read();
+	return useAsyncValue('app-user', getAppUser);
 }
 
 /**
@@ -63,7 +67,7 @@ export function useAppUser() {
  *
  *
  * @protected
- * @template {Models.Base} T
+ * @template {Model} T
  * @param {string} id - The ntiid, id, or url of the object to fetch.
  * @param {typeof T} Type - The expected Model instance (defaults to "any")
  * @returns {T}
@@ -72,39 +76,68 @@ export function useObject(id, Type = Models.Base) {
 	const service = useService();
 	const key = `${id}-${Type?.MimeType}`;
 
-	/** @type {Promises.Reader<Type>} (reader) */
+	// This factory is re-created every call to this hook, however, the useAsyncValue will
+	// ONLY use it the first time (key is undefined, and key will be cleared once unused)
+	const factory = () =>
+		service.getObject(
+			id,
+			Type !== Models.Base ? { type: Type.MimeType } : void 0
+		);
+
+	return useAsyncValue(key, factory);
+}
+
+/**
+ * @template {Model} T
+ * @param {string} key
+ * @param {() => Promise<T>} factory The factory makes the request, and returns the results. Its the factory's responsibility to manage/cancel inflight re-entry.
+ * @returns {T}
+ */
+function useAsyncValue(key, factory) {
 	let reader = DATA.objects[key];
 
 	if (!reader) {
-		/** @type {Promises.Reader<Type>} */
-		reader = DATA.objects[key] = Promises.toReader(
-			service.getObject(
-				id,
-				Type !== Models.Base ? { type: Type.MimeType } : void 0
-			)
-		);
-		reader.Type = Type;
-		reader.used = 1;
-	} else {
-		reader.used++;
+		reader = DATA.objects[key] = Promises.toReader(factory());
+		// we initialize to 0 because we will increment within the effect hook.
+		reader.used = 0;
 	}
 
 	useEffect(
-		// This effect just returns a cleanup call.
-		() =>
+		// This effect just increments the usage count, and returns a cleanup call.
+		() => {
+			// This will only increment each time this body is called (once per component that is using the
+			// key/reader instance) If the key changes, the cleanup will decrement and eventually free/delete
+			// the data.
+			reader.used++;
 			// The cleanup will decrement the used count and if zero,
 			// remove it so we get a fresh object next time. (but only
 			// if the object matches what we have)
-			() => {
+			return () => {
 				if (--reader.used <= 0 && reader === DATA.objects[key]) {
 					delete DATA.objects[key];
 				}
-			},
+			};
+		},
 		// effect only runs on mount/unmount with an empty dep list.
-		[]
+		[key, reader]
 	);
 
 	return reader.read();
+}
+
+/**
+ *
+ * @param {Model} object
+ * @param {string} rel
+ * @param {Record<string,string>} params
+ * @returns {Model|Model[]}
+ */
+export function useLink(object, rel, params) {
+	const key = object?.getLink(rel, params);
+	if (!key) {
+		throw new Error('No Link ' + rel);
+	}
+	return useAsyncValue(key, async () => object.fetchLinkParsed(rel, params));
 }
 
 /**
