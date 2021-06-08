@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '~@nti/style-common';
 
 %name-column {
@@ -62,7 +64,7 @@
 
 	.entity-row {
 		cursor: pointer;
-		line-height: (40/13);
+		line-height: math.div(40, 13);
 		font-size: rem-calc(13px);
 		white-space: nowrap;
 		color: var(--secondary-grey);
