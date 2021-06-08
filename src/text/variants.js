@@ -11,7 +11,7 @@ const styles = stylesheet`
 		}
 
 		&.condensed {
-			font-family: var(--header-font-family);
+			font-family: var(--legacy-header-font-family);
 		}
 
 		&.label {
@@ -31,6 +31,10 @@ const styles = stylesheet`
 		&.tertiary-grey {
 			color: var(--tertiary-grey);
 		}
+	}
+
+	:is(h1, h2, h3, h4, h5, h6).nti-text {
+		color: red;
 	}
 `;
 
