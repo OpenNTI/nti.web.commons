@@ -25,9 +25,17 @@ const MASK_SPEC = `
 </svg>
 `;
 
-export default function Avatar(props) {
-	return <BaseEntity {...props}>{AvatarContent}</BaseEntity>;
-}
+const ResolveWrapper = props => (
+	<BaseEntity {...props}>{AvatarContent}</BaseEntity>
+);
+
+const Avatar = styled(ResolveWrapper, { allowAs: true })`
+	&.rounded {
+		border-radius: 100%;
+		object-position: center;
+		object-fit: contain;
+	}
+`;
 
 Avatar.propTypes = {
 	...BaseEntity.propTypes,
@@ -41,6 +49,8 @@ Avatar.propTypes = {
 };
 
 Avatar.getColorClass = getColorClass;
+
+export default Avatar;
 
 function AvatarContent({
 	entity,
