@@ -1,4 +1,4 @@
-const Elem = styled.div`
+export const Box = styled.div`
 	&.p-sm {
 		padding: var(--padding-sm);
 	}
@@ -23,9 +23,7 @@ const Elem = styled.div`
 	}
 `;
 
-const defaults = {
+Box.defaultProps = {
 	// p: 'sm',
 	// sh: 'sm',
 };
-
-export const Box = props => <Elem {...{ ...defaults, ...props }} />;
