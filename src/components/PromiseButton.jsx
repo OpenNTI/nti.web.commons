@@ -230,3 +230,4 @@ const StyledPromiseButton = styled(PromiseButton)`
 
 export default StyledPromiseButton;
 StyledPromiseButton.impl = PromiseButton;
+StyledPromiseButton.IMPL = PromiseButton;
