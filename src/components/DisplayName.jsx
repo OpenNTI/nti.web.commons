@@ -51,6 +51,13 @@ DisplayName.propTypes = {
 	 * @type {boolean}
 	 */
 	useGeneralName: PropTypes.bool,
+
+	/**
+	 * Specify a substring to mark
+	 *
+	 * @type {string}
+	 */
+	mark: PropTypes.string,
 };
 
 DisplayName.from = from;
@@ -63,11 +70,19 @@ function DisplayNameContent({
 	tag = as,
 	usePronoun,
 	useGeneralName,
+	mark,
 	...otherProps
 }) {
 	const Tag = tag || (localeKey ? 'address' : 'span');
 
 	let name = from(entity);
+
+	if (mark && name) {
+		name = name.replace(
+			new RegExp(mark, 'gi'),
+			match => `<mark>${match}</mark>`
+		);
+	}
 
 	const props = {
 		...otherProps,
@@ -86,9 +101,14 @@ function DisplayNameContent({
 		const getString =
 			typeof localeKey === 'function' ? localeKey : o => t(localeKey, o);
 
+		name = getString({ name });
+	}
+
+	// any markup
+	if (/[<>]/.test(name)) {
 		Object.assign(props, {
 			children: void 0,
-			dangerouslySetInnerHTML: { __html: getString({ name }) },
+			dangerouslySetInnerHTML: { __html: name },
 		});
 	}
 
