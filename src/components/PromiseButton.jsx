@@ -33,6 +33,7 @@ function useExecutor(set, onClick) {
 				disable: () => (reset = DISABLED),
 				hide: () => (reset = HIDE),
 				reset: () => (reset = NORMAL),
+				call: fn => (reset = fn),
 			};
 			// Ensure the react component has redrawn. (using setState's callback)
 			set(PROCESSING);
@@ -54,8 +55,13 @@ function useExecutor(set, onClick) {
 			// the cleanup hook will cancel the timer.
 
 			resetTimer = setTimeout(() => {
-				set(reset);
+				if (typeof reset === 'string') {
+					set(reset);
+				}
 				done();
+				if (typeof reset === 'function') {
+					reset();
+				}
 			}, RESET_DELAY);
 		},
 		[set, onClick]
