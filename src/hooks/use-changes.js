@@ -15,9 +15,9 @@ export function useChanges(item, callback, eventName = ChangeEvent) {
 	const forceUpdate = useForceUpdate();
 
 	React.useEffect(() => {
-		const handler = () => {
+		const handler = (...whatChanged) => {
 			if (callback) {
-				callback(forceUpdate);
+				callback(forceUpdate, ...whatChanged);
 			} else {
 				forceUpdate();
 			}

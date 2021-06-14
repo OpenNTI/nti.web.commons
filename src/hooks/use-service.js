@@ -87,19 +87,38 @@ export function useObject(id, Type = Models.Base) {
 	return useAsyncValue(key, factory);
 }
 
+function shouldReload(nonce) {
+	const self = shouldReload;
+	const seen = self.seen || (self.seen = new WeakSet());
+
+	if (/boolean|string|number/.test(typeof nonce)) {
+		throw new Error(
+			'Reload nonce should be an object with a unique reference (address). Primitive values are non-unique.'
+		);
+	}
+
+	if (nonce && !seen.has(nonce)) {
+		seen.add(nonce);
+		return true;
+	}
+
+	return false;
+}
+
 /**
  * @template {Model} T
  * @param {string} key
  * @param {() => Promise<T>} factory The factory makes the request, and returns the results. Its the factory's responsibility to manage/cancel inflight re-entry.
+ * @param {*} reload - if set, will reload once per unique instance (no primitives allowed)
  * @returns {T}
  */
-function useAsyncValue(key, factory) {
+function useAsyncValue(key, factory, reload) {
 	let reader = DATA.objects[key];
 
-	if (!reader) {
+	if (!reader || shouldReload(reload)) {
 		reader = DATA.objects[key] = Promises.toReader(factory());
 		// we initialize to 0 because we will increment within the effect hook.
-		reader.used = 0;
+		reader.used = reader?.used ?? 0;
 	}
 
 	useEffect(
@@ -132,12 +151,17 @@ function useAsyncValue(key, factory) {
  * @param {Record<string,string>} params
  * @returns {Model|Model[]}
  */
-export function useLink(object, rel, params) {
+export function useLink(object, rel, { reload, ...params } = {}) {
 	const key = object?.getLink(rel, params);
 	if (!key) {
 		throw new Error('No Link ' + rel);
 	}
-	return useAsyncValue(key, async () => object.fetchLinkParsed(rel, params));
+
+	return useAsyncValue(
+		key,
+		async () => object.fetchLinkParsed(rel, params),
+		reload
+	);
 }
 
 /**
