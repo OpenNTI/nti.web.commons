@@ -79,11 +79,12 @@ const Layer = styled.li`
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
+	position: relative;
 	border-radius: inherit;
 	transition: background-color 250ms ease-in;
 	width: 100%;
 
-	&:first-child > span {
+	& > span {
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -169,17 +170,31 @@ PromiseButton.propTypes = {
 
 	// The callback can return a promise if the work to be done will be async...
 	onClick: PropTypes.func,
+
+	renderFinalState: PropTypes.func,
 };
 
 PromiseButton.defaultProps = {
 	onClick: () => wait(2000),
 };
 
-function PromiseButton({ children: label, onClick, className, ...props }) {
+function PromiseButton({
+	children: label,
+	onClick,
+	className,
+	renderFinalState,
+	...props
+}) {
 	const [status, setStatus] = useState(NORMAL);
 	const go = useExecutor(setStatus, onClick);
 
-	const css = cx('promise-button', className);
+	const css = cx('promise-button', status, className);
+
+	const final = renderFinalState?.(status) ?? (
+		<i
+			className={status !== FINISHED_ERROR ? 'icon-check' : 'icon-bold-x'}
+		/>
+	);
 
 	return (
 		<Structure
@@ -202,7 +217,9 @@ function PromiseButton({ children: label, onClick, className, ...props }) {
 						<Ellipsis />
 					</Layer>
 
-					<Layer />
+					<Layer>
+						<span>{final}</span>
+					</Layer>
 				</Group>
 			</Mask>
 		</Structure>
