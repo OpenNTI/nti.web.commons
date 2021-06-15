@@ -5,10 +5,6 @@
 	padding: 0.75rem 1.25rem;
 	cursor: pointer;
 
-	&:focus-within {
-		text-decoration: underline;
-	}
-
 	/*
 	 * We are using the global scope for backwards compatibility.
 	 * Older Sass styles will likely be targeting these state classes,
@@ -58,7 +54,7 @@
 	}
 
 	& span {
-		vertical-align: middle;;
+		vertical-align: middle;
 	}
 
 	& :global(.nt-icon) {
