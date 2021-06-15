@@ -73,36 +73,39 @@ class Input extends React.Component {
 }
 
 const InputStyle = css`
-	background: transparent;
-	border: 0;
-	color: var(--primary-grey);
-	margin: 0;
-	padding: 0 2rem;
-	width: 100%;
-	font-weight: normal;
-	font-style: normal;
-	font-size: 0.875rem;
-	box-sizing: border-box;
-	box-shadow: none;
+	/* triple-class specificity to combat foundation in mobile */
+	&&& {
+		background: transparent;
+		border: 0;
+		color: var(--primary-grey);
+		margin: 0;
+		padding: 0 2rem;
+		width: 100%;
+		font-weight: normal;
+		font-style: normal;
+		font-size: 0.875rem;
+		box-sizing: border-box;
+		box-shadow: none;
 
-	&:not(:valid) ~ input[type='reset'] {
-		opacity: 0;
-		cursor: text;
-	}
+		&:not(:valid) ~ input[type='reset'] {
+			opacity: 0;
+			cursor: text;
+		}
 
-	&:focus,
-	&:active {
-		outline: none;
-	}
+		&:focus,
+		&:active {
+			outline: none;
+		}
 
-	&::placeholder {
-		font-style: italic;
-		color: var(--tertiary-grey);
-		font-weight: 300;
-	}
+		&::placeholder {
+			font-style: italic;
+			color: var(--tertiary-grey);
+			font-weight: 300;
+		}
 
-	&::-ms-clear {
-		display: none;
+		&::-ms-clear {
+			display: none;
+		}
 	}
 `;
 
