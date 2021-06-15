@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
  * 1) The onChange is delayed/buffered. (I know thats the intent, but thats not where the buffer should be)
  * 2) There is no "prop-change" way to change the value. This breaks the React paradigm.
  */
-
 export default class BufferedInput extends React.Component {
 	static propTypes = {
 		defaultValue: PropTypes.string,
@@ -15,13 +14,6 @@ export default class BufferedInput extends React.Component {
 	};
 
 	attachRef = x => (this.input = x);
-
-	componentDidMount() {
-		//eslint-disable-next-line no-console
-		console.warn(
-			'BufferedInput is deprecated. Please attempt to shift to a regular input and buffer the method onChange calls.'
-		);
-	}
 
 	clear() {
 		const { input } = this;
