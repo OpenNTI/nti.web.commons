@@ -191,7 +191,11 @@ class Row extends React.Component {
 						<td
 							key={cell}
 							className={Cell.cssClassName}
-							data-name={Cell.Name}
+							data-name={
+								typeof Cell.Name === 'string'
+									? Cell.Name
+									: void 0
+							}
 						>
 							<Cell item={item} store={store} />
 						</td>
