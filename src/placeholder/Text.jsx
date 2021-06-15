@@ -29,7 +29,7 @@ TextPlaceholder.propTypes = {
 function TextPlaceholder({ text, flat, ...otherProps }) {
 	return (
 		<TextInner {...otherProps} full={!text}>
-			<span ariaHidden>{text || 'w'}</span>
+			<span aria-hidden>{text || 'w'}</span>
 			<Placeholder flat={flat} />
 		</TextInner>
 	);
