@@ -188,7 +188,11 @@ class Row extends React.Component {
 					Cell.rendersContainer ? (
 						<Cell key={cell} item={item} store={store} />
 					) : (
-						<td key={cell} className={Cell.cssClassName}>
+						<td
+							key={cell}
+							className={Cell.cssClassName}
+							data-name={Cell.Name}
+						>
 							<Cell item={item} store={store} />
 						</td>
 					)
