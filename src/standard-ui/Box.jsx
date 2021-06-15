@@ -12,6 +12,23 @@ export const Box = styled.div`
 		padding: var(--padding-xl);
 	}
 
+	&.pb-sm {
+		padding-block-start: var(--padding-sm);
+		padding-block-end: var(--padding-sm);
+	}
+	&.pb-md {
+		padding-block-start: var(--padding-md);
+		padding-block-end: var(--padding-md);
+	}
+	&.pb-lg {
+		padding-block-start: var(--padding-lg);
+		padding-block-end: var(--padding-lg);
+	}
+	&.pb-xl {
+		padding-block-start: var(--padding-xl);
+		padding-block-end: var(--padding-xl);
+	}
+
 	&.sh-sm {
 		box-shadow: var(--box-shadow-sm);
 	}
