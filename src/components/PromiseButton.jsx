@@ -28,6 +28,7 @@ function useExecutor(set, onClick) {
 
 			let reset = NORMAL;
 			let done;
+			let error = false;
 			let work = new Promise(f => (done = f));
 			const selectFinalState = {
 				disable: () => (reset = DISABLED),
@@ -44,7 +45,8 @@ function useExecutor(set, onClick) {
 				await ensureDelay();
 				// Once the onClick task has been completed, set the state to finished
 				set(FINISHED);
-			} catch {
+			} catch (e) {
+				error = e;
 				// The onClick function should still handle its own errors, it can opt
 				// to ALSO throw the error to make this caller aware as to show an error state.
 				set(FINISHED_ERROR);
@@ -60,7 +62,7 @@ function useExecutor(set, onClick) {
 				}
 				done();
 				if (typeof reset === 'function') {
-					reset();
+					reset(error);
 				}
 			}, RESET_DELAY);
 		},
