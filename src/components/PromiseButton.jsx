@@ -18,6 +18,7 @@ const MIN_DELAY_BEFORE_FINISHING = 1000; // milliseconds
 
 function useExecutor(set, onClick) {
 	let resetTimer;
+	let cancelArtificialDelay;
 
 	const handler = useCallback(
 		async e => {
@@ -30,6 +31,7 @@ function useExecutor(set, onClick) {
 			let done;
 			let error = false;
 			let work = new Promise(f => (done = f));
+
 			const selectFinalState = {
 				disable: () => (reset = DISABLED),
 				hide: () => (reset = HIDE),
@@ -39,6 +41,7 @@ function useExecutor(set, onClick) {
 			// Ensure the react component has redrawn. (using setState's callback)
 			set(PROCESSING);
 			const ensureDelay = wait.min(MIN_DELAY_BEFORE_FINISHING);
+			cancelArtificialDelay = ensureDelay.cancel;
 
 			try {
 				await onClick?.(work, selectFinalState);
@@ -46,6 +49,8 @@ function useExecutor(set, onClick) {
 				// Once the onClick task has been completed, set the state to finished
 				set(FINISHED);
 			} catch (e) {
+				if (e === 'canceled') return;
+
 				error = e;
 				// The onClick function should still handle its own errors, it can opt
 				// to ALSO throw the error to make this caller aware as to show an error state.
@@ -73,10 +78,13 @@ function useExecutor(set, onClick) {
 		// register a cleanup callback
 		() =>
 			// The effect hook function needs to return a function
-			() =>
+			() => {
 				//clearTimeout is safe to call on any value.
-				clearTimeout(resetTimer),
-		[set]
+				clearTimeout(resetTimer);
+				cancelArtificialDelay?.();
+				set = () => null;
+			},
+		[set, onClick]
 	);
 
 	return handler;
