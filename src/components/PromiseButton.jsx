@@ -49,7 +49,10 @@ function useExecutor(set, onClick) {
 				// Once the onClick task has been completed, set the state to finished
 				set(FINISHED);
 			} catch (e) {
-				if (e === 'canceled') return;
+				if (e === 'canceled') {
+					console.log('canceled!');
+					return;
+				}
 
 				error = e;
 				// The onClick function should still handle its own errors, it can opt
@@ -82,9 +85,18 @@ function useExecutor(set, onClick) {
 				//clearTimeout is safe to call on any value.
 				clearTimeout(resetTimer);
 				cancelArtificialDelay?.();
-				set = () => null;
 			},
 		[set, onClick]
+	);
+
+	useEffect(
+		// register a cleanup callback
+		() =>
+			// The effect hook function needs to return a function
+			() => {
+				set = () => null;
+			},
+		[]
 	);
 
 	return handler;
