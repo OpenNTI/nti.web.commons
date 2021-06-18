@@ -5,6 +5,10 @@
 	padding: 0.75rem 1.25rem;
 	cursor: pointer;
 
+	&[hidden] {
+		display: none !important;
+	}
+
 	/*
 	 * We are using the global scope for backwards compatibility.
 	 * Older Sass styles will likely be targeting these state classes,
