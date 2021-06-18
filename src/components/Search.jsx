@@ -204,9 +204,9 @@ class Search extends React.Component {
 const StyledSearch = styled(Search)`
 	position: relative;
 	overflow: hidden;
-	background: #fafafa;
+	background: var(--panel-background);
 	border-radius: 0.3125rem;
-	box-shadow: 0 0 0 0.0625rem var(--border-grey-light-alt);
+	box-shadow: 0 0 0 1px var(--border-grey-light-alt);
 	margin: 0.5rem;
 	line-height: 2.375rem;
 
