@@ -36,6 +36,7 @@ function useExecutor(set, onClick) {
 				disable: () => (reset = DISABLED),
 				hide: () => (reset = HIDE),
 				reset: () => (reset = NORMAL),
+				retain: () => (reset = null),
 				call: fn => (reset = fn),
 			};
 			// Ensure the react component has redrawn. (using setState's callback)
@@ -50,7 +51,6 @@ function useExecutor(set, onClick) {
 				set(FINISHED);
 			} catch (e) {
 				if (e === 'canceled') {
-					console.log('canceled!');
 					return;
 				}
 
@@ -228,7 +228,7 @@ function PromiseButton({
 		<Structure
 			{...props}
 			className={css}
-			onClick={go}
+			onClick={status === NORMAL ? go : void 0}
 			state={status}
 			disabled={status === DISABLED}
 		>
