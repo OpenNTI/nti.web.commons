@@ -1,37 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import { Events, PropTypes as NtiPropTypes } from '@nti/lib-commons';
 
+import { filterProps } from '../utils/filter-props';
+
 import styles from './Button.css';
 
-const cx = classnames.bind(styles);
+/**
+ * @param {Object} props
+ * @param {*} props.as Change the default element this component renders with.
+ * @param {*} props.component Deprecated: use 'as'
+ * @param {string} props.className
+ * @param {boolean} props.rounded
+ * @param {boolean} props.disabled
+ * @param {boolean} props.secondary
+ * @param {boolean} props.destructive
+ * @param {boolean} props.inverted
+ * @param {boolean} props.plain
+ * @param {(e: Event) => void} props.onClick
+ * @param {React.RefObject} ref
+ * @returns {JSX.Element}
+ */
+const ButtonImpl = (
+	{
+		/**@deprecated use as instead */
+		component,
 
-export default class Button extends React.Component {
-	static propTypes = {
-		as: PropTypes.any,
-		component: NtiPropTypes.deprecated,
-		className: PropTypes.string,
-		onClick: PropTypes.func,
-
-		rounded: PropTypes.bool,
-		disabled: PropTypes.bool,
-		secondary: PropTypes.bool,
-		destructive: PropTypes.bool,
-		inverted: PropTypes.bool,
-		plain: PropTypes.bool,
-	};
-
-	ref = React.createRef();
-
-	getDOMNode() {
-		return this.ref.current;
-	}
-
-	handleTrigger = e => {
-		const { disabled, onClick } = this.props;
-
+		as: Component = component || 'a',
+		className,
+		rounded,
+		disabled,
+		secondary,
+		destructive,
+		inverted,
+		plain,
+		onClick,
+		...otherProps
+	},
+	ref
+) => {
+	const handleTrigger = e => {
 		// This handler is called for clicks, and keyDown.
 		// This filter only allows "clicks" from physical clicks and "keyDown" events from Space or Enter.
 		if (disabled || !Events.isActionable(e)) {
@@ -47,43 +57,44 @@ export default class Button extends React.Component {
 		}
 	};
 
-	render() {
-		const {
-			as = this.props.component || 'a',
-			className,
-			rounded,
-			disabled,
-			secondary,
-			destructive,
-			inverted,
-			plain,
-			...otherProps
-		} = this.props;
-		const Component = as;
-		const cls = cx('nti-button', className, {
-			button: !plain,
-			primary: !secondary && !destructive && !plain,
-			secondary,
-			destructive,
-			disabled,
-			rounded,
-			plain,
-			inverted
-		});
+	const cls = cx('nti-button', className, {
+		[styles.button]: !plain,
+		[styles.primary]: !secondary && !destructive && !plain,
+		[styles.secondary]: secondary,
+		[styles.destructive]: destructive,
+		[styles.disabled]: disabled,
+		[styles.rounded]: rounded,
+		[styles.inverted]: inverted,
+		plain,
+	});
 
-		delete otherProps.component;
-		delete otherProps.onClick;
+	return (
+		<Component
+			ref={ref}
+			role="button"
+			tabIndex="0"
+			{...filterProps(otherProps, Component)}
+			className={cls}
+			onKeyDown={handleTrigger}
+			onClick={handleTrigger}
+		/>
+	);
+};
 
-		return (
-			<Component
-				ref={this.ref}
-				role="button"
-				tabIndex="0"
-				className={cls}
-				onKeyDown={this.handleTrigger}
-				onClick={this.handleTrigger}
-				{...otherProps}
-			/>
-		);
-	}
-}
+const Button = React.forwardRef(ButtonImpl);
+
+Button.propTypes = {
+	as: PropTypes.any,
+	component: NtiPropTypes.deprecated,
+	className: PropTypes.string,
+	onClick: PropTypes.func,
+
+	rounded: PropTypes.bool,
+	disabled: PropTypes.bool,
+	secondary: PropTypes.bool,
+	destructive: PropTypes.bool,
+	inverted: PropTypes.bool,
+	plain: PropTypes.bool,
+};
+
+export default Button;
