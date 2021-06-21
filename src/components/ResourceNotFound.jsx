@@ -14,21 +14,15 @@ const DEFAULT_TEXT = {
 
 const t = scoped('common.components.resource-not-found', DEFAULT_TEXT);
 
-const HomeLink = props => {
-	const basepath = getConfig('basepath') ?? '/';
-	return (
-		<a
-			css={`
-				display: block;
-				font: normal 400 0.875rem/1 var(--body-font-family);
-				color: var(--text-color-nav-link);
-				margin: 1rem 0;
-			`}
-			href={basepath}
-			{...props}
-		/>
-	);
-};
+const HomeLink = styled('a').attrs(props => ({
+	href: getConfig('basepath') ?? '/',
+	...props,
+}))`
+	display: block;
+	font: normal 400 0.875rem/1 var(--body-font-family);
+	color: var(--text-color-nav-link);
+	margin: 1rem 0;
+`;
 
 ResourceNotFound.getBackAction = history => ({
 	label: t('back'),
