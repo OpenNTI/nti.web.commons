@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -41,21 +41,25 @@ const ButtonImpl = (
 	},
 	ref
 ) => {
-	const handleTrigger = e => {
-		// This handler is called for clicks, and keyDown.
-		// This filter only allows "clicks" from physical clicks and "keyDown" events from Space or Enter.
-		if (disabled || !Events.isActionable(e)) {
-			if (disabled) {
-				e.preventDefault();
-				e.stopPropagation();
-			}
-			return false;
-		}
+	const handleTrigger = useCallback(
+		e => {
+			// This handler is called for clicks, and keyDown.
+			// This filter only allows "clicks" from physical clicks and "keyDown" events from Space or Enter.
+			if (disabled || !Events.isActionable(e)) {
+				if (disabled) {
+					e.preventDefault();
 
-		if (onClick) {
-			onClick(e);
-		}
-	};
+					//FIXME: disabled elements do not swallow events...
+					// they simply do not act on them, and let the event to propagate
+					e.stopPropagation();
+				}
+				return false;
+			}
+
+			onClick?.(e);
+		},
+		[disabled, onClick]
+	);
 
 	const cls = cx('nti-button', className, {
 		[styles.button]: !plain,
