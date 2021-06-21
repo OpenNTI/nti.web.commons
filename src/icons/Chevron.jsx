@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import { Variant } from '../HighOrderComponents';
 
-import FontIcon from './Font-Icon';
+import FontIcon from './types/Font-Icon';
 
 const styles = stylesheet`
 	.left {

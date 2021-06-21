@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FontIcon from './Font-Icon';
+import FontIcon from './types/Font-Icon';
 
 TrashCan.propTypes = {
 	fill: PropTypes.bool,

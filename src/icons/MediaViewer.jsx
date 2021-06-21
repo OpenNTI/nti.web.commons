@@ -1,8 +1,8 @@
 import React from 'react';
 
-import SVGIcon from './SVG-Icon';
+import SVGIcon from './types/SVG-Icon';
 
-export function MediaViewer (props) {
+export function MediaViewer(props) {
 	return (
 		<SVGIcon {...props} viewBox="0 0 37 20" width="1.75em">
 			<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -13,4 +13,4 @@ export function MediaViewer (props) {
 			</g>
 		</SVGIcon>
 	);
-};
+}

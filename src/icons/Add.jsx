@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FontIcon from './Font-Icon';
-import SVGIcon from './SVG-Icon';
+import FontIcon from './types/Font-Icon';
+import SVGIcon from './types/SVG-Icon';
 
 Add.Circled = props => {
 	return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SVGIcon from './SVG-Icon';
+import SVGIcon from './types/SVG-Icon';
 
 //https://icons.getbootstrap.com/icons/paperclip/
 

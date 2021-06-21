@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useId } from '../hooks/use-id';
 
-import SVGIcon from './SVG-Icon';
+import SVGIcon from './types/SVG-Icon';
 
 export function VideoResume(props) {
 	const maskId = useId('mask');

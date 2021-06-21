@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SVGIcon from './SVG-Icon';
-import FontIcon from './Font-Icon';
+import SVGIcon from './types/SVG-Icon';
+import FontIcon from './types/Font-Icon';
 
 function BoldX(props) {
 	return <FontIcon icon="icon-bold-x" {...props} />;

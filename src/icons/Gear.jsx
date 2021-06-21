@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FontIcon from './Font-Icon';
+import FontIcon from './types/Font-Icon';
 
 const Icon = 'icon-settings';
 

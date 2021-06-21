@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Variant } from '../HighOrderComponents';
 
-import FontIcon from './Font-Icon';
+import FontIcon from './types/Font-Icon';
 
 const Slash = 'slash';
 const NoSlash = 'no-slash';
