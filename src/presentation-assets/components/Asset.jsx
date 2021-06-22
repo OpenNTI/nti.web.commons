@@ -199,7 +199,7 @@ export default class Asset extends React.Component {
 	}
 
 	verifyImage = () => {
-		if (this.propName === 'src') {
+		if (this.propName === 'src' && !this.props.computeProps) {
 			// assume child handles onError
 			return;
 		}
