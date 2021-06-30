@@ -43,11 +43,11 @@ export default class Upload extends React.Component {
 		}
 	}
 
-	clearError() {
+	clearError = () => {
 		if (this.state.error) {
 			this.setState({ error: null, errorClass: null });
 		}
-	}
+	};
 
 	get getString() {
 		const { getString } = this.props;
