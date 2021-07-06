@@ -5,7 +5,7 @@ const t = scoped('common.errors.messages', {
 });
 
 export function getMessage(error) {
-	if (typeof error === 'string') {
+	if (typeof error === 'string' || !error) {
 		return error;
 	}
 
