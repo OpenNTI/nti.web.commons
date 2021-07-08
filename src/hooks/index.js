@@ -15,6 +15,7 @@ export * from './use-extern-class-name';
 export * from './use-link';
 export * from './use-list-item-variant';
 export * from './use-object';
+export * from './use-reducer-state';
 export * from './use-resize-observer';
 export * from './use-responsive-value';
 export * from './use-service';
