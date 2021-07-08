@@ -9,29 +9,30 @@ const styles = stylesheet`
 			text-decoration: none;
 			color: var(--primary-blue);
 		}
+	}
 
-		&.condensed {
+		.condensed {
 			font-family: var(--legacy-header-font-family);
 		}
 
-		&.label {
+		.label {
 			font-size: 0.625rem;
 			font-weight: bold;
 			text-transform: uppercase;
 		}
 
-		&.primary-grey {
+		.primary-grey {
 			color: var(--primary-grey);
 		}
 
-		&.secondary-grey {
+		.secondary-grey {
 			color: var(--secondary-grey);
 		}
 
-		&.tertiary-grey {
+		.tertiary-grey {
 			color: var(--tertiary-grey);
 		}
-	}
+
 `;
 
 function makeClassVariant(className) {
