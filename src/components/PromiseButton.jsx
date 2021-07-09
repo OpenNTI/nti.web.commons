@@ -195,6 +195,14 @@ const Mask = styled.div`
 PromiseButton.propTypes = {
 	children: PropTypes.any, //simple nodes only please
 	className: PropTypes.string,
+	initialState: PropTypes.oneOf([
+		DISABLED,
+		HIDE,
+		NORMAL,
+		PROCESSING,
+		FINISHED,
+		FINISHED_ERROR,
+	]),
 
 	// The callback can return a promise if the work to be done will be async...
 	onClick: PropTypes.func,
@@ -202,7 +210,17 @@ PromiseButton.propTypes = {
 	renderFinalState: PropTypes.func,
 };
 
+PromiseButton.states = {
+	DISABLED,
+	HIDE,
+	NORMAL,
+	PROCESSING,
+	FINISHED,
+	FINISHED_ERROR,
+};
+
 PromiseButton.defaultProps = {
+	initialState: NORMAL,
 	onClick: () => wait(2000),
 };
 
@@ -210,10 +228,11 @@ function PromiseButton({
 	children: label,
 	onClick,
 	className,
+	initialState,
 	renderFinalState,
 	...props
 }) {
-	const [status, setStatus] = useState(NORMAL);
+	const [status, setStatus] = useState(initialState);
 	const go = useExecutor(setStatus, onClick);
 
 	const css = cx('promise-button', status, className);
