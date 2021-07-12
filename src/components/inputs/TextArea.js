@@ -6,6 +6,7 @@ import cx from 'classnames';
 export default class TextArea extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
+		inputClassName: PropTypes.string,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 		autoGrow: PropTypes.bool,
@@ -51,6 +52,7 @@ export default class TextArea extends React.Component {
 	render() {
 		const {
 			value,
+			inputClassName,
 			className,
 			autoGrow,
 			placeholder,
@@ -62,14 +64,14 @@ export default class TextArea extends React.Component {
 			{ 'textarea-text': autoGrow },
 			{ placeholder: !value && placeholder }
 		);
-		const textareaCls = cx('textarea', className, 'textarea-text', {
+		const textareaCls = cx('textarea', 'textarea-text', inputClassName, {
 			autogrow: autoGrow,
 		});
 
 		delete otherProps.onChange;
 
 		return (
-			<div className="textarea-container">
+			<div className={cx('textarea-container', className)}>
 				{autoGrow && (
 					<div
 						className={sizerCls}
