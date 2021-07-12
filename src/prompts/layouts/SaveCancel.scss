@@ -1,8 +1,6 @@
-@import '~@nti/style-common';
-
 .save-cancel-dialog {
 	dialog {
-		@include responsive-range(mobile) {
+		@media (--respond-to-handhelds) {
 			height: 100%;
 		}
 
@@ -18,9 +16,12 @@
 
 			.save-cancel-content {
 				flex-grow: 1;
+				height: 90%;
+				height: calc(100% - 40px);
+				overflow: auto;
 			}
 
-			@include responsive-range(mobile) {
+			@media (--respond-to-handhelds) {
 				height: 100%;
 			}
 		}
