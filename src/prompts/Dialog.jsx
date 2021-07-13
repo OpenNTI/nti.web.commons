@@ -7,6 +7,8 @@ import { v4 as uuid } from 'uuid';
 import { reportError } from '@nti/web-client';
 import Logger from '@nti/util-logger';
 
+import ErrorMessage from '../components/Error';
+
 import Manager from './ModalManager';
 
 const logger = Logger.get('common:prompts:ManagedDialog');
@@ -48,12 +50,19 @@ export default class Dialog extends React.Component {
 		tall: PropTypes.bool,
 	};
 
+	static getDerivedStateFromError(error) {
+		/* istanbul ignore next */
+		reportError(error);
+		return { error };
+	}
+
+	state = {};
 	mounted = true;
 
 	componentDidCatch(e) {
 		/* istanbul ignore next */
 		reportError(e);
-		logger.error(e.stack || e.message || e);
+		alert('Unhandled Exception in Dialog');
 	}
 
 	componentDidMount() {
@@ -149,9 +158,12 @@ export default class Dialog extends React.Component {
 				restoreScroll,
 				tall,
 			},
+			state: { error },
 		} = this;
 
-		this.m = Manager.show(children, {
+		const content = error ? <ErrorMessage {...{ error }} /> : children;
+
+		this.m = Manager.show(content, {
 			className: cx('managed-modal', className),
 			onBeforeDismiss: this.onBeforeDismiss,
 			closeOnMaskClick,
