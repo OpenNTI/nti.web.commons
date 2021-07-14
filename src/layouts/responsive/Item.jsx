@@ -1,75 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { getEffectiveScreenSize } from './utils';
 
-export default class ResponsiveItem extends React.Component {
-	static propTypes = {
-		query: PropTypes.func.isRequired,
+ResponsiveItem.propTypes = {
+	query: PropTypes.func.isRequired,
 
-		component: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-		render: PropTypes.func,
+	component: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+	render: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 
-		additionalArguments: PropTypes.object,
-	};
+	additionalArguments: PropTypes.object,
+};
 
-	state = {};
+export default function ResponsiveItem({
+	query,
+	component,
+	render,
+	additionalArguments,
+	...props
+}) {
+	const [visible, setVisible] = useState();
 
-	constructor(props) {
-		super(props);
-
-		if (!props.component && !props.render) {
-			throw new Error(
-				'Must have a component or render prop for a ResponsiveItem'
-			);
-		}
+	if (!component && !render) {
+		throw new Error(
+			'Must have a component or render prop for a ResponsiveItem'
+		);
 	}
 
-	componentDidMount() {
-		this.setupFor(this.props);
-	}
+	const { width, height } = getEffectiveScreenSize();
 
-	componentDidUpdate(prevProps) {
-		const { additionalArguments: oldArguments } = prevProps;
-		const { additionalArguments: newArguments } = this.props;
-
-		// TODO: Eventually, have a more generic field comparison
-		if (
-			(oldArguments || {}).containerWidth !==
-			(newArguments || {}).containerWidth
-		) {
-			this.setupFor(this.props);
-		}
-	}
-
-	setupFor(props) {
-		const { query, additionalArguments } = props;
-
-		this.setState({
-			visible: query({
-				screenSize: getEffectiveScreenSize(),
+	useEffect(() => {
+		setVisible(
+			query({
+				screenSize: {
+					width,
+					height,
+				},
 				...additionalArguments,
-			}),
-		});
+			})
+		);
+	}, [query, width, height, additionalArguments]);
+
+	if (!visible) {
+		return null;
 	}
 
-	render() {
-		const { visible } = this.state;
-
-		if (!visible) {
-			return null;
-		}
-
-		const { component, render, ...otherProps } = this.props;
-
-		delete otherProps.query;
-
-		if (component) {
-			return React.createElement(component, otherProps);
-		}
-
-		if (render) {
-			return render(otherProps);
-		}
-	}
+	return component
+		? React.isValidElement(component)
+			? React.cloneElement(component, props)
+			: React.createElement(component, props)
+		: render
+		? React.isValidElement(render)
+			? React.cloneElement(render, props)
+			: render(props)
+		: null;
 }
