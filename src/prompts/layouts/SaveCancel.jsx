@@ -6,7 +6,8 @@ import { scoped } from '@nti/lib-locale';
 
 import Dialog from '../Dialog';
 import { Responsive } from '../../layouts';
-import { DialogButtons, Panels } from '../../components';
+import DialogButtons from '../../components/DialogButtons';
+import * as Panels from '../../components/panels';
 
 //#region 🎨 & 🛠️
 const t = scoped('common.prompts.layouts.SaveCancel', {
