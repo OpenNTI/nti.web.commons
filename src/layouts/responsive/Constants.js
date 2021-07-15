@@ -17,11 +17,20 @@ export const oneOf = (...args) => {
 	};
 };
 
-export const not = query => {
-	return (...queryArgs) => {
-		return !query(...queryArgs);
-	};
-};
+export const not =
+	query =>
+	(...queryArgs) =>
+		!query(...queryArgs);
+
+export const and =
+	(...queries) =>
+	(...args) =>
+		queries.every(query => query(...args));
+
+export const any =
+	(...queries) =>
+	(...args) =>
+		queries.some(query => query(...args));
 
 let CONTEXT_FLAG = null;
 const WEBAPP_CONTEXT = 'webapp';

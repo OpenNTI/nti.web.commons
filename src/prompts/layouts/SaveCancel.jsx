@@ -10,6 +10,11 @@ import DialogButtons from '../../components/DialogButtons';
 import * as Panels from '../../components/panels';
 
 //#region 🎨 & 🛠️
+
+const { isMobile, isMobileContext, not, any } = Responsive;
+
+const MOBILE = any(isMobileContext, isMobile);
+
 const t = scoped('common.prompts.layouts.SaveCancel', {
 	cancel: 'Cancel',
 	save: 'Save',
@@ -24,7 +29,7 @@ const DialogContainer = styled(Dialog)`
 	}
 `;
 
-const Layout = styled.div`
+const Layout = styled('div').attrs(({ onDismiss, ...props }) => props)`
 	background: white;
 	display: flex;
 	flex-direction: column;
@@ -86,7 +91,7 @@ export default function SaveCancel({
 				{!customHeader && (
 					<>
 						<Responsive.Item
-							query={Responsive.not(Responsive.isMobile)}
+							query={not(MOBILE)}
 							render={
 								<TitleBar
 									title={getString('title')}
@@ -95,7 +100,7 @@ export default function SaveCancel({
 							}
 						/>
 						<Responsive.Item
-							query={Responsive.isMobile}
+							query={MOBILE}
 							render={
 								<ActionHeader
 									title={getString('title')}
@@ -112,7 +117,7 @@ export default function SaveCancel({
 				<Content className="save-cancel-content">{children}</Content>
 
 				<Responsive.Item
-					query={Responsive.not(Responsive.isMobile)}
+					query={not(MOBILE)}
 					render={
 						<DialogButtons
 							buttons={[
