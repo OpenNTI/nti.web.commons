@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 TitleBar.propTypes = {
-	title: PropTypes.string.isRequired,
+	title: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	iconAction: PropTypes.func,
 	iconCls: PropTypes.string,

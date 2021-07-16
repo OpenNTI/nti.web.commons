@@ -45,6 +45,7 @@ const ActionHeader = styled(Panels.ActionHeader)`
 
 const TitleBar = styled(Panels.TitleBar)`
 	flex: 0 0 auto;
+	align-items: center;
 `;
 
 const Content = styled.div`
@@ -59,7 +60,7 @@ const Content = styled.div`
 SaveCancel.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
-	customHeader: PropTypes.bool,
+	title: PropTypes.oneOfType([PropTypes.oneOf([false]), PropTypes.node]),
 	dialog: PropTypes.bool,
 	disableSave: PropTypes.bool,
 	getString: PropTypes.func,
@@ -70,7 +71,7 @@ SaveCancel.propTypes = {
 export default function SaveCancel({
 	children,
 	className,
-	customHeader = false,
+	title = false,
 	dialog = true,
 	disableSave,
 	getString,
@@ -88,31 +89,30 @@ export default function SaveCancel({
 			})}
 		>
 			<Layout className={cx('save-cancel-layout', className)}>
-				{!customHeader && (
-					<>
-						<Responsive.Item
-							query={not(MOBILE)}
-							render={
-								<TitleBar
-									title={getString('title')}
-									iconAction={onCancel}
-								/>
-							}
-						/>
-						<Responsive.Item
-							query={MOBILE}
-							render={
-								<ActionHeader
-									title={getString('title')}
-									onCancel={onCancel}
-									onSave={onSave}
-									cancel={getString('cancel')}
-									save={getString('save')}
-								/>
-							}
-						/>
-					</>
-				)}
+				<>
+					<Responsive.Item
+						query={not(MOBILE)}
+						render={
+							<TitleBar
+								inverted={!!title}
+								title={title || getString('title')}
+								iconAction={onCancel}
+							/>
+						}
+					/>
+					<Responsive.Item
+						query={MOBILE}
+						render={
+							<ActionHeader
+								title={title || getString('title')}
+								onCancel={onCancel}
+								onSave={onSave}
+								cancel={getString('cancel')}
+								save={getString('save')}
+							/>
+						}
+					/>
+				</>
 
 				<Content className="save-cancel-content">{children}</Content>
 

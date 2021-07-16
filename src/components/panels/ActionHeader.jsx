@@ -38,7 +38,7 @@ const Cancel = styled.div`
 ActionHeader.propTypes = {
 	cancel: PropTypes.string.isRequired,
 	save: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired,
+	title: PropTypes.node.isRequired,
 	onCancel: PropTypes.func.isRequired,
 	onSave: PropTypes.func.isRequired,
 };
