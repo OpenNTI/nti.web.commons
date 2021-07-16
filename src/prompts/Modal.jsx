@@ -214,7 +214,7 @@ export default class Modal extends React.Component {
 								aria-modal="true"
 							>
 								{React.Children.map(children, child =>
-									typeof child.type === 'string'
+									!child || typeof child.type === 'string'
 										? child
 										: React.cloneElement(child, {
 												onDismiss: this.close,
