@@ -21,7 +21,7 @@ export default function TitleBar({
 
 	return (
 		<div className={cls}>
-			<h1>{title}</h1>
+			{typeof title === 'string' ? <h1>{title}</h1> : title}
 			{iconAction && (
 				<i
 					className={iconCls}
