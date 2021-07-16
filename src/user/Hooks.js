@@ -5,6 +5,9 @@ import { scoped } from '@nti/lib-locale';
 
 import { useResolver, useForceUpdate } from '../hooks';
 
+/** @typedef {import('@nti/lib-interfaces').Models.preferences.Preference} Preference */
+/** @typedef {(value: any) => void} PreferenceValueSetter */
+
 const { isResolved } = useResolver;
 const t = scoped('web-commons.user.Hooks', {
 	anonymous: 'Anonymous User',
@@ -47,7 +50,10 @@ export function useUser(user) {
 }
 
 /**
- * Provides convenient access to UserPreferences and listens for user preference changes
+ * Provides convenient access to UserPreferences and listens for user preference changes.
+ * Use this for raw access to the entire preference tree. There is another hook that
+ * refines your access to a singular branch. Prefer that one unless you really need the
+ * entire preference store
  *
  * @param {[string]} keys - Optional - If provided, change events will only fire for the given preference keys
  * @returns {Object} - a UserPreferences object
@@ -74,6 +80,12 @@ export const usePreferences = keys => {
 	return prefs;
 };
 
+/**
+ * Get a specific preference value.
+ *
+ * @param {string} key
+ * @returns {[Preference, PreferenceValueSetter]}
+ */
 export const usePreference = key => {
 	const prefs = usePreferences([key]);
 	const value = prefs?.get(key);
