@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { modal } from '../../../prompts';
-import TitleBar from '../../../components/panels/TitleBar';
+import { TitleBar } from '../../../components/panels/TitleBar';
 import DialogButtons from '../../../components/DialogButtons';
 
 import Editor from './View';
