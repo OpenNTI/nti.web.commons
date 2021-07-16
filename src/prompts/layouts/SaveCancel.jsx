@@ -94,7 +94,6 @@ export default function SaveCancel({
 						query={not(MOBILE)}
 						render={
 							<TitleBar
-								inverted={!!title}
 								title={title || getString('title')}
 								iconAction={onCancel}
 							/>
