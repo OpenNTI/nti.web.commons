@@ -232,7 +232,11 @@ export class ModalManager extends EventEmitter {
 			this.removeDocumentListeners();
 		}
 
-		this.emit(EVENT);
+		clearTimeout(this.emittingUpdated);
+		this.emittingUpdated = setTimeout(() => {
+			delete this.emittingUpdated;
+			this.emit(EVENT);
+		});
 	}
 
 	updateARIA() {
