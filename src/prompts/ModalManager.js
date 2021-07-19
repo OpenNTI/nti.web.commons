@@ -9,7 +9,6 @@ import {
 	getScrollParent,
 	scrollElementTo,
 } from '@nti/lib-dom';
-import { buffer } from '@nti/lib-commons';
 
 import Modal from './Modal';
 
@@ -97,12 +96,9 @@ export class ModalManager extends EventEmitter {
 
 		const container = this.getContainer(mountPoint, forceFront);
 
-		const dismiss = buffer(
-			1,
-			() =>
-				(!onBeforeDismiss || onBeforeDismiss() !== false) &&
-				this.hide(container)
-		);
+		const dismiss = () =>
+			(!onBeforeDismiss || onBeforeDismiss() !== false) &&
+			this.hide(container);
 
 		// scrollingElement is what we want ALL the time. (modals are appended to <body>),
 		// but in old browsers we need to fallback to getScrollParent(container)
@@ -232,11 +228,7 @@ export class ModalManager extends EventEmitter {
 			this.removeDocumentListeners();
 		}
 
-		clearTimeout(this.emittingUpdated);
-		this.emittingUpdated = setTimeout(() => {
-			delete this.emittingUpdated;
-			this.emit(EVENT);
-		});
+		this.emit(EVENT);
 	}
 
 	updateARIA() {
