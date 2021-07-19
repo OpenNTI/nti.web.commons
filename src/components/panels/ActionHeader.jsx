@@ -5,12 +5,13 @@ const Header = styled.div`
 	display: flex;
 	flex-direction: row;
 	height: 50px;
-	line-height: 50px;
+	line-height: normal;
 	font-weight: 300;
 	text-align: center;
 	background-color: white;
 	border-bottom: solid 1px #ddd;
 	padding: 0 1rem;
+	align-items: center;
 `;
 
 const Title = styled.div`
@@ -22,9 +23,14 @@ const Title = styled.div`
 	font-family: var(--legacy-header-font-family);
 	border: none;
 	flex-grow: 1;
-	text-align: center;
 	overflow: hidden;
 	padding: 0 0.5rem;
+
+	/* centering */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `;
 
 const Save = styled.div`

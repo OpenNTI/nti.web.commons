@@ -13,6 +13,8 @@ import {
 
 import LockScroll from '../components/LockScroll';
 
+/** @typedef {import('./ModalManager').ModalManager} ModalManager */
+
 declareCustomElement('dialog');
 
 const needsSafariFix = e =>
@@ -25,7 +27,9 @@ const stopEvent = e => e && e.stopPropagation();
  *
  * If you are looking to lauch a modal, see {@link Dialog}
  *
- * @private This class should be considered impementation detail of ModalManager.
+ * This class should be considered impementation detail of ModalManager.
+ *
+ * @private
  * @class Modal
  */
 export default class Modal extends React.Component {
@@ -37,6 +41,7 @@ export default class Modal extends React.Component {
 
 		/**
 		 * A ModalManager instance.
+		 *
 		 * @private
 		 * @ignore
 		 * @type {ModalManager}
@@ -45,8 +50,9 @@ export default class Modal extends React.Component {
 
 		/**
 		 * Sent by ModalManager
+		 *
 		 * @ignore
-		 * @type {Boolean}
+		 * @type {boolean}
 		 */
 		isPortal: PropTypes.bool,
 
@@ -55,7 +61,7 @@ export default class Modal extends React.Component {
 		 *
 		 * @private
 		 * @ignore
-		 * @type {function}
+		 * @type {(e: Event) => void}
 		 */
 		onDismiss: PropTypes.func.isRequired,
 
@@ -129,7 +135,11 @@ export default class Modal extends React.Component {
 		this.props.Manager.removeUpdateListener(this.onManagerUpdate);
 	}
 
-	onManagerUpdate = () => !this.props.isPortal && this.forceUpdate();
+	onManagerUpdate = () => {
+		if (!this.props.isPortal) {
+			this.forceUpdate();
+		}
+	};
 
 	/**
 	 * @param {Object} e - the event
