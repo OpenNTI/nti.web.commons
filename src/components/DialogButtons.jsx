@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import Button from './Button';
+
 DialogButtons.propTypes = {
 	flat: PropTypes.bool,
 	buttons: PropTypes.array,
@@ -24,6 +26,7 @@ export default function DialogButtons(props) {
 							onClick,
 							className,
 							disabled,
+							as,
 							tag,
 							...buttonProps
 						},
@@ -34,15 +37,15 @@ export default function DialogButtons(props) {
 							primary: i === 0,
 							secondary: i > 0,
 						});
-						let Button = tag || 'button';
 
 						return (
 							<Button
 								{...buttonProps}
-								role="button"
+								as={as || tag || 'button'}
 								key={label}
 								className={classes}
 								onClick={disabled ? null : onClick}
+								plain
 							>
 								{label}
 							</Button>

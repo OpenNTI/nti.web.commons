@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '../Button';
+
 const Header = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -33,11 +35,11 @@ const Title = styled.div`
 	justify-content: center;
 `;
 
-const Save = styled.div`
+const Save = styled(Button)`
 	color: var(--primary-blue);
 `;
 
-const Cancel = styled.div`
+const Cancel = styled(Button)`
 	/* placeholder */
 `;
 
@@ -52,11 +54,11 @@ ActionHeader.propTypes = {
 export function ActionHeader({ cancel, title, save, onCancel, onSave }) {
 	return (
 		<Header className="action-header">
-			<Cancel className="action-cancel" onClick={onCancel}>
+			<Cancel className="action-cancel" onClick={onCancel} plain>
 				{cancel}
 			</Cancel>
 			<Title className="action-title">{title}</Title>
-			<Save className="action-save" onClick={onSave}>
+			<Save className="action-save" onClick={onSave} plain>
 				{save}
 			</Save>
 		</Header>

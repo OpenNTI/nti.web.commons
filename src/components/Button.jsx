@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { Events, PropTypes as NtiPropTypes } from '@nti/lib-commons';
 
 import { filterProps } from '../utils/filter-props';
+import * as Icons from '../icons';
 
 import styles from './Button.css';
 
@@ -71,6 +72,23 @@ const ButtonImpl = (
 		[styles.inverted]: inverted,
 		plain,
 	});
+
+	if (React.Children.count(otherProps.children) === 1) {
+		const [child] = React.Children.toArray(otherProps.children);
+		const iconRe = /^icon:([^|]+)(?:\|(.*)?)?/i;
+		let [, icon, tip] = iconRe.exec(child) || [];
+		if (tip) {
+			otherProps.title = tip;
+			otherProps['data-tooltip'] = tip;
+		}
+
+		if (icon) {
+			icon = Icons[icon];
+			if (icon) {
+				otherProps.children = React.createElement(icon);
+			}
+		}
+	}
 
 	return (
 		<Component
