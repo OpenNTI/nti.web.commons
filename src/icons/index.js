@@ -11,6 +11,7 @@ export { FileUpload } from './FileUpload';
 export { FontType } from './FontType';
 export { Gear } from './Gear';
 export { Globe } from './Globe';
+export { GoTo } from './GoTo';
 export { Gripper } from './Gripper';
 export { Image } from './Image';
 export { Lock } from './Lock';
