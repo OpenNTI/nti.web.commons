@@ -83,9 +83,11 @@ const ButtonImpl = (
 		}
 
 		if (icon) {
-			icon = Icons[icon];
-			if (icon) {
-				otherProps.children = React.createElement(icon);
+			const IconGlyph = Icons[icon];
+			if (IconGlyph) {
+				otherProps.children = <IconGlyph />;
+			} else {
+				otherProps.children = <i data-icon="missing">[{icon}]</i>;
 			}
 		}
 	}
