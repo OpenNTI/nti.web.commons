@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { User } from '@nti/web-client';
-
 import { DataURIs } from '../constants';
 import { filterProps } from '../utils';
 import { useSharedDOM } from '../hooks/use-shared-dom.js';
@@ -78,7 +76,6 @@ function AvatarContent({
 	const childProps = {
 		...filterProps(props, renderer),
 		letterbox,
-		'data-for': User.getDebugUsernameString(entity),
 		alt: displayName && 'Avatar for ' + displayName,
 		className: cx(styles.avatar, 'avatar', color, className, {
 			[styles.withPresence]: presence,

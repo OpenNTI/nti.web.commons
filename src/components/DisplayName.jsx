@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import t, { scoped } from '@nti/lib-locale';
-import { getAppUsername, User } from '@nti/web-client';
+import { getAppUsername } from '@nti/web-client';
 
 import { filterProps } from '../utils/filter-props.js';
 
@@ -88,7 +88,6 @@ function DisplayNameContent({
 		...otherProps,
 		className: cx('username', className),
 		children: name,
-		'data-for': User.getDebugUsernameString(entity),
 	};
 
 	delete props.entity;
