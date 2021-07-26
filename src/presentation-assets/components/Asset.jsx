@@ -15,18 +15,22 @@ const styles = stylesheet`
 
 	.promo {
 		background-image: url(./assets/default-course/course-promo-large-16x9.png);
+		background-size: cover;
 	}
 
 	.thumb {
 		background-image: url(./assets/default-course/contentpackage-thumb-60x60.png);
+		background-size: cover;
 	}
 
 	.landing {
 		background-image: url(./assets/default-course/contentpackage-landing-232x170.png);
+		background-size: cover;
 	}
 
 	.background {
 		background-image: url(./assets/default-course/background.png);
+		background-size: cover;
 	}
 `;
 
@@ -280,8 +284,14 @@ export default class Asset extends React.Component {
 		const { children, computeProps } = this.props;
 		const child = React.Children.only(children);
 
+		// omit 'src' prop for non-img dom elements (e.g. divs)
+		const omitUrlProp =
+			!this.props.propName && // prop not explicitly specified…
+			typeof child?.type === 'string' && // …and child is a dom element…
+			child.type !== 'img'; // …and child isn't an img
+
 		const childProps = {
-			[this.propName]: this.state.resolvedUrl,
+			...(omitUrlProp ? {} : { [this.propName]: this.state.resolvedUrl }),
 			onError: this.onImgLoadError,
 			...computeProps?.(this.state.resolvedUrl),
 		};
