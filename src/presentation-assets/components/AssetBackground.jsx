@@ -35,7 +35,7 @@ export default class AssetBackground extends React.Component {
 				type={type}
 				computeProps={this.computeProps}
 			>
-				<div {...otherProps} />
+				<div data-testid="asset-background" {...otherProps} />
 			</Asset>
 		);
 	}
