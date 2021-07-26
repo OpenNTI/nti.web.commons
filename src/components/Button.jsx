@@ -85,7 +85,14 @@ const ButtonImpl = (
 		if (icon) {
 			const IconGlyph = Icons[icon];
 			if (IconGlyph) {
-				otherProps.children = <IconGlyph />;
+				otherProps.children = (
+					<>
+						<IconGlyph icon="true" />
+						<span className={styles.iconLabel} icon-label="true">
+							{tip}
+						</span>
+					</>
+				);
 			} else {
 				otherProps.children = <i data-icon="missing">[{icon}]</i>;
 			}
