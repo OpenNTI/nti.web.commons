@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Button from '../Button';
 
@@ -51,9 +52,16 @@ ActionHeader.propTypes = {
 	onSave: PropTypes.func.isRequired,
 };
 
-export function ActionHeader({ cancel, title, save, onCancel, onSave }) {
+export function ActionHeader({
+	className,
+	cancel,
+	title,
+	save,
+	onCancel,
+	onSave,
+}) {
 	return (
-		<Header className="action-header">
+		<Header className={cx('action-header', className)}>
 			<Cancel className="action-cancel" onClick={onCancel} plain>
 				{cancel}
 			</Cancel>
