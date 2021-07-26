@@ -5,15 +5,28 @@ import cx from 'classnames';
 import Button from '../Button';
 
 const Header = styled.div`
+	align-items: center;
+	flex: 0 0 auto;
 	display: flex;
 	flex-direction: row;
 	height: 50px;
 	line-height: normal;
 	font-weight: 300;
 	text-align: center;
+	padding: 0 10px;
 	background-color: white;
 	border-bottom: solid 1px #ddd;
-	padding: 0 1rem;
+
+	[icon] {
+		display: initial;
+		& + [icon-label] {
+			display: none;
+		}
+	}
+`;
+
+const Action = styled(Button)`
+	display: flex;
 	align-items: center;
 `;
 
@@ -27,7 +40,7 @@ const Title = styled.div`
 	border: none;
 	flex-grow: 1;
 	overflow: hidden;
-	padding: 0 0.5rem;
+	padding: 0 10px;
 
 	/* centering */
 	display: flex;
@@ -36,12 +49,15 @@ const Title = styled.div`
 	justify-content: center;
 `;
 
-const Save = styled(Button)`
+const Save = styled(Action)`
 	color: var(--primary-blue);
 `;
 
-const Cancel = styled(Button)`
-	/* placeholder */
+const Cancel = styled(Action)`
+	[icon] {
+		font-size: 2em;
+		color: var(--primary-grey);
+	}
 `;
 
 ActionHeader.propTypes = {

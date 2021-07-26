@@ -4,7 +4,7 @@ import SVGIcon from './types/SVG-Icon';
 
 const SVG = styled(SVGIcon)`
 	/* visually center on the box, not the entire view-box */
-	transform: translateY(15%);
+	/* transform: translateY(15%); */
 `;
 
 export function GoTo(props) {

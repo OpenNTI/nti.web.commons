@@ -37,10 +37,22 @@ const Layout = styled('div').attrs(({ onDismiss, ...props }) => props)`
 	@media (--respond-to-handhelds) {
 		height: 100%;
 	}
-`;
 
-const ActionHeader = styled(Panels.ActionHeader)`
-	flex: 0 0 auto;
+	:global(.dialog-buttons) {
+		[icon] {
+			display: none;
+			& + [icon-label] {
+				display: inline;
+			}
+		}
+
+		:global(.primary) {
+			[icon] {
+				display: initial;
+				margin-right: 0.5em;
+			}
+		}
+	}
 `;
 
 const TitleBar = styled(Panels.TitleBar)`
@@ -102,7 +114,7 @@ export default function SaveCancel({
 					<Responsive.Item
 						query={MOBILE}
 						render={
-							<ActionHeader
+							<Panels.ActionHeader
 								title={title || getString('title')}
 								onCancel={onCancel}
 								onSave={onSave}
