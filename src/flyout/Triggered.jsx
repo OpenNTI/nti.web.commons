@@ -152,9 +152,10 @@ export default class TriggeredFlyout extends React.Component {
 
 				// eslint-disable-next-line no-console
 				console.warn(
-					'A Stateless Component null ref was returned for the Trigger. Forward its ref to the DOM node.\n%s%s',
+					'A Stateless Component null ref was returned for the Trigger. Forward its ref to the DOM node.\n%s%s\n%s\n',
 					'See: ',
-					'https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components'
+					'https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components',
+					'If you are seeing this in unit tests, make sure createNodeMock is defined on the renderer'
 				);
 			}
 		}
