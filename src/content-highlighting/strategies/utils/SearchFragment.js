@@ -40,7 +40,7 @@ export function contentRegexForFragment(fragment, phraseSearch) {
 	for (const match of matches) {
 		const term = extractTermFromMatch(match);
 		if (term) {
-			terms = [...terms, term];
+			terms = [...terms, ...term];
 		}
 	}
 
