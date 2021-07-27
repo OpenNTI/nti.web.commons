@@ -88,7 +88,7 @@ const ButtonImpl = (
 				otherProps.children = (
 					<>
 						<IconGlyph icon="true" />
-						<span className={styles.iconLabel} icon-label="true">
+						<span className={styles.labelForIcon} icon-label="true">
 							{tip}
 						</span>
 					</>
