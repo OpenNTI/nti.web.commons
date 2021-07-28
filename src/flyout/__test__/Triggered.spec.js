@@ -253,6 +253,7 @@ describe('Triggered Flyout', () => {
 				'A Stateless Component null ref was returned for the Trigger'
 			),
 			expect.anything(),
+			expect.anything(),
 			expect.anything()
 		);
 
@@ -280,6 +281,7 @@ describe('Triggered Flyout', () => {
 			expect.stringMatching(
 				'A Stateless Component null ref was returned for the Trigger'
 			),
+			expect.anything(),
 			expect.anything(),
 			expect.anything()
 		);
