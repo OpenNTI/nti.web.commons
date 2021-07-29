@@ -41,6 +41,8 @@ const Layout = styled('div').attrs(({ onDismiss, ...props }) => props)`
 	:global(.dialog-buttons) {
 		[icon] {
 			display: none;
+			vertical-align: inherit;
+
 			& + [icon-label] {
 				display: inline;
 			}
