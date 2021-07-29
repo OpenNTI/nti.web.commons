@@ -83,7 +83,7 @@ export function ActionHeader({
 			</Cancel>
 			<Title className="action-title">{title}</Title>
 			<Save className="action-save" onClick={onSave} plain>
-				{save}
+				{onSave && save}
 			</Save>
 		</Header>
 	);

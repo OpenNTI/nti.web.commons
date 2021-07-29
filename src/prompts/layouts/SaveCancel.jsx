@@ -75,6 +75,7 @@ SaveCancel.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
 	title: PropTypes.oneOfType([PropTypes.oneOf([false]), PropTypes.node]),
+	controls: PropTypes.bool,
 	dialog: PropTypes.bool,
 	disableSave: PropTypes.bool,
 	getString: PropTypes.func,
@@ -87,6 +88,7 @@ export default function SaveCancel({
 	className,
 	title = false,
 	dialog = true,
+	controls = true,
 	disableSave,
 	getString,
 	onCancel,
@@ -119,7 +121,7 @@ export default function SaveCancel({
 							<Panels.ActionHeader
 								title={title || getString('title')}
 								onCancel={onCancel}
-								onSave={onSave}
+								onSave={controls && onSave}
 								cancel={getString('cancel')}
 								save={getString('save')}
 							/>
@@ -129,24 +131,26 @@ export default function SaveCancel({
 
 				<Content className="save-cancel-content">{children}</Content>
 
-				<Responsive.Item
-					query={not(MOBILE)}
-					render={
-						<DialogButtons
-							buttons={[
-								{
-									label: getString('cancel'),
-									onClick: onCancel,
-								},
-								{
-									label: getString('save'),
-									onClick: onSave,
-									disabled: disableSave,
-								},
-							]}
-						/>
-					}
-				/>
+				{controls && (
+					<Responsive.Item
+						query={not(MOBILE)}
+						render={
+							<DialogButtons
+								buttons={[
+									{
+										label: getString('cancel'),
+										onClick: onCancel,
+									},
+									{
+										label: getString('save'),
+										onClick: onSave,
+										disabled: disableSave,
+									},
+								]}
+							/>
+						}
+					/>
+				)}
 			</Layout>
 		</Container>
 	);
