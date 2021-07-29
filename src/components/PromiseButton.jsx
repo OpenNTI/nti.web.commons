@@ -117,7 +117,7 @@ const Layer = styled.li`
 		top: 50%;
 		left: 50%;
 		transform: translate3d(-50%, -50%, 0);
-		width: fit-content;
+		width: max-content;
 	}
 
 	&.processing > * {
