@@ -69,7 +69,12 @@ export default class TextInput extends React.Component {
 	};
 
 	onFocus = e => {
-		e.target.setSelectionRange(0, e.target.value.length);
+		try {
+			e.target.setSelectionRange(0, e.target.value.length);
+		} catch {
+			// InvalidStateError: Failed to execute 'setSelectionRange' on 'HTMLInputElement': The input element's type ('email') does not support selection.
+			// We tried... oh well.
+		}
 		// eslint-disable-next-line react/prop-types
 		this.props.onFocus?.(e);
 	};

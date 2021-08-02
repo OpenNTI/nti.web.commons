@@ -227,8 +227,13 @@ export default class Entity extends React.Component {
 	attachInputRef = ref => {
 		if (ref) {
 			ref.focus();
-			// ref.select(); <- doesn't work on all browser *caugh* safari *caugh*
-			ref.setSelectionRange(0, ref.value.length);
+			try {
+				// ref.select(); <- doesn't work on all browser *caugh* safari *caugh*
+				ref.setSelectionRange(0, ref.value.length);
+			} catch {
+				// InvalidStateError: Failed to execute 'setSelectionRange' on 'HTMLInputElement': The input element's type ('email') does not support selection.
+				// We tried... oh well.
+			}
 		}
 	};
 
