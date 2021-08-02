@@ -69,9 +69,7 @@ function AvatarContent({
 
 	const imgSrc =
 		failedImage ||
-		(!entity || entity.Deactivated || !initials
-			? BLANK_AVATAR
-			: entity.avatarURL);
+		(!entity || entity.Deactivated ? BLANK_AVATAR : entity.avatarURL);
 
 	const renderer = imgSrc || !initials ? Component : 'svg';
 
