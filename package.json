@@ -2,8 +2,9 @@
   "name": "@nti/web-commons",
   "version": "0.118.0-alpha",
   "author": "nextthought",
-  "description": "ReactJS Common Components",
+  "description": "",
   "license": "UNLICENSED",
+  "private": true,
   "main": "src/index.js",
   "module": "src/index.js",
   "sideEffects": [
@@ -23,17 +24,6 @@
     "type": "git",
     "url": "https://github.com/NextThought/nti.web.commons.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.nextthought.com"
-  },
-  "keywords": [
-    "react",
-    "editor",
-    "modeled",
-    "modeled body",
-    "content",
-    "component"
-  ],
   "dependencies": {
     "@nti/lib-commons": "NextThought/nti.lib.commons",
     "@nti/lib-dom": "NextThought/nti.lib.dom",
