@@ -206,6 +206,8 @@ PromiseButton.propTypes = {
 
 	// The callback can return a promise if the work to be done will be async...
 	onClick: PropTypes.func,
+	// mirror other buttons and accept a disabled prop
+	disabled: PropTypes.bool,
 
 	renderFinalState: PropTypes.func,
 };
@@ -247,9 +249,9 @@ function PromiseButton({
 		<Structure
 			{...props}
 			className={css}
-			onClick={status === NORMAL ? go : void 0}
+			onClick={!props.disabled && status === NORMAL ? go : void 0}
 			state={status}
-			disabled={status === DISABLED}
+			disabled={status === DISABLED || props.disabled}
 		>
 			<Sizer>
 				<span>{label}</span>
