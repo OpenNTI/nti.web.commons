@@ -6,7 +6,7 @@ import { getEffectiveScreenSize } from './utils';
 ResponsiveItem.propTypes = {
 	query: PropTypes.func.isRequired,
 
-	component: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+	component: PropTypes.oneOfType([PropTypes.elementType, PropTypes.node]),
 	render: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 
 	additionalArguments: PropTypes.object,
