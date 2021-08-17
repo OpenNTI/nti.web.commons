@@ -6,8 +6,12 @@ import styles from './Tab.css';
 
 const cx = classnames.bind(styles);
 
-export default function Tab({ label, active, className }) {
-	return <div className={cx('nti-tab', { active }, className)}>{label}</div>;
+export default function Tab({ label, active, className, ...props }) {
+	return (
+		<div className={cx('nti-tab', { active }, className)} {...props}>
+			{label}
+		</div>
+	);
 }
 
 Tab.propTypes = {
