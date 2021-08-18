@@ -13,6 +13,8 @@ export const Base = styled.div`
 		);
 		background-size: 1000px 100%;
 		background-attachment: fixed;
+		/* Turn on GPU Rendering */
+		transform: rotateZ(360deg);
 	}
 
 	@keyframes shimmer {
