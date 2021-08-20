@@ -42,7 +42,7 @@
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.10",
     "eases": "^1.0.8",
-    "filesize": "^7.0.0",
+    "filesize": "^8.0.0",
     "invariant": "^2.2.1",
     "jump.js": "^1.0.2",
     "line-height": "^0.3.1",
