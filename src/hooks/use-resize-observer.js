@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { matches } from '@nti/lib-dom';
 
@@ -9,6 +9,18 @@ function ignoreResize(target) {
 export function useResizeObserver(onChange) {
 	const changeRef = useRef(null);
 	const observerRef = useRef(null);
+
+	useEffect(
+		() =>
+			// cleanup
+			() => {
+				observerRef.current?.disconnect();
+				observerRef.current = null;
+				changeRef.current = null;
+			},
+		// hook only runs on mount, and only cleans up on unmount.
+		[]
+	);
 
 	if (changeRef.current === onChange) {
 		return observerRef.current;
