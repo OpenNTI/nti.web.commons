@@ -26,6 +26,7 @@ export default class Toggle extends React.Component {
 		disabled: PropTypes.bool,
 		iconOff: PropTypes.func,
 		iconOn: PropTypes.func,
+		'data-testid': PropTypes.string,
 		classes: PropTypes.shape({
 			root: PropTypes.string,
 			toggler: PropTypes.string,
@@ -130,7 +131,7 @@ export default class Toggle extends React.Component {
 	}
 
 	render() {
-		const { className, classes = {} } = this.props;
+		const { className, classes = {}, 'data-testid': testid } = this.props;
 
 		return (
 			<div
@@ -140,6 +141,7 @@ export default class Toggle extends React.Component {
 					classes.root,
 					className
 				)}
+				data-testid={testid}
 			>
 				<div className={cx('toggler-container')}>
 					{this.renderOnOff()}
