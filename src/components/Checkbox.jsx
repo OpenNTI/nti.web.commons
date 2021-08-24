@@ -25,10 +25,12 @@ function Checkbox(props) {
 		label,
 		name,
 		domRef,
+		['data-testid']: testid,
 		...otherProps
 	} = props;
 	return (
 		<label
+			data-testid={testid}
 			className={cx('checkbox-component', { disabled })}
 			name={name}
 			ref={domRef}
