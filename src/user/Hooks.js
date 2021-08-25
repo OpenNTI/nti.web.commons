@@ -3,7 +3,7 @@ import { useEffect, useCallback } from 'react';
 import { User, getAppUsername, getUserPreferences } from '@nti/web-client';
 import { scoped } from '@nti/lib-locale';
 
-import { useResolver, useForceUpdate } from '../hooks';
+import { useResolver, useForceUpdate, useAsyncValue } from '../hooks';
 
 /** @typedef {import('@nti/lib-interfaces').Models.preferences.Preference} Preference */
 /** @typedef {(value: any) => void} PreferenceValueSetter */
@@ -59,8 +59,7 @@ export function useUser(user) {
  * @returns {Object} - a UserPreferences object
  */
 export const usePreferences = keys => {
-	const r = useResolver(getUserPreferences, [getUserPreferences]);
-	const prefs = isResolved(r) ? r : null;
+	const preferences = useAsyncValue('getUserPreferences', getUserPreferences);
 	const forceUpdate = useForceUpdate();
 
 	useEffect(() => {
@@ -74,10 +73,10 @@ export const usePreferences = keys => {
 			}
 		};
 
-		prefs?.addListener('change', onChange);
-		return () => prefs?.removeListener('change', onChange);
-	}, [prefs, keys, forceUpdate]);
-	return prefs;
+		preferences?.addListener('change', onChange);
+		return () => preferences?.removeListener('change', onChange);
+	}, [preferences, keys, forceUpdate]);
+	return preferences;
 };
 
 /**
@@ -87,8 +86,11 @@ export const usePreferences = keys => {
  * @returns {[Preference, PreferenceValueSetter]}
  */
 export const usePreference = key => {
-	const prefs = usePreferences([key]);
-	const value = prefs?.get(key);
-	const setValue = useCallback(v => prefs?.set(key, v), [key, prefs]);
+	const preferences = usePreferences([key]);
+	const value = preferences?.get(key);
+	const setValue = useCallback(
+		v => preferences?.set(key, v),
+		[key, preferences]
+	);
 	return [value, setValue];
 };
