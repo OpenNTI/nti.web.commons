@@ -1,57 +1,75 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+// @ts-check
+import React, { useCallback } from 'react';
+import cx from 'classnames';
 
-import { DropZone } from '../../drag-and-drop/';
+import { DropZone as DZ } from '../../drag-and-drop/';
 
-import Styles from './FileInputWrapper.css';
+/** @type {import('@nti/web-core/src/styles')} */
 
-const cx = classnames.bind(Styles);
+/** @typedef {import('@nti/web-core/src/types').IntrinsicProps} IntrinsicProps */
 
-export default class FileInputWrapper extends React.Component {
-	static propTypes = {
-		className: PropTypes.string,
-		children: PropTypes.any,
-		style: PropTypes.any,
-		onChange: PropTypes.func,
-	};
+const DropZone = styled(DZ)`
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+`;
 
-	fileChanged(files, e) {
-		const { onChange } = this.props;
+const File = styled('input').attrs({ type: 'file' })`
+	position: absolute;
+	inset: 0;
+	font-size: 2rem;
+	padding: 0;
+	margin: 0;
+	opacity: 0;
+	border: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+`;
 
-		if (onChange) {
-			onChange(files, e);
-		}
-	}
+/** @typedef {(files: File[], e: Event) => void} FileChangeHandler */
 
-	onChange = e => {
-		e.preventDefault();
+/**
+ * @param {{onChange: FileChangeHandler} & IntrinsicProps} props
+ * @returns {JSX.Element}
+ */
+export default function FileInputWrapper({
+	className,
+	children,
+	onChange,
+	style,
+	...otherProps
+}) {
+	const fileChanged = useCallback(
+		(files, e) => {
+			onChange?.(files, e);
+		},
+		[onChange]
+	);
 
-		const { target: { files = [] } = {} } = e;
+	const handleChange = useCallback(
+		e => {
+			e.preventDefault?.();
+			fileChanged(e.target?.files, e);
+		},
+		[fileChanged]
+	);
 
-		this.fileChanged(files, e);
-	};
+	const onDrop = useCallback(
+		e => {
+			fileChanged(e.dataTransfer?.files, e);
+		},
+		[fileChanged]
+	);
 
-	onDrop = e => {
-		const { files } = e.dataTransfer;
-
-		this.fileChanged(files, e);
-	};
-
-	render() {
-		const { className, children, style, ...otherProps } = this.props;
-
-		delete otherProps.onChange;
-
-		return (
-			<DropZone
-				className={cx('nti-file-input-wrapper', className)}
-				style={style}
-				onDrop={this.onDrop}
-			>
-				{children}
-				<input type="file" {...otherProps} onChange={this.onChange} />
-			</DropZone>
-		);
-	}
+	return (
+		<DropZone
+			className={cx('nti-file-input-wrapper', className)}
+			style={style}
+			onDrop={onDrop}
+		>
+			{children}
+			<File {...otherProps} onChange={handleChange} />
+		</DropZone>
+	);
 }
