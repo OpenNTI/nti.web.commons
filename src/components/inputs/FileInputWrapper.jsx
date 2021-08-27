@@ -49,8 +49,8 @@ export default class FileInputWrapper extends React.Component {
 				style={style}
 				onDrop={this.onDrop}
 			>
-				<input type="file" {...otherProps} onChange={this.onChange} />
 				{children}
+				<input type="file" {...otherProps} onChange={this.onChange} />
 			</DropZone>
 		);
 	}
