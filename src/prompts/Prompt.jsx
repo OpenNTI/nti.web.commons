@@ -190,17 +190,20 @@ export default class Prompt extends React.Component {
 				label: cancelButtonLabel,
 				className: cancelButtonClass,
 				onClick: this.dismiss,
+				'data-testid': 'cancel',
 			},
 			onConfirm && {
 				ref: this.attachConfirmRef,
 				className: confirmButtonClass,
 				label: confirmButtonLabel,
 				onClick: this.confirmClicked,
+				'data-testid': 'confirm',
 			},
 		].filter(x => x);
 
 		return (
 			<div
+				data-testid="prompt-modal"
 				ref={this.attachFrameRef}
 				className={`modal dialog mask ${promptType} ${state}`}
 			>
