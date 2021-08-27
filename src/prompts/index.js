@@ -20,7 +20,7 @@ export function alert(message, title = 'Alert', extra = {}) {
 }
 
 export function areYouSure(message, title = 'Are you sure?', extra = {}) {
-	return new Promise((acknowledge, cancel) => {
+	return new Promise((acknowledge, reject) => {
 		Prompt.show({
 			...extra,
 			confirmButtonClass: extra.confirmButtonClass || 'caution',
@@ -28,8 +28,8 @@ export function areYouSure(message, title = 'Are you sure?', extra = {}) {
 			message,
 			title,
 			onConfirm: () => acknowledge(true),
-			// FIXME: do not reject, acknowledge false.
-			onCancel: () => cancel(new Error('Prompt Canceled')),
+			//FIXME: do not reject, acknowledge false.
+			onCancel: () => reject(new Error('Prompt Canceled')),
 		});
 	});
 }
@@ -38,7 +38,7 @@ export function areYouSure(message, title = 'Are you sure?', extra = {}) {
  * Display a modal
  *
  * @see {ModalManager#show()}
- * @param  {React.Element} content The JSX expression to render into a dialog
+ * @param  {JSX.Element} content The JSX expression to render into a dialog
  * @param  {string|Object} options Options or className
  * @returns {ModalReference} Stuff & Things
  */
