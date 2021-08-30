@@ -227,6 +227,10 @@ export default class Asset extends React.Component {
 		}
 	}
 
+	componentWillUnmount() {
+		this.unmounted = true;
+	}
+
 	getPresentationResource(props) {
 		const item = this.getItem(props);
 		return (item?.PlatformPresentationResources || []).find(
@@ -271,6 +275,10 @@ export default class Asset extends React.Component {
 	}
 
 	onImgLoadError = () => {
+		if (this.unmounted) {
+			return;
+		}
+
 		const { resolvedUrl } = this.state;
 
 		const defaultValue =
