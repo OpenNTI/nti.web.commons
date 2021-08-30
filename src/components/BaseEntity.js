@@ -1,11 +1,10 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { User, getAppUsername } from '@nti/web-client';
+import { User } from '@nti/web-client';
 
 import { useChanges } from '../hooks/use-changes';
-
-const CLASSIC_STATE = (s, action) => ({ ...s, ...action });
+import { useReducerState } from '../hooks/use-reducer-state';
 
 /**
  * This component can use the full Entity instance if you have it.
@@ -20,8 +19,12 @@ BaseEntity.propTypes = {
 
 export default function BaseEntity({ entity, me, children, ...props }) {
 	const getID = x => x?.getID?.() || x;
-	const userId = me ? getAppUsername() : getID(entity);
-	const [state, setState] = useReducer(CLASSIC_STATE, {});
+	const userId = me ? null : getID(entity);
+	const [state, setState] = useReducerState({
+		entity: null,
+		error: null,
+		generation: 0,
+	});
 
 	useEffect(() => {
 		let late = false;
