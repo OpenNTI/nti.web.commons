@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {
+	useCallback,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import * as Errors from '../errors';
 import BasePrompt from '../standard-ui/prompt/Base';
+import { useReducerState } from '../hooks/use-reducer-state';
 
 import Styles from './Styles.css';
 import FormContext from './Context';
@@ -156,19 +162,22 @@ function Form(props) {
 		...otherProps
 	} = props;
 
-	const formEl = React.useRef(null);
-	const [errors, setErrors] = React.useState(
-		getInitialErrorState(initialError)
-	);
-	const [submitting, setSubmitting] = React.useState(false);
+	const formEl = useRef(null);
+	const [{ errors, submitting }, setState] = useReducerState({
+		errors: getInitialErrorState(initialError),
+		submitting: false,
+	});
 
-	React.useImperativeHandle(formRef, () => formEl.current);
+	const setErrors = useMemo(error => setState({ error }), []);
+	const setSubmitting = useMemo(submitting => setState({ submitting }), []);
 
-	const addErrors = React.useCallback(
+	useImperativeHandle(formRef, () => formEl.current);
+
+	const addErrors = useCallback(
 		toAdd => setErrors({ ...errors, ...toAdd }),
 		[errors]
 	);
-	const clearError = React.useCallback(
+	const clearError = useCallback(
 		name => {
 			if (errors && errors[name]) {
 				setErrors({ ...errors, [name]: void 0, [GlobalError]: void 0 });
@@ -179,7 +188,7 @@ function Form(props) {
 		[errors]
 	);
 
-	const submitHandler = React.useMemo(
+	const submitHandler = useMemo(
 		() =>
 			getSubmitHandler({
 				form: formEl,
@@ -192,7 +201,7 @@ function Form(props) {
 		[formEl, disabled, addErrors, onSubmit, afterSubmit, setSubmitting]
 	);
 
-	const changeHandler = React.useMemo(
+	const changeHandler = useMemo(
 		() =>
 			getChangeHandler({
 				form: formEl,
