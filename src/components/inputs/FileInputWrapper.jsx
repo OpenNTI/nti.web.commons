@@ -1,5 +1,5 @@
 // @ts-check
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import cx from 'classnames';
 
 import { DropZone as DZ } from '../../drag-and-drop/';
@@ -40,6 +40,7 @@ export default function FileInputWrapper({
 	style,
 	...otherProps
 }) {
+	const ref = useRef(null);
 	const fileChanged = useCallback(
 		(files, e) => {
 			onChange?.(files, e);
@@ -62,14 +63,20 @@ export default function FileInputWrapper({
 		[fileChanged]
 	);
 
+	const child = /** @type {React.ReactElement<any>} */ (
+		React.Children.only(children)
+	);
+
 	return (
 		<DropZone
 			className={cx('nti-file-input-wrapper', className)}
 			style={style}
 			onDrop={onDrop}
 		>
-			{children}
-			<File {...otherProps} onChange={handleChange} />
+			{React.cloneElement(child, {
+				onClick: () => ref.current?.click(),
+			})}
+			<File {...otherProps} onChange={handleChange} ref={ref} />
 		</DropZone>
 	);
 }
