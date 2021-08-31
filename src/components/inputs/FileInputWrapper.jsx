@@ -14,7 +14,7 @@ const DropZone = styled(DZ)`
 	cursor: pointer;
 `;
 
-const File = styled('input').attrs({ type: 'file' })`
+const File = styled('input').attrs({ type: 'file', tabIndex: -1 })`
 	position: absolute;
 	inset: 0;
 	font-size: 2rem;
@@ -25,6 +25,10 @@ const File = styled('input').attrs({ type: 'file' })`
 	width: 100%;
 	height: 100%;
 	cursor: pointer;
+`;
+
+const clickThrough = css`
+	pointer-events: none;
 `;
 
 /** @typedef {(files: File[], e: Event) => void} FileChangeHandler */
@@ -63,8 +67,14 @@ export default function FileInputWrapper({
 		[fileChanged]
 	);
 
-	const child = /** @type {React.ReactElement<any>} */ (
-		React.Children.only(children)
+	let clickableChild = false;
+	const child = React.Children.toArray(children).map(c =>
+		!React.isValidElement(c)
+			? c
+			: ((clickableChild = true),
+			  React.cloneElement(c, {
+					onClick: () => ref.current?.click(),
+			  }))
 	);
 
 	return (
@@ -73,10 +83,13 @@ export default function FileInputWrapper({
 			style={style}
 			onDrop={onDrop}
 		>
-			{React.cloneElement(child, {
-				onClick: () => ref.current?.click(),
-			})}
-			<File {...otherProps} onChange={handleChange} ref={ref} />
+			{child}
+			<File
+				{...otherProps}
+				className={cx({ [clickThrough]: clickableChild })}
+				onChange={handleChange}
+				ref={ref}
+			/>
 		</DropZone>
 	);
 }
