@@ -168,8 +168,11 @@ function Form(props) {
 		submitting: false,
 	});
 
-	const setErrors = useMemo(error => setState({ error }), []);
-	const setSubmitting = useMemo(submitting => setState({ submitting }), []);
+	const setErrors = useCallback(error => setState({ error }), []);
+	const setSubmitting = useCallback(
+		submitting => setState({ submitting }),
+		[]
+	);
 
 	useImperativeHandle(formRef, () => formEl.current);
 
