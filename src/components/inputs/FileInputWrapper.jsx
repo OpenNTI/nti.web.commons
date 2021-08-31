@@ -69,7 +69,7 @@ export default function FileInputWrapper({
 
 	let clickableChild = false;
 	const child = React.Children.toArray(children).map(c =>
-		!React.isValidElement(c)
+		!React.isValidElement(c) || c?.type === React.Fragment
 			? c
 			: ((clickableChild = true),
 			  React.cloneElement(c, {
