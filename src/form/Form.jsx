@@ -168,41 +168,39 @@ function Form(props) {
 		submitting: false,
 	});
 
-	const setErrors = useCallback(error => setState({ error }), []);
-	const setSubmitting = useCallback(
-		submitting => setState({ submitting }),
-		[]
-	);
-
 	useImperativeHandle(formRef, () => formEl.current);
 
 	const addErrors = useCallback(
-		toAdd => setErrors({ ...errors, ...toAdd }),
+		toAdd => setState({ errors: { ...errors, ...toAdd } }),
 		[errors]
 	);
 	const clearError = useCallback(
 		name => {
-			if (errors && errors[name]) {
-				setErrors({ ...errors, [name]: void 0, [GlobalError]: void 0 });
-			} else if (errors[GlobalError]) {
-				setErrors({ ...errors, [GlobalError]: void 0 });
+			if (errors?.[name]) {
+				setState({
+					errors: {
+						...errors,
+						[name]: void 0,
+						[GlobalError]: void 0,
+					},
+				});
+			} else if (errors?.[GlobalError]) {
+				setState({ errors: { ...errors, [GlobalError]: void 0 } });
 			}
 		},
 		[errors]
 	);
 
-	const submitHandler = useMemo(
-		() =>
-			getSubmitHandler({
-				form: formEl,
-				disabled,
-				addErrors,
-				onSubmit,
-				afterSubmit,
-				setSubmitting,
-			}),
-		[formEl, disabled, addErrors, onSubmit, afterSubmit, setSubmitting]
-	);
+	const submitHandler = useMemo(() => {
+		return getSubmitHandler({
+			form: formEl,
+			disabled,
+			addErrors,
+			onSubmit,
+			afterSubmit,
+			setSubmitting: submitting => setState({ submitting }),
+		});
+	}, [formEl, disabled, addErrors, onSubmit, afterSubmit]);
 
 	const changeHandler = useMemo(
 		() =>
