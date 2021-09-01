@@ -45,8 +45,7 @@ const DEFAULT_TEXT = {
 			label: 'Draft',
 		},
 		schedule: {
-			text:
-				'When do you want students to have access to this assignment?',
+			text: 'When do you want students to have access to this assignment?',
 			selectedText:
 				'Assignment contents will be visible to students on %(date)s at %(time)s.',
 			label: 'Schedule',
@@ -234,6 +233,7 @@ export default class Publish extends React.Component {
 			verticalAlignment: vAlign,
 			horizontalAlignment: hAlign,
 			children,
+			className,
 			value,
 			error,
 			localeContext,
@@ -259,7 +259,7 @@ export default class Publish extends React.Component {
 				ref={this.setFlyoutRef}
 				arrow
 				constrain
-				className="publish-controls"
+				className={cx('publish-controls', className)}
 				verticalAlign={vAlign}
 				horizontalAlign={hAlign}
 				trigger={trigger}
