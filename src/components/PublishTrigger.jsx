@@ -58,11 +58,16 @@ export default class PublishTrigger extends React.PureComponent {
 			value,
 			hasChanges,
 			label: labelOverride,
+			className,
 			...props
 		} = this.props;
 		const selected = getPublishState(value || PUBLISH_STATES.DRAFT);
 		const date = selected === PUBLISH_STATES.SCHEDULE ? value : null;
-		const classNames = cx('publish-trigger', selected.toLowerCase());
+		const classNames = cx(
+			'publish-trigger',
+			selected.toLowerCase(),
+			className
+		);
 
 		const label =
 			labelOverride ||
