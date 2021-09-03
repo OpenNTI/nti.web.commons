@@ -7,9 +7,10 @@ import React, {
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { useReducerState } from '@nti/web-core';
+
 import * as Errors from '../errors';
 import BasePrompt from '../standard-ui/prompt/Base';
-import { useReducerState } from '../hooks/use-reducer-state';
 
 import Styles from './Styles.css';
 import FormContext from './Context';

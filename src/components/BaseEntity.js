@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { User } from '@nti/web-client';
+import { useReducerState } from '@nti/web-core';
 
 import { useChanges } from '../hooks/use-changes';
-import { useReducerState } from '../hooks/use-reducer-state';
 
 /**
  * This component can use the full Entity instance if you have it.

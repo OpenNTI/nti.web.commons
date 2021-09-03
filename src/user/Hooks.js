@@ -1,9 +1,10 @@
 import { useEffect, useCallback } from 'react';
 
 import { User, getAppUsername, getUserPreferences } from '@nti/web-client';
+import { useAsyncValue } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
-import { useResolver, useForceUpdate, useAsyncValue } from '../hooks';
+import { useResolver, useForceUpdate } from '../hooks';
 
 /** @typedef {import('@nti/lib-interfaces').Models.preferences.Preference} Preference */
 /** @typedef {(value: any) => void} PreferenceValueSetter */
