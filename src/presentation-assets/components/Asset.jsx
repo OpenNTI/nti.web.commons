@@ -274,10 +274,13 @@ export default class Asset extends React.Component {
 		return url && `${url}?t=${lastMod}`;
 	}
 
-	onImgLoadError = () => {
+	onImgLoadError = e => {
 		if (this.unmounted) {
 			return;
 		}
+
+		// eslint-disable-next-line no-console
+		console.log(e);
 
 		const { resolvedUrl } = this.state;
 
