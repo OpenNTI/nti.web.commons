@@ -279,9 +279,18 @@ export default class Asset extends React.Component {
 			return;
 		}
 
-		const { defaultValue } = ASSET_MAP[this.props.type] || {};
+		const {
+			state: { resolvedUrl },
+			props: { type },
+		} = this;
+		const { tagName = 'IMG', src = resolvedUrl } = e?.target || {};
+		const { defaultValue } = ASSET_MAP[type] || {};
 
-		if (e.target.src === this.state.resolvedUrl && defaultValue) {
+		if (
+			tagName === 'IMG' &&
+			(!resolvedUrl || src === resolvedUrl) &&
+			defaultValue
+		) {
 			this.setState({ resolvedUrl: defaultValue });
 		}
 	};
