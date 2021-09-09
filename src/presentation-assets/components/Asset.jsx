@@ -279,16 +279,11 @@ export default class Asset extends React.Component {
 			return;
 		}
 
-		// eslint-disable-next-line no-console
-		console.log(e);
+		const { defaultValue } = ASSET_MAP[this.props.type] || {};
 
-		const { resolvedUrl } = this.state;
-
-		const defaultValue =
-			ASSET_MAP[this.props.type] &&
-			ASSET_MAP[this.props.type].defaultValue;
-
-		this.setState({ resolvedUrl: defaultValue || resolvedUrl });
+		if (e.target.src === this.state.resolvedUrl && defaultValue) {
+			this.setState({ resolvedUrl: defaultValue });
+		}
 	};
 
 	render() {
