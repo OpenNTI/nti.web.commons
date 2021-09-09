@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useForceUpdate } from './use-force-update';
+import { useForceUpdate } from '@nti/web-core';
 
 const BREAK = {
 	minimum: 360,

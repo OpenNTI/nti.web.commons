@@ -1,8 +1,7 @@
 import { useContext, useEffect } from 'react';
 
 import { Events, ObjectUtils } from '@nti/lib-commons';
-
-import { useForceUpdate } from '../hooks';
+import { useForceUpdate } from '@nti/web-core';
 
 import ThemeContext from './Context';
 

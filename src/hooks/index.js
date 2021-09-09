@@ -1,5 +1,4 @@
 export { useDebounce } from './use-debounce';
-export { useForceUpdate } from './use-force-update';
 export { useId } from './use-id';
 export { useMediaQuery } from './use-media-query';
 export { useMutationObserver } from './use-mutation-observer';
