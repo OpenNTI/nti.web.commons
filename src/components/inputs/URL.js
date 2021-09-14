@@ -12,13 +12,12 @@ function getFullHref(href, defaultProtocol = 'http:') {
 
 	const parts = url.parse(href);
 
-	if (!parts.protocol) {
-		parts.protocol = defaultProtocol;
+	if (!parts.protocol || parts.protocol === 'file:') {
 		parts.host = href;
 		parts.pathname = '';
-		parts.path = '';
+		parts.protocol = defaultProtocol;
 
-		return parts.toString();
+		return parts.toString().replace(/\/$/, '');
 	}
 
 	return href;
