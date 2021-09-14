@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 const Cache = new WeakMap();
 
@@ -40,10 +39,10 @@ const getFallbackObserver = onChange => ({
 });
 
 function useIntersectionObserver(onChange, buffer) {
-	const changeRef = React.useRef(null);
-	const bufferRef = React.useRef(null);
+	const changeRef = useRef(null);
+	const bufferRef = useRef(null);
 
-	const observerRef = React.useRef(null);
+	const observerRef = useRef(null);
 
 	if (changeRef.current === onChange && bufferRef.current === buffer) {
 		return observerRef.current;
@@ -61,30 +60,44 @@ function useIntersectionObserver(onChange, buffer) {
 	return observerRef.current;
 }
 
-OnScreenMonitor.propTypes = {
-	as: PropTypes.any,
+export default React.forwardRef(
+	/**
+	 * @template T
+	 * @param {object} props
+	 * @param {() => void} props.onChange
+	 * @param {string|React.ComponentType<T>} [props.as='div']
+	 * @param {number} [props.buffer=0]
+	 * @param {React.Ref<T>} ref
+	 * @returns {JSX.Element}
+	 */
+	function OnScreenMonitor(
+		{ onChange, as: tag, buffer, ...otherProps },
+		ref
+	) {
+		const Cmp = tag || 'div';
 
-	buffer: PropTypes.number,
-	onChange: PropTypes.func,
-};
-export default function OnScreenMonitor({
-	onChange,
-	as: tag,
-	buffer,
-	...otherProps
-}) {
-	const Cmp = tag || 'div';
+		const observer = useIntersectionObserver(onChange, buffer);
+		const elementRef = useRef();
 
-	const observer = useIntersectionObserver(onChange, buffer);
-	const elementRef = React.useRef();
+		useEffect(() => {
+			const target = elementRef.current;
 
-	React.useEffect(() => {
-		const target = elementRef.current;
+			observer.observe(target);
 
-		observer.observe(target);
+			return () => observer.unobserve(target);
+		}, [observer]);
 
-		return () => observer.unobserve(target);
-	}, [observer]);
+		const setRef = useCallback(
+			r => {
+				elementRef.current = r;
+				if (ref) {
+					if (typeof ref === 'function') ref(r);
+					else ref.current = r;
+				}
+			},
+			[ref]
+		);
 
-	return <Cmp ref={elementRef} {...otherProps} />;
-}
+		return <Cmp ref={setRef} {...otherProps} />;
+	}
+);
