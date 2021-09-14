@@ -290,7 +290,7 @@ export default class Asset extends React.Component {
 
 		if (
 			(e.target === this.ref.current || !document.contains(e.target)) &&
-			(!resolvedUrl || src === resolvedUrl) &&
+			(!resolvedUrl || equal(src, resolvedUrl)) &&
 			defaultValue
 		) {
 			e?.stopPropagation?.();
@@ -319,4 +319,10 @@ export default class Asset extends React.Component {
 
 		return React.cloneElement(child, childProps);
 	}
+}
+
+function equal(a, b) {
+	//if this is ever rendered on the server side, we will need to rethink the source of 'location'
+	const normal = x => new URL(x, global.location).toString();
+	return normal(a) === normal(b);
 }
