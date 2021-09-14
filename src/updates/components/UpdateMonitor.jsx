@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { InactivityMonitor } from '@nti/lib-dom';
-import { URL as UrlUtils } from '@nti/lib-commons';
+import { url } from '@nti/lib-commons';
 import Logger from '@nti/util-logger';
 
 import Notification from './Notification';
@@ -92,7 +92,7 @@ export default class UpdateMonitor extends React.Component {
 
 		this.lastChecked = Date.now();
 
-		const r = await fetch(UrlUtils.join(baseUrl, versionPath), {
+		const r = await fetch(url.join(baseUrl, versionPath), {
 			method: 'GET',
 			headers: {
 				pragma: 'no-cache',

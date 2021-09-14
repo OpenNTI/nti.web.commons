@@ -1,33 +1,31 @@
-import Url from 'url';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { url } from '@nti/lib-commons';
+
 import Text from './Text';
 
-const defaultProtocol = 'http:';
-
-function getFullHref(href) {
+function getFullHref(href, defaultProtocol = 'http:') {
 	if (!href) {
 		return '';
 	}
 
-	let parts = Url.parse(href);
+	const parts = url.parse(href);
 
 	if (!parts.protocol) {
 		parts.protocol = defaultProtocol;
 		parts.host = href;
 		parts.pathname = '';
 		parts.path = '';
+
+		return parts.toString();
 	}
 
-	return Url.format(parts);
+	return href;
 }
 
 export default class URLInput extends React.Component {
-	static getFullURL(url) {
-		return getFullHref(url);
-	}
+	static getFullURL = getFullHref;
 
 	static isValidURL(url) {
 		const input = Object.assign(document.createElement('input'), {

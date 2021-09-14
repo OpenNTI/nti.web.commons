@@ -1,4 +1,4 @@
-import { URL } from '@nti/lib-commons';
+import { url } from '@nti/lib-commons';
 
 import { ASSET_MAP } from '../components/Asset';
 
@@ -47,7 +47,7 @@ export default function getAssetSrc(scope, name) {
 	const assetPath = ASSET_MAP[name]?.path || `missing-${name}-asset.png`;
 	const root = getRoot(scope);
 	const lastMod = getLastModified(scope);
-	const url = root && URL.resolve(root, assetPath);
+	const _url = root && url.resolve(root, assetPath);
 
-	return url ? `${url}?t=${lastMod}` : '';
+	return _url ? `${_url}?t=${lastMod}` : '';
 }

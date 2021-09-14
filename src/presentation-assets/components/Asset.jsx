@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { URL as URLUtils } from '@nti/lib-commons';
+import { url } from '@nti/lib-commons';
 import Logger from '@nti/util-logger';
 
 const logger = Logger.get('common:presentation-assets:components:Asset');
@@ -271,9 +271,9 @@ export default class Asset extends React.Component {
 			`missing-${name}-asset.png`;
 		const root = Asset.getAssetRoot(props);
 		const lastMod = this.getLastModified(props);
-		const url = root && URLUtils.resolve(root, assetPath);
+		const _url = root && url.resolve(root, assetPath);
 
-		return url && `${url}?t=${lastMod}`;
+		return _url && `${_url}?t=${lastMod}`;
 	}
 
 	onImgLoadError = e => {
