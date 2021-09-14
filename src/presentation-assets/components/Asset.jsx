@@ -184,6 +184,8 @@ export default class Asset extends React.Component {
 		return contentPackage || item;
 	}
 
+	ref = React.createRef();
+
 	constructor(props) {
 		super(props);
 
@@ -283,15 +285,18 @@ export default class Asset extends React.Component {
 			state: { resolvedUrl },
 			props: { type },
 		} = this;
-		const { tagName = 'IMG', src = resolvedUrl } = e?.target || {};
+		const { src = resolvedUrl } = e?.target || {};
 		const { defaultValue } = ASSET_MAP[type] || {};
 
 		if (
-			tagName === 'IMG' &&
+			(e.target === this.ref.current || !document.contains(e.target)) &&
 			(!resolvedUrl || src === resolvedUrl) &&
 			defaultValue
 		) {
+			e?.stopPropagation?.();
 			this.setState({ resolvedUrl: defaultValue });
+		} else {
+			// debugger;
 		}
 	};
 
@@ -309,6 +314,7 @@ export default class Asset extends React.Component {
 			...(omitUrlProp ? {} : { [this.propName]: this.state.resolvedUrl }),
 			onError: this.onImgLoadError,
 			...computeProps?.(this.state.resolvedUrl),
+			ref: this.ref,
 		};
 
 		return React.cloneElement(child, childProps);
