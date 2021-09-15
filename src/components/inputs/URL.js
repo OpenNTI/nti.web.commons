@@ -12,7 +12,7 @@ function getFullHref(href, defaultProtocol = 'http:') {
 
 	const parts = url.parse(href);
 
-	if (!parts.protocol || parts.protocol === 'file:') {
+	if (!parts.protocol) {
 		parts.host = href;
 		parts.pathname = '';
 		parts.protocol = defaultProtocol;
