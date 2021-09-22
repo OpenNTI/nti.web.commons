@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
-import { decorate, PropTypes as NTIPropTypes } from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 
 import { LEFT, RIGHT } from './Constants';
 import Store from './Store';
@@ -12,7 +12,7 @@ class Aside extends React.Component {
 	static Container = Container;
 
 	static propTypes = {
-		component: NTIPropTypes.component,
+		component: PropTypes.elementType,
 		side: PropTypes.oneOf([LEFT, RIGHT]),
 
 		placeholder: PropTypes.object,
