@@ -288,10 +288,15 @@ export class ModalManager extends EventEmitter {
 		) {
 			e.stopPropagation();
 			try {
-				top.component.focus();
+				top.component?.focus?.();
 			} catch (er) {
 				/* istanbul ignore next */
-				console.error('Could not focus top most component: %o', top); //eslint-disable-line no-console
+				//eslint-disable-next-line no-console
+				console.debug(
+					'Could not focus top most component: %o',
+					top,
+					er.stack || er.message || er
+				);
 			}
 		}
 	};
