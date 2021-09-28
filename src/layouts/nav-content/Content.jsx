@@ -1,13 +1,6 @@
-import './Content.scss';
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+const NavContentContent = styled.div`
+	flex: 0 0 74%;
+	max-width: 74%;
+`
 
-NavContentContent.propTypes = {
-	className: PropTypes.string,
-};
-export default function NavContentContent({ className, ...otherProps }) {
-	return (
-		<div className={cx('nav-content-content', className)} {...otherProps} />
-	);
-}
+export default NavContentContent;
