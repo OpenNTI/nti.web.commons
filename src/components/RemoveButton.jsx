@@ -1,6 +1,7 @@
 import './RemoveButton.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import { areYouSure } from '../prompts/';
 
@@ -27,7 +28,10 @@ export default class RemoveButton extends React.Component {
 
 	render() {
 		return (
-			<div className="nt-remove-button" onClick={this.onClick}>
+			<div
+				className={cx('nt-remove-button', this.props.className)}
+				onClick={this.onClick}
+			>
 				<i className="icon-remove" />
 			</div>
 		);
