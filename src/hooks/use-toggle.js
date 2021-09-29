@@ -7,6 +7,6 @@ export function useToggle(initial = false) {
 		e?.stopPropagation?.();
 		e?.preventDefault?.();
 		setState(x => (typeof e === 'boolean' ? e : !x)), [];
-	});
+	}, []);
 	return [state, toggle];
 }
