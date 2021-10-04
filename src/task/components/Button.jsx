@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Button, Loading } from '../../components';
+import { Button } from '@nti/web-core';
+
+import { Loading } from '../../components';
 import Text from '../../text';
 
 import Styles from './Button.css';

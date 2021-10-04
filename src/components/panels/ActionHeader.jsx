@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Button from '../Button';
+import { Button } from '@nti/web-core';
 
 const Header = styled.div`
 	align-items: center;

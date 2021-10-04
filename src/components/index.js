@@ -19,7 +19,6 @@ export { default as Background } from './Background';
 export { default as Badge } from './Badge';
 export { default as Banner } from './Banner';
 export { default as BufferedInput } from './BufferedInput';
-export { default as Button } from './Button';
 export { default as Card } from './Card';
 export { default as CalendarCard } from './CalendarCard';
 export { default as Checkbox } from './Checkbox';

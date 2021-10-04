@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
+import { Button } from '@nti/web-core';
 
-import Button from '../components/Button';
 import Text from '../text/View';
 import { Chevron } from '../icons/Chevron';
 
@@ -60,10 +60,10 @@ export default function PagingControls({
 	const hasPrev = current > 1;
 	const hasNext = current < total;
 
-	const onPrev = React.useCallback(() => onChange(Math.max(current - 1, 0)), [
-		onChange,
-		current,
-	]);
+	const onPrev = React.useCallback(
+		() => onChange(Math.max(current - 1, 0)),
+		[onChange, current]
+	);
 	const onNext = React.useCallback(
 		() => onChange(Math.min(current + 1, total)),
 		[onChange, current, total]

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
+import { Button } from '@nti/web-core';
 
 import Card from '../Card';
-import Button from '../../components/Button';
 import { Alert } from '../../icons';
 import { Variant } from '../../HighOrderComponents';
 import * as Responsive from '../../layouts/responsive';

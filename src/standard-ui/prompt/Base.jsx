@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
+import { Button } from '@nti/web-core';
 
 import Card from '../Card';
-import Button from '../../components/Button';
 import { useMediaQuery } from '../../hooks/use-media-query';
 import * as Responsive from '../../layouts/responsive';
 import Dialog from '../../prompts/Dialog';
