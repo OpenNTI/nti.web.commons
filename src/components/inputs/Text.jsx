@@ -10,7 +10,7 @@ export default class TextInput extends React.Component {
 		autoFocus: PropTypes.bool,
 		autoSelect: PropTypes.bool,
 		className: PropTypes.string,
-		value: PropTypes.string,
+		value: PropTypes.any,
 		onChange: PropTypes.func,
 		type: PropTypes.string,
 	};
