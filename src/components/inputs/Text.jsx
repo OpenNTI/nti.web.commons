@@ -9,7 +9,10 @@ export default class TextInput extends React.Component {
 	static propTypes = {
 		autoFocus: PropTypes.bool,
 		autoSelect: PropTypes.bool,
-		className: PropTypes.string,
+		placeholder: PropTypes.oneOfType([
+			PropTypes.oneOf([false, null, undefined]),
+			PropTypes.string,
+		]),
 		value: PropTypes.any,
 		onChange: PropTypes.func,
 		type: PropTypes.string,
@@ -80,12 +83,13 @@ export default class TextInput extends React.Component {
 	};
 
 	render() {
-		const { value, className, ...props } = this.props;
+		const { value, className, placeholder, ...props } = this.props;
 
 		return (
 			<input
 				type="text"
 				{...filterProps(props, 'input')}
+				placeholder={placeholder || null}
 				onFocus={this.onFocus}
 				className={cx('nti-text-input', className)}
 				ref={this.attachInputRef}

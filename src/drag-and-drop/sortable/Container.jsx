@@ -60,8 +60,8 @@ class Container extends React.Component {
 		items: PropTypes.array.isRequired,
 		renderer: PropTypes.func.isRequired,
 		children: PropTypes.any,
-		onMove: PropTypes.func.isRequired,
-		onDragEnd: PropTypes.func.isRequired,
+		onMove: PropTypes.func,
+		onDragEnd: PropTypes.func,
 		readOnly: PropTypes.bool,
 		className: PropTypes.string,
 	};
