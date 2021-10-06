@@ -35,13 +35,18 @@ export function areYouSure(message, title = 'Are you sure?', extra = {}) {
 }
 
 /**
- * Display a modal
+ * Don't use this.
  *
+ * @deprecated
  * @see {ModalManager#show()}
  * @param  {JSX.Element} content The JSX expression to render into a dialog
  * @param  {string|Object} options Options or className
- * @returns {ModalReference} Stuff & Things
+ * @returns {object} Stuff & Things
  */
 export function modal(content, options) {
+	// eslint-disable-next-line no-console
+	console.warn(
+		'This call needs to be rewritten to render a <Dialog> instead'
+	);
 	return Manager.show(content, options);
 }
