@@ -61,6 +61,13 @@ function DateTimeImpl(
 		dateTime: formatISO(date instanceof Date ? date : parseJSON(date)),
 	};
 
+	if ('dangerouslySetInnerHTML' in otherProps) {
+		// because we are passing children... they cannot co-exist
+		throw new Error(
+			'DateTime does not support dangerouslySetInnerHTML prop'
+		);
+	}
+
 	return (
 		<Text.Base ref={ref} as="time" {...props}>
 			{prefix || ''}
