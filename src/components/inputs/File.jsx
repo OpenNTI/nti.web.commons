@@ -16,23 +16,9 @@ export default class File extends React.Component {
 		checkValid: PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			file: props.value,
-		};
-	}
-
-	renderFileName() {
-		if (this.state && this.state.file) {
-			return <span>{this.state.file.name}</span>;
-		}
-
-		const text = this.props.defaultText ? this.props.defaultText : '';
-
-		return <span className="nofile">{text}</span>;
-	}
+	state = {
+		file: this.props.value,
+	};
 
 	clearFile = e => {
 		if (e) {
@@ -50,16 +36,6 @@ export default class File extends React.Component {
 			this.props.onFileChange();
 		}
 	};
-
-	renderClear() {
-		if (this.state && this.state.file) {
-			return (
-				<span className="file-select-reset" onClick={this.clearFile}>
-					x
-				</span>
-			);
-		}
-	}
 
 	onChange = e => {
 		e.stopPropagation();
@@ -90,9 +66,15 @@ export default class File extends React.Component {
 			this.input = x;
 		};
 
-		const { label = 'Choose file', className } = this.props;
+		const {
+			accept,
+			defaultText = '',
+			label = 'Choose file',
+			className,
+		} = this.props;
+		const { file } = this.state;
 
-		let props = {
+		const props = {
 			icon: 'upload',
 			label,
 			available: true,
@@ -101,17 +83,30 @@ export default class File extends React.Component {
 			attachRef: attachRef,
 		};
 
-		if (this.props.accept) {
-			props.accept = this.props.accept;
+		if (accept) {
+			props.accept = accept;
 		}
+
+		const text = file?.name ?? defaultText;
 
 		return (
 			<div className={cx('nti-file-input', className)}>
 				<FilePickerButton {...props} />
-				<span className="file-select-filename">
-					{this.renderFileName()}
+				<span
+					className={cx('file-select-filename', {
+						empty: !text || text === '',
+					})}
+				>
+					<span className={cx({ 'no-file': !file })}>{text}</span>
 				</span>
-				{this.renderClear()}
+				{file && (
+					<span
+						className="file-select-reset"
+						onClick={this.clearFile}
+					>
+						x
+					</span>
+				)}
 			</div>
 		);
 	}

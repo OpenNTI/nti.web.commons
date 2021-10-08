@@ -4,11 +4,11 @@
 	display: inline-block;
 	position: relative;
 
-	.file-select-filename {
+	.file-select-filename:not(.empty) {
 		margin-left: 5px;
 		font-size: 12px;
 
-		.nofile {
+		.no-file {
 			color: var(--secondary-grey-alt);
 			font-style: italic;
 		}
