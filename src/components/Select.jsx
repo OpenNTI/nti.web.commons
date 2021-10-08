@@ -45,7 +45,10 @@ export default function Select(props) {
 	}
 
 	return (
-		<div className="nti-select-native-wrapper" ref={domRef}>
+		<div
+			className={cx('nti-select-native-wrapper', className)}
+			ref={domRef}
+		>
 			<span className="icon-chevron-down small" role="presentation" />
 			<span
 				className={cx('nti-select-value', { placeholder: !value })}
