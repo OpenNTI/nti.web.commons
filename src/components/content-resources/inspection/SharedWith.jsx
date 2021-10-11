@@ -59,7 +59,7 @@ export default class SharedWith extends React.Component {
 			() =>
 				item &&
 				item
-					.fetchLinkParsed('associations')
+					.fetchLink('associations')
 					.then(x => Promise.all(x.map(o => getPathFrom(o))))
 					.then(x =>
 						Promise.all(x.map(o => getOutlineAndUnitsFromPath(o)))
