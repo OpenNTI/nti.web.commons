@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -46,9 +46,9 @@ function ContainerQuery({
 	as,
 	...otherProps
 }) {
-	const [activeProps, setActiveProps] = React.useState({});
+	const [activeProps, setActiveProps] = useState({});
 
-	const onSizeChange = React.useCallback(
+	const onSizeChange = useCallback(
 		size => setActiveProps(_propGetter(size)),
 		[_propGetter]
 	);

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -38,16 +38,16 @@ export default function CurrencyInput({
 	onChange: onChangeProp,
 	...otherProps
 }) {
-	const intlInfo = React.useMemo(
+	const intlInfo = useMemo(
 		() => getIntlFormatInfo(currency, locale, omitFractional),
 		[currency, locale, omitFractional]
 	);
 
-	const value = React.useRef(null);
-	const [display, setDisplay] = React.useState(null);
+	const value = useRef(null);
+	const [display, setDisplay] = useState(null);
 	const mask = getMaskFromDisplay(display, intlInfo);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (amount !== value.current) {
 			value.current = amount;
 			setDisplay(getDisplayFromAmount(amount, intlInfo));

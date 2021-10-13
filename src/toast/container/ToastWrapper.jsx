@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -32,7 +32,7 @@ ToastWrapper.propTypes = {
 	}),
 };
 export default function ToastWrapper({ className, toast }) {
-	const [mountPoint, setMountPoint] = React.useState(null);
+	const [mountPoint, setMountPoint] = useState(null);
 
 	const onMount = n => setMountPoint(n);
 	const onUnmount = () => setMountPoint(null);

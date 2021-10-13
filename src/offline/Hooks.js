@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getServer } from '@nti/web-client';
 
@@ -6,10 +6,10 @@ let unloading = false;
 const setUnloading = () => (unloading = true);
 
 export function useOffline() {
-	const server = React.useRef(getServer());
-	const [offline, setOffline] = React.useState(false);
+	const server = useRef(getServer());
+	const [offline, setOffline] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		window.addEventListener('beforeunload', setUnloading);
 
 		return () => {
@@ -17,7 +17,7 @@ export function useOffline() {
 		};
 	}, []);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		return server.current.OnlineStatus.subscribeToChange(online => {
 			if (!unloading) {
 				setOffline(!online);

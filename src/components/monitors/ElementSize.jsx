@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useResizeObserver } from '../../hooks/use-resize-observer';
@@ -15,9 +15,9 @@ function ElementSizeMonitorResize({
 	const Cmp = tag || 'div';
 
 	const observer = useResizeObserver(onChange);
-	const elementRef = React.useRef();
+	const elementRef = useRef();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const target = elementRef.current;
 
 		observer.observe(target);
@@ -38,7 +38,7 @@ ElementSizeMonitorFallback.propTypes = {
 function ElementSizeMonitorFallback({ as: tag, onChange, ...otherProps }) {
 	const Cmp = tag || 'div';
 
-	const sizeRef = React.useRef();
+	const sizeRef = useRef();
 
 	const attachCmp = cmp => {
 		if (cmp) {

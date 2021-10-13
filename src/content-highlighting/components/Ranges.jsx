@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -28,11 +28,11 @@ Ranges.propTypes = {
 	}),
 };
 export default function Ranges({ ranges, containerRef: parentRef }) {
-	const [rootEl, setRootEl] = React.useState();
-	const getRekt = React.useCallback(el => rootEl !== el && setRootEl(el), [
-		rootEl,
-		setRootEl,
-	]);
+	const [rootEl, setRootEl] = useState();
+	const getRekt = useCallback(
+		el => rootEl !== el && setRootEl(el),
+		[rootEl, setRootEl]
+	);
 
 	const rects = ranges?.reduce?.(
 		(acc, range) => [...acc, ...Array.from(range.getClientRects())],

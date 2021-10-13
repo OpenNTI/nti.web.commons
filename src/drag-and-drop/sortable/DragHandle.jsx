@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -24,10 +24,10 @@ export default function DragHandle({
 	onMouseDown,
 	onMouseUp,
 }) {
-	const Draggable = React.useContext(Context);
+	const Draggable = useContext(Context);
 	const connector = connect ?? (x => x);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!connect) {
 			Draggable?.addDragHandle?.();
 		}

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useForceUpdate } from '@nti/web-core';
 
@@ -47,7 +47,7 @@ export function useMediaQuery(query) {
 	}
 
 	const forceUpdate = useForceUpdate();
-	const mediaQuery = React.useMemo(() => global.matchMedia?.(query), [query]);
+	const mediaQuery = useMemo(() => global.matchMedia?.(query), [query]);
 
 	if (mediaQuery && mediaQuery.media !== query) {
 		throw new Error(
@@ -55,7 +55,7 @@ export function useMediaQuery(query) {
 		);
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (mediaQuery?.addEventListener)
 			mediaQuery?.addEventListener('change', forceUpdate);
 		else mediaQuery?.addListener?.(forceUpdate);

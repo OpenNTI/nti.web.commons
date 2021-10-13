@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -60,11 +60,11 @@ export default function PagingControls({
 	const hasPrev = current > 1;
 	const hasNext = current < total;
 
-	const onPrev = React.useCallback(
+	const onPrev = useCallback(
 		() => onChange(Math.max(current - 1, 0)),
 		[onChange, current]
 	);
-	const onNext = React.useCallback(
+	const onNext = useCallback(
 		() => onChange(Math.min(current + 1, total)),
 		[onChange, current, total]
 	);

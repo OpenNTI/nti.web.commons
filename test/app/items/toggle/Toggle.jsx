@@ -1,7 +1,7 @@
-import React from 'react';
+import { useState } from 'react';
 import classnames from 'classnames/bind';
 
-import {Toggle} from '../../../../src/components/inputs';
+import { Toggle } from '../../../../src/components/inputs';
 
 import Sun from './SunIcon';
 import Moon from './MoonIcon';
@@ -17,11 +17,11 @@ const classes = {
 	icon: cx('icon'),
 	icons: cx('icons'),
 	iconOff: cx('icon-off'),
-	iconOn: cx('icon-on')
+	iconOn: cx('icon-on'),
 };
 
-export default function ToggleInput (props) {
-	const [checked, setChecked] = React.useState();
+export default function ToggleInput(props) {
+	const [checked, setChecked] = useState();
 	return (
 		<>
 			<Toggle
@@ -29,15 +29,11 @@ export default function ToggleInput (props) {
 				iconOff={Moon}
 				iconOn={Sun}
 				hideLabel
-				className={cx('theme-toggle', { off: !checked, on: checked})}
+				className={cx('theme-toggle', { off: !checked, on: checked })}
 				value={checked}
 				onChange={setChecked}
 			/>
-			<Toggle
-				hideLabel
-				value={checked}
-				onChange={setChecked}
-			/>
+			<Toggle hideLabel value={checked} onChange={setChecked} />
 		</>
 	);
 }

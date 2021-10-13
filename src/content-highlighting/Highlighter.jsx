@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -28,10 +28,10 @@ export default function ContentHighlighter({
 	strategy,
 	...otherProps
 }) {
-	const [ranges, setRanges] = React.useState([]);
+	const [ranges, setRanges] = useState([]);
 
 	const Cmp = tag ?? 'div';
-	const cmpRef = React.useRef();
+	const cmpRef = useRef();
 
 	useMutationObserver(
 		strategy.isActive() ? cmpRef : null,
@@ -39,7 +39,7 @@ export default function ContentHighlighter({
 		MutationObserverInit
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (cmpRef.current && strategy.isActive()) {
 			setRanges(strategy(cmpRef.current));
 		} else {

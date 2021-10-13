@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -44,14 +44,14 @@ export default function LabelPlaceholder({
 	children,
 	...otherProps
 }) {
-	const [id] = React.useState(() => getId());
+	const [id] = useState(() => getId());
 	const errorId = `${id}-error`;
 	const input = React.Children.only(children);
 	const Cmp = tag || 'div';
 
-	const [empty, setEmpty] = React.useState();
-	const inputRef = React.useRef(null);
-	const inputListener = React.useCallback(e => setEmpty(!e.target.value), []);
+	const [empty, setEmpty] = useState();
+	const inputRef = useRef(null);
+	const inputListener = useCallback(e => setEmpty(!e.target.value), []);
 
 	const clonedInputRef = component => {
 		const node = component?.input ?? component;

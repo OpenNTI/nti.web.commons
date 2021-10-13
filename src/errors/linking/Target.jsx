@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import { v4 as uuid } from 'uuid';
@@ -21,9 +21,9 @@ export default function ErrorTarget({
 	label,
 	...otherProps
 }) {
-	const [name, setName] = React.useState(null);
+	const [name, setName] = useState(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const id = uuid();
 
 		setName(id);

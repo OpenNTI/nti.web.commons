@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import Triggered from '../Triggered';
 
@@ -31,7 +31,7 @@ export const KeyboardNavigation = () => (
 );
 
 export const PreventDismiss = () => {
-	const [block, setBlock] = React.useState(false);
+	const [block, setBlock] = useState(false);
 
 	return (
 		<div>

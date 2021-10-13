@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Storage from '@nti/web-storage';
 
@@ -45,9 +45,9 @@ const setValue = (key, newValue, { expireIn }) => {
 
 export function usePersistentState(key, configArg) {
 	const config = normalizeConfig(configArg);
-	const [value, setStateValue] = React.useState(getValue(key, config));
+	const [value, setStateValue] = useState(getValue(key, config));
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const handler = e => {
 			if (e.key === key) {
 				setStateValue(getValue(key, config));
@@ -59,7 +59,7 @@ export function usePersistentState(key, configArg) {
 		return () => Storage.removeListener('change', handler);
 	}, [key]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		//If there's an expireIn check the value every render to see if
 		//its expired and needs to update
 		//
@@ -73,7 +73,7 @@ export function usePersistentState(key, configArg) {
 		}
 	});
 
-	const setState = React.useCallback(
+	const setState = useCallback(
 		newValue => setValue(key, newValue, config),
 		[key, config.initial, config.expireIn]
 	);

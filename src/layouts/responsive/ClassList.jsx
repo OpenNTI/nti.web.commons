@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -18,9 +18,9 @@ export default function ResponsiveClassList({
 	classList,
 	...otherProps
 }) {
-	const [activeClasses, setActiveClasses] = React.useState([]);
+	const [activeClasses, setActiveClasses] = useState([]);
 
-	const onSizeChange = React.useCallback(
+	const onSizeChange = useCallback(
 		size => {
 			setActiveClasses(
 				classList.reduce((acc, item) => {

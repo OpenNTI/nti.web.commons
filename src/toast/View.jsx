@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Container from './container';
@@ -22,19 +22,19 @@ export default function Toast({
 	location = DefaultLocation,
 	style = DefaultStyle,
 }) {
-	const container = React.useContext(Context);
-	const toastId = React.useRef(null);
+	const container = useContext(Context);
+	const toastId = useRef(null);
 
 	if (!container) {
 		//TODO: if there's not toast container show toasts on the body
 		throw new Error('Unable to render toast outside of toast container');
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		return () => container.removeToast(toastId.current);
 	}, []);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!toastId.current) {
 			const id = container.getNextId();
 			toastId.current = id;

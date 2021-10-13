@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useId } from '../use-id';
@@ -30,7 +30,7 @@ function Child({ count, namespace }) {
 }
 
 function Test(props) {
-	const [count, setCount] = React.useState(0);
+	const [count, setCount] = useState(0);
 
 	return (
 		<>
@@ -42,11 +42,11 @@ function Test(props) {
 
 export const Base = props => <Test {...props} />;
 export const Namespace = ({ namespace = 'nti' }) => {
-	const [clear, setClear] = React.useState(false);
-	const [ns, setNS] = React.useState();
+	const [clear, setClear] = useState(false);
+	const [ns, setNS] = useState();
 
-	React.useEffect(() => (setNS(namespace), setClear(true)), [namespace]);
-	React.useEffect(() => {
+	useEffect(() => (setNS(namespace), setClear(true)), [namespace]);
+	useEffect(() => {
 		if (clear) {
 			setTimeout(() => {
 				setClear(false);

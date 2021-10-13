@@ -1,13 +1,17 @@
-import React from 'react';
+import { useState } from 'react';
 
-import {List} from '../../../src';
+import { List } from '../../../src';
 
-export default function ListTest () {
-	const [selected, setSelected] = React.useState();
+export default function ListTest() {
+	const [selected, setSelected] = useState();
 
 	return (
 		<div>
-			<List.Selectable.Unstyled controlledBy={global} selected={selected} onSelectedChange={setSelected}>
+			<List.Selectable.Unstyled
+				controlledBy={global}
+				selected={selected}
+				onSelectedChange={setSelected}
+			>
 				<List.Selectable.Item value={1}>First</List.Selectable.Item>
 				<List.Selectable.Item value={2}>Second</List.Selectable.Item>
 				<List.Selectable.Item value={3}>Third</List.Selectable.Item>

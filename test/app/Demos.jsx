@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
 
 import style from './Demos.css';
@@ -7,23 +7,22 @@ import * as Items from './items';
 
 const cx = classnames.bind(style);
 
-function Choose () {
+function Choose() {
 	return <div className={cx('choose')}>Choose a component</div>;
 }
 
 const nameFromHash = () => global.location.hash.substr(1);
-const componentFromHash = () =>Items[nameFromHash()] || Choose;
+const componentFromHash = () => Items[nameFromHash()] || Choose;
 
-export default function Demos () {
-
+export default function Demos() {
 	// functions are expected to return state, not be state,
-	const [Cmp, setCmp] = React.useState(componentFromHash);
+	const [Cmp, setCmp] = useState(componentFromHash);
 
 	const onHashChange = () => {
 		setCmp(componentFromHash);
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		global.addEventListener('hashchange', onHashChange);
 		return () => global.removeEventListener('hashchange', onHashChange);
 	}, []);

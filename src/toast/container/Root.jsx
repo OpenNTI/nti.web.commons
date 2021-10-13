@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -22,9 +22,9 @@ export default function ToastContainerRoot({
 }) {
 	const Cmp = tag || 'div';
 
-	const idCount = React.useRef(0);
-	const toastRaw = React.useRef([]);
-	const [toasts, setToasts] = React.useState([]);
+	const idCount = useRef(0);
+	const toastRaw = useRef([]);
+	const [toasts, setToasts] = useState([]);
 
 	const updateToasts = () => {
 		clearTimeout(updateToasts.timeout);

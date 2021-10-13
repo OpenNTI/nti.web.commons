@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 const DefaultOptions = {
 	attributes: true,
@@ -8,7 +8,7 @@ const DefaultOptions = {
 };
 
 export function useMutationObserver(ref, callback, options = DefaultOptions) {
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!ref?.current) {
 			return;
 		}

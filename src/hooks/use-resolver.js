@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 import { equals } from '@nti/lib-commons';
 import { useForceUpdate } from '@nti/web-core';
@@ -18,9 +18,9 @@ export function useResolver(resolver, dependencyList = [], config = {}) {
 	}
 
 	const nonce = {};
-	const prevDependencies = React.useRef();
-	const bufferTimeout = React.useRef();
-	const value = React.useRef(initialState(nonce));
+	const prevDependencies = useRef();
+	const bufferTimeout = useRef();
+	const value = useRef(initialState(nonce));
 	let discarded = false;
 
 	const forceUpdate = useForceUpdate();
@@ -42,7 +42,7 @@ export function useResolver(resolver, dependencyList = [], config = {}) {
 
 	prevDependencies.current = dependencyList;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const doResolve = async () => {
 			if (!value.current || nonce !== value.current[Initial]) {
 				updateValue(initialState(nonce));

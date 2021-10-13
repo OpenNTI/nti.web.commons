@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 import { addClass, removeClass } from '@nti/lib-dom';
 
@@ -22,6 +22,6 @@ function add(node, className) {
 }
 
 export default function AddClass({ node = document.body, className }) {
-	React.useEffect(() => add(node, className), [node, className]);
+	useEffect(() => add(node, className), [node, className]);
 	return null;
 }

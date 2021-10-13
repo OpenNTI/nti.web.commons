@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { rawContent } from '@nti/lib-commons';
@@ -29,7 +29,7 @@ function fixMarkup(node) {
 }
 
 const NTIMarkupText = React.forwardRef(({ text, ...otherProps }, ref) => {
-	const processRef = React.useCallback(
+	const processRef = useCallback(
 		node => {
 			updateRef(ref, node);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import OnScreen from '../OnScreen';
@@ -15,7 +15,7 @@ Tile.propTypes = {
 	buffer: PropTypes.number,
 };
 function Tile({ buffer }) {
-	const [onScreen, setOnScreen] = React.useState();
+	const [onScreen, setOnScreen] = useState();
 
 	const styles = {
 		width: '33vw',

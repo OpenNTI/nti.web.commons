@@ -1,15 +1,15 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import Clock from './Clock';
 
 export function useClock(interval) {
-	const [clock, setClock] = React.useState({
+	const [clock, setClock] = useState({
 		running: false,
 		current: 0,
 		duration: -1,
 	});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const started = new Date();
 		const onTick = newClock => {
 			if (newClock.current - clock.current > interval) {
@@ -32,9 +32,9 @@ export function useClock(interval) {
 export function useTicks(interval) {
 	const clock = useClock(interval);
 
-	const [ticks, setTicks] = React.useState(0);
+	const [ticks, setTicks] = useState(0);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const newTicks = Math.floor(clock.duration / interval);
 
 		if (newTicks !== ticks) {
@@ -46,7 +46,7 @@ export function useTicks(interval) {
 }
 
 export function useWait(fn, interval) {
-	React.useEffect(() => {
+	useEffect(() => {
 		const started = new Date();
 		const onTick = tick => {
 			if (tick.current - started >= interval) {

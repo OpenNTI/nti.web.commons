@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { ObjectUtils } from '@nti/lib-commons';
@@ -52,7 +52,7 @@ function WrapperFactory(Cmp, clearOn = 'onChange', labelOnInput) {
 			{ inputProps: {}, labelProps: {} }
 		);
 
-		const formContext = React.useContext(FormContext);
+		const formContext = useContext(FormContext);
 		const { errors = {}, clearError, submitting } = formContext || {};
 
 		const clearProps = {};

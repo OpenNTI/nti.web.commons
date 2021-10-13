@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -29,8 +29,8 @@ export default function SelectableItem({
 }) {
 	const Cmp = tag || 'li';
 
-	const [id, setId] = React.useState(null);
-	const SelectableContext = React.useContext(Context);
+	const [id, setId] = useState(null);
+	const SelectableContext = useContext(Context);
 
 	if (!SelectableContext) {
 		throw new Error(
@@ -38,7 +38,7 @@ export default function SelectableItem({
 		);
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const itemId = idProp || SelectableContext.getItemId();
 
 		SelectableContext.addItem(itemId, value);

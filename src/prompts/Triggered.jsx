@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -11,10 +11,10 @@ TriggeredDialog.propTypes = {
 	trigger: PropTypes.any,
 };
 export default function TriggeredDialog({ trigger, ...otherProps }) {
-	const [open, setOpen] = React.useState(!trigger);
+	const [open, setOpen] = useState(!trigger);
 
-	const focused = React.useRef(false);
-	const blurTimeout = React.useRef(null);
+	const focused = useRef(false);
+	const blurTimeout = useRef(null);
 
 	const onBeforeDismiss = (...args) => (
 		setOpen(false), otherProps?.onBeforeDismiss?.(...args)

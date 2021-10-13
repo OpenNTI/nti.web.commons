@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -44,13 +44,13 @@ export default function SelectableList({
 	...otherProps
 }) {
 	const Cmp = tag || 'ul';
-	const cmpRef = React.useRef();
+	const cmpRef = useRef();
 	const cmpProps = {
 		role: 'listbox',
 	};
 
-	const idsToValue = React.useRef({});
-	const [focused, setFocused] = React.useState(null);
+	const idsToValue = useRef({});
+	const [focused, setFocused] = useState(null);
 
 	const context = {
 		getItemId: () => getItemId(),
@@ -108,7 +108,7 @@ export default function SelectableList({
 		},
 	});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!controlledBy) {
 			return;
 		}
@@ -123,7 +123,7 @@ export default function SelectableList({
 		};
 	});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!autoFocus) {
 			return;
 		}

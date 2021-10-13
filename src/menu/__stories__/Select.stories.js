@@ -1,12 +1,12 @@
-import React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Select } from '../Select';
 
 export const Basic = props => {
-	const options = React.useMemo(() =>
+	const options = useMemo(() =>
 		Array.from({ length: 5 }, (_, i) => `Option ${i + 1}`)
 	);
-	const [value, setValue] = React.useState(options[0]);
+	const [value, setValue] = useState(options[0]);
 
 	return (
 		<Select
@@ -19,10 +19,10 @@ export const Basic = props => {
 };
 
 export const WithTitle = props => {
-	const options = React.useMemo(() =>
+	const options = useMemo(() =>
 		Array.from({ length: 5 }, (_, i) => `Option ${i + 1}`)
 	);
-	const [value, setValue] = React.useState(options[0]);
+	const [value, setValue] = useState(options[0]);
 
 	return (
 		<Select
@@ -36,13 +36,13 @@ export const WithTitle = props => {
 };
 
 export const WithStrings = props => {
-	const options = React.useMemo(() =>
+	const options = useMemo(() =>
 		Array.from({ length: 5 }, (_, i) => `Option ${i + 1}`)
 	);
 
-	const getText = React.useCallback(value => `You selected ${value}`);
+	const getText = useCallback(value => `You selected ${value}`);
 
-	const [value, setValue] = React.useState(options[0]);
+	const [value, setValue] = useState(options[0]);
 
 	return (
 		<Select
