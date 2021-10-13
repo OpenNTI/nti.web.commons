@@ -1,4 +1,3 @@
-import React from 'react';
 
 import FontIcon from './types/Font-Icon';
 

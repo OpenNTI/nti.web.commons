@@ -1,7 +1,6 @@
 import './File.scss';
 import { extname } from 'path';
 
-import React from 'react';
 import cx from 'classnames';
 import mime from 'mime-types';
 

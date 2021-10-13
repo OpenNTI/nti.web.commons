@@ -4,6 +4,7 @@
 export default new (class Registry {
 	/**
 	 * Maps error codes to a list of responders.
+	 *
 	 * @type {Object}
 	 */
 	handlers = {};

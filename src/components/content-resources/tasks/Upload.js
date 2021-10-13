@@ -10,7 +10,7 @@ export default class Upload extends Task {
 	 *
 	 * @param  {File} file - file object from the browser's dataTranserver.files.
 	 * @param  {Object} folder - The Entity folder to upload to.
-	 * @param  {function} [onComplete] - Optional callback for when the task completes
+	 * @param  {Function} [onComplete] - Optional callback for when the task completes
 	 * @returns {void}
 	 */
 	constructor(file, folder, onComplete) {

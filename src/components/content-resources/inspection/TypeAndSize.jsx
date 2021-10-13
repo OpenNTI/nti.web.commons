@@ -1,7 +1,6 @@
 import './TypeAndSize.scss';
 import { extname } from 'path';
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import mime from 'mime-types';
 

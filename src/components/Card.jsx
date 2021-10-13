@@ -72,6 +72,7 @@ export default class RelatedWorkRefCard extends React.Component {
 	static propTypes = {
 		/**
 		 * The owning contentPackage to provide a method "resolveContentURL"
+		 *
 		 * @type {Package}
 		 */
 		contentPackage: PropTypes.object,
@@ -91,6 +92,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		/**
 		 * Allow the parent to force this card to be an "internal" link.
+		 *
 		 * @type {boolean}
 		 */
 		internalOverride: PropTypes.bool,
@@ -102,6 +104,7 @@ export default class RelatedWorkRefCard extends React.Component {
 
 		/**
 		 * Items to render as the labels of the card (i.e Comment count)
+		 *
 		 * @type {object}
 		 */
 		labels: PropTypes.array,

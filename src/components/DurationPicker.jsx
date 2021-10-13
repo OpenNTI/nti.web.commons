@@ -32,6 +32,7 @@ const t = scoped('common.components.durations.units', DEFAULT_TEXT);
 
 /**
  * Get the minutes (0-59) for the given seconds value.
+ *
  * @param  {number} seconds number of seconds
  * @returns {integer} the minutes (0-59) for the given seconds value
  */
@@ -41,6 +42,7 @@ function getMinutes(seconds) {
 
 /**
  * Get the hours (0-23) for the given seconds value
+ *
  * @param  {number} seconds The number of seconds
  * @returns {integer} the number of hours (0-23) for the given seconds value
  */
@@ -50,6 +52,7 @@ function getHours(seconds) {
 
 /**
  * Get the number of days for the given seconds value
+ *
  * @param  {number} seconds The number of seconds
  * @returns {integer} the number of days for the given seconds value
  */
@@ -59,6 +62,7 @@ function getDays(seconds) {
 
 /**
  * Get the number of seconds for the given days, hours, and minutes
+ *
  * @param  {number} days    number of days
  * @param  {number} hours   number of hours
  * @param  {number} minutes number of minutes
@@ -76,6 +80,7 @@ function getValue(days, hours, minutes) {
 /**
  * Get a display string for the duration of a given number of
  * seconds
+ *
  * @param  {number} seconds the number of seconds
  * @returns {string}       display value
  */

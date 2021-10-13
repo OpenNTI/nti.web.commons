@@ -203,9 +203,9 @@ const normalizeTextIndex = (node, doc, searchFor, which, textIndex) =>
  * @param {number} [textIndex]
  * Note cutz: for the which param to work it expects each part of your regex to be captured
  * IE if your goal is to have a capture in the middle of the regex you must also capture the first portion prior to it
- *
+ * @param {...any} args
  * @returns {Range[]} a list of range objects that represent the portion of text to highlight
- **/
+ */
 export function findTextRanges(...args) {
 	// const node = normalizeNode(...args);
 	const doc = normalizeDoc(...args);

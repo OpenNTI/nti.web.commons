@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { usePersistentState } from '../use-persistent-state';
 

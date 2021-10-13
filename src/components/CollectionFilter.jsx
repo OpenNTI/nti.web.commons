@@ -25,7 +25,8 @@ export default class Filter extends React.Component {
 		 */
 		children: PropTypes.element.isRequired,
 
-		/** filters should be a collection of named filter functions.
+		/**
+		 * filters should be a collection of named filter functions.
 		 * for example:
 		 *	{
 		 * 		Odds (item,index,array) {

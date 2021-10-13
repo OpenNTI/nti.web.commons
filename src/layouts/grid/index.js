@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { HOC } from '@nti/lib-commons';
 

@@ -13,7 +13,7 @@ export default class Move extends Task {
 	 *
 	 * @param  {Object} data - file object. Either the raw json, or the instance.
 	 * @param  {Folder} target - Folder instance to move to.
-	 * @param  {function} [onComplete] - Optional callback for when the task completes
+	 * @param  {Function} [onComplete] - Optional callback for when the task completes
 	 * @returns {void}
 	 */
 	constructor(data, target, onComplete) {

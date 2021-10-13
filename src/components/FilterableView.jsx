@@ -27,6 +27,7 @@ export default class FilterableView extends React.Component {
 
 	/**
 	 * filter the list according using the currently selected filter.
+	 *
 	 * @param {Object} list Any object that implements filter.
 	 * @returns {Object} The result of calling filter on the `list`
 	 */

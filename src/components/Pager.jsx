@@ -1,5 +1,4 @@
 import './Pager.scss';
-import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -53,6 +52,7 @@ export default createReactClass({
 		/**
 		 * An object that provides an interface to get the current/prev/next
 		 * PageSourceItem-like objects.
+		 *
 		 * @type {Store}
 		 */
 		pageSource: PropTypes.object,
@@ -60,6 +60,7 @@ export default createReactClass({
 		/**
 		 * An object that has at least two properties: href, title
 		 *	This prop represents the forward link.
+		 *
 		 * @type {PageSourceItem}
 		 */
 		next: PropTypes.object,
@@ -67,24 +68,28 @@ export default createReactClass({
 		/**
 		 * An object that has at least two properties: href, title
 		 * 	This prop represents the backward link.
+		 *
 		 * @type {PageSourceItem}
 		 */
 		prev: PropTypes.object,
 
 		/**
 		 * The "current" page ID (ntiid)
+		 *
 		 * @type {string}
 		 */
 		current: PropTypes.string,
 
 		/**
 		 * The imposed content root.
+		 *
 		 * @type {string}
 		 */
 		root: PropTypes.string,
 
 		/**
 		 * Describes which style this pager will take on. "bottom" vs Default.
+		 *
 		 * @type {string}
 		 */
 		position: PropTypes.string,

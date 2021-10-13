@@ -48,6 +48,7 @@ export default class DayPickerRange extends React.Component {
 
 	/**
 	 * Handles a day being clicked
+	 *
 	 * @param  {Date} value - This is the day that was clicked.
 	 * @param  {Object} modifiers - Modifiers from react-day-picker
 	 * @param  {boolean} modifiers.selected - This is true if the day clicked is currently selected.

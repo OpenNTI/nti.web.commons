@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { Container as ContainerPlaceholder } from '../Container';
 

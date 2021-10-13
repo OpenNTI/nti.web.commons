@@ -43,6 +43,7 @@ export function isSameData(a, b) {
 export default class DataTransfer {
 	/**
 	 * Create a DataTransfer
+	 *
 	 * @param  {DataTransfer} dataTransfer the data transfer from the dnd event
 	 */
 	constructor(dataTransfer) {

@@ -28,6 +28,7 @@ class FieldError extends EventEmitter {
 	 * 		Field: String, //The field on the object the error is on
 	 * 		Label: String, //User facing string describing what the error is on
 	 * }
+	 *
 	 * @param  {string} id      identifier for the error
 	 * @param  {Object} attachedTo      what the error is on
 	 * @param  {string} message user facing message
@@ -114,6 +115,7 @@ export default class Factory {
 
 	/**
 	 * Create a FieldError.
+	 *
 	 * @param  {Object} attachedTo  describes what the error is on. See comment on FieldError's constructor
 	 * @param  {Object} reason  describes what the error is (i.e. the server's error response)
 	 * @param  {Function} onClear what to do when the error is cleared

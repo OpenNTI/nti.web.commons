@@ -10,9 +10,9 @@ export default class Task extends EventEmitter {
 	/**
 	 * Setup a file task.
 	 *
-	 * @param  {function} callback - the callback to start the work.
+	 * @param  {Function} callback - the callback to start the work.
 	 * @param  {number} units - number of units represented by this task.
-	 * @param  {function} [onComplete] - Optional callback when the task completes.
+	 * @param  {Function} [onComplete] - Optional callback when the task completes.
 	 * @returns {void}
 	 */
 	constructor(callback, units, onComplete) {

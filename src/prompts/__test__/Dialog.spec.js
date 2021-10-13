@@ -8,7 +8,6 @@ jest.mock('@nti/lib-dom', () => ({
 	}),
 }));
 
-import React from 'react';
 
 import { verify } from '../../__test__/utils';
 import Dialog from '../Dialog';

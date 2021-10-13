@@ -13,6 +13,7 @@ const EDIT = Symbol('Edit Association');
 export default class AssociationItem extends EventEmitter {
 	/**
 	 * A wrapper to add some utils for associations
+	 *
 	 * @param  {Object} item         the item for association
 	 * @param  {Function} onAddTo     callback for when the association is added, must return a Promise
 	 * @param  {Function} onRemoveFrom callback for when the association is removed, must return a Promise

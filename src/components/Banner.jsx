@@ -1,5 +1,4 @@
 import './Banner.scss';
-import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -17,6 +16,7 @@ export default createReactClass({
 
 		/**
 		 * Any model that implements getPresentationProperties()
+		 *
 		 * @type {object}
 		 */
 		item: PropTypes.shape({

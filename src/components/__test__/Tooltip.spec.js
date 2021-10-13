@@ -1,5 +1,4 @@
 /* eslint-env jest */
-import React from 'react';
 import { render, act, fireEvent, waitFor } from '@testing-library/react';
 
 import Tooltip from '../Tooltip';

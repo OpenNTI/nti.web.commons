@@ -1,4 +1,3 @@
-import React from 'react';
 
 import SVGIcon from './types/SVG-Icon';
 

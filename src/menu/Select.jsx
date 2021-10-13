@@ -1,4 +1,3 @@
-import React from 'react';
 
 import * as Flyout from '../flyout';
 import * as List from '../components/list';

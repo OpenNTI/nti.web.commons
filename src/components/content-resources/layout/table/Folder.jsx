@@ -1,5 +1,4 @@
 import './Folder.scss';
-import React from 'react';
 import cx from 'classnames';
 
 import { ItemChanges } from '../../../../HighOrderComponents';

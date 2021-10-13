@@ -1,7 +1,6 @@
 import './Browser.scss';
 import { dirname } from 'path';
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';

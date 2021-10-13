@@ -24,6 +24,7 @@ class MountPoint {
 
 	/**
 	 * Return the existing dom node, or create one and append it to the parent
+	 *
 	 * @returns {Node} the dom node for this mount point
 	 */
 	get mountPoint() {
@@ -39,6 +40,7 @@ class MountPoint {
 
 	/**
 	 * Render a react component at this point
+	 *
 	 * @param  {Object} cmpCls   the react class to render
 	 * @param  {Object} props    the props to render the class with
 	 * @param  {Object} children the children to render with the class
