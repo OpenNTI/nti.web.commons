@@ -1,9 +1,9 @@
-/** @typedef {string|React.ReactElement} SlotIdentifier - either a name or React component */
+/** @typedef {string|JSX.Element} SlotIdentifier - either a name or React component */
 /** @typedef {SlotIdentifier|[SlotIdentifier]} Slot */
-/** @typedef {(cmp: React.ReactElement) => boolean} Matcher */
-/** @typedef {(cmp: React.ReactElement, index:number) => JSX.Element} Mapper */
-/** @typedef {(slot:Slot, cmp: React.ReactElement, index:number) => JSX.Element} ElementMapper */
-/** @typedef {(slot: Slot, cmp: React.ReactElement, index: number) => boolean | boolean} ElementFilter - if === true filter any child that does not match a slot, if a function filter by the return value*/
+/** @typedef {(cmp: JSX.Element) => boolean} Matcher */
+/** @typedef {(cmp: JSX.Element, index:number) => JSX.Element} Mapper */
+/** @typedef {(slot:Slot, cmp: JSX.Element, index:number) => JSX.Element} ElementMapper */
+/** @typedef {(slot: Slot, cmp: JSX.Element, index: number) => boolean | boolean} ElementFilter - if === true filter any child that does not match a slot, if a function filter by the return value*/
 
 import React from 'react';
 
@@ -144,7 +144,7 @@ Slot.List = ({ slots, map = x => x, filter, children }) => {
  * Whether or not a child matches a slot
  *
  * @param {Slot} slot
- * @param {React.ReactElement} child
+ * @param {JSX.Element} child
  * @returns {boolean}
  */
 Slot.matches = (slot, child) => buildMatchFn(slot)(child);
@@ -154,7 +154,7 @@ Slot.matches = (slot, child) => buildMatchFn(slot)(child);
  *
  * @param {Slot} slot
  * @param {React.Children} children
- * @returns {React.ReactElement}
+ * @returns {JSX.Element}
  */
 Slot.find = (slot, children) =>
 	React.Children.toArray(children).find(buildMatchFn(slot));

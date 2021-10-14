@@ -6,7 +6,7 @@ import { DisplayName } from '../components';
  * Convenience helpers to reduce imports on commons if you just need User.x stuff
  *
  * @param {*} props
- * @returns {React.ReactElement}
+ * @returns {JSX.Element}
  */
 export default function UserDisplayName({
 	/**

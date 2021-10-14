@@ -22,7 +22,7 @@ import Text from '../../text';
 /**
  * @param {DateTimeProps} props
  * @param {any} ref
- * @returns {React.ReactElement}
+ * @returns {JSX.Element}
  */
 function DateTimeImpl(
 	{
@@ -77,7 +77,7 @@ function DateTimeImpl(
 	);
 }
 
-/** @type {(props: DateTimeProps) => React.ReactElement} */
+/** @type {(props: DateTimeProps) => JSX.Element} */
 export const DateTime = React.forwardRef(DateTimeImpl);
 DateTimeImpl.propTypes = DateTime.propTypes = {
 	date: PropTypes.instanceOf(Date),
