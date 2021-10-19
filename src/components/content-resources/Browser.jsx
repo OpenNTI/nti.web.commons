@@ -8,8 +8,8 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { wait } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
+import { ErrorPanel as CError } from '@nti/web-core';
 
-import CError from '../Error';
 import { Mask as Loading } from '../loading-indicators';
 import FilePickerButton from '../FilePickerButton';
 import ProgressBar from '../ProgressBar';

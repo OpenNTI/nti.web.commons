@@ -34,7 +34,7 @@ export { default as DurationPicker } from './DurationPicker';
 export { default as Ellipsed } from './Ellipsed';
 export { default as EmptyList } from './EmptyList';
 export { default as EmptyState } from './EmptyState';
-export { default as Error } from './Error';
+
 export { default as Favorite } from './Favorite';
 export { default as FillToBottom } from './FillToBottom';
 export { default as FilterableView } from './FilterableView';
@@ -79,3 +79,5 @@ export { default as TokenEditor } from './TokenEditor';
 export { default as Toggle } from './Toggle';
 export { default as Tooltip } from './Tooltip';
 export { default as Zoomable } from './Zoomable';
+
+export { ErrorPanel as Error } from '@nti/web-core';

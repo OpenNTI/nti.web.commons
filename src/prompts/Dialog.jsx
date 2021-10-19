@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { v4 as uuid } from 'uuid';
 
+import { ErrorPanel as ErrorMessage } from '@nti/web-core';
 import { reportError } from '@nti/web-client';
 import Logger from '@nti/util-logger';
-
-import ErrorMessage from '../components/Error';
 
 import Manager from './ModalManager';
 
@@ -22,7 +21,6 @@ const logger = Logger.get('common:prompts:ManagedDialog');
  * dismissals without unmounting this instance)
  *
  * @class Dialog
- * @component
  */
 export default class Dialog extends React.Component {
 	static propTypes = {
