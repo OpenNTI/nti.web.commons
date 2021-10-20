@@ -3,17 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-Select.propTypes = {
-	value: PropTypes.any,
-	placeholder: PropTypes.string,
-	onChange: PropTypes.func.isRequired,
-	children: PropTypes.array.isRequired,
-	className: PropTypes.string,
-	empty: PropTypes.bool,
-	domRef: PropTypes.func,
-};
-
-export default function Select(props) {
+const Select = React.forwardRef((props, ref) => {
 	const {
 		value,
 		placeholder,
@@ -21,7 +11,6 @@ export default function Select(props) {
 		className,
 		children,
 		empty,
-		domRef,
 		...otherProps
 	} = props;
 	const selectClassNames = cx('nti-select-native', className);
@@ -45,10 +34,7 @@ export default function Select(props) {
 	}
 
 	return (
-		<div
-			className={cx('nti-select-native-wrapper', className)}
-			ref={domRef}
-		>
+		<div className={cx('nti-select-native-wrapper', className)} ref={ref}>
 			<span className="icon-chevron-down small" role="presentation" />
 			<span
 				className={cx('nti-select-value', { placeholder: !value })}
@@ -67,8 +53,15 @@ export default function Select(props) {
 			</select>
 		</div>
 	);
-}
+});
 
-const ForwardedRefSelect = (props, ref) => <Select {...props} domRef={ref} />;
+Select.propTypes = {
+	value: PropTypes.any,
+	placeholder: PropTypes.string,
+	onChange: PropTypes.func.isRequired,
+	children: PropTypes.array.isRequired,
+	className: PropTypes.string,
+	empty: PropTypes.bool,
+};
 
-Select.ForwardRef = React.forwardRef(ForwardedRefSelect);
+export default Select;
