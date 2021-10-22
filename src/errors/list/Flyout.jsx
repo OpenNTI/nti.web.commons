@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
+import { Icons } from '@nti/web-core';
 
 import { isWarning } from '../messages';
 import { Link } from '../linking/';
 import Text from '../../text';
-import * as Icons from '../../icons';
 import { Triggered } from '../../flyout';
 
 import Styles from './Styles.css';

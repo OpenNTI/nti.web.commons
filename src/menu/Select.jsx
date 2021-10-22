@@ -1,7 +1,7 @@
+import { Icons } from '@nti/web-core';
 
 import * as Flyout from '../flyout';
 import * as List from '../components/list';
-import { Check as CheckIcon } from '../icons';
 import { useMobileValue } from '../hooks';
 
 const MenuTitle = styled('h1')`
@@ -43,7 +43,7 @@ const MenuOption = styled('li')`
 	}
 `;
 
-const Check = styled(CheckIcon)`
+const Check = styled(Icons.Check)`
 	color: var(--primary-blue);
 	font-size: 1rem;
 	position: absolute;

@@ -2,7 +2,8 @@ import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Gripper } from '../../icons';
+import { Icons } from '@nti/web-core';
+
 import Context from '../Context';
 
 import Styles from './DragHandler.css';
@@ -47,7 +48,7 @@ export default function DragHandle({
 			className={cx('drag-handle', className, { disabled })}
 			{...listeners}
 		>
-			<Gripper className={cx('drag-icon')} />
+			<Icons.Gripper className={cx('drag-icon')} />
 		</div>
 	);
 }

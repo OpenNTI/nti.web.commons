@@ -16,7 +16,6 @@ export { default as Form } from './form';
 export * as HOC from './HighOrderComponents';
 export * as Hooks from './hooks'; // leaving this here so we don't break other imports
 export * from './hooks'; //hooks have a unique prefix (useXXXX) they namespace themselves.
-export * as Icons from './icons';
 export { default as Iframe } from './iframe';
 export { default as Image } from './image';
 export * as Layouts from './layouts';

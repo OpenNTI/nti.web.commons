@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import * as Icons from '../../icons';
+import { Icons } from '@nti/web-core';
 
 import Styles from './TitleBar.css';
 

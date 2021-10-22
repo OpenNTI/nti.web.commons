@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
-import { Button } from '@nti/web-core';
+import { Button, Icons } from '@nti/web-core';
 
 import Text from '../text/View';
-import { Chevron } from '../icons/Chevron';
 
 const t = scoped('web-commons.paging.Controls', {
 	counts: '%(current)s of %(total)s',
@@ -82,14 +81,14 @@ export default function PagingControls({
 				className={cx({ disabled: !hasPrev })}
 				aria-label="previous page"
 			>
-				<Chevron.Left skinny />
+				<Icons.Chevron.Left skinny />
 			</Arrow>
 			<Arrow
 				onClick={onNext}
 				className={cx({ disabled: !hasNext })}
 				aria-label="next page"
 			>
-				<Chevron.Right skinny />
+				<Icons.Chevron.Right skinny />
 			</Arrow>
 		</Controls>
 	);

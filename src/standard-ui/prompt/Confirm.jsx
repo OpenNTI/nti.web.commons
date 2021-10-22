@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
-import { Button } from '@nti/web-core';
+import { Button, Icons } from '@nti/web-core';
 
 import Card from '../Card';
-import { Alert } from '../../icons';
 import { Variant } from '../../HighOrderComponents';
 import * as Responsive from '../../layouts/responsive';
 import { Dialog } from '../../prompts';
@@ -74,7 +73,7 @@ export default function ConfirmPrompt({
 				})}
 			>
 				<div className={styles.icon}>
-					<Alert.Round className={styles.icon} />
+					<Icons.Alert.Round className={styles.icon} />
 				</div>
 				<Text.Base as="h1" className={styles.title}>
 					{title}

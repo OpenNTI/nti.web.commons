@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import * as Icons from '../../icons';
+import { Icons } from '@nti/web-core';
+
 import { Card } from '../../standard-ui';
 
 import styles from './Single.css';

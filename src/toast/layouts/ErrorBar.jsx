@@ -1,18 +1,19 @@
 import PropTypes from 'prop-types';
 
+import { Icons } from '@nti/web-core';
+
 import { getMessage } from '../../errors/messages';
-import { Alert } from '../../icons/Alert';
 
 import MessageBar from './MessageBar';
 
 ErrorBar.propTypes = {
-	error: PropTypes.any
+	error: PropTypes.any,
 };
-export default function ErrorBar ({error, ...otherProps}) {
+export default function ErrorBar({ error, ...otherProps }) {
 	return (
 		<MessageBar
 			error
-			icon={<Alert />}
+			icon={<Icons.Alert />}
 			message={getMessage(error)}
 			{...otherProps}
 		/>
