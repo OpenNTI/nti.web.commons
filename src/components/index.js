@@ -33,8 +33,6 @@ export { default as DisplayName } from './DisplayName';
 export { default as DurationPicker } from './DurationPicker';
 export { default as Ellipsed } from './Ellipsed';
 export { default as EmptyList } from './EmptyList';
-export { default as EmptyState } from './EmptyState';
-
 export { default as Favorite } from './Favorite';
 export { default as FillToBottom } from './FillToBottom';
 export { default as FilterableView } from './FilterableView';
@@ -49,7 +47,6 @@ export { default as LockScroll } from './LockScroll';
 export { default as LuckyCharms } from './LuckyCharms';
 export { default as NestableLink } from './NestableLink';
 export { default as NoMatches } from './NoMatches';
-export { default as Notice } from './Notice';
 export { default as NumberInput } from './NumberInput';
 export { default as NTIContent } from './NTIContent';
 export { default as OkCancelButtons } from './OkCancelButtons';
@@ -80,4 +77,4 @@ export { default as Toggle } from './Toggle';
 export { default as Tooltip } from './Tooltip';
 export { default as Zoomable } from './Zoomable';
 
-export { ErrorPanel as Error } from '@nti/web-core';
+export { ErrorPanel as Error, EmptyState } from '@nti/web-core';

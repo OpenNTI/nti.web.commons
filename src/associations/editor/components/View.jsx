@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { Filters } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
+import { EmptyState } from '@nti/web-core';
 
-import EmptyState from '../../../components/EmptyState';
 import Search from '../../../components/Search';
 import { Mask as Loading } from '../../../components/loading-indicators';
 

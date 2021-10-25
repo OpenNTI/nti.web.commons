@@ -1,7 +1,7 @@
 import './Container.scss';
 import PropTypes from 'prop-types';
 
-import EmptyState from '../../../components/EmptyState';
+import { EmptyState } from '@nti/web-core';
 
 import Group from './Group';
 

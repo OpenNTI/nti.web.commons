@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
+import { NoticePanel } from '@nti/web-core';
 
-import Notice from './Notice';
-
-const Box = styled(Notice)`
+const Box = styled(NoticePanel)`
 	text-align: center;
 	color: var(--tertiary-grey);
 	font-size: 0.875rem;
