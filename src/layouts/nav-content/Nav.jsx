@@ -1,22 +1,15 @@
-import './Nav.scss';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { StickyElement, FillToBottom } from '../../components';
 
-NavContentNav.propTypes = {
+Nav.propTypes = {
 	className: PropTypes.string,
 	sticky: PropTypes.bool,
 	fill: PropTypes.bool,
 	children: PropTypes.any,
 };
-export default function NavContentNav({
-	className,
-	sticky,
-	fill,
-	children,
-	...otherProps
-}) {
+export function Nav({ className, sticky, fill, children, ...otherProps }) {
 	let content = children;
 
 	if (fill) {
@@ -28,7 +21,13 @@ export default function NavContentNav({
 	}
 
 	return (
-		<div className={cx('nav-content-nav', className)} {...otherProps}>
+		<div
+			className={cx('nav-content-nav', className)}
+			{...otherProps}
+			css={css`
+				flex: 0 0 25%;
+			`}
+		>
 			{content}
 		</div>
 	);
