@@ -65,6 +65,11 @@
 	text-transform: uppercase;
 }
 
+.controls {
+	flex: 0 0 auto;
+	padding: 0 var(--header-padding, 0.75rem);
+}
+
 .progress-bar {
 	position: absolute;
 	top: 100%;

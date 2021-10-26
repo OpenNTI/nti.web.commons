@@ -9,6 +9,8 @@ import Progress from './Progress';
 
 const cx = classnames.bind(Styles);
 
+const Controls = styled('div').attrs({ className: cx('controls') })``;
+
 PagingHeader.propTypes = {
 	onDismiss: PropTypes.func,
 
@@ -16,6 +18,8 @@ PagingHeader.propTypes = {
 	subTitle: PropTypes.string,
 
 	progress: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+
+	controls: PropTypes.node,
 
 	flat: PropTypes.bool,
 
@@ -27,13 +31,14 @@ PagingHeader.propTypes = {
 	}),
 };
 export default function PagingHeader(props) {
-	const { flat } = props;
+	const { flat, controls } = props;
 
 	return (
 		<div className={cx('paging-window-header', { flat })}>
 			<Dismiss {...props} />
 			<Title {...props} />
 			<Pager {...props} />
+			{controls && <Controls>{controls}</Controls>}
 			<Progress {...props} />
 		</div>
 	);
