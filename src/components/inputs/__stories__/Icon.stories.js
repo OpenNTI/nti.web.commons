@@ -1,8 +1,8 @@
+import { Icons } from '@nti/web-core';
 
 import Text from '../Text';
 import InputIcon from '../Icon';
 import PlaceholderLabel from '../placeholder/Label';
-import * as Icons from '../../../icons';
 
 export default {
 	title: 'Components/inputs/Input Icon',
