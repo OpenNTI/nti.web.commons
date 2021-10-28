@@ -41,6 +41,7 @@ export default function PanelButton({
 							onClick={onClick}
 							css={css`
 								width: 100%;
+								margin-top: 0.5em;
 							`}
 						>
 							{linkText}
