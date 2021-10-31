@@ -1,44 +1,41 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import cx from 'classnames';
 
-import { Button } from '@nti/web-core';
-
-import { ItemChanges } from '../mixins';
+import { Button, useChanges } from '@nti/web-core';
+import { Loading } from '@nti/web-commons';
 
 import './Favorite.scss';
 
-export default createReactClass({
-	displayName: 'Favorite',
-	mixins: [ItemChanges],
+Favorite.propTypes = {
+	item: PropTypes.object.isRequired,
+	asButton: PropTypes.bool,
+};
 
-	propTypes: {
-		item: PropTypes.object.isRequired,
-		asButton: PropTypes.bool,
-	},
+export default function Favorite({ item, asButton }) {
+	let cls = cx('favorite', {
+		active: item.hasLink('unfavorite'),
+		'button-like': asButton,
+	});
 
-	onClick(e) {
+	const [loading, setLoading] = useState(false);
+
+	useChanges(item);
+
+	const onClick = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let { item } = this.props;
+		setLoading(true);
+		item.favorite().then(() => setLoading(false));
+	};
 
-		this.setState({ loading: true });
-		item.favorite().then(() => this.setState({ loading: false }));
-	},
+	const Tag = asButton ? Button : 'a';
+	const extraProps = asButton ? { plain: true } : { href: '#' };
 
-	render() {
-		let { item, asButton } = this.props;
-
-		let cls = cx('favorite', {
-			active: item.hasLink('unfavorite'),
-			'button-like': asButton,
-		});
-
-		const Tag = asButton ? Button : 'a';
-		const extraProps = asButton ? { plain: true } : { href: '#' };
-
-		return <Tag {...extraProps} className={cls} onClick={this.onClick} />;
-	},
-});
+	return (
+		<Loading.Placeholder loading={loading} fallback={<></>}>
+			<Tag {...extraProps} className={cls} onClick={onClick} />
+		</Loading.Placeholder>
+	);
+}

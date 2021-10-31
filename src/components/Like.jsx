@@ -1,52 +1,50 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import cx from 'classnames';
 
-import { Button } from '@nti/web-core';
-
-import { ItemChanges } from '../mixins';
+import { Button, useChanges } from '@nti/web-core';
+import { Loading } from '@nti/web-commons';
 
 import './Like.scss';
 
-export default createReactClass({
-	displayName: 'Like',
-	mixins: [ItemChanges],
+Like.propTypes = {
+	item: PropTypes.object.isRequired,
+	asButton: PropTypes.bool,
+};
 
-	propTypes: {
-		item: PropTypes.object.isRequired,
-		asButton: PropTypes.bool,
-	},
+export default function Like({ item, asButton }) {
+	useChanges(item);
 
-	onClick(e) {
+	const { LikeCount } = item;
+
+	const [loading, setLoading] = useState(false);
+
+	const onClick = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		let { item } = this.props;
 
-		this.setState({ loading: true });
-		item.like().then(() => this.setState({ loading: false }));
-	},
+		setLoading(true);
+		item.like().then(() => setLoading(false));
+	};
 
-	render() {
-		let { item, asButton } = this.props;
-		let { LikeCount } = item;
+	let count = LikeCount || '';
 
-		let count = LikeCount || '';
+	let cls = cx('like', {
+		active: item.hasLink('unlike'),
+		'button-like': asButton,
+		count: !!count,
+	});
 
-		let cls = cx('like', {
-			active: item.hasLink('unlike'),
-			'button-like': asButton,
-			count: !!count,
-		});
+	const Tag = asButton ? Button : 'a';
+	const extraProps = asButton ? { plain: true } : { href: '#' };
 
-		const Tag = asButton ? Button : 'a';
-		const extraProps = asButton ? { plain: true } : { href: '#' };
-
-		return (
-			<Tag {...extraProps} className={cls} onClick={this.onClick}>
+	return (
+		<Loading.Placeholder loading={loading} fallback={<></>}>
+			<Tag {...extraProps} className={cls} onClick={onClick}>
 				{count}
 			</Tag>
-		);
-	},
-});
+		</Loading.Placeholder>
+	);
+}
