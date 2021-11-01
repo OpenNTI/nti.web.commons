@@ -8,13 +8,13 @@
 
 	/* stylelint-disable-next-line media-feature-name-no-unknown */
 	@media (min-device-pixel-ratio: 1.01), (min-resolution: 1.01dppx) {
-		background-image: url('"' + $path + '@2x.' + $type + '"');
+		background-image: url('#{$path}@2x.#{$type}');
 	}
 
 	@if $xCount > 2 {
 		/* stylelint-disable-next-line media-feature-name-no-unknown */
 		@media (min-device-pixel-ratio: 2.2), (min-resolution: 2.2dppx) {
-			background-image: url('"' + $path + '@3x.' + $type + '"');
+			background-image: url('#{$path}@3x.#{$type}');
 		}
 	}
 }

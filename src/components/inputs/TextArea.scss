@@ -9,6 +9,7 @@
 	border-radius: 2px;
 
 	// Shared placeholder css
+	.textarea::placeholder,
 	.placeholder {
 		font-style: italic;
 		color: var(--tertiary-grey);
@@ -31,10 +32,6 @@
 		resize: none;
 		border: none;
 		width: 100%;
-
-		&::placeholder {
-			@extend %placeholder;
-		}
 
 		&.autogrow {
 			position: absolute;
