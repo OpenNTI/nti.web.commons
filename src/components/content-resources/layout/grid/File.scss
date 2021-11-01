@@ -83,7 +83,8 @@ body > .file-asset.ghost,
 			display: inline-block;
 
 			// Magic non-standard CSS:
-			display: box;
+			/* stylelint-disable-next-line value-no-vendor-prefix */
+			display: -webkit-box;
 			-webkit-box-orient: vertical;
 			-webkit-line-clamp: 2;
 		}
