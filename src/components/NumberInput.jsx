@@ -54,7 +54,7 @@ export default class NumberInput extends React.Component {
 	 */
 	onKeyPress = e => {
 		//if the owner component wants a KeyPress listener, don't hijack it.
-		const { onKeyPress, min } = this.props; //eslint-disable-line react/prop-types
+		const { onKeyPress, min } = this.props;  
 		const minNumber = parseInt(min, 10);
 		const allowed = {
 			44: ',',

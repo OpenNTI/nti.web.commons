@@ -4,7 +4,7 @@
 	width: 100%;
 
 	&.disabled {
-		opacity: 0.5;
+		opacity: 50%;
 		pointer-events: none;
 	}
 
@@ -15,7 +15,7 @@
 		margin-right: 10px;
 	}
 
-	.TimePicker {
+	.time-picker {
 		width: 16%;
 		justify-content: flex-start;
 		line-height: 40px;

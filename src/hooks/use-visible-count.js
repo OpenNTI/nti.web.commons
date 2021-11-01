@@ -21,7 +21,7 @@ const ITEM_DIMENSION_RESOLVERS = {
 
 /**
  * @param {number|string} sizeOrSelector A fixed size or a selector to derive the size.
- * @param {React.Ref<HTMLElement>} ref The container ref object
+ * @param {import('react').Ref<HTMLElement>} ref The container ref object
  * @param {"height"|"width"} [dimension='height'] The dimension to count
  * @returns {number} The amount of items that will fit.
  */

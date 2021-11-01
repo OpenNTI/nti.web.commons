@@ -47,7 +47,7 @@ function renderItems(items, associations) {
 			{items.map(x => (
 				<CSSTransition
 					key={x.NTIID || x.ID}
-					classNames="fadeAndCollapse"
+					classNames="fade-and-collapse"
 					timeout={300}
 				>
 					{renderItem(x, associations)}

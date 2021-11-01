@@ -6,9 +6,10 @@
 	border: solid 1px var(--border-grey-light);
 	color: var(--secondary-grey);
 	font: normal 400 0.875rem/2rem var(--body-font-family);
-	//since these are box-sizing: border-box the borders are eating into the
-	//height. We want the input themselves to be 32px tall. So we need to add
-	//2px to account for the borders
+
+	// since these are box-sizing: border-box the borders are eating into the
+	// height. We want the input themselves to be 32px tall. So we need to add
+	// 2px to account for the borders
 	height: rem-calc(34px);
 	padding: rem-calc(0 10px);
 

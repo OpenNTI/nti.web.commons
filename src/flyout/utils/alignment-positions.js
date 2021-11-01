@@ -13,6 +13,37 @@ import {
 
 import getPseudoElementSpace from './get-pseudo-element-space';
 
+/**
+ * @typedef {object} ViewSize
+ * @property {number} height
+ * @property {number} width
+ */
+
+/**
+ * @typedef {object} Margin
+ * @property {number} top
+ * @property {number} bottom
+ * @property {number} left
+ * @property {number} right
+ */
+
+/**
+ * @typedef {object} Alignment
+ * @property {number?} top
+ * @property {number?} bottom
+ * @property {number?} left
+ * @property {number?} right
+ */
+
+/**
+ * @typedef {(triggerRect: DOMRect, flyout: HTMLElement, view: ViewSize, reserved: Margin?) => Alignment} AlignmentCalculator
+ * @param triggerRect the rect for the trigger
+ * @param flyout the flyout dom node
+ * @param view the size of the viewport
+ * @param reserved the space to reserve between the edge of the screen
+ * @returns {Alignment} the vertical positioning
+ */
+
 export const ALIGNMENT_POSITIONS = {
 	//TODO: add horizontal positioning
 	[VERTICAL]: {
@@ -25,11 +56,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * 		------------
 		 * 		|  Trigger |
 		 *
-		 * @type {Function}
-		 * @param {Object} triggerRect the rect for the trigger
-		 * @param {Object} flyout the flyout dom node
-		 * @param {Object} viewSize the size of the viewport
-		 * @returns {Object} the vertical positioning
+		 * @type {AlignmentCalculator}
 		 */
 		[ALIGN_TOP]({ top }, flyout, { height: viewHeight }) {
 			return {
@@ -47,11 +74,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * 		------------
 		 * 		|  Flyout  |
 		 *
-		 * @type {Function}
-		 * @param {Object} triggerRect the rect for the trigger
-		 * @param {Object} flyout the flyout dom node
-		 * @param {Object} viewSize the size of the viewport
-		 * @returns {Object} the vertical positioning
+		 * @type {AlignmentCalculator}		 *
 		 */
 		[ALIGN_BOTTOM]({ bottom }) {
 			return {
@@ -67,12 +90,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * Else if the height of the flyout will fit above the trigger, put it there.
 		 * Else put it to which side has the most space.
 		 *
-		 * @type {Function}
-		 * @param {Object} triggerRect the rect for the trigger
-		 * @param {Object} flyout the flyout dom node
-		 * @param {Object} viewSize the size of the viewport
-		 * @param {Object} reservedMargin the space to reserve between the edge of the screen
-		 * @returns {Object} the vertical positioning
+		 * @type {AlignmentCalculator}
 		 */
 		[DEFAULT_VERTICAL](
 			{ top, bottom },
@@ -118,11 +136,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * 		----------------
 		 * 		|  Flyout      |
 		 *
-		 * @type {Function}
-		 * @param {Object} triggerRect the rect for the trigger
-		 * @param {Object} flyout the flyout dom node
-		 * @param {Object} viewSize the size of the viewport
-		 * @returns {Object} the horizontal positioning
+		 * @type {AlignmentCalculator}
 		 */
 		[ALIGN_LEFT]({ left }) {
 			return {
@@ -140,11 +154,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * 		----------------
 		 * 		|  Flyout      |
 		 *
-		 * @type {Function}
-		 * @param {Object} triggerRect the rect for the trigger
-		 * @param {Object} flyout the flyout dom node
-		 * @param {Object} viewSize the size of the viewport
-		 * @returns {Object} the horizontal positioning
+		 * @type {AlignmentCalculator}
 		 */
 		[ALIGN_RIGHT]({ right }, flyout, { width: viewWidth }) {
 			return {
@@ -153,6 +163,9 @@ export const ALIGNMENT_POSITIONS = {
 			};
 		},
 
+		/**
+		 * @type {AlignmentCalculator}
+		 */
 		[ALIGN_LEFT_OR_RIGHT](
 			{ left, right },
 			{ offsetWidth: flyoutWidth },
@@ -197,11 +210,7 @@ export const ALIGNMENT_POSITIONS = {
 		 * 		  ------------
 		 * 		  |  Flyout |
 		 *
-		 * @type {Function}
-		 * @param {Object} triggerRect the rect for the trigger
-		 * @param {Object} flyout the flyout dom node
-		 * @param {Object} viewSize the size of the viewport
-		 * @returns {Object} the horizontal positioning
+		 * @type {AlignmentCalculator}
 		 */
 		[ALIGN_CENTER](
 			{ left, width: triggerWidth },
@@ -219,8 +228,7 @@ export const ALIGNMENT_POSITIONS = {
 		/**
 		 * Default to ALIGN_CENTER
 		 *
-		 * @type {Function}
-		 * @returns {Object} the horizontal positioning
+		 * @type {AlignmentCalculator}
 		 */
 		[DEFAULT_HORIZONTAL](...args) {
 			return ALIGNMENT_POSITIONS[VERTICAL][ALIGN_CENTER](...args);

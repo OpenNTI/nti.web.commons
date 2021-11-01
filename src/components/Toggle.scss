@@ -12,9 +12,9 @@
 		min-width: 12rem;
 		display: flex;
 		align-items: stretch;
-		border: 0 solid rgba(0, 0, 0, 0);
+		border: 0 solid rgba(0, 0, 0, 0%);
 		border-radius: 3px;
-		box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 10%);
 		overflow: hidden;
 	}
 
@@ -38,7 +38,7 @@
 			a {
 				color: #fff;
 				font-weight: 600;
-				background: #2878b4; //rgb(40, 120, 180);
+				background: #2878b4; // rgb(40, 120, 180);
 			}
 		}
 	}

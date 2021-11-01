@@ -19,32 +19,32 @@
 		margin: 10px 0;
 	}
 
-	.fadeAndCollapse-enter-active,
-	.fadeAndCollapse-exit-active {
+	.fade-and-collapse-enter-active,
+	.fade-and-collapse-exit-active {
 		overflow: hidden;
 		transition: opacity 300ms ease-in-out, max-height 300ms ease-in-out,
 			margin-bottom 300ms ease-in-out;
 	}
 
-	.fadeAndCollapse-enter {
-		opacity: 0;
+	.fade-and-collapse-enter {
+		opacity: 0%;
 		max-height: 0;
 		margin-bottom: 0;
 
-		&.fadeAndCollapse-enter-active {
-			opacity: 1;
+		&.fade-and-collapse-enter-active {
+			opacity: 100%;
 			max-height: 55px;
 			margin-bottom: 10px;
 		}
 	}
 
-	.fadeAndCollapse-exit {
-		opacity: 1;
+	.fade-and-collapse-exit {
+		opacity: 100%;
 		max-height: 55px;
 		margin-bottom: 10px;
 
-		&.fadeAndCollapse-exit-active {
-			opacity: 0;
+		&.fade-and-collapse-exit-active {
+			opacity: 0%;
 			max-height: 0;
 			margin-bottom: 0;
 		}

@@ -22,7 +22,7 @@
 .dismiss {
 	display: inline-block;
 	flex: 0 0 auto;
-	padding: 5px 0.875rem 5px;
+	padding: 5px 0.875rem;
 	cursor: pointer;
 	color: var(--tertiary-grey);
 	font-size: 2rem;

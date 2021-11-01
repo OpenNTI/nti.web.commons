@@ -7,7 +7,7 @@ body > .file-asset.ghost,
 	&.unselectable {
 		pointer-events: none;
 		cursor: default;
-		opacity: 0.6;
+		opacity: 60%;
 	}
 
 	&:focus,
@@ -19,7 +19,7 @@ body > .file-asset.ghost,
 			margin: rem-calc(-5px);
 			padding: rem-calc(5px);
 			border-radius: 5px;
-			background-color: rgba(0, 0, 0, 0.1);
+			background-color: rgba(0, 0, 0, 10%);
 		}
 	}
 
@@ -39,8 +39,8 @@ body > .file-asset.ghost,
 
 		& > * {
 			border-radius: 2px;
-			box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.1),
-				0 0 1px 1px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 1px 0 1px rgba(0, 0, 0, 10%),
+				0 0 1px 1px rgba(0, 0, 0, 10%);
 			max-width: 100%;
 			max-height: 100%;
 			position: absolute;
@@ -70,7 +70,7 @@ body > .file-asset.ghost,
 		color: var(--primary-grey);
 
 		& > span {
-			opacity: 1;
+			opacity: 100%;
 			white-space: normal;
 			word-break: break-word;
 			overflow: hidden;
@@ -81,8 +81,9 @@ body > .file-asset.ghost,
 			// For browsers that don't support -webkit-box
 			max-height: 2.1rem; // Used to set height on num of lines for FF.
 			display: inline-block;
-			//Magic non-standard CSS:
-			display: -webkit-box;
+
+			// Magic non-standard CSS:
+			display: box;
 			-webkit-box-orient: vertical;
 			-webkit-line-clamp: 2;
 		}
@@ -105,6 +106,6 @@ body > .file-asset.ghost,
 
 	&.renameable.renaming .filename span {
 		visibility: hidden;
-		opacity: 0;
+		opacity: 0%;
 	}
 }

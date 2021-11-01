@@ -74,8 +74,8 @@ export default class DataTransfer {
 	 *
 	 * If no key is provided or we are unable to find one nothing will be added to the data transfer
 	 *
-	 * @param {string|Mixed} key   the key to store the value on (typically a mimetype), or the object to store
-	 * @param {Mixed} value the value to store
+	 * @param {string|any} key   the key to store the value on (typically a mimetype), or the object to store
+	 * @param {any} value the value to store
 	 * @returns {void}
 	 */
 	setData(key, value) {

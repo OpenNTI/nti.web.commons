@@ -9,43 +9,6 @@ import DefaultPath from './DefaultPath';
 
 //@deprecated: This, FilterBar, & DefaultPath probably belong in the mobile app code... the filter data structure is not generic.
 export default class Filter extends React.Component {
-	static propTypes = {
-		/**
-		 *	An array or object with a filter() method.
-		 */
-		list: PropTypes.oneOfType([
-			PropTypes.array,
-			PropTypes.shape({
-				filter: PropTypes.func,
-			}),
-		]),
-
-		/**
-		 *	A (single) component for rendering the (filtered) list.
-		 */
-		children: PropTypes.element.isRequired,
-
-		/**
-		 * filters should be a collection of named filter functions.
-		 * for example:
-		 *	{
-		 * 		Odds (item,index,array) {
-		 * 			return index % 2 === 1;
-		 * 		},
-		 * 		Evens (item,index,array) {
-		 * 			return index % 2 === 0;
-		 * 		}
-		 *	}
-		 */
-		filters: PropTypes.array,
-
-		title: PropTypes.string,
-
-		defaultFilter: PropTypes.string,
-
-		localStorageKey: PropTypes.string,
-	};
-
 	static defaultProps = {
 		localStorageKey: null,
 		list: [],
@@ -162,3 +125,40 @@ export default class Filter extends React.Component {
 		];
 	};
 }
+
+Filter.propTypes = {
+	/**
+	 *	An array or object with a filter() method.
+	 */
+	list: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.shape({
+			filter: PropTypes.func,
+		}),
+	]),
+
+	/**
+	 *	A (single) component for rendering the (filtered) list.
+	 */
+	children: PropTypes.element.isRequired,
+
+	/**
+	 * filters should be a collection of named filter functions.
+	 * for example:
+	 *	{
+	 * 		Odds (item,index,array) {
+	 * 			return index % 2 === 1;
+	 * 		},
+	 * 		Evens (item,index,array) {
+	 * 			return index % 2 === 0;
+	 * 		}
+	 *	}
+	 */
+	filters: PropTypes.array,
+
+	title: PropTypes.string,
+
+	defaultFilter: PropTypes.string,
+
+	localStorageKey: PropTypes.string,
+};

@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 @import '~@nti/style-common';
 
 .DayPicker-wrapper {
@@ -8,6 +9,7 @@
 	padding: 1rem 0 0;
 	margin: 0 auto;
 	user-select: none;
+
 	// width: 268px;
 	border: none;
 	font-family: var(--body-font-family);
@@ -53,21 +55,21 @@
 
 .DayPicker-NavButton--prev {
 	left: rem-calc(6px);
-	opacity: 0.3;
-	background-image: url(../assets/day-picker/date-chevron-left.png);
+	opacity: 30%;
+	background-image: url('../assets/day-picker/date-chevron-left.png');
 
 	.no-touch &:hover {
-		opacity: 1;
+		opacity: 100%;
 	}
 }
 
 .DayPicker-NavButton--next {
 	right: rem-calc(6px);
-	opacity: 0.3;
-	background-image: url(../assets/day-picker/date-chevron-right.png);
+	opacity: 30%;
+	background-image: url('../assets/day-picker/date-chevron-right.png');
 
 	.no-touch &:hover {
-		opacity: 1;
+		opacity: 100%;
 	}
 }
 

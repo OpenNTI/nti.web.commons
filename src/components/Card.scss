@@ -1,13 +1,13 @@
 @import '~@nti/style-common';
 
 %icon-external-link {
-	background-image: url(./assets/extern-link.png);
+	background-image: url('./assets/extern-link.png');
 }
 %icon-external-link-hover {
-	background-image: url(./assets/extern-link_hover.png);
+	background-image: url('./assets/extern-link_hover.png');
 }
 %circle-white-check-large {
-	background-image: url(./assets/circle-check-white-large.png);
+	background-image: url('./assets/circle-check-white-large.png');
 }
 
 .content-link.related-work-ref {
@@ -18,7 +18,8 @@
 	color: var(--primary-grey);
 	text-decoration: inherit;
 	font-family: var(--body-font-family);
-	//
+
+	// --
 	position: relative;
 	overflow: hidden;
 	display: block;
@@ -28,8 +29,9 @@
 	padding: 15px;
 	padding-left: $icon-width + $gap;
 	padding-bottom: 5px;
-	min-height: ceil($icon-width * $icon-ratio);
-	//
+	min-height: math.ceil($icon-width * $icon-ratio);
+
+	// --
 	word-wrap: break-word;
 	word-break: break-word;
 	hyphens: auto;
@@ -39,9 +41,10 @@
 		top: 0;
 		left: 0;
 		width: $icon-width;
-		height: ceil($icon-width * $icon-ratio);
+		height: math.ceil($icon-width * $icon-ratio);
 		margin: 0;
-		box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 10%);
+
 		// background-color: #f0f0f0;
 	}
 
@@ -61,13 +64,13 @@
 	}
 
 	.label {
-		//Design wants the by-line to be one line and ellipsed
+		// Design wants the by-line to be one line and ellipse'd
 		display: block;
 		text-align: left;
 
-		//This is dumb... but i'm having a hard time figuring out why "white-space: nowrap"
-		//forces the label to overflow and drive the width wider than the container. :|
-		//So... use the two-line solution clamped to one.
+		// This is dumb... but i'm having a hard time figuring out why "white-space: nowrap"
+		// forces the label to overflow and drive the width wider than the container. :|
+		// So... use the two-line solution clamped to one.
 		white-space: normal;
 
 		@include limit-lines($lines: 1, $line-height: 1.4);
@@ -94,7 +97,7 @@
 			display: none;
 		}
 
-		margin: 10px 0 0 0;
+		margin: 10px 0 0;
 		color: var(--tertiary-grey);
 
 		a,
@@ -111,7 +114,7 @@
 		font-weight: 400;
 		line-height: 1.4;
 
-		//don't crop decenders that stick out the left side:}
+		// don't crop decenders that stick out the left side:}
 		margin-left: -2px;
 		padding-left: 2px;
 	}
@@ -138,7 +141,7 @@
 				display: block;
 				position: absolute;
 				background: {
-					color: rgba(0, 0, 0, 0.5);
+					color: rgba(0, 0, 0, 50%);
 					position: center center;
 					repeat: no-repeat;
 				}
@@ -153,6 +156,7 @@
 
 			&::after {
 				@extend %circle-white-check-large;
+
 				$p: 50%;
 				$s: 40px;
 				$o: -20px;
@@ -166,7 +170,7 @@
 					left: $o;
 				}
 
-				background-color: rgba(0, 0, 0, 0.6);
+				background-color: rgba(0, 0, 0, 60%);
 				border-radius: $s;
 			}
 		}
@@ -179,7 +183,7 @@
 
 		margin: 10px 0;
 		padding-left: $icon-width + $gap;
-		min-height: max(120px, ceil($icon-width * $icon-ratio));
+		min-height: math.max(120px, math.ceil($icon-width * $icon-ratio));
 
 		.icon {
 			width: $icon-width;

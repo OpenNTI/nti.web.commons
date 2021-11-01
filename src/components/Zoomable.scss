@@ -2,7 +2,7 @@
 
 .zoomable {
 	position: fixed !important;
-	background: rgba(255, 255, 255, 0.95);
+	background: rgba(255, 255, 255, 95%);
 	z-index: 9999;
 	top: 0;
 	left: 0;
@@ -16,14 +16,11 @@
 		left: 0;
 		bottom: 0;
 		right: 0;
-		margin-top: auto;
-		margin-bottom: auto;
-		margin-left: auto;
-		margin-right: auto;
+		margin: auto;
 	}
 
 	.zoomable-close {
-		background-image: url(./assets/close.png);
+		background-image: url('./assets/close.png');
 		position: absolute;
 		top: 0.5rem;
 		right: 0.5rem;
@@ -31,7 +28,7 @@
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
-		box-shadow: 0 3px 5px rgba(128, 128, 128, 0.4);
+		box-shadow: 0 3px 5px rgba(128, 128, 128, 40%);
 		background: {
 			repeat: no-repeat;
 			position: center;

@@ -20,19 +20,19 @@
 		width: rem-calc(40px);
 
 		&[href] {
-			opacity: 0.65;
+			opacity: 65%;
 
 			&::before {
 				color: var(--primary-blue);
 			}
 
 			.no-touch &:hover {
-				opacity: 1;
+				opacity: 100%;
 			}
 		}
 
 		&::before {
-			font-family: 'icomoon', serif;
+			font-family: icomoon, serif;
 			font-size: rem-calc(25px);
 			font-weight: 300;
 			line-height: 2;
@@ -62,7 +62,7 @@
 		position: relative;
 	}
 
-	&.realPage {
+	&.real-page {
 		& > a {
 			transform: rotate(-90deg);
 		}
@@ -88,7 +88,7 @@
 		height: 2.8125rem;
 
 		&:not([href]) {
-			opacity: 0.2;
+			opacity: 20%;
 		}
 
 		&.prev::before {
@@ -114,7 +114,7 @@
 	max-width: 62.5rem;
 	width: 100%;
 
-	@include clearfix();
+	@include clearfix;
 
 	list-style-type: none;
 	display: inline-block;
@@ -122,21 +122,21 @@
 	li {
 		padding-left: 0.9375rem;
 		padding-right: 0.9375rem;
-		width: 33.3333333%;
+		width: 33.3333%;
 		display: inline-block;
 
 		a {
 			width: 100%;
 
 			&:not([href]) {
-				opacity: 0.2;
+				opacity: 20%;
 			}
 		}
 
 		&.counts {
 			padding-left: 0;
 			padding-right: 0;
-			width: 33.3333333%;
+			width: 33.3333%;
 			text-align: center;
 			white-space: nowrap;
 			font-size: 0.6875rem;

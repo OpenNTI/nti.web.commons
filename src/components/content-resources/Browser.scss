@@ -3,6 +3,7 @@
 .content-resource-browser {
 	position: relative;
 	max-width: 1024px;
+
 	// min-height: 720px;
 	// max-height: 720px;
 	background-color: #f2f2f2;
@@ -19,7 +20,7 @@
 	}
 
 	.panel-header-component {
-		min-height: 105px; //safari??
+		min-height: 105px; // safari??
 	}
 
 	.content-resource-view {

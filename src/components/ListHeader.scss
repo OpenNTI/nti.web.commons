@@ -12,7 +12,7 @@
 	position: relative;
 
 	&::after {
-		background-image: url(./assets/list.png);
+		background-image: url('./assets/list.png');
 		content: '';
 		position: absolute;
 		left: 18px;

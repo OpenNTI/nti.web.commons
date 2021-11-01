@@ -6,10 +6,10 @@
  *
  * Author: Raymond Hill
  * Version: 2011-01-17
- * Title: HTML text hilighter
+ * Title: HTML text highlighter
  * Permalink: http://www.raymondhill.net/blog/?p=272
- * Purpose: Hilight portions of text inside a specified element, according to a search expression.
- * Key feature: Can safely hilight text across HTML tags.
+ * Purpose: Highlight portions of text inside a specified element, according to a search expression.
+ * Key feature: Can safely highlight text across HTML tags.
  * History:
  *	 2012-01-29
  *	   fixed a bug which caused special regex characters in the
@@ -196,22 +196,21 @@ const normalizeTextIndex = (node, doc, searchFor, which, textIndex) =>
 	textIndex ?? indexText(node, allButObjects);
 
 /**
- * @param {Node} node - the node to search for ranges beneath
- * @param {document} doc - the document fragment node is a child of
- * @param {string} searchFor - a string or a regex to search for
- * @param {number} [which] - if provided the subexpression of the regex to be matched or an array of subexpression idexes
- * @param {number} [textIndex]
+ * @param {Node} _node - the node to search for ranges beneath
+ * @param {Document} _doc - the document fragment node is a child of
+ * @param {string} _searchFor - a string or a regex to search for
+ * @param {number} [_which] - if provided the subexpression of the regex to be matched or an array of subexpression idexes
+ * @param {number} [_textIndex]
  * Note cutz: for the which param to work it expects each part of your regex to be captured
  * IE if your goal is to have a capture in the middle of the regex you must also capture the first portion prior to it
- * @param {...any} args
  * @returns {Range[]} a list of range objects that represent the portion of text to highlight
  */
-export function findTextRanges(...args) {
-	// const node = normalizeNode(...args);
-	const doc = normalizeDoc(...args);
-	const searchFor = normalizeSearchFor(...args);
-	const which = normalizeWhich(...args);
-	const textIndex = normalizeTextIndex(...args);
+export function findTextRanges(_node, _doc, _searchFor, _which, _textIndex) {
+	// const node = normalizeNode.apply(null, arguments);
+	const doc = normalizeDoc.apply(null, arguments);
+	const searchFor = normalizeSearchFor.apply(null, arguments);
+	const which = normalizeWhich.apply(null, arguments);
+	const textIndex = normalizeTextIndex.apply(null, arguments);
 
 	if (!textIndex) {
 		return [];

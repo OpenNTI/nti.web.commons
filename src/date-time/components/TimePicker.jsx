@@ -207,7 +207,7 @@ export default class TimePicker extends React.Component {
 		}
 
 		return (
-			<div className="TimePicker">
+			<div className="time-picker">
 				<div className="time">
 					<NumberInput
 						onChange={this.onHourInputChange}

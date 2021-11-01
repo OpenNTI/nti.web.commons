@@ -17,7 +17,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background: rgba(0, 0, 0, 0.7);
+	background: rgba(0, 0, 0, 70%);
 	perspective: 300px;
 	display: flex;
 	flex-direction: column;
@@ -59,7 +59,7 @@
 					bottom: 0;
 					left: 0;
 					right: 0;
-					background: rgba(255, 255, 255, 0.5);
+					background: rgba(255, 255, 255, 50%);
 				}
 			}
 		}
@@ -78,7 +78,7 @@
 		position: absolute;
 		width: 16px;
 		height: 16px;
-		background-image: url(./assets/close.png);
+		background-image: url('./assets/close.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 		right: 1rem;
@@ -113,16 +113,16 @@
 
 .modal-mask-appear,
 .modal-mask-enter {
-	opacity: 0.01;
+	opacity: 1%;
 
 	html:not(.is-ie) & {
-		transition: opacity 300ms ease-out; //make this transition 10ms longer to let the .modal-content animation playout
+		transition: opacity 300ms ease-out; // make this transition 10ms longer to let the .modal-content animation playout
 	}
 }
 
 .modal-mask-appear.modal-mask-appear-active,
 .modal-mask-enter.modal-mask-enter-active {
-	opacity: 1;
+	opacity: 100%;
 
 	.modal-content {
 		animation: modal-content 250ms ease both;
@@ -130,22 +130,22 @@
 }
 
 .modal-mask-exit {
-	opacity: 1;
+	opacity: 100%;
 	transition: opacity 250ms ease-out;
 }
 
 .modal-mask-exit.modal-mask-exit-active {
-	opacity: 0.01;
+	opacity: 1%;
 }
 
 @keyframes modal-content {
 	0% {
 		transform: translate3d(0, 0, -30px);
-		opacity: 0;
+		opacity: 0%;
 	}
 
 	100% {
 		transform: translate3d(0, 0, 0);
-		opacity: 1;
+		opacity: 100%;
 	}
 }

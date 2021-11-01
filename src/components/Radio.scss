@@ -5,7 +5,7 @@ label.radio-component {
 	position: relative;
 
 	input[type='radio'] {
-		opacity: 0;
+		opacity: 0%;
 		position: absolute;
 		top: 0;
 
@@ -39,7 +39,7 @@ label.radio-component {
 		}
 
 		&:disabled + span.label::before {
-			opacity: 0.5;
+			opacity: 50%;
 		}
 	}
 
@@ -48,20 +48,8 @@ label.radio-component {
 		margin-left: 1.625rem;
 	}
 
-	// html:not(.touch) &:hover {
-	// 	input[type=radio] {
-	// 		& + span.label::before {
-	// 			@include retina-asset('radio/hover', $xCount: 3);
-	// 		}
-	//
-	// 		&:checked + span.label::before {
-	// 			@include retina-asset('radio/hover-select', $xCount: 3);
-	// 		}
-	// 	}
-	// }
-
 	&.disabled {
-		opacity: 0.3;
+		opacity: 30%;
 		pointer-events: none;
 	}
 }

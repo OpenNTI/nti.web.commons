@@ -1,11 +1,12 @@
 @import '~@nti/style-common';
 
 .daytime-picker {
+	/* stylelint-disable-next-line selector-class-pattern */
 	.DayPicker-wrapper .DayPicker-Caption {
 		font-size: 1rem;
 	}
 
-	.TimePicker-Header-Text {
+	.time-picker-header-text {
 		font-family: var(--body-font-family);
 		font-size: rem-calc(10px);
 		margin: rem-calc(10px);

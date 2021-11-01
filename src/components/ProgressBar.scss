@@ -8,7 +8,7 @@
 	display: block;
 	border-radius: 2px;
 	background-color: #fff;
-	box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 0 1px rgba(0, 0, 0, 10%);
 	padding: rem-calc(11px 15px 10px);
 	font-size: rem-calc(13px);
 	font-weight: 600;
@@ -75,7 +75,7 @@
 
 		.time-left {
 			color: var(--tertiary-grey);
-			float: right; //eew...
+			float: right; // eew...
 		}
 	}
 
@@ -116,11 +116,11 @@
 }
 
 .progress-bar-transition-enter {
-	opacity: 0.01;
+	opacity: 1%;
 }
 
 .progress-bar-transition-enter.progress-bar-transition-enter-active {
-	opacity: 1;
+	opacity: 100%;
 	transition: opacity 300ms ease-in;
 }
 
@@ -129,10 +129,10 @@
 	top: rem-calc(11px);
 	left: rem-calc(15px);
 	right: rem-calc(15px);
-	opacity: 1;
+	opacity: 100%;
 }
 
 .progress-bar-transition-exit.progress-bar-transition-exit-active {
-	opacity: 0.01;
+	opacity: 1%;
 	transition: opacity 300ms ease-in;
 }

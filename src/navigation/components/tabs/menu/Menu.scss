@@ -14,7 +14,7 @@
 		left: 0;
 		right: 0;
 		background: #000;
-		opacity: 0.7;
+		opacity: 70%;
 
 		.navigation-menu.opening & {
 			animation-name: navigation-menu-mask-fade-in;
@@ -86,11 +86,11 @@
 
 @keyframes navigation-menu-mask-fade-in {
 	from {
-		opacity: 0;
+		opacity: 0%;
 	}
 
 	to {
-		opacity: 0.7;
+		opacity: 70%;
 	}
 }
 

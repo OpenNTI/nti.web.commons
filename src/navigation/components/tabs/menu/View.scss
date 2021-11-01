@@ -60,26 +60,26 @@
 	.menu-mask {
 		transform: translate3d(0, 0, 0);
 		background: #000;
-		opacity: 0.7;
+		opacity: 70%;
 		bottom: 0;
 
 		&.navigation-mask-enter {
 			transition: opacity $duration $enter-timing;
 			transition-delay: 0s !important;
-			opacity: 0;
+			opacity: 0%;
 
 			&.navigation-mask-enter-active {
-				opacity: 0.7;
+				opacity: 70%;
 			}
 		}
 
 		&.navigation-mask-exit {
 			transition: opacity 0.25s $exit-timing;
 			transition-delay: 0s !important;
-			opacity: 0.7;
+			opacity: 70%;
 
 			&.navigation-mask-exit-active {
-				opacity: 0;
+				opacity: 0%;
 			}
 		}
 	}

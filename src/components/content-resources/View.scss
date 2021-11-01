@@ -1,22 +1,22 @@
 @import '~@nti/style-common';
 
 .content-resource-view {
-	$sideMargin: 20px;
+	$side-margin: 20px;
 
 	@include clearfix;
 
-	padding: rem-calc(0 $sideMargin);
+	padding: rem-calc(0 $side-margin);
 	min-height: rem-calc(160px);
 	display: flex;
 	user-select: none;
 
 	.view-main-pane {
 		transition: box-shadow 0.3s ease, background-color 0.3s ease;
-		background-color: rgba(0, 0, 0, 0);
+		background-color: rgba(0, 0, 0, 0%);
 		flex: 1 1 auto;
 		overflow: auto;
 		overflow-x: hidden;
-		padding-right: rem-calc($sideMargin - 5px);
+		padding-right: rem-calc($side-margin - 5px);
 
 		&.entity-drag-over {
 			box-shadow: inset 0 0 0 5px var(--primary-blue);
@@ -24,28 +24,28 @@
 
 			.content-resource-view-layout.table thead,
 			.content-resource-view-layout.table {
-				background-color: rgba(0, 0, 0, 0);
+				background-color: rgba(0, 0, 0, 0%);
 			}
 
 			.row-file-asset,
 			.section.files {
-				opacity: 0.3;
+				opacity: 30%;
 				pointer-events: none;
 			}
 		}
 	}
 
 	&:not(.split) .view-main-pane {
-		padding-left: rem-calc($sideMargin);
-		margin-left: rem-calc(-$sideMargin);
-		padding-right: rem-calc($sideMargin);
-		margin-right: rem-calc(-$sideMargin);
+		padding-left: rem-calc($side-margin);
+		margin-left: rem-calc(-$side-margin);
+		padding-right: rem-calc($side-margin);
+		margin-right: rem-calc(-$side-margin);
 	}
 
 	&.split {
 		.view-main-pane {
-			padding-left: rem-calc($sideMargin);
-			margin-left: rem-calc(-$sideMargin);
+			padding-left: rem-calc($side-margin);
+			margin-left: rem-calc(-$side-margin);
 		}
 	}
 
@@ -53,7 +53,7 @@
 		flex: 0;
 		overflow: auto;
 		min-width: 350px;
-		margin-right: rem-calc(-$sideMargin);
+		margin-right: rem-calc(-$side-margin);
 		border: 0 solid var(--border-grey-light);
 		border-width: 0 0 0 1px;
 		background: #fff;

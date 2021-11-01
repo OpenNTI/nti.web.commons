@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 .mask-loader {
 	position: fixed;
@@ -6,7 +6,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: rgba(255, 255, 255, 0.8);
+	background: rgba(255, 255, 255, 80%);
 }
 
 figure.loading {
@@ -18,8 +18,9 @@ figure.loading {
 	top: 50%;
 	left: 0;
 	right: 0;
-	//FF can't handle rendering the rotation all the time, for some reason fading it in at all
-	//seems to make it work.
+
+	// FF can't handle rendering the rotation all the time, for some reason fading it in at all
+	// seems to make it work.
 	animation: fadeIn 0.1s;
 
 	& + & {
@@ -36,7 +37,7 @@ figure.loading {
 		font-size: 9px;
 		text-align: center;
 		color: #757575;
-		text-shadow: 0 0 0 rgba(255, 255, 255, 0.5);
+		text-shadow: 0 0 0 rgba(255, 255, 255, 50%);
 		mix-blend-mode: difference;
 	}
 
@@ -52,8 +53,8 @@ figure.loading {
 
 		// border: 1px solid rgba(142,183,55,.15);
 		// border-top-color: rgba(142,183,55,.8);
-		border: 1px solid rgba(240, 240, 240, 0.5);
-		border-top-color: rgba(63, 179, 79, 0.9);
+		border: 1px solid rgba(240, 240, 240, 50%);
+		border-top-color: rgba(63, 179, 79, 90%);
 		border-radius: 100%;
 	}
 }

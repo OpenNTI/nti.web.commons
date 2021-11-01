@@ -1,6 +1,6 @@
 @import '~@nti/style-common';
 
-@keyframes loadingSpinnerDash {
+@keyframes loading-spinner-dash {
 	0% {
 		stroke-dasharray: 1, 200;
 		stroke-dashoffset: 0;
@@ -19,7 +19,7 @@
 
 .loading-spinner {
 	position: relative;
-	margin: 0 auto; //XXX: This may cause everyone who uses this to define margin to override... we may want to remove this and let those who want to center the loader center it themselves
+	margin: 0 auto; // XXX: This may cause everyone who uses this to define margin to override... we may want to remove this and let those who want to center the loader center it themselves
 
 	&::before {
 		content: '';
@@ -44,7 +44,7 @@
 		stroke-dasharray: 1, 200;
 		stroke-dashoffset: 0;
 		stroke-linecap: round;
-		animation: loadingSpinnerDash 1.5s ease-in-out infinite;
+		animation: loading-spinner-dash 1.5s ease-in-out infinite;
 	}
 
 	&.blue {

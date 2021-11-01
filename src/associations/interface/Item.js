@@ -107,7 +107,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param  {Object} container the destination to add an association, if not passed use
 	 *                            this.item
 	 * @param {Object} association the parent object of the container if needed
-	 * @returns {Promise}          Fulfills or rejects with the success of adding an association
+	 * @returns {void}
 	 */
 	onAddTo(container, association) {
 		if (this[ADD_TO]) {
@@ -127,7 +127,7 @@ export default class AssociationItem extends EventEmitter {
 	 * @param  {Object} container the destination to add an association, if not passed use
 	 *                            this.item
 	 * @param {Object} association the parent object of the container if needed
-	 * @returns {Promise}          Fulfills or rejects with the success of adding an association
+	 * @returns {void}
 	 */
 	onRemoveFrom(container, association) {
 		if (this[REMOVE_FROM]) {

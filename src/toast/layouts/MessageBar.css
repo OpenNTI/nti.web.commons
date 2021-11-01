@@ -10,7 +10,7 @@
 
 .toast-message-bar.error {
 	background-color: var(--primary-red);
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 0 1px rgb(0 0 0 / 30%);
 
 	.icon-container {
 		color: white;

@@ -3,6 +3,8 @@ import Registry from './Registry';
 export const REGISTER_FIRST_RESPONDER = true;
 export const REGISTER_FALLBACK = false;
 
+/** @typedef {import('./Registry').Responder} Responder */
+
 /*
  * Mount this component to enable the Conflict Resolver Subsystem.
  */

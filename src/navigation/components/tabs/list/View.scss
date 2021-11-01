@@ -11,12 +11,12 @@
 		visibility: visible;
 
 		ul.visible-tabs li {
-			opacity: 1;
+			opacity: 100%;
 			transform: none;
 		}
 
 		.active-indicator {
-			opacity: 1;
+			opacity: 100%;
 		}
 	}
 
@@ -31,7 +31,7 @@
 			margin-top: 0;
 			margin-bottom: 0;
 			margin-right: 1.5rem;
-			opacity: 0;
+			opacity: 0%;
 			transform: translateX(5px);
 			transition: transform 0.1s, opacity 0.1s;
 		}
@@ -56,7 +56,7 @@
 		height: 2px;
 		background-color: var(--primary-blue);
 		transition: width 0.5s, left 0.5s, opacity 0.5s 0.5s;
-		opacity: 0;
+		opacity: 0%;
 
 		&.hidden {
 			display: none;

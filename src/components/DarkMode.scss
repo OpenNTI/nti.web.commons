@@ -1,8 +1,8 @@
-//iOS8 fails to fully transition from light to dark on body when the content
-//of the page is not full or overflowing. So we're not going to transition
-//this value. :(
-//
-//transition: background 0.4s ease-out 0.01s;
+// iOS8 fails to fully transition from light to dark on body when the content
+// of the page is not full or overflowing. So we're not going to transition
+// this value. :(
+
+// transition: background 0.4s ease-out 0.01s;
 .darkmode {
 	background: #333 !important;
 }

@@ -66,7 +66,7 @@ export default class DayTimePicker extends React.Component {
 					disabledDays={disabledDays}
 					onChange={this.onDateValueChange}
 				/>
-				<div className="TimePicker-Header-Text">YOUR LOCAL TIME</div>
+				<div className="time-picker-header-text">YOUR LOCAL TIME</div>
 				<TimePicker value={value} onChange={this.onTimeChange} />
 			</div>
 		);

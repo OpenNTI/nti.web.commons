@@ -14,10 +14,10 @@ class ReferenceCounter extends EventEmitter {
 	nextId = 1;
 
 	subscribe = cb => {
-		const unsub = () => this.removeListener(ID_CHANGED, cb);
-		unsub(); // prevent multiple for the same listener. shouldn't be necessary, but safe > sorry.
+		const unsubscribe = () => this.removeListener(ID_CHANGED, cb);
+		unsubscribe(); // prevent multiple for the same listener. shouldn't be necessary, but safe > sorry.
 		this.addListener(ID_CHANGED, cb);
-		return unsub;
+		return unsubscribe;
 	};
 
 	add = () => {
@@ -43,8 +43,9 @@ class ReferenceCounter extends EventEmitter {
 /**
  * Decorator that ensures only a single instance of the given component is rendered into the DOM at a time.
  *
- * @param {class} Cmp The React Component class
- * @returns {class} The decorated class
+ * @template T
+ * @param {T} Cmp The React Component class
+ * @returns {T} The decorated class
  */
 export default function SingleInstanceDecorator(Cmp) {
 	const counter = ReferenceCounter.instanceFor(Cmp);

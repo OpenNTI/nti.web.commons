@@ -1,11 +1,11 @@
-@use "sass:math";
+@use 'sass:math';
 
 @import '~@nti/style-common';
 
 .filters {
 	text-align: center;
 	list-style: none;
-	margin: 0.75rem 0 0 0;
+	margin: 0.75rem 0 0;
 	font-size: 0.6875rem;
 
 	li {
@@ -23,17 +23,18 @@
 		display: block;
 
 		.count {
-			@include count-badge();
+			@include count-badge;
 		}
 	}
 
 	.active {
 		position: relative;
+
 		$opacity: 0.1;
 		$color: black;
 
 		&::before {
-			//underline
+			// underline
 			content: '';
 			border-bottom: 1px solid $color;
 			position: absolute;
@@ -45,7 +46,7 @@
 		}
 
 		&::after {
-			//arrow
+			// arrow
 			$arrowsize: 1em;
 
 			content: '';

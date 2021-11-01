@@ -6,7 +6,7 @@
 	left: 0;
 	right: 0;
 	background: white;
-	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 25%);
 
 	/*
 	We want the order of layers to be determined by their position in the dom -- not by
@@ -19,7 +19,7 @@
 		position: relative;
 		width: 94%;
 		max-width: 1060px;
-		padding: 0 rem-calc(18px); //(1060-1024)/2
+		padding: 0 rem-calc(18px); // (1060-1024)/2
 		height: rem-calc(52px);
 		margin: 0 auto;
 

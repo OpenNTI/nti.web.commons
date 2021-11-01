@@ -12,6 +12,7 @@
 		background-color: var(--panel-background);
 		border: solid 1px var(--border-grey-light);
 		width: 100%;
+
 		// max-width: 100%;
 		// min-width: 100%;
 		min-height: 100px;
@@ -21,7 +22,7 @@
 		&::placeholder {
 			font-style: italic;
 			color: var(--tertiary-grey);
-			opacity: 1;
+			opacity: 100%;
 		}
 	}
 }

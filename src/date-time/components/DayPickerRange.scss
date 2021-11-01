@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 @import '~@nti/style-common';
 
 .date-picker-range {
@@ -12,7 +13,6 @@
 			overflow: hidden;
 			word-wrap: normal;
 			background: #fafafa;
-			-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
 			box-shadow: 0 0 0 0.0625rem #eaeaea;
 			border: solid 2px #fafafa;
 			margin: 0.5rem;
@@ -59,7 +59,7 @@
 		color: black;
 
 		&::before {
-			opacity: 0;
+			opacity: 0%;
 			height: 1em !important;
 		}
 	}
@@ -67,7 +67,7 @@
 	.DayPicker-Day--rangeopen {
 		background: linear-gradient(
 			90deg,
-			rgba(0, 0, 0, 0) 50%,
+			rgba(0, 0, 0, 0%) 50%,
 			rgb(223, 239, 256) 50%
 		);
 	}
@@ -76,7 +76,7 @@
 		background: linear-gradient(
 			90deg,
 			rgb(223, 239, 256) 50%,
-			rgba(0, 0, 0, 0) 50%
+			rgba(0, 0, 0, 0%) 50%
 		);
 	}
 

@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'invariant';
 
-import NavigatableMixin from '../mixins/NavigatableMixin';
+import NavigableMixin from '../mixins/NavigatableMixin';
 import VisibleComponentTracker from '../visible-component-tracker';
 
 function buildHref(page, props, scope) {
-	let ctx = props.navigatableContext;
+	let ctx = props.navigableContext;
 	if (ctx && !ctx.makeHref) {
-		console.warn('navigatableContext missing "makeHref" method'); //eslint-disable-line no-console
+		console.warn('navigableContext missing "makeHref" method'); //eslint-disable-line no-console
 	}
 	if (!ctx || !ctx.makeHref) {
 		ctx = scope;
@@ -44,8 +44,29 @@ const needsUpdate = (props, prevProps) => {
 	);
 };
 
+/**
+ * @typedef {object} Pages
+ * @property {number} total
+ * @property {number} index
+ * @property {Page} next
+ * @property {Page} prev
+ */
+
+/**
+ * @typedef {object} Page
+ * @property {string} ntiid
+ * @property {string} title
+ * @property {string} ref
+ */
+
+/**
+ * @typedef {object} PagerSource
+ * @property {(current: string, root: Page) => Pages[]} getPagesAround
+ * @property {Page} root
+ */
+
 export default createReactClass({
-	mixins: [NavigatableMixin],
+	mixins: [NavigableMixin],
 	displayName: 'Pager',
 
 	propTypes: {
@@ -53,7 +74,7 @@ export default createReactClass({
 		 * An object that provides an interface to get the current/prev/next
 		 * PageSourceItem-like objects.
 		 *
-		 * @type {Store}
+		 * @type {PagerSource}
 		 */
 		pageSource: PropTypes.object,
 
@@ -61,7 +82,7 @@ export default createReactClass({
 		 * An object that has at least two properties: href, title
 		 *	This prop represents the forward link.
 		 *
-		 * @type {PageSourceItem}
+		 * @type {Page}
 		 */
 		next: PropTypes.object,
 
@@ -69,7 +90,7 @@ export default createReactClass({
 		 * An object that has at least two properties: href, title
 		 * 	This prop represents the backward link.
 		 *
-		 * @type {PageSourceItem}
+		 * @type {Page}
 		 */
 		prev: PropTypes.object,
 
@@ -99,9 +120,9 @@ export default createReactClass({
 		 * So theMixins.NavigatableMixin#makeHref() method will produce the incorrect url. This
 		 * allows for specifying whom should make the href.
 		 *
-		 * @type {ReactElement}
+		 * @type {import('react').ReactElement}
 		 */
-		navigatableContext: PropTypes.shape({
+		navigableContext: PropTypes.shape({
 			makeHref: PropTypes.func,
 		}),
 
@@ -215,9 +236,9 @@ export default createReactClass({
 		const cls = cx('pager', {
 			mobile: isMobile,
 			desktop: !isMobile,
-			realPage: isRealPages,
+			'real-page': isRealPages,
 		});
-		const bottomClassName = cx('bottompager', { realPage: isRealPages });
+		const bottomClassName = cx('bottompager', { 'real-page': isRealPages });
 
 		if (source) {
 			invariant(

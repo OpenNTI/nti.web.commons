@@ -19,13 +19,13 @@
 	}
 
 	&.disabled {
-		opacity: 0.25;
+		opacity: 25%;
 	}
 
 	&.open {
 		& > ul {
 			background: white;
-			box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.1);
+			box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 10%);
 		}
 
 		.selected {

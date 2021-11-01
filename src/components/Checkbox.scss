@@ -5,14 +5,13 @@ label.checkbox-component {
 	position: relative;
 	line-height: 1; // fixes a safari issue where clicking the label doesn't affect the checkbox
 	input[type='checkbox'] {
-		opacity: 0;
+		opacity: 0%;
 		position: absolute;
 
 		& + span.label {
 			position: relative;
 
-			//
-			//override foundation's '.label'
+			// override foundation's '.label'
 			background: inherit;
 			color: inherit;
 			padding-left: 0;
@@ -37,7 +36,8 @@ label.checkbox-component {
 		}
 
 		&:checked + span.label::before {
-			background-image: url(./assets/checkbox/select.png);
+			background-image: url('./assets/checkbox/select.png');
+
 			// @include retina-asset('checkbox/select', $xCount: 3);
 		}
 
@@ -46,11 +46,11 @@ label.checkbox-component {
 		}
 
 		&:disabled + span.label {
-			opacity: 0.5;
+			opacity: 50%;
 			pointer-events: none;
 
 			&::before {
-				opacity: 0.5;
+				opacity: 50%;
 			}
 		}
 
@@ -60,7 +60,7 @@ label.checkbox-component {
 		}
 	}
 
-	//reset foundation's 'label' & '.label'
+	// reset foundation's 'label' & '.label'
 	&,
 	& span.label {
 		font-weight: inherit;
@@ -72,16 +72,4 @@ label.checkbox-component {
 	div.sub {
 		margin-left: 1.625rem;
 	}
-
-	// html:not(.touch) &:hover {
-	// 	input[type=checkbox] {
-	// 		& + span.label::before {
-	// 			@include retina-asset('checkbox/hover', $xCount: 3);
-	// 		}
-	//
-	// 		&:checked + span.label::before {
-	// 			@include retina-asset('checkbox/hover-select', $xCount: 3);
-	// 		}
-	// 	}
-	// }
 }

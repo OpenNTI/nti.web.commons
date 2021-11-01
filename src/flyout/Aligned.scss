@@ -42,7 +42,7 @@
 
 		&::after {
 			content: '';
-			box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
+			box-shadow: 0 0 4px 0 rgba(0, 0, 0, 21%);
 			width: 15px;
 			height: 15px;
 			background: white;
@@ -97,7 +97,7 @@
 	}
 
 	.flyout-inner {
-		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.21);
+		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 21%);
 		background: white;
 		overflow: hidden auto;
 	}
@@ -113,7 +113,7 @@
 	}
 }
 
-//when there is a control bar open, add some margin so you can scroll to the full flyout
+// when there is a control bar open, add some margin so you can scroll to the full flyout
 body.control-bar-open .aligned-flyout.bottom {
 	&::after {
 		content: '';

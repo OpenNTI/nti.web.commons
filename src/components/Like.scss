@@ -17,7 +17,7 @@
 	}
 
 	&::after {
-		background-image: url(./assets/like.png);
+		background-image: url('./assets/like.png');
 		content: '';
 		overflow: hidden;
 		position: absolute;
@@ -28,6 +28,6 @@
 	}
 
 	&.active::after {
-		background-image: url(./assets/like_active.png);
+		background-image: url('./assets/like_active.png');
 	}
 }

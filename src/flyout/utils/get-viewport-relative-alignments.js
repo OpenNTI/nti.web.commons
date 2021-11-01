@@ -1,10 +1,10 @@
 import { getElementRect as getRectInViewport } from '@nti/lib-dom';
 
 /**
- * @param  {DOMNode} element   A dom node to measure
+ * @param  {HTMLElement} element   A dom node to measure
  * @param  {Object}  alignment The alignment description
- * @param  {Rect}    viewport  The viewport rect.
- * @returns {Rect} A partial rect.
+ * @param  {DOMRect}    viewport  The viewport rect.
+ * @returns {DOMRect} A partial rect.
  */
 export default function getViewportRelativeAlignments(
 	element,

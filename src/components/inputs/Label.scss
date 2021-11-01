@@ -6,7 +6,8 @@
 		font: normal bold 0.625rem/1rem var(--body-font-family);
 		text-transform: uppercase;
 		color: var(--secondary-grey);
-		//Override foundation.css' rules for `.label` (only on mobile)
+
+		// Override foundation.css' rules for `.label` (only on mobile)
 		background: initial;
 		padding: initial;
 		white-space: initial;

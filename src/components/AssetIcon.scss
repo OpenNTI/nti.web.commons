@@ -1,32 +1,32 @@
 @import '~@nti/style-common';
 
 %icon-fallback-reading {
-	background-image: url(./assets/file-types/required-reading.png) !important;
+	background-image: url('./assets/file-types/required-reading.png') !important;
 }
 %icon-fallback-link {
-	background-image: url(./assets/file-types/view-link-www.png) !important;
+	background-image: url('./assets/file-types/view-link-www.png') !important;
 }
 %icon-fallback-unknown {
-	background-image: url(./assets/file-types/view-link-www.png) !important;
+	background-image: url('./assets/file-types/view-link-www.png') !important;
 }
 %icon-fallback-download {
-	background-image: url(./assets/file-types/blank-download.png) !important;
+	background-image: url('./assets/file-types/blank-download.png') !important;
 }
 %icon-fallback-scorm {
-	background-image: url(./assets/file-types/scorm-icon.svg) !important;
+	background-image: url('./assets/file-types/scorm-icon.svg') !important;
 }
 
 %icon-google-app-docs {
-	background-image: url(./assets/file-types/google-app-docs.svg) !important;
+	background-image: url('./assets/file-types/google-app-docs.svg') !important;
 }
 %icon-google-app-form {
-	background-image: url(./assets/file-types/google-app-form.svg) !important;
+	background-image: url('./assets/file-types/google-app-form.svg') !important;
 }
 %icon-google-app-sheets {
-	background-image: url(./assets/file-types/google-app-sheets.svg) !important;
+	background-image: url('./assets/file-types/google-app-sheets.svg') !important;
 }
 %icon-google-app-slides {
-	background-image: url(./assets/file-types/google-app-slides.svg) !important;
+	background-image: url('./assets/file-types/google-app-slides.svg') !important;
 }
 
 .file-type.icon {
@@ -36,7 +36,6 @@
 	$orange: #f65b24;
 	$yellow: #ffaf44;
 	$red: #da251c;
-
 	$icon-width: 80px;
 
 	color: $grey;
@@ -54,6 +53,7 @@
 
 		&.www {
 			@extend %icon-fallback-link;
+
 			text,
 			label {
 				display: none;
@@ -62,6 +62,7 @@
 
 		&.unknown {
 			@extend %icon-fallback-unknown;
+
 			text,
 			label {
 				display: none;
@@ -70,6 +71,7 @@
 
 		&.content-link {
 			@extend %icon-fallback-reading;
+
 			text,
 			label {
 				display: none;
@@ -78,6 +80,7 @@
 
 		&.scorm-content {
 			@extend %icon-fallback-scorm;
+
 			text,
 			label {
 				display: none;
@@ -86,6 +89,7 @@
 
 		&.google-app-docs {
 			@extend %icon-google-app-docs;
+
 			text,
 			label {
 				display: none;
@@ -94,6 +98,7 @@
 
 		&.google-app-form {
 			@extend %icon-google-app-form;
+
 			text,
 			label {
 				display: none;
@@ -102,6 +107,7 @@
 
 		&.google-app-sheets {
 			@extend %icon-google-app-sheets;
+
 			text,
 			label {
 				display: none;
@@ -110,6 +116,7 @@
 
 		&.google-app-slides {
 			@extend %icon-google-app-slides;
+
 			text,
 			label {
 				display: none;
@@ -142,7 +149,9 @@
 			color: inherit;
 		}
 
-		//Blue=Docs
+		/* stylelint-disable selector-class-pattern */
+
+		// Blue=Docs
 		&.doc,
 		&.docx,
 		&.pages,
@@ -150,24 +159,28 @@
 		&.plain {
 			color: $blue;
 		}
-		//Orange=Presentations
+
+		// Orange=Presentations
 		&.ppt,
 		&.pptx,
 		&.key {
 			color: $orange;
 		}
-		//Green=Sheets
+
+		// Green=Sheets
 		&.xls,
 		&.xlsx,
 		&.numbers,
 		&.csv {
 			color: $green;
 		}
-		//Red=PDF
+
+		// Red=PDF
 		&.pdf {
 			color: $red;
 		}
-		//Yellow=Archive
+
+		// Yellow=Archive
 		&.zip,
 		&.gz,
 		&.tar,
@@ -176,5 +189,6 @@
 		&.rar {
 			color: $yellow;
 		}
+		/* stylelint-enable selector-class-pattern */
 	}
 }

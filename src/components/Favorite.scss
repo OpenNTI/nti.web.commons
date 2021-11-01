@@ -9,7 +9,7 @@
 	vertical-align: top;
 
 	&::after {
-		background-image: url(./assets/favorite.png);
+		background-image: url('./assets/favorite.png');
 		content: '';
 		overflow: hidden;
 		position: absolute;
@@ -20,6 +20,6 @@
 	}
 
 	&.active::after {
-		background-image: url(./assets/favorite_active.png);
+		background-image: url('./assets/favorite_active.png');
 	}
 }

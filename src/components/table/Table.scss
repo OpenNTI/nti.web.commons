@@ -8,7 +8,7 @@
 	// Cells in subsequent rows do not affect column widths.
 	table-layout: fixed;
 
-	//HTML spec defines the default table cells have individual borders. We typically want thin shared borders.
+	// HTML spec defines the default table cells have individual borders. We typically want thin shared borders.
 	border-collapse: collapse;
 	border-spacing: 0;
 }

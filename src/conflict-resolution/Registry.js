@@ -1,3 +1,38 @@
+/** @typedef {number|string} Code */
+
+/**
+ * @typedef {object} ConfirmationOptions
+ * @property {string?} [rel="confirm"] Name of link on Challenge to post to.
+ * @property {any} [data] Optional additional data to post with confirmation
+ */
+
+/**
+ * @typedef {object} Link
+ * @property {string} rel
+ * @property {string} href
+ */
+
+/**
+ * the conflict challenge response
+ *
+ * @typedef {object} Challenge
+ * @property {Code} code
+ * @property {Link[]} Links
+ * @property {string?} Message
+ * @property {(confirmationOptions: ConfirmationOptions?) => void} confirm
+ * @property {() => void} reject
+ */
+
+/**
+ * @typedef {Promise<void> | true} Acknowledge
+ */
+
+/**
+ * If handled, a truthy value. If the return value is a Promise it will be used to prolong the existing promise chain.
+ *
+ * @typedef {(challenge: Challenge) => Acknowledge?} Responder
+ */
+
 /**
  * Singltion instance maintains custom handlers for conflict resolution.
  */
@@ -5,7 +40,7 @@ export default new (class Registry {
 	/**
 	 * Maps error codes to a list of responders.
 	 *
-	 * @type {Object}
+	 * @type {Record<Code, Responder>}
 	 */
 	handlers = {};
 
@@ -13,11 +48,10 @@ export default new (class Registry {
 	 * Attempts to handle the challenge response.
 	 *
 	 * If there exists more than one handler per code, last one registered responds first.
-	 * First one to response/handle wins. Not all responders are garunteed to get called.
+	 * First one to response/handle wins. Not all responders are guaranteed to get called.
 	 *
-	 * @param  {Object} challenge - The challenge body.
-	 * @param  {Object} challenge.code - The error code for the challenge.
-	 * @returns {Promise|void} If handled, a Promise, otherwise void.
+	 * @param  {Challenge} challenge - The challenge body.
+	 * @returns {Promise<void>?} If handled, a Promise, otherwise void.
 	 */
 	handleConflict(challenge) {
 		const { code } = challenge || {};
@@ -33,13 +67,6 @@ export default new (class Registry {
 			}
 		}
 	}
-
-	/**
-	 * @callback responder
-	 * @param {Object} challenge - the conflict challenge response.
-	 * @returns {*} If handled, a truthy value. If the return value is a
-	 *                 Promise it will be used to prolong the existing promise chain.
-	 */
 
 	/**
 	 * Register a responder for an error code.

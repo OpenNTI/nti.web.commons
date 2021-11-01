@@ -25,13 +25,13 @@
 .saturation-layer {
 	background: linear-gradient(
 		to right,
-		rgba(255, 255, 255, 1),
-		rgba(255, 255, 255, 0)
+		rgb(255 255 255 / 100%),
+		rgb(255 255 255 / 0%)
 	);
 }
 
 .brightness-layer {
-	background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+	background: linear-gradient(to top, rgb(0 0 0 / 100%), rgb(0 0 0 / 0%));
 }
 
 .saturation-brightness-thumb {

@@ -5,11 +5,13 @@
 
 	li {
 		display: inline;
+
 		// vertical-align: middle;
 		margin-right: 0.3rem;
 
 		div {
 			display: inline;
+
 			// vertical-align: middle;
 		}
 
@@ -17,10 +19,10 @@
 			display: inline-block;
 			vertical-align: middle;
 			content: '\b7';
-			font-size: 1rem; //16px, we want a 14px height... thats a ratio of .875 for line-height.
+			font-size: 1rem; // 16px, we want a 14px height... thats a ratio of .875 for line-height.
 			line-height: 0.875;
 			margin-left: 0.3rem;
-			margin-top: -1px; // removed the position: releative; top: -1px; caused z-index issues
+			margin-top: -1px; // removed the position: relative; top: -1px; caused z-index issues
 		}
 	}
 }
