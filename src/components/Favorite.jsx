@@ -1,42 +1,52 @@
-import './Favorite.scss';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
-import { ItemChanges } from '../mixins';
+import { Button, useChanges } from '@nti/web-core';
 
-export default createReactClass({
-	displayName: 'Favorite',
-	mixins: [ItemChanges],
+const Element = styled(Button, { allowAs: true }).attrs({ plain: true })`
+	position: relative;
+	display: inline-block;
+	margin: 0 10px 0 0;
+	padding: 0;
+	height: 24px;
+	width: 18px;
+	cursor: pointer;
+	vertical-align: top;
 
-	propTypes: {
-		item: PropTypes.object.isRequired,
-		asButton: PropTypes.bool,
-	},
+	&::after {
+		background-image: url('./assets/favorite.png');
+		content: '';
+		overflow: hidden;
+		position: absolute;
+		height: 24px;
+		width: 12px;
+		top: -1px;
+		left: 3px;
+	}
 
-	onClick(e) {
-		e.preventDefault();
-		e.stopPropagation();
+	&.active::after {
+		background-image: url('./assets/favorite_active.png');
+	}
+`;
 
-		let { item } = this.props;
+Favorite.propTypes = {
+	item: PropTypes.object.isRequired,
+};
 
-		this.setState({ loading: true });
-		item.favorite().then(() => this.setState({ loading: false }));
-	},
+export default function Favorite({ item, ...props }) {
+	useChanges(item);
 
-	render() {
-		let { item, asButton } = this.props;
+	const onClick = e => {
+		e?.preventDefault();
+		e?.stopPropagation();
+		item?.favorite();
+	};
 
-		let cls = cx('favorite', {
-			active: item.hasLink('unfavorite'),
-			'button-like': asButton,
-		});
-
-		const Tag = asButton ? 'span' : 'a';
-		const extraProps = asButton
-			? { role: 'button', tabIndex: '0' }
-			: { href: '#' };
-
-		return <Tag {...extraProps} className={cls} onClick={this.onClick} />;
-	},
-});
+	return (
+		<Element
+			{...props}
+			className="favorite"
+			onClick={onClick}
+			active={item?.hasLink('unfavorite')}
+		/>
+	);
+}

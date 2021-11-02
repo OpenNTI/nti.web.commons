@@ -1,50 +1,69 @@
-import './Like.scss';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { ItemChanges } from '../mixins';
+import { Button, useChanges } from '@nti/web-core';
 
-export default createReactClass({
-	displayName: 'Like',
-	mixins: [ItemChanges],
+const Element = styled(Button, { allowAs: true }).attrs({ plain: true })`
+	position: relative;
+	display: inline-block;
+	margin: 0.5rem;
+	padding: 0 0 0 1.25rem;
+	height: 1rem;
+	width: 1.875rem;
+	cursor: pointer;
+	vertical-align: top;
+	white-space: nowrap;
+	text-overflow: clip;
+	line-height: 16px;
+	font-size: 0.625rem;
+	font-style: italic;
+	font-weight: 600;
 
-	propTypes: {
-		item: PropTypes.object.isRequired,
-		asButton: PropTypes.bool,
-	},
+	& > div {
+		margin-left: 15px;
+	}
 
-	onClick(e) {
-		e.preventDefault();
-		e.stopPropagation();
+	&::after {
+		background-image: url('./assets/like.png');
+		content: '';
+		overflow: hidden;
+		position: absolute;
+		height: 13px;
+		width: 14px;
+		top: 0.0625rem;
+		left: 0.1875rem;
+	}
 
-		let { item } = this.props;
+	&.active::after {
+		background-image: url('./assets/like_active.png');
+	}
+`;
 
-		this.setState({ loading: true });
-		item.like().then(() => this.setState({ loading: false }));
-	},
+Like.propTypes = {
+	item: PropTypes.object.isRequired,
+};
 
-	render() {
-		let { item, asButton } = this.props;
-		let { LikeCount } = item;
+export default function Like({ item, ...props }) {
+	useChanges(item);
 
-		let count = LikeCount || '';
+	const onClick = e => {
+		e?.preventDefault();
+		e?.stopPropagation();
+		item?.like();
+	};
 
-		let cls = cx('like', {
-			active: item.hasLink('unlike'),
-			'button-like': asButton,
-			count: !!count,
-		});
+	const count = item.LikeCount || '';
 
-		const Tag = asButton ? 'span' : 'a';
-		const extraProps = asButton
-			? { role: 'button', tabIndex: '0' }
-			: { href: '#' };
-
-		return (
-			<Tag {...extraProps} className={cls} onClick={this.onClick}>
-				{count}
-			</Tag>
-		);
-	},
-});
+	return (
+		<Element
+			{...props}
+			className={cx('like', {
+				count: !!count,
+			})}
+			onClick={onClick}
+			active={item?.hasLink('unlike')}
+		>
+			{count}
+		</Element>
+	);
+}

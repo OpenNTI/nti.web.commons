@@ -6,11 +6,8 @@ import Like from './Like';
 
 LuckyCharms.propTypes = {
 	item: PropTypes.object.isRequired,
-	asButton: PropTypes.bool,
 };
-export default function LuckyCharms(props) {
-	let { item, asButton } = props;
-
+export default function LuckyCharms({ item }) {
 	if (!item || !item.isTopLevel || item.placeholder) {
 		// console.warn('Item doesn\'t have isTopLevel method. bailing.');
 		return null;
@@ -18,8 +15,8 @@ export default function LuckyCharms(props) {
 
 	return (
 		<div className="charms">
-			<Like item={item} asButton={asButton} />
-			{item.isTopLevel() && <Favorite item={item} asButton={asButton} />}
+			<Like item={item} />
+			{item.isTopLevel() && <Favorite item={item} />}
 		</div>
 	);
 }
