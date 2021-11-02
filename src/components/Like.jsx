@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import cx from 'classnames';
 
 import { Button, useChanges } from '@nti/web-core';
-
-import Loading from './loading-indicators';
 
 import './Like.scss';
 
@@ -18,16 +15,11 @@ export default function Like({ item, asButton }) {
 
 	const { LikeCount } = item;
 
-	const [loading, setLoading] = useState(false);
-
 	const onClick = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let { item } = this.props;
-
-		setLoading(true);
-		item.like().then(() => setLoading(false));
+		item.like();
 	};
 
 	let count = LikeCount || '';
@@ -42,10 +34,8 @@ export default function Like({ item, asButton }) {
 	const extraProps = asButton ? { plain: true } : { href: '#' };
 
 	return (
-		<Loading.Placeholder loading={loading} fallback={<></>}>
-			<Tag {...extraProps} className={cls} onClick={onClick}>
-				{count}
-			</Tag>
-		</Loading.Placeholder>
+		<Tag {...extraProps} className={cls} onClick={onClick}>
+			{count}
+		</Tag>
 	);
 }
