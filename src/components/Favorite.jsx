@@ -1,32 +1,52 @@
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import { Button, useChanges } from '@nti/web-core';
 
-import './Favorite.scss';
+const Element = styled(Button, { allowAs: true }).attrs({ plain: true })`
+	position: relative;
+	display: inline-block;
+	margin: 0 10px 0 0;
+	padding: 0;
+	height: 24px;
+	width: 18px;
+	cursor: pointer;
+	vertical-align: top;
+
+	&::after {
+		background-image: url('./assets/favorite.png');
+		content: '';
+		overflow: hidden;
+		position: absolute;
+		height: 24px;
+		width: 12px;
+		top: -1px;
+		left: 3px;
+	}
+
+	&.active::after {
+		background-image: url('./assets/favorite_active.png');
+	}
+`;
 
 Favorite.propTypes = {
 	item: PropTypes.object.isRequired,
-	asButton: PropTypes.bool,
 };
 
-export default function Favorite({ item, asButton }) {
-	let cls = cx('favorite', {
-		active: item.hasLink('unfavorite'),
-		'button-like': asButton,
-	});
-
+export default function Favorite({ item, ...props }) {
 	useChanges(item);
 
 	const onClick = e => {
-		e.preventDefault();
-		e.stopPropagation();
-
-		item.favorite();
+		e?.preventDefault();
+		e?.stopPropagation();
+		item?.favorite();
 	};
 
-	const Tag = asButton ? Button : 'a';
-	const extraProps = asButton ? { plain: true } : { href: '#' };
-
-	return <Tag {...extraProps} className={cls} onClick={onClick} />;
+	return (
+		<Element
+			{...props}
+			className="favorite"
+			onClick={onClick}
+			active={item?.hasLink('unfavorite')}
+		/>
+	);
 }
