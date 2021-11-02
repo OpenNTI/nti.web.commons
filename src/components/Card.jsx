@@ -116,19 +116,18 @@ export default function RelatedWorkRefCard({
 
 	const by = 'byline' in item ? byline : creator;
 
-	const props = {
-		...remainder,
-		className: cx('content-link', 'related-work-ref', {
-			external,
-			seen: isSeen,
-		}),
-		target: external ? '_blank' : null,
-		onClick: this.onClick,
-		ref: this.attachRef,
-	};
-
 	return (
-		<div {...props}>
+		<div
+			{...{
+				...remainder,
+				className: cx('content-link', 'related-work-ref', {
+					external,
+					seen: isSeen,
+				}),
+				target: external ? '_blank' : null,
+				onClick,
+			}}
+		>
 			<AssetIcon src={icon} mimeType={type} href={item?.href}>
 				{external && <div className="external" />}
 			</AssetIcon>
