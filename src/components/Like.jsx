@@ -3,7 +3,8 @@ import { useState } from 'react';
 import cx from 'classnames';
 
 import { Button, useChanges } from '@nti/web-core';
-import { Loading } from '@nti/web-commons';
+
+import Loading from './loading-indicators';
 
 import './Like.scss';
 
