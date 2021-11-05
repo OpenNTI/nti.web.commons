@@ -3,38 +3,30 @@ import cx from 'classnames';
 
 import { Button, useChanges } from '@nti/web-core';
 
-const Element = styled(Button, { allowAs: true }).attrs({ plain: true })`
-	position: relative;
-	display: inline-block;
-	margin: 0.5rem;
-	padding: 0 0 0 1.25rem;
-	height: 1rem;
-	width: 1.875rem;
-	cursor: pointer;
-	vertical-align: top;
-	white-space: nowrap;
-	text-overflow: clip;
-	line-height: 16px;
-	font-size: 0.625rem;
-	font-style: italic;
-	font-weight: 600;
+const Element = styled(Button).attrs({ plain: true })`
+	[data-button-label] {
+		margin: 0.5rem;
+		padding-right: 4px;
+		height: 1rem;
+		white-space: nowrap;
+		line-height: 1.6;
+		font-size: 0.625rem;
+		font-style: italic;
+		font-weight: 600;
 
-	& > div {
-		margin-left: 15px;
+		&::before {
+			display: inline-block;
+			background-image: url('./assets/like.png');
+			content: '';
+			overflow: hidden;
+			height: 13px;
+			width: 14px;
+			margin-right: 4px;
+			vertical-align: sub;
+		}
 	}
 
-	&::after {
-		background-image: url('./assets/like.png');
-		content: '';
-		overflow: hidden;
-		position: absolute;
-		height: 13px;
-		width: 14px;
-		top: 0.0625rem;
-		left: 0.1875rem;
-	}
-
-	&.active::after {
+	&.active [data-button-label]::before {
 		background-image: url('./assets/like_active.png');
 	}
 `;

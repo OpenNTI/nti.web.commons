@@ -1,4 +1,3 @@
-import './LuckyCharms.scss';
 import PropTypes from 'prop-types';
 
 import Favorite from './Favorite';
@@ -14,8 +13,26 @@ export default function LuckyCharms({ item }) {
 	}
 
 	return (
-		<div className="charms">
-			<Like item={item} />
+		<div
+			className="charms"
+			css={css`
+				position: absolute;
+				top: 0;
+				right: 0;
+
+				/* TODO: remove z-index */
+				z-index: 1;
+			`}
+		>
+			<Like
+				item={item}
+				css={css`
+					& > [data-button-label] {
+						color: var(--primary-blue);
+						text-decoration: none;
+					}
+				`}
+			/>
 			{item.isTopLevel() && <Favorite item={item} />}
 		</div>
 	);
