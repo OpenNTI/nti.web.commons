@@ -19,10 +19,14 @@ export default function Radio(props) {
 		label,
 		name,
 		disabled,
+		className,
 		...otherProps
 	} = props;
 	return (
-		<label className={cx('radio-component', { disabled })} name={name}>
+		<label
+			className={cx('radio-component', className, { disabled })}
+			name={name}
+		>
 			<input
 				{...otherProps}
 				name={name}

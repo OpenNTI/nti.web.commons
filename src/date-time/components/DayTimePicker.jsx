@@ -1,6 +1,7 @@
 import './DayTimePicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import DayPicker, { DateUtils } from './DayPicker';
 import TimePicker from './TimePicker';
@@ -57,10 +58,10 @@ export default class DayTimePicker extends React.Component {
 	}
 
 	render() {
-		const { value, disabledDays } = this.props;
+		const { className, value, disabledDays } = this.props;
 
 		return (
-			<div className="daytime-picker">
+			<div className={cx('daytime-picker', className)}>
 				<DayPicker
 					value={value}
 					disabledDays={disabledDays}
