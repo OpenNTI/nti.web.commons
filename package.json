@@ -38,7 +38,7 @@
     "@nti/web-client": "NextThought/nti.web.client",
     "@nti/web-core": "NextThought/nti.web.core",
     "@nti/web-storage": "NextThought/nti.web.storage",
-    "@reach/tooltip": "^0.16.0",
+    "@reach/tooltip": "^0.18.0",
     "create-react-class": "^15.5.2",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.10",
