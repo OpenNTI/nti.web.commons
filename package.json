@@ -41,7 +41,7 @@
     "@reach/tooltip": "^0.16.0",
     "create-react-class": "^15.5.2",
     "date-fns": "^2.16.1",
-    "date-fns-tz": "^1.0.10",
+    "date-fns-tz": "^2.0.0",
     "eases": "^1.0.8",
     "filesize": "^8.0.0",
     "invariant": "^2.2.1",
